@@ -6,6 +6,8 @@ from socket import *
 from threading import Thread
 import numpy as np
 from queue import Queue
+from DataConverter import DataConverter
+from utils import Toolkit
 
 class OpenEphysSender():
     def __init__(self, q_queue, p_buffer_size, p_frequency, p_port, p_host_addr=""):
@@ -67,3 +69,26 @@ class OpenEphysSender():
     #                 j = j + 1
     #             np_conv = np.array(self.converted_array, np.uint16).flatten().tobytes()
     #             self.queue_conv_data.put(np_conv)
+
+
+if __name__ == "__main__":
+
+    #GLOBAL VARIABLES
+    HOST_ADDR = "192.168.1.132"
+    OPENEPHYS_PORT = 10001
+
+    CHANNELS = [0, 1, 2, 3, 31, 32, 46, 47]
+    BUFFER_SIZE = 50
+    FREQUENCY = 15000
+
+    #CONSTRUCTORS
+    QUEUE_RAW_DATA = Queue()
+    QUEUE_CONV_DATA = Queue()
+
+    TOOLKIT = Toolkit(QUEUE_RAW_DATA)
+    TASK_DataConverter = DataConverter(QUEUE_RAW_DATA, QUEUE_CONV_DATA, CHANNELS, BUFFER_SIZE)
+    TASK_OpenEphysSender = OpenEphysSender(QUEUE_CONV_DATA, BUFFER_SIZE, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+
+    TASK_OpenEphysSender.sendToOpenEphys()
+    TASK_DataConverter.startThread()
+    TOOLKIT.startThread()

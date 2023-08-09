@@ -15,13 +15,13 @@ from utils import Toolkit
 if __name__ == "__main__":
 
     #GLOBAL VARIABLES
-    HOST_ADDR = "192.168.1.132"
+    HOST_ADDR = "192.168.1.121"
     HEADSTAGE_PORT = 5000
     OPENEPHYS_PORT = 10001
 
-    CHANNELS = [0, 1, 2, 3, 31, 32, 46, 47]
-    BUFFER_SIZE = 50
-    FREQUENCY = 15000
+    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
+    BUFFER_SIZE = 64
+    FREQUENCY = 12000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA = Queue()
@@ -36,6 +36,9 @@ if __name__ == "__main__":
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
     while not TASK_WiFiServer.m_connected:
        time.sleep(1)
+
+    TASK_WiFiServer.configureIntanChip()
+
     TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvTread)

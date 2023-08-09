@@ -28,7 +28,6 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_host_addr = p_host_addr
         self.m_thread_socket = False
         self.m_socketConnectionThread = threading.Thread(target=self.connectSocket)
-        self.dummy_buffer_for_test = []
         self.m_connected = False
 
         self.m_received_data = 0
@@ -61,6 +60,7 @@ class WiFiHeadstageReceiver(BaseException):
                 self.m_connected = True
 
     def continuedDataFromIntan(self):
+        BUFFER_SIZE = 1024
         print("---STARTING HEADSTAGE_RECV THREAD---")
         sample_size = self.buffer_size * 2 #since its 16bits
         command = b"B"
@@ -70,12 +70,12 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_conn.sendall(command)  # Start Intan Timer
         time.sleep(1)
 
+
         while 1:
-            self.m_received_data = self.m_conn.recv((num_channels * sample_size))
+            time.sleep(0.001)
+            data = self.m_conn.recv(BUFFER_SIZE)
 
-            #SIMULATE SIN WAVE FROM DATA
-
-            self.queue_raw_data.put(self.m_received_data)
+            self.queue_raw_data.put(data)
 
 
     def readMenu(self):
@@ -86,10 +86,12 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_conn.sendall(b"A")
         print(self.m_conn.recv(1024).decode("utf-8"))
         print("Low-pass selection:")
-        input1 = input()
+        #input1 = input()
+        input1 = "4"
         print("High-pass selection:")
-        input2 = input()
-        self.m_conn.sendall(b"" + bytes(input1, 'ascii') + bytes(input2, 'ascii'))
+        #input2 = input()
+        input2 = "B"
+        self.m_conn.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
 
     def receiveSeqDataFromIntan(self, sample_size):
         command = b"B"
