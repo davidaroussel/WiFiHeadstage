@@ -74,6 +74,12 @@ class WiFiHeadstageReceiver(BaseException):
         while 1:
             time.sleep(0.001)
             data = self.m_conn.recv(BUFFER_SIZE)
+            while len(data) < BUFFER_SIZE:
+                rest_packet = self.m_conn.recv(BUFFER_SIZE - len(data))
+                if not rest_packet:
+                    print("BOOBOO")
+                data += bytearray(rest_packet)
+
 
             self.queue_raw_data.put(data)
 
