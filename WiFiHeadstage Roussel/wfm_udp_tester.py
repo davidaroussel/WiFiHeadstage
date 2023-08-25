@@ -1,30 +1,24 @@
 import socket
-import time
-import struct
-import threading
-import random
-import sched
 
-timer_delay = 1
 
-bufferSize = 1
-localIP = "192.168.43.96"
-serverAddressPort = (localIP, 10000)
-intList_1 = [0xFF]*bufferSize
-intList_2 = [65000]*bufferSize
-testValue = []
+def main():
+    server_host = '0.0.0.0'  # Use your server's IP address or '0.0.0.0' for all available interfaces
+    server_port = 10001  # Choose an available port number
 
-bytesToSend_1 = struct.pack('%se' % len(intList_1), *intList_1)
-bytesToSend_2 = struct.pack('%se' % len(intList_2), *intList_2)
-buffer = 0xFF
-value = 0
+    server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server.bind((server_host, server_port))
+    print(f"[*] Listening on {server_host}:{server_port}")
 
-UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    # data = "testing testing"
+    # client_address = ("10.99.172.126", 10000)
+    while True:
+        data, client_address = server.recvfrom(2)
+        print(f"[*] Received data from {client_address[0]}:{client_address[1]} - {data.decode()}")
 
-counter = 0
-while(1):
-    if counter < 10000:
-        UDPClientSocket.sendto(bytesToSend_1, serverAddressPort)
-        counter += 1
-    print("SENT_1")
-    print("Value:  ", value)
+        # Echo the received data back to the client
+        server.sendto(bytes(data, 'utf-8'), client_address)
+        print("Sending")
+
+
+if __name__ == "__main__":
+    main()
