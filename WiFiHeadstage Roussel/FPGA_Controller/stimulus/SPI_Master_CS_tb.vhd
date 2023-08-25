@@ -20,7 +20,9 @@
 --
 -- <Description here>
 --
--- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
+-- Targeted
+
+device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
 -- Author: <Name>
 --
 --------------------------------------------------------------------------------
