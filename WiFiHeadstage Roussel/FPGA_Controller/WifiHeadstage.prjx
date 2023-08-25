@@ -1,0 +1,343 @@
+KEY LIBERO "11.9"
+KEY CAPTURE "11.9.0.4"
+KEY DEFAULT_IMPORT_LOC ""
+KEY ProjectID "0"
+KEY HDLTechnology "VHDL"
+KEY VERILOGMODE "VERILOG2001"
+KEY VHDLMODE "VHDL2008"
+KEY UseConstraintFlowTechnology "FALSE"
+KEY VendorTechnology_Family "IGLOO"
+KEY VendorTechnology_Die "UM4X4M1NLPLV"
+KEY VendorTechnology_Package "vq100"
+KEY VendorTechnology_Speed "STD"
+KEY VendorTechnology_DieVoltage "1.2~1.5"
+KEY VendorTechnology_PART_RANGE "COM"
+KEY VendorTechnology_IO_DEFT_STD "LVCMOS12"
+KEY VendorTechnology_RESERVEMIGRATIONPINS "1"
+KEY VendorTechnology_RESTRICTPROBEPINS "1"
+KEY VendorTechnology_RESTRICTSPIPINS "0"
+KEY VendorTechnology_TARGETDEVICESFORMIGRATION "UM4X4M1NLPLV"
+KEY VendorTechnology_TEMPR "COM"
+KEY VendorTechnology_UNUSED_MSS_IO_RESISTOR_PULL "None"
+KEY VendorTechnology_VCCI_1.2_VOLTR "COM"
+KEY VendorTechnology_VCCI_1.5_VOLTR "COM"
+KEY VendorTechnology_VCCI_1.8_VOLTR "COM"
+KEY VendorTechnology_VCCI_2.5_VOLTR "COM"
+KEY VendorTechnology_VCCI_3.3_VOLTR "COM"
+KEY VendorTechnology_VOLTR "COM"
+KEY ProjectLocation "C:\Users\David\Desktop\WiFiHeadstage_FPGA\WifiHeadstage"
+KEY ProjectDescription ""
+KEY Pa4PeripheralNewSeq "GOOD"
+KEY SimulationType "VHDL"
+KEY Vendor "Actel"
+KEY ActiveRoot "SPI_Master::work"
+LIST REVISIONS
+VALUE="Impl1",NUM=1
+CURREV=1
+ENDLIST
+LIST FileManager
+VALUE "<project>\designer\impl1\SPI_Master.ide_des,ide_des"
+STATE="utd"
+TIME="1692884847"
+SIZE="217"
+ENDFILE
+VALUE "<project>\hdl\Controller.vhd,hdl"
+STATE="utd"
+TIME="1692908850"
+SIZE="6404"
+ENDFILE
+VALUE "<project>\hdl\SPI_Master.vhd,hdl"
+STATE="utd"
+TIME="1692912413"
+SIZE="7107"
+ENDFILE
+VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
+STATE="utd"
+TIME="1692913461"
+SIZE="6527"
+ENDFILE
+VALUE "<project>\simulation\run.do,do"
+STATE="utd"
+TIME="1692885111"
+SIZE="648"
+ENDFILE
+VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
+STATE="utd"
+TIME="1692891931"
+SIZE="3972"
+ENDFILE
+VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
+STATE="utd"
+TIME="1692912441"
+SIZE="68"
+ENDFILE
+VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
+STATE="utd"
+TIME="1692905946"
+SIZE="2572"
+ENDFILE
+VALUE "<project>\smartgen\FIFO\FIFO.gen,gen"
+STATE="utd"
+TIME="1692905946"
+SIZE="814"
+PARENT="<project>\smartgen\FIFO\FIFO.cxf"
+IS_READONLY="TRUE"
+ENDFILE
+VALUE "<project>\smartgen\FIFO\FIFO.log,log"
+STATE="utd"
+TIME="1692905946"
+SIZE="2494"
+PARENT="<project>\smartgen\FIFO\FIFO.cxf"
+IS_READONLY="TRUE"
+ENDFILE
+VALUE "<project>\smartgen\FIFO\FIFO.vhd,hdl"
+STATE="utd"
+TIME="1692905946"
+SIZE="10909"
+PARENT="<project>\smartgen\FIFO\FIFO.cxf"
+IS_READONLY="TRUE"
+ENDFILE
+VALUE "<project>\stimulus\FIFO_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1692903788"
+SIZE="3219"
+ENDFILE
+VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1692913903"
+SIZE="4881"
+ENDFILE
+VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1692910126"
+SIZE="4414"
+ENDFILE
+ENDLIST
+LIST UsedFile
+ENDLIST
+LIST NewModulesInfo
+LIST "SPI_Master::work"
+FILE "<project>\hdl\SPI_Master.vhd,hdl"
+LIST AssociatedStimulus
+VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+ENDLIST
+LIST ProjectState5.1
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+LIST "SPI_Master_CS::work"
+FILE "<project>\hdl\SPI_Master_CS.vhd,hdl"
+LIST AssociatedStimulus
+VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
+ENDLIST
+LIST ProjectState5.1
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+ENDLIST
+LIST AssociatedStimulus
+LIST SPI_Master_CS
+VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
+ENDLIST
+LIST SPI_Master
+VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+ENDLIST
+ENDLIST
+LIST Other_Association
+ENDLIST
+LIST SimulationOptions
+UseAutomaticDoFile=true
+IncludeWaveDo=false
+Type=max
+RunTime=10000ns
+Resolution=1ps
+VsimOpt=
+EntityName=SPI_Master_CS_TB
+TopInstanceName=<top>_0
+DoFileName=
+DoFileName2=wave.do
+DoFileParams=
+DisplayDUTWave=false
+LogAllSignals=false
+DisablePulseFiltering=false
+DumpVCD=false
+VCDFileName=power.vcd
+VHDL2008=false
+Verilog2001=false
+SystemVerilog=false
+TimeUnit=1
+TimeUnitBase=ns
+Precision=100
+PrecisionBase=ps
+ENDLIST
+LIST ModelSimLibPath
+UseCustomPath=FALSE
+LibraryPath=
+ENDLIST
+LIST GlobalFlowOptions
+GenerateHDLAfterSynthesis=FALSE
+GenerateHDLAfterPhySynthesis=FALSE
+RunDRCAfterSynthesis=FALSE
+AutoCheckConstraints=TRUE
+UpdateModelSimIni=TRUE
+NoIOMode=FALSE
+PeriInitStandalone=FALSE
+EnableViewDraw=FALSE
+UpdateViewDrawIni=TRUE
+GenerateHDLFromSchematic=TRUE
+VmNetlistFlowOn=FALSE
+EnableDesignSeparationOn=FALSE
+EnableSETMitigationOn=FALSE
+DisplayFanoutLimit=10
+AbortFlowOnPDCErrorsOn=TRUE
+AbortFlowOnSDCErrorsOn=TRUE
+InstantiateInSmartDesign=TRUE
+FlashProInputFile=pdb
+SmartGenCompileReport=T
+ENDLIST
+LIST PhySynthesisOptions
+ENDLIST
+LIST Profiles
+NAME="SoftConsole"
+FUNCTION="SoftwareIDE"
+TOOL="SoftConsole"
+LOCATION="eclipse.exe"
+PARAM=""
+BATCH=0
+LICENSE=""
+IS32BIT="1"
+EndProfile
+NAME="Synplify Pro ME"
+FUNCTION="Synthesis"
+TOOL="Synplify Pro ME"
+LOCATION="C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\synplify_pro.exe"
+PARAM=""
+BATCH=0
+LICENSE=""
+IS32BIT="1"
+EndProfile
+NAME="ModelSim ME"
+FUNCTION="Simulation"
+TOOL="ModelSim"
+LOCATION="C:\Microsemi\Libero_SoC_v11.9\Modelsim\win32acoem\modelsim.exe"
+PARAM=" -l SPI_Master_CS_TB_presynth_simulation.log "
+BATCH=0
+LICENSE=""
+IS32BIT="1"
+EndProfile
+NAME="FPExpress"
+FUNCTION="Program"
+TOOL="FlashPro"
+LOCATION="C:\Microsemi\Libero_SoC_v11.9\Designer\bin\FPExpress.exe"
+PARAM=""
+BATCH=0
+LICENSE=""
+IS32BIT="1"
+EndProfile
+NAME="Identify Debugger"
+FUNCTION="IdentifyDebugger"
+TOOL="Identify Debugger"
+LOCATION="C:\Microsemi\Libero_SoC_v11.9\Identify\bin\identify_debugger.exe"
+PARAM=""
+BATCH=0
+LICENSE=""
+IS32BIT="1"
+EndProfile
+ENDLIST
+LIST ProjectState5.1
+LIST "SPI_Master::work"
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+LIST "SPI_Master_CS::work"
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+LIST ExcludePackageForSimulation
+ENDLIST
+LIST ExcludePackageForSynthesis
+ENDLIST
+LIST IncludeModuleForSimulation
+ENDLIST
+LIST CDBOrder
+ENDLIST
+LIST UserCustomizedFileList
+ENDLIST
+LIST OpenedFileList
+ORIENTATION;HORIZONTAL
+HDL;hdl\SPI_Master.vhd;0
+HDL;stimulus\SPI_Master_CS_tb.vhd;1
+HDL;hdl\SPI_Master_CS.vhd;0
+HDL;stimulus\SPI_Master_tb.vhd;0
+ACTIVEVIEW;stimulus\SPI_Master_CS_tb.vhd
+ENDLIST
+LIST ModuleSubBlockList
+LIST "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
+SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
+SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+ENDLIST
+LIST "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
+ENDLIST
+LIST "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+LIST "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+LIST "FIFO_tb::work","stimulus\FIFO_tb.vhd","FALSE","TRUE"
+SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
+ENDLIST
+LIST "SPI_Master_CS_TB::work","stimulus\SPI_Master_CS_tb.vhd","FALSE","TRUE"
+SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+ENDLIST
+LIST "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE","TRUE"
+SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+ENDLIST
+LIST ActiveTestBenchList
+LIST "SPI_Master::work"
+ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"
+ENDLIST
+ENDLIST
+LIST IOTabList
+ENDLIST
+LIST FPTabList
+ENDLIST
+LIST TimingTabList
+ENDLIST
+LIST FDCTabList
+ENDLIST

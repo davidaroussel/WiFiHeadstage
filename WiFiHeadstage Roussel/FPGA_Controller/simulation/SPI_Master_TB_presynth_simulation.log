@@ -1,0 +1,70 @@
+# Reading C:/Microsemi/Libero_SoC_v11.9/Modelsim/tcl/vsim/pref.tcl
+# do run.do
+# INFO: Simulation library presynth already exists
+# Model Technology ModelSim Microsemi vmap 10.5c Lib Mapping Utility 2016.07 Jul 21 2016
+# vmap presynth presynth 
+# Modifying modelsim.ini
+# Model Technology ModelSim Microsemi vmap 10.5c Lib Mapping Utility 2016.07 Jul 21 2016
+# vmap igloo C:/Microsemi/Libero_SoC_v11.9/Designer/lib/modelsim/precompiled/vhdl/igloo 
+# Modifying modelsim.ini
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 17:27:24 on Aug 24,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFiHeadstage_FPGA/WifiHeadstage/hdl/SPI_Master.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity SPI_Master
+# -- Compiling architecture RTL of SPI_Master
+# End time: 17:27:24 on Aug 24,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 17:27:24 on Aug 24,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFiHeadstage_FPGA/WifiHeadstage/stimulus/SPI_Master_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity SPI_Master_TB
+# -- Compiling architecture TB of SPI_Master_TB
+# -- Loading entity SPI_Master
+# End time: 17:27:24 on Aug 24,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -L igloo -L presynth -t 1ps presynth.SPI_Master_TB 
+# Start time: 17:27:24 on Aug 24,2023
+# //  ModelSim Microsemi 10.5c Jul 21 2016
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim Microsemi and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading presynth.spi_master_tb(tb)
+# Loading presynth.spi_master(rtl)
+# ** Note: Sent out 0xC1C2, Received 0xC1C2
+#    Time: 722 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Note:  and 0xC1C2
+#    Time: 722 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Note: Sent out 0xADBC, Received 0xADBC
+#    Time: 1246 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Note:  and 0xADBC
+#    Time: 1246 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Note: Sent out 0xA1A2, Received 0xA1A2
+#    Time: 1770 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Note:  and 0xA1A2
+#    Time: 1770 ns  Iteration: 1  Instance: /spi_master_tb
+# ** Failure: Test Complete
+#    Time: 1820 ns  Iteration: 0  Process: /spi_master_tb/Testing File: C:/Users/David/Desktop/WiFiHeadstage_FPGA/WifiHeadstage/stimulus/SPI_Master_tb.vhd
+# Break in Process Testing at C:/Users/David/Desktop/WiFiHeadstage_FPGA/WifiHeadstage/stimulus/SPI_Master_tb.vhd line 119
+# End time: 17:30:15 on Aug 24,2023, Elapsed time: 0:02:51
+# Errors: 0, Warnings: 0
