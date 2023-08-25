@@ -24,7 +24,7 @@
 --                 
 --              IN THIS CASE, 250MHz (1.5V) 
 --
---              MAX_BYTES_PER_CS - Set to the maximum number of bytes that
+--              MAX_PACKET_PER_CS - Set to the maximum number of bytes that
 --              will be sent during a single CS-low pulse.
 -- 
 --              CS_INACTIVE_CLKS - Sets the amount of time in clock cycles to
@@ -46,7 +46,7 @@ entity SPI_Master_CS is
   generic (
     SPI_MODE          : integer := 0;
     CLKS_PER_HALF_BIT : integer := 2;
-    MAX_BYTES_PER_CS  : integer := 1;
+    MAX_PACKET_PER_CS : integer := 1;
     CS_INACTIVE_CLKS  : integer := 1
     );
   port (
@@ -81,7 +81,7 @@ architecture RTL of SPI_Master_CS is
   signal r_SM_CS : t_SM_CS;
   signal r_CS_n : std_logic;
   signal r_CS_Inactive_Count : integer range 0 to CS_INACTIVE_CLKS;
-  signal r_TX_Count : integer range 0 to MAX_BYTES_PER_CS + 1;
+  signal r_TX_Count : integer range 0 to MAX_PACKET_PER_CS + 1;
   signal w_Master_Ready : std_logic;
 
 begin

@@ -22,8 +22,9 @@ use ieee.numeric_std.all;
 
 entity SPI_Master is
   generic (
-    SPI_MODE          : integer := 0;
-    CLKS_PER_HALF_BIT : integer := 2
+    SPI_MODE               : integer := 0;
+    CLKS_PER_HALF_BIT      : integer := 2;
+    NUM_OF_BYTE_PER_PACKET : integer := 2
     );
   port (
    -- Control/Data Signals,
@@ -171,7 +172,6 @@ begin
     elsif rising_edge(i_Clk) then
       -- Default Assignments
       o_RX_DV <= '0';
-
       if o_TX_Ready = '1' then -- Check if ready, if so reset count to default
         r_RX_Bit_Count <= "11111";        -- Starts at 31
       elsif r_Leading_Edge = '1' or r_Trailing_Edge = '1' then 

@@ -1,6 +1,7 @@
 KEY LIBERO "11.9"
 KEY CAPTURE "11.9.0.4"
 KEY DEFAULT_IMPORT_LOC ""
+KEY DEFAULT_OPEN_LOC ""
 KEY ProjectID "0"
 KEY HDLTechnology "VHDL"
 KEY VERILOGMODE "VERILOG2001"
@@ -12,10 +13,15 @@ KEY VendorTechnology_Package "vq100"
 KEY VendorTechnology_Speed "STD"
 KEY VendorTechnology_DieVoltage "1.2~1.5"
 KEY VendorTechnology_PART_RANGE "COM"
+KEY VendorTechnology_DSW_VCCA_VOLTAGE_RAMP_RATE ""
 KEY VendorTechnology_IO_DEFT_STD "LVCMOS12"
+KEY VendorTechnology_OPCONR ""
+KEY VendorTechnology_PLL_SUPPLY ""
+KEY VendorTechnology_RAD_EXPOSURE ""
 KEY VendorTechnology_RESERVEMIGRATIONPINS "1"
 KEY VendorTechnology_RESTRICTPROBEPINS "1"
 KEY VendorTechnology_RESTRICTSPIPINS "0"
+KEY VendorTechnology_SYSTEM_CONTROLLER_SUSPEND_MODE ""
 KEY VendorTechnology_TARGETDEVICESFORMIGRATION "UM4X4M1NLPLV"
 KEY VendorTechnology_TEMPR "COM"
 KEY VendorTechnology_UNUSED_MSS_IO_RESISTOR_PULL "None"
@@ -25,7 +31,7 @@ KEY VendorTechnology_VCCI_1.8_VOLTR "COM"
 KEY VendorTechnology_VCCI_2.5_VOLTR "COM"
 KEY VendorTechnology_VCCI_3.3_VOLTR "COM"
 KEY VendorTechnology_VOLTR "COM"
-KEY ProjectLocation "C:\Users\David\Desktop\WiFiHeadstage_FPGA\WifiHeadstage"
+KEY ProjectLocation "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller"
 KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VHDL"
@@ -48,28 +54,28 @@ SIZE="6404"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master.vhd,hdl"
 STATE="utd"
-TIME="1692912413"
-SIZE="7107"
+TIME="1692977152"
+SIZE="7159"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 STATE="utd"
-TIME="1692913461"
-SIZE="6527"
+TIME="1692972633"
+SIZE="6529"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1692885111"
-SIZE="648"
+TIME="1692913910"
+SIZE="735"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1692891931"
-SIZE="3972"
+TIME="1692914072"
+SIZE="4203"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
 STATE="utd"
-TIME="1692912441"
-SIZE="68"
+TIME="1692977162"
+SIZE="3545"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
@@ -104,13 +110,13 @@ SIZE="3219"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1692913903"
-SIZE="4881"
+TIME="1692979080"
+SIZE="4930"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1692910126"
-SIZE="4414"
+TIME="1692978271"
+SIZE="4556"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -300,10 +306,12 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
+Reports;Reports;0
+ReportsCurrentItem;Pre-Synthesis Simulate:SPI_Master_TB_presynth_simulation.log
+HDL;stimulus\SPI_Master_tb.vhd;1
 HDL;hdl\SPI_Master.vhd;0
 HDL;stimulus\SPI_Master_CS_tb.vhd;1
 HDL;hdl\SPI_Master_CS.vhd;0
-HDL;stimulus\SPI_Master_tb.vhd;0
 ACTIVEVIEW;stimulus\SPI_Master_CS_tb.vhd
 ENDLIST
 LIST ModuleSubBlockList
