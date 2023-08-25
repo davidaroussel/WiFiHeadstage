@@ -93,7 +93,7 @@ class WiFiHeadstageReceiver(BaseException):
         print(self.m_conn.recv(1024).decode("utf-8"))
         print("Low-pass selection:")
         #input1 = input()
-        input1 = "4"
+        input1 = "7"
         print("High-pass selection:")
         #input2 = input()
         input2 = "B"
@@ -120,16 +120,6 @@ class WiFiHeadstageReceiver(BaseException):
         time.sleep(1)
         print("Intan Chip {}: {}".format(p_id, self.m_conn.recv(8)))
 
-    def plotData(self):
-        plt.gca().cla()
-        plt.plot(self.k, self.converted_array)
-        plt.show()
-
-        bufsize = 4096
-        while True:
-            packet = self.m_conn.recv(bufsize)
-            if len(packet) < bufsize:
-                break
 
 
 

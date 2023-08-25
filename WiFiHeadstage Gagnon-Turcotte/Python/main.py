@@ -5,6 +5,7 @@ import time
 from queue import Queue
 from WiFiHeadstageReceiver import WiFiHeadstageReceiver
 from DataConverter import DataConverter
+
 from OpenEphysSender import OpenEphysSender
 
 from utils import Toolkit
@@ -29,8 +30,8 @@ if __name__ == "__main__":
 
     TASK_WiFiServer = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE,  p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
     TASK_DataConverter = DataConverter(QUEUE_RAW_DATA, QUEUE_CONV_DATA, CHANNELS, BUFFER_SIZE)
-    TASK_OpenEphysSender = OpenEphysSender(QUEUE_CONV_DATA, BUFFER_SIZE, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
-
+    #TASK_OpenEphysSender = OpenEphysSender(QUEUE_CONV_DATA, BUFFER_SIZE, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+    TOOLKIT = Toolkit(QUEUE_CONV_DATA, BUFFER_SIZE, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
 
     #START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
@@ -39,7 +40,7 @@ if __name__ == "__main__":
 
     TASK_WiFiServer.configureIntanChip()
 
-    TASK_OpenEphysSender.startThread()
+    #TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvTread)
 

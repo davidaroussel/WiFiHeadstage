@@ -71,11 +71,7 @@ architecture TB of SPI_Master_TB is
 begin  -- architecture TB
 
    -- Clock Generators:
-<<<<<<< HEAD
-  r_Clk <= not r_Clk after 41.5 ns;
-=======
-  r_Clk <= not r_Clk after 21.5 ns;
->>>>>>> c656511fdb31e2785184546732a954d6fef53a10
+  r_Clk <= not r_Clk after 20.83 ns;
 
   -- Instantiate Master
   UUT : entity work.SPI_Master
