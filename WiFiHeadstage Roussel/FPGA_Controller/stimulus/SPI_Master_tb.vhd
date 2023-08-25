@@ -35,9 +35,10 @@ end entity SPI_Master_TB;
 
 architecture TB of SPI_Master_TB is
 
-  constant SPI_MODE : integer := 0; -- CPOL = 1, CPHA = 1
-  constant CLKS_PER_HALF_BIT : integer := 4;  -- 6.25 MHz
-  
+  constant SPI_MODE               : integer := 0; -- CPOL = 1, CPHA = 1
+  constant CLKS_PER_HALF_BIT      : integer := 4;  -- 6.25 MHz
+  constant NUM_OF_BYTE_PER_PACKET : integer := 2; -- Messages are 2 bytes each
+
   signal r_Rst_L    : std_logic := '0';
   signal w_SPI_Clk  : std_logic;
   signal r_Clk      : std_logic := '0';
@@ -54,7 +55,7 @@ architecture TB of SPI_Master_TB is
     
 
   -- Sends a single byte from master. 
-  procedure SendSingleByte (
+  procedure SendMessage (
     data          : in  std_logic_vector(15 downto 0);
     signal o_data : out std_logic_vector(15 downto 0);
     signal o_dv   : out std_logic) is
@@ -65,18 +66,23 @@ architecture TB of SPI_Master_TB is
     wait until rising_edge(r_Clk);
     o_dv   <= '0';
     wait until rising_edge(w_Master_TX_Ready);
-  end procedure SendSingleByte;
+  end procedure SendMessage;
 
 begin  -- architecture TB
 
    -- Clock Generators:
+<<<<<<< HEAD
   r_Clk <= not r_Clk after 41.5 ns;
+=======
+  r_Clk <= not r_Clk after 21.5 ns;
+>>>>>>> c656511fdb31e2785184546732a954d6fef53a10
 
   -- Instantiate Master
   UUT : entity work.SPI_Master
     generic map (
       SPI_MODE          => SPI_MODE,
-      CLKS_PER_HALF_BIT => CLKS_PER_HALF_BIT)
+      CLKS_PER_HALF_BIT => CLKS_PER_HALF_BIT,
+      NUM_OF_BYTE_PER_PACKET => NUM_OF_BYTE_PER_PACKET)
     port map (
       -- Control/Data Signals,
       i_Rst_L    => r_Rst_L,            -- FPGA Reset
@@ -103,15 +109,15 @@ begin  -- architecture TB
     r_Rst_L <= '1';
     
     -- Test single byte
-    SendSingleByte(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
     -- Test double byte
-    SendSingleByte(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
 
-    SendSingleByte(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));    
     

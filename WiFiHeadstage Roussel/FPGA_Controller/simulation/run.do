@@ -1,5 +1,9 @@
 quietly set ACTELLIBNAME IGLOO
+<<<<<<< HEAD
 quietly set PROJECT_DIR "C:/Users/david/Desktop/WiFiHeadstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller"
+=======
+quietly set PROJECT_DIR "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller"
+>>>>>>> c656511fdb31e2785184546732a954d6fef53a10
 
 if {[file exists presynth/_info]} {
    echo "INFO: Simulation library presynth already exists"

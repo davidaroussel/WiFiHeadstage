@@ -37,10 +37,10 @@ end entity SPI_Master_CS_TB;
 
 architecture TB of SPI_Master_CS_TB is
 
-  constant SPI_MODE : integer := 0;           -- CPOL = 0 CPHA = 0
-  constant CLKS_PER_HALF_BIT : integer := 3;  -- (125/2) /CLK_PER_HALF_BIT MHz
-  constant MAX_BYTES_PER_CS : integer := 2;   -- 2 bytes per chip select
-  constant CS_INACTIVE_CLKS : integer := 38;  -- Adds delay between bytes
+  constant SPI_MODE           : integer := 0;           -- CPOL = 0 CPHA = 0
+  constant CLKS_PER_HALF_BIT  : integer := 3;  -- (125/2) /CLK_PER_HALF_BIT MHz
+  constant MAX_PACKET_PER_CS  : integer := 2;   -- 2 bytes per chip select
+  constant CS_INACTIVE_CLKS   : integer := 4;  -- Adds delay between bytes
   
   signal  r_Rst_L    : std_logic := '0';
   signal  w_SPI_Clk  : std_logic;
@@ -49,17 +49,17 @@ architecture TB of SPI_Master_CS_TB is
   signal  w_SPI_MOSI : std_logic;
   
   -- Master Specific
-  signal r_Master_TX_Byte  : std_logic_vector(15 downto 0) := X"0000";
-  signal r_Master_TX_DV    : std_logic := '0';
-  signal w_Master_TX_Ready : std_logic;
-  signal w_Master_RX_DV    : std_logic;
+  signal r_Master_TX_Byte         : std_logic_vector(15 downto 0) := X"0000";
+  signal r_Master_TX_DV           : std_logic := '0';
+  signal w_Master_TX_Ready        : std_logic;
+  signal w_Master_RX_DV           : std_logic;
   signal w_Master_RX_Byte_Rising  : std_logic_vector(15 downto 0);
-  signal w_Master_RX_Byte_Falling  : std_logic_vector(15 downto 0);
-  signal w_Master_RX_Count : std_logic_vector(1 downto 0);
-  signal r_Master_TX_Count : std_logic_vector(1 downto 0) := "01";
+  signal w_Master_RX_Byte_Falling : std_logic_vector(15 downto 0);
+  signal w_Master_RX_Count        : std_logic_vector(1 downto 0);
+  signal r_Master_TX_Count        : std_logic_vector(1 downto 0) := "01";
 
   -- Sends a single byte from master. 
-  procedure SendSingleByte (
+  procedure SendMessage (
     data          : in  std_logic_vector(15 downto 0);
     signal o_data : out std_logic_vector(15 downto 0);
     signal o_dv   : out std_logic) is
@@ -70,20 +70,20 @@ architecture TB of SPI_Master_CS_TB is
     wait until rising_edge(r_Clk);
     o_dv   <= '0';
     wait until rising_edge(w_Master_TX_Ready);
-  end procedure SendSingleByte;
+  end procedure SendMessage;
 
 begin  -- architecture TB 
 
   -- Clock Generators:
-  r_Clk <= not r_Clk after 2 ns;
+  r_Clk <= not r_Clk after 20.83 ns;
 
   -- Instantiate UUT
   UUT : entity work.SPI_Master_CS
     generic map (
-      SPI_MODE          => SPI_MODE,
-      CLKS_PER_HALF_BIT => CLKS_PER_HALF_BIT,
-      MAX_BYTES_PER_CS  => MAX_BYTES_PER_CS,
-      CS_INACTIVE_CLKS  => CS_INACTIVE_CLKS)
+      SPI_MODE           => SPI_MODE,
+      CLKS_PER_HALF_BIT  => CLKS_PER_HALF_BIT,
+      MAX_PACKET_PER_CS  => MAX_PACKET_PER_CS,
+      CS_INACTIVE_CLKS   => CS_INACTIVE_CLKS)
     port map (
       i_Rst_L    => r_Rst_L,
       i_Clk      => r_Clk,
@@ -112,15 +112,15 @@ begin  -- architecture TB
     r_Rst_L <= '1';
 
     -- Test single byte
-    SendSingleByte(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));
     -- Test double byte
-    SendSingleByte(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));
 
-    SendSingleByte(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
+    SendMessage(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));   
 
