@@ -4,7 +4,10 @@ import math
 import struct
 import threading
 import time
+import cmath
 import matplotlib.pyplot as plt
+from numpy.fft import fft
+import numpy as np
 from matplotlib.animation import FuncAnimation
 
 #Coded by G. Gagnon-Turcotte at SiFiLabs
@@ -80,11 +83,13 @@ class WiFiServer(BaseException):
     #This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)
     def receiveDataV2(self, buffer_size, loops):
         BUFFER_SIZE = buffer_size
+        self.m_raw_data = []
         command = b"B"
+        time.sleep(1)
         for ch in self.m_channels:
             command = command + ch.to_bytes(1, 'big')
         self.m_socket.sendall(command)  # Start Intan Timer
-        time.sleep(0.1)
+        time.sleep(0.001)
 
         for i in range(loops):
             pourcentage = round((i/loops) * 100, 3)
@@ -96,7 +101,7 @@ class WiFiServer(BaseException):
                 if not rest_packet:
                     print("BOOBOO")
                 data += bytearray(rest_packet)
-                time.sleep(0.001)
+                #time.sleep(0.001)
             self.m_raw_data.extend(data)
 
 
@@ -109,6 +114,7 @@ class WiFiServer(BaseException):
     def plotAllChannels(self):
         fig, axs = plt.subplots(4, 2, figsize=(30, 10))
         plt.gca().cla()
+        self.m_converted_array = [[] for i in range(8)]
 
         ch_counter = 0
         for i in range(0, len(self.m_raw_data), 2):
@@ -123,8 +129,16 @@ class WiFiServer(BaseException):
                 #VERSION FOR PYTHON 3.10
                 axs[row, column].plot(k, self.m_converted_array[ch_counter])
                 axs[row, column].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
-                ch_counter += 1
 
+
+                fft_data = np.fft.fft(self.m_converted_array[ch_counter])
+                freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
+                peak_coef = np.argmax(np.abs(fft_data))
+                peak_freq = freqs[peak_coef]
+                peak_freq = peak_freq * self.m_samp_freq
+                print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
+
+                ch_counter += 1
             #VERSION FOR PYTHON 3.9 (needs reajusting figure declaration)
            #  fig.add_subplot(4,2,ch)
            #  plt.subplot(4, 2, ch+1)
@@ -172,7 +186,7 @@ if __name__ == "__main__":
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    SAMPLING_TIME = 30  # Time sampling in seconds
+    SAMPLING_TIME = 20  # Time sampling in seconds
     FREQ_SAMPLING = 15000
     BUFFER_SIZE = 1024*1000  # Maximum value possible for the WiFi UDP Socket communication
 
@@ -188,13 +202,15 @@ if __name__ == "__main__":
     # HEADSTAGESERVER.getID(1)
     # HEADSTAGESERVER.getID(2)
     HEADSTAGESERVER.configureIntanChip()
+    HEADSTAGESERVER.receiveDataV2(BUFFER_SIZE, LOOPS)
+    HEADSTAGESERVER.plotAllChannels()
 
     # Buffer Size for Headstage communication is 1024 bytes.
     # Loops is the number of time we want to receive data
 
     print("Welcome to the Python Menu!")
     print("1. Samples the channels")
-    print("2. Option 2")
+    print("2. Validate Data")
     print("3. Option 3")
     print("4. Exit")
 
@@ -207,7 +223,7 @@ if __name__ == "__main__":
             HEADSTAGESERVER.plotAllChannels()
             # Add your code for Option 1 here
         elif choice == "4":
-            print("Exiting the menu.")
+            HEADSTAGESERVER.ValidateData()
             break
         else:
             print("Invalid choice. Please select a valid option.")

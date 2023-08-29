@@ -64,13 +64,13 @@ SIZE="6529"
 ENDFILE
 VALUE "<project>\simulation\FIFO_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1692999228"
-SIZE="68"
+TIME="1693238270"
+SIZE="4209"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1692983598"
-SIZE="966"
+TIME="1693238251"
+SIZE="672"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
@@ -115,8 +115,8 @@ SIZE="5050"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1692998706"
-SIZE="4931"
+TIME="1693251656"
+SIZE="4945"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
@@ -181,7 +181,7 @@ Type=max
 RunTime=10000ns
 Resolution=1ps
 VsimOpt=
-EntityName=SPI_Master_TB
+EntityName=SPI_Master_CS_TB
 TopInstanceName=<top>_0
 DoFileName=
 DoFileName2=wave.do
@@ -249,7 +249,7 @@ NAME="ModelSim ME"
 FUNCTION="Simulation"
 TOOL="ModelSim"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\Modelsim\win32acoem\modelsim.exe"
-PARAM=" -l FIFO_tb_presynth_simulation.log "
+PARAM=" -l SPI_Master_CS_TB_presynth_simulation.log "
 BATCH=0
 LICENSE=""
 IS32BIT="1"
@@ -311,13 +311,9 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
+StartPage;StartPage;0
 HDL;stimulus\SPI_Master_CS_tb.vhd;0
-HDL;stimulus\FIFO_tb.vhd;1
-HDL;hdl\SPI_Master.vhd;0
-HDL;stimulus\SPI_Master_tb.vhd;1
-HDL;hdl\SPI_Master_CS.vhd;0
-HDL;smartgen\FIFO\FIFO.vhd;0
-ACTIVEVIEW;stimulus\FIFO_tb.vhd
+ACTIVEVIEW;stimulus\SPI_Master_CS_tb.vhd
 ENDLIST
 LIST ModuleSubBlockList
 LIST "Controller::work","hdl\Controller.vhd","FALSE","FALSE"

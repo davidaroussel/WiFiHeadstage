@@ -92,8 +92,8 @@ begin  -- architecture TB
       i_TX_DV    => r_Master_TX_DV,     -- Data Valid Pulse with i_TX_Byte
       o_TX_Ready => w_Master_TX_Ready,  -- Transmit Ready for Byte        
       -- RX (MISO) Signals
-      o_RX_Count => w_Master_RX_Count,  -- Index of RX'd byte              
-      o_RX_DV    => w_Master_RX_DV,     -- Data Valid pulse (1 clock cycle)
+      o_RX_Count        => w_Master_RX_Count,  -- Index of RX'd byte              
+      o_RX_DV           => w_Master_RX_DV,     -- Data Valid pulse (1 clock cycle)
       o_RX_Byte_Rising  => w_Master_RX_Byte_Rising,   -- Byte received on MISO
       o_RX_Byte_Falling => w_Master_RX_Byte_Falling,  -- Byte received on MISO                   
       -- SPI Interface
