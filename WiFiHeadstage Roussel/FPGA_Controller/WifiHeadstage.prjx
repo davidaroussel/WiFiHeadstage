@@ -31,7 +31,7 @@ KEY VendorTechnology_VCCI_1.8_VOLTR "COM"
 KEY VendorTechnology_VCCI_2.5_VOLTR "COM"
 KEY VendorTechnology_VCCI_3.3_VOLTR "COM"
 KEY VendorTechnology_VOLTR "COM"
-KEY ProjectLocation "C:\Users\david\Desktop\WiFiHeadstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller"
+KEY ProjectLocation "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller"
 KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VHDL"
@@ -44,84 +44,84 @@ ENDLIST
 LIST FileManager
 VALUE "<project>\designer\impl1\SPI_Master.ide_des,ide_des"
 STATE="utd"
-TIME="1692971709"
+TIME="1692884847"
 SIZE="217"
 ENDFILE
 VALUE "<project>\hdl\Controller.vhd,hdl"
 STATE="utd"
-TIME="1692971709"
-SIZE="6404"
+TIME="1693424740"
+SIZE="8591"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master.vhd,hdl"
 STATE="utd"
-TIME="1692983598"
-SIZE="7159"
+TIME="1693415371"
+SIZE="7208"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 STATE="utd"
-TIME="1692983598"
+TIME="1693420815"
 SIZE="6529"
 ENDFILE
 VALUE "<project>\simulation\FIFO_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1693238270"
+TIME="1693316563"
 SIZE="4209"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1693238251"
-SIZE="672"
+TIME="1693316563"
+SIZE="772"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1692983599"
-SIZE="4340"
-ENDFILE
-VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
-STATE="utd"
-TIME="1692983598"
-SIZE="2839"
+TIME="1693316563"
+SIZE="4093"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
-TIME="1692971709"
+TIME="1693412124"
 SIZE="2572"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.gen,gen"
 STATE="utd"
-TIME="1692971709"
-SIZE="814"
+TIME="1693412122"
+SIZE="856"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.log,log"
 STATE="utd"
-TIME="1692971709"
-SIZE="2494"
+TIME="1693412123"
+SIZE="2535"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.vhd,hdl"
 STATE="utd"
-TIME="1692971709"
-SIZE="10909"
+TIME="1693412123"
+SIZE="11033"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
+VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1693426277"
+SIZE="3038"
+ENDFILE
 VALUE "<project>\stimulus\FIFO_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693003857"
-SIZE="5050"
+TIME="1693411983"
+SIZE="4908"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693251656"
-SIZE="4945"
+TIME="1693418995"
+SIZE="4966"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1692998621"
-SIZE="4557"
+TIME="1693413341"
+SIZE="4559"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -130,7 +130,7 @@ LIST NewModulesInfo
 LIST "SPI_Master::work"
 FILE "<project>\hdl\SPI_Master.vhd,hdl"
 LIST AssociatedStimulus
-VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 ENDLIST
 LIST ProjectState5.1
 LIST Impl1
@@ -169,7 +169,7 @@ LIST SPI_Master_CS
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 ENDLIST
 LIST SPI_Master
-VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 ENDLIST
 ENDLIST
 LIST Other_Association
@@ -178,10 +178,10 @@ LIST SimulationOptions
 UseAutomaticDoFile=true
 IncludeWaveDo=false
 Type=max
-RunTime=10000ns
+RunTime=50000ns
 Resolution=1ps
 VsimOpt=
-EntityName=SPI_Master_CS_TB
+EntityName=Controller_tb
 TopInstanceName=<top>_0
 DoFileName=
 DoFileName2=wave.do
@@ -311,9 +311,12 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-StartPage;StartPage;0
-HDL;stimulus\SPI_Master_CS_tb.vhd;0
-ACTIVEVIEW;stimulus\SPI_Master_CS_tb.vhd
+HDL;hdl\Controller.vhd;0
+HDL;hdl\SPI_Master_CS.vhd;1
+HDL;stimulus\Controller_tb.vhd;0
+HDL;stimulus\SPI_Master_CS_tb.vhd;1
+HDL;hdl\SPI_Master.vhd;1
+ACTIVEVIEW;hdl\Controller.vhd
 ENDLIST
 LIST ModuleSubBlockList
 LIST "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
@@ -325,6 +328,9 @@ ENDLIST
 LIST "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 LIST "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+LIST "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE","TRUE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 LIST "FIFO_tb::work","stimulus\FIFO_tb.vhd","FALSE","TRUE"
@@ -339,7 +345,7 @@ ENDLIST
 ENDLIST
 LIST ActiveTestBenchList
 LIST "SPI_Master::work"
-ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"
+ACTIVETESTBENCH "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE"
 ENDLIST
 ENDLIST
 LIST IOTabList

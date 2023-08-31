@@ -5,14 +5,16 @@ import time
 from socket import *
 from threading import Thread
 import numpy as np
+import matplotlib.pyplot as plt
 from queue import Queue
 from DataConverter import DataConverter
 from utils import Toolkit
 
 class OpenEphysSender():
-    def __init__(self, q_queue, p_buffer_size, p_frequency, p_port, p_host_addr=""):
+    def __init__(self, q_queue, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
         self.queue_conv_data = q_queue
         self.buffer_size = p_buffer_size
+        self.buffer_factor = p_buffer_factor
         self.frequency = p_frequency
         self.host_addr = p_host_addr
         self.port = p_port
@@ -33,7 +35,7 @@ class OpenEphysSender():
     def sendToOpenEphys(self):
         # SPECIFY THE IP AND PORT #
         print("---STARTING SEND_OPENEPHYS THREAD---")
-        openEphys_AddrPort = (self.host_addr, self.port)
+        openEphys_AddrPort = ("192.168.1.147", self.port)
         openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
         buffersPerSecond = self.frequency / self.buffer_size
@@ -50,25 +52,37 @@ class OpenEphysSender():
             while ((t2 - t1) < bufferInterval):
                 t2 = self.currentTime()
 
+    def plotData(self):
+        # SPECIFY THE IP AND PORT #
+        print("---STARTING SEND_OPENEPHYS THREAD---")
+        fig, axs = plt.subplots(8, 1, figsize=(30, 10))
+        plt.gca().cla()
+        file_number = 0
+        full_data = [[] for i in range(8)]
+        loops = 0
+        while True:
+            item = self.queue_conv_data.get()
 
-    # def convertData(self):
-    #     while 1:
-    #         print("here")
-    #         item = self.queue_raw_data.get()
-    #         if item is None:
-    #             time.sleep(0.001)
-    #         else:
-    #             #CONVERT EACH VALUE AND SPLIT IT INTO EACH CHANNELS
-    #             j = 0
-    #             for i in range(0, len(item), 2):
-    #                 in1 = item[i+1]
-    #                 in2 = item[i]
-    #                 converted_data = int.from_bytes([in1, in2], byteorder='big', signed=True)
-    #                 self.converted_array[j%8][j//8] = (converted_data * 0.195) #REMOVED THE uV multiplier
-    #
-    #                 j = j + 1
-    #             np_conv = np.array(self.converted_array, np.uint16).flatten().tobytes()
-    #             self.queue_conv_data.put(np_conv)
+            if loops < 10:
+                print("Loops", loops)
+                for ch in range(8):
+                    full_data[ch] = full_data[ch] + item [ch]
+                loops += 1
+            else:
+                print("Plotting !!")
+                loops = 0
+
+                for row in range(8):
+                    k = [i for i in range(len(full_data[row]))]
+                    # VERSION FOR PYTHON 3.10
+                    axs[row].plot(k, full_data[row])
+                    axs[row].title.set_text("CHANNEL {}".format(row))
+                filename = "Figure"+str(file_number)+".png"
+                plt.savefig(filename)
+                file_number += 1
+                fig, axs = plt.subplots(8, 1, figsize=(30, 10))
+                plt.gca().cla()
+
 
 
 if __name__ == "__main__":
@@ -78,7 +92,7 @@ if __name__ == "__main__":
     OPENEPHYS_PORT = 10001
 
     CHANNELS = [0, 1, 2, 3, 31, 32, 46, 47]
-    BUFFER_SIZE = 50
+    BUFFER_SIZE = 64
     FREQUENCY = 15000
 
     #CONSTRUCTORS

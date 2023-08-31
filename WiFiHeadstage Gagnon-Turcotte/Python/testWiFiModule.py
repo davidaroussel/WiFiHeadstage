@@ -106,13 +106,20 @@ class WiFiServer(BaseException):
 
 
         self.m_socket.sendall(b"C")  # Stop Intan Timer
-        time.sleep(1)
+        time.sleep(0.1)
+
+        #EMPTY SOCKET BUFFER
+        trash_bufsize = buffer_size
+        while True:
+            packet = self.m_socket.recv(trash_bufsize)
+            if len(packet) < trash_bufsize:
+                break
 
 
 
     #Considering that we have 8 channels !!
     def plotAllChannels(self):
-        fig, axs = plt.subplots(4, 2, figsize=(30, 10))
+        fig, axs = plt.subplots(8, 1, figsize=(30, 10))
         plt.gca().cla()
         self.m_converted_array = [[] for i in range(8)]
 
@@ -123,27 +130,26 @@ class WiFiServer(BaseException):
             ch_counter += 1
 
         ch_counter = 0
-        for row in range(4):
-            for column in range(2):
-                k = [i for i in range(len(self.m_converted_array[ch_counter]))]
-                #VERSION FOR PYTHON 3.10
-                axs[row, column].plot(k, self.m_converted_array[ch_counter])
-                axs[row, column].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
+        for row in range(8):
+            k = [i for i in range(len(self.m_converted_array[ch_counter]))]
+            #VERSION FOR PYTHON 3.10
+            axs[row].plot(k, self.m_converted_array[ch_counter])
+            axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
 
+            fft_data = np.fft.fft(self.m_converted_array[ch_counter])
+            freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
+            peak_coef = np.argmax(np.abs(fft_data))
+            peak_freq = freqs[peak_coef]
+            peak_freq = peak_freq * self.m_samp_freq
+            print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
 
-                fft_data = np.fft.fft(self.m_converted_array[ch_counter])
-                freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
-                peak_coef = np.argmax(np.abs(fft_data))
-                peak_freq = freqs[peak_coef]
-                peak_freq = peak_freq * self.m_samp_freq
-                print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
-
-                ch_counter += 1
+            ch_counter += 1
             #VERSION FOR PYTHON 3.9 (needs reajusting figure declaration)
            #  fig.add_subplot(4,2,ch)
            #  plt.subplot(4, 2, ch+1)
            #  plt.title("CHANNEL {}".format(self.channels[ch]))
            #  plt.plot(k, self.m_converted_array[ch])
+        plt.tight_layout()
         plt.show()
 
     def serverThread(self):
@@ -181,14 +187,14 @@ class WiFiServer(BaseException):
 
 if __name__ == "__main__":
     # Port 5000, IP assign by router, possible to configure the router to have this static IP
-    SOCKET_PORT = 3000
+    SOCKET_PORT = 5000
     HOST_IP_ADDR = ""
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
     SAMPLING_TIME = 20  # Time sampling in seconds
     FREQ_SAMPLING = 15000
-    BUFFER_SIZE = 1024*1000  # Maximum value possible for the WiFi UDP Socket communication
+    BUFFER_SIZE = 1024*2000  # Maximum value possible for the WiFi UDP Socket communication
 
     HEADSTAGESERVER = WiFiServer(SOCKET_PORT, HOST_IP_ADDR, TESTING_CHANNELS, FREQ_SAMPLING, BUFFER_SIZE)
     LOOPS = HEADSTAGESERVER.calculateSamplingLoops(SAMPLING_TIME)

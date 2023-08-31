@@ -18,11 +18,12 @@ from queue import Queue
 class WiFiHeadstageReceiver(BaseException):
     # p_port: Port to listen on (non-privileged ports are > 1023)
     # p_host_addr: Standard loopback interface address (localhost)
-    def __init__(self, p_queue, p_channels, p_buffer_size, p_port, p_host_addr=""):
+    def __init__(self, p_queue, p_channels, p_buffer_size, p_buffer_factor, p_port, p_host_addr=""):
         BaseException.__init__(self)
         self.channels = p_channels
         self.queue_raw_data = p_queue
         self.buffer_size = p_buffer_size
+        self.buffer_factor = p_buffer_factor
         self.m_port = p_port
         self.m_conn = 0
         self.m_host_addr = p_host_addr
@@ -60,44 +61,42 @@ class WiFiHeadstageReceiver(BaseException):
                 self.m_connected = True
 
     def continuedDataFromIntan(self):
-        BUFFER_SIZE = 1024
+        BUFFER_SIZE = self.buffer_size * self.buffer_factor
         print("---STARTING HEADSTAGE_RECV THREAD---")
-        sample_size = self.buffer_size * 2 #since its 16bits
         command = b"B"
         num_channels = len(self.channels)
         for ch in self.channels:
             command = command + ch.to_bytes(1, 'big')
-        self.m_conn.sendall(command)  # Start Intan Timer
-        time.sleep(1)
-
-
+            self.m_thread_socket.sendall(command)  # Start Intan Timer
+        time.sleep(0.1)
+        trash_packet = self.m_thread_socket.recv(BUFFER_SIZE)
         while 1:
-            time.sleep(0.001)
-            data = self.m_conn.recv(BUFFER_SIZE)
+            data = []
             while len(data) < BUFFER_SIZE:
-                rest_packet = self.m_conn.recv(BUFFER_SIZE - len(data))
+                rest_packet = self.m_thread_socket.recv(BUFFER_SIZE)
                 if not rest_packet:
                     print("BOOBOO")
                 data += bytearray(rest_packet)
-
-
             self.queue_raw_data.put(data)
 
 
+        # TODO: Needs a stop condition triggering this call
+        # self.m_socket.sendall(b"C")  # Stop Intan Timer
+
     def readMenu(self):
-        self.m_conn.sendall(b"0")
-        print(self.m_conn.recv(1024).decode("utf-8"))
+        self.m_thread_socket.sendall(b"0")
+        print(self.m_thread_socket.recv(1024).decode("utf-8"))
 
     def configureIntanChip(self):
-        self.m_conn.sendall(b"A")
-        print(self.m_conn.recv(1024).decode("utf-8"))
-        print("Low-pass selection:")
+        self.m_thread_socket.sendall(b"A")
+        print(self.m_thread_socket.recv(1024).decode("utf-8"))
+        #print("Low-pass selection:")
         #input1 = input()
         input1 = "7"
-        print("High-pass selection:")
+        #print("High-pass selection:")
         #input2 = input()
         input2 = "B"
-        self.m_conn.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
+        self.m_thread_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
 
     def receiveSeqDataFromIntan(self, sample_size):
         command = b"B"

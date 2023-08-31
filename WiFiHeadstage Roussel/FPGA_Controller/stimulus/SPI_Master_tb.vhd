@@ -39,7 +39,7 @@ architecture TB of SPI_Master_TB is
   constant CLKS_PER_HALF_BIT      : integer := 4;  -- 6.25 MHz
   constant NUM_OF_BYTE_PER_PACKET : integer := 2; -- Messages are 2 bytes each
 
-  signal r_Rst_L    : std_logic := '0';
+  signal r_Rst_L    : std_logic := '1';
   signal w_SPI_Clk  : std_logic;
   signal r_Clk      : std_logic := '0';
   signal w_SPI_MOSI : std_logic;
@@ -100,9 +100,9 @@ begin  -- architecture TB
   Testing : process is
   begin
     wait for 100 ns;
-    r_Rst_L <= '0';
-    wait for 100 ns;
     r_Rst_L <= '1';
+    wait for 100 ns;
+    r_Rst_L <= '0';
     
     -- Test single byte
     SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
@@ -117,7 +117,7 @@ begin  -- architecture TB
     report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));    
     
-    wait for 50 ns;
+    wait for 5000 ns;
     assert false report "Test Complete" severity failure;
   end process Testing;
 

@@ -83,7 +83,7 @@ begin
   -- Purpose: Generate SPI Clock correct number of times when DV pulse comes
   Edge_Indicator : process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       o_TX_Ready      <= '0';
       r_SPI_Clk_Edges <= 0;
       r_Leading_Edge  <= '0';
@@ -126,7 +126,7 @@ begin
   -- Keeps local storage of byte in case higher level module changes the data
   Byte_Reg : process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       r_TX_Byte <= X"0000";
       r_TX_DV   <= '0';
     elsif rising_edge(i_clk) then
@@ -142,7 +142,7 @@ begin
   -- Works with both CPHA=0 and CPHA=1
   MOSI_Data : process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       o_SPI_MOSI     <= '0';
       r_TX_Bit_Count <= "1111";          -- Send MSB first
     elsif rising_edge(i_Clk) then
@@ -164,24 +164,26 @@ begin
   -- Purpose: Read in MISO data.
   MISO_Data : process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       o_RX_Byte_Rising      <= X"0000";
       o_RX_Byte_Falling     <= X"0000";
       o_RX_DV        <= '0';
-      r_RX_Bit_Count <= "11111";          -- Starts at 15 (Dual-data rate)
+      r_RX_Bit_Count <= "11111";          -- Starts at 31a (Dual-data rate)
     elsif rising_edge(i_Clk) then
-      -- Default Assignments
-      o_RX_DV <= '0';
       if o_TX_Ready = '1' then -- Check if ready, if so reset count to default
+        -- Default Assignments
+        o_RX_DV <= '0';         
         r_RX_Bit_Count <= "11111";        -- Starts at 31
-      elsif r_Leading_Edge = '1' or r_Trailing_Edge = '1' then 
-        if r_Leading_Edge = '1' then
-            o_RX_Byte_Rising(to_integer(r_RX_Bit_Count)/2) <= i_SPI_MISO;  -- Sample data
-            r_RX_Bit_Count <= r_RX_Bit_Count - 1;
-        elsif r_Trailing_Edge = '1' then 
-            o_RX_Byte_Falling(to_integer(r_RX_Bit_Count)/2) <= i_SPI_MISO; -- Sample data
-            r_RX_Bit_Count <= r_RX_Bit_Count - 1;
-        elsif r_RX_Bit_Count = "00000" then
+      elsif r_Leading_Edge = '1' then
+        o_RX_Byte_Rising(to_integer(r_RX_Bit_Count)/2)  <= i_SPI_MISO;  -- Sample data
+        r_RX_Bit_Count <= r_RX_Bit_Count - 1;
+        if r_RX_Bit_Count = "00000" then
+          o_RX_DV <= '1';   -- Byte done, pulse Data Valid
+        end if;
+      elsif r_Trailing_Edge = '1' then 
+        o_RX_Byte_Falling(to_integer(r_RX_Bit_Count)/2) <= i_SPI_MISO; -- Sample data
+        r_RX_Bit_Count <= r_RX_Bit_Count - 1;
+        if r_RX_Bit_Count = "00000" then
           o_RX_DV <= '1';   -- Byte done, pulse Data Valid
         end if;
       end if;
@@ -192,7 +194,7 @@ begin
   -- Purpose: Add clock delay to signals for alignment.
   SPI_Clock : process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       o_SPI_Clk  <= w_CPOL;
     elsif rising_edge(i_Clk) then
       o_SPI_Clk <= r_SPI_Clk;

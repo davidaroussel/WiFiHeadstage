@@ -113,7 +113,7 @@ begin
   -- Purpose: Control CS line using State Machine
   SM_CS : process (i_Clk, i_Rst_L) is
   begin
-    if i_Rst_L = '0' then
+    if i_Rst_L = '1' then
       r_SM_CS             <= IDLE;
       r_CS_n              <= '1';   -- Resets to high
       r_TX_Count          <= 0;

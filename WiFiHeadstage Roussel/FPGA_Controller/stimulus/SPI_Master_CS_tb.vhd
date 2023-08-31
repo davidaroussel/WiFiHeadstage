@@ -22,7 +22,7 @@
 --
 -- Targeted
 
-device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
+-- device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
 -- Author: <Name>
 --
 --------------------------------------------------------------------------------
@@ -36,16 +36,17 @@ end entity SPI_Master_CS_TB;
 
 architecture TB of SPI_Master_CS_TB is
 
-  constant SPI_MODE           : integer := 0;           -- CPOL = 0 CPHA = 0
-  constant CLKS_PER_HALF_BIT  : integer := 3;  -- (125/2) /CLK_PER_HALF_BIT MHz
-  constant MAX_PACKET_PER_CS  : integer := 2;   -- 2 bytes per chip select
+  constant SPI_MODE           : integer := 0;  -- CPOL = 0 CPHA = 0
+  constant CLKS_PER_HALF_BIT  : integer := 3;  -- (125/2)/CLK_PER_HALF_BIT MHz
+  constant MAX_PACKET_PER_CS  : integer := 2;  -- 2 bytes per chip select
   constant CS_INACTIVE_CLKS   : integer := 4;  -- Adds delay between bytes
   
-  signal  r_Rst_L    : std_logic := '0';
-  signal  w_SPI_Clk  : std_logic;
-  signal  r_Clk      : std_logic := '0';
-  signal  w_SPI_CS_n : std_logic;
-  signal  w_SPI_MOSI : std_logic;
+  signal r_Rst_L    : std_logic := '1';
+  signal w_SPI_Clk  : std_logic;
+  signal r_Clk      : std_logic := '0';
+  signal w_SPI_CS_n : std_logic;
+  signal w_SPI_MOSI : std_logic;
+  signal r_SPI_MISO : std_logic;
   
   -- Master Specific
   signal r_Master_TX_Byte         : std_logic_vector(15 downto 0) := X"0000";
@@ -54,8 +55,8 @@ architecture TB of SPI_Master_CS_TB is
   signal w_Master_RX_DV           : std_logic;
   signal w_Master_RX_Byte_Rising  : std_logic_vector(15 downto 0);
   signal w_Master_RX_Byte_Falling : std_logic_vector(15 downto 0);
-  signal w_Master_RX_Count        : std_logic_vector(1 downto 0);
-  signal r_Master_TX_Count        : std_logic_vector(1 downto 0) := "01";
+  signal w_Master_RX_Count        : std_logic_vector(1  downto 0);
+  signal r_Master_TX_Count        : std_logic_vector(1  downto 0) := "01";
 
   -- Sends a single byte from master. 
   procedure SendMessage (
@@ -98,7 +99,7 @@ begin  -- architecture TB
       o_RX_Byte_Falling => w_Master_RX_Byte_Falling,  -- Byte received on MISO                   
       -- SPI Interface
       o_SPI_Clk  => w_SPI_Clk,
-      i_SPI_MISO => w_SPI_MOSI,
+      i_SPI_MISO => r_SPI_MISO,
       o_SPI_MOSI => w_SPI_MOSI,
       o_SPI_CS_n => w_SPI_CS_n
       );
@@ -106,9 +107,9 @@ begin  -- architecture TB
   Testing : process is
   begin
     wait for 100 ns;
-    r_Rst_L <= '0';
-    wait for 100 ns;
     r_Rst_L <= '1';
+    wait for 100 ns;
+    r_Rst_L <= '0';
 
     -- Test single byte
     SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
@@ -122,7 +123,6 @@ begin  -- architecture TB
     SendMessage(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
     report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));   
-
 
     wait for 100 ns;
     assert false report "Test Complete" severity failure;

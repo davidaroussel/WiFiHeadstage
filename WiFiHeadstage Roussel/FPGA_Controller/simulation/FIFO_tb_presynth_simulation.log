@@ -8,28 +8,28 @@
 # vmap igloo C:/Microsemi/Libero_SoC_v11.9/Designer/lib/modelsim/precompiled/vhdl/igloo 
 # Modifying modelsim.ini
 # Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
-# Start time: 11:57:44 on Aug 28,2023
-# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/david/Desktop/WiFiHeadstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd 
+# Start time: 12:15:42 on Aug 30,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Compiling entity FIFO
 # -- Compiling architecture DEF_ARCH of FIFO
-# End time: 11:57:45 on Aug 28,2023, Elapsed time: 0:00:01
+# End time: 12:15:42 on Aug 30,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
-# Start time: 11:57:45 on Aug 28,2023
-# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/david/Desktop/WiFiHeadstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd 
+# Start time: 12:15:42 on Aug 30,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
 # -- Compiling entity FIFO_tb
 # -- Compiling architecture behave of FIFO_tb
-# End time: 11:57:45 on Aug 28,2023, Elapsed time: 0:00:00
+# End time: 12:15:42 on Aug 30,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -L igloo -L presynth -t 1ps presynth.FIFO_tb 
-# Start time: 11:57:45 on Aug 28,2023
+# Start time: 12:15:42 on Aug 30,2023
 # //  ModelSim Microsemi 10.5c Jul 21 2016
 # //
 # //  Copyright 1991-2016 Mentor Graphics Corporation
@@ -55,31 +55,30 @@
 # Loading igloo.or2(vital_act)
 # Loading igloo.nand2a(vital_act)
 # Loading igloo.nand2(vital_act)
+# Loading igloo.inv(vital_act)
 # Loading igloo.and2(vital_act)
 # Loading igloo.fifo4k18(vital_act)
-# Loading igloo.inv(vital_act)
 # Loading igloo.gnd(vital_act)
 # Loading igloo.vcc(vital_act)
-# ** Warning: WCLK went unknown
-#    Time: 0 ps  Iteration: 1  Instance: /fifo_tb/MODULE_FIFO/\FIFOBLOCK[1]\
-# ** Warning: RCLK went unknown
-#    Time: 0 ps  Iteration: 1  Instance: /fifo_tb/MODULE_FIFO/\FIFOBLOCK[1]\
-# ** Warning: WCLK went unknown
-#    Time: 0 ps  Iteration: 1  Instance: /fifo_tb/MODULE_FIFO/\FIFOBLOCK[0]\
-# ** Warning: RCLK went unknown
-#    Time: 0 ps  Iteration: 1  Instance: /fifo_tb/MODULE_FIFO/\FIFOBLOCK[0]\
-# ** Note: Received 0x00000000
-#    Time: 395770 ps  Iteration: 0  Instance: /fifo_tb
-# ** Note: Received 0x12345678
-#    Time: 770710 ps  Iteration: 0  Instance: /fifo_tb
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: david  Hostname: DESKTOP-I7V5QPQ  ProcessID: 4532
+#           Attempting to use alternate WLF file "./wlftgk8hg1".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftgk8hg1
+# ** Note: Receiving 0x12345678
+#    Time: 312450 ps  Iteration: 0  Instance: /fifo_tb
 # ** Note: Received 0xA1A1A1A1
-#    Time: 1103990 ps  Iteration: 0  Instance: /fifo_tb
+#    Time: 770710 ps  Iteration: 0  Instance: /fifo_tb
 # ** Note: Received 0xA2A2A2A2
-#    Time: 1228970 ps  Iteration: 0  Instance: /fifo_tb
+#    Time: 1103990 ps  Iteration: 0  Instance: /fifo_tb
 # ** Note: Received 0xA3A3A3A3
-#    Time: 1353950 ps  Iteration: 0  Instance: /fifo_tb
+#    Time: 1187310 ps  Iteration: 0  Instance: /fifo_tb
 # ** Note: Received 0xB4B4B4B4
-#    Time: 1478930 ps  Iteration: 0  Instance: /fifo_tb
+#    Time: 1270630 ps  Iteration: 0  Instance: /fifo_tb
+# ** Note: Received 0xA7A7A7A7
+#    Time: 1353950 ps  Iteration: 0  Instance: /fifo_tb
 # ** Failure: Test Complete
-#    Time: 1478930 ps  Iteration: 0  Process: /fifo_tb/p_TEST File: C:/Users/david/Desktop/WiFiHeadstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
-# Break in Process p_TEST at C:/Users/david/Desktop/WiFiHeadstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd line 190
+#    Time: 1353950 ps  Iteration: 0  Process: /fifo_tb/p_TEST File: C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
+# Break in Process p_TEST at C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd line 186
+# End time: 12:16:00 on Aug 30,2023, Elapsed time: 0:00:18
+# Errors: 0, Warnings: 2

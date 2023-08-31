@@ -1,6 +1,6 @@
  ** Message System Log
  ** Database: 
- ** Date:   Thu Aug 24 15:39:06 2023
+ ** Date:   Wed Aug 30 12:15:22 2023
 
 
 ****************
@@ -14,14 +14,14 @@ Type                            : FIFO
 Write Enable                    : Active High
 Read Clock                      : Rising
 Write Clock                     : Rising
-Reset                           : Active Low
+Reset                           : Active High
 Read Enable                     : Active High
 Write Depth                     : 256
 Write Width                     : 32
 Read Depth                      : 256
 Read Width                      : 32
-Almost Full                     : 2
-Almost Empty                    : 1
+Almost Full                     : 250
+Almost Empty                    : 5
 Flags                           : Static
 AFFlag Units                    : Write Words
 AEFlag Units                    : Read Words
@@ -56,7 +56,7 @@ Compile Report
 Netlist Resource Report
 =======================
 
-    CORE                       Used:      6  Total:   6144   (0.10%)
+    CORE                       Used:      7  Total:   6144   (0.11%)
     IO (W/ clocks)             Used:      0  Total:     68   (0.00%)
     GLOBAL (Chip+Quadrant)     Used:      0  Total:     18   (0.00%)
     PLL                        Used:      0  Total:      1   (0.00%)
@@ -65,7 +65,7 @@ Netlist Resource Report
     FlashROM                   Used:      0  Total:      1   (0.00%)
     User JTAG                  Used:      0  Total:      1   (0.00%)
 
-Wrote VHDL netlist to C:/Users/David/Desktop/WiFiHeadstage_FPGA/WifiHeadstage/smartgen\FIFO\FIFO.vhd.
+Wrote VHDL netlist to C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen\FIFO\FIFO.vhd.
 
- ** Log Ended:   Thu Aug 24 15:39:06 2023
+ ** Log Ended:   Wed Aug 30 12:15:23 2023
 

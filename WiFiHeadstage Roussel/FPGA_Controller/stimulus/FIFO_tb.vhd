@@ -87,32 +87,27 @@ begin
 
   p_TEST : process is
   begin
-    r_RESET <= '0';
+    r_RESET <= '1';
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
-    r_RESET <= '1';    
-    wait until r_CLOCK = '1';
+    r_RESET <= '0';    
     wait until r_CLOCK = '1';
     
-    r_RE <= '1';
-    wait until r_CLOCK = '1';
-    r_RE <= '0';        
-   
-    wait until r_CLOCK = '1';
-    wait until r_CLOCK = '1';
- 
-
     r_WE <= '1';
     r_DATA <= X"12345678";    
     wait until r_CLOCK = '1';
     r_WE <= '0'; 
     
     wait until r_CLOCK = '1';    
+    wait until r_CLOCK = '1';   
     
+
     r_RE <= '1';
     wait until r_CLOCK = '1';
-    r_RE <= '0';        
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
+    r_RE <= '0';       
+    wait until r_CLOCK = '1'; 
+    report "Receiving 0x" & to_hstring(unsigned(w_Q)); 
+
     
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
@@ -129,11 +124,15 @@ begin
     wait until r_CLOCK = '1';
     r_WE <= '0';
 
+    wait until r_CLOCK = '1';
+
     r_DATA <= X"A3A3A3A3";    
     r_WE <= '1';
     wait until r_CLOCK = '1';
     r_WE <= '0';
 
+    wait until r_CLOCK = '1';
+    
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
@@ -164,21 +163,18 @@ begin
     wait until r_CLOCK = '1';
     report "Received 0x" & to_hstring(unsigned(w_Q)); 
     
-    wait until r_CLOCK = '1';    
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
     report "Received 0x" & to_hstring(unsigned(w_Q)); 
     
-    wait until r_CLOCK = '1';    
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
     report "Received 0x" & to_hstring(unsigned(w_Q)); 
-    
-    wait until r_CLOCK = '1';    
+     
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0'; 
