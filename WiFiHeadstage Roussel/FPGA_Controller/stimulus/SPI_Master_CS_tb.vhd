@@ -76,7 +76,8 @@ begin  -- architecture TB
 
   -- Clock Generators:
   r_Clk <= not r_Clk after 20.83 ns;
-
+  r_SPI_MISO <= w_SPI_MOSI;
+  
   -- Instantiate UUT
   UUT : entity work.SPI_Master_CS
     generic map (

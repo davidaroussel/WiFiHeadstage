@@ -1,110 +1,113 @@
-----------------------------------------------------------------------
--- Created by Microsemi SmartDesign Wed Aug 30 16:11:17 2023
--- Testbench Template
--- This is a basic testbench that instantiates your design with basic 
--- clock and reset pins connected.  If your design has special
--- clock/reset or testbench driver requirements then you should 
--- copy this file and modify it. 
-----------------------------------------------------------------------
-
---------------------------------------------------------------------------------
--- Company: <Name>
---
--- File: Controller_tb.vhd
--- File history:
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---
--- Description: 
---
--- <Description here>
---
--- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
--- Author: <Name>
---
---------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use std.textio.all;
 
 entity Controller_tb is
-end Controller_tb;
+end entity Controller_tb;
 
-architecture behavioral of Controller_tb is
+architecture sim of Controller_tb is
 
-    constant SYSCLK_PERIOD : time := 100 ns; -- 10MHZ
+  constant CLK_PERIOD   : time := 20.83 ns; -- Adjust as needed
 
-    signal r_Clk : std_logic := '0';
-    signal r_Rst_L : std_logic := '0';
+  constant SPI_MODE           : integer := 0;  -- CPOL = 0 CPHA = 0
+  constant CLKS_PER_HALF_BIT  : integer := 3;  -- (125/2)/CLK_PER_HALF_BIT MHz
+  constant MAX_PACKET_PER_CS  : integer := 2;  -- 2 bytes per chip select
+  constant CS_INACTIVE_CLKS   : integer := 4;  -- Adds delay between bytes
 
-    component SPI_Master
-        -- ports
-        port( 
-            -- Inputs
-            i_Rst_L : in std_logic;
-            i_Clk : in std_logic;
-            i_TX_Byte : in std_logic_vector(15 downto 0);
-            i_TX_DV : in std_logic;
-            i_SPI_MISO : in std_logic;
+  signal tb_Rst_L           : std_logic := '1';
+  signal tb_Clk             : std_logic := '0';
+  
+  signal tb_SPI_Clk         : std_logic;
+  signal tb_SPI_MISO        : std_logic;
+  signal tb_SPI_MOSI        : std_logic;
+  signal tb_SPI_CS_n        : std_logic;
+  
+  signal tb_TX_Count        : std_logic_vector(1 downto 0)  := "01";
+  signal tb_TX_Byte         : std_logic_vector(15 downto 0) := (others => '0');
+  signal tb_TX_DV           : std_logic := '0';
+  signal tb_TX_Ready        : std_logic;
+  
+  signal tb_RX_Count        : std_logic_vector(3 downto 0);
+  signal tb_RX_DV           : std_logic;
+  signal tb_RX_Byte_Rising  : std_logic_vector(15 downto 0) := (others => '0');
+  signal tb_RX_Byte_Falling : std_logic_vector(15 downto 0) := (others => '0');
+  
+  signal tb_FIFO_Data       : std_logic_vector(31 downto 0);
+  signal tb_FIFO_EMPTY      : std_logic;
+  signal tb_FIFO_FULL       : std_logic;
+  signal tb_FIFO_AEMPTY     : std_logic;
+  signal tb_FIFO_AFULL      : std_logic;
 
-            -- Outputs
-            o_TX_Ready : out std_logic;
-            o_RX_DV : out std_logic;
-            o_RX_Byte_Rising : out std_logic_vector(15 downto 0);
-            o_RX_Byte_Falling : out std_logic_vector(15 downto 0);
-            w : out std_logic_vector(7 downto 0);
-            o_SPI_Clk : out std_logic;
-            o_SPI_MOSI : out std_logic
-
-            -- Inouts
-
-        );
-    end component;
+  -- Sends a single byte from master. 
+  procedure SendMessage (
+    data          : in  std_logic_vector(15 downto 0);
+    signal o_data : out std_logic_vector(15 downto 0);
+    signal o_dv   : out std_logic) is
+  begin
+    wait until rising_edge(tb_Clk);
+    o_data <= data;
+    o_dv   <= '1';
+    wait until rising_edge(tb_Clk);
+    o_dv   <= '0';
+    wait until rising_edge(tb_TX_Ready);
+  end procedure SendMessage;
 
 begin
+ 
+  tb_Clk <= not tb_Clk after CLK_PERIOD;
+  tb_SPI_MISO <= tb_SPI_MOSI;
 
-    process
-        variable vhdl_initial : BOOLEAN := TRUE;
+  UUT: entity work.Controller
+    generic map (
+      SPI_MODE           => SPI_MODE,
+      CLKS_PER_HALF_BIT  => CLKS_PER_HALF_BIT,
+      MAX_PACKET_PER_CS  => MAX_PACKET_PER_CS,
+      CS_INACTIVE_CLKS   => CS_INACTIVE_CLKS)
+    port map (
+      i_Rst_L           => tb_Rst_L,
+      i_Clk             => tb_Clk,
+      o_SPI_Clk         => tb_SPI_Clk,
+      i_SPI_MISO        => tb_SPI_MISO,
+      o_SPI_MOSI        => tb_SPI_MOSI,
+      o_SPI_CS_n        => tb_SPI_CS_n,
+      i_TX_Count        => tb_TX_Count,
+      i_TX_Byte         => tb_TX_Byte,
+      i_TX_DV           => tb_TX_DV,
+      o_TX_Ready        => tb_TX_Ready,
+      o_RX_Count        => tb_RX_Count,
+      o_RX_DV           => tb_RX_DV,
+      o_RX_Byte_Rising  => tb_RX_Byte_Rising,
+      o_RX_Byte_Falling => tb_RX_Byte_Falling,
+      o_FIFO_Data       => tb_FIFO_Data,
+      o_FIFO_EMPTY      => tb_FIFO_EMPTY,
+      o_FIFO_FULL       => tb_FIFO_FULL,
+      o_FIFO_AEMPTY     => tb_FIFO_AEMPTY,
+      o_FIFO_AFULL      => tb_FIFO_AFULL
+    );
 
-    begin
-        if ( vhdl_initial ) then
-            -- Assert Reset
-            NSYSRESET <= '0';
-            wait for ( SYSCLK_PERIOD * 10 );
-            
-            NSYSRESET <= '1';
-            wait;
-        end if;
-    end process;
 
-    -- Clock Driver
-    SYSCLK <= not SYSCLK after (SYSCLK_PERIOD / 2.0 );
+    Testing : process is
+  begin
+    wait for 100 ns;
+    tb_Rst_L <= '1';
+    wait for 100 ns;
+    tb_Rst_L <= '0';
 
-    -- Instantiate Unit Under Test:  SPI_Master
-    SPI_Master_0 : SPI_Master
-        -- port map
-        port map( 
-            -- Inputs
-            i_Rst_L => NSYSRESET,
-            i_Clk => SYSCLK,
-            i_TX_Byte => (others=> '0'),
-            i_TX_DV => '0',
-            i_SPI_MISO => '0',
+    -- Test single byte
+    SendMessage(X"C1C2", tb_TX_Byte, tb_TX_DV);
+    report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
+    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
+    -- Test double byte
+    SendMessage(X"ADBC", tb_TX_Byte, tb_TX_DV);
+    report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
+    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
 
-            -- Outputs
-            o_TX_Ready =>  open,
-            o_RX_DV =>  open,
-            o_RX_Byte_Rising => open,
-            o_RX_Byte_Falling => open,
-            w => open,
-            o_SPI_Clk =>  open,
-            o_SPI_MOSI =>  open
+    SendMessage(X"A1A2", tb_TX_Byte, tb_TX_DV);
+    report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
+    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));   
 
-            -- Inouts
-
-        );
-
-end behavioral;
-
+    wait for 100 ns;
+    assert false report "Test Complete" severity failure;
+  end process Testing;
+end architecture sim;

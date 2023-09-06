@@ -36,12 +36,17 @@ KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VHDL"
 KEY Vendor "Actel"
-KEY ActiveRoot "SPI_Master::work"
+KEY ActiveRoot "Controller::work"
 LIST REVISIONS
 VALUE="Impl1",NUM=1
 CURREV=1
 ENDLIST
 LIST FileManager
+VALUE "<project>\designer\impl1\Controller.ide_des,ide_des"
+STATE="utd"
+TIME="1693580290"
+SIZE="255"
+ENDFILE
 VALUE "<project>\designer\impl1\SPI_Master.ide_des,ide_des"
 STATE="utd"
 TIME="1692884847"
@@ -49,8 +54,8 @@ SIZE="217"
 ENDFILE
 VALUE "<project>\hdl\Controller.vhd,hdl"
 STATE="utd"
-TIME="1693424740"
-SIZE="8591"
+TIME="1694036615"
+SIZE="7084"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master.vhd,hdl"
 STATE="utd"
@@ -59,23 +64,33 @@ SIZE="7208"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 STATE="utd"
-TIME="1693420815"
-SIZE="6529"
+TIME="1694036667"
+SIZE="7763"
+ENDFILE
+VALUE "<project>\simulation\Controller_tb_presynth_simulation.log,log"
+STATE="utd"
+TIME="1694036685"
+SIZE="2253"
 ENDFILE
 VALUE "<project>\simulation\FIFO_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1693316563"
-SIZE="4209"
+TIME="1693580561"
+SIZE="4181"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1693316563"
-SIZE="772"
+TIME="1693841936"
+SIZE="916"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1693316563"
-SIZE="4093"
+TIME="1693839637"
+SIZE="4696"
+ENDFILE
+VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
+STATE="utd"
+TIME="1693587013"
+SIZE="3984"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
@@ -105,30 +120,40 @@ IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693426277"
-SIZE="3038"
+TIME="1694036495"
+SIZE="4060"
 ENDFILE
 VALUE "<project>\stimulus\FIFO_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693411983"
-SIZE="4908"
+TIME="1693580754"
+SIZE="4943"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693418995"
-SIZE="4966"
+TIME="1693587009"
+SIZE="4997"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693413341"
-SIZE="4559"
+TIME="1693586938"
+SIZE="4619"
+ENDFILE
+VALUE "<project>\synthesis\Controller_syn.prj,prj"
+STATE="utd"
+TIME="1694035645"
+SIZE="1129"
+ENDFILE
+VALUE "<project>\synthesis\synwork\layer0.so,so"
+STATE="utd"
+TIME="1694035647"
+SIZE="159"
 ENDFILE
 ENDLIST
 LIST UsedFile
 ENDLIST
 LIST NewModulesInfo
-LIST "SPI_Master::work"
-FILE "<project>\hdl\SPI_Master.vhd,hdl"
+LIST "Controller::work"
+FILE "<project>\hdl\Controller.vhd,hdl"
 LIST AssociatedStimulus
 VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 ENDLIST
@@ -145,7 +170,25 @@ ENDUsed_File_List
 ENDLIST
 ENDLIST
 ENDLIST
-LIST "SPI_Master_CS::work"
+LIST "SPI_Master::work"
+FILE "<project>\hdl\SPI_Master.vhd,hdl"
+LIST AssociatedStimulus
+VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
+ENDLIST
+LIST ProjectState5.1
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+LIST "spi_master_cs::work"
 FILE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 LIST AssociatedStimulus
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
@@ -165,11 +208,14 @@ ENDLIST
 ENDLIST
 ENDLIST
 LIST AssociatedStimulus
-LIST SPI_Master_CS
+LIST Controller
+VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+ENDLIST
+LIST spi_master_cs
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 ENDLIST
 LIST SPI_Master
-VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 ENDLIST
 ENDLIST
 LIST Other_Association
@@ -240,8 +286,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\synplify_pro.exe"
-PARAM=""
-BATCH=0
+PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
+BATCH=1
 LICENSE=""
 IS32BIT="1"
 EndProfile
@@ -249,7 +295,7 @@ NAME="ModelSim ME"
 FUNCTION="Simulation"
 TOOL="ModelSim"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\Modelsim\win32acoem\modelsim.exe"
-PARAM=" -l SPI_Master_CS_TB_presynth_simulation.log "
+PARAM=" -l Controller_tb_presynth_simulation.log "
 BATCH=0
 LICENSE=""
 IS32BIT="1"
@@ -274,6 +320,18 @@ IS32BIT="1"
 EndProfile
 ENDLIST
 LIST ProjectState5.1
+LIST "Controller::work"
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
 LIST "SPI_Master::work"
 LIST Impl1
 ideSTIMULUS=StateSuccess
@@ -286,7 +344,7 @@ Used_File_List
 ENDUsed_File_List
 ENDLIST
 ENDLIST
-LIST "SPI_Master_CS::work"
+LIST "spi_master_cs::work"
 LIST Impl1
 ideSTIMULUS=StateSuccess
 LIST FlowOptions
@@ -311,41 +369,44 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-HDL;hdl\Controller.vhd;0
-HDL;hdl\SPI_Master_CS.vhd;1
-HDL;stimulus\Controller_tb.vhd;0
-HDL;stimulus\SPI_Master_CS_tb.vhd;1
-HDL;hdl\SPI_Master.vhd;1
+HDL;hdl\SPI_Master_CS.vhd;0
+HDL;stimulus\Controller_tb.vhd;1
+HDL;stimulus\SPI_Master_CS_tb.vhd;0
+HDL;hdl\Controller.vhd;1
+HDL;hdl\SPI_Master.vhd;0
 ACTIVEVIEW;hdl\Controller.vhd
 ENDLIST
 LIST ModuleSubBlockList
 LIST "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
-SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
+SUBBLOCK "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 ENDLIST
 LIST "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
 LIST "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
-LIST "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+LIST "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 LIST "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE","TRUE"
-SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+SUBBLOCK "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
 ENDLIST
 LIST "FIFO_tb::work","stimulus\FIFO_tb.vhd","FALSE","TRUE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
 LIST "SPI_Master_CS_TB::work","stimulus\SPI_Master_CS_tb.vhd","FALSE","TRUE"
-SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+SUBBLOCK "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 ENDLIST
 LIST "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE","TRUE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 ENDLIST
 LIST ActiveTestBenchList
-LIST "SPI_Master::work"
+LIST "Controller::work"
 ACTIVETESTBENCH "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE"
+ENDLIST
+LIST "SPI_Master::work"
+ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"
 ENDLIST
 ENDLIST
 LIST IOTabList

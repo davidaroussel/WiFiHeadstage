@@ -1,0 +1,71 @@
+
+Starting:    C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin64\mbin\synbatch.exe
+Install:     C:\Microsemi\Libero_SoC_v11.9\SynplifyPro
+Hostname:    DESKTOP-MV50I24
+Date:        Wed Sep 06 17:27:26 2023
+Version:     L-2016.09M-SP1-5
+
+Arguments:   -product synplify_pro -licensetype synplifypro_actel -batch -log synplify.log Controller_syn.tcl
+ProductType: synplify_pro
+
+License checkout: synplifypro_actel
+License: synplifypro_actel node-locked 
+Licensed Vendor: actel
+License Option: actel_oem
+
+Running in Vendor Mode
+
+
+Implementation not found: synthesis
+
+log file: "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\synthesis\Controller.srr"
+
+Running: synthesis in foreground
+
+
+
+Running Controller_syn|synthesis
+
+
+Running: compile (Compile) on Controller_syn|synthesis
+# Wed Sep 06 17:27:27 2023
+
+
+Running: compile_flow (Compile Process) on Controller_syn|synthesis
+# Wed Sep 06 17:27:27 2023
+
+
+Running: compiler (Compile Input) on Controller_syn|synthesis
+# Wed Sep 06 17:27:27 2023
+
+compiler exited with errors
+
+Job failed on: Controller_syn|synthesis
+
+
+Job: "compiler" terminated with error status: 2
+See log file: "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\synthesis\synlog\Controller_compiler.srr"
+# Wed Sep 06 17:27:27 2023
+
+Return Code: 2
+Run Time:00h:00m:00s
+
+Complete: Compile Process on Controller_syn|synthesis
+
+Complete: Compile on Controller_syn|synthesis
+
+Complete: Logic Synthesis on Controller_syn|synthesis
+
+Error: At line 2 while processing "Controller_syn.tcl"
+2
+
+TCL script complete: "Controller_syn.tcl"
+
+TCL script had errors: "Controller_syn.tcl"
+
+exit status=9
+
+exit status=9
+
+License checkin: synplifypro_actel
+
