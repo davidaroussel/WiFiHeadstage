@@ -121,13 +121,49 @@ class WiFiServer(BaseException):
     def plotAllChannels(self):
         fig, axs = plt.subplots(8, 1, figsize=(30, 10))
         plt.gca().cla()
+
+ #       fig = plt.figure(figsize=(30, 10))
         self.m_converted_array = [[] for i in range(8)]
 
         ch_counter = 0
         for i in range(0, len(self.m_raw_data), 2):
             converted_data = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True)
+            LSB_FLAG = int(hex(converted_data), 16) & 0x01
+            dataNumber = ch_counter // 8
+            channelNumber = ch_counter % 8
+
+            if LSB_FLAG == 1:
+                if channelNumber == 0:
+                    pass
+                else:
+                    print("OUT OF SYNC !!", "dataCounter", dataNumber)
+                    diff_ch = 8 - channelNumber
+                    ch_counter += diff_ch
+
+                    dataNumber = ch_counter // 8
+                    channelNumber = ch_counter % 8
+                    print("NOW ON", dataNumber, "with", channelNumber)
             self.m_converted_array[ch_counter % 8].append(converted_data * 0.000195)
             ch_counter += 1
+
+        PLUGGED_CH = [0, 5]
+        REF_CH = 7
+        for dataNum in range(0, len(self.m_converted_array[0])-1):
+            for ch in PLUGGED_CH:
+                if self.m_converted_array[REF_CH][dataNum] > 0:
+                    self.m_converted_array[ch][dataNum] -= self.m_converted_array[REF_CH][dataNum]
+                elif self.m_converted_array[REF_CH][dataNum] < 0:
+                    self.m_converted_array[ch][dataNum] += self.m_converted_array[REF_CH][dataNum]
+                else:
+                    pass
+
+        # ch_counter = 0
+        # for row in range(8):
+        #     k = [i for i in range(len(self.m_converted_array[ch_counter]))]
+        #     #VERSION FOR PYTHON 3.10
+        #     plt.plot(k, self.m_converted_array[ch_counter])
+        #     ch_counter += 1
+
 
         ch_counter = 0
         for row in range(8):
@@ -136,12 +172,24 @@ class WiFiServer(BaseException):
             axs[row].plot(k, self.m_converted_array[ch_counter])
             axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
 
+
+
+
             fft_data = np.fft.fft(self.m_converted_array[ch_counter])
             freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
             peak_coef = np.argmax(np.abs(fft_data))
             peak_freq = freqs[peak_coef]
             peak_freq = peak_freq * self.m_samp_freq
             print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
+
+            ch_counter += 1
+
+        ch_counter = 0
+        for row in range(8):
+            k = [i for i in range(len(self.m_converted_array[ch_counter]))]
+            #VERSION FOR PYTHON 3.10
+            axs[row].plot(k, self.m_converted_array[ch_counter])
+            axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
 
             ch_counter += 1
             #VERSION FOR PYTHON 3.9 (needs reajusting figure declaration)
@@ -193,7 +241,7 @@ if __name__ == "__main__":
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
     SAMPLING_TIME = 20  # Time sampling in seconds
-    FREQ_SAMPLING = 15000
+    FREQ_SAMPLING = 12000
     BUFFER_SIZE = 1024*2000  # Maximum value possible for the WiFi UDP Socket communication
 
     HEADSTAGESERVER = WiFiServer(SOCKET_PORT, HOST_IP_ADDR, TESTING_CHANNELS, FREQ_SAMPLING, BUFFER_SIZE)

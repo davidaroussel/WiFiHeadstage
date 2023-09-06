@@ -43,15 +43,11 @@ class DataConverter():
             if item is None:
                 time.sleep(0.001)
             else:
-                if len(item) % 2 != 0:
-                    item = item.pop()
-                    print("IMPAIR ???")
-
                 if TEMP_STACK != []:
                     item = TEMP_STACK + item
                     TEMP_STACK = []
 
-                item_size      = len(item)
+                item_size = len(item)
                 rest_item_size = item_size % BUFFER_SIZE
                 rest_index = self.buffer_size*(rest_item_size//self.buffer_size)
                 if len(item) >= BUFFER_SIZE:
@@ -63,25 +59,39 @@ class DataConverter():
                 dataCounter = 0
                 for i in range(0, len(item), 2):
                     converted_data = int.from_bytes([item[i+1], item[i]], byteorder='big', signed=True)
+                    LSB_FLAG = int(hex(converted_data), 16) & 0x01
+
                     dataNumber = dataCounter // self.num_channels
                     channelNumber = dataCounter % self.num_channels
+
+                    if LSB_FLAG == 1:
+                        #print("LSB FLAG from CH", channelNumber)
+                        if channelNumber == 0:
+                            pass
+                        else:
+                            print("OUT OF SYNC !!", "dataCounter", dataNumber)
+                            diff_ch = self.num_channels - channelNumber
+                            dataCounter += diff_ch
+
+                            dataNumber = dataCounter // self.num_channels
+                            channelNumber = dataCounter % self.num_channels
+                            print("NOW ON", dataNumber, "with", channelNumber)
+
+
                     if channelNumber == 7:
                         converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
                         sin_counter += 1
                     else:
                         mV_value = OpenEphysOffset + (converted_data * converting_value) #now in mV
                         converted_array_mV[channelNumber][dataNumber] = mV_value #now in mV
-                        ch_list = [0,1,2,3]
-                        if channelNumber not in ch_list:
-                            if mV_value > 40000 or mV_value < 20000:
-                                print(dataCounter)
                     dataCounter = dataCounter + 1
 
-                    if (dataCounter % (self.buffer_size*self.num_channels)) == 0:
-                        np_conv = np.array(converted_array_mV, np.int16).flatten().tobytes()
-                        self.queue_conv_data.put(np_conv)
-                        sin_counter = 0
-                        dataCounter = 0
+                    if dataCounter > 0:
+                        if (dataCounter % (self.buffer_size*self.num_channels)) == 0:
+                            np_conv = np.array(converted_array_mV, np.int16).flatten().tobytes()
+                            self.queue_conv_data.put(np_conv)
+                            sin_counter = 0
+                            dataCounter = 0
 
 
 

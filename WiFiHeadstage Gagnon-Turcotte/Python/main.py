@@ -23,7 +23,7 @@ if __name__ == "__main__":
     CHANNELS    = [0, 1, 2, 3, 4, 5, 6, 7]
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 15000
+    FREQUENCY   = 12000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA  = Queue()
