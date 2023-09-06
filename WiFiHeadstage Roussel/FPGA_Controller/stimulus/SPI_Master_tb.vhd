@@ -43,6 +43,7 @@ architecture TB of SPI_Master_TB is
   signal w_SPI_Clk  : std_logic;
   signal r_Clk      : std_logic := '0';
   signal w_SPI_MOSI : std_logic;
+  signal r_SPI_MISO : std_logic;
   
   -- Master Specific
   signal r_Master_TX_Byte  : std_logic_vector(15 downto 0) := X"0000";
@@ -72,8 +73,9 @@ begin  -- architecture TB
 
    -- Clock Generators:
   r_Clk <= not r_Clk after 20.83 ns;
+  r_SPI_MISO <= w_SPI_MOSI;
 
-  -- Instantiate Master
+  -- Instantiate UUT
   UUT : entity work.SPI_Master
     generic map (
       SPI_MODE          => SPI_MODE,
@@ -93,7 +95,7 @@ begin  -- architecture TB
       o_RX_Byte_Falling  => r_Master_RX_Byte_Falling,     -- Byte received on MISO Falling Edge
       -- SPI Interface
       o_SPI_Clk  => w_SPI_Clk, 
-      i_SPI_MISO => w_SPI_MOSI,
+      i_SPI_MISO => r_SPI_MISO,
       o_SPI_MOSI => w_SPI_MOSI
       );
       

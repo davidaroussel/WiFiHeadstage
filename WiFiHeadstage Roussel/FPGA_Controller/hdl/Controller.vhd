@@ -1,236 +1,210 @@
---------------------------------------------------------------------------------
--- Company: <Name>
---
--- File: Controller.vhd
--- File history:
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---
--- Description: 
---
--- <Description here>
---
--- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
--- Author: <Name>
---
---------------------------------------------------------------------------------
-library IEEE;
-
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use std.textio.all;
 
 entity Controller is
-   generic (
-       NUM_OF_READ_TO_PUSH : integer := 32 -- 64 CHANNELS WITH DUAL DATA BIT SPI PROTOCOLE SO 32 READ NECESSARY
-        );
-   port (
-       -- Control/Data Signals,
-       i_Rst_L : in std_logic;     -- FPGA Reset
-       i_Clk   : in std_logic;     -- FPGA Clock
+  generic (
+    SPI_MODE          : integer := 0;
+    CLKS_PER_HALF_BIT : integer := 2;
+    MAX_PACKET_PER_CS : integer := 1;
+    CS_INACTIVE_CLKS  : integer := 1
+    );
+  port (
+    i_Rst_L        : in std_logic;
+    i_Clk          : in std_logic;
 
-       -- SPI Interface
-       o_uC_SPI_Clk  : out std_logic;
-       i_uC_SPI_MISO : in  std_logic;
-       o_uC_SPI_MOSI : out std_logic;
-       o_uC_SPI_CS_n : out std_logic;
+    -- SPI Interface
+    o_SPI_Clk  : out std_logic;
+    i_SPI_MISO : in  std_logic;
+    o_SPI_MOSI : out std_logic;
+    o_SPI_CS_n : out std_logic;
+    
+    -- TX (MOSI) Signals
+    i_TX_Count : in  std_logic_vector;  -- # bytes per CS low
+    i_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
+    i_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
+    o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
 
-       -- SPI Interface
-       o_RHD64_uC_SPI_Clk  : out std_logic;
-       i_RHD64_uC_SPI_MISO : in  std_logic;
-       o_RHD64_uC_SPI_MOSI : out std_logic;
-       o_RHD64_uC_SPI_CS_n : out std_logic
+    -- RX (MISO) Signals
+    o_RX_Count        : out std_logic_vector;  -- Index RX byte
+    o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
+    o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
+    o_RX_Byte_Falling : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
 
-       o_FIFO_FULL   : out   std_logic;
-       o_FIFO_EMPTY  : out   std_logic;
-       o_FIFO_AEMPTY : out   std_logic;
-       o_FIFO_AFULL  : out   std_logic
-        );
-end Controller;
+    o_FIFO_Data : out std_logic_vector(31 downto 0);
+    o_FIFO_EMPTY : out std_logic;
+    o_FIFO_FULL : out std_logic;
+    o_FIFO_AEMPTY : out std_logic;
+    o_FIFO_AFULL : out std_logic
+  );
+end entity Controller;
 
+architecture RTL of Controller is
 
-architecture architecture_Controller of Controller is
-   -- Control/Data Signals,
-   signal r_Rst_L : in std_logic;     -- FPGA Reset
-   signal w_Clk   : in std_logic;     -- FPGA Clock
-
-   -- TX (MOSI) Signals
-   signal r_uC_TX_Count : in  std_logic_vector;               -- # bytes per CS low
-   signal r_uC_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
-   signal r_uC_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
-   signal w_uC_TX_Ready : out std_logic;     -- Transmit Ready for next byte
-   -- RX (MISO) Signals
-   signal w_uC_RX_Count : out std_logic_vector;  -- Index RX byte
-   signal w_uC_RX_DV    : out std_logic;         -- Data Valid pulse (1 clock cycle)
-   signal w_uC_RX_Byte_Rising  : out std_logic_vector(15 downto 0);  -- Byte received on MISO Rising  CLK Edge
-   signal w_uC_RX_Byte_Falling : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
-   -- SPI Interface
-   signal w_uC_SPI_Clk  : out std_logic;
-   signal r_uC_SPI_MISO : in  std_logic;
-   signal w_uC_SPI_MOSI : out std_logic;
-   signal w_uC_SPI_CS_n : out std_logic;
+  -- Signals for SPI_Master_CS
+  signal inter_RX_Byte_Rising  : std_logic_vector(15 downto 0);
+  signal inter_RX_Byte_Falling : std_logic_vector(15 downto 0);
+  signal inter_RX_DV           : std_logic;
   
-   -- TX (MOSI) Signals
-   signal r_RHD64_TX_Count : in  std_logic_vector;               -- # bytes per CS low
-   signal r_RHD64_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
-   signal r_RHD64_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
-   signal w_RHD64_TX_Ready : out std_logic;     -- Transmit Ready for next byte
-   -- RX (MISO) Signals
-   signal w_RHD64_RX_Count : out std_logic_vector;  -- Index RX byte
-   signal w_RHD64_RX_DV    : out std_logic;         -- Data Valid pulse (1 clock cycle)
-   signal w_RHD64_RX_Byte_Rising  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-   signal w_RHD64_RX_Byte_Falling  : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
-   -- SPI Interface
-   signal w_RHD64_SPI_Clk  : out std_logic;
-   signal r_RHD64_SPI_MISO : in  std_logic;
-   signal w_RHD64_SPI_MOSI : out std_logic;
-   signal w_RHD64_SPI_CS_n : out std_logic
-   
-    -- FIFO Interface
-   signal r_FIFO_DATA   : in    std_logic_vector(31 downto 0);
-   signal w_FIFO_Q      : out   std_logic_vector(31 downto 0);
-   signal r_FIFO_WE     : in    std_logic;
-   signal r_FIFO_RE     : in    std_logic;
-   signal r_FIFO_WCLOCK : in    std_logic;
-   signal r_FIFO_RCLOCK : in    std_logic;
-   signal w_FIFO_FULL   : out   std_logic;
-   signal w_FIFO_EMPTY  : out   std_logic;
-   signal r_FIFO_RESET  : in    std_logic;
-   signal w_FIFO_AEMPTY : out   std_logic;
-   signal w_FIFO_AFULL  : out   std_logic;
+  signal inter_TX_Byte         : std_logic_vector(15 downto 0);
+  signal inter_TX_DV           : std_logic; 
+  signal inter_TX_Ready        : std_logic;
 
-   constant r_COMMAND_0  : integer:= 16#00#;
-   constant r_COMMAND_63 : integer:= 16#63#;
-   
-   signal r_CH_Counter : integer range 0 to NUM_OF_READ_TO_PUSH;
+  signal inter_FIFO_DATA : std_logic_vector(31 downto 0);
+  signal inter_FIFO_Q    : std_logic_vector(31 downto 0);
+  signal inter_FIFO_WE   : std_logic;
+  signal inter_FIFO_RE   : std_logic;
+  signal inter_FIFO_RESET     : std_logic;
+  signal inter_FIFO_WCLOCK    : std_logic;
+  signal inter_FIFO_RCLOCK    : std_logic;
+  signal inter_FIFO_FULL      : std_logic;
+  signal inter_FIFO_EMPTY     : std_logic;
+  signal inter_FIFO_AEMPTY    : std_logic;
+  signal inter_FIFO_AFULL     : std_logic;
 
-   type t_SM_RHD64 is (IDLE, PUT_DATA_ON_LINE, FIFO_FULL);
-   signal r_SM_RHD64 : t_SM_RHD64;
+
+
+  -- Component declaration for SPI_Master_CS
+  component SPI_Master_CS is
+    generic (
+      SPI_MODE          : integer := 0;
+      CLKS_PER_HALF_BIT : integer := 3;
+      MAX_PACKET_PER_CS : integer := 2;
+      CS_INACTIVE_CLKS  : integer := 4
+    );
+    port (
+      i_Rst_L    : in std_logic;     -- FPGA Reset
+      i_Clk      : in std_logic;     -- FPGA Clock
+      -- TX (MOSI) Signals
+      i_TX_Count : in  std_logic_vector;  -- # bytes per CS low
+      i_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
+      i_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
+      o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
+      -- RX (MISO) Signals
+      o_RX_Count        : out std_logic_vector;  -- Index RX byte
+      o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
+      o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
+      o_RX_Byte_Falling : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+      -- SPI Interface
+      o_SPI_Clk  : out std_logic;
+      i_SPI_MISO : in  std_logic;
+      o_SPI_MOSI : out std_logic;
+      o_SPI_CS_n : out std_logic
+    );
+  end component;
+
+  component FIFO is
+    port( DATA   : in    std_logic_vector(31 downto 0);
+          Q      : out   std_logic_vector(31 downto 0);
+          WE     : in    std_logic;
+          RE     : in    std_logic;
+          WCLOCK : in    std_logic;
+          RCLOCK : in    std_logic;
+          FULL   : out   std_logic;
+          EMPTY  : out   std_logic;
+          RESET  : in    std_logic;
+          AEMPTY : out   std_logic;
+          AFULL  : out   std_logic
+      );
+  end component FIFO;
 
 begin
-
-  -- Instantiate Master uControler
-  SPI_Master_CS_1 : entity work.SPI_Master_CS
+  -- SPI_Master_CS instantiation
+  SPI_Master_CS_1 : SPI_Master_CS
     generic map (
-      SPI_MODE          => integer := 0,
-      CLKS_PER_HALF_BIT => integer := 2,
-      MAX_BYTES_PER_CS  => integer := 1,
-      CS_INACTIVE_CLKS  => integer := 1)
+      SPI_MODE           => SPI_MODE,
+      CLKS_PER_HALF_BIT  => CLKS_PER_HALF_BIT,
+      MAX_PACKET_PER_CS  => MAX_PACKET_PER_CS,
+      CS_INACTIVE_CLKS   => CS_INACTIVE_CLKS
+    )
     port map (
-      -- Control/Data Signals,
-      i_Rst_L    => r_Rst_L,            -- FPGA Reset
-      i_Clk      => r_Clk,              -- FPGA Clock
-      -- TX (MOSI) Signals
-      i_TX_Count => r_uC_TX_Count,         -- Index Tx byte
-      i_TX_Byte  => r_uC_TX_Byte,          -- Byte to transmit
-      i_TX_DV    => r_uC_TX_DV,            -- Data Valid pulse
-      o_TX_Ready => w_uC_TX_Ready,         -- Transmit Ready for Byte
-      -- RX (MISO) Signals
-      o_RX_Count        => o_uC_RX_Count          -- Index RX byte
-      o_RX_DV           => o_uC_RX_DV,            -- Data Valid pulse
-      o_RX_Byte_Rising  => o_uC_RX_Byte_Rising,   -- Byte received on MISO Rising  CLK Edge 
-      o_RX_Byte_Falling => o_uC_RX_Byte_Falling,  -- Byte received on MISO Falling CLK Edge       
-       -- SPI Interface
-      o_SPI_Clk  => w_uC_SPI_Clk, 
-      i_SPI_MISO => r_uC_SPI_MISO,
-      o_SPI_MOSI => w_uC_SPI_MOSI,
-      o_SPI_CS_n => w_uC_SPI_CS_n
-      );
-
-  -- Instantiate Master RHD64
-  SPI_Master_CS_2 : entity work.SPI_Master_CS
-    generic map (
-      SPI_MODE          => integer := 0,
-      CLKS_PER_HALF_BIT => integer := 2,
-      MAX_BYTES_PER_CS  => integer := 2,
-      CS_INACTIVE_CLKS  => integer := 1)
-    port map (
-      -- Control/Data Signals,
-      i_Rst_L    => r_Rst_L,            -- FPGA Reset
-      i_Clk      => r_Clk,              -- FPGA Clock
-      -- TX (MOSI) Signals
-      i_TX_Count => r_RHD64_TX_Count,         -- Index Tx byte
-      i_TX_Byte  => r_RHD64_TX_Byte,          -- Byte to transmit
-      i_TX_DV    => r_RHD64_TX_DV,            -- Data Valid pulse
-      o_TX_Ready => w_RHD64_TX_Ready,     -- Transmit Ready for Byte
-      -- RX (MISO) Signals
-      o_RX_Count        => w_RHD64_RX_Count          -- Index RX byte
-      o_RX_DV           => w_RHD64_RX_DV,            -- Data Valid pulse
-      o_RX_Byte_Rising  => w_RHD64_RX_Byte_Rising,   -- Byte received on MISO Rising  CLK Edge 
-      o_RX_Byte_Falling => w_RHD64_RX_Byte_Falling,  -- Byte received on MISO Falling CLK Edge       
-       -- SPI Interface
-      o_SPI_Clk  => w_RHD64_SPI_Clk, 
-      i_SPI_MISO => r_RHD64_SPI_MISO,
-      o_SPI_MOSI => w_RHD64_SPI_MOSI,
-      o_SPI_CS_n => w_RHD64_SPI_CS_n
-      );
-
-  -- Instantiate FIFO
-  FIFO_1 : entity work.FIFO
-    port map(
-      DATA   => i_FIFO_DATA,
-      Q      => o_FIFO_Q,
-      WE     => o_FIFO_WE,
-      RE     => o_FIFO_RE,
-      WCLOCK => o_FIFO_WCLOCK,
-      RCLOCK => o_FIFO_RCLOCK,
-      FULL   => o_FIFO_FULL,
-      EMPTY  => o_FIFO_EMPTY,
-      RESET  => o_FIFO_RESET,
-      AEMPTY => o_FIFO_AEMPTY,
-      AFULL  => o_FIFO_AFULL
+      i_Rst_L           => i_Rst_L,
+      i_Clk             => i_Clk,
+      i_TX_Count        => i_TX_Count,           
+      i_TX_Byte         => inter_TX_Byte,           
+      i_TX_DV           => inter_TX_DV,                   
+      o_TX_Ready        => inter_TX_Ready,                
+      o_RX_Count        => o_RX_Count,                
+      o_RX_DV           => inter_RX_DV,               
+      o_RX_Byte_Rising  => inter_RX_Byte_Rising,
+      o_RX_Byte_Falling => inter_RX_Byte_Falling,
+      
+      o_SPI_Clk  => o_SPI_CLK,
+      i_SPI_MISO => i_SPI_MISO,
+      o_SPI_MOSI => o_SPI_MOSI,
+      o_SPI_CS_n => o_SPI_CS_n
     );
 
+
+  FIFO_1 : entity work.FIFO
+    port map (
+      DATA      => inter_FIFO_DATA,
+      Q         => inter_FIFO_Q,
+      WE        => inter_FIFO_WE,
+      RE        => inter_FIFO_RE,
+      WCLOCK    => inter_FIFO_WCLOCK,
+      RCLOCK    => inter_FIFO_RCLOCK,
+      FULL      => inter_FIFO_FULL,
+      EMPTY     => inter_FIFO_EMPTY,
+      RESET     => inter_FIFO_RESET,
+      AEMPTY    => inter_FIFO_AEMPTY,
+      AFULL     => inter_FIFO_AFULL
+      );
+
+  inter_FIFO_RESET  <= i_Rst_L; 
+  inter_FIFO_WCLOCK <= i_Clk;
+  inter_FIFO_RCLOCK <= i_Clk;
+  
+  inter_TX_DV       <= i_TX_DV;     -- Data Valid Pulse with i_TX_Byte
+  
+  -- FIFO logic
+  process (i_Clk)
+  begin
+    if rising_edge(i_Clk) then
+      -- Check if SPI data is valid and FIFO is not full
+      if inter_RX_DV = '1' and inter_FIFO_FULL = '0' then
+        -- Push MISO data into the FIFO
+        inter_FIFO_DATA(31 downto 16) <= inter_RX_Byte_Rising;
+        inter_FIFO_DATA(15 downto 0)  <= inter_RX_Byte_Falling;
+      end if;
+    end if;
+  end process;
+
+  -- Full and Empty flags
+  o_FIFO_FULL <= inter_FIFO_FULL;
+  o_FIFO_EMPTY <= inter_FIFO_EMPTY;
+
+  -- RX (MISO) Signals
+  o_RX_DV          <= inter_RX_DV;
+  o_RX_Byte_Rising <= inter_RX_Byte_Rising;
+  o_RX_Byte_Falling <= inter_RX_Byte_Falling; 
   
 
 
-
-  RHD64 : process(i_Clk, i_Rst_L) is
+  -- Reset logic
+  process (i_Rst_L)
   begin
     if i_Rst_L = '1' then
-        r_CH_Counter <= '32';
-    elsif rising_edge(i_Clk) then
-        case r_SM_RHD64 is
-            when IDLE =>
-                
-      
-            when INSERT_DATA_MOSI =>
-                if w_RHD64_TX_Ready = '1' then                        
-                    if r_CH_Counter = '0' then
-                        r_RHD64_TX_Byte <= r_COMMAND_0;
-                    else
-                        r_RHD64_TX_Byte <= r_COMMAND_63;
-                    end if;
-                    r_RHD64_TX_DV <= '1';
-                end if;    
-                r_CH_Counter <= r_CH_Counter + 1;
-                r_SM_RHD64   <= FLAG_TX_DV;
-                    
-            when FLAG_TX_DV => 
-                r_RHD64_TX_DV <= '0';
-                r_SM_RHD64   <= TRANSFER_DATA;
+      inter_FIFO_DATA <= (others => '0');
+      inter_FIFO_FULL <= '0';
+      inter_FIFO_EMPTY <= '1';
+    elsif rising_edge(inter_FIFO_RE) then
+      inter_FIFO_FULL <= '0';
+      if inter_FIFO_EMPTY = '0' then
+        inter_FIFO_EMPTY <= '1';
+      end if;
+    end if;
+  end process;
 
-            when TRANSFER_DATA =>
-                if r_CH_Counter > 0 then
-                    r_CH_Counter = r_CH_Counter - 1;
-                end if;
-                
-                
-                
+  -- Data access ports
+  o_FIFO_DATA <= inter_FIFO_DATA;
 
-                   
+  -- Almost empty and Almost full flags
+  o_FIFO_AEMPTY <= '0';  -- Modify as needed
+  o_FIFO_AFULL <= '0';   -- Modify as needed
 
-            when CS_INACTIVE =>
-         
-            when others => 
-            r_CS_n  <= '1'; -- we done, so set CS high
-            r_SM_RHD64 <= IDLE;
-        end case;
-                
+  o_TX_Ready <= inter_TX_Ready;     -- Transmit Ready for next byte
 
 
-
-  end process RHD64;
-
-   -- architecture body
-end architecture_Controller;
-
+end architecture RTL;

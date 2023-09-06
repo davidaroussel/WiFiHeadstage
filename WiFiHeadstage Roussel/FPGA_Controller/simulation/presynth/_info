@@ -295,35 +295,38 @@ R26
 R38
 R39
 R0
-Efifo
-Z46 w1693412123
+Econtroller
+Z46 w1694036615
+R1
 R2
 R3
 R6
-Z47 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd
-Z48 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd
+Z47 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller.vhd
+Z48 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller.vhd
 l0
-L8
-VCYz=fc7P;;J]cEOeI2dOK0
-!s100 l@`iM8=5_ggA`<Bae>dzl0
+L6
+VRz1ca<XPQ9[jmi>;kjARF1
+!s100 F;zU1C6dVeV6@1AidYbkl1
 R26
 33
-Z49 !s110 1693412142
+Z49 !s110 1694036685
 !i10b 1
-Z50 !s108 1693412142.000000
-Z51 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd|
-Z52 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd|
+Z50 !s108 1694036685.000000
+Z51 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller.vhd|
+Z52 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller.vhd|
 !i113 1
 R38
 R39
-Adef_arch
+Artl
+Z53 DEx4 work 4 fifo 0 22 CYz=fc7P;;J]cEOeI2dOK0
+R1
 R2
 R3
-DEx4 work 4 fifo 0 22 CYz=fc7P;;J]cEOeI2dOK0
-l161
-L25
-V;ZHg2?>nODnTWn:S1:>??2
-!s100 []oW92iFoR1KoakaiL9MF1
+Z54 DEx4 work 10 controller 0 22 Rz1ca<XPQ9[jmi>;kjARF1
+l112
+L43
+Vk[ZF6Rokk92XCV[?[XK`H3
+!s100 o=fPWZ[`oP==i`M0dXIUA0
 R26
 33
 R49
@@ -334,25 +337,190 @@ R52
 !i113 1
 R38
 R39
-Efifo_tb
-Z53 w1693411983
+Aarchitecture_controller
+R53
+R42
+R1
+R2
+R3
+Z55 DEx4 work 10 controller 0 22 0PN[=QecIldOVkTRn7nL`1
+l92
+L66
+Va@;=hfOM:zO<hTn16>?MO0
+!s100 0zWII_N]Bk<?z=U;i`2Tk0
+R26
+33
+Z56 !s110 1693598361
+!i10b 1
+Z57 !s108 1693598361.000000
+R51
+R52
+!i113 1
+R38
+R39
+w1693598948
+Econtroller_tb
+Z58 w1694036495
 R1
 R2
 R3
 R6
-Z54 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
-Z55 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
+Z59 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/Controller_tb.vhd
+Z60 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/Controller_tb.vhd
+l0
+L6
+VFBdiZ=a6:lP5O[jiz8cle1
+!s100 D8:k9ab6oJZQ<IL[C@Z?C2
+R26
+33
+R49
+!i10b 1
+R50
+Z61 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/Controller_tb.vhd|
+Z62 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/Controller_tb.vhd|
+!i113 1
+R38
+R39
+Asim
+R54
+R1
+R2
+R3
+Z63 DEx4 work 13 controller_tb 0 22 FBdiZ=a6:lP5O[jiz8cle1
+l56
+L9
+V]4RehKVVgI@1]PZS=aHlX3
+!s100 U8MV?:US46fKPVN[jIlh62
+R26
+33
+R49
+!i10b 1
+R50
+R61
+R62
+!i113 1
+R38
+R39
+Atb_arch
+R1
+R2
+R3
+DEx4 work 13 controller_tb 0 22 nNNDJA8Tz7<Lm@8H[`YL10
+l80
+L8
+V2o34AX`;_8SU1MXfYLnf12
+!s100 Sag^KEoQ3<dVh@@fX]G?>2
+R26
+33
+!s110 1694021335
+!i10b 1
+!s108 1694021335.000000
+R61
+R62
+!i113 1
+R38
+R39
+w1694021310
+Atb_architecture
+R55
+R1
+R2
+R3
+DEx4 work 13 controller_tb 0 22 <lD_l@8]e2P3LSjF3JeQT3
+l41
+L8
+VNPImHii=<4gOO6O@l5l]83
+!s100 9AEBEz=TS08nhLXlP`ZaW1
+R26
+33
+R56
+!i10b 1
+R57
+R61
+R62
+!i113 1
+R38
+R39
+w1693596786
+Aarchitecture_controller_tb
+R1
+DEx4 work 10 controller 0 22 Q`k;9eLoc5;Dl<OE_1Gl=2
+R2
+R3
+DEx4 work 13 controller_tb 0 22 U5Ebfgd?;YXOOO`J_c^UN1
+l79
+L26
+V>f0aQg9Q_6O]dG1P44K>D1
+!s100 VbPDbK7o]LNGYlDF5dZA?0
+R26
+33
+!s110 1693587216
+!i10b 1
+!s108 1693587216.000000
+R61
+R62
+!i113 1
+R38
+R39
+w1693587184
+Efifo
+Z64 w1693412123
+R2
+R3
+R6
+Z65 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd
+Z66 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd
+l0
+L8
+VCYz=fc7P;;J]cEOeI2dOK0
+!s100 l@`iM8=5_ggA`<Bae>dzl0
+R26
+33
+R49
+!i10b 1
+R50
+Z67 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd|
+Z68 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd|
+!i113 1
+R38
+R39
+Adef_arch
+R2
+R3
+R53
+l161
+L25
+V;ZHg2?>nODnTWn:S1:>??2
+!s100 []oW92iFoR1KoakaiL9MF1
+R26
+33
+R49
+!i10b 1
+R50
+R67
+R68
+!i113 1
+R38
+R39
+Efifo_tb
+Z69 w1693579599
+R1
+R2
+R3
+R6
+Z70 8C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
+Z71 FC:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd
 l0
 L33
 VfSnX`[[H;We89Vdi?Y28l3
 !s100 lb;ECVfFf>[X9Q:F;K5bE2
 R26
 33
-R49
+Z72 !s110 1693579614
 !i10b 1
-R50
-Z56 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd|
-Z57 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd|
+Z73 !s108 1693579613.000000
+Z74 !s90 -reportprogress|300|-2008|-explicit|-work|presynth|C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd|
+Z75 !s107 C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/FIFO_tb.vhd|
 !i113 1
 R38
 R39
@@ -363,20 +531,20 @@ R3
 DEx4 work 7 fifo_tb 0 22 fSnX`[[H;We89Vdi?Y28l3
 l67
 L36
-V;QE^oZUDWboa6A[lEU2OP3
-!s100 bI?=i`BIZ>JF3=had9k6Z0
+VCh:JEOf;=h`F?L=5c3GL02
+!s100 M>XlJ3hziVLBLICO[QkCA0
 R26
 33
-R49
+R72
 !i10b 1
-R50
-R56
-R57
+R73
+R74
+R75
 !i113 1
 R38
 R39
 Espi_master
-Z58 w1693415371
+Z76 w1693415371
 R1
 R2
 R3
@@ -389,9 +557,9 @@ R36
 R37
 R26
 33
-Z59 !s110 1693415432
+R49
 !i10b 1
-Z60 !s108 1693415432.000000
+R50
 R11
 R12
 !i113 1
@@ -408,16 +576,16 @@ VY5GiB90_Pn=N[O3l2lTGK1
 !s100 h6G]ilV8;AT<2EBhJ5[_z0
 R26
 33
-R59
+R49
 !i10b 1
-R60
+R50
 R11
 R12
 !i113 1
 R38
 R39
 Espi_master_cs
-Z61 w1693411854
+Z77 w1694036667
 R1
 R2
 R3
@@ -430,9 +598,9 @@ R40
 R41
 R26
 33
-R59
+R49
 !i10b 1
-R60
+R50
 R17
 R18
 !i113 1
@@ -444,22 +612,22 @@ R1
 R2
 R3
 R42
-l87
+l117
 L77
-VAC]z_Tnbn2<8MbPiC=Vml1
-!s100 3;2RA?_`D<iD8CU1e72ha3
+V8U4<eRo@3dGYIS?M4aSoU2
+!s100 jVil0f_T<FUaLkcc3QkP;0
 R26
 33
-R59
+R49
 !i10b 1
-R60
+R50
 R17
 R18
 !i113 1
 R38
 R39
 Espi_master_cs_tb
-Z62 w1693411914
+Z78 w1693587009
 R1
 R2
 R3
@@ -472,9 +640,9 @@ VZLf@UjM=FUSX1aI?0?PhT2
 !s100 e<[Rh7GN_@el`VE5:BAD<1
 R26
 33
-R59
+Z79 !s110 1694035697
 !i10b 1
-R60
+Z80 !s108 1694035697.000000
 R23
 R24
 !i113 1
@@ -485,23 +653,23 @@ R42
 R1
 R2
 R3
-Z63 DEx4 work 16 spi_master_cs_tb 0 22 ZLf@UjM=FUSX1aI?0?PhT2
-l74
+DEx4 work 16 spi_master_cs_tb 0 22 ZLf@UjM=FUSX1aI?0?PhT2
+l75
 L37
-Z64 V<Te5?HO<Bl5fcdD[ZPefJ2
-Z65 !s100 KEBR3:mM1XXS`S9fhLkPV0
+Vb[3R;L>d=7Z`lW:E[@hDF0
+!s100 gDkB:P9dOM0K_`keK>4>S1
 R26
 33
-R59
+R79
 !i10b 1
-R60
+R80
 R23
 R24
 !i113 1
 R38
 R39
 Espi_master_tb
-Z66 w1693413341
+Z81 w1693586938
 R1
 R2
 R3
@@ -514,9 +682,9 @@ R43
 R44
 R26
 33
-Z67 !s110 1693413773
+Z82 !s110 1693586955
 !i10b 1
-Z68 !s108 1693413773.000000
+Z83 !s108 1693586955.000000
 R34
 R35
 !i113 1
@@ -528,15 +696,15 @@ R1
 R2
 R3
 R45
-l71
+l72
 L36
-V2zeGG;M?i[XWo<;C=ZhWL3
-!s100 X1:[QCQ7PIZ22oX_Rj>122
+VFdzTGJkz0IeCzXU2:oN@L3
+!s100 =ZX<CkkM:d@8PB>;X=IC73
 R26
 33
-R67
+R82
 !i10b 1
-R68
+R83
 R34
 R35
 !i113 1

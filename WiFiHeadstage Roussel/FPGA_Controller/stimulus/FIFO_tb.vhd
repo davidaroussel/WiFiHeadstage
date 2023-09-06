@@ -65,7 +65,7 @@ architecture behave of FIFO_tb is
  
    
 begin
-  MODULE_FIFO : FIFO
+  UUT : entity work.FIFO
     port map (
       DATA      => r_DATA,
       Q         => w_Q,
@@ -114,11 +114,12 @@ begin
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
 
-    r_DATA <= X"A1A1A1A1";    
     r_WE <= '1';
     wait until r_CLOCK = '1';
+    r_DATA <= X"A1A1A1A1";    
     r_WE <= '0';
 
+    wait until r_CLOCK = '1';
     r_DATA <= X"A2A2A2A2";    
     r_WE <= '1';
     wait until r_CLOCK = '1';

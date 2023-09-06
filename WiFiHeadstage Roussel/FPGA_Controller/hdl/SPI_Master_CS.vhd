@@ -79,10 +79,40 @@ architecture RTL of SPI_Master_CS is
   type t_SM_CS is (IDLE, TRANSFER, CS_INACTIVE);
 
   signal r_SM_CS : t_SM_CS;
-  signal r_CS_n : std_logic;
+  signal r_CS_n  : std_logic;
   signal r_CS_Inactive_Count : integer range 0 to CS_INACTIVE_CLKS;
-  signal r_TX_Count : integer range 0 to MAX_PACKET_PER_CS + 1;
+  signal r_TX_Count     : integer range 0 to MAX_PACKET_PER_CS + 1;
   signal w_Master_Ready : std_logic;
+
+  component SPI_Master is
+      generic (
+        SPI_MODE               : integer := 0;
+        CLKS_PER_HALF_BIT      : integer := 2;
+        NUM_OF_BYTE_PER_PACKET : integer := 2
+        );
+      port (
+       -- Control/Data Signals,
+       i_Rst_L : in std_logic;        -- FPGA Reset
+       i_Clk   : in std_logic;        -- FPGA Clock
+       
+       -- TX (MOSI) Signals
+       i_TX_Byte   : in std_logic_vector(15 downto 0);   -- Byte to transmit on MOSI
+       i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
+       o_TX_Ready  : out std_logic;         -- Transmit Ready for next byte
+       
+       -- RX (MISO) Signals
+       o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
+       o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);    -- Byte received on MISO Rising Edge
+       o_RX_Byte_Falling  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Falling Edge
+       w : out std_logic_vector(7 downto 0);   -- Byte received on MISO Falling Edge
+
+       -- SPI Interface
+       o_SPI_Clk  : out std_logic;
+       i_SPI_MISO : in  std_logic;
+       o_SPI_MOSI : out std_logic
+       );
+    end component SPI_Master;
+
 
 begin
 
@@ -100,9 +130,9 @@ begin
       i_TX_DV    => i_TX_DV,            -- Data Valid pulse
       o_TX_Ready => w_Master_Ready,     -- Transmit Ready for Byte
       -- RX (MISO) Signals
-      o_RX_DV    => o_RX_DV,            -- Data Valid pulse
-      o_RX_Byte_Rising  => o_RX_Byte_Rising,          -- Byte received on MISO Rising  CLK Edge 
-      o_RX_Byte_Falling  => o_RX_Byte_Falling,        -- Byte received on MISO Falling CLK Edge       
+      o_RX_DV           => o_RX_DV,            -- Data Valid pulse
+      o_RX_Byte_Rising  => o_RX_Byte_Rising,   -- Byte received on MISO Rising  CLK Edge 
+      o_RX_Byte_Falling => o_RX_Byte_Falling,  -- Byte received on MISO Falling CLK Edge       
        -- SPI Interface
       o_SPI_Clk  => o_SPI_Clk, 
       i_SPI_MISO => i_SPI_MISO,
