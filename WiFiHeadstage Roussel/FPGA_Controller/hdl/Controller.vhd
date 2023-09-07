@@ -29,8 +29,8 @@ entity Controller is
     -- RX (MISO) Signals
     o_RX_Count        : out std_logic_vector;  -- Index RX byte
     o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
-    o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-    o_RX_Byte_Falling : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+    io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
+    io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
 
     o_FIFO_Data : out std_logic_vector(31 downto 0);
     o_FIFO_EMPTY : out std_logic;
@@ -84,8 +84,8 @@ architecture RTL of Controller is
       -- RX (MISO) Signals
       o_RX_Count        : out std_logic_vector;  -- Index RX byte
       o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
-      o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-      o_RX_Byte_Falling : out std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+      io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
+      io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
       -- SPI Interface
       o_SPI_Clk  : out std_logic;
       i_SPI_MISO : in  std_logic;
@@ -122,13 +122,13 @@ begin
       i_Rst_L           => i_Rst_L,
       i_Clk             => i_Clk,
       i_TX_Count        => i_TX_Count,           
-      i_TX_Byte         => inter_TX_Byte,           
-      i_TX_DV           => inter_TX_DV,                   
-      o_TX_Ready        => inter_TX_Ready,                
+      i_TX_Byte         => i_TX_Byte,           
+      i_TX_DV           => i_TX_DV,                   
+      o_TX_Ready        => o_TX_Ready,                
       o_RX_Count        => o_RX_Count,                
       o_RX_DV           => inter_RX_DV,               
-      o_RX_Byte_Rising  => inter_RX_Byte_Rising,
-      o_RX_Byte_Falling => inter_RX_Byte_Falling,
+      io_RX_Byte_Rising  => inter_RX_Byte_Rising,
+      io_RX_Byte_Falling => inter_RX_Byte_Falling,
       
       o_SPI_Clk  => o_SPI_CLK,
       i_SPI_MISO => i_SPI_MISO,
@@ -163,7 +163,7 @@ begin
   begin
     if rising_edge(i_Clk) then
       -- Check if SPI data is valid and FIFO is not full
-      if inter_RX_DV = '1' and inter_FIFO_FULL = '0' then
+      if inter_RX_DV = '1' then
         -- Push MISO data into the FIFO
         inter_FIFO_DATA(31 downto 16) <= inter_RX_Byte_Rising;
         inter_FIFO_DATA(15 downto 0)  <= inter_RX_Byte_Falling;
@@ -171,16 +171,7 @@ begin
     end if;
   end process;
 
-  -- Full and Empty flags
-  o_FIFO_FULL <= inter_FIFO_FULL;
-  o_FIFO_EMPTY <= inter_FIFO_EMPTY;
-
-  -- RX (MISO) Signals
-  o_RX_DV          <= inter_RX_DV;
-  o_RX_Byte_Rising <= inter_RX_Byte_Rising;
-  o_RX_Byte_Falling <= inter_RX_Byte_Falling; 
-  
-
+ 
 
   -- Reset logic
   process (i_Rst_L)
@@ -197,14 +188,23 @@ begin
     end if;
   end process;
 
-  -- Data access ports
-  o_FIFO_DATA <= inter_FIFO_DATA;
 
-  -- Almost empty and Almost full flags
-  o_FIFO_AEMPTY <= '0';  -- Modify as needed
-  o_FIFO_AFULL <= '0';   -- Modify as needed
+  -- Full and Empty flags
+  o_FIFO_FULL <= inter_FIFO_FULL;
+  o_FIFO_EMPTY <= inter_FIFO_EMPTY;
 
-  o_TX_Ready <= inter_TX_Ready;     -- Transmit Ready for next byte
+  -- RX (MISO) Signals
+  o_RX_DV           <= inter_RX_DV;
+  io_RX_Byte_Rising  <= inter_RX_Byte_Rising;
+  io_RX_Byte_Falling <= inter_RX_Byte_Falling; 
+
+  -- data access ports
+  o_FIFO_DATA <= inter_fifo_data;
+
+  -- almost empty and almost full flags
+  o_FIFO_AEMPTY <= '0';  -- modify as needed
+  o_FIFO_AFULL <= '0';   -- modify as needed
+   -- Transmit Ready for next byte
 
 
 end architecture RTL;

@@ -24,14 +24,14 @@ architecture sim of Controller_tb is
   signal tb_SPI_CS_n        : std_logic;
   
   signal tb_TX_Count        : std_logic_vector(1 downto 0)  := "01";
-  signal tb_TX_Byte         : std_logic_vector(15 downto 0) := (others => '0');
+  signal tb_TX_Byte         : std_logic_vector(15 downto 0) := X"0000";
   signal tb_TX_DV           : std_logic := '0';
   signal tb_TX_Ready        : std_logic;
   
-  signal tb_RX_Count        : std_logic_vector(3 downto 0);
+  signal tb_RX_Count        : std_logic_vector(1 downto 0);
   signal tb_RX_DV           : std_logic;
-  signal tb_RX_Byte_Rising  : std_logic_vector(15 downto 0) := (others => '0');
-  signal tb_RX_Byte_Falling : std_logic_vector(15 downto 0) := (others => '0');
+  signal tb_RX_Byte_Rising  : std_logic_vector(15 downto 0);
+  signal tb_RX_Byte_Falling : std_logic_vector(15 downto 0);
   
   signal tb_FIFO_Data       : std_logic_vector(31 downto 0);
   signal tb_FIFO_EMPTY      : std_logic;
@@ -68,7 +68,7 @@ begin
       i_Rst_L           => tb_Rst_L,
       i_Clk             => tb_Clk,
       o_SPI_Clk         => tb_SPI_Clk,
-      i_SPI_MISO        => tb_SPI_MISO,
+      i_SPI_MISO        => tb_SPI_MOSI,
       o_SPI_MOSI        => tb_SPI_MOSI,
       o_SPI_CS_n        => tb_SPI_CS_n,
       i_TX_Count        => tb_TX_Count,
@@ -77,8 +77,8 @@ begin
       o_TX_Ready        => tb_TX_Ready,
       o_RX_Count        => tb_RX_Count,
       o_RX_DV           => tb_RX_DV,
-      o_RX_Byte_Rising  => tb_RX_Byte_Rising,
-      o_RX_Byte_Falling => tb_RX_Byte_Falling,
+      io_RX_Byte_Rising  => tb_RX_Byte_Rising,
+      io_RX_Byte_Falling => tb_RX_Byte_Falling,
       o_FIFO_Data       => tb_FIFO_Data,
       o_FIFO_EMPTY      => tb_FIFO_EMPTY,
       o_FIFO_FULL       => tb_FIFO_FULL,

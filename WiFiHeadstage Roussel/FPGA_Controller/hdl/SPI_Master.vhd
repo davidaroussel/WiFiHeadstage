@@ -38,8 +38,8 @@ entity SPI_Master is
    
    -- RX (MISO) Signals
    o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
-   o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);    -- Byte received on MISO Rising Edge
-   o_RX_Byte_Falling  : out std_logic_vector(15 downto 0);   -- Byte received on MISO Falling Edge
+   io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);    -- Byte received on MISO Rising Edge
+   io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Falling Edge
    w : out std_logic_vector(7 downto 0);   -- Byte received on MISO Falling Edge
 
    -- SPI Interface
@@ -165,8 +165,8 @@ begin
   MISO_Data : process (i_Clk, i_Rst_L)
   begin
     if i_Rst_L = '1' then
-      o_RX_Byte_Rising      <= X"0000";
-      o_RX_Byte_Falling     <= X"0000";
+      io_RX_Byte_Rising      <= X"0000";
+      io_RX_Byte_Falling     <= X"0000";
       o_RX_DV        <= '0';
       r_RX_Bit_Count <= "11111";          -- Starts at 31a (Dual-data rate)
     elsif rising_edge(i_Clk) then
@@ -175,13 +175,13 @@ begin
         o_RX_DV <= '0';         
         r_RX_Bit_Count <= "11111";        -- Starts at 31
       elsif r_Leading_Edge = '1' then
-        o_RX_Byte_Rising(to_integer(r_RX_Bit_Count)/2)  <= i_SPI_MISO;  -- Sample data
+        io_RX_Byte_Rising(to_integer(r_RX_Bit_Count)/2)  <= i_SPI_MISO;  -- Sample data
         r_RX_Bit_Count <= r_RX_Bit_Count - 1;
         if r_RX_Bit_Count = "00000" then
           o_RX_DV <= '1';   -- Byte done, pulse Data Valid
         end if;
       elsif r_Trailing_Edge = '1' then 
-        o_RX_Byte_Falling(to_integer(r_RX_Bit_Count)/2) <= i_SPI_MISO; -- Sample data
+        io_RX_Byte_Falling(to_integer(r_RX_Bit_Count)/2) <= i_SPI_MISO; -- Sample data
         r_RX_Bit_Count <= r_RX_Bit_Count - 1;
         if r_RX_Bit_Count = "00000" then
           o_RX_DV <= '1';   -- Byte done, pulse Data Valid
