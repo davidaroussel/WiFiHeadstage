@@ -44,10 +44,10 @@ use ieee.numeric_std.all;
 
 entity SPI_Master_CS is
   generic (
-    SPI_MODE          : integer := 0;
-    CLKS_PER_HALF_BIT : integer := 2;
-    MAX_PACKET_PER_CS : integer := 1;
-    CS_INACTIVE_CLKS  : integer := 1
+      SPI_MODE          : integer := 0;
+      CLKS_PER_HALF_BIT : integer := 3;
+      MAX_PACKET_PER_CS : integer := 2;
+      CS_INACTIVE_CLKS  : integer := 4
     );
   port (
    -- Control/Data Signals,

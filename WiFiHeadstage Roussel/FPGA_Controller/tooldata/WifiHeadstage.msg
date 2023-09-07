@@ -1,3 +1,1 @@
 HelpInfo,C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\lib\html,fpgahelp.qhc,errormessages.mp,C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\mbin\assistant
-Implementation;Synthesis;RootName:Controller
-Implementation;Synthesis|| CD147 ||@E:Variable i_tx_count should have a constrained type||Controller.srr(23);liberoaction://cross_probe/hdl/file/'C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\synthesis\Controller.srr'/linenumber/23||Controller.vhd(18);liberoaction://cross_probe/hdl/file/'C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\Controller.vhd'/linenumber/18

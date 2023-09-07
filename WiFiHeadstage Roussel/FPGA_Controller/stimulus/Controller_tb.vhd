@@ -34,11 +34,16 @@ architecture sim of Controller_tb is
   signal tb_RX_Byte_Falling : std_logic_vector(15 downto 0);
   
   signal tb_FIFO_Data       : std_logic_vector(31 downto 0);
+  signal tb_FIFO_WE      : std_logic;
+  signal tb_FIFO_RE      : std_logic;
+  
+  signal tb_FIFO_Q          : std_logic_vector(31 downto 0);
   signal tb_FIFO_EMPTY      : std_logic;
   signal tb_FIFO_FULL       : std_logic;
   signal tb_FIFO_AEMPTY     : std_logic;
   signal tb_FIFO_AFULL      : std_logic;
 
+  
   -- Sends a single byte from master. 
   procedure SendMessage (
     data          : in  std_logic_vector(15 downto 0);
@@ -58,39 +63,38 @@ begin
   tb_Clk <= not tb_Clk after CLK_PERIOD;
   tb_SPI_MISO <= tb_SPI_MOSI;
 
-  UUT: entity work.Controller
-    generic map (
-      SPI_MODE           => SPI_MODE,
-      CLKS_PER_HALF_BIT  => CLKS_PER_HALF_BIT,
-      MAX_PACKET_PER_CS  => MAX_PACKET_PER_CS,
-      CS_INACTIVE_CLKS   => CS_INACTIVE_CLKS)
+  UUT: entity work.Controller_RHD64
     port map (
-      i_Rst_L           => tb_Rst_L,
-      i_Clk             => tb_Clk,
-      o_SPI_Clk         => tb_SPI_Clk,
-      i_SPI_MISO        => tb_SPI_MOSI,
-      o_SPI_MOSI        => tb_SPI_MOSI,
-      o_SPI_CS_n        => tb_SPI_CS_n,
-      i_TX_Count        => tb_TX_Count,
-      i_TX_Byte         => tb_TX_Byte,
-      i_TX_DV           => tb_TX_DV,
-      o_TX_Ready        => tb_TX_Ready,
-      o_RX_Count        => tb_RX_Count,
-      o_RX_DV           => tb_RX_DV,
+      i_Rst_L            => tb_Rst_L,
+      i_Clk              => tb_Clk,
+      o_SPI_Clk          => tb_SPI_Clk,
+      i_SPI_MISO         => tb_SPI_MOSI,
+      o_SPI_MOSI         => tb_SPI_MOSI,
+      o_SPI_CS_n         => tb_SPI_CS_n,
+      i_TX_Count         => tb_TX_Count,
+      i_TX_Byte          => tb_TX_Byte,
+      i_TX_DV            => tb_TX_DV,
+      o_TX_Ready         => tb_TX_Ready,
+      o_RX_Count         => tb_RX_Count,
+      o_RX_DV            => tb_RX_DV,
       io_RX_Byte_Rising  => tb_RX_Byte_Rising,
       io_RX_Byte_Falling => tb_RX_Byte_Falling,
-      o_FIFO_Data       => tb_FIFO_Data,
-      o_FIFO_EMPTY      => tb_FIFO_EMPTY,
-      o_FIFO_FULL       => tb_FIFO_FULL,
-      o_FIFO_AEMPTY     => tb_FIFO_AEMPTY,
-      o_FIFO_AFULL      => tb_FIFO_AFULL
+      o_FIFO_Data        => tb_FIFO_Data,
+      o_FIFO_WE          => tb_FIFO_WE,
+      i_FIFO_RE          => tb_FIFO_RE,
+      o_FIFO_Q           => tb_FIFO_Q,
+      o_FIFO_EMPTY       => tb_FIFO_EMPTY,
+      o_FIFO_FULL        => tb_FIFO_FULL,
+      o_FIFO_AEMPTY      => tb_FIFO_AEMPTY,
+      o_FIFO_AFULL       => tb_FIFO_AFULL
     );
 
 
-    Testing : process is
+  Testing : process is
   begin
     wait for 100 ns;
     tb_Rst_L <= '1';
+    tb_FIFO_RE <= '0';
     wait for 100 ns;
     tb_Rst_L <= '0';
 
@@ -98,16 +102,38 @@ begin
     SendMessage(X"C1C2", tb_TX_Byte, tb_TX_DV);
     report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
+
+    wait until rising_edge(tb_Clk);
+    tb_FIFO_RE <= '1';
+    wait until rising_edge(tb_Clk);
+    tb_FIFO_RE <= '0';
+    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
+    
     -- Test double byte
     SendMessage(X"ADBC", tb_TX_Byte, tb_TX_DV);
     report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
 
+
     SendMessage(X"A1A2", tb_TX_Byte, tb_TX_DV);
     report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
     report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));   
 
-    wait for 100 ns;
+    wait until rising_edge(tb_Clk);
+    tb_FIFO_RE <= '1';
+    wait until rising_edge(tb_Clk);
+    tb_FIFO_RE <= '0';
+    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
+    for i in 0 to 9 loop
+        wait until rising_edge(tb_Clk);
+    end loop;
+    
+    tb_FIFO_RE <= '1';
+    wait until rising_edge(tb_Clk);
+    tb_FIFO_RE <= '0';
+    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
+
+    wait for 5000 ns;
     assert false report "Test Complete" severity failure;
   end process Testing;
 end architecture sim;

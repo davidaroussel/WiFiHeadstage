@@ -31,12 +31,12 @@ KEY VendorTechnology_VCCI_1.8_VOLTR "COM"
 KEY VendorTechnology_VCCI_2.5_VOLTR "COM"
 KEY VendorTechnology_VCCI_3.3_VOLTR "COM"
 KEY VendorTechnology_VOLTR "COM"
-KEY ProjectLocation "C:\Users\david\Desktop\WiFiHeadstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller"
+KEY ProjectLocation "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller"
 KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VHDL"
 KEY Vendor "Actel"
-KEY ActiveRoot "Controller::work"
+KEY ActiveRoot "Controller_RHD64::work"
 LIST REVISIONS
 VALUE="Impl1",NUM=1
 CURREV=1
@@ -44,121 +44,136 @@ ENDLIST
 LIST FileManager
 VALUE "<project>\component\work\DESIGN_FIRMWARE\DESIGN_FIRMWARE.cxf,actgen_cxf"
 STATE="utd"
-TIME="1694038046"
+TIME="1694033881"
 SIZE="437"
 ENDFILE
 VALUE "<project>\designer\impl1\Controller.ide_des,ide_des"
 STATE="utd"
-TIME="1694038046"
+TIME="1694102172"
 SIZE="255"
+ENDFILE
+VALUE "<project>\designer\impl1\Controller_RHD64.ide_des,ide_des"
+STATE="utd"
+TIME="1694102197"
+SIZE="261"
 ENDFILE
 VALUE "<project>\designer\impl1\SPI_Master.ide_des,ide_des"
 STATE="utd"
-TIME="1692971709"
+TIME="1692884847"
 SIZE="217"
 ENDFILE
-VALUE "<project>\hdl\Controller.vhd,hdl"
+VALUE "<project>\hdl\Controller_Headstage.vhd,hdl"
 STATE="utd"
-TIME="1694045600"
-SIZE="7030"
+TIME="1694116124"
+SIZE="8323"
+ENDFILE
+VALUE "<project>\hdl\Controller_RHD64.vhd,hdl"
+STATE="utd"
+TIME="1694113337"
+SIZE="6514"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master.vhd,hdl"
 STATE="utd"
-TIME="1694044574"
+TIME="1694090295"
 SIZE="7217"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 STATE="utd"
-TIME="1694045321"
-SIZE="7698"
+TIME="1694108273"
+SIZE="7706"
+ENDFILE
+VALUE "<project>\simulation\Controller_Headstage_tb_presynth_simulation.log,log"
+STATE="utd"
+TIME="1694110681"
+SIZE="3562"
 ENDFILE
 VALUE "<project>\simulation\Controller_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694045640"
-SIZE="4015"
+TIME="1694113450"
+SIZE="6574"
 ENDFILE
 VALUE "<project>\simulation\FIFO_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694038046"
+TIME="1693580561"
 SIZE="4181"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1694038046"
-SIZE="916"
+TIME="1694090295"
+SIZE="915"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694038046"
+TIME="1694035829"
 SIZE="5224"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694038046"
+TIME="1693587013"
 SIZE="3984"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
-TIME="1692971709"
+TIME="1694098845"
 SIZE="2572"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.gen,gen"
 STATE="utd"
-TIME="1693494746"
+TIME="1694098843"
 SIZE="856"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.log,log"
 STATE="utd"
-TIME="1693494746"
+TIME="1694098844"
 SIZE="2535"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.vhd,hdl"
 STATE="utd"
-TIME="1693494746"
+TIME="1694098844"
 SIZE="11033"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
+VALUE "<project>\stimulus\Controller_Headstage_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1694115237"
+SIZE="6175"
+ENDFILE
 VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694045659"
-SIZE="4016"
+TIME="1694113292"
+SIZE="4746"
 ENDFILE
 VALUE "<project>\stimulus\FIFO_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694038046"
+TIME="1694099420"
 SIZE="4943"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694038046"
+TIME="1693587009"
 SIZE="4997"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694038046"
+TIME="1693586938"
 SIZE="4619"
 ENDFILE
 VALUE "<project>\synthesis\Controller_syn.prj,prj"
 STATE="utd"
-TIME="1694038046"
-SIZE="1129"
-ENDFILE
-VALUE "<project>\synthesis\synwork\layer0.so,so"
-STATE="utd"
-TIME="1694038046"
-SIZE="159"
+TIME="1694090295"
+SIZE="1124"
 ENDFILE
 ENDLIST
 LIST UsedFile
 ENDLIST
 LIST NewModulesInfo
-LIST "Controller::work"
-FILE "<project>\hdl\Controller.vhd,hdl"
+LIST "Controller_RHD64::work"
+FILE "<project>\hdl\Controller_RHD64.vhd,hdl"
 LIST AssociatedStimulus
 VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 ENDLIST
@@ -213,7 +228,7 @@ ENDLIST
 ENDLIST
 ENDLIST
 LIST AssociatedStimulus
-LIST Controller
+LIST Controller_RHD64
 VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
 ENDLIST
 LIST SPI_Master_CS
@@ -325,7 +340,7 @@ IS32BIT="1"
 EndProfile
 ENDLIST
 LIST ProjectState5.1
-LIST "Controller::work"
+LIST "Controller_RHD64::work"
 LIST Impl1
 ideSTIMULUS=StateSuccess
 LIST FlowOptions
@@ -375,16 +390,20 @@ ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
 Reports;Reports;0
-ReportsCurrentItem;Pre-Synthesis Simulate:Controller_tb_presynth_simulation.log
-HDL;hdl\Controller.vhd;1
-HDL;hdl\SPI_Master.vhd;0
-HDL;stimulus\Controller_tb.vhd;0
-HDL;hdl\SPI_Master_CS.vhd;0
-HDL;stimulus\SPI_Master_CS_tb.vhd;0
-ACTIVEVIEW;hdl\Controller.vhd
+ReportsCurrentItem;Controller_Headstage:Controller_Headstage_tb_presynth_simulation.log
+HDL;hdl\Controller_Headstage.vhd;1
+HDL;stimulus\Controller_Headstage_tb.vhd;0
+HDL;stimulus\Controller_tb.vhd;1
+HDL;hdl\Controller_RHD64.vhd;0
+HDL;stimulus\FIFO_tb.vhd;0
+ACTIVEVIEW;stimulus\Controller_Headstage_tb.vhd
 ENDLIST
 LIST ModuleSubBlockList
-LIST "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
+LIST "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
+SUBBLOCK "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
+SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+ENDLIST
+LIST "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
 SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
@@ -397,8 +416,11 @@ ENDLIST
 LIST "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
+LIST "Controller_Headstage_tb::work","stimulus\Controller_Headstage_tb.vhd","FALSE","TRUE"
+SUBBLOCK "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
+ENDLIST
 LIST "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE","TRUE"
-SUBBLOCK "Controller::work","hdl\Controller.vhd","FALSE","FALSE"
+SUBBLOCK "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
 ENDLIST
 LIST "FIFO_tb::work","stimulus\FIFO_tb.vhd","FALSE","TRUE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
@@ -411,8 +433,11 @@ SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 ENDLIST
 LIST ActiveTestBenchList
-LIST "Controller::work"
+LIST "Controller_RHD64::work"
 ACTIVETESTBENCH "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE"
+ENDLIST
+LIST "SPI_Master::work"
+ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"
 ENDLIST
 LIST "SPI_Master::work"
 ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"

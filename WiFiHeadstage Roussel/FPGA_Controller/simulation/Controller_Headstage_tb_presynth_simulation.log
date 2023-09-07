@@ -1,0 +1,131 @@
+# Reading C:/Microsemi/Libero_SoC_v11.9/Modelsim/tcl/vsim/pref.tcl
+# do run.do
+# INFO: Simulation library presynth already exists
+# Model Technology ModelSim Microsemi vmap 10.5c Lib Mapping Utility 2016.07 Jul 21 2016
+# vmap presynth presynth 
+# Modifying modelsim.ini
+# Model Technology ModelSim Microsemi vmap 10.5c Lib Mapping Utility 2016.07 Jul 21 2016
+# vmap igloo C:/Microsemi/Libero_SoC_v11.9/Designer/lib/modelsim/precompiled/vhdl/igloo 
+# Modifying modelsim.ini
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:21 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/SPI_Master.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity SPI_Master
+# -- Compiling architecture RTL of SPI_Master
+# End time: 15:33:21 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:21 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/SPI_Master_CS.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity SPI_Master_CS
+# -- Compiling architecture RTL of SPI_Master_CS
+# -- Loading entity SPI_Master
+# End time: 15:33:21 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:21 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity FIFO
+# -- Compiling architecture DEF_ARCH of FIFO
+# End time: 15:33:21 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:21 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_RHD64.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Controller_RHD64
+# -- Compiling architecture RTL of Controller_RHD64
+# -- Loading entity FIFO
+# End time: 15:33:21 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:21 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity Controller_Headstage
+# -- Compiling architecture RTL of Controller_Headstage
+# -- Loading package NUMERIC_STD
+# -- Loading entity Controller_RHD64
+# -- Loading entity SPI_Master_CS
+# ** Warning: C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd(199): (vcom-1272) Length of expected is 16; length of actual is 32.
+# ** Warning: C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd(200): (vcom-1272) Length of expected is 16; length of actual is 32.
+# End time: 15:33:22 on Sep 07,2023, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim Microsemi vcom 10.5c Compiler 2016.07 Jul 21 2016
+# Start time: 15:33:22 on Sep 07,2023
+# vcom -reportprogress 300 -2008 -explicit -work presynth C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/stimulus/Controller_Headstage_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Controller_Headstage_tb
+# -- Compiling architecture Testbench of Controller_Headstage_tb
+# -- Loading entity Controller_Headstage
+# End time: 15:33:22 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -L igloo -L presynth -t 1ps presynth.Controller_Headstage_tb 
+# Start time: 15:33:22 on Sep 07,2023
+# //  ModelSim Microsemi 10.5c Jul 21 2016
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim Microsemi and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading presynth.controller_headstage_tb(testbench)
+# Loading presynth.controller_headstage(rtl)
+# Loading presynth.controller_rhd64(rtl)
+# Loading presynth.spi_master_cs(rtl)
+# Loading presynth.spi_master(rtl)
+# Loading presynth.fifo(def_arch)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading igloo.vtables
+# Loading igloo.or2(vital_act)
+# Loading igloo.nand2a(vital_act)
+# Loading igloo.nand2(vital_act)
+# Loading igloo.inv(vital_act)
+# Loading igloo.and2(vital_act)
+# Loading igloo.fifo4k18(vital_act)
+# Loading igloo.gnd(vital_act)
+# Loading igloo.vcc(vital_act)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: david  Hostname: DESKTOP-I7V5QPQ  ProcessID: 4532
+#           Attempting to use alternate WLF file "./wlft2jdg5q".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft2jdg5q
+# ** Fatal: (vsim-3420) Array lengths do not match. Left is 16 (15 downto 0). Right is 32 (15 downto -16).
+#    Time: 100 ns  Iteration: 1  Process: /controller_headstage_tb/UUT/line__194 File: C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd
+# Fatal error in Process line__194 at C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd line 199
+# 
+# HDL call sequence:
+# Stopped at C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd 199 Process line__194
+# 
+# End time: 15:33:58 on Sep 07,2023, Elapsed time: 0:00:36
+# Errors: 2, Warnings: 2
