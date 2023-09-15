@@ -8,6 +8,7 @@
 #include "Intan_utils.h"
 #include "Task_RHD64_SPI_communication.h"
 #include "stm32f4xx_hal.h"
+#include "Task_FPGA_communication.h"
 #include "Task_Apps_Start.h"
 
 #define RHD64_ADC_CONVERSION 0.195
@@ -23,12 +24,6 @@ extern SPI_HandleTypeDef hspi4;
 extern bool spi_flag;
 
 //extern osTimerId periodicTimerHandle;
-
-
-
-
-
-
 
 
 void RHD64_SPI_COMMUNICATION_task_entry(void const *p_arg);

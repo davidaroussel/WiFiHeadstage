@@ -44,13 +44,7 @@ void start_app_task(void);
 #define  DEFAULT_IP_ADDR        "10.99.172.126"
 //#define  DEFAULT_IP_ADDR        "192.168.1.5"
 #define  UDP_SERVER_PORT_DEFAULT 10000
-/*
- * 16 bits per channels, 2 channels per SPI message, 32 bits --> 4 bytes
- * 4 bytes * 32 loop to cover all 64 channels --> 128 bytes for all 64 channels
- * To achieve 15 KHz with RTOS Tick Rate at 1ms, need 15 loops --> 1920 bytes
-*/
-#define  SPI_DMA_BUFFER_SIZE 2 * 32
-#define  SPI_LOOP_FOR_1MS    30
+
 
 
 

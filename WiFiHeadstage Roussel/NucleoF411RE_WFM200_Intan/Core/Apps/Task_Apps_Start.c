@@ -15,10 +15,17 @@
 static QueueHandle_t spi_to_wifi_queue = NULL;
 
 osThreadId id;
-bool spi_flag = true;
+bool spi_flag = false;
 struct udp_pcb *upcb;
 osTimerId periodicTimerHandle;
 TimerHandle_t PTHandle;
+
+
+volatile uint8_t current_buffer;
+uint16_t rx_buffers[NUM_BUFFERS][SPI_BUFFER_SIZE];
+uint16_t rx_buffer[SPI_BUFFER_SIZE];
+
+
 
 uint16_t UDP_FREQUENCY = 16/2;
 
@@ -27,6 +34,8 @@ uint16_t UDP_FREQUENCY = 16/2;
 
 void start_app_task(void)
 {
+
+
 	INIT_UPD();
 
 
@@ -41,9 +50,10 @@ void start_app_task(void)
 
   	//osTimerStart(periodicTimerHandle, UDP_FREQUENCY);
 
-  	WIFI_MENU_INIT();
-  	//TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
+  	//WIFI_MENU_INIT();
+  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
   	//TASK_RHD64_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+  	TASK_FPGA_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 
 }
 

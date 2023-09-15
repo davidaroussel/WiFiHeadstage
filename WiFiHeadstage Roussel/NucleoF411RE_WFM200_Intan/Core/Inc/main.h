@@ -30,12 +30,18 @@ extern "C" {
 #include "stm32f4xx_hal.h"
 #include "sl_wfx_host_pin.h"
 
+#define  UDP_BUFFER_SIZE 128
+#define  SPI_BUFFER_SIZE 64    // Define the size of each buffer
+#define  NUM_BUFFERS 2         // Number of rolling buffers
+
+
 
 #define USART_TX_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
 
 #define USART_RX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
+
 
 //DEGUGGER
 #define TMS_GPIO_Port GPIOA
@@ -63,8 +69,8 @@ extern "C" {
 #define RHD_SPI_MOSI_Port GPIOA
 #define RHD_SPI_MOSI_Pin GPIO_PIN_1
 
-#define RHD_SPI_MISO_Port GPIOA
-#define RHD_SPI_MISO_Pin GPIO_PIN_11
+//#define RHD_SPI_MISO_Port GPIOA
+//#define RHD_SPI_MISO_Pin GPIO_PIN_11
 
 #define RHD_SPI_CLK_Port GPIOB
 #define RHD_SPI_CLK_Pin GPIO_PIN_13

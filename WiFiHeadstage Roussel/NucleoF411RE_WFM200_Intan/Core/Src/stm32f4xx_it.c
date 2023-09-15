@@ -37,11 +37,17 @@ extern SPI_HandleTypeDef hspi1;
 extern DMA_HandleTypeDef hdma_spi1_rx;
 extern DMA_HandleTypeDef hdma_spi1_tx;
 
-extern SPI_HandleTypeDef hspi4;
-extern SemaphoreHandle_t spi_data_ready;
+extern DMA_HandleTypeDef hdma_spi4_rx;
+
 
 extern SemaphoreHandle_t spiDMASemaphore;
 
+extern bool spi_flag;
+
+
+extern uint16_t rx_buffers[NUM_BUFFERS][SPI_BUFFER_SIZE];
+extern uint16_t rx_buffer[SPI_BUFFER_SIZE];
+extern volatile uint8_t current_buffer;
 
 
 
@@ -73,6 +79,12 @@ void HAL_SPI_RxCpltCallback (SPI_HandleTypeDef *hspi) {
 	if(hspi->Instance==SPI1){
 		  xSemaphoreGiveFromISR(spiDMASemaphore, &xHigherPriorityTaskWoken);
 		  portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
+
+	if(hspi->Instance==SPI4){
+		current_buffer = (current_buffer + 1) % NUM_BUFFERS;
+		HAL_SPI_Receive_DMA(hspi, (uint8_t *)rx_buffers[current_buffer], SPI_BUFFER_SIZE);
+		spi_flag = 1;
 	}
 }
 
@@ -243,6 +255,17 @@ void DMA2_Stream2_IRQHandler(void)
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
   /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+
+void DMA2_Stream3_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream3_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream3_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_spi4_rx);
+  /* USER CODE BEGIN DMA2_Stream3_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream3_IRQn 1 */
 }
 
 

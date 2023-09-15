@@ -8,28 +8,28 @@ C_SRCS += \
 ../Core/Apps/Intan_utils.c \
 ../Core/Apps/SPI_communication.c \
 ../Core/Apps/Task_Apps_Start.c \
-../Core/Apps/Task_RHD64_SPI_communication.c \
+../Core/Apps/Task_FPGA_communication.c \
 ../Core/Apps/Task_UDP_Transmit.c \
-../Core/Apps/Wifi_autoconnect.c \
-../Core/Apps/Wifi_menu.c 
+../Core/Apps/Task_Wifi_menu.c \
+../Core/Apps/Wifi_autoconnect.c 
 
 OBJS += \
 ./Core/Apps/Intan_utils.o \
 ./Core/Apps/SPI_communication.o \
 ./Core/Apps/Task_Apps_Start.o \
-./Core/Apps/Task_RHD64_SPI_communication.o \
+./Core/Apps/Task_FPGA_communication.o \
 ./Core/Apps/Task_UDP_Transmit.o \
-./Core/Apps/Wifi_autoconnect.o \
-./Core/Apps/Wifi_menu.o 
+./Core/Apps/Task_Wifi_menu.o \
+./Core/Apps/Wifi_autoconnect.o 
 
 C_DEPS += \
 ./Core/Apps/Intan_utils.d \
 ./Core/Apps/SPI_communication.d \
 ./Core/Apps/Task_Apps_Start.d \
-./Core/Apps/Task_RHD64_SPI_communication.d \
+./Core/Apps/Task_FPGA_communication.d \
 ./Core/Apps/Task_UDP_Transmit.d \
-./Core/Apps/Wifi_autoconnect.d \
-./Core/Apps/Wifi_menu.d 
+./Core/Apps/Task_Wifi_menu.d \
+./Core/Apps/Wifi_autoconnect.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -39,7 +39,7 @@ Core/Apps/%.o Core/Apps/%.su: ../Core/Apps/%.c Core/Apps/subdir.mk
 clean: clean-Core-2f-Apps
 
 clean-Core-2f-Apps:
-	-$(RM) ./Core/Apps/Intan_utils.d ./Core/Apps/Intan_utils.o ./Core/Apps/Intan_utils.su ./Core/Apps/SPI_communication.d ./Core/Apps/SPI_communication.o ./Core/Apps/SPI_communication.su ./Core/Apps/Task_Apps_Start.d ./Core/Apps/Task_Apps_Start.o ./Core/Apps/Task_Apps_Start.su ./Core/Apps/Task_RHD64_SPI_communication.d ./Core/Apps/Task_RHD64_SPI_communication.o ./Core/Apps/Task_RHD64_SPI_communication.su ./Core/Apps/Task_UDP_Transmit.d ./Core/Apps/Task_UDP_Transmit.o ./Core/Apps/Task_UDP_Transmit.su ./Core/Apps/Wifi_autoconnect.d ./Core/Apps/Wifi_autoconnect.o ./Core/Apps/Wifi_autoconnect.su ./Core/Apps/Wifi_menu.d ./Core/Apps/Wifi_menu.o ./Core/Apps/Wifi_menu.su
+	-$(RM) ./Core/Apps/Intan_utils.d ./Core/Apps/Intan_utils.o ./Core/Apps/Intan_utils.su ./Core/Apps/SPI_communication.d ./Core/Apps/SPI_communication.o ./Core/Apps/SPI_communication.su ./Core/Apps/Task_Apps_Start.d ./Core/Apps/Task_Apps_Start.o ./Core/Apps/Task_Apps_Start.su ./Core/Apps/Task_FPGA_communication.d ./Core/Apps/Task_FPGA_communication.o ./Core/Apps/Task_FPGA_communication.su ./Core/Apps/Task_UDP_Transmit.d ./Core/Apps/Task_UDP_Transmit.o ./Core/Apps/Task_UDP_Transmit.su ./Core/Apps/Task_Wifi_menu.d ./Core/Apps/Task_Wifi_menu.o ./Core/Apps/Task_Wifi_menu.su ./Core/Apps/Wifi_autoconnect.d ./Core/Apps/Wifi_autoconnect.o ./Core/Apps/Wifi_autoconnect.su
 
 .PHONY: clean-Core-2f-Apps
 

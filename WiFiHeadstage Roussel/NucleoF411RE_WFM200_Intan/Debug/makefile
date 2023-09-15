@@ -90,8 +90,8 @@ all: main-build
 main-build: NucleoF411RE_WFM200_Intan.elf secondary-outputs
 
 # Tool invocations
-NucleoF411RE_WFM200_Intan.elf NucleoF411RE_WFM200_Intan.map: $(OBJS) $(USER_OBJS) C:\Users\david\STM32CubeIDE\workspace_1.10.1\NucleoF411RE_WFM200_Intan\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "NucleoF411RE_WFM200_Intan.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\STM32CubeIDE\workspace_1.10.1\NucleoF411RE_WFM200_Intan\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_WFM200_Intan.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+NucleoF411RE_WFM200_Intan.elf NucleoF411RE_WFM200_Intan.map: $(OBJS) $(USER_OBJS) C:\Users\David\STM32CubeIDE\workspace_1.10.1\NucleoF411RE_WFM200_Intan\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "NucleoF411RE_WFM200_Intan.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\David\STM32CubeIDE\workspace_1.10.1\NucleoF411RE_WFM200_Intan\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_WFM200_Intan.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

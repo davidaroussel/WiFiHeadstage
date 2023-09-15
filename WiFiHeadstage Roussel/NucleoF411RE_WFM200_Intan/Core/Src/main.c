@@ -42,10 +42,6 @@ SPI_HandleTypeDef hspi4;
 DMA_HandleTypeDef hdma_spi4_rx;
 DMA_HandleTypeDef hdma_spi4_tx;
 
-SPI_HandleTypeDef hspi3;
-DMA_HandleTypeDef hdma_spi3_rx;
-DMA_HandleTypeDef hdma_spi3_tx;
-
 osThreadId defaultTaskHandle;
 
 
@@ -225,13 +221,12 @@ static void MX_SPI4_Init(void)
 
   /* SPI4 parameter configuration*/
   hspi4.Instance = SPI4;
-  hspi4.Init.Mode = SPI_MODE_MASTER;
-  hspi4.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi4.Init.Mode = SPI_MODE_SLAVE;
+  hspi4.Init.Direction = SPI_DIRECTION_2LINES_RXONLY;
   hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi4.Init.NSS = SPI_NSS_SOFT;
-  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -275,10 +270,6 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
 
-  /* SPI4 */
-  /* DMA2_Stream1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
 
   /* DMA2_Stream3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
@@ -304,9 +295,6 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(WFM_RESET_GPIO_Port, WFM_RESET_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(RHD_SPI_CS_Port, RHD_SPI_CS_Pin, GPIO_PIN_SET);
 
 
   //  /*Configure GPIO pin Output Level */

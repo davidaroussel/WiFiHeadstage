@@ -43,6 +43,7 @@ int INIT_UPD(void){
 
   err = udp_connect(upcb, &server_addr, UDP_SERVER_PORT_DEFAULT);
 
+
   if (err == ERR_OK){
         printf("Client UDP connected to %s \r\n", ip_str_server);
   }
@@ -61,8 +62,6 @@ void TASK_UDP_TRANSMIT_INIT(void *arg){
 	if (osThreadCreate(osThread(UDP_Tx_handle), (void *) arg) == NULL){
 		printf("Booboo creating UDP task \r\n");
 	}
-
-
 }
 
 
@@ -75,12 +74,10 @@ void UDP_TRANSMIT_task_entry(void const *arg){
 	  spi_to_udp_t udp_message = {0};
 
 
-	  p = pbuf_alloc(PBUF_TRANSPORT, SPI_DMA_BUFFER_SIZE, PBUF_RAM);
+	  p = pbuf_alloc(PBUF_TRANSPORT, UDP_BUFFER_SIZE, PBUF_RAM);
 
 	  while(1){
 		if(xQueueReceive((QueueHandle_t)arg, (void *)&udp_message , (TickType_t)1) == pdPASS){
-
-
 //			printf("%u \r\n", counter);
 //			printf("%02x %02x %02x \r\n",udp_message.data0, udp_message.data1, udp_message.data2);
 
@@ -88,18 +85,18 @@ void UDP_TRANSMIT_task_entry(void const *arg){
 			UDP_TASK_SCOPE_Port->BSRR = UDP_TASK_SCOPE_Pin;
 
 			if (p == NULL){
-				p = pbuf_alloc(PBUF_TRANSPORT, SPI_DMA_BUFFER_SIZE, PBUF_RAM);
+				p = pbuf_alloc(PBUF_TRANSPORT, UDP_BUFFER_SIZE, PBUF_RAM);
 				printf("p is NULL \r\n");
 			}
 
 
 			counter ++;
 			//pbuf_take_at(p, counter, 2, SPI_DMA_BUFFER_SIZE);
-			pbuf_take_at(p, (const void *)udp_message.buffer, SPI_DMA_BUFFER_SIZE, 0);
+			pbuf_take_at(p, (const void *)udp_message.buffer, UDP_BUFFER_SIZE, 0);
 
 
-//			for (int i = 0; i< udp_message.message_lenght; i++){
-//				printf("0x%08x \r\n", ((uint16_t*)udp_message.buffer)[i]);
+//			for (int i = 0; i< SPI_DMA_BUFFER_SIZE; i++){
+//				printf("0x%04x \r\n", ((uint16_t*)udp_message.buffer)[i]);
 //			}
 
 			//printf("0x%08x - 0x%08x - 0x%08x\r\n", *(uint16_t*)udp_message.buffer, *(uint16_t*)udp_message.buffer+2, *(uint16_t*)udp_message.buffer+udp_message.message_lenght-1);
@@ -116,7 +113,7 @@ void UDP_TRANSMIT_task_entry(void const *arg){
 
 			//printf("%u \r8n", counter);
 
-			spi_flag = true;
+			//spi_flag = true;
 		}else{
 			vTaskDelay(1);
 		}

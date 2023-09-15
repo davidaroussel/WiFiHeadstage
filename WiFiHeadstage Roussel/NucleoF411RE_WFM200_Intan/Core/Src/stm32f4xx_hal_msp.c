@@ -24,9 +24,8 @@
 
 /* USER CODE END Includes */
 extern DMA_HandleTypeDef hdma_spi1_rx;
-
 extern DMA_HandleTypeDef hdma_spi1_tx;
-
+extern DMA_HandleTypeDef hdma_spi4_rx;
 
 
 void HAL_MspInit(void)
@@ -133,7 +132,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 10, 1);
     HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
 
-    /* DMA2_Stream3_IRQn TX interrupt configuration */
+    /* DMA2_Stream2_IRQn TX interrupt configuration */
     HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 10, 0);
     HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
 
@@ -153,12 +152,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**SPI4 GPIO Configuration
-    PA1     ------> SPI4_MOSI
-    PB12     ------> SPI4_CS (INIT IN GPIO_INIT();
+    PA1      ------> SPI4_MOSI
+    PB12     ------> SPI4_CS
     PB13     ------> SPI4_SCK
-    PA11     ------> SPI4_MISO
     */
-
     GPIO_InitStruct.Pin = RHD_SPI_MOSI_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -166,31 +163,45 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI4;
     HAL_GPIO_Init(RHD_SPI_MOSI_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = RHD_SPI_MISO_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
-    HAL_GPIO_Init(RHD_SPI_MISO_Port, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = RHD_SPI_CLK_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pin   = RHD_SPI_CLK_Pin;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
     HAL_GPIO_Init(RHD_SPI_CLK_Port, &GPIO_InitStruct);
 
-    /*Configure GPIO pin: RHD_CS */
-    GPIO_InitStruct.Pin = RHD_SPI_CS_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pin   = RHD_SPI_CS_Pin;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
     HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
 
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(RHD_SPI_CS_Port, RHD_SPI_CS_Pin, GPIO_PIN_RESET);
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(RHD_SPI_CS_Port, RHD_SPI_CS_Pin, GPIO_PIN_SET);
+
+    /* SPI4 DMA Init */
+    /* SPI4_RX Init */
+    hdma_spi4_rx.Instance = DMA2_Stream3;
+    hdma_spi4_rx.Init.Channel = DMA_CHANNEL_5;
+    hdma_spi4_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_spi4_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_spi4_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_spi4_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_spi4_rx.Init.MemDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_spi4_rx.Init.Mode = DMA_NORMAL;
+    hdma_spi4_rx.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_spi4_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    if (HAL_DMA_Init(&hdma_spi4_rx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hspi,hdmarx,hdma_spi4_rx);
+
+
+    /* DMA interrupt init */
+    /* DMA2_Stream3_IRQn RX interrupt configuration */
+    HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
 
   /* USER CODE BEGIN SPI4_MspInit 1 */
 
@@ -241,11 +252,14 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     PA1     ------> SPI4_MOSI
     PB12     ------> SPI4_NSS
     PB13     ------> SPI4_SCK
-    PA11     ------> SPI4_MISO
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_1|GPIO_PIN_11);
+    HAL_GPIO_DeInit(RHD_SPI_MOSI_Port, RHD_SPI_MOSI_Pin);
 
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_12|GPIO_PIN_13);
+    HAL_GPIO_DeInit(RHD_SPI_CS_Port  , RHD_SPI_CS_Pin | RHD_SPI_CLK_Pin);
+
+    /* SPI4 DMA DeInit */
+    HAL_DMA_DeInit(hspi->hdmarx);
+    HAL_DMA_DeInit(hspi->hdmatx);
 
 
   /* USER CODE BEGIN SPI4_MspDeInit 1 */

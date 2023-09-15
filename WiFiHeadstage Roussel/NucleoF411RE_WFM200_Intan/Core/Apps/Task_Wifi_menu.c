@@ -14,7 +14,9 @@
 
 
 extern struct udp_pcb *upcb;
+extern ip_addr_t server_addr;
 
+void wifi_menu_start(void const *arg);
 
 // Callback function to process received UDP data
 void wifi_menu_recv_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port) {
@@ -29,9 +31,9 @@ void wifi_menu_recv_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p, con
 
 void WIFI_MENU_INIT(void *arg){
 
-	osThreadDef(udp_init_handle, wifi_menu_start, osPriorityRealtime, 0, configMINIMAL_STACK_SIZE*10);
+	osThreadDef(wifi_menu_handle, wifi_menu_start, osPriorityRealtime, 0, configMINIMAL_STACK_SIZE);
 
-	if (osThreadCreate(osThread(udp_init_handle), (void *) arg) == NULL){
+	if (osThreadCreate(osThread(wifi_menu_handle), (void *) arg) == NULL){
 		printf("Booboo creating UDP task \r\n");
 	}
 }
@@ -39,17 +41,23 @@ void WIFI_MENU_INIT(void *arg){
 
 void wifi_menu_start(void const *arg){
 
-	// Set the UDP receive callback function
-	udp_recv(upcb, wifi_menu_recv_callback, NULL);
+ // Replace with the IP address of the Python server
+    char message[] = "Hello from the STM32 client!";
+    struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, sizeof(message), PBUF_RAM);
+	memcpy(p->payload, message, sizeof(message));
 
-	// Main loop
-	while (1) {
-		//sys_check_timeouts();
+    while (1) {
 
-        udp_recv(upcb, NULL, NULL);
+    	// Send data to the server
+    	udp_send(upcb, p);
 
-        // Delay to allow other tasks to run
-        vTaskDelay(pdMS_TO_TICKS(100));
-	 }
+    	// Set up callback function to receive data
+    	udp_recv(upcb, wifi_menu_recv_callback, NULL);
+
+    	// Wait for a while to allow reception of response
+    	HAL_Delay(1000);
+  }
+
+  udp_remove(upcb);
 
 }

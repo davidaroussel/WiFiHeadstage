@@ -1,5 +1,5 @@
-Core/Apps/Task_RHD64_SPI_communication.o: \
- ../Core/Apps/Task_RHD64_SPI_communication.c ../Core/Apps/Intan_utils.h \
+Core/Apps/Task_FPGA_communication.o: \
+ ../Core/Apps/Task_FPGA_communication.c ../Core/Apps/Intan_utils.h \
  ../Core/Apps/Task_Apps_Start.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
@@ -56,7 +56,8 @@ Core/Apps/Task_RHD64_SPI_communication.o: \
  ../Drivers/wfx_fmac_driver/sl_wfx_constants.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration_defaults.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration.h \
- ../Drivers/wfx_fmac_driver/sl_status.h
+ ../Drivers/wfx_fmac_driver/sl_status.h \
+ ../Core/Apps/Task_FPGA_communication.h
 ../Core/Apps/Intan_utils.h:
 ../Core/Apps/Task_Apps_Start.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -117,3 +118,4 @@ Core/Apps/Task_RHD64_SPI_communication.o: \
 ../Drivers/wfx_fmac_driver/sl_wfx_configuration_defaults.h:
 ../Drivers/wfx_fmac_driver/sl_wfx_configuration.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
+../Core/Apps/Task_FPGA_communication.h:
