@@ -2,44 +2,44 @@ import socket
 import time
 import math
 import matplotlib.pyplot as plt
+import numpy as np
+
+counter = 0
+ROUNDS = 1000
+NUM_CHANNELS = 64
+BYTES_PER_DATA = 2
+FPGA_BUFFER_SIZE = 15
+RHD64_DATA_BUFFER = [[None for i in range(ROUNDS)] for j in range(NUM_CHANNELS)]
 
 localIP = "10.99.172.126"
-#localIP = "192.168.43.96"
-# localIP = "192.168.0.226"
-
 localPort = 10000
-UDP_HEADER_SIZE = 56
-UDP_BUFFER_SIZE = 128
+UDP_HEADER_SIZE = 150
+UDP_BUFFER_SIZE = NUM_CHANNELS * BYTES_PER_DATA * FPGA_BUFFER_SIZE
 bufferSize = UDP_BUFFER_SIZE + UDP_HEADER_SIZE
 
-# Create a datagram socket
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPServerSocket.bind((localIP, localPort))
 
 print("UDP server up and listening on {}".format(localIP))
 
-counter = 0
-ROUNDS = 10000
-NUM_CHANNELS = 64
-BYTES_PER_DATA = 2
-RHD64_DATA_BUFFER = [[None for i in range(ROUNDS)] for j in range(NUM_CHANNELS)]
+NUM_OF_COLUMN = 4
 
-NUM_OF_COLUMN = 4 #HAS TO BE A DIVIDER OF 64
+# Create a list to store the parsed data from the binary message
+parsed_data = []
+plot_data = []
 
 def plotAllChannels():
-    fig, axs = plt.subplots(int(NUM_CHANNELS/NUM_OF_COLUMN), NUM_OF_COLUMN, figsize=(30, 10))
+    fig, axs = plt.subplots(int(NUM_CHANNELS / NUM_OF_COLUMN), NUM_OF_COLUMN, figsize=(30, 10))
     plt.gca().cla()
     ch_counter = 0
     for col in range(NUM_OF_COLUMN):
-        for row in range(int(NUM_CHANNELS/NUM_OF_COLUMN)):
+        for row in range(int(NUM_CHANNELS / NUM_OF_COLUMN)):
             k = [i for i in range(len(RHD64_DATA_BUFFER[ch_counter]))]
-            #VERSION FOR PYTHON 3.10
             axs[row, col].plot(k, RHD64_DATA_BUFFER[ch_counter])
             axs[row, col].title.set_text("CHANNEL {}".format(ch_counter))
             ch_counter += 1
     plt.tight_layout()
     plt.show()
-
 
 def plotChannel(channel_number):
     if channel_number < 0 or channel_number >= NUM_CHANNELS:
@@ -52,37 +52,40 @@ def plotChannel(channel_number):
     ax.set_title("CHANNEL {}".format(channel_number))
     plt.show()
 
-
-while(1):
+while 1:
     t1 = time.time()
     bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
     t2 = time.time()
-    #print("Temps : ", t2-t1, " s")
-    if counter %100 == 0:
-        print("Counter: ", counter)
+
+
+    print("Counter: ", counter)
 
     message = bytesAddressPair[0][:UDP_BUFFER_SIZE]
-    for i in range(0, UDP_BUFFER_SIZE, 2):
+
+    # Iterate through the binary message and parse it into 16-bit values
+    for i in range(0, len(message), BYTES_PER_DATA):
         byte1 = message[i]
         byte2 = message[i + 1]
-        # Combine the two bytes to create a 16-bit value
         data_value = (byte2 << 8) | byte1
 
         channels = (i // BYTES_PER_DATA) % NUM_CHANNELS
-        RHD64_DATA_BUFFER[channels][counter] = data_value
+        rounds = i // (BYTES_PER_DATA * NUM_CHANNELS)
+        RHD64_DATA_BUFFER[channels][rounds] = data_value
+
+        # Append the parsed value to the list
+        parsed_data.append(data_value)
 
     counter += 1
-    if counter == ROUNDS-1:
-        plotChannel(0)
-        #plotAllChannels()
+    if counter == 1000:
+        # Now, you can plot the parsed data
+        plt.figure(figsize=(10, 5))
+        k = np.arange(len(parsed_data))
+        plt.plot(k, parsed_data)
+        plt.title("Parsed Data")
+        plt.xlabel("Sample")
+        plt.ylabel("Value")
+        plt.show()
+
+    # Reset the parsed data for the next round
+
         counter = 0
-
-
-
-
-
-
-
-
-
-
