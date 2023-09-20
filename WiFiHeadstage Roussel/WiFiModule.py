@@ -118,7 +118,6 @@ class WiFiServer(BaseException):
             if len(packet) < trash_bufsize:
                 break
 
-
     def receiveDataDEV(self, buffer_size, loops):
         command = b"3"
         time.sleep(1)
@@ -127,15 +126,34 @@ class WiFiServer(BaseException):
         self.m_socket.sendall(command)  # Start Intan Timer
         time.sleep(0.001)
 
-        data = []
-        while len(data) < buffer_size:
-            rest_packet = self.m_socket.recv(buffer_size)
+        received_data = []  # Initialize a variable to store the received data
+
+        while True:
+            rest_packet = self.m_socket.recv(2048)
             print(rest_packet)
-            if not rest_packet:
-                print("BOOBOO")
-            data += bytearray(rest_packet)
-            # time.sleep(0.001)
-        self.m_raw_data.extend(data)
+
+            # Append the received data to the list
+            received_data.append(np.frombuffer(rest_packet, dtype=np.uint16))
+
+            # Check if you have received enough data to plot
+            if len(received_data) >= 5:  # Assuming 1024 values per reception
+                # Concatenate and plot all received data
+                all_received_data = np.concatenate(received_data)
+                received_data.clear()  # Clear the received data list
+
+                # Your plotting logic here using all_received_data
+                plt.plot(all_received_data)
+                plt.show()
+
+        # data = []
+        # while len(data) < buffer_size:
+        #     rest_packet = self.m_socket.recv(buffer_size)
+        #     print(rest_packet)
+        #     if not rest_packet:
+        #         print("BOOBOO")
+        #     data += bytearray(rest_packet)
+        #     # time.sleep(0.001)
+        # self.m_raw_data.extend(data)
 
 def main():
     # Port 5000, IP assign by router, possible to configure the router to have this static IP
@@ -155,13 +173,13 @@ def main():
 
     while not (HEADSTAGESERVER.m_connected):
         time.sleep(1)
-
+    #
     HEADSTAGESERVER.receiveMenu()
     HEADSTAGESERVER.configureIntanChip()
     HEADSTAGESERVER.receiveDataDEV(BUFFER_SIZE, LOOPS)
-
-
-
+    HEADSTAGESERVER.receiveMenu()
+    HEADSTAGESERVER.receiveDataDEV(BUFFER_SIZE, LOOPS)
+    HEADSTAGESERVER.receiveMenu()
 
 
 
