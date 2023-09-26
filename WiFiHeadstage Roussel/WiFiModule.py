@@ -129,14 +129,17 @@ class WiFiServer(BaseException):
         received_data = []  # Initialize a variable to store the received data
 
         while True:
-            rest_packet = self.m_socket.recv(2048)
-            print(rest_packet)
+            rest_packet = self.m_socket.recv(8192*2)
+            print(len(received_data))
 
             # Append the received data to the list
             received_data.append(np.frombuffer(rest_packet, dtype=np.uint16))
 
             # Check if you have received enough data to plot
-            if len(received_data) >= 5:  # Assuming 1024 values per reception
+            if len(received_data) >= 1000:  # Assuming 1024 values per reception
+                command = b"4"
+                self.m_socket.sendall(command)
+
                 # Concatenate and plot all received data
                 all_received_data = np.concatenate(received_data)
                 received_data.clear()  # Clear the received data list
@@ -144,7 +147,7 @@ class WiFiServer(BaseException):
                 # Your plotting logic here using all_received_data
                 plt.plot(all_received_data)
                 plt.show()
-
+                break
         # data = []
         # while len(data) < buffer_size:
         #     rest_packet = self.m_socket.recv(buffer_size)
@@ -177,9 +180,7 @@ def main():
     HEADSTAGESERVER.receiveMenu()
     HEADSTAGESERVER.configureIntanChip()
     HEADSTAGESERVER.receiveDataDEV(BUFFER_SIZE, LOOPS)
-    HEADSTAGESERVER.receiveMenu()
-    HEADSTAGESERVER.receiveDataDEV(BUFFER_SIZE, LOOPS)
-    HEADSTAGESERVER.receiveMenu()
+
 
 
 
