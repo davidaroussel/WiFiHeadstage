@@ -6,7 +6,7 @@
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/SPI_Master.vhd"
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/SPI_Master_CS.vhd"
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd"
-add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller.vhd"
+add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_RHD64.vhd"
 
 
 
@@ -22,7 +22,6 @@ set_option -part_companion ""
 
 #compilation/mapping options
 set_option -use_fsm_explorer 0
-set_option -top_module "work.Controller"
 
 # hdl_compiler_options
 set_option -distributed_compile 0
@@ -71,5 +70,5 @@ set_option -vhdl2008 1
 set_option -write_apr_constraint 1
 
 #set result format/file last
-project -result_file "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/synthesis/Controller.edn"
+project -result_file "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/synthesis/controller_rhd64.edn"
 impl -active "synthesis"

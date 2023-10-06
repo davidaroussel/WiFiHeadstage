@@ -44,10 +44,10 @@ use ieee.numeric_std.all;
 
 entity SPI_Master_CS is
   generic (
-      SPI_MODE          : integer := 0;
-      CLKS_PER_HALF_BIT : integer := 3;
-      MAX_PACKET_PER_CS : integer := 2;
-      CS_INACTIVE_CLKS  : integer := 4
+      SPI_MODE               : integer := 0;
+      CLKS_PER_HALF_BIT      : integer := 3;
+      NUM_OF_BITS_PER_PACKET : integer := 32;
+      CS_INACTIVE_CLKS       : integer := 4
     );
   port (
    -- Control/Data Signals,
@@ -56,15 +56,15 @@ entity SPI_Master_CS is
    
    -- TX (MOSI) Signals
    i_TX_Count : in  std_logic_vector;  -- # bytes per CS low
-   i_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
+   i_TX_Byte  : in  std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte to transmit on MOSI
    i_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
    o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
    
    -- RX (MISO) Signals
    o_RX_Count : out std_logic_vector;  -- Index RX byte
    o_RX_DV    : out std_logic;  -- Data Valid pulse (1 clock cycle)
-   io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-   io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+   io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
+   io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
 
    -- SPI Interface
    o_SPI_Clk  : out std_logic;
@@ -81,14 +81,14 @@ architecture RTL of SPI_Master_CS is
   signal r_SM_CS : t_SM_CS;
   signal r_CS_n  : std_logic;
   signal r_CS_Inactive_Count : integer range 0 to CS_INACTIVE_CLKS;
-  signal r_TX_Count     : integer range 0 to MAX_PACKET_PER_CS + 1;
+  signal r_TX_Count     : integer range 0 to NUM_OF_BITS_PER_PACKET + 1;
   signal w_Master_Ready : std_logic;
 
   component SPI_Master is
       generic (
         SPI_MODE               : integer := 0;
         CLKS_PER_HALF_BIT      : integer := 2;
-        NUM_OF_BYTE_PER_PACKET : integer := 2
+        NUM_OF_BITS_PER_PACKET : integer := 32
         );
       port (
        -- Control/Data Signals,
@@ -102,8 +102,8 @@ architecture RTL of SPI_Master_CS is
        
        -- RX (MISO) Signals
        o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
-       io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);    -- Byte received on MISO Rising Edge
-       io_RX_Byte_Falling  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Falling Edge
+       io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
+       io_RX_Byte_Falling  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
       
        -- SPI Interface
        o_SPI_Clk  : out std_logic;
@@ -118,8 +118,9 @@ begin
   -- Instantiate Master
   SPI_Master_1 : entity work.SPI_Master
     generic map (
-      SPI_MODE          => SPI_MODE,
-      CLKS_PER_HALF_BIT => CLKS_PER_HALF_BIT)
+      SPI_MODE               => SPI_MODE,
+      CLKS_PER_HALF_BIT      => CLKS_PER_HALF_BIT,
+      NUM_OF_BITS_PER_PACKET => NUM_OF_BITS_PER_PACKET)
     port map (
       -- Control/Data Signals,
       i_Rst_L    => i_Rst_L,            -- FPGA Reset

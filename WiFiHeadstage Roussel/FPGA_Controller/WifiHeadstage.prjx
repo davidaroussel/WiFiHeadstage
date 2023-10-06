@@ -36,7 +36,7 @@ KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VHDL"
 KEY Vendor "Actel"
-KEY ActiveRoot "Controller_RHD64::work"
+KEY ActiveRoot "Controller_Dual_SPI::work"
 LIST REVISIONS
 VALUE="Impl1",NUM=1
 CURREV=1
@@ -52,6 +52,16 @@ STATE="utd"
 TIME="1694102172"
 SIZE="255"
 ENDFILE
+VALUE "<project>\designer\impl1\Controller_Dual_SPI.ide_des,ide_des"
+STATE="utd"
+TIME="1696624435"
+SIZE="264"
+ENDFILE
+VALUE "<project>\designer\impl1\Controller_Headstage.ide_des,ide_des"
+STATE="utd"
+TIME="1696621914"
+SIZE="265"
+ENDFILE
 VALUE "<project>\designer\impl1\Controller_RHD64.ide_des,ide_des"
 STATE="utd"
 TIME="1694102197"
@@ -62,55 +72,60 @@ STATE="utd"
 TIME="1692884847"
 SIZE="217"
 ENDFILE
+VALUE "<project>\hdl\Controller_Dual_SPI.vhd,hdl"
+STATE="utd"
+TIME="1696624571"
+SIZE="2518"
+ENDFILE
 VALUE "<project>\hdl\Controller_Headstage.vhd,hdl"
 STATE="utd"
-TIME="1694116124"
-SIZE="8323"
+TIME="1696627316"
+SIZE="11398"
 ENDFILE
 VALUE "<project>\hdl\Controller_RHD64.vhd,hdl"
 STATE="utd"
-TIME="1694113337"
-SIZE="6514"
+TIME="1696615885"
+SIZE="6931"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master.vhd,hdl"
 STATE="utd"
-TIME="1694090295"
-SIZE="7217"
+TIME="1696607563"
+SIZE="7189"
 ENDFILE
 VALUE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 STATE="utd"
-TIME="1694108273"
-SIZE="7706"
+TIME="1696608335"
+SIZE="7910"
+ENDFILE
+VALUE "<project>\simulation\Controller_Dual_SPI_tb_presynth_simulation.log,log"
+STATE="utd"
+TIME="1696627326"
+SIZE="5631"
 ENDFILE
 VALUE "<project>\simulation\Controller_Headstage_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694110681"
-SIZE="3562"
-ENDFILE
-VALUE "<project>\simulation\Controller_tb_presynth_simulation.log,log"
-STATE="utd"
-TIME="1694113450"
-SIZE="6574"
+TIME="1696621491"
+SIZE="6627"
 ENDFILE
 VALUE "<project>\simulation\FIFO_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1693580561"
-SIZE="4181"
+TIME="1694101032"
+SIZE="4207"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1694090295"
-SIZE="915"
+TIME="1696624276"
+SIZE="1033"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1694035829"
-SIZE="5224"
+TIME="1696616078"
+SIZE="4958"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
 STATE="utd"
-TIME="1693587013"
-SIZE="3984"
+TIME="1696615270"
+SIZE="2778"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
@@ -138,15 +153,20 @@ SIZE="11033"
 PARENT="<project>\smartgen\FIFO\FIFO.cxf"
 IS_READONLY="TRUE"
 ENDFILE
+VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
+STATE="utd"
+TIME="1696627378"
+SIZE="2884"
+ENDFILE
 VALUE "<project>\stimulus\Controller_Headstage_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694115237"
-SIZE="6175"
+TIME="1696620806"
+SIZE="5337"
 ENDFILE
-VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+VALUE "<project>\stimulus\Controller_RHD64_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1694113292"
-SIZE="4746"
+TIME="1696618781"
+SIZE="5157"
 ENDFILE
 VALUE "<project>\stimulus\FIFO_tb.vhd,tb_hdl"
 STATE="utd"
@@ -155,27 +175,73 @@ SIZE="4943"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693587009"
-SIZE="4997"
+TIME="1696615984"
+SIZE="5187"
 ENDFILE
 VALUE "<project>\stimulus\SPI_Master_tb.vhd,tb_hdl"
 STATE="utd"
-TIME="1693586938"
-SIZE="4619"
+TIME="1696613491"
+SIZE="5519"
+ENDFILE
+VALUE "<project>\synthesis\controller_rhd64_syn.prj,prj"
+STATE="utd"
+TIME="1696609861"
+SIZE="1101"
 ENDFILE
 VALUE "<project>\synthesis\Controller_syn.prj,prj"
 STATE="utd"
-TIME="1694090295"
-SIZE="1124"
+TIME="1694093130"
+SIZE="1129"
+ENDFILE
+VALUE "<project>\synthesis\synwork\layer0.so,so"
+STATE="utd"
+TIME="1696609862"
+SIZE="159"
 ENDFILE
 ENDLIST
 LIST UsedFile
 ENDLIST
 LIST NewModulesInfo
-LIST "Controller_RHD64::work"
+LIST "Controller_Dual_SPI::work"
+FILE "<project>\hdl\Controller_Dual_SPI.vhd,hdl"
+LIST AssociatedStimulus
+VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
+ENDLIST
+LIST ProjectState5.1
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+LIST "Controller_Headstage::work"
+FILE "<project>\hdl\Controller_Headstage.vhd,hdl"
+LIST AssociatedStimulus
+VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
+ENDLIST
+LIST ProjectState5.1
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+ENDLIST
+LIST "controller_rhd64::work"
 FILE "<project>\hdl\Controller_RHD64.vhd,hdl"
 LIST AssociatedStimulus
-VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+VALUE "<project>\stimulus\Controller_RHD64_tb.vhd,tb_hdl"
 ENDLIST
 LIST ProjectState5.1
 LIST Impl1
@@ -208,7 +274,7 @@ ENDUsed_File_List
 ENDLIST
 ENDLIST
 ENDLIST
-LIST "SPI_Master_CS::work"
+LIST "spi_master_cs::work"
 FILE "<project>\hdl\SPI_Master_CS.vhd,hdl"
 LIST AssociatedStimulus
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
@@ -228,10 +294,16 @@ ENDLIST
 ENDLIST
 ENDLIST
 LIST AssociatedStimulus
-LIST Controller_RHD64
-VALUE "<project>\stimulus\Controller_tb.vhd,tb_hdl"
+LIST Controller_Dual_SPI
+VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
 ENDLIST
-LIST SPI_Master_CS
+LIST Controller_Headstage
+VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
+ENDLIST
+LIST controller_rhd64
+VALUE "<project>\stimulus\Controller_RHD64_tb.vhd,tb_hdl"
+ENDLIST
+LIST spi_master_cs
 VALUE "<project>\stimulus\SPI_Master_CS_tb.vhd,tb_hdl"
 ENDLIST
 LIST SPI_Master
@@ -247,7 +319,7 @@ Type=max
 RunTime=50000ns
 Resolution=1ps
 VsimOpt=
-EntityName=Controller_tb
+EntityName=Controller_Dual_SPI_tb
 TopInstanceName=<top>_0
 DoFileName=
 DoFileName2=wave.do
@@ -315,7 +387,7 @@ NAME="ModelSim ME"
 FUNCTION="Simulation"
 TOOL="ModelSim"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\Modelsim\win32acoem\modelsim.exe"
-PARAM=" -l Controller_tb_presynth_simulation.log "
+PARAM=" -l Controller_Dual_SPI_tb_presynth_simulation.log "
 BATCH=0
 LICENSE=""
 IS32BIT="1"
@@ -340,7 +412,31 @@ IS32BIT="1"
 EndProfile
 ENDLIST
 LIST ProjectState5.1
-LIST "Controller_RHD64::work"
+LIST "Controller_Dual_SPI::work"
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+LIST "Controller_Headstage::work"
+LIST Impl1
+ideSTIMULUS=StateSuccess
+LIST FlowOptions
+UsePhySynth=FALSE
+UseSynth=TRUE
+UseFhbAutoInst=FALSE
+ENDLIST
+Used_File_List
+ENDUsed_File_List
+ENDLIST
+ENDLIST
+LIST "controller_rhd64::work"
 LIST Impl1
 ideSTIMULUS=StateSuccess
 LIST FlowOptions
@@ -364,7 +460,7 @@ Used_File_List
 ENDUsed_File_List
 ENDLIST
 ENDLIST
-LIST "SPI_Master_CS::work"
+LIST "spi_master_cs::work"
 LIST Impl1
 ideSTIMULUS=StateSuccess
 LIST FlowOptions
@@ -389,22 +485,26 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-Reports;Reports;0
-ReportsCurrentItem;Controller_Headstage:Controller_Headstage_tb_presynth_simulation.log
-HDL;hdl\Controller_Headstage.vhd;1
 HDL;stimulus\Controller_Headstage_tb.vhd;0
-HDL;stimulus\Controller_tb.vhd;1
-HDL;hdl\Controller_RHD64.vhd;0
-HDL;stimulus\FIFO_tb.vhd;0
-ACTIVEVIEW;stimulus\Controller_Headstage_tb.vhd
+HDL;hdl\Controller_RHD64.vhd;1
+HDL;hdl\Controller_Dual_SPI.vhd;0
+HDL;hdl\SPI_Master.vhd;1
+HDL;stimulus\Controller_RHD64_tb.vhd;0
+HDL;stimulus\Controller_Dual_SPI_tb.vhd;1
+HDL;hdl\Controller_Headstage.vhd;0
+HDL;hdl\SPI_Master_CS.vhd;0
+ACTIVEVIEW;stimulus\Controller_Dual_SPI_tb.vhd
 ENDLIST
 LIST ModuleSubBlockList
-LIST "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
-SUBBLOCK "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
-SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+LIST "Controller_Dual_SPI::work","hdl\Controller_Dual_SPI.vhd","FALSE","FALSE"
+SUBBLOCK "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
 ENDLIST
-LIST "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
-SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+LIST "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
+SUBBLOCK "controller_rhd64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
+SUBBLOCK "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+ENDLIST
+LIST "controller_rhd64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
+SUBBLOCK "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
 LIST "DESIGN_FIRMWARE::work","component\work\DESIGN_FIRMWARE\DESIGN_FIRMWARE.cxf","TRUE","FALSE"
@@ -413,28 +513,37 @@ LIST "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
 LIST "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
-LIST "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+LIST "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+LIST "Controller_Dual_SPI_tb::work","stimulus\Controller_Dual_SPI_tb.vhd","FALSE","TRUE"
+SUBBLOCK "Controller_Dual_SPI::work","hdl\Controller_Dual_SPI.vhd","FALSE","FALSE"
 ENDLIST
 LIST "Controller_Headstage_tb::work","stimulus\Controller_Headstage_tb.vhd","FALSE","TRUE"
 SUBBLOCK "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
 ENDLIST
-LIST "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE","TRUE"
-SUBBLOCK "Controller_RHD64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
+LIST "Controller_RHD64_tb::work","stimulus\Controller_RHD64_tb.vhd","FALSE","TRUE"
+SUBBLOCK "controller_rhd64::work","hdl\Controller_RHD64.vhd","FALSE","FALSE"
 ENDLIST
 LIST "FIFO_tb::work","stimulus\FIFO_tb.vhd","FALSE","TRUE"
 SUBBLOCK "FIFO::work","smartgen\FIFO\FIFO.vhd","TRUE","FALSE"
 ENDLIST
 LIST "SPI_Master_CS_TB::work","stimulus\SPI_Master_CS_tb.vhd","FALSE","TRUE"
-SUBBLOCK "SPI_Master_CS::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
+SUBBLOCK "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 ENDLIST
 LIST "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE","TRUE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 ENDLIST
 LIST ActiveTestBenchList
-LIST "Controller_RHD64::work"
-ACTIVETESTBENCH "Controller_tb::work","stimulus\Controller_tb.vhd","FALSE"
+LIST "Controller_Dual_SPI::work"
+ACTIVETESTBENCH "Controller_Dual_SPI_tb::work","stimulus\Controller_Dual_SPI_tb.vhd","FALSE"
+ENDLIST
+LIST "Controller_Headstage::work"
+ACTIVETESTBENCH "Controller_Dual_SPI_tb::work","stimulus\Controller_Dual_SPI_tb.vhd","FALSE"
+ENDLIST
+LIST "controller_rhd64::work"
+ACTIVETESTBENCH "Controller_RHD64_tb::work","stimulus\Controller_RHD64_tb.vhd","FALSE"
 ENDLIST
 LIST "SPI_Master::work"
 ACTIVETESTBENCH "SPI_Master_TB::work","stimulus\SPI_Master_tb.vhd","FALSE"

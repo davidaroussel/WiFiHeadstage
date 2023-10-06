@@ -3,17 +3,17 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
-entity Controller_tb is
-end entity Controller_tb;
+entity Controller_RHD64_tb is
+end entity Controller_RHD64_tb;
 
-architecture sim of Controller_tb is
+architecture sim of Controller_RHD64_tb is
 
-  constant CLK_PERIOD   : time := 20.83 ns; -- Adjust as needed
+  constant CLK_PERIOD   : time := 5.21 ns; -- Adjust as needed
 
-  constant SPI_MODE           : integer := 0;  -- CPOL = 0 CPHA = 0
-  constant CLKS_PER_HALF_BIT  : integer := 3;  -- (125/2)/CLK_PER_HALF_BIT MHz
-  constant MAX_PACKET_PER_CS  : integer := 2;  -- 2 bytes per chip select
-  constant CS_INACTIVE_CLKS   : integer := 4;  -- Adds delay between bytes
+  constant SPI_MODE                : integer := 0;  -- CPOL = 0 CPHA = 0
+  constant CLKS_PER_HALF_BIT       : integer := 2;  -- (125/2)/CLK_PER_HALF_BIT MHz
+  constant NUM_OF_BITS_PER_PACKET  : integer := 16;  -- 2 bytes per chip select
+  constant CS_INACTIVE_CLKS        : integer := 14;  -- Adds delay between bytes
 
   signal tb_Rst_L           : std_logic := '1';
   signal tb_Clk             : std_logic := '0';
@@ -24,20 +24,20 @@ architecture sim of Controller_tb is
   signal tb_SPI_CS_n        : std_logic;
   
   signal tb_TX_Count        : std_logic_vector(1 downto 0)  := "01";
-  signal tb_TX_Byte         : std_logic_vector(15 downto 0) := X"0000";
+  signal tb_TX_Byte         : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0) := (others => '0');
   signal tb_TX_DV           : std_logic := '0';
   signal tb_TX_Ready        : std_logic;
   
   signal tb_RX_Count        : std_logic_vector(1 downto 0);
   signal tb_RX_DV           : std_logic;
-  signal tb_RX_Byte_Rising  : std_logic_vector(15 downto 0);
-  signal tb_RX_Byte_Falling : std_logic_vector(15 downto 0);
+  signal tb_RX_Byte_Rising  : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
+  signal tb_RX_Byte_Falling : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
   
-  signal tb_FIFO_Data       : std_logic_vector(31 downto 0);
-  signal tb_FIFO_WE      : std_logic;
-  signal tb_FIFO_RE      : std_logic;
+  signal tb_FIFO_Data       : std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
+  signal tb_FIFO_WE         : std_logic;
+  signal tb_FIFO_RE         : std_logic;
   
-  signal tb_FIFO_Q          : std_logic_vector(31 downto 0);
+  signal tb_FIFO_Q          : std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
   signal tb_FIFO_EMPTY      : std_logic;
   signal tb_FIFO_FULL       : std_logic;
   signal tb_FIFO_AEMPTY     : std_logic;
@@ -46,8 +46,8 @@ architecture sim of Controller_tb is
   
   -- Sends a single byte from master. 
   procedure SendMessage (
-    data          : in  std_logic_vector(15 downto 0);
-    signal o_data : out std_logic_vector(15 downto 0);
+    data          : in  std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
+    signal o_data : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
     signal o_dv   : out std_logic) is
   begin
     wait until rising_edge(tb_Clk);
@@ -64,11 +64,16 @@ begin
   tb_SPI_MISO <= tb_SPI_MOSI;
 
   UUT: entity work.Controller_RHD64
+    generic map (
+      SPI_MODE               => SPI_MODE,
+      CLKS_PER_HALF_BIT      => CLKS_PER_HALF_BIT,
+      NUM_OF_BITS_PER_PACKET => NUM_OF_BITS_PER_PACKET,
+      CS_INACTIVE_CLKS       => CS_INACTIVE_CLKS)
     port map (
       i_Rst_L            => tb_Rst_L,
       i_Clk              => tb_Clk,
       o_SPI_Clk          => tb_SPI_Clk,
-      i_SPI_MISO         => tb_SPI_MOSI,
+      i_SPI_MISO         => tb_SPI_MISO,
       o_SPI_MOSI         => tb_SPI_MOSI,
       o_SPI_CS_n         => tb_SPI_CS_n,
       i_TX_Count         => tb_TX_Count,
@@ -92,7 +97,6 @@ begin
 
   Testing : process is
   begin
-    wait for 100 ns;
     tb_Rst_L <= '1';
     tb_FIFO_RE <= '0';
     wait for 100 ns;

@@ -14,8 +14,10 @@ vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/hdl/SPI_Master.vhd"
 vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/hdl/SPI_Master_CS.vhd"
 vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/smartgen/FIFO/FIFO.vhd"
 vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/hdl/Controller_RHD64.vhd"
-vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/stimulus/Controller_tb.vhd"
+vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/hdl/Controller_Headstage.vhd"
+vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/hdl/Controller_Dual_SPI.vhd"
+vcom -2008 -explicit  -work presynth "${PROJECT_DIR}/stimulus/Controller_Dual_SPI_tb.vhd"
 
-vsim -L igloo -L presynth  -t 1ps presynth.Controller_tb
-add wave /Controller_tb/*
+vsim -L igloo -L presynth  -t 1ps presynth.Controller_Dual_SPI_tb
+add wave /Controller_Dual_SPI_tb/*
 run 50000ns

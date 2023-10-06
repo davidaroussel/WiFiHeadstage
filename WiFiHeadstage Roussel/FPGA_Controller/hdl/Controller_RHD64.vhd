@@ -4,6 +4,12 @@ use ieee.numeric_std.all;
 use std.textio.all;
 
 entity Controller_RHD64 is
+  generic (
+      SPI_MODE               : integer := 0;
+      CLKS_PER_HALF_BIT      : integer := 3;
+      NUM_OF_BITS_PER_PACKET : integer := 16;
+      CS_INACTIVE_CLKS       : integer := 4
+    );
   port (
     i_Rst_L        : in std_logic;
     i_Clk          : in std_logic;
@@ -15,26 +21,25 @@ entity Controller_RHD64 is
     o_SPI_CS_n : out std_logic;
     
     -- TX (MOSI) Signals
-    i_TX_Count : in  std_logic_vector;  -- # bytes per CS low
-    i_TX_Byte  : in  std_logic_vector(15 downto 0);  -- Byte to transmit on MOSI
+    i_TX_Count : in  std_logic_vector(1 downto 0);  -- # bytes per CS low
+    i_TX_Byte  : in  std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte to transmit on MOSI
     i_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
     o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
 
     -- RX (MISO) Signals
-    o_RX_Count        : out std_logic_vector;  -- Index RX byte
-    o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
-    io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-    io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+    o_RX_Count         : out std_logic_vector;  -- Index RX byte
+    o_RX_DV            : out std_logic;  -- Data Valid pulse (1 clock cycle)
+    io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
+    io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
 
-    o_FIFO_Data   : out std_logic_vector(31 downto 0);
+    o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_WE     : out std_logic;
     i_FIFO_RE     : in std_logic;
-
-    o_FIFO_Q : out std_logic_vector(31 downto 0);
-    o_FIFO_EMPTY : out std_logic;
-    o_FIFO_FULL : out std_logic;
+    o_FIFO_Q      : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
+    o_FIFO_EMPTY  : out std_logic;
+    o_FIFO_FULL   : out std_logic;
     o_FIFO_AEMPTY : out std_logic;
-    o_FIFO_AFULL : out std_logic
+    o_FIFO_AFULL  : out std_logic
   
 );
 end entity Controller_RHD64;
@@ -44,10 +49,10 @@ architecture RTL of Controller_RHD64 is
  -- Component declaration for SPI_Master_CS
   component SPI_Master_CS is
     generic (
-      SPI_MODE          : integer := 0;
-      CLKS_PER_HALF_BIT : integer := 3;
-      MAX_PACKET_PER_CS : integer := 2;
-      CS_INACTIVE_CLKS  : integer := 4
+      SPI_MODE               : integer := 0;
+      CLKS_PER_HALF_BIT      : integer := 3;
+      NUM_OF_BITS_PER_PACKET : integer := 16;
+      CS_INACTIVE_CLKS       : integer := 4
     );
     port (
       i_Rst_L    : in std_logic;     -- FPGA Reset
@@ -111,10 +116,10 @@ begin
   -- SPI_Master_CS instantiation
   SPI_Master_CS_1 : SPI_Master_CS
     generic map (
-      SPI_MODE          => 0,
-      CLKS_PER_HALF_BIT => 3,
-      MAX_PACKET_PER_CS => 2,
-      CS_INACTIVE_CLKS  => 4
+      SPI_MODE               => SPI_MODE,
+      CLKS_PER_HALF_BIT      => CLKS_PER_HALF_BIT,
+      NUM_OF_BITS_PER_PACKET => NUM_OF_BITS_PER_PACKET,
+      CS_INACTIVE_CLKS       => CS_INACTIVE_CLKS
     )
     port map (
       i_Rst_L           => i_Rst_L,
@@ -155,7 +160,7 @@ begin
   begin
     if i_Rst_L = '1' then
       int_FIFO_DATA <= X"00000000";
-      int_FIFO_WE   <= '0';  
+      int_FIFO_WE   <= '0';      
     elsif rising_edge(i_Clk) then
       if int_RX_DV = '1' then
         -- Push MISO data into the FIFO
@@ -176,7 +181,7 @@ begin
   
   -- data access ports
   o_FIFO_DATA <= int_FIFO_DATA;
-  --o_FIFO_Q <= int_FIFO_Q;
+
   -- RX (MISO) Signals
   o_RX_DV            <= int_RX_DV;
   io_RX_Byte_Rising  <= int_RX_Byte_Rising;
