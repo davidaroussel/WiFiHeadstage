@@ -47,15 +47,30 @@ STATE="utd"
 TIME="1694033881"
 SIZE="437"
 ENDFILE
+VALUE "<project>\component\work\top_level\top_level.cxf,actgen_cxf"
+STATE="utd"
+TIME="1696862391"
+SIZE="995"
+ENDFILE
 VALUE "<project>\designer\impl1\Controller.ide_des,ide_des"
 STATE="utd"
 TIME="1694102172"
 SIZE="255"
 ENDFILE
+VALUE "<project>\designer\impl1\Controller_Dual_SPI.adb,adb"
+STATE="ood"
+TIME="1696860564"
+SIZE="344064"
+ENDFILE
 VALUE "<project>\designer\impl1\Controller_Dual_SPI.ide_des,ide_des"
 STATE="utd"
 TIME="1696624435"
 SIZE="264"
+ENDFILE
+VALUE "<project>\designer\impl1\Controller_Dual_SPI_compile_log.rpt,log"
+STATE="utd"
+TIME="1696860564"
+SIZE="11482"
 ENDFILE
 VALUE "<project>\designer\impl1\Controller_Headstage.ide_des,ide_des"
 STATE="utd"
@@ -97,10 +112,15 @@ STATE="utd"
 TIME="1696608335"
 SIZE="7910"
 ENDFILE
+VALUE "<project>\simulation\Controller_Dual_SPI_tb_postsynth_simulation.log,log"
+STATE="utd"
+TIME="1696861806"
+SIZE="5993"
+ENDFILE
 VALUE "<project>\simulation\Controller_Dual_SPI_tb_presynth_simulation.log,log"
 STATE="utd"
-TIME="1696627326"
-SIZE="5631"
+TIME="1696627506"
+SIZE="6853"
 ENDFILE
 VALUE "<project>\simulation\Controller_Headstage_tb_presynth_simulation.log,log"
 STATE="utd"
@@ -114,8 +134,8 @@ SIZE="4207"
 ENDFILE
 VALUE "<project>\simulation\run.do,do"
 STATE="utd"
-TIME="1696624276"
-SIZE="1033"
+TIME="1696627387"
+SIZE="1116"
 ENDFILE
 VALUE "<project>\simulation\SPI_Master_CS_tb_presynth_simulation.log,log"
 STATE="utd"
@@ -126,6 +146,32 @@ VALUE "<project>\simulation\SPI_Master_TB_presynth_simulation.log,log"
 STATE="utd"
 TIME="1696615270"
 SIZE="2778"
+ENDFILE
+VALUE "<project>\smartgen\clock\clock.cxf,actgen_cxf"
+STATE="utd"
+TIME="1696861974"
+SIZE="1163"
+ENDFILE
+VALUE "<project>\smartgen\clock\clock.gen,gen"
+STATE="utd"
+TIME="1696861974"
+SIZE="448"
+PARENT="<project>\smartgen\clock\clock.cxf"
+IS_READONLY="TRUE"
+ENDFILE
+VALUE "<project>\smartgen\clock\clock.log,log"
+STATE="utd"
+TIME="1696861974"
+SIZE="1288"
+PARENT="<project>\smartgen\clock\clock.cxf"
+IS_READONLY="TRUE"
+ENDFILE
+VALUE "<project>\smartgen\clock\clock.vhd,hdl"
+STATE="utd"
+TIME="1696861974"
+SIZE="1709"
+PARENT="<project>\smartgen\clock\clock.cxf"
+IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\smartgen\FIFO\FIFO.cxf,actgen_cxf"
 STATE="utd"
@@ -183,6 +229,31 @@ STATE="utd"
 TIME="1696613491"
 SIZE="5519"
 ENDFILE
+VALUE "<project>\synthesis\Controller_Dual_SPI.edn,syn_edn"
+STATE="utd"
+TIME="1696860292"
+SIZE="407622"
+ENDFILE
+VALUE "<project>\synthesis\Controller_Dual_SPI.so,so"
+STATE="utd"
+TIME="1696860292"
+SIZE="301"
+ENDFILE
+VALUE "<project>\synthesis\Controller_Dual_SPI.vhd,syn_hdl"
+STATE="utd"
+TIME="1696861795"
+SIZE="188531"
+ENDFILE
+VALUE "<project>\synthesis\Controller_Dual_SPI_sdc.sdc,syn_sdc"
+STATE="utd"
+TIME="1696860292"
+SIZE="412"
+ENDFILE
+VALUE "<project>\synthesis\Controller_Dual_SPI_syn.prj,prj"
+STATE="utd"
+TIME="1696860292"
+SIZE="2590"
+ENDFILE
 VALUE "<project>\synthesis\controller_rhd64_syn.prj,prj"
 STATE="utd"
 TIME="1696609861"
@@ -192,11 +263,6 @@ VALUE "<project>\synthesis\Controller_syn.prj,prj"
 STATE="utd"
 TIME="1694093130"
 SIZE="1129"
-ENDFILE
-VALUE "<project>\synthesis\synwork\layer0.so,so"
-STATE="utd"
-TIME="1696609862"
-SIZE="159"
 ENDFILE
 ENDLIST
 LIST UsedFile
@@ -209,7 +275,9 @@ VALUE "<project>\stimulus\Controller_Dual_SPI_tb.vhd,tb_hdl"
 ENDLIST
 LIST ProjectState5.1
 LIST Impl1
+LiberoState=Post_Synthesis
 ideSTIMULUS=StateSuccess
+ideSYNTHESIS(<project>\synthesis\Controller_Dual_SPI.edn,syn_edn)=StateSuccess
 LIST FlowOptions
 UsePhySynth=FALSE
 UseSynth=TRUE
@@ -378,8 +446,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\synplify_pro.exe"
-PARAM=""
-BATCH=0
+PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
+BATCH=1
 LICENSE=""
 IS32BIT="1"
 EndProfile
@@ -387,7 +455,7 @@ NAME="ModelSim ME"
 FUNCTION="Simulation"
 TOOL="ModelSim"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\Modelsim\win32acoem\modelsim.exe"
-PARAM=" -l Controller_Dual_SPI_tb_presynth_simulation.log "
+PARAM=" -l Controller_Dual_SPI_tb_postsynth_simulation.log "
 BATCH=0
 LICENSE=""
 IS32BIT="1"
@@ -414,7 +482,9 @@ ENDLIST
 LIST ProjectState5.1
 LIST "Controller_Dual_SPI::work"
 LIST Impl1
+LiberoState=Post_Synthesis
 ideSTIMULUS=StateSuccess
+ideSYNTHESIS(<project>\synthesis\Controller_Dual_SPI.edn,syn_edn)=StateSuccess
 LIST FlowOptions
 UsePhySynth=FALSE
 UseSynth=TRUE
@@ -485,17 +555,17 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-HDL;stimulus\Controller_Headstage_tb.vhd;0
-HDL;hdl\Controller_RHD64.vhd;1
 HDL;hdl\Controller_Dual_SPI.vhd;0
-HDL;hdl\SPI_Master.vhd;1
-HDL;stimulus\Controller_RHD64_tb.vhd;0
 HDL;stimulus\Controller_Dual_SPI_tb.vhd;1
-HDL;hdl\Controller_Headstage.vhd;0
-HDL;hdl\SPI_Master_CS.vhd;0
-ACTIVEVIEW;stimulus\Controller_Dual_SPI_tb.vhd
+HDL;synthesis\Controller_Dual_SPI_sdc.sdc;0
+HDL;hdl\SPI_Master.vhd;1
+SmartDesign;top_level;0
+HDL;hdl\Controller_RHD64.vhd;1
+ACTIVEVIEW;top_level
 ENDLIST
 LIST ModuleSubBlockList
+LIST "clock::work","smartgen\clock\clock.vhd","TRUE","FALSE"
+ENDLIST
 LIST "Controller_Dual_SPI::work","hdl\Controller_Dual_SPI.vhd","FALSE","FALSE"
 SUBBLOCK "Controller_Headstage::work","hdl\Controller_Headstage.vhd","FALSE","FALSE"
 ENDLIST
@@ -515,6 +585,9 @@ LIST "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
 ENDLIST
 LIST "spi_master_cs::work","hdl\SPI_Master_CS.vhd","FALSE","FALSE"
 SUBBLOCK "SPI_Master::work","hdl\SPI_Master.vhd","FALSE","FALSE"
+ENDLIST
+LIST "top_level::work","component\work\top_level\top_level.cxf","TRUE","FALSE"
+SUBBLOCK "Controller_Dual_SPI::work","hdl\Controller_Dual_SPI.vhd","FALSE","FALSE"
 ENDLIST
 LIST "Controller_Dual_SPI_tb::work","stimulus\Controller_Dual_SPI_tb.vhd","FALSE","TRUE"
 SUBBLOCK "Controller_Dual_SPI::work","hdl\Controller_Dual_SPI.vhd","FALSE","FALSE"

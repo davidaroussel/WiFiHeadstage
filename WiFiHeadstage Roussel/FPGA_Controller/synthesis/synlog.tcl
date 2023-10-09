@@ -1,1 +1,1 @@
-run_tcl -fg controller_rhd64_syn.tcl
+run_tcl -fg Controller_Dual_SPI_syn.tcl

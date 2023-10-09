@@ -1,5 +1,5 @@
 #defaultlanguage:vhdl
-#OPTIONS:"|-layerid|0|-orig_srs|C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\synthesis\\synwork\\controller_rhd64_comp.srs|-autotop|-prodtype|synplify_pro|-nram|-fixsmult|-divnmod|-encrypt|-pro|-lite|-ui|-fid2|-ram|-sharing|on|-ll|2000|-autosm|-vhdl2008|-ignore_undefined_lib|-lib|work|-lib|work|-lib|work|-lib|work"
+#OPTIONS:"|-layerid|0|-orig_srs|C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\synthesis\\synwork\\Controller_Dual_SPI_comp.srs|-top|work.Controller_Dual_SPI|-prodtype|synplify_pro|-nram|-fixsmult|-divnmod|-encrypt|-pro|-lite|-ui|-fid2|-ram|-sharing|on|-ll|2000|-autosm|-vhdl2008|-ignore_undefined_lib|-lib|work|-lib|work|-lib|work|-lib|work|-lib|work|-lib|work"
 #CUR:"C:\\Microsemi\\Libero_SoC_v11.9\\SynplifyPro\\bin64\\c_vhdl.exe":1509030028
 #CUR:"C:\\Microsemi\\Libero_SoC_v11.9\\SynplifyPro\\lib\\vhd2008\\location.map":1509036036
 #CUR:"C:\\Microsemi\\Libero_SoC_v11.9\\SynplifyPro\\lib\\vhd2008\\std.vhd":1509029528
@@ -14,23 +14,31 @@
 #CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\SPI_Master.vhd":1696607563
 #CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\SPI_Master_CS.vhd":1696608335
 #CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\smartgen\\FIFO\\FIFO.vhd":1694098844
-#CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\Controller_RHD64.vhd":1696609850
+#CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\Controller_RHD64.vhd":1696615885
+#CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\Controller_Headstage.vhd":1696627316
+#CUR:"C:\\Users\\David\\Desktop\\WiFi Headstage GIT\\WiFiHeadstage\\WiFiHeadstage Roussel\\FPGA_Controller\\hdl\\Controller_Dual_SPI.vhd":1696624571
 0 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\SPI_Master.vhd" vhdl
 1 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\SPI_Master_CS.vhd" vhdl
 2 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\smartgen\FIFO\FIFO.vhd" vhdl
 3 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\Controller_RHD64.vhd" vhdl
+4 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\Controller_Headstage.vhd" vhdl
+5 "C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\hdl\Controller_Dual_SPI.vhd" vhdl
 
 # Dependency Lists (Uses list)
 0 -1
 1 0 
 2 -1
 3 1 2 
+4 3 1 
+5 4 
 
 # Dependency Lists (Users Of)
 0 1 
-1 3 
+1 4 3 
 2 3 
-3 -1
+3 4 
+4 5 
+5 -1
 
 # Design Unit to File Association
 arch work spi_master rtl 0
@@ -41,3 +49,7 @@ arch work fifo def_arch 2
 module work fifo 2
 arch work controller_rhd64 rtl 3
 module work controller_rhd64 3
+arch work controller_headstage rtl 4
+module work controller_headstage 4
+arch work controller_dual_spi rtl 5
+module work controller_dual_spi 5

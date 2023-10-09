@@ -1,7 +1,7 @@
 #--  Synopsys, Inc.
 #--  Version L-2016.09M-SP1-5
 #--  Project file C:\Users\David\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\synthesis\run_options.txt
-#--  Written on Fri Oct 06 12:31:01 2023
+#--  Written on Mon Oct 09 10:28:09 2023
 
 
 #project files
@@ -9,6 +9,8 @@ add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstag
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/SPI_Master_CS.vhd"
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/smartgen/FIFO/FIFO.vhd"
 add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_RHD64.vhd"
+add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Headstage.vhd"
+add_file -vhdl -lib work "C:/Users/David/Desktop/WiFi Headstage GIT/WiFiHeadstage/WiFiHeadstage Roussel/FPGA_Controller/hdl/Controller_Dual_SPI.vhd"
 
 
 
@@ -24,6 +26,7 @@ set_option -part_companion ""
 
 #compilation/mapping options
 set_option -use_fsm_explorer 0
+set_option -top_module "work.Controller_Dual_SPI"
 
 # hdl_compiler_options
 set_option -distributed_compile 0
@@ -72,5 +75,5 @@ set_option -vhdl2008 1
 set_option -write_apr_constraint 1
 
 #set result format/file last
-project -result_file "./controller_rhd64.edn"
+project -result_file "./Controller_Dual_SPI.edn"
 impl -active "synthesis"
