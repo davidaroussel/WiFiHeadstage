@@ -8,7 +8,8 @@ import cmath
 import matplotlib.pyplot as plt
 from numpy.fft import fft
 import numpy as np
-from matplotlib.animation import FuncAnimation
+import csv
+from datetime import datetime
 
 #Coded by G. Gagnon-Turcotte at SiFiLabs
 #Original version 6/22/2023
@@ -29,7 +30,8 @@ class WiFiServer(BaseException):
         self.m_connected = False
         self.m_raw_data = []
         self.m_converted_array = [[] for i in range(8)]
-
+        self.m_vrms_array = [[] for i in range(8)]
+        self.cutoff_menu = ''
 
 
         self.m_serverThread = threading.Thread(target=self.serverThread)
@@ -51,15 +53,28 @@ class WiFiServer(BaseException):
 
     def configureIntanChip(self):
         self.m_socket.sendall(b"A")
-        print(self.m_socket.recv(1024).decode("utf-8"))
+        self.cutoff_menu = self.m_socket.recv(1024).decode("utf-8")
+        print(self.cutoff_menu)
         print("Low-pass selection:")
         #input1 = input()
         input1 = "4"
+        choice_lowfreq = self.findCutoffChoice(input1, "high")
+        print(choice_lowfreq)
         print("High-pass selection:")
         #input2 = input()
-        input2 = "4"
+        input2 = "0"
+        choice_highfreq = self.findCutoffChoice(input2, "low")
+        print(choice_highfreq)
         self.m_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
 
+    def findCutoffChoice(self, input, cutoff):
+        choice_index = None
+
+        choice_index = self.cutoff_menu.rfind(input + '-')
+
+        retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
+        choice_cutoff = self.cutoff_menu[choice_index:retline_index]
+        return choice_cutoff
     def receiveDataV1(self, buffer_size, loops):
         command = b"B"
         for ch in self.channels:
@@ -115,14 +130,50 @@ class WiFiServer(BaseException):
             if len(packet) < trash_bufsize:
                 break
 
+    def convertData(self):
+        converted_data = [[] for i in range(8)]
+        ch_counter = 0
 
+        for i in range(0, len(self.m_raw_data), 2):
+            value = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True) * 0.195
+            converted_data[ch_counter].append(value)
+            ch_counter = (ch_counter + 1) % 8
+
+        self.m_converted_array = converted_data
+
+
+
+    def plotOneChannel(self, channel_number):
+        if channel_number < 0 or channel_number >= 8:
+            raise ValueError("Invalid channel number. It should be in the range [0, 7]")
+
+        fig, ax = plt.subplots(figsize=(10, 5))
+
+        converted_data = self.m_converted_array[channel_number]
+        vrms = [self.m_vrms_array[channel_number] for i in range(len(converted_data))]
+
+        k = [i for i in range(len(converted_data))]
+        ax.plot(k, converted_data, label="Noise")
+        ax.plot(k, vrms, label="Vrms")
+
+        ax.set_title("CHANNEL {}".format(self.m_channels[channel_number]))
+        ax.set_xlabel("Sample Number")
+        ax.set_ylabel("uV")
+
+        plt.legend(loc='upper right')
+        plt.show()
+        plt.tight_layout()
+        fft_data = np.fft.fft(converted_data)
+        freqs = np.fft.fftfreq(len(converted_data))
+        peak_coef = np.argmax(np.abs(fft_data))
+        peak_freq = freqs[peak_coef]
+        peak_freq = peak_freq * self.m_samp_freq
+        print("CH:", channel_number, "FREQUENCE DU SIGNAL", peak_freq)
 
     #Considering that we have 8 channels !!
     def plotAllChannels(self):
         fig, axs = plt.subplots(8, 1, figsize=(30, 10))
         plt.gca().cla()
-
- #       fig = plt.figure(figsize=(30, 10))
         self.m_converted_array = [[] for i in range(8)]
 
         ch_counter = 0
@@ -131,7 +182,6 @@ class WiFiServer(BaseException):
             LSB_FLAG = int(hex(converted_data), 16) & 0x01
             dataNumber = ch_counter // 8
             channelNumber = ch_counter % 8
-
             if LSB_FLAG == 1:
                 if channelNumber == 0:
                     pass
@@ -143,19 +193,21 @@ class WiFiServer(BaseException):
                     dataNumber = ch_counter // 8
                     channelNumber = ch_counter % 8
                     print("NOW ON", dataNumber, "with", channelNumber)
-            self.m_converted_array[ch_counter % 8].append(converted_data * 0.000195)
+            self.m_converted_array[ch_counter % 8].append(converted_data * 0.195) #NOW IN uV (0.000000195 is V)
             ch_counter += 1
 
-        PLUGGED_CH = [0, 5]
-        REF_CH = 7
-        for dataNum in range(0, len(self.m_converted_array[0])-1):
-            for ch in PLUGGED_CH:
-                if self.m_converted_array[REF_CH][dataNum] > 0:
-                    self.m_converted_array[ch][dataNum] -= self.m_converted_array[REF_CH][dataNum]
-                elif self.m_converted_array[REF_CH][dataNum] < 0:
-                    self.m_converted_array[ch][dataNum] += self.m_converted_array[REF_CH][dataNum]
-                else:
-                    pass
+
+        # TEST TO DELETE THE NOISE FROM AN INPUT CHANNELS (NOT WORKING VERY GOOD)
+        # PLUGGED_CH = [0, 5]
+        # REF_CH = 7
+        # for dataNum in range(0, len(self.m_converted_array[0])-1):
+        #     for ch in PLUGGED_CH:
+        #         if self.m_converted_array[REF_CH][dataNum] > 0:
+        #             self.m_converted_array[ch][dataNum] -= self.m_converted_array[REF_CH][dataNum]
+        #         elif self.m_converted_array[REF_CH][dataNum] < 0:
+        #             self.m_converted_array[ch][dataNum] += self.m_converted_array[REF_CH][dataNum]
+        #         else:
+        #             pass
 
         # ch_counter = 0
         # for row in range(8):
@@ -200,6 +252,28 @@ class WiFiServer(BaseException):
         plt.tight_layout()
         plt.show()
 
+    def calculateVrmsForAllChannels(self):
+        noDC_value = [[] for i in range(8)]
+        for ch_number, channel_data in enumerate(self.m_converted_array):
+            if channel_data:
+                meanValue = np.mean(np.array(channel_data))
+                for data in channel_data:
+                    noDC_value[ch_number].append(data - meanValue)
+
+
+                noDC_meanValue = np.mean(np.array(noDC_value[ch_number]) ** 2)
+                mVrms = np.sqrt(noDC_meanValue)
+                self.m_vrms_array[ch_number] = mVrms
+
+
+        # Print the table
+        print("Channel    |  Average Vrms")
+        print("-----------|---------------")
+        for i, avg_vrms in enumerate(self.m_vrms_array):
+            if avg_vrms:
+                print(f"Channel {i}: | {avg_vrms:.4f} uV")
+        print("-----------|---------------")
+
     def serverThread(self):
         print("WAITING FOR THE DEVICE")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
@@ -232,6 +306,30 @@ class WiFiServer(BaseException):
 
         return LOOPS
 
+    def writeDataToCSV(self, data):
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"data_{timestamp}.csv"
+        try:
+            with open(filename, 'w', newline='') as csv_file:
+                writer = csv.writer(csv_file)
+                writer.writerows(data)
+            print(f"Data written to {filename} successfully.")
+        except Exception as e:
+            print(f"Error writing data to {filename}: {e}")
+
+    def createDataForCSV(self):
+        meanPerChannel = [[] for i in range(8)]
+        data_for_csv = []
+        data_for_csv.append(["Channel ID", "Vavg"] + [f"Data {i}" for i in range(len(self.m_vrms_array))])
+        for i in range(8):
+            if (self.m_converted_array[i]):
+                meanPerChannel[i] = np.mean(np.array(self.m_converted_array[i]))
+
+                data_row = [i, meanPerChannel[i]] + self.m_converted_array[i]
+                data_for_csv.append(data_row)
+        return data_for_csv
+
+
 
 if __name__ == "__main__":
     # Port 5000, IP assign by router, possible to configure the router to have this static IP
@@ -257,7 +355,21 @@ if __name__ == "__main__":
     # HEADSTAGESERVER.getID(2)
     HEADSTAGESERVER.configureIntanChip()
     HEADSTAGESERVER.receiveDataV2(BUFFER_SIZE, LOOPS)
-    HEADSTAGESERVER.plotAllChannels()
+    HEADSTAGESERVER.convertData()
+
+    HEADSTAGESERVER.calculateVrmsForAllChannels()
+
+    HEADSTAGESERVER.plotOneChannel(2)
+
+    # HEADSTAGESERVER.plotAllChannels()
+
+
+
+
+    data_for_csv = HEADSTAGESERVER.createDataForCSV()
+    HEADSTAGESERVER.writeDataToCSV(data_for_csv)
+
+
 
     # Buffer Size for Headstage communication is 1024 bytes.
     # Loops is the number of time we want to receive data

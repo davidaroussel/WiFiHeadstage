@@ -78,9 +78,11 @@ class DataConverter():
                             print("NOW ON", dataNumber, "with", channelNumber)
 
 
-                    if channelNumber == 7:
-                        converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
-                        sin_counter += 1
+                    if channelNumber == 3:
+                        # converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
+                        # sin_counter += 1
+                        converted_array_mV[channelNumber][dataNumber] = converted_array_mV[channelNumber-2][dataNumber]
+
                     else:
                         mV_value = OpenEphysOffset + (converted_data * converting_value) #now in mV
                         converted_array_mV[channelNumber][dataNumber] = mV_value #now in mV
@@ -133,11 +135,13 @@ class DataConverter():
                         converted_data = int.from_bytes([item[i+1], item[i]], byteorder='big', signed=True)
                         dataNumber = dataCounter // self.num_channels
                         channelNumber = dataCounter % self.num_channels
-                        if channelNumber == 7:
-                            converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
-                            sin_counter += 1
-                        else:
-                            converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + (((converted_data * 0.000000195)/maxOpenEphysValue)*OpenEphysOffset) #now in mV
+                        # if channelNumber == 7:
+                        #     converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
+                        #     sin_counter += 1
+                        # else:
+                        #     converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + (((converted_data * 0.000000195)/maxOpenEphysValue)*OpenEphysOffset) #now in V
+                        converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + (((converted_data * 0.000000195)/maxOpenEphysValue)*OpenEphysOffset) #now in V
+
                         dataCounter += 1
 
                         # if dataCounter >= self.buffer_size*self.num_channels:

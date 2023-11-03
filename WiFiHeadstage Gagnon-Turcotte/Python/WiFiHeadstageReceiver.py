@@ -92,10 +92,10 @@ class WiFiHeadstageReceiver(BaseException):
         print(self.m_thread_socket.recv(1024).decode("utf-8"))
         #print("Low-pass selection:")
         #input1 = input()
-        input1 = "7"
+        input1 = "4"
         #print("High-pass selection:")
         #input2 = input()
-        input2 = "B"
+        input2 = "3"
         self.m_thread_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
 
     def receiveSeqDataFromIntan(self, sample_size):
