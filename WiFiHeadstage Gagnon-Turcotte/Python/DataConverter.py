@@ -7,13 +7,19 @@ import numpy as np
 from threading import Thread
 
 class DataConverter():
-    def __init__(self, queue_raw_data, queue_conv_data, p_channels, p_buffer_size, p_buffer_factor):
+    def __init__(self, queue_raw_data, queue_ephys_data, queue_csv_data, p_channels, p_buffer_size, p_buffer_factor):
         self.queue_raw_data = queue_raw_data
-        self.queue_conv_data = queue_conv_data
+        self.queue_ephys_data = queue_ephys_data
+        self.queue_csv_data = queue_csv_data
         self.num_channels = len(p_channels)
         self.buffer_size = p_buffer_size
         self.buffer_factor = p_buffer_factor
         self.m_dataConversionTread = Thread(target=self.convertData)
+
+        # Open a CSV file for writing converted data
+        self.csv_filename = "converted_data.csv"
+        self.csv_file = open(self.csv_filename, mode='w', newline='')
+        self.csv_writer = csv.writer(self.csv_file)
 
     def startThread(self):
         self.m_dataConversionTread.start()
@@ -23,7 +29,8 @@ class DataConverter():
 
     def convertData(self):
         print("---STARTING DATA_CONVERSION THREAD---")
-        converted_array_mV = [[None for i in range(self.buffer_size)] for i in range(self.num_channels)]
+        converted_array_mV = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
+        converted_array_Ephys = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
         QUEUE_STACK = [[],[]]
         counter = 0
         sin_counter = 0
@@ -37,7 +44,7 @@ class DataConverter():
         BUFFER_SIZE = self.buffer_size * self.buffer_factor
         converting_value = (0.000000195/maxOpenEphysValue)*OpenEphysOffset
         TEMP_STACK  = []
-        FINAL_STACK = []
+        maxData = self.buffer_size*self.num_channels
         while 1:
             item = self.queue_raw_data.get()
             if item is None:
@@ -78,31 +85,35 @@ class DataConverter():
                             print("NOW ON", dataNumber, "with", channelNumber)
 
 
-                    if channelNumber == 3:
-                        # converted_array_mV[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
+                    if channelNumber == None:
+                        # converted_array_Ephys[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10 / 1000) * value_per_uV) # now in mV
                         # sin_counter += 1
-                        converted_array_mV[channelNumber][dataNumber] = converted_array_mV[channelNumber-2][dataNumber]
-
+                        converted_array_Ephys[channelNumber].append(converted_array_Ephys[channelNumber-2][dataNumber])
                     else:
-                        mV_value = OpenEphysOffset + (converted_data * converting_value) #now in mV
-                        converted_array_mV[channelNumber][dataNumber] = mV_value #now in mV
+                        mV_value = OpenEphysOffset + (converted_data * converting_value)  # now in mV
+                        if dataNumber < self.buffer_size:
+                            converted_array_Ephys[channelNumber][dataNumber] = mV_value #now in mV
+                            converted_array_mV[channelNumber][dataNumber] = converted_data  # raw data
+                        else:
+                            converted_array_Ephys[channelNumber].append(mV_value) #now in mV
+                            converted_array_mV[channelNumber].append(converted_data)   # raw dat
                     dataCounter = dataCounter + 1
 
                     if dataCounter > 0:
                         if (dataCounter % (self.buffer_size*self.num_channels)) == 0:
-                            np_conv = np.array(converted_array_mV, np.int16).flatten().tobytes()
-                            self.queue_conv_data.put(np_conv)
+                            np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
+                            self.queue_ephys_data.put(np_conv)
+                            self.queue_csv_data.put(converted_array_mV)
                             sin_counter = 0
                             dataCounter = 0
 
 
-
             # CSV_HEADER = ["RAW DATA", "CONV DATA"]
             # QUEUE_STACK[0].append(self.queue_raw_data.qsize())
-            # QUEUE_STACK[1].append(self.queue_conv_data.qsize())
+            # QUEUE_STACK[1].append(self.queue_ephys_data.qsize())
 
             # print("RAW  QUEUE : ", self.queue_raw_data.qsize())
-            # print("CONV QUEUE : ", self.queue_conv_data.qsize())
+            # print("CONV QUEUE : ", self.queue_ephys_data.qsize())
             # print("------------------")
 
     def convertDataV2(self):
@@ -146,7 +157,7 @@ class DataConverter():
 
                         # if dataCounter >= self.buffer_size*self.num_channels:
                         #     np_conv = np.array(converted_array_mV, np.int16).flatten().tobytes()
-                        #     self.queue_conv_data.put(np_conv)
+                        #     self.queue_ephys_data.put(np_conv)
                     dataCounter = 0
                     sin_counter = 0
-                    self.queue_conv_data.put(converted_array_mV)
+                    self.queue_ephys_data.put(converted_array_mV)

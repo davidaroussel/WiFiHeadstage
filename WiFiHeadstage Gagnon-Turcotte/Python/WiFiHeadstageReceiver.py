@@ -1,10 +1,3 @@
-# Coded by G. Gagnon-Turcotte at SiFiLabs
-# Original version 6/22/2023
-
-# Edited by D. Roussel at BIOMEDICAL MICROSYSTEMS LABORATORY
-# Started on 06/28/2023
-
-
 import socket
 import struct
 import threading
@@ -14,10 +7,7 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from queue import Queue
 
-
 class WiFiHeadstageReceiver(BaseException):
-    # p_port: Port to listen on (non-privileged ports are > 1023)
-    # p_host_addr: Standard loopback interface address (localhost)
     def __init__(self, p_queue, p_channels, p_buffer_size, p_buffer_factor, p_port, p_host_addr=""):
         BaseException.__init__(self)
         self.channels = p_channels
@@ -30,23 +20,22 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_thread_socket = False
         self.m_socketConnectionThread = threading.Thread(target=self.connectSocket)
         self.m_connected = False
-
         self.m_received_data = 0
-        self.m_headstageRecvTread = threading.Thread(target=self.continuedDataFromIntan)
-
-        #For plotting
+        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataFromIntan)
+        # For plotting
         self.k = []
         self.converted_array = []
 
-
     def startThread(self, threadID):
-        threadID.start()
+        if threadID.is_alive():
+            print(f"Thread {threadID.getName()} is already running.")
+        else:
+            threadID.start()
 
-    # Stop the server
     def stopThread(self, threadID):
         if threadID == self.m_socketConnectionThread:
             self.m_thread_socket.shutdown(socket.SHUT_RDWR)
-        self.m_socketConnectionThread.join()
+            threadID.join()
 
     def connectSocket(self):
         print("---STARTING CONNECTION THREAD---")
@@ -79,24 +68,26 @@ class WiFiHeadstageReceiver(BaseException):
                 data += bytearray(rest_packet)
             self.queue_raw_data.put(data)
 
-
-        # TODO: Needs a stop condition triggering this call
-        # self.m_socket.sendall(b"C")  # Stop Intan Timer
-
     def readMenu(self):
         self.m_thread_socket.sendall(b"0")
         print(self.m_thread_socket.recv(1024).decode("utf-8"))
 
     def configureIntanChip(self):
-        self.m_thread_socket.sendall(b"A")
-        print(self.m_thread_socket.recv(1024).decode("utf-8"))
-        #print("Low-pass selection:")
-        #input1 = input()
-        input1 = "4"
-        #print("High-pass selection:")
-        #input2 = input()
-        input2 = "3"
-        self.m_thread_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
+        if not self.m_connected:
+            print("Not connected.")
+            return
+
+        try:
+            self.m_thread_socket.sendall(b"A")
+            response = self.m_thread_socket.recv(1024).decode("utf-8")
+            print(response)
+            # Configure the Intan chip
+            input1 = "4"
+            input2 = "3"
+            self.m_thread_socket.sendall(bytes(input1, 'ascii') + bytes(input2, 'ascii'))
+        except UnicodeDecodeError as e:
+            print(f"Error configuring Intan Chip: {e}")
+            print("Already configured")
 
     def receiveSeqDataFromIntan(self, sample_size):
         command = b"B"
@@ -105,20 +96,13 @@ class WiFiHeadstageReceiver(BaseException):
             command = command + ch.to_bytes(1, 'big')
         self.m_conn.sendall(command)  # Start Intan Timer
         time.sleep(1)
-
         self.m_received_data = self.m_conn.recv((num_channels * sample_size))
-
         self.m_conn.sendall(b"C")  # Stop Intan Timer
         print(self.m_received_data)
         time.sleep(0.1)
 
-    # P_ID: ID of the Intan Chip on the custom PCB
     def getID(self, p_id):
         self.m_conn.sendall(b"9")
         self.m_conn.sendall(p_id.to_bytes(1, 'big'))
         time.sleep(1)
         print("Intan Chip {}: {}".format(p_id, self.m_conn.recv(8)))
-
-
-
-

@@ -5,6 +5,7 @@ import time
 from queue import Queue
 from WiFiHeadstageReceiver import WiFiHeadstageReceiver
 from DataConverter import DataConverter
+from CSVWriter import CSVWriter
 
 from OpenEphysSender import OpenEphysSender
 
@@ -27,11 +28,13 @@ if __name__ == "__main__":
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA  = Queue()
-    QUEUE_CONV_DATA = Queue()
+    QUEUE_EPHYS_DATA = Queue()
+    QUEUE_CSV_DATA = Queue()
 
     TASK_WiFiServer      = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR,  p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
-    TASK_DataConverter   = DataConverter(QUEUE_RAW_DATA, QUEUE_CONV_DATA, CHANNELS, BUFFER_SIZE,BUFFER_SOCKET_FACTOR)
-    TASK_OpenEphysSender = OpenEphysSender(QUEUE_CONV_DATA, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+    TASK_DataConverter   = DataConverter(QUEUE_RAW_DATA, QUEUE_EPHYS_DATA, QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE,BUFFER_SOCKET_FACTOR)
+    TASK_OpenEphysSender = OpenEphysSender(QUEUE_EPHYS_DATA, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+    TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
@@ -40,9 +43,12 @@ if __name__ == "__main__":
 
     TASK_WiFiServer.configureIntanChip()
 
+
+    TASK_CSVWriter.startThread()
     TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
-    TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvTread)
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+
 
 
 
