@@ -1,0 +1,309 @@
+***************************************************************************
+                               Status Report
+                          Mon Feb 05 13:45:03 2024 ***************************************************************************
+
+Product: Designer
+Release: v11.9
+Version: 11.9.0.4
+File Name: C:\Users\david\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\designer\impl1\Controller_Dual_SPI.adb
+Design Name: Controller_Dual_SPI  Design State: layout
+Last Saved: Mon Feb 05 13:44:30 2024
+
+***** Device Data **************************************************
+
+Family: IGLOO  Die: AGLN250V2  Package: 100 VQFP
+Speed: STD  Voltage: 1.2~1.5
+
+Restrict JTAG Pins: YES
+Restrict Probe Pins: YES
+
+Junction Temperature Range:   COM
+Voltage Range:   COM
+
+***** Import Variables *********************************************
+
+Source File(s) Imported on Mon Feb 05 13:17:40 2024:
+        C:\Users\david\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage Roussel\FPGA_Controller\synthesis\Controller_Dual_SPI.edn
+
+
+***** CAE Variables ************************************************
+
+Back Annotation File: N/A
+
+
+***** Bitstream Variables ******************************************
+
+Bitstream File: N/A
+     Lock Mode: off
+
+
+***** Compile Variables ********************************************
+
+Netlist PIN properties overwrite existing properties: 0
+
+Compile Output:
+=====================================================================
+Parameters used to run compile:
+===============================
+
+Family      : IGLOO
+Device      : AGLN250V2
+Package     : 100 VQFP
+Source      : C:\Users\david\Desktop\WiFi Headstage GIT\WiFiHeadstage\WiFiHeadstage
+Roussel\FPGA_Controller\synthesis\Controller_Dual_SPI.edn
+Format      : EDIF
+Topcell     : Controller_Dual_SPI
+Speed grade : STD
+Temp        : 0:25:70
+Voltage     : 1.58:1.20:1.14
+
+Keep Existing Physical Constraints : No
+Keep Existing Timing Constraints   : Yes
+
+pdc_abort_on_error                 : Yes
+pdc_eco_display_unmatched_objects  : No
+pdc_eco_max_warnings               : 10000
+
+demote_globals                     : No
+promote_globals                    : No
+localclock_max_shared_instances    : 12
+localclock_buffer_tree_max_fanout  : 12
+
+combine_register                   : No
+delete_buffer_tree                 : No
+
+report_high_fanout_nets_limit      : 10
+
+=====================================================================
+Compile starts ...
+
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_AEMPTYX_I[1]_ drives no
+         load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_AFULLX_I[1]_ drives no
+         load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_FIFOBLOCK[1]__RD14
+         drives no load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_FIFOBLOCK[1]__RD15
+         drives no load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_FIFOBLOCK[1]__RD16
+         drives no load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_FIFOBLOCK[1]__RD17
+         drives no load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_AEMPTYX_I[0]_ drives no
+         load.
+Warning: CMP201: Net Controller_Headstage_1/Controller_RHD64_1/FIFO_1/Z_AFULLX_I[0]_ drives no
+         load.
+Warning: Top level port i_STM32_SPI_MISO is not connected to any IO pad
+
+Netlist Optimization Report
+===========================
+
+Optimized macros:
+  - Dangling net drivers:   19
+  - Buffers:                0
+  - Inverters:              1
+  - Tieoff:                 0
+  - Logic combining:        12
+
+    Total macros optimized  32
+
+There were 0 error(s) and 9 warning(s) in this design.
+=====================================================================
+
+Reading previous post-compile physical placement constraints.
+
+
+There were 0 error(s) and 0 warning(s).
+
+=====================================================================
+Compile report:
+===============
+
+    CORE                       Used:    624  Total:   6144   (10.16%)
+    IO (W/ clocks)             Used:      9  Total:     68   (13.24%)
+    GLOBAL (Chip+Quadrant)     Used:      2  Total:     18   (11.11%)
+    PLL                        Used:      0  Total:      1   (0.00%)
+    RAM/FIFO                   Used:      2  Total:      8   (25.00%)
+    Low Static ICC             Used:      0  Total:      1   (0.00%)
+    FlashROM                   Used:      0  Total:      1   (0.00%)
+    User JTAG                  Used:      0  Total:      1   (0.00%)
+
+Global Information:
+
+    Type            | Used   | Total
+    ----------------|--------|--------------
+    Chip global     | 2      | 6  (33.33%)*
+    Quadrant global | 0      | 12 (0.00%)
+
+    (*) Chip globals may be assigned to Quadrant globals using the Multi-View Navigator (MVN)
+        or Physical Design Constraints (PDC).
+        They may also be assigned to Quadrant globals automatically during Layout.
+
+Core Information:
+
+    Type    | Instances    | Core tiles
+    --------|--------------|-----------
+    COMB    | 341          | 341
+    SEQ     | 283          | 283
+
+I/O Function:
+
+    Type                                  | w/o register  | w/ register  | w/ DDR register
+    --------------------------------------|---------------|--------------|----------------
+    Input I/O                             | 3             | 0            | 0
+    Output I/O                            | 6             | 0            | 0
+    Bidirectional I/O                     | 0             | 0            | 0
+    Differential Input I/O Pairs          | 0             | 0            | 0
+    Differential Output I/O Pairs         | 0             | 0            | 0
+
+I/O Technology:
+
+                                    |   Voltages    |             I/Os
+    --------------------------------|-------|-------|-------|--------|--------------
+    I/O Standard(s)                 | Vcci  | Vref  | Input | Output | Bidirectional
+    --------------------------------|-------|-------|-------|--------|--------------
+    LVCMOS12                        | 1.20v | N/A   | 3     | 6      | 0
+
+I/O Placement:
+
+    Locked  :   0
+    Placed  :   9 ( 100.00% )
+    UnPlaced:   0
+
+Net information report:
+=======================
+
+The following nets have been assigned to a chip global resource:
+    Fanout  Type          Name
+    --------------------------
+    287     CLK_NET       Net   : i_Clk_c
+                          Driver: i_Clk_pad
+                          Source: NETLIST
+    207     SET/RESET_NET Net   : i_Rst_L_c
+                          Driver: i_Rst_L_pad
+                          Source: NETLIST
+
+High fanout nets in the post compile netlist:
+    Fanout  Type          Name
+    --------------------------
+    24      INT_NET       Net   : Controller_Headstage_1/int_STM32_TX_DV_0
+                          Driver: Controller_Headstage_1/int_STM32_TX_DV_0
+    24      INT_NET       Net   : Controller_Headstage_1/int_STM32_TX_DV
+                          Driver: Controller_Headstage_1/int_STM32_TX_DV
+    19      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[1]
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[1]
+    19      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/N_170_i
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Trailing_Edge
+    18      INT_NET       Net   :
+Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_TX_Bit_Count[4]
+                          Driver:
+Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_TX_Bit_Count[4]
+    18      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[2]
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[2]
+    17      INT_NET       Net   : i_RHD64_SPI_MISO_c
+                          Driver: i_RHD64_SPI_MISO_pad
+    17      INT_NET       Net   : Controller_Headstage_1/Controller_RHD64_1/o_RX_DV_0
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/o_RX_DV_0
+    17      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Leading_Edge
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Leading_Edge
+    16      INT_NET       Net   : i_RHD64_SPI_MISO_c_0
+                          Driver: i_RHD64_SPI_MISO_pad_RNI6BFA
+
+Nets that are candidates for clock assignment and the resulting fanout:
+    Fanout  Type          Name
+    --------------------------
+    32      INT_NET       Net   : i_RHD64_SPI_MISO_c
+                          Driver: i_RHD64_SPI_MISO_pad
+    24      INT_NET       Net   : Controller_Headstage_1/int_STM32_TX_DV_0
+                          Driver: Controller_Headstage_1/int_STM32_TX_DV_0
+    24      INT_NET       Net   : Controller_Headstage_1/int_STM32_TX_DV
+                          Driver: Controller_Headstage_1/int_STM32_TX_DV
+    19      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[1]
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[1]
+    19      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/N_170_i
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Trailing_Edge
+    18      INT_NET       Net   :
+Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_TX_Bit_Count[4]
+                          Driver:
+Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_TX_Bit_Count[4]
+    18      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[2]
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[2]
+    17      INT_NET       Net   : Controller_Headstage_1/Controller_RHD64_1/o_RX_DV_0
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/o_RX_DV_0
+    17      INT_NET       Net   :
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Leading_Edge
+                          Driver:
+Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Leading_Edge
+    16      INT_NET       Net   : Controller_Headstage_1/int_N_5_0
+                          Driver: Controller_Headstage_1/int_STM32_TX_DV_0_RNIOMCJ2
+====================
+Flash*Freeze report:
+====================
+
+The design does not use the Flash*Freeze feature.
+
+====================
+
+
+Layout Output:
+***** Layout Variables *********************************************
+
+Mode: TIMING_DRIVEN
+Power-driven Layout: OFF
+Incremental Placement: OFF
+Incremental Route: OFF
+
+
+
+Running I/O Bank Assigner.
+
+I/O Bank Assigner completed successfully.
+
+
+Planning global net placement...
+
+
+Global net placement completed successfully.
+
+                        o - o - o - o - o - o
+
+Timing-driven Placer Started: Mon Feb 05 13:44:51 2024
+
+Placer Finished: Mon Feb 05 13:44:56 2024
+Total Placer CPU Time:     00:00:05
+
+                        o - o - o - o - o - o
+
+
+Timing-driven Router 
+Design: Controller_Dual_SPI             Started: Mon Feb 05 13:44:57 2024
+
+ 
+Iterative improvement...
+
+Timing-driven Router completed successfully.
+
+Design: Controller_Dual_SPI             
+Finished: Mon Feb 05 13:45:01 2024
+Total CPU Time:     00:00:04            Total Elapsed Time: 00:00:04
+Total Memory Usage: 171.3 Mbytes
+                        o - o - o - o - o - o
+
+
+

@@ -1,26 +1,16 @@
-# Coded by D. Roussel at BIOMEDICAL MICROSYSTEMS LABORATORY
-# Original version 7/03/2023
-
 import time
 from queue import Queue
 from WiFiHeadstageReceiver import WiFiHeadstageReceiver
 from DataConverter import DataConverter
 from CSVWriter import CSVWriter
-
 from OpenEphysSender import OpenEphysSender
-
 from utils import Toolkit
 
-
-
-
-if __name__ == "__main__":
-
+def main():
     #GLOBAL VARIABLES
     HOST_ADDR      = ""
     HEADSTAGE_PORT = 5000
     OPENEPHYS_PORT = 10001
-
     CHANNELS    = [0, 1, 2, 3, 4, 5, 6, 7]
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
@@ -37,22 +27,28 @@ if __name__ == "__main__":
     TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
-    TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    while not TASK_WiFiServer.m_connected:
-       time.sleep(1)
+    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+    # while not TASK_WiFiServer.m_connected:
+    #     time.sleep(1)
 
     TASK_WiFiServer.configureIntanChip()
 
-
+    # Start other threads
     TASK_CSVWriter.startThread()
     TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
-    TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+
+    # Continuous loop until "stop" is entered
+    user_input = input("\n Enter 'stop' to disable sampling: ")
+    if user_input.strip().lower() == "stop":
+        print("Exiting...")
+        TASK_WiFiServer.stopDataFromIntan()
+        TASK_CSVWriter.stopThread()
+        TASK_OpenEphysSender.stopThread()
+        TASK_DataConverter.stopThread()
+        TASK_WiFiServer.stopThread()
 
 
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()

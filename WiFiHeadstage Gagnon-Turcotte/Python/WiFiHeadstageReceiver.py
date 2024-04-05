@@ -68,6 +68,9 @@ class WiFiHeadstageReceiver(BaseException):
                 data += bytearray(rest_packet)
             self.queue_raw_data.put(data)
 
+    def stopDataFromIntan(self):
+        self.m_socket.sendall(b"C")  # Stop Intan Timer
+
     def readMenu(self):
         self.m_thread_socket.sendall(b"0")
         print(self.m_thread_socket.recv(1024).decode("utf-8"))

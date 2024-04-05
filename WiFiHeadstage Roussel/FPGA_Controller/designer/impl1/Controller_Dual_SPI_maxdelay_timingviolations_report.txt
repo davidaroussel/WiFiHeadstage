@@ -1,0 +1,822 @@
+Timing Violation Report Max Delay Analysis
+
+SmartTime Version v11.9
+Microsemi Corporation - Microsemi Libero Software Release v11.9 (Version 11.9.0.4)
+Date: Mon Feb 05 13:45:08 2024
+
+
+Design: Controller_Dual_SPI
+Family: IGLOO
+Die: AGLN250V2
+Package: 100 VQFP
+Temperature Range: 0 - 70 C
+Voltage Range: 1.14 - 1.575 V
+Speed Grade: STD
+Design State: Post-Layout
+Data source: Silicon verified
+Min Operating Conditions: BEST - 1.575 V - 0 C
+Max Operating Conditions: WORST - 1.14 V - 70 C
+Using Enhanced Min Delay Analysis
+Scenario for Timing Analysis: Primary
+
+
+Path 1
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.880
+  Slack (ns):            -8.736
+  Arrival (ns):          21.611
+  Required (ns):         12.875
+
+Path 2
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.784
+  Slack (ns):            -8.695
+  Arrival (ns):          21.570
+  Required (ns):         12.875
+
+Path 3
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.544
+  Slack (ns):            -8.494
+  Arrival (ns):          21.369
+  Required (ns):         12.875
+
+Path 4
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.567
+  Slack (ns):            -8.448
+  Arrival (ns):          21.323
+  Required (ns):         12.875
+
+Path 5
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.432
+  Slack (ns):            -8.446
+  Arrival (ns):          21.321
+  Required (ns):         12.875
+
+Path 6
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.471
+  Slack (ns):            -8.421
+  Arrival (ns):          21.296
+  Required (ns):         12.875
+
+Path 7
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.527
+  Slack (ns):            -8.383
+  Arrival (ns):          21.258
+  Required (ns):         12.875
+
+Path 8
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.431
+  Slack (ns):            -8.342
+  Arrival (ns):          21.217
+  Required (ns):         12.875
+
+Path 9
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.517
+  Slack (ns):            -8.311
+  Arrival (ns):          21.248
+  Required (ns):         12.937
+
+Path 10
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.517
+  Slack (ns):            -8.311
+  Arrival (ns):          21.248
+  Required (ns):         12.937
+
+Path 11
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.421
+  Slack (ns):            -8.270
+  Arrival (ns):          21.207
+  Required (ns):         12.937
+
+Path 12
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.421
+  Slack (ns):            -8.270
+  Arrival (ns):          21.207
+  Required (ns):         12.937
+
+Path 13
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.299
+  Slack (ns):            -8.257
+  Arrival (ns):          21.132
+  Required (ns):         12.875
+
+Path 14
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.462
+  Slack (ns):            -8.247
+  Arrival (ns):          21.193
+  Required (ns):         12.946
+
+Path 15
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.366
+  Slack (ns):            -8.206
+  Arrival (ns):          21.152
+  Required (ns):         12.946
+
+Path 16
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            17.253
+  Slack (ns):            -8.145
+  Arrival (ns):          20.984
+  Required (ns):         12.839
+
+Path 17
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.129
+  Slack (ns):            -8.143
+  Arrival (ns):          21.018
+  Required (ns):         12.875
+
+Path 18
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.231
+  Slack (ns):            -8.142
+  Arrival (ns):          21.017
+  Required (ns):         12.875
+
+Path 19
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.191
+  Slack (ns):            -8.141
+  Arrival (ns):          21.016
+  Required (ns):         12.875
+
+Path 20
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.119
+  Slack (ns):            -8.133
+  Arrival (ns):          21.008
+  Required (ns):         12.875
+
+Path 21
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            17.157
+  Slack (ns):            -8.104
+  Arrival (ns):          20.943
+  Required (ns):         12.839
+
+Path 22
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.214
+  Slack (ns):            -8.095
+  Arrival (ns):          20.970
+  Required (ns):         12.875
+
+Path 23
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.079
+  Slack (ns):            -8.093
+  Arrival (ns):          20.968
+  Required (ns):         12.875
+
+Path 24
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.181
+  Slack (ns):            -8.069
+  Arrival (ns):          21.006
+  Required (ns):         12.937
+
+Path 25
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.181
+  Slack (ns):            -8.069
+  Arrival (ns):          21.006
+  Required (ns):         12.937
+
+Path 26
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            17.118
+  Slack (ns):            -8.068
+  Arrival (ns):          20.943
+  Required (ns):         12.875
+
+Path 27
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.204
+  Slack (ns):            -8.023
+  Arrival (ns):          20.960
+  Required (ns):         12.937
+
+Path 28
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.204
+  Slack (ns):            -8.023
+  Arrival (ns):          20.960
+  Required (ns):         12.937
+
+Path 29
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.069
+  Slack (ns):            -8.021
+  Arrival (ns):          20.958
+  Required (ns):         12.937
+
+Path 30
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.069
+  Slack (ns):            -8.021
+  Arrival (ns):          20.958
+  Required (ns):         12.937
+
+Path 31
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.126
+  Slack (ns):            -8.005
+  Arrival (ns):          20.951
+  Required (ns):         12.946
+
+Path 32
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            17.108
+  Slack (ns):            -7.996
+  Arrival (ns):          20.933
+  Required (ns):         12.937
+
+Path 33
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            17.108
+  Slack (ns):            -7.996
+  Arrival (ns):          20.933
+  Required (ns):         12.937
+
+Path 34
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            16.950
+  Slack (ns):            -7.968
+  Arrival (ns):          20.843
+  Required (ns):         12.875
+
+Path 35
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.149
+  Slack (ns):            -7.959
+  Arrival (ns):          20.905
+  Required (ns):         12.946
+
+Path 36
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.014
+  Slack (ns):            -7.957
+  Arrival (ns):          20.903
+  Required (ns):         12.946
+
+Path 37
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            16.986
+  Slack (ns):            -7.944
+  Arrival (ns):          20.819
+  Required (ns):         12.875
+
+Path 38
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            17.053
+  Slack (ns):            -7.932
+  Arrival (ns):          20.878
+  Required (ns):         12.946
+
+Path 39
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.946
+  Slack (ns):            -7.904
+  Arrival (ns):          20.779
+  Required (ns):         12.875
+
+Path 40
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.917
+  Slack (ns):            -7.903
+  Arrival (ns):          20.742
+  Required (ns):         12.839
+
+Path 41
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            17.069
+  Slack (ns):            -7.863
+  Arrival (ns):          20.800
+  Required (ns):         12.937
+
+Path 42
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.940
+  Slack (ns):            -7.857
+  Arrival (ns):          20.696
+  Required (ns):         12.839
+
+Path 43
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.805
+  Slack (ns):            -7.855
+  Arrival (ns):          20.694
+  Required (ns):         12.839
+
+Path 44
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.936
+  Slack (ns):            -7.832
+  Arrival (ns):          20.769
+  Required (ns):         12.937
+
+Path 45
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.936
+  Slack (ns):            -7.832
+  Arrival (ns):          20.769
+  Required (ns):         12.937
+
+Path 46
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            16.816
+  Slack (ns):            -7.830
+  Arrival (ns):          20.705
+  Required (ns):         12.875
+
+Path 47
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.844
+  Slack (ns):            -7.830
+  Arrival (ns):          20.669
+  Required (ns):         12.839
+
+Path 48
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.973
+  Slack (ns):            -7.822
+  Arrival (ns):          20.759
+  Required (ns):         12.937
+
+Path 49
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.776
+  Slack (ns):            -7.790
+  Arrival (ns):          20.665
+  Required (ns):         12.875
+
+Path 50
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.878
+  Slack (ns):            -7.789
+  Arrival (ns):          20.664
+  Required (ns):         12.875
+
+Path 51
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.766
+  Slack (ns):            -7.780
+  Arrival (ns):          20.655
+  Required (ns):         12.875
+
+Path 52
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.881
+  Slack (ns):            -7.768
+  Arrival (ns):          20.714
+  Required (ns):         12.946
+
+Path 53
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.766
+  Slack (ns):            -7.718
+  Arrival (ns):          20.655
+  Required (ns):         12.937
+
+Path 54
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.766
+  Slack (ns):            -7.718
+  Arrival (ns):          20.655
+  Required (ns):         12.937
+
+Path 55
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.868
+  Slack (ns):            -7.717
+  Arrival (ns):          20.654
+  Required (ns):         12.937
+
+Path 56
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.868
+  Slack (ns):            -7.717
+  Arrival (ns):          20.654
+  Required (ns):         12.937
+
+Path 57
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.756
+  Slack (ns):            -7.708
+  Arrival (ns):          20.645
+  Required (ns):         12.937
+
+Path 58
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.756
+  Slack (ns):            -7.708
+  Arrival (ns):          20.645
+  Required (ns):         12.937
+
+Path 59
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.672
+  Slack (ns):            -7.666
+  Arrival (ns):          20.505
+  Required (ns):         12.839
+
+Path 60
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.711
+  Slack (ns):            -7.654
+  Arrival (ns):          20.600
+  Required (ns):         12.946
+
+Path 61
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.813
+  Slack (ns):            -7.653
+  Arrival (ns):          20.599
+  Required (ns):         12.946
+
+Path 62
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.701
+  Slack (ns):            -7.644
+  Arrival (ns):          20.590
+  Required (ns):         12.946
+
+Path 63
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.733
+  Slack (ns):            -7.621
+  Arrival (ns):          20.558
+  Required (ns):         12.937
+
+Path 64
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.597
+  Slack (ns):            -7.615
+  Arrival (ns):          20.490
+  Required (ns):         12.875
+
+Path 65
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.743
+  Slack (ns):            -7.596
+  Arrival (ns):          20.474
+  Required (ns):         12.878
+
+Path 66
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.633
+  Slack (ns):            -7.591
+  Arrival (ns):          20.466
+  Required (ns):         12.875
+
+Path 67
+  From:                  Controller_Headstage_1/state[3]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            16.637
+  Slack (ns):            -7.587
+  Arrival (ns):          20.462
+  Required (ns):         12.875
+
+Path 68
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.756
+  Slack (ns):            -7.575
+  Arrival (ns):          20.512
+  Required (ns):         12.937
+
+Path 69
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.621
+  Slack (ns):            -7.573
+  Arrival (ns):          20.510
+  Required (ns):         12.937
+
+Path 70
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.647
+  Slack (ns):            -7.555
+  Arrival (ns):          20.433
+  Required (ns):         12.878
+
+Path 71
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.502
+  Slack (ns):            -7.552
+  Arrival (ns):          20.391
+  Required (ns):         12.839
+
+Path 72
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.604
+  Slack (ns):            -7.551
+  Arrival (ns):          20.390
+  Required (ns):         12.839
+
+Path 73
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.660
+  Slack (ns):            -7.548
+  Arrival (ns):          20.485
+  Required (ns):         12.937
+
+Path 74
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.587
+  Slack (ns):            -7.543
+  Arrival (ns):          20.480
+  Required (ns):         12.937
+
+Path 75
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.587
+  Slack (ns):            -7.543
+  Arrival (ns):          20.480
+  Required (ns):         12.937
+
+Path 76
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.492
+  Slack (ns):            -7.542
+  Arrival (ns):          20.381
+  Required (ns):         12.839
+
+Path 77
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.623
+  Slack (ns):            -7.519
+  Arrival (ns):          20.456
+  Required (ns):         12.937
+
+Path 78
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.623
+  Slack (ns):            -7.519
+  Arrival (ns):          20.456
+  Required (ns):         12.937
+
+Path 79
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.532
+  Slack (ns):            -7.479
+  Arrival (ns):          20.425
+  Required (ns):         12.946
+
+Path 80
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.463
+  Slack (ns):            -7.477
+  Arrival (ns):          20.352
+  Required (ns):         12.875
+
+Path 81
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.568
+  Slack (ns):            -7.455
+  Arrival (ns):          20.401
+  Required (ns):         12.946
+
+Path 82
+  From:                  Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_TX_Bit_Count[4]:CLK
+  To:                    Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/o_SPI_MOSI:D
+  Delay (ns):            16.065
+  Slack (ns):            -7.412
+  Arrival (ns):          20.080
+  Required (ns):         12.668
+
+Path 83
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.453
+  Slack (ns):            -7.405
+  Arrival (ns):          20.342
+  Required (ns):         12.937
+
+Path 84
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.453
+  Slack (ns):            -7.405
+  Arrival (ns):          20.342
+  Required (ns):         12.937
+
+Path 85
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.488
+  Slack (ns):            -7.384
+  Arrival (ns):          20.321
+  Required (ns):         12.937
+
+Path 86
+  From:                  Controller_Headstage_1/state[6]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.323
+  Slack (ns):            -7.377
+  Arrival (ns):          20.216
+  Required (ns):         12.839
+
+Path 87
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.407
+  Slack (ns):            -7.354
+  Arrival (ns):          20.232
+  Required (ns):         12.878
+
+Path 88
+  From:                  Controller_Headstage_1/state[25]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.359
+  Slack (ns):            -7.353
+  Arrival (ns):          20.192
+  Required (ns):         12.839
+
+Path 89
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[2]:E
+  Delay (ns):            16.398
+  Slack (ns):            -7.341
+  Arrival (ns):          20.287
+  Required (ns):         12.946
+
+Path 90
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.430
+  Slack (ns):            -7.308
+  Arrival (ns):          20.186
+  Required (ns):         12.878
+
+Path 91
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.295
+  Slack (ns):            -7.306
+  Arrival (ns):          20.184
+  Required (ns):         12.878
+
+Path 92
+  From:                  Controller_Headstage_1/state[13]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.334
+  Slack (ns):            -7.281
+  Arrival (ns):          20.159
+  Required (ns):         12.878
+
+Path 93
+  From:                  Controller_Headstage_1/state[30]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.318
+  Slack (ns):            -7.270
+  Arrival (ns):          20.207
+  Required (ns):         12.937
+
+Path 94
+  From:                  Controller_Headstage_1/state[23]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.420
+  Slack (ns):            -7.269
+  Arrival (ns):          20.206
+  Required (ns):         12.937
+
+Path 95
+  From:                  Controller_Headstage_1/state[21]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[15]:E
+  Delay (ns):            16.308
+  Slack (ns):            -7.260
+  Arrival (ns):          20.197
+  Required (ns):         12.937
+
+Path 96
+  From:                  Controller_Headstage_1/state[27]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[1]:E
+  Delay (ns):            16.189
+  Slack (ns):            -7.239
+  Arrival (ns):          20.078
+  Required (ns):         12.839
+
+Path 97
+  From:                  Controller_Headstage_1/state[3]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[6]:E
+  Delay (ns):            16.284
+  Slack (ns):            -7.234
+  Arrival (ns):          20.109
+  Required (ns):         12.875
+
+Path 98
+  From:                  Controller_Headstage_1/state[3]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[11]:E
+  Delay (ns):            16.274
+  Slack (ns):            -7.162
+  Arrival (ns):          20.099
+  Required (ns):         12.937
+
+Path 99
+  From:                  Controller_Headstage_1/state[3]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[14]:E
+  Delay (ns):            16.274
+  Slack (ns):            -7.162
+  Arrival (ns):          20.099
+  Required (ns):         12.937
+
+Path 100
+  From:                  Controller_Headstage_1/state[28]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[5]:E
+  Delay (ns):            16.162
+  Slack (ns):            -7.117
+  Arrival (ns):          19.995
+  Required (ns):         12.878
+

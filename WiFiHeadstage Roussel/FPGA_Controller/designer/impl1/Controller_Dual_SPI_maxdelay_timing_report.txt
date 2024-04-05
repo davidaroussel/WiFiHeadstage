@@ -1,0 +1,496 @@
+Timing Report Max Delay Analysis
+
+SmartTime Version v11.9
+Microsemi Corporation - Microsemi Libero Software Release v11.9 (Version 11.9.0.4)
+Date: Mon Feb 05 13:45:08 2024
+
+
+Design: Controller_Dual_SPI
+Family: IGLOO
+Die: AGLN250V2
+Package: 100 VQFP
+Temperature Range: 0 - 70 C
+Voltage Range: 1.14 - 1.575 V
+Speed Grade: STD
+Design State: Post-Layout
+Data source: Silicon verified
+Min Operating Conditions: BEST - 1.575 V - 0 C
+Max Operating Conditions: WORST - 1.14 V - 70 C
+Using Enhanced Min Delay Analysis
+Scenario for Timing Analysis: Primary
+
+
+-----------------------------------------------------
+SUMMARY
+
+Clock Domain:               CLK
+Period (ns):                18.736
+Frequency (MHz):            53.373
+Required Period (ns):       10.000
+Required Frequency (MHz):   100.000
+External Setup (ns):        11.150
+Max Clock-To-Out (ns):      13.787
+
+                            Input to Output
+Max Delay (ns):             N/A
+
+END SUMMARY
+-----------------------------------------------------
+
+Clock Domain CLK
+
+SET Register to Register
+
+Path 1
+  From:                  Controller_Headstage_1/state[14]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.880
+  Slack (ns):            -8.736
+  Arrival (ns):          21.611
+  Required (ns):         12.875
+  Setup (ns):            0.947
+  Minimum Period (ns):   18.736
+
+Path 2
+  From:                  Controller_Headstage_1/state[16]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.784
+  Slack (ns):            -8.695
+  Arrival (ns):          21.570
+  Required (ns):         12.875
+  Setup (ns):            0.947
+  Minimum Period (ns):   18.695
+
+Path 3
+  From:                  Controller_Headstage_1/state[26]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.544
+  Slack (ns):            -8.494
+  Arrival (ns):          21.369
+  Required (ns):         12.875
+  Setup (ns):            0.947
+  Minimum Period (ns):   18.494
+
+Path 4
+  From:                  Controller_Headstage_1/state[11]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.567
+  Slack (ns):            -8.448
+  Arrival (ns):          21.323
+  Required (ns):         12.875
+  Setup (ns):            0.947
+  Minimum Period (ns):   18.448
+
+Path 5
+  From:                  Controller_Headstage_1/state[24]:CLK
+  To:                    Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  Delay (ns):            17.432
+  Slack (ns):            -8.446
+  Arrival (ns):          21.321
+  Required (ns):         12.875
+  Setup (ns):            0.947
+  Minimum Period (ns):   18.446
+
+
+Expanded Path 1
+  From: Controller_Headstage_1/state[14]:CLK
+  To: Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+  data required time                             12.875
+  data arrival time                          -   21.611
+  slack                                          -8.736
+  ________________________________________________________
+  Data arrival time calculation
+  0.000                        CLK
+               +     0.000          Clock source
+  0.000                        i_Clk (r)
+               +     0.000          net: i_Clk
+  0.000                        i_Clk_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  1.560                        i_Clk_pad/U0/U0:Y (r)
+               +     0.000          net: i_Clk_pad/U0/NET1
+  1.560                        i_Clk_pad/U0/U1:A (r)
+               +     1.016          cell: ADLIB:CLKIO
+  2.576                        i_Clk_pad/U0/U1:Y (r)
+               +     1.155          net: i_Clk_c
+  3.731                        Controller_Headstage_1/state[14]:CLK (r)
+               +     1.606          cell: ADLIB:DFN1
+  5.337                        Controller_Headstage_1/state[14]:Q (f)
+               +     0.392          net: Controller_Headstage_1/state[14]
+  5.729                        Controller_Headstage_1/state_RNI73OU[11]:B (f)
+               +     1.467          cell: ADLIB:OR2
+  7.196                        Controller_Headstage_1/state_RNI73OU[11]:Y (f)
+               +     0.388          net: Controller_Headstage_1/un1_int_rhd64_tx_byte8_2_i_o3_13[0]
+  7.584                        Controller_Headstage_1/state_RNIHAHT1[17]:C (f)
+               +     1.575          cell: ADLIB:OR3
+  9.159                        Controller_Headstage_1/state_RNIHAHT1[17]:Y (f)
+               +     0.388          net: Controller_Headstage_1/un1_int_rhd64_tx_byte8_2_i_o3_21[0]
+  9.547                        Controller_Headstage_1/state_RNIDKHJ3[5]:C (f)
+               +     1.575          cell: ADLIB:OR3
+  11.122                       Controller_Headstage_1/state_RNIDKHJ3[5]:Y (f)
+               +     1.891          net: Controller_Headstage_1/un1_int_rhd64_tx_byte8_2_i_o3_25[0]
+  13.013                       Controller_Headstage_1/state_RNIBMOFD[2]:A (f)
+               +     1.338          cell: ADLIB:OR3
+  14.351                       Controller_Headstage_1/state_RNIBMOFD[2]:Y (f)
+               +     0.644          net: Controller_Headstage_1/N_40
+  14.995                       Controller_Headstage_1/state_RNIBVIND[2]:A (f)
+               +     1.262          cell: ADLIB:OR2
+  16.257                       Controller_Headstage_1/state_RNIBVIND[2]:Y (f)
+               +     0.406          net: Controller_Headstage_1/N_41
+  16.663                       Controller_Headstage_1/state_RNICHQEE[0]:C (f)
+               +     1.608          cell: ADLIB:AND3C
+  18.271                       Controller_Headstage_1/state_RNICHQEE[0]:Y (r)
+               +     3.340          net: Controller_Headstage_1/int_RHD64_TX_Byte_0_sqmuxa
+  21.611                       Controller_Headstage_1/int_RHD64_TX_Byte[13]:E (r)
+                                    
+  21.611                       data arrival time
+  ________________________________________________________
+  Data required time calculation
+  10.000                       CLK
+               +     0.000          Clock source
+  10.000                       i_Clk (r)
+               +     0.000          net: i_Clk
+  10.000                       i_Clk_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  11.560                       i_Clk_pad/U0/U0:Y (r)
+               +     0.000          net: i_Clk_pad/U0/NET1
+  11.560                       i_Clk_pad/U0/U1:A (r)
+               +     1.016          cell: ADLIB:CLKIO
+  12.576                       i_Clk_pad/U0/U1:Y (r)
+               +     1.246          net: i_Clk_c
+  13.822                       Controller_Headstage_1/int_RHD64_TX_Byte[13]:CLK (r)
+               -     0.947          Library setup time: ADLIB:DFN1E1
+  12.875                       Controller_Headstage_1/int_RHD64_TX_Byte[13]:E
+                                    
+  12.875                       data required time
+
+
+END SET Register to Register
+
+----------------------------------------------------
+
+SET External Setup
+
+Path 1
+  From:                  i_RHD64_SPI_MISO
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[12]:D
+  Delay (ns):            13.857
+  Slack (ns):
+  Arrival (ns):          13.857
+  Required (ns):
+  Setup (ns):            1.112
+  External Setup (ns):   11.150
+
+Path 2
+  From:                  i_RHD64_SPI_MISO
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Falling[12]:D
+  Delay (ns):            13.735
+  Slack (ns):
+  Arrival (ns):          13.735
+  Required (ns):
+  Setup (ns):            1.112
+  External Setup (ns):   11.006
+
+Path 3
+  From:                  i_RHD64_SPI_MISO
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Falling[10]:D
+  Delay (ns):            13.597
+  Slack (ns):
+  Arrival (ns):          13.597
+  Required (ns):
+  Setup (ns):            1.112
+  External Setup (ns):   10.882
+
+Path 4
+  From:                  i_RHD64_SPI_MISO
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Falling[11]:D
+  Delay (ns):            13.294
+  Slack (ns):
+  Arrival (ns):          13.294
+  Required (ns):
+  Setup (ns):            1.112
+  External Setup (ns):   10.614
+
+Path 5
+  From:                  i_RHD64_SPI_MISO
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[0]:D
+  Delay (ns):            13.294
+  Slack (ns):
+  Arrival (ns):          13.294
+  Required (ns):
+  Setup (ns):            1.112
+  External Setup (ns):   10.565
+
+
+Expanded Path 1
+  From: i_RHD64_SPI_MISO
+  To: Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[12]:D
+  data required time                             N/C
+  data arrival time                          -   13.857
+  slack                                          N/C
+  ________________________________________________________
+  Data arrival time calculation
+  0.000                        i_RHD64_SPI_MISO (r)
+               +     0.000          net: i_RHD64_SPI_MISO
+  0.000                        i_RHD64_SPI_MISO_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  1.560                        i_RHD64_SPI_MISO_pad/U0/U0:Y (r)
+               +     0.000          net: i_RHD64_SPI_MISO_pad/U0/NET1
+  1.560                        i_RHD64_SPI_MISO_pad/U0/U1:YIN (r)
+               +     0.251          cell: ADLIB:IOIN_IB
+  1.811                        i_RHD64_SPI_MISO_pad/U0/U1:Y (r)
+               +     4.915          net: i_RHD64_SPI_MISO_c
+  6.726                        i_RHD64_SPI_MISO_pad_RNI6BFA:A (r)
+               +     1.440          cell: ADLIB:BUFF
+  8.166                        i_RHD64_SPI_MISO_pad_RNI6BFA:Y (r)
+               +     3.651          net: i_RHD64_SPI_MISO_c_0
+  11.817                       Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising_RNO[12]:A (r)
+               +     1.663          cell: ADLIB:MX2
+  13.480                       Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising_RNO[12]:Y (r)
+               +     0.377          net: Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/N_61
+  13.857                       Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[12]:D (r)
+                                    
+  13.857                       data arrival time
+  ________________________________________________________
+  Data required time calculation
+  N/C                          CLK
+               +     0.000          Clock source
+  N/C                          i_Clk (r)
+               +     0.000          net: i_Clk
+  N/C                          i_Clk_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  N/C                          i_Clk_pad/U0/U0:Y (r)
+               +     0.000          net: i_Clk_pad/U0/NET1
+  N/C                          i_Clk_pad/U0/U1:A (r)
+               +     1.016          cell: ADLIB:CLKIO
+  N/C                          i_Clk_pad/U0/U1:Y (r)
+               +     1.243          net: i_Clk_c
+  N/C                          Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[12]:CLK (r)
+               -     1.112          Library setup time: ADLIB:DFN1E1C1
+  N/C                          Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/io_RX_Byte_Rising[12]:D
+
+
+END SET External Setup
+
+----------------------------------------------------
+
+SET Clock to Output
+
+Path 1
+  From:                  Controller_Headstage_1/SPI_Master_CS_STM32/r_CS_n:CLK
+  To:                    o_STM32_SPI_CS_n
+  Delay (ns):            9.965
+  Slack (ns):
+  Arrival (ns):          13.787
+  Required (ns):
+  Clock to Out (ns):     13.787
+
+Path 2
+  From:                  Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/o_SPI_MOSI:CLK
+  To:                    o_RHD64_SPI_MOSI
+  Delay (ns):            9.341
+  Slack (ns):
+  Arrival (ns):          13.229
+  Required (ns):
+  Clock to Out (ns):     13.229
+
+Path 3
+  From:                  Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/o_SPI_MOSI:CLK
+  To:                    o_STM32_SPI_MOSI
+  Delay (ns):            8.974
+  Slack (ns):
+  Arrival (ns):          12.754
+  Required (ns):
+  Clock to Out (ns):     12.754
+
+Path 4
+  From:                  Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/r_CS_n:CLK
+  To:                    o_RHD64_SPI_CS_n
+  Delay (ns):            8.212
+  Slack (ns):
+  Arrival (ns):          12.101
+  Required (ns):
+  Clock to Out (ns):     12.101
+
+Path 5
+  From:                  Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/o_SPI_Clk:CLK
+  To:                    o_STM32_SPI_Clk
+  Delay (ns):            8.270
+  Slack (ns):
+  Arrival (ns):          11.986
+  Required (ns):
+  Clock to Out (ns):     11.986
+
+
+Expanded Path 1
+  From: Controller_Headstage_1/SPI_Master_CS_STM32/r_CS_n:CLK
+  To: o_STM32_SPI_CS_n
+  data required time                             N/C
+  data arrival time                          -   13.787
+  slack                                          N/C
+  ________________________________________________________
+  Data arrival time calculation
+  0.000                        CLK
+               +     0.000          Clock source
+  0.000                        i_Clk (r)
+               +     0.000          net: i_Clk
+  0.000                        i_Clk_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  1.560                        i_Clk_pad/U0/U0:Y (r)
+               +     0.000          net: i_Clk_pad/U0/NET1
+  1.560                        i_Clk_pad/U0/U1:A (r)
+               +     1.016          cell: ADLIB:CLKIO
+  2.576                        i_Clk_pad/U0/U1:Y (r)
+               +     1.246          net: i_Clk_c
+  3.822                        Controller_Headstage_1/SPI_Master_CS_STM32/r_CS_n:CLK (r)
+               +     1.606          cell: ADLIB:DFN1E1P1
+  5.428                        Controller_Headstage_1/SPI_Master_CS_STM32/r_CS_n:Q (f)
+               +     3.459          net: o_STM32_SPI_CS_n_c
+  8.887                        o_STM32_SPI_CS_n_pad/U0/U1:D (f)
+               +     1.400          cell: ADLIB:IOTRI_OB_EB
+  10.287                       o_STM32_SPI_CS_n_pad/U0/U1:DOUT (f)
+               +     0.000          net: o_STM32_SPI_CS_n_pad/U0/NET1
+  10.287                       o_STM32_SPI_CS_n_pad/U0/U0:D (f)
+               +     3.500          cell: ADLIB:IOPAD_TRI
+  13.787                       o_STM32_SPI_CS_n_pad/U0/U0:PAD (f)
+               +     0.000          net: o_STM32_SPI_CS_n
+  13.787                       o_STM32_SPI_CS_n (f)
+                                    
+  13.787                       data arrival time
+  ________________________________________________________
+  Data required time calculation
+  N/C                          CLK
+               +     0.000          Clock source
+  N/C                          i_Clk (r)
+                                    
+  N/C                          o_STM32_SPI_CS_n (f)
+
+
+END SET Clock to Output
+
+----------------------------------------------------
+
+SET Register to Asynchronous
+
+No Path
+
+END SET Register to Asynchronous
+
+----------------------------------------------------
+
+SET External Recovery
+
+Path 1
+  From:                  i_Rst_L
+  To:                    Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[1]\\:RESET
+  Delay (ns):            3.346
+  Slack (ns):
+  Arrival (ns):          3.346
+  Required (ns):
+  Recovery (ns):         5.480
+  External Recovery (ns): 5.008
+
+Path 2
+  From:                  i_Rst_L
+  To:                    Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[0]\\:RESET
+  Delay (ns):            3.339
+  Slack (ns):
+  Arrival (ns):          3.339
+  Required (ns):
+  Recovery (ns):         5.480
+  External Recovery (ns): 4.976
+
+Path 3
+  From:                  i_Rst_L
+  To:                    Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/r_SPI_Clk_Count[0]:CLR
+  Delay (ns):            3.220
+  Slack (ns):
+  Arrival (ns):          3.220
+  Required (ns):
+  Recovery (ns):         0.241
+  External Recovery (ns): -0.260
+
+Path 4
+  From:                  i_Rst_L
+  To:                    Controller_Headstage_1/Controller_RHD64_1/SPI_Master_CS_1/SPI_Master_1/r_Trailing_Edge:CLR
+  Delay (ns):            3.248
+  Slack (ns):
+  Arrival (ns):          3.248
+  Required (ns):
+  Recovery (ns):         0.241
+  External Recovery (ns): -0.262
+
+Path 5
+  From:                  i_Rst_L
+  To:                    Controller_Headstage_1/SPI_Master_CS_STM32/SPI_Master_1/o_SPI_Clk:CLR
+  Delay (ns):            3.199
+  Slack (ns):
+  Arrival (ns):          3.199
+  Required (ns):
+  Recovery (ns):         0.241
+  External Recovery (ns): -0.276
+
+
+Expanded Path 1
+  From: i_Rst_L
+  To: Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[1]\\:RESET
+  data required time                             N/C
+  data arrival time                          -   3.346
+  slack                                          N/C
+  ________________________________________________________
+  Data arrival time calculation
+  0.000                        i_Rst_L (f)
+               +     0.000          net: i_Rst_L
+  0.000                        i_Rst_L_pad/U0/U0:PAD (f)
+               +     1.118          cell: ADLIB:IOPAD_IN
+  1.118                        i_Rst_L_pad/U0/U0:Y (f)
+               +     0.000          net: i_Rst_L_pad/U0/NET1
+  1.118                        i_Rst_L_pad/U0/U1:A (f)
+               +     1.014          cell: ADLIB:CLKIO
+  2.132                        i_Rst_L_pad/U0/U1:Y (f)
+               +     1.214          net: i_Rst_L_c
+  3.346                        Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[1]\\:RESET (f)
+                                    
+  3.346                        data arrival time
+  ________________________________________________________
+  Data required time calculation
+  N/C                          CLK
+               +     0.000          Clock source
+  N/C                          i_Clk (r)
+               +     0.000          net: i_Clk
+  N/C                          i_Clk_pad/U0/U0:PAD (r)
+               +     1.560          cell: ADLIB:IOPAD_IN
+  N/C                          i_Clk_pad/U0/U0:Y (r)
+               +     0.000          net: i_Clk_pad/U0/NET1
+  N/C                          i_Clk_pad/U0/U1:A (r)
+               +     1.016          cell: ADLIB:CLKIO
+  N/C                          i_Clk_pad/U0/U1:Y (r)
+               +     1.242          net: i_Clk_c
+  N/C                          Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[1]\\:RCLK (r)
+               -     5.480          Library recovery time: ADLIB:FIFO4K18
+  N/C                          Controller_Headstage_1/Controller_RHD64_1/FIFO_1/\\FIFOBLOCK[1]\\:RESET
+
+
+END SET External Recovery
+
+----------------------------------------------------
+
+SET Asynchronous to Register
+
+No Path
+
+END SET Asynchronous to Register
+
+----------------------------------------------------
+
+Path set Pin to Pin
+
+SET Input to Output
+
+No Path
+
+END SET Input to Output
+
+----------------------------------------------------
+
+Path set User Sets
+
