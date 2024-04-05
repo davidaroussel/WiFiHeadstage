@@ -1,10 +1,8 @@
 import socket
 import os
 import math
-import struct
 import threading
 import time
-import cmath
 import matplotlib.pyplot as plt
 from numpy.fft import fft
 import numpy as np
@@ -53,19 +51,32 @@ class WiFiServer(BaseException):
 
     def configureIntanChip(self):
         self.m_socket.sendall(b"A")
-        self.cutoff_menu = self.m_socket.recv(1024).decode("utf-8")
+        try:
+            recv_message = self.m_socket.recv(1024)
+            self.cutoff_menu = recv_message.decode("utf-8")
+        except UnicodeDecodeError:
+            # Handle the decoding error here, for example:
+            print("Error decoding received data")
+            return
         print(self.cutoff_menu)
         print("Low-pass selection:")
-        #input1 = input()
+        # input1 = input()
         input1 = "4"
         choice_lowfreq = self.findCutoffChoice(input1, "high")
         print(choice_lowfreq)
         print("High-pass selection:")
-        #input2 = input()
+        # input2 = input()
         input2 = "0"
         choice_highfreq = self.findCutoffChoice(input2, "low")
         print(choice_highfreq)
         self.m_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
+
+    def restartDevice(self):
+        self.m_socket.sendall(b"C")
+        time.sleep(0.5)
+        self.m_socket.sendall(b"C")
+
+
 
     def findCutoffChoice(self, input, cutoff):
         choice_index = None
@@ -75,28 +86,9 @@ class WiFiServer(BaseException):
         retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
         choice_cutoff = self.cutoff_menu[choice_index:retline_index]
         return choice_cutoff
-    def receiveDataV1(self, buffer_size, loops):
-        command = b"B"
-        for ch in self.channels:
-            command = command + ch.to_bytes(1, 'big')
-        self.m_socket.sendall(command)#Start Intan Timer
-        #time.sleep(1)
-
-        for i in range(loops):
-
-            data = self.m_socket.recv(buffer_size)
-            print("Loops ", i, " SizeOf Recv Buffer ", data.__sizeof__())
-            ch_counter = 0
-            # for i in range(0, len(data), 2):
-            #     converted_data = int.from_bytes([data[i + 1], data[i]], byteorder='big', signed=True)
-            #     self.m_converted_array[ch_counter % 8].append(converted_data*0.000195)
-            #     ch_counter += 1
-
-        self.m_socket.sendall(b"C")#Stop Intan Timer
-        time.sleep(1)
 
     #This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)
-    def receiveDataV2(self, buffer_size, loops):
+    def receiveData(self, buffer_size, loops):
         BUFFER_SIZE = buffer_size
         self.m_raw_data = []
         command = b"B"
@@ -317,7 +309,7 @@ class WiFiServer(BaseException):
         except Exception as e:
             print(f"Error writing data to {filename}: {e}")
 
-    def createDataForCSV(self):
+    def createDataForCSV2(self):
         meanPerChannel = [[] for i in range(8)]
         data_for_csv = []
         data_for_csv.append(["Channel ID", "Vavg"] + [f"Data {i}" for i in range(len(self.m_vrms_array))])
@@ -329,6 +321,49 @@ class WiFiServer(BaseException):
                 data_for_csv.append(data_row)
         return data_for_csv
 
+    def createDataForCSV(self):
+        data = self.m_converted_array
+        #data = [[i + 1 for _ in range(2000)] for i in range(8)]
+        meanPerChannel = [np.mean(np.array(data[i])) for i in range(len(data))]
+        data_for_csv = []
+
+        data_row = ["Channels"]
+        for i in range(len(data)):
+            data_row.extend(["", "", f"Channel {i}", "", ""])
+        data_for_csv.append(data_row)
+
+        data_row = ["Avg"]
+        for i in range(len(data)):
+            data_row.extend(["", f"{meanPerChannel[i]}", "", "", ""])
+        data_for_csv.append(data_row)
+
+        data_row = []
+        for i in range(len(data)):
+            data_row.extend(["", "", "Data", "v - Vavg", "expo2"])
+        data_for_csv.append(data_row)
+
+        expo2_value = [[] for i in range(len(data))]
+        v_Vavg = [[] for i in range(len(data))]
+
+        min_list_index = min(enumerate(data), key=lambda x: len(x[1]))[0]
+        for i in range(len(data[min_list_index])):
+            data_row = ["", ""]
+            for j in range(len(data)):
+                expo2_value[j].append((data[j][i] - meanPerChannel[j]) ** 2)
+                v_Vavg[j].append(data[j][i] - meanPerChannel[j])
+                data_row.extend([data[j][i], v_Vavg[j][i], expo2_value[j][i], "", ""])
+            data_for_csv.append(data_row)
+
+        for i in range(len(data)):
+            mean_value = np.mean(expo2_value[i])
+            data_for_csv[0][((i + 1) * 5) - 1] = np.sqrt(mean_value)
+            data_for_csv[0][((i + 1) * 5)] = f"mV"
+
+            data_for_csv[1][((i + 1) * 5) - 1] = np.mean(expo2_value[i])
+            data_for_csv[1][((i + 1) * 5) - 2] = np.mean(v_Vavg[i])
+
+        return data_for_csv
+
 
 
 if __name__ == "__main__":
@@ -338,7 +373,7 @@ if __name__ == "__main__":
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    SAMPLING_TIME = 20  # Time sampling in seconds
+    SAMPLING_TIME = 60  # Time sampling in seconds
     FREQ_SAMPLING = 12000
     BUFFER_SIZE = 1024*2000  # Maximum value possible for the WiFi UDP Socket communication
 
@@ -353,21 +388,21 @@ if __name__ == "__main__":
     # HEADSTAGESERVER.getID(0)
     # HEADSTAGESERVER.getID(1)
     # HEADSTAGESERVER.getID(2)
+
+    # HEADSTAGESERVER.restartDevice()
+
     HEADSTAGESERVER.configureIntanChip()
-    HEADSTAGESERVER.receiveDataV2(BUFFER_SIZE, LOOPS)
+    HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
     HEADSTAGESERVER.convertData()
 
     HEADSTAGESERVER.calculateVrmsForAllChannels()
 
-    HEADSTAGESERVER.plotOneChannel(2)
+    # HEADSTAGESERVER.plotOneChannel(2)
 
-    # HEADSTAGESERVER.plotAllChannels()
+    HEADSTAGESERVER.plotAllChannels()
 
-
-
-
-    data_for_csv = HEADSTAGESERVER.createDataForCSV()
-    HEADSTAGESERVER.writeDataToCSV(data_for_csv)
+    # data_for_csv = HEADSTAGESERVER.createDataForCSV()
+    # HEADSTAGESERVER.writeDataToCSV(data_for_csv)
 
 
 
@@ -385,7 +420,7 @@ if __name__ == "__main__":
         choice = input("Select an option: ")
         if choice == "1":
 
-            HEADSTAGESERVER.receiveDataV2(BUFFER_SIZE, LOOPS)
+            HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
             HEADSTAGESERVER.plotAllChannels()
             # Add your code for Option 1 here
         elif choice == "4":

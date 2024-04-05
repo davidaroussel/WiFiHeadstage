@@ -103,7 +103,7 @@ class DataConverter():
                         if (dataCounter % (self.buffer_size*self.num_channels)) == 0:
                             np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
                             self.queue_ephys_data.put(np_conv)
-                            self.queue_csv_data.put(converted_array_mV)
+                            # self.queue_csv_data.put(converted_array_mV)
                             sin_counter = 0
                             dataCounter = 0
 

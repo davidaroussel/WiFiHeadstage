@@ -82,8 +82,8 @@ class WiFiHeadstageReceiver(BaseException):
             response = self.m_thread_socket.recv(1024).decode("utf-8")
             print(response)
             # Configure the Intan chip
-            input1 = "4"
-            input2 = "3"
+            input1 = "2"
+            input2 = "4"
             self.m_thread_socket.sendall(bytes(input1, 'ascii') + bytes(input2, 'ascii'))
         except UnicodeDecodeError as e:
             print(f"Error configuring Intan Chip: {e}")
