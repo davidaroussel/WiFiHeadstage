@@ -373,7 +373,7 @@ if __name__ == "__main__":
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    SAMPLING_TIME = 60  # Time sampling in seconds
+    SAMPLING_TIME = 15  # Time sampling in seconds
     FREQ_SAMPLING = 12000
     BUFFER_SIZE = 1024*2000  # Maximum value possible for the WiFi UDP Socket communication
 
@@ -401,8 +401,8 @@ if __name__ == "__main__":
 
     HEADSTAGESERVER.plotAllChannels()
 
-    # data_for_csv = HEADSTAGESERVER.createDataForCSV()
-    # HEADSTAGESERVER.writeDataToCSV(data_for_csv)
+    data_for_csv = HEADSTAGESERVER.createDataForCSV()
+    HEADSTAGESERVER.writeDataToCSV(data_for_csv)
 
 
 
@@ -423,8 +423,10 @@ if __name__ == "__main__":
             HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
             HEADSTAGESERVER.plotAllChannels()
             # Add your code for Option 1 here
-        elif choice == "4":
+        elif choice == "2":
             HEADSTAGESERVER.ValidateData()
+            break
+        elif choice == "3":
             break
         else:
             print("Invalid choice. Please select a valid option.")

@@ -27,9 +27,9 @@ def main():
     TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
-    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    # while not TASK_WiFiServer.m_connected:
-    #     time.sleep(1)
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+    while not TASK_WiFiServer.m_connected:
+        time.sleep(1)
 
     TASK_WiFiServer.configureIntanChip()
 
@@ -37,7 +37,7 @@ def main():
     TASK_CSVWriter.startThread()
     TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
-    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
     # Continuous loop until "stop" is entered
     user_input = input("\n Enter 'stop' to disable sampling: ")
@@ -48,6 +48,7 @@ def main():
         TASK_OpenEphysSender.stopThread()
         TASK_DataConverter.stopThread()
         TASK_WiFiServer.stopThread()
+        print("Closed everything")
 
 
 if __name__ == "__main__":
