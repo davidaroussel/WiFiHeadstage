@@ -1,11 +1,25 @@
 # WiFi Headstage
 
-5. Copy - Paste the following list:
+1. Create a virtual environment to install dependencies.
 
+2. Copy and paste the following list after opening the environment (`ENV`):
 
+    ```
     python -m pip install websockets
     python -m pip install numpy
     python -m pip install matplotlib
-   
-6. Verify that your IDE is using the proper interpreter (ENVS)
-7. Run BrainIA/python_server.py
+    ```
+
+3. Verify that your IDE is using the proper interpreter (ENV).
+
+4. Connect to the BioML_Headstage WiFi.
+
+5. Perform sampling:
+
+    5.1. Open Ephys - Continuous:
+
+        main.py
+
+    5.2. Use Python IDE - Fixed time period:
+
+        testWiFiModule.py

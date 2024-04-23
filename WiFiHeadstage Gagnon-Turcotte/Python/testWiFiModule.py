@@ -31,8 +31,11 @@ class WiFiServer(BaseException):
         self.m_vrms_array = [[] for i in range(8)]
         self.cutoff_menu = ''
 
-
         self.m_serverThread = threading.Thread(target=self.serverThread)
+        directory = "./sampling data"
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        self.csv_directory = os.path.join(directory, timestamp)
+
 
     #Start the server to receive the data
     def startServer(self):
@@ -121,6 +124,15 @@ class WiFiServer(BaseException):
             packet = self.m_socket.recv(trash_bufsize)
             if len(packet) < trash_bufsize:
                 break
+
+    def stopDataFromIntan(self):
+        self.m_socket.sendall(b"C")  # Stop Intan Timer
+        time.sleep(0.1)
+        self.m_socket.sendall(b"C")  # Stop Intan Timer
+        #EMPTY SOCKET BUFFER
+        trash_bufsize = 128
+        packet = self.m_socket.recv(trash_bufsize)
+        print("Closed Intan Sampling")
 
     def convertData(self):
         converted_data = [[] for i in range(8)]
@@ -215,10 +227,6 @@ class WiFiServer(BaseException):
             #VERSION FOR PYTHON 3.10
             axs[row].plot(k, self.m_converted_array[ch_counter])
             axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
-
-
-
-
             fft_data = np.fft.fft(self.m_converted_array[ch_counter])
             freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
             peak_coef = np.argmax(np.abs(fft_data))
@@ -299,10 +307,11 @@ class WiFiServer(BaseException):
         return LOOPS
 
     def writeDataToCSV(self, data):
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = f"data_{timestamp}.csv"
+        timestamp = datetime.now().strftime("%H-%M-%S")
+        filename = f"{timestamp}.csv"
+        csv_path = os.path.join(self.csv_directory, filename)
         try:
-            with open(filename, 'w', newline='') as csv_file:
+            with open(csv_path, 'w', newline='') as csv_file:
                 writer = csv.writer(csv_file)
                 writer.writerows(data)
             print(f"Data written to {filename} successfully.")
@@ -322,6 +331,9 @@ class WiFiServer(BaseException):
         return data_for_csv
 
     def createDataForCSV(self):
+        if not os.path.exists(self.csv_directory):
+            os.makedirs(self.csv_directory)
+
         data = self.m_converted_array
         #data = [[i + 1 for _ in range(2000)] for i in range(8)]
         meanPerChannel = [np.mean(np.array(data[i])) for i in range(len(data))]
@@ -373,9 +385,9 @@ if __name__ == "__main__":
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    SAMPLING_TIME = 15  # Time sampling in seconds
+    SAMPLING_TIME = 8  # Time sampling in seconds
     FREQ_SAMPLING = 12000
-    BUFFER_SIZE = 1024*2000  # Maximum value possible for the WiFi UDP Socket communication
+    BUFFER_SIZE = 1024*1500  # Maximum value possible for the WiFi UDP Socket communication
 
     HEADSTAGESERVER = WiFiServer(SOCKET_PORT, HOST_IP_ADDR, TESTING_CHANNELS, FREQ_SAMPLING, BUFFER_SIZE)
     LOOPS = HEADSTAGESERVER.calculateSamplingLoops(SAMPLING_TIME)
@@ -409,24 +421,26 @@ if __name__ == "__main__":
     # Buffer Size for Headstage communication is 1024 bytes.
     # Loops is the number of time we want to receive data
 
-    print("Welcome to the Python Menu!")
-    print("1. Samples the channels")
-    print("2. Validate Data")
-    print("3. Option 3")
-    print("4. Exit")
 
 
     while True:
+        print("WiFi Headstage Menu")
+        print("1. Samples the channels")
+        print("2. Validate Data")
+        print("3. Exit")
         choice = input("Select an option: ")
         if choice == "1":
-
             HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
             HEADSTAGESERVER.plotAllChannels()
+            data_for_csv = HEADSTAGESERVER.createDataForCSV()
+            HEADSTAGESERVER.writeDataToCSV(data_for_csv)
             # Add your code for Option 1 here
         elif choice == "2":
             HEADSTAGESERVER.ValidateData()
             break
         elif choice == "3":
+            HEADSTAGESERVER.stopDataFromIntan()
+            HEADSTAGESERVER.stopServer()
             break
         else:
             print("Invalid choice. Please select a valid option.")

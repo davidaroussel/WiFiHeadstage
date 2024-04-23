@@ -6,7 +6,12 @@ from CSVWriter import CSVWriter
 from OpenEphysSender import OpenEphysSender
 from utils import Toolkit
 
+
 def main():
+    #MODES
+    CSV_WRITING = True
+    OPENEPHYS_SENDING = False
+
     #GLOBAL VARIABLES
     HOST_ADDR      = ""
     HEADSTAGE_PORT = 5000
@@ -34,21 +39,32 @@ def main():
     TASK_WiFiServer.configureIntanChip()
 
     # Start other threads
-    TASK_CSVWriter.startThread()
-    TASK_OpenEphysSender.startThread()
+    if CSV_WRITING:
+        TASK_CSVWriter.startThread()
+    if OPENEPHYS_SENDING:
+        TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
     # Continuous loop until "stop" is entered
     user_input = input("\n Enter 'stop' to disable sampling: ")
     if user_input.strip().lower() == "stop":
-        print("Exiting...")
         TASK_WiFiServer.stopDataFromIntan()
-        TASK_CSVWriter.stopThread()
-        TASK_OpenEphysSender.stopThread()
+        print("Closed Intan")
+
+        if CSV_WRITING:
+            TASK_CSVWriter.stopThread()
+            print("Closed CSV Writer")
+
+        if OPENEPHYS_SENDING:
+            TASK_OpenEphysSender.stopThread()
+            print("Closed OpenEphys Sender")
+
         TASK_DataConverter.stopThread()
-        TASK_WiFiServer.stopThread()
         print("Closed everything")
+
+        TASK_WiFiServer.stopThread(TASK_WiFiServer.m_socketConnectionThread)
+        print("Closed WiFi Server")
 
 
 if __name__ == "__main__":
