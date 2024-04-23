@@ -18,8 +18,8 @@
 
     5.1. Open Ephys - Continuous:
 
-        main.py
+        OpenEphysServer.py
 
     5.2. Use Python IDE - Fixed time period:
 
-        testWiFiModule.py
+        PythonServer.py
