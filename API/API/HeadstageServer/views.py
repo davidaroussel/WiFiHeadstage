@@ -1,37 +1,30 @@
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import ResearchCenter, Subject, Device
-from .serializers import ResearchCenterSerializer, SubjectSerializer, DeviceSerializer
+from .models import ResearchCenter, Subject, Device, Experiment
+from .serializers import ResearchCenterSerializer, SubjectSerializer, DeviceSerializer, ExperimentSerializer
 
 
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def research_center_api(request):
     if request.method == 'GET':
-        # Check if ResearchCenterId is provided in the request data
-        research_center_id = request.data.get('ResearchCenterId')
-        if research_center_id:
-            # Retrieve the specific ResearchCenter by ID
+        # Check if ResearchCenterName is provided in the query parameters
+        research_center_name = request.data.get('ResearchCenterName')
+        if research_center_name:
+            # Retrieve the specific ResearchCenter by name
             try:
-                research_center = ResearchCenter.objects.get(ResearchCenterId=research_center_id)
+                research_center = ResearchCenter.objects.get(ResearchCenterName=research_center_name)
                 serializer = ResearchCenterSerializer(research_center)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except ResearchCenter.DoesNotExist:
                 return Response({"error": "Research center not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            # If no ResearchCenterId provided, return all ResearchCenters
+            # If no ResearchCenterName provided, return all ResearchCenters
             research_centers = ResearchCenter.objects.all()
             serializer = ResearchCenterSerializer(research_centers, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
-        # Check if ResearchCenterId is provided in the request data
-        research_center_id = request.data.get('ResearchCenterId')
-        if research_center_id:
-            # Check if the provided ResearchCenterId is already used by another research center
-            if ResearchCenter.objects.filter(ResearchCenterId=research_center_id).exists():
-                return Response({"error": "Research center with this ID already exists"}, status=status.HTTP_400_BAD_REQUEST)
-
         serializer = ResearchCenterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -98,6 +91,74 @@ def research_center_detail_api(request, research_center_id):
         return Response({"message": "Research center deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
+
+@api_view(['GET', 'PUT', 'POST', 'DELETE'])
+def experiment_api(request):
+    if request.method == 'GET':
+        experiments = Experiment.objects.all()
+        serializer = ExperimentSerializer(experiments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        serializer = ExperimentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        experiment_id = request.data.get('ExperimentId')
+        if experiment_id:
+            try:
+                experiment = Experiment.objects.get(ExperimentId=experiment_id)
+                serializer = ExperimentSerializer(experiment, data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            except Experiment.DoesNotExist:
+                return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "ExperimentId is required for updating"}, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        experiment_id = request.data.get('ExperimentId')
+        if experiment_id:
+            try:
+                experiment = Experiment.objects.get(ExperimentId=experiment_id)
+                experiment.delete()
+                return Response({"message": "Experiment deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+            except Experiment.DoesNotExist:
+                return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "ExperimentId is required for deletion"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def experiment_detail_api(request, experiment_id):
+    try:
+        experiment = Experiment.objects.get(ExperimentId=experiment_id)
+    except Experiment.DoesNotExist:
+        return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ExperimentSerializer(experiment)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = ExperimentSerializer(experiment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        experiment.delete()
+        return Response({"message": "Experiment deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def subject_api(request):
     if request.method == 'GET':
@@ -117,8 +178,26 @@ def subject_api(request):
             serializer = SubjectSerializer(subjects, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-    elif request.method == 'POST':
-        serializer = SubjectSerializer(data=request.data)
+    if request.method == 'POST':
+        subject_name = request.data.get('SubjectName')
+        research_center_name = request.data.get('ResearchCenterName')
+        research_center = ResearchCenter.objects.get(name=research_center_name)
+        print(research_center)
+
+        print("HERE", research_center_name)
+        if not subject_name:
+            return Response({"error": "SubjectName is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not research_center_name:
+            return Response({"error": "ResearchCenterName is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            research_center = ResearchCenter.objects.get(ResearchCenterName=research_center_name)
+        except ResearchCenter.DoesNotExist:
+            return Response({"error": "Research center not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        subject_data = {'SubjectName': subject_name, 'ResearchCenter_id': research_center.id}
+        serializer = SubjectSerializer(data=subject_data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

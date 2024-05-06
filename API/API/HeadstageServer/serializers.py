@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ResearchCenter, Subject, Device
+from .models import ResearchCenter, Subject, Device, Experiment
 from datetime import datetime
 
 
@@ -12,39 +12,54 @@ class DateField(serializers.ReadOnlyField):
 
 class ResearchCenterSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
+
     class Meta:
         model = ResearchCenter
         fields = ['ResearchCenterId', 'ResearchCenterName', 'DateOfJoining']
 
+    def validate_ResearchCenterName(self, value):
+        """
+        Check that the ResearchCenterName is unique.
+        """
+        existing_centers = ResearchCenter.objects.filter(ResearchCenterName=value)
+        if existing_centers.exists():
+            raise serializers.ValidationError("A research center with this name already exists.")
+        return value
 
-class SubjectSerializer(serializers.ModelSerializer):
+class ExperimentSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
-    Location = ResearchCenterSerializer(source='ResearchCenter', read_only=True)
-    ResearchCenterName = serializers.CharField(write_only=True)  # Add this line
-    print(ResearchCenterName)
+    Location = ResearchCenterSerializer(source='research_center', read_only=True)
+    ResearchCenter = ResearchCenter()
+    print(ResearchCenter)
     class Meta:
-        model = Subject
-        fields = ['SubjectId', 'SubjectName', 'Location', 'DateOfJoining', 'ResearchCenterName']
+        model = Experiment
+        fields = ['ResearchCenterName', 'Location', 'ExperimentId', 'ExperimentName', 'DateOfJoining']
 
     def create(self, validated_data):
         research_center_name = validated_data.pop('ResearchCenterName', None)
-        if not research_center_name:
-            raise serializers.ValidationError("ResearchCenterName is missing")
+        if research_center_name:
+            try:
+                research_center = ResearchCenter.objects.get(ResearchCenterName=research_center_name)
+                validated_data['research_center'] = research_center
+            except ResearchCenter.DoesNotExist:
+                raise serializers.ValidationError("Research center not found")
+        else:
+            raise serializers.ValidationError("ResearchCenterName is required")
 
-        try:
-            # Get the ResearchCenter instance based on the provided name
-            research_center = ResearchCenter.objects.get(ResearchCenterName=research_center_name)
-        except ResearchCenter.DoesNotExist:
-            raise serializers.ValidationError(
-                "Research center with name '{}' does not exist".format(research_center_name))
+        return super().create(validated_data)
 
-        # Create the Subject associated with the found ResearchCenter
-        subject = Subject.objects.create(ResearchCenter=research_center, **validated_data)
-        return subject
+
+class SubjectSerializer(serializers.ModelSerializer):
+    DateOfJoining = DateField()
+    Location = ExperimentSerializer(source='Experiment', read_only=True)
+    class Meta:
+        model = Subject
+        fields = ['SubjectId', 'SubjectName', 'Location', 'DateOfJoining']
 
 
 class DeviceSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
+    Location = ExperimentSerializer(source='Experiment', read_only=True)
     class Meta:
-        model = Device
-        fields = '__all__'
+        model = Subject
+        fields = ['DeviceId', 'DeviceName', 'Location', 'DateOfJoining']
