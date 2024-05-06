@@ -152,9 +152,9 @@ def experiments_api(request):
 
         # If not, proceed with creating the experiment
         try:
-            subject_name = request.data.get('Subject_Name')
+            subject_name = request.data.get('SubjectName')
             subject = Subjects.objects.get(SubjectName=subject_name)
-            device_name = request.data.get('Device_Name')
+            device_name = request.data.get('DeviceName')
             device = Devices.objects.get(DeviceName=device_name)
 
             new_data = request.data

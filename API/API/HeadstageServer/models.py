@@ -22,3 +22,4 @@ class ResearchCenters(models.Model):
     ResearchCenterId = models.AutoField(primary_key=True)
     ResearchCenterName = models.CharField(max_length=500)
     DateOfJoining = models.DateField(auto_now_add=True)
+    Experiment = models.ForeignKey(Experiments, on_delete=models.CASCADE)
