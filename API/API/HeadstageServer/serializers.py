@@ -1,65 +1,67 @@
 from rest_framework import serializers
-from .models import ResearchCenter, Subject, Device, Experiment
-from datetime import datetime
+from .models import ResearchCenters, Experiments, Subjects, Devices
 
 
 class DateField(serializers.ReadOnlyField):
     def to_representation(self, value):
-        if isinstance(value, datetime):
-            return value.date()
-        return value
+        if value:
+            return value.strftime('%Y-%m-%d')
+        return None
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    DateOfJoining = DateField()
+
+    class Meta:
+        model = Subjects
+        fields = ['SubjectId', 'SubjectName', 'DateOfJoining']
+    # def validate_SubjectName(self, value):
+    #     if Subjects.objects.filter(SubjectName=value).exists():
+    #         raise serializers.ValidationError("A subject with this name already exists.")
+    #     return value
+
+
+class DeviceSerializer(serializers.ModelSerializer):
+    DateOfJoining = DateField()
+
+    class Meta:
+        model = Devices
+        fields = ['DeviceId', 'DeviceName', 'DateOfJoining']
+
+    # def validate_DeviceName(self, value):
+    #     if Devices.objects.filter(DeviceName=value).exists():
+    #         raise serializers.ValidationError("A device with this name already exists.")
+    #     return value
+
+
+class ExperimentSerializer(serializers.ModelSerializer):
+    DateOfJoining = DateField()
+    Subject = SubjectSerializer()
+    Device = DeviceSerializer()
+
+    class Meta:
+        model = Experiments
+        fields = ['ExperimentId', 'ExperimentName', 'DateOfJoining', 'Subject', 'Device']
+
+    def create(self, validated_data):
+        subject_data = validated_data.pop('Subject')
+        device_data = validated_data.pop('Device')
+
+        subject = Subjects.objects.get(SubjectName=subject_data['SubjectName'])
+        device = Devices.objects.get(DeviceName=device_data['DeviceName'])
+
+
+        print(subject.SubjectName,device.DeviceName)
+        # subject = Subjects.objects.create(**subject_data)
+        # device = Devices.objects.create(**device_data)
+        #
+        experiment = Experiments.objects.create(Subject=subject, Device=device, **validated_data)
+        return experiment
 
 
 class ResearchCenterSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
 
     class Meta:
-        model = ResearchCenter
+        model = ResearchCenters
         fields = ['ResearchCenterId', 'ResearchCenterName', 'DateOfJoining']
-
-    def validate_ResearchCenterName(self, value):
-        """
-        Check that the ResearchCenterName is unique.
-        """
-        existing_centers = ResearchCenter.objects.filter(ResearchCenterName=value)
-        if existing_centers.exists():
-            raise serializers.ValidationError("A research center with this name already exists.")
-        return value
-
-class ExperimentSerializer(serializers.ModelSerializer):
-    DateOfJoining = DateField()
-    Location = ResearchCenterSerializer(source='research_center', read_only=True)
-    ResearchCenter = ResearchCenter()
-    print(ResearchCenter)
-    class Meta:
-        model = Experiment
-        fields = ['ResearchCenterName', 'Location', 'ExperimentId', 'ExperimentName', 'DateOfJoining']
-
-    def create(self, validated_data):
-        research_center_name = validated_data.pop('ResearchCenterName', None)
-        if research_center_name:
-            try:
-                research_center = ResearchCenter.objects.get(ResearchCenterName=research_center_name)
-                validated_data['research_center'] = research_center
-            except ResearchCenter.DoesNotExist:
-                raise serializers.ValidationError("Research center not found")
-        else:
-            raise serializers.ValidationError("ResearchCenterName is required")
-
-        return super().create(validated_data)
-
-
-class SubjectSerializer(serializers.ModelSerializer):
-    DateOfJoining = DateField()
-    Location = ExperimentSerializer(source='Experiment', read_only=True)
-    class Meta:
-        model = Subject
-        fields = ['SubjectId', 'SubjectName', 'Location', 'DateOfJoining']
-
-
-class DeviceSerializer(serializers.ModelSerializer):
-    DateOfJoining = DateField()
-    Location = ExperimentSerializer(source='Experiment', read_only=True)
-    class Meta:
-        model = Subject
-        fields = ['DeviceId', 'DeviceName', 'Location', 'DateOfJoining']

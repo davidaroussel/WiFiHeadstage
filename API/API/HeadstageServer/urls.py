@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import ResearchCenter, Subject, Device, Experiment
+from .views import ResearchCenters, Experiments, Devices, Subjects
 
 
 urlpatterns = [
-    path('research-centers/', ResearchCenter, name='research_centers'),
-    path('experiments/', Experiment, name='experiments'),
-    path('subjects/', Subject, name='subjects'),
-    path('devices/', Device, name='devices'),
+    path('research-centers/', ResearchCenters, name='research_centers'),
+    path('experiments/', Experiments, name='experiments'),
+    path('devices/', Devices, name='devices'),
+    path('subjects/', Subjects, name='subjects'),
 ]
