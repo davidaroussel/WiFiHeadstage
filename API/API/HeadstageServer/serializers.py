@@ -25,39 +25,56 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = ['DeviceId', 'DeviceName', 'DateOfJoining']
 
 
+# serializers.py
 class ExperimentSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
-    Subject = SubjectSerializer()
-    Device = DeviceSerializer()
+    SubjectList = SubjectSerializer(required=False)
+    DeviceList = DeviceSerializer(required=False)
 
     class Meta:
         model = Experiments
-        fields = ['ExperimentId', 'ExperimentName', 'DateOfJoining', 'Subject', 'Device']
+        fields = ['ExperimentId', 'ExperimentName', 'DateOfJoining', 'SubjectList', 'DeviceList']
 
     def create(self, validated_data):
-        subject_data = validated_data.pop('Subject')
-        device_data = validated_data.pop('Device')
+        subject_data = validated_data.pop('Subject', None)
+        device_data = validated_data.pop('Device', None)
 
-        subject = Subjects.objects.get(SubjectName=subject_data['SubjectName'])
-        device = Devices.objects.get(DeviceName=device_data['DeviceName'])
+        experiment = Experiments.objects.create(**validated_data)
 
-        experiment = Experiments.objects.create(Subject=subject, Device=device, **validated_data)
+        if subject_data:
+            subject = Subjects.objects.get_or_create(SubjectName=subject_data['SubjectName'])[0]
+            experiment.Subject = subject
+
+        if device_data:
+            device = Devices.objects.get_or_create(DeviceName=device_data['DeviceName'])[0]
+            experiment.Device = device
+
+        experiment.save()
         return experiment
 
 
 class ResearchCenterSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
+    ExperimentList = ExperimentSerializer(required=False)
 
     class Meta:
         model = ResearchCenters
-        fields = ['ResearchCenterId', 'ResearchCenterName', 'DateOfJoining', 'Experiments']
+        fields = ['ResearchCenterId', 'ResearchCenterName', 'DateOfJoining', 'ExperimentList']
 
     def create(self, validated_data):
-        subject_data = validated_data.pop('Subject')
-        device_data = validated_data.pop('Device')
+        print(validated_data)
+        subject_data = validated_data.pop('Experiment', None)
+        device_data = validated_data.pop('Device', None)
 
-        subject = Subjects.objects.get(SubjectName=subject_data['SubjectName'])
-        device = Devices.objects.get(DeviceName=device_data['DeviceName'])
+        experiment = Experiments.objects.create(**validated_data)
 
-        experiment = Experiments.objects.create(Subject=subject, Device=device, **validated_data)
+        if subject_data:
+            subject = Subjects.objects.get_or_create(SubjectName=subject_data['SubjectName'])[0]
+            experiment.Subject = subject
+
+        if device_data:
+            device = Devices.objects.get_or_create(DeviceName=device_data['DeviceName'])[0]
+            experiment.Device = device
+
+        experiment.save()
         return experiment

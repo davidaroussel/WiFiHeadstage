@@ -138,7 +138,7 @@ def experiments_api(request):
                 serializer = ExperimentSerializer(experiment)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Experiments.DoesNotExist:
-                return Response({"error": "Device not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
             # If no DeviceName provided, return all Devices
             experiments = Experiments.objects.all()
@@ -150,52 +150,48 @@ def experiments_api(request):
         if Experiments.objects.filter(ExperimentName=experiment_name).exists():
             return Response("Already Exists", status=status.HTTP_400_BAD_REQUEST)
 
-        # If not, proceed with creating the experiment
-        try:
-            subject_name = request.data.get('SubjectName')
-            subject = Subjects.objects.get(SubjectName=subject_name)
-            device_name = request.data.get('DeviceName')
-            device = Devices.objects.get(DeviceName=device_name)
-
-            new_data = request.data
-            new_data["Subject"] = {
-                "SubjectId": subject.SubjectId,
-                "SubjectName": subject.SubjectName,
-                "DateOfJoining": subject.DateOfJoining
-            }
-            new_data["Device"] = {
-                "DeviceId": device.DeviceId,
-                "DeviceName": device.DeviceName,
-                "DateOfJoining": device.DateOfJoining
-
-            }
-            serializer = ExperimentSerializer(data=new_data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        except (Subjects.DoesNotExist, Devices.DoesNotExist) as e:
-            # Handle missing subject or device
-            print("Error:", e)
-            return Response("Subject or Device not found", status=status.HTTP_400_BAD_REQUEST)
+        serializer = ExperimentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'PUT':
-        experiment_id = request.data.get('ExperimentId')
-        updated_name = request.data.get('ExperimentName')
-
-        if experiment_id and updated_name:
+        experiment_name = request.data.get('ExperimentName')
+        device_name = request.data.get('DeviceName')
+        subject_name = request.data.get('SubjectName')
+        if experiment_name:
             try:
-                experiment = Experiments.objects.get(ExperimentId=experiment_id)
-                experiment.ExperimentName = updated_name
+                # Retrieve the experiment object from the database
+                experiment = Experiments.objects.get(ExperimentName=experiment_name)
+
+                if device_name:
+                    if Devices.objects.filter(DeviceName=device_name).exists():
+                        device = Devices.objects.get(DeviceName=device_name)
+                        if experiment.DeviceList is None:
+                            experiment.DeviceList = device
+                        else:
+                            experiment.DeviceList.append(device)
+                    else:
+                        return Response({"error": "Device Not found"}, status=status.HTTP_404_NOT_FOUND)
+
+                if subject_name:
+                    if Subjects.objects.filter(SubjectName=subject_name).exists():
+                        subject = Subjects.objects.create(SubjectName=subject_name)
+                        if experiment.SubjectList is None:
+                            experiment.SubjectList = subject
+                    else:
+                        return Response({"error": "Subject Not found"}, status=status.HTTP_404_NOT_FOUND)
+
                 experiment.save()
                 serializer = ExperimentSerializer(experiment)
                 return Response(serializer.data, status=status.HTTP_200_OK)
+
             except Experiments.DoesNotExist:
-                return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": "Experiment Not found"}, status=status.HTTP_404_NOT_FOUND)
+
         else:
-            return Response({"error": "Both ExperimentId and ExperimentName are required for updating"},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "ExperimentName is required for updating"}, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         experiment_id = request.data.get('ExperimentId')
@@ -232,6 +228,10 @@ def research_center_api(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
+        researchCenter_name = request.data.get('ResearchCenterName')
+        if ResearchCenters.objects.filter(ResearchCenterName=researchCenter_name).exists():
+            return Response("Already Exists", status=status.HTTP_400_BAD_REQUEST)
+
         serializer = ResearchCenterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

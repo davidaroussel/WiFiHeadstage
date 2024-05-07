@@ -14,12 +14,11 @@ class Experiments(models.Model):
     ExperimentId = models.AutoField(primary_key=True)
     ExperimentName = models.CharField(max_length=500)
     DateOfJoining = models.DateField(auto_now_add=True)
-    Subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
-    Device = models.ForeignKey(Devices, on_delete=models.CASCADE)
-
+    SubjectList = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True, blank=True)
+    DeviceList = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True, blank=True)
 
 class ResearchCenters(models.Model):
     ResearchCenterId = models.AutoField(primary_key=True)
     ResearchCenterName = models.CharField(max_length=500)
     DateOfJoining = models.DateField(auto_now_add=True)
-    Experiment = models.ForeignKey(Experiments, on_delete=models.CASCADE)
+    ExperimentsList = models.ForeignKey(Experiments, on_delete=models.CASCADE, null=True, blank=True)
