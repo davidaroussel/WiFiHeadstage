@@ -14,8 +14,10 @@ class Experiments(models.Model):
     ExperimentId = models.AutoField(primary_key=True)
     ExperimentName = models.CharField(max_length=500)
     DateOfJoining = models.DateField(auto_now_add=True)
-    SubjectList = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True, blank=True)
-    DeviceList = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True, blank=True)
+    Subject = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True, blank=True)
+    Device = models.ForeignKey(Devices, on_delete=models.CASCADE, null=True, blank=True)
+    data_file = models.FileField(upload_to='upload/', null=True, blank=True)
+    FilePath = models.CharField(max_length=500)
 
 class ResearchCenters(models.Model):
     ResearchCenterId = models.AutoField(primary_key=True)
