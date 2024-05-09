@@ -195,10 +195,7 @@ def experiments_api(request):
             except Experiments.DoesNotExist:
                 return Response({"error": "Experiment not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            print(Experiments.objects.all())
-            # If no DeviceName provided, return all Devices
             experiments = Experiments.objects.all()
-
             serializer = ExperimentSerializer(experiments, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -301,7 +298,6 @@ def research_center_api(request):
         else:
             # If no ResearchCenterName provided, return all ResearchCenters
             research_centers = ResearchCenters.objects.all()
-            print(research_centers)
             serializer = ResearchCenterSerializer(research_centers, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
