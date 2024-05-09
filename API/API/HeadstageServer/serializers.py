@@ -14,7 +14,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subjects
-        fields = ['SubjectId', 'SubjectName', 'DateOfJoining']
+        fields = ['SubjectId', 'SubjectName', 'DateOfJoining', "ExperimentsList"]
 
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -22,18 +22,18 @@ class DeviceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Devices
-        fields = ['DeviceId', 'DeviceName', 'DateOfJoining']
+        fields = ['DeviceId', 'DeviceName', 'DateOfJoining', "ExperimentsList"]
 
 
 # serializers.py
 class ExperimentSerializer(serializers.ModelSerializer):
     DateOfJoining = DateField()
-    SubjectList = SubjectSerializer(required=False)
-    DeviceList = DeviceSerializer(required=False)
+    Subject = SubjectSerializer(required=False)
+    Device = DeviceSerializer(required=False)
 
     class Meta:
         model = Experiments
-        fields = ['ExperimentId', 'ExperimentName', 'DateOfJoining', 'SubjectList', 'DeviceList', 'FilePath']
+        fields = ['ExperimentId', 'ExperimentName', 'DateOfJoining', 'Subject', 'Device']
 
     def create(self, validated_data):
         subject_data = validated_data.pop('Subject', None)
@@ -61,20 +61,4 @@ class ResearchCenterSerializer(serializers.ModelSerializer):
         model = ResearchCenters
         fields = ['ResearchCenterId', 'ResearchCenterName', 'DateOfJoining', 'ExperimentList']
 
-    def create(self, validated_data):
-        print(validated_data)
-        subject_data = validated_data.pop('Experiment', None)
-        device_data = validated_data.pop('Device', None)
 
-        experiment = Experiments.objects.create(**validated_data)
-
-        if subject_data:
-            subject = Subjects.objects.get_or_create(SubjectName=subject_data['SubjectName'])[0]
-            experiment.Subject = subject
-
-        if device_data:
-            device = Devices.objects.get_or_create(DeviceName=device_data['DeviceName'])[0]
-            experiment.Device = device
-
-        experiment.save()
-        return experiment

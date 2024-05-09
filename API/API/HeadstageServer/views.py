@@ -3,57 +3,57 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import ResearchCenters, Experiments, Devices, Subjects
 from .serializers import ResearchCenterSerializer, ExperimentSerializer, DeviceSerializer, SubjectSerializer
-import json
-from datetime import date
-from django.shortcuts import render, redirect
+
 from django.views.decorators.csrf import csrf_exempt
-from .forms import ExperimentForm
-from datetime import datetime
+from django.conf import settings
 
 import os
-from django.conf import settings
+import zipfile
+from datetime import datetime
 
 @csrf_exempt
 @api_view(['POST'])
 def upload_experiment(request):
     if request.method == 'POST':
-        data = request.data
-        experiment_name = data.get('ExperimentName')
-        subject_name = data.get('Subject')
-        device_name = data.get('Device')
-        directory_structure = data.get('DirectoryStructure')
-
+        # Retrieve data from the request
+        experiment_name = request.data.get('ExperimentName')
+        subject_name = request.data.get('Subject')
+        device_name = request.data.get('Device')
+        zip_file = request.FILES.get('zip_file')
 
         # Ensure that all required data is provided
-        if experiment_name is None or subject_name is None or device_name is None or directory_structure is None:
+        if not all([experiment_name, subject_name, device_name, zip_file]):
             return Response({'error': 'Missing required data'}, status=400)
 
-        # Create base directory path using experiment name, subject name, and device name
-        base_directory = os.path.join(settings.MEDIA_ROOT, experiment_name, subject_name, device_name)
+        if not Experiments.objects.filter(ExperimentName=experiment_name).exists():
+            return Response({'error': 'Experiment name doesnt exist'}, status=400)
 
-        # Create a timestamp-based folder
+        if not Subjects.objects.filter(SubjectName=subject_name).exists():
+            return Response({'error': 'Subject name doesnt exist'}, status=400)
+
+        if not Devices.objects.filter(DeviceName=device_name).exists():
+            return Response({'error': 'Device name doesnt exist'}, status=400)
+
+
+        base_directory = os.path.join(settings.MEDIA_ROOT, experiment_name, subject_name, device_name)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         timestamp_directory = os.path.join(base_directory, timestamp)
         os.makedirs(timestamp_directory, exist_ok=True)
 
-        # Recursively create directory structure inside the timestamp directory
-        create_directories(timestamp_directory, directory_structure)
+        with open(os.path.join(timestamp_directory, zip_file.name), 'wb+') as destination:
+            for chunk in zip_file.chunks():
+                destination.write(chunk)
 
-        return Response({'message': 'Directory structure created successfully'}, status=200)
+        with zipfile.ZipFile(os.path.join(timestamp_directory, zip_file.name), 'r') as zip_ref:
+            zip_ref.extractall(timestamp_directory)
+
+        os.remove(os.path.join(timestamp_directory, zip_file.name))
+
+        return Response({'message': 'Zip file uploaded, extracted, and deleted successfully'}, status=200)
     else:
         return Response({'error': 'Invalid request method'}, status=405)
 
-def create_directories(base_path, directory_structure):
-    for element, (element_type, contents) in directory_structure.items():
-        directory_path = os.path.join(base_path, element)
-        if element_type == 'folder':
-            os.makedirs(directory_path, exist_ok=True)
-            if contents:
-                create_directories(directory_path, contents)
-        elif element_type == 'file':
-            # Keep track of files but don't create them now
-            # This will be done when the actual file is received
-            pass
+
 
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def subjects_api(request):
@@ -225,18 +225,40 @@ def experiments_api(request):
                 if device_name:
                     if Devices.objects.filter(DeviceName=device_name).exists():
                         device = Devices.objects.get(DeviceName=device_name)
-                        if experiment.DeviceList is None:
-                            experiment.DeviceList = device
+                        if experiment.Device is None:
+                            experiment.Device = device
+
+                            temp_history = device.ExperimentsList
+                            if temp_history is None:
+                                device.ExperimentsList = [experiment.ExperimentName]
+                            else:
+                                data_listed = eval(device.ExperimentsList)
+                                data_listed.append(experiment.ExperimentName)
+                                device.ExperimentsList = data_listed
+                            device.save()
                         else:
-                            experiment.DeviceList.append(device)
+                            print("TODO: Logic for Device Already Exist")
                     else:
                         return Response({"error": "Device Not found"}, status=status.HTTP_404_NOT_FOUND)
 
                 if subject_name:
                     if Subjects.objects.filter(SubjectName=subject_name).exists():
                         subject = Subjects.objects.create(SubjectName=subject_name)
-                        if experiment.SubjectList is None:
-                            experiment.SubjectList = subject
+                        if experiment.Subject is None:
+                            experiment.Subject = subject
+
+                            temp_history = subject.ExperimentsList
+                            if temp_history is None:
+                                subject.ExperimentsList = [experiment.ExperimentName]
+                            else:
+                                data_listed = eval(subject.ExperimentsList)
+                                data_listed.append(experiment.ExperimentName)
+                                subject.ExperimentsList = data_listed
+                            subject.save()
+
+
+                        else:
+                            print("TODO: Logic for Subject Already Exist")
                     else:
                         return Response({"error": "Subject Not found"}, status=status.HTTP_404_NOT_FOUND)
 
