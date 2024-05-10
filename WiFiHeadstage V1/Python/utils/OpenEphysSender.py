@@ -32,6 +32,26 @@ class OpenEphysSender:
     def currentTime(self):
         return time.time_ns() / (10 ** 9)
 
+
+    def sendToOpenEphysTCP(self):
+        print("---STARTING SEND_OPENEPHYS THREAD---")
+        openEphys_AddrPort = ("192.168.1.147", self.port)
+        openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
+        try:
+            openEphys_Socket.connect(openEphys_AddrPort)
+        except Exception as e:
+            print("Error connecting to OpenEphys:", e)
+            return
+
+        try:
+            while True:
+                item = self.queue_conv_data.get()
+                openEphys_Socket.sendall(item)
+        except KeyboardInterrupt:
+            print("---Connection closed---")
+        finally:
+            openEphys_Socket.close()
+
     def sendToOpenEphys(self):
         # SPECIFY THE IP AND PORT #
         print("---STARTING SEND_OPENEPHYS THREAD---")
@@ -51,6 +71,22 @@ class OpenEphysSender:
             # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
             while ((t2 - t1) < bufferInterval):
                 t2 = self.currentTime()
+
+    def send_to_openEphys(self):
+        openEphys_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        openEphys_socket.connect(("192.168.1.147", self.port))
+
+        def send_data(data):
+            openEphys_socket.sendall(data)
+        try:
+            while True:
+                # Generate or fetch data to send
+                data = b'your_data_here'  # Replace with your data
+                send_data(data)
+        except KeyboardInterrupt:
+            openEphys_socket.close()
+            print("---Connection closed---")
+
 
     def plotData(self):
         # SPECIFY THE IP AND PORT #
@@ -88,12 +124,12 @@ class OpenEphysSender:
 if __name__ == "__main__":
 
     #GLOBAL VARIABLES
-    HOST_ADDR = "192.168.1.132"
+    HOST_ADDR = ""
     OPENEPHYS_PORT = 10001
 
-    CHANNELS = [0, 1, 2, 3, 31, 32, 46, 47]
-    BUFFER_SIZE = 64
-    FREQUENCY = 15000
+    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
+    BUFFER_SIZE = 1024
+    FREQUENCY = 12000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA = Queue()

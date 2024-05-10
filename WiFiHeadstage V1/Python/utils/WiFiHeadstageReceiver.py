@@ -21,7 +21,7 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_socketConnectionThread = threading.Thread(target=self.connectSocket)
         self.m_connected = False
         self.m_received_data = 0
-        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataFromIntan)
+        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataSimulator)
         # For plotting
         self.k = []
         self.converted_array = []
@@ -67,6 +67,13 @@ class WiFiHeadstageReceiver(BaseException):
                     print("BOOBOO")
                 data += bytearray(rest_packet)
             self.queue_raw_data.put(data)
+
+    def continuedDataSimulator(self):
+        BUFFER_SIZE = self.buffer_size * self.buffer_factor
+        while 1:
+            data = [i%256 for i in range(0, BUFFER_SIZE)]
+            self.queue_raw_data.put(data)
+            time.sleep(0.001)
 
     def stopDataFromIntan(self):
         self.m_thread_socket.sendall(b"C")  # Stop Intan Timer
