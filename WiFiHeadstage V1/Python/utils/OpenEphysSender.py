@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 from queue import Queue
 from .DataConverter import DataConverter
 
+def currentTime():
+    return time.time_ns() / (10 ** 9)
+
 
 class OpenEphysSender:
     def __init__(self, q_queue, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
@@ -19,7 +22,7 @@ class OpenEphysSender:
         self.host_addr = p_host_addr
         self.port = p_port
         self.buffServer_Flag = False
-        self.buffServer_Thread = Thread(target=self.sendToOpenEphys)
+        self.buffServer_Thread = Thread(target=self.sendToOpenEphysTCP)
 
     def startThread(self):
         self.buffServer_Thread.start()
@@ -35,18 +38,46 @@ class OpenEphysSender:
 
     def sendToOpenEphysTCP(self):
         print("---STARTING SEND_OPENEPHYS THREAD---")
-        openEphys_AddrPort = ("192.168.1.147", self.port)
-        openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
+
+        numChannels = 8  # number of channels to send
+        numSamples = 1024  # size of the data buffer
+        Freq = 12000  # sample rate of the signal
+        offset = 0  # Offset of bytes in this packet; only used for buffers > ~64 kB
+        dataType = 2  # Enumeration value based on OpenCV.Mat data types
+        elementSize = 2  # Number of bytes per element. elementSize = 2 for U16
+
+        bytesPerBuffer = numChannels * numSamples * elementSize
+        header = np.array([offset, bytesPerBuffer], dtype='i4').tobytes() + \
+                 np.array([dataType], dtype='i2').tobytes() + \
+                 np.array([elementSize, numChannels, numSamples], dtype='i4').tobytes()
+
+        buffersPerSecond = Freq / numSamples
+        bufferInterval = 1 / buffersPerSecond
+
+        openEphys_AddrPort = ("localhost", 10001)
         try:
-            openEphys_Socket.connect(openEphys_AddrPort)
+            openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
+            openEphys_Socket.bind(openEphys_AddrPort)
+            openEphys_Socket.listen(1)
+
+
+            print("Waiting for external connection to start...")
+            (tcpClient, address) = openEphys_Socket.accept()
+            print("Connected.")
         except Exception as e:
             print("Error connecting to OpenEphys:", e)
             return
 
         try:
             while True:
+                t1 = currentTime()
                 item = self.queue_conv_data.get()
-                openEphys_Socket.sendall(item)
+                rc = tcpClient.sendto(header + item, address)
+                t2 = currentTime()
+                # while ((t2 - t1) < bufferInterval):
+                #     t2 = currentTime()
+
+
         except KeyboardInterrupt:
             print("---Connection closed---")
         finally:
@@ -55,7 +86,7 @@ class OpenEphysSender:
     def sendToOpenEphys(self):
         # SPECIFY THE IP AND PORT #
         print("---STARTING SEND_OPENEPHYS THREAD---")
-        openEphys_AddrPort = ("192.168.1.147", self.port)
+        openEphys_AddrPort = ("10.63.56.126", self.port)
         openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
         buffersPerSecond = self.frequency / self.buffer_size
