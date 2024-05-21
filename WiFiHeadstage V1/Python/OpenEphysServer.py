@@ -5,8 +5,18 @@ from utils.DataConverter import DataConverter
 from utils.CSVWriter import CSVWriter
 from utils.OpenEphysSender import OpenEphysSender
 
+from open_ephys.control import OpenEphysHTTPServer
+from open_ephys.control.network_control import NetworkControl
+
 
 def main():
+
+    channel = 5
+    state = 1
+    gui_starter = OpenEphysHTTPServer(address='127.0.0.1')
+    gui_ttl = NetworkControl(ip_address='127.0.0.1', port=5556)
+
+
     #MODES
     CSV_WRITING = False
     OPENEPHYS_SENDING = True
@@ -37,10 +47,10 @@ def main():
     TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
-    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    # while not TASK_WiFiServer.m_connected:
-    #     time.sleep(1)
-    # TASK_WiFiServer.configureIntanChip()
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+    while not TASK_WiFiServer.m_connected:
+        time.sleep(1)
+    TASK_WiFiServer.configureIntanChip()
 
     # Start other threads
     if CSV_WRITING:
@@ -49,6 +59,26 @@ def main():
         TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+
+    # gui_starter.acquire()
+    # time.sleep(1)
+    # print("SENDING ")
+    #
+    # gui_starter.record()
+    # time.sleep(1)
+    # print("RECORDING ")
+
+    # counter = 0
+    # while True:
+    #     gui_ttl.send_ttl(line=channel, state=state)
+    #     time.sleep(1)
+    #     state = not state
+    #     counter += 1
+    #
+    #     if counter == 100:
+    #         gui_starter.idle()
+    #         print("STOP ")
+    #         quit()
 
     # Continuous loop until "stop" is entered
     user_input = input("\n Enter 'stop' to disable sampling: ")

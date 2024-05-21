@@ -9,6 +9,7 @@
     python -m pip install mysqlclient
     python -m pip install djangorestframework
     python -m pip install request
+    python -m pip open-ephys-python-tools
     ```
 
 

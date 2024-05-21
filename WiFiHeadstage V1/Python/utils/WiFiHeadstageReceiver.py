@@ -71,7 +71,7 @@ class WiFiHeadstageReceiver(BaseException):
     def continuedDataSimulator(self):
         BUFFER_SIZE = self.buffer_size * self.buffer_factor
         while 1:
-            data = [i%256 for i in range(0, BUFFER_SIZE)]
+            data = [0 for i in range(0, BUFFER_SIZE)]
             self.queue_raw_data.put(data)
             time.sleep(0.001)
 

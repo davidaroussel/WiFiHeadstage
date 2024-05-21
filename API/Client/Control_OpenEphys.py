@@ -3,11 +3,11 @@ import time
 from open_ephys.control import OpenEphysHTTPServer
 from open_ephys.control.network_control import NetworkControl
 
-channel = 1
+channel = 5
 state = 1
 
-gui_starter = OpenEphysHTTPServer(address='127.0.0.1')
-gui_ttl = NetworkControl(ip_address='127.0.0.1', port=5556)
+gui_starter = OpenEphysHTTPServer(address='localhost')
+gui_ttl = NetworkControl(ip_address='localhost', port=5556)
 
 gui_starter.acquire()
 time.sleep(1)

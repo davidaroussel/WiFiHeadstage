@@ -22,7 +22,7 @@ class OpenEphysSender:
         self.host_addr = p_host_addr
         self.port = p_port
         self.buffServer_Flag = False
-        self.buffServer_Thread = Thread(target=self.sendToOpenEphysTCP)
+        self.buffServer_Thread = Thread(target=self.sendToOpenEphys)
 
     def startThread(self):
         self.buffServer_Thread.start()
@@ -54,7 +54,7 @@ class OpenEphysSender:
         buffersPerSecond = Freq / numSamples
         bufferInterval = 1 / buffersPerSecond
 
-        openEphys_AddrPort = ("localhost", 10001)
+        openEphys_AddrPort = ("localhost", self.port)
         try:
             openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
             openEphys_Socket.bind(openEphys_AddrPort)
@@ -70,13 +70,8 @@ class OpenEphysSender:
 
         try:
             while True:
-                t1 = currentTime()
                 item = self.queue_conv_data.get()
                 rc = tcpClient.sendto(header + item, address)
-                t2 = currentTime()
-                # while ((t2 - t1) < bufferInterval):
-                #     t2 = currentTime()
-
 
         except KeyboardInterrupt:
             print("---Connection closed---")
@@ -86,7 +81,7 @@ class OpenEphysSender:
     def sendToOpenEphys(self):
         # SPECIFY THE IP AND PORT #
         print("---STARTING SEND_OPENEPHYS THREAD---")
-        openEphys_AddrPort = ("10.63.56.126", self.port)
+        openEphys_AddrPort = ("localhost", self.port)
         openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
         buffersPerSecond = self.frequency / self.buffer_size
