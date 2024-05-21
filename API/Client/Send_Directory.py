@@ -33,9 +33,9 @@ if __name__ == '__main__':
     directory_path = r"C:\Users\david\OneDrive\Ph.D G. ELECTRIQUE\Wi-Fi Headstage\SCOPE\2024-04-25\2024-04-25_13-17-49 (Very Good - In cage)"
     User_Name = "david.roussel"
     Password = "<PASSWORD>"
-    experiment_name = "Experiment B"
+    experiment_name = "Experiment A"
     subject_name = "Monkey A"
-    device_name = "Headstage V3"
+    device_name = "Headstage V1"
     url = "http://127.0.0.1:8000/upload/"
 
     upload_experiment(directory_path, experiment_name, subject_name, device_name, url)

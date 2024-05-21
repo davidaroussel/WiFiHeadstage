@@ -47,10 +47,10 @@ def main():
     TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
-    TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    while not TASK_WiFiServer.m_connected:
-        time.sleep(1)
-    TASK_WiFiServer.configureIntanChip()
+    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+    # while not TASK_WiFiServer.m_connected:
+    #     time.sleep(1)
+    # TASK_WiFiServer.configureIntanChip()
 
     # Start other threads
     if CSV_WRITING:
