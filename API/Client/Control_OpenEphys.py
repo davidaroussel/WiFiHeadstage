@@ -25,6 +25,7 @@ if __name__ == '__main__':
     # Run the experiment cycle three times
     for i in range(3):
         gui_starter.set_base_text(f"TESTING {i}")
+        gui_starter.acquire()
         gui_starter.record()
         print("RECORDING")
         print(gui_starter.get_recording_info())
@@ -36,7 +37,7 @@ if __name__ == '__main__':
             state = not state
             counter += 1
 
-        # gui_starter.idle()
+        gui_starter.idle()
         print("STOPPING RECORDING")
         upload_experiment(directory_path, experiment_name, subject_name, device_name, url)
         print("UPLOAD COMPLETE")
