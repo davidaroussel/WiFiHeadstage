@@ -38,7 +38,7 @@ architecture TB of SPI_Master_CS_TB is
 
   constant SPI_MODE                : integer := 0;  -- CPOL = 0 CPHA = 0
   constant CLKS_PER_HALF_BIT       : integer := 2;  -- (125/2)/CLK_PER_HALF_BIT MHz
-  constant NUM_OF_BITS_PER_PACKET  : integer := 32;  -- 2 bytes per chip select
+  constant NUM_OF_BITS_PER_PACKET  : integer := 16;  -- 2 bytes per chip select
   constant CS_INACTIVE_CLKS        : integer := 4;  -- Adds delay between bytes
   
   signal r_Rst_L    : std_logic := '1';
@@ -113,17 +113,12 @@ begin  -- architecture TB
     r_Rst_L <= '0';
 
     -- Test single byte
-    SendMessage(X"C1C2C3C4", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xC1C2C3C4, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));
-    -- Test double byte
-    SendMessage(X"ADBCEF12", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xADBCEF12, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));
+    SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
 
-    SendMessage(X"A1A2A3A4", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xA1A2A3A4, Received 0x" & to_hstring(unsigned(w_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(w_Master_RX_Byte_Falling));   
+    -- Test double byte
+    SendMessage(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
+
+    SendMessage(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
 
     wait for 100 ns;
     assert false report "Test Complete" severity failure;

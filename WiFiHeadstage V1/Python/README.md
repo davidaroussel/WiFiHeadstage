@@ -6,10 +6,14 @@
 
     ```
     python -m pip install websockets
+    python -m pip install open-ephys-python-tools
     python -m pip install numpy
     python -m pip install matplotlib
     python -m pip install tqdm
     python -m pip install pyopenephys
+    python -m pip install scikit-learn
+    python -m pip install kneed
+
     ```
 
 3. Verify that your IDE is using the proper interpreter (ENV).

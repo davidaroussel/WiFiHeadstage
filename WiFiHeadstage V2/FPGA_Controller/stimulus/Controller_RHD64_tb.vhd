@@ -37,11 +37,13 @@ architecture sim of Controller_RHD64_tb is
   signal tb_FIFO_WE         : std_logic;
   signal tb_FIFO_RE         : std_logic;
   
-  signal tb_FIFO_Q          : std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
+  signal tb_FIFO_Q 			: std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
   signal tb_FIFO_EMPTY      : std_logic;
   signal tb_FIFO_FULL       : std_logic;
   signal tb_FIFO_AEMPTY     : std_logic;
   signal tb_FIFO_AFULL      : std_logic;
+  
+
 
   
   -- Sends a single byte from master. 
@@ -62,6 +64,7 @@ begin
  
   tb_Clk <= not tb_Clk after CLK_PERIOD;
   tb_SPI_MISO <= tb_SPI_MOSI;
+
 
   UUT: entity work.Controller_RHD64
     generic map (
@@ -104,38 +107,27 @@ begin
 
     -- Test single byte
     SendMessage(X"C1C2", tb_TX_Byte, tb_TX_DV);
-    report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
+
 
     wait until rising_edge(tb_Clk);
     tb_FIFO_RE <= '1';
     wait until rising_edge(tb_Clk);
     tb_FIFO_RE <= '0';
-    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
     
     -- Test double byte
     SendMessage(X"ADBC", tb_TX_Byte, tb_TX_DV);
-    report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));
 
 
     SendMessage(X"A1A2", tb_TX_Byte, tb_TX_DV);
-    report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(tb_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(tb_RX_Byte_Falling));   
 
     wait until rising_edge(tb_Clk);
     tb_FIFO_RE <= '1';
     wait until rising_edge(tb_Clk);
     tb_FIFO_RE <= '0';
-    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
-    for i in 0 to 9 loop
-        wait until rising_edge(tb_Clk);
-    end loop;
-    
+    wait until rising_edge(tb_Clk);    
     tb_FIFO_RE <= '1';
     wait until rising_edge(tb_Clk);
     tb_FIFO_RE <= '0';
-    report "Received 0x" & to_hstring(unsigned(tb_FIFO_Q)); 
 
     wait for 5000 ns;
     assert false report "Test Complete" severity failure;

@@ -328,6 +328,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(WFM_SPI_WIRQ_Port, &GPIO_InitStruct);
 
 
+
+
+
+
+ //EXTRA PINOUTS HERE
+
+
   /*Configure GPIO pin: RHD_CS */
   GPIO_InitStruct.Pin = UDP_TASK_SCOPE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;

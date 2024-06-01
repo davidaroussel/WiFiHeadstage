@@ -30,7 +30,7 @@
 --              CS_INACTIVE_CLKS - Sets the amount of time in clock cycles to
 --              hold the state of Chip-Selct high (inactive) before next 
 --              command is allowed on the line.  Useful if chip requires some
---              time when CS is high between trasnfers.
+--              time when CS is high between transfers.
 --
 -- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
 -- Author: <Name>
@@ -39,14 +39,13 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-
 use ieee.numeric_std.all;
 
 entity SPI_Master_CS is
   generic (
       SPI_MODE               : integer := 0;
       CLKS_PER_HALF_BIT      : integer := 3;
-      NUM_OF_BITS_PER_PACKET : integer := 32;
+      NUM_OF_BITS_PER_PACKET : integer := 16;
       CS_INACTIVE_CLKS       : integer := 4
     );
   port (
@@ -61,7 +60,7 @@ entity SPI_Master_CS is
    o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
    
    -- RX (MISO) Signals
-   o_RX_Count : out std_logic_vector;  -- Index RX byte
+   o_RX_Count : inout std_logic_vector;  -- Index RX byte
    o_RX_DV    : out std_logic;  -- Data Valid pulse (1 clock cycle)
    io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
    io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
@@ -84,6 +83,9 @@ architecture RTL of SPI_Master_CS is
   signal r_TX_Count     : integer range 0 to NUM_OF_BITS_PER_PACKET + 1;
   signal w_Master_Ready : std_logic;
 
+  signal r_RX_Count : std_logic_vector(o_RX_Count'range);
+  signal r_RX_DV : std_logic;
+
   component SPI_Master is
       generic (
         SPI_MODE               : integer := 0;
@@ -98,7 +100,7 @@ architecture RTL of SPI_Master_CS is
        -- TX (MOSI) Signals
        i_TX_Byte   : in std_logic_vector(15 downto 0);   -- Byte to transmit on MOSI
        i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
-       o_TX_Ready  : out std_logic;         -- Transmit Ready for next byte
+       o_TX_Ready  : inout std_logic;         -- Transmit Ready for next byte
        
        -- RX (MISO) Signals
        o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
@@ -130,7 +132,7 @@ begin
       i_TX_DV    => i_TX_DV,            -- Data Valid pulse
       o_TX_Ready => w_Master_Ready,     -- Transmit Ready for Byte
       -- RX (MISO) Signals
-      o_RX_DV           => o_RX_DV,            -- Data Valid pulse
+      o_RX_DV           => r_RX_DV,            -- Data Valid pulse
       io_RX_Byte_Rising  => io_RX_Byte_Rising,   -- Byte received on MISO Rising  CLK Edge 
       io_RX_Byte_Falling => io_RX_Byte_Falling,  -- Byte received on MISO Falling CLK Edge       
        -- SPI Interface
@@ -179,30 +181,33 @@ begin
             r_SM_CS <= IDLE;
           end if;
 
-        when others => 
-          r_CS_n  <= '1'; -- we done, so set CS high
+        when others =>
           r_SM_CS <= IDLE;
       end case;
     end if;
-  end process SM_CS; 
+  end process SM_CS;
+  
 
-
-  -- Purpose: Keep track of RX_Count
+  -- RX Count logic
   RX_COUNT : process (i_Clk)
   begin
     if rising_edge(i_Clk) then
       if r_CS_n = '1' then
-        o_RX_Count <= std_logic_vector(to_unsigned(0, o_RX_Count'length));
-      elsif o_RX_DV = '1' then
-        o_RX_Count <= std_logic_vector(unsigned(o_RX_Count) + 1);
+        r_RX_Count <= std_logic_vector(to_unsigned(0, r_RX_Count'length));
+      elsif r_RX_DV = '1' then
+        r_RX_Count <= std_logic_vector(unsigned(r_RX_Count) + 1);
       end if;
     end if;
   end process RX_COUNT;
 
-  o_SPI_CS_n <= r_CS_n;
+  -- Assign internal signals to output ports
+  o_RX_Count <= r_RX_Count;
+  o_RX_DV <= r_RX_DV;
 
+  o_SPI_CS_n <= r_CS_n;
+  
   o_TX_Ready <= '1' when 
-                i_TX_DV /= '1' and ((r_SM_CS = IDLE)  or  (r_SM_CS = TRANSFER and w_Master_Ready = '1' and r_TX_Count > 0)) 
-                else '0'; 
+				i_TX_DV /= '1' and ((r_SM_CS = IDLE)  or  (r_SM_CS = TRANSFER and w_Master_Ready = '1' and r_TX_Count > 0)) 
+				else '0'; 
 
 end architecture RTL;

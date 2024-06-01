@@ -1,84 +1,57 @@
-----------------------------------------------------------------------
--- Created by Microsemi SmartDesign Thu Aug 24 14:04:40 2023
--- Testbench Template
--- This is a basic testbench that instantiates your design with basic 
--- clock and reset pins connected.  If your design has special
--- clock/reset or testbench driver requirements then you should 
--- copy this file and modify it. 
-----------------------------------------------------------------------
-
---------------------------------------------------------------------------------
--- Company: <Name>
---
--- File: FIFO_tb.vhd
--- File history:
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---
--- Description: 
---
--- <Description here>
---
--- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
--- Author: <Name>
---
---------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use std.textio.all; -- Include textio package for string handling
 
 
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
- 
+
 entity FIFO_tb is
 end FIFO_tb;
- 
+
 architecture behave of FIFO_tb is
-  signal r_DATA   : std_logic_vector(31 downto 0);
-  signal w_Q      : std_logic_vector(31 downto 0);
-  signal r_WE     : std_logic := '0';
-  signal r_RE     : std_logic := '0';
-  signal r_CLOCK  : std_logic := '0';  
-  signal r_WCLOCK : std_logic;
-  signal r_RCLOCK : std_logic;
-  signal w_FULL   : std_logic;
-  signal w_EMPTY  : std_logic;
-  signal r_RESET  : std_logic := '1';
-  signal w_AEMPTY : std_logic;
-  signal w_AFULL  : std_logic;
-   
-  
-  component FIFO is
-    port( DATA   : in    std_logic_vector(31 downto 0);
-          Q      : out   std_logic_vector(31 downto 0);
-          WE     : in    std_logic;
-          RE     : in    std_logic;
-          WCLOCK : in    std_logic;
-          RCLOCK : in    std_logic;
-          FULL   : out   std_logic;
-          EMPTY  : out   std_logic;
-          RESET  : in    std_logic;
-          AEMPTY : out   std_logic;
-          AFULL  : out   std_logic
-      );
-  end component FIFO;
- 
-   
+  signal r_DATA      : std_logic_vector(31 downto 0);
+  signal w_Q         : std_logic_vector(31 downto 0);
+  signal r_WE        : std_logic := '0';
+  signal r_RE        : std_logic := '0';
+  signal r_CLOCK     : std_logic := '0';  
+  signal r_WCLOCK    : std_logic;
+  signal r_RCLOCK    : std_logic;
+  signal w_FULL      : std_logic;
+  signal w_EMPTY     : std_logic;
+  signal r_RESET     : std_logic := '1';
+  signal w_AEMPTY    : std_logic;
+  signal w_AFULL     : std_logic;
+
+  component FIFO_MEM is
+    port(
+      clk_i         : in std_logic;
+      rst_i         : in std_logic;
+      wr_en_i       : in std_logic;
+      rd_en_i       : in std_logic;
+      wr_data_i     : in std_logic_vector(31 downto 0);
+      full_o        : out std_logic;
+      empty_o       : out std_logic;
+      almost_full_o : out std_logic;
+      almost_empty_o: out std_logic;
+      rd_data_o     : out std_logic_vector(31 downto 0)
+    );
+  end component;
+
+
 begin
-  UUT : entity work.FIFO
+  UUT : FIFO_MEM
     port map (
-      DATA      => r_DATA,
-      Q         => w_Q,
-      WE        => r_WE,
-      RE        => r_RE,
-      WCLOCK    => r_WCLOCK,
-      RCLOCK    => r_RCLOCK,
-      FULL      => w_FULL,
-      EMPTY     => w_EMPTY,
-      RESET     => r_RESET,
-      AEMPTY    => w_AEMPTY,
-      AFULL     => w_AFULL
-      );
+      clk_i         => r_CLOCK,
+      rst_i         => r_RESET,
+      wr_en_i       => r_WE,
+      rd_en_i       => r_RE,
+      wr_data_i     => r_DATA,
+      full_o        => w_FULL,
+      empty_o       => w_EMPTY,
+      almost_full_o => w_AFULL,
+      almost_empty_o=> w_AEMPTY,
+      rd_data_o     => w_Q
+    );
    
   -- Clock Generators:
   r_CLOCK <= not r_CLOCK after 20.83 ns;
@@ -101,14 +74,11 @@ begin
     wait until r_CLOCK = '1';    
     wait until r_CLOCK = '1';   
     
-
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';       
     wait until r_CLOCK = '1'; 
-    report "Receiving 0x" & to_hstring(unsigned(w_Q)); 
 
-    
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
@@ -133,13 +103,28 @@ begin
     r_WE <= '0';
 
     wait until r_CLOCK = '1';
-    
+	
+	r_DATA <= X"A4A4A4A4";    
+    wait until r_CLOCK = '1';   
+	r_WE <= '1';
+    wait until r_CLOCK = '1';
+	r_WE <= '0';
+	
+	
+    wait until r_CLOCK = '1';
+	r_WE <= '1';
+	 wait until r_CLOCK = '1';
+	r_DATA <= X"A4A4A4A4";    
+    wait until r_CLOCK = '1';   
+	
+    r_WE <= '0';
+
+    wait until r_CLOCK = '1';	
+
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
-    
     
     wait until r_CLOCK = '1';
     wait until r_CLOCK = '1';
@@ -148,41 +133,80 @@ begin
     r_DATA <= X"B4B4B4B4";    
     r_WE <= '1';
     wait until r_CLOCK = '1';
-    r_WE <= '0';
+
 
     r_DATA <= X"A7A7A7A7";    
-    r_WE <= '1';
     wait until r_CLOCK = '1';
-    r_WE <= '0';
+	r_DATA <= X"A8A8A8A8";    
+    wait until r_CLOCK = '1';
+    r_DATA <= X"A9A9A9A9";    
+    wait until r_CLOCK = '1';
+	r_DATA <= X"AAAAAAAA";    
+    wait until r_CLOCK = '1';
+	r_WE <= '0';
 
-    
     wait until r_CLOCK = '1';    
     
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
     
-    r_RE <= '1';
+	r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
     
-    r_RE <= '1';
+	r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0';        
     wait until r_CLOCK = '1';
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
-     
+	
     r_RE <= '1';
     wait until r_CLOCK = '1';
     r_RE <= '0'; 
     wait until r_CLOCK = '1';       
-    report "Received 0x" & to_hstring(unsigned(w_Q)); 
-    
 
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';       
+
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';       
+
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';       
+
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';       
+
+
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    
+    wait until r_CLOCK = '1';       
+
+	wait until r_CLOCK = '1';
+    
+	wait until r_CLOCK = '1';       
+
+	
+	wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';       
+
+
+	r_RE <= '1';
+    wait until r_CLOCK = '1';
+    r_RE <= '0'; 
+    wait until r_CLOCK = '1';   
 
     assert false report "Test Complete" severity failure;  
   end process;

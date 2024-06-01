@@ -1,0 +1,24 @@
+if {![file exists "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/sim/sim.mpf"]} { 
+	project new "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/sim" sim
+	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" verilog
+	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/Controller_RHD64.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master_CS.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/stimulus/Controller_RHD64_tb.vhd" vhdl
+	vlib  work
+	vdel -lib work -all 
+	vlib work
+
+	vlog  "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl" -work work  "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" -suppress 2388
+    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/Controller_RHD64.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master_CS.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/stimulus/Controller_RHD64_tb.vhd"
+} else {
+	project open "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/sim/sim"
+	project compileoutofdate
+}
+vsim -L work -L pmi_work -L ovi_ice40up  -suppress vsim-7033,vsim-8630,3009,3389 Controller_RHD64_tb 
+view wave
+add wave /*
+run 100 ns

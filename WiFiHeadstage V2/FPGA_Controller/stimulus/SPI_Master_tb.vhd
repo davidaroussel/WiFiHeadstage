@@ -1,139 +1,109 @@
-----------------------------------------------------------------------
--- Created by Microsemi SmartDesign Thu Aug 24 09:49:18 2023
--- Testbench Template
--- This is a basic testbench that instantiates your design with basic 
--- clock and reset pins connected.  If your design has special
--- clock/reset or testbench driver requirements then you should 
--- copy this file and modify it. 
-----------------------------------------------------------------------
-
---------------------------------------------------------------------------------
--- Company: <Name>
---
--- File: SPI_Master_tb.vhd
--- File history:
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---      <Revision number>: <Date>: <Comments>
---
--- Description: 
---
--- <Description here>
---
--- Targeted device: <Family::IGLOO> <Die::AGLN250V2> <Package::100 VQFP>
--- Author: <Name>
---
---------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use ieee.std_logic_textio.all;
+use std.textio.all;
 
 entity SPI_Master_TB is
 end entity SPI_Master_TB;
 
-architecture TB of SPI_Master_TB is
-
-  constant SPI_MODE               : integer := 0; -- CPOL = 1, CPHA = 1
-  constant CLKS_PER_HALF_BIT      : integer := 2; 
-  constant NUM_OF_BITS_PER_PACKET : integer := 32; -- Messages are 4 bytes each
-
-  signal r_Rst_L    : std_logic := '1';
-  signal w_SPI_Clk  : std_logic;
-  signal r_Clk      : std_logic := '0';
-  signal w_SPI_MOSI : std_logic;
-  signal r_SPI_MISO : std_logic;
+architecture tb_arch of SPI_Master_TB is
+  -- Constants
+  constant CLK_PERIOD : time := 10 ns;
   
-  -- Master Specific
-  signal r_Master_TX_Byte  : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0) := (others => '0');
-  signal r_Master_TX_DV    : std_logic := '0';
-  signal r_Master_CS_n     : std_logic := '1';
-  signal w_Master_TX_Ready : std_logic;
-  signal r_Master_RX_DV    : std_logic := '0';
-  signal r_Master_RX_Byte_Rising   : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0) := (others => '0');
-  signal r_Master_RX_Byte_Falling  : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0) := (others => '0');
+  -- Signals
+  signal s_clk           : std_logic := '0';
+  signal s_reset         : std_logic := '0';
+  signal s_tx_byte       : std_logic_vector(15 downto 0) := (others => '0');
+  signal s_tx_dv         : std_logic := '0';
+  signal s_rx_byte_rising  : std_logic_vector(15 downto 0) := (others => '0');
+  signal s_rx_byte_falling : std_logic_vector(15 downto 0) := (others => '0');
+  signal s_spi_miso      : std_logic := '0';
+  signal s_spi_mosi      : std_logic;
+  signal s_tx_ready      : std_logic;
+  signal s_rx_dv         : std_logic;
+  signal s_spi_clk       : std_logic;
 
-  -- Sends a single byte from master. 
-  procedure SendMessage (
-    data          : in  std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
-    signal o_data : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
-    signal o_dv   : out std_logic) is
+  -- Component instantiation
+  component SPI_Master
+    generic (
+      SPI_MODE               : integer := 0;
+      CLKS_PER_HALF_BIT      : integer := 2;
+      NUM_OF_BITS_PER_PACKET : integer := 16
+    );
+    port (
+      i_Rst_L : in std_logic;        -- FPGA Reset
+      i_Clk   : in std_logic;        -- FPGA Clock
+      i_TX_Byte   : in std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte to transmit on MOSI
+      i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
+      o_TX_Ready  : inout std_logic;        -- Transmit Ready for next byte
+      o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
+      io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
+      io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
+      o_SPI_Clk  : out std_logic;
+      i_SPI_MISO : in  std_logic;
+      o_SPI_MOSI : out std_logic
+    );
+  end component;
+
+begin
+  -- DUT
+  dut : SPI_Master
+    generic map(
+      SPI_MODE               => 0,
+      CLKS_PER_HALF_BIT      => 2,
+      NUM_OF_BITS_PER_PACKET => 16
+    )
+    port map(
+      i_Rst_L            => s_reset,
+      i_Clk              => s_clk,
+      i_TX_Byte          => s_tx_byte,
+      i_TX_DV            => s_tx_dv,
+      o_TX_Ready         => s_tx_ready,
+      o_RX_DV            => s_rx_dv,
+      io_RX_Byte_Rising  => s_rx_byte_rising,
+      io_RX_Byte_Falling => s_rx_byte_falling,
+      o_SPI_Clk          => s_spi_clk,
+      i_SPI_MISO         => s_spi_miso,
+      o_SPI_MOSI         => s_spi_mosi
+    );
+    s_spi_miso <= s_spi_mosi;
+  
+  -- Clock process
+  process
   begin
-    wait until rising_edge(r_Clk);
-    o_data <= data;
-    o_dv   <= '1';
-    wait until rising_edge(r_Clk);
-    o_dv   <= '0';
-    wait until rising_edge(w_Master_TX_Ready);
-  end procedure SendMessage;
+    while now < 1000 ns loop  -- Simulate for 1000 ns
+      s_clk <= '0';
+      wait for CLK_PERIOD / 2;
+      s_clk <= '1';
+      wait for CLK_PERIOD / 2;
+    end loop;
+    wait;
+  end process;
 
-begin  -- architecture TB
-
-   -- Clock Generators:
-  r_Clk <= not r_Clk after 5.21 ns;
-  r_SPI_MISO <= w_SPI_MOSI;
-
-  -- Instantiate UUT
-  UUT : entity work.SPI_Master
-    generic map (
-      SPI_MODE          => SPI_MODE,
-      CLKS_PER_HALF_BIT => CLKS_PER_HALF_BIT,
-      NUM_OF_BITS_PER_PACKET => NUM_OF_BITS_PER_PACKET)
-    port map (
-      -- Control/Data Signals,
-      i_Rst_L    => r_Rst_L,            -- FPGA Reset
-      i_Clk      => r_Clk,              -- FPGA Clock
-      -- TX (MOSI) Signals
-      i_TX_Byte  => r_Master_TX_Byte,          -- Byte to transmit
-      i_TX_DV    => r_Master_TX_DV,            -- Data Valid pulse
-      o_TX_Ready => w_Master_TX_Ready,         -- Transmit Ready for Byte
-      -- RX (MISO) Signals
-      o_RX_DV    => r_Master_RX_DV,            -- Data Valid pulse
-      io_RX_Byte_Rising   => r_Master_RX_Byte_Rising,      -- Byte received on MISO Rising Edge
-      io_RX_Byte_Falling  => r_Master_RX_Byte_Falling,     -- Byte received on MISO Falling Edge
-      -- SPI Interface
-      o_SPI_Clk  => w_SPI_Clk, 
-      i_SPI_MISO => r_SPI_MISO,
-      o_SPI_MOSI => w_SPI_MOSI
-      );
-      
-  Testing : process is
+  -- Stimulus process
+  process
   begin
-    wait for 100 ns;
-    r_Rst_L <= '1';
-    wait for 100 ns;
-    r_Rst_L <= '0';
-    
-    ---- Test single byte
-    --SendMessage(X"C1C2", r_Master_TX_Byte, r_Master_TX_DV);
-    --report "Sent out 0xC1C2, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    --report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
-    ---- Test double byte
-    --SendMessage(X"ADBC", r_Master_TX_Byte, r_Master_TX_DV);
-    --report "Sent out 0xADBC, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    --report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
-    --SendMessage(X"A1A2", r_Master_TX_Byte, r_Master_TX_DV);
-    --report "Sent out 0xA1A2, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    --report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));    
+    s_reset <= '1';
+    wait for 50 ns;  -- Reset for 50 ns
+    s_reset <= '0';
+    wait for 10 ns;
+
+    -- Transmit a byte
+    s_tx_byte <= "1010101010101010";
+    s_tx_dv <= '1';
+    wait for 10 ns;
+    s_tx_dv <= '0';
+
+    wait for 200 ns;
+
+    -- Transmit another byte
+    s_tx_byte <= "1011110101110101";
+    s_tx_dv <= '1';
+    wait for 10 ns;
+    s_tx_dv <= '0';
+
+    wait;
+  end process;
 
 
-
-    -- Test single byte
-    SendMessage(X"C1C2C3C4", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xC1C2C3C4, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
-    -- Test double byte
-    SendMessage(X"ADBCEF12", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xADBCEF12, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));
-    SendMessage(X"A1A2A3A4", r_Master_TX_Byte, r_Master_TX_DV);
-    report "Sent out 0xA1A2A3A4, Received 0x" & to_hstring(unsigned(r_Master_RX_Byte_Rising)); 
-    report " and 0x" & to_hstring(unsigned(r_Master_RX_Byte_Falling));    
-    
-    wait for 5000 ns;
-    assert false report "Test Complete" severity failure;
-  end process Testing;
-
-end architecture TB;
-
+end architecture tb_arch;

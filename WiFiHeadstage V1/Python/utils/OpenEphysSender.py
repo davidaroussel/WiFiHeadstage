@@ -22,7 +22,7 @@ class OpenEphysSender:
         self.host_addr = p_host_addr
         self.port = p_port
         self.buffServer_Flag = False
-        self.buffServer_Thread = Thread(target=self.sendToOpenEphys)
+        self.buffServer_Thread = Thread(target=self.sendToOpenEphysTCP)
 
     def startThread(self):
         self.buffServer_Thread.start()
@@ -97,22 +97,6 @@ class OpenEphysSender:
             # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
             while ((t2 - t1) < bufferInterval):
                 t2 = self.currentTime()
-
-    def send_to_openEphys(self):
-        openEphys_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        openEphys_socket.connect(("192.168.1.147", self.port))
-
-        def send_data(data):
-            openEphys_socket.sendall(data)
-        try:
-            while True:
-                # Generate or fetch data to send
-                data = b'your_data_here'  # Replace with your data
-                send_data(data)
-        except KeyboardInterrupt:
-            openEphys_socket.close()
-            print("---Connection closed---")
-
 
     def plotData(self):
         # SPECIFY THE IP AND PORT #

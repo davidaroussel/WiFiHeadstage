@@ -27,7 +27,7 @@ entity Controller_RHD64 is
     o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
 
     -- RX (MISO) Signals
-    o_RX_Count         : out std_logic_vector;  -- Index RX byte
+    o_RX_Count         : inout std_logic_vector;  -- Index RX byte
     o_RX_DV            : out std_logic;  -- Data Valid pulse (1 clock cycle)
     io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
     io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
@@ -40,13 +40,13 @@ entity Controller_RHD64 is
     o_FIFO_FULL   : out std_logic;
     o_FIFO_AEMPTY : out std_logic;
     o_FIFO_AFULL  : out std_logic
-  
-);
+  );
 end entity Controller_RHD64;
+
 
 architecture RTL of Controller_RHD64 is
 
- -- Component declaration for SPI_Master_CS
+  -- Component declaration for SPI_Master_CS
   component SPI_Master_CS is
     generic (
       SPI_MODE               : integer := 0;
@@ -63,7 +63,7 @@ architecture RTL of Controller_RHD64 is
       i_TX_DV    : in  std_logic;     -- Data Valid Pulse with i_TX_Byte
       o_TX_Ready : out std_logic;     -- Transmit Ready for next byte
       -- RX (MISO) Signals
-      o_RX_Count        : out std_logic_vector;  -- Index RX byte
+      o_RX_Count        : inout std_logic_vector;  -- Index RX byte
       o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
       io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
       io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
@@ -75,20 +75,20 @@ architecture RTL of Controller_RHD64 is
     );
   end component;
 
-  component FIFO is
-    port( DATA   : in    std_logic_vector(31 downto 0);
-          Q      : out   std_logic_vector(31 downto 0);
-          WE     : in    std_logic;
-          RE     : in    std_logic;
-          WCLOCK : in    std_logic;
-          RCLOCK : in    std_logic;
-          FULL   : out   std_logic;
-          EMPTY  : out   std_logic;
-          RESET  : in    std_logic;
-          AEMPTY : out   std_logic;
-          AFULL  : out   std_logic
-      );
-  end component FIFO;
+  component FIFO_MEM is
+    port(
+        clk_i: in std_logic;
+        rst_i: in std_logic;
+        wr_en_i: in std_logic;
+        rd_en_i: in std_logic;
+        wr_data_i: in std_logic_vector(31 downto 0);
+        full_o: out std_logic;
+        empty_o: out std_logic;
+        almost_full_o: out std_logic;
+        almost_empty_o: out std_logic;
+        rd_data_o: out std_logic_vector(31 downto 0)
+    );
+  end component;
 
   -- Signals for SPI_Master_CS
   signal int_RX_Byte_Rising  : std_logic_vector(15 downto 0);
@@ -100,19 +100,18 @@ architecture RTL of Controller_RHD64 is
   signal int_TX_Ready        : std_logic;
 
   signal int_FIFO_DATA : std_logic_vector(31 downto 0);
-  signal int_FIFO_Q    : std_logic_vector(31 downto 0);
-  signal int_FIFO_WE   : std_logic;
-  --signal int_FIFO_RE   : std_logic;
-  --signal int_FIFO_RESET     : std_logic;
-  --signal int_FIFO_WCLOCK    : std_logic;
-  --signal int_FIFO_RCLOCK    : std_logic;
-  signal int_FIFO_FULL      : std_logic;
-  signal int_FIFO_EMPTY     : std_logic;
-  signal int_FIFO_AEMPTY    : std_logic;
-  signal int_FIFO_AFULL     : std_logic;
+  signal int_FIFO_Q    : std_logic_vector(31 downto 0) := (others => '0');
+  signal int_FIFO_WE   : std_logic ;
+  signal int_FIFO_RE   : std_logic;
+  signal int_FIFO_FULL  : std_logic;
+  signal int_FIFO_EMPTY : std_logic;
+  signal int_FIFO_AEMPTY: std_logic;
+  signal int_FIFO_AFULL : std_logic;
   
 
 begin
+	int_FIFO_RE <= i_FIFO_RE;
+
   -- SPI_Master_CS instantiation
   SPI_Master_CS_1 : SPI_Master_CS
     generic map (
@@ -136,31 +135,32 @@ begin
       o_SPI_Clk  => o_SPI_CLK,
       i_SPI_MISO => i_SPI_MISO,
       o_SPI_MOSI => o_SPI_MOSI,
-      o_SPI_CS_n => o_SPI_CS_n
+      o_SPI_CS_n => o_SPI_CS_n,
+
     );
 
+  FIFO_1 : entity work.FIFO_MEM 
+  port map(
+      clk_i         => i_Clk,
+      rst_i         => i_Rst_L,
+      wr_en_i       => int_FIFO_WE,
+      rd_en_i       => int_FIFO_RE,
+      wr_data_i     => int_FIFO_DATA,
+      full_o        => int_FIFO_FULL,
+      empty_o       => int_FIFO_EMPTY,
+      almost_full_o => int_FIFO_AFULL,
+      almost_empty_o=> int_FIFO_AEMPTY,
+      rd_data_o     => int_FIFO_Q
+  );
 
-  FIFO_1 : entity work.FIFO
-    port map (
-      DATA      => int_FIFO_DATA,
-      Q         => o_FIFO_Q,
-      WE        => int_FIFO_WE,
-      RE        => i_FIFO_RE,
-      WCLOCK    => i_Clk,
-      RCLOCK    => i_Clk,
-      FULL      => int_FIFO_FULL,
-      EMPTY     => int_FIFO_EMPTY,
-      RESET     => i_Rst_L,
-      AEMPTY    => int_FIFO_AEMPTY,
-      AFULL     => int_FIFO_AFULL
-      );
+
 
   -- SPI RHD64 to FIFO logic
   process (i_Clk, i_Rst_L)
   begin
-    if i_Rst_L = '1' then
-      int_FIFO_DATA <= X"00000000";
-      int_FIFO_WE   <= '0';      
+    if i_Rst_L = '1' then	
+      int_FIFO_DATA <= (others => '0');
+      int_FIFO_WE   <= '0';   	  
     elsif rising_edge(i_Clk) then
       if int_RX_DV = '1' then
         -- Push MISO data into the FIFO
@@ -172,15 +172,17 @@ begin
       end if;
     end if;
   end process;
-
+  
 
   -- SIGNALING FOR CONTROLLER TESTBENCH
-  o_FIFO_WE     <= int_FIFO_WE;
+  o_FIFO_WE <= int_FIFO_WE;
   
   -- SIGNALING FOR CONTROLLER TESTBENCH
-  
   -- data access ports
-  o_FIFO_DATA <= int_FIFO_DATA;
+  o_FIFO_Data <= int_FIFO_DATA;
+  o_FIFO_Q <= int_FIFO_Q;
+	
+
 
   -- RX (MISO) Signals
   o_RX_DV            <= int_RX_DV;
@@ -192,8 +194,5 @@ begin
   -- almost empty and almost full flags
   o_FIFO_AEMPTY <= int_FIFO_AEMPTY;  
   o_FIFO_AFULL  <= int_FIFO_AFULL;   
-
-
-
+  
 end architecture RTL;
-

@@ -1,8 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use ieee.math_real.all;
-use std.STANDARD.INTEGER;
+use ieee.math_real.all; -- Add this line for ceil function
 
 entity SPI_Master is
   generic (
@@ -18,7 +17,7 @@ entity SPI_Master is
    -- TX (MOSI) Signals
    i_TX_Byte   : in std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte to transmit on MOSI
    i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
-   o_TX_Ready  : out std_logic;         -- Transmit Ready for next byte
+   o_TX_Ready  : buffer std_logic;        -- Transmit Ready for next byte
    
    -- RX (MISO) Signals
    o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
@@ -142,7 +141,7 @@ begin
         o_SPI_MOSI     <= r_TX_Byte(NUM_OF_BITS_PER_PACKET-1);
       elsif (r_Leading_Edge = '1' and w_CPHA = '1') or (r_Trailing_Edge = '1' and w_CPHA = '0') then
         r_TX_Bit_Count <= r_TX_Bit_Count - 1;
-        o_SPI_MOSI     <= r_TX_Byte(to_integer(r_TX_Bit_Count));
+        o_SPI_MOSI     <= r_TX_Byte(to_integer(unsigned(r_TX_Bit_Count))); -- Explicit type conversion
       end if;
     end if;
   end process MOSI_Data;
