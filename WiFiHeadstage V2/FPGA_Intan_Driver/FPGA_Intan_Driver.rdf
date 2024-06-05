@@ -2,12 +2,12 @@
 <RadiantProject version="4.2" radiant="2023.2.1.288.0" title="FPGA_Intan_Driver" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
-        <Options hdl_sort="off" top="SPI_Master_CS"/>
+        <Options def_top="Controller_RHD64_FIFO_tb" hdl_sort="off" top="Controller_RHD64_Sampling"/>
         <Source name="source/impl_1/Controller_RHD64_Config.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
         <Source name="source/impl_1/Controller_RHD64_Sampling.vhd" type="VHDL" type_short="VHDL">
-            <Options/>
+            <Options top_module="Controller_RHD64_Sampling"/>
         </Source>
         <Source name="source/impl_1/Controller_RHD64_FIFO.vhd" type="VHDL" type_short="VHDL">
             <Options/>

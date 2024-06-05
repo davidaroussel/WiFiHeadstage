@@ -21,14 +21,15 @@ class WiFiServer(BaseException):
         self.m_socket = 0
         self.m_host_addr = p_host_addr
         self.m_channels = channels
+        self.num_channels = len(self.m_channels)
         self.m_buffer_size = buffer_size
         self.m_samp_freq = samp_freq
         self.m_thread_socket = False
         self.m_serverThread = threading.Thread(target=self.serverThread)
         self.m_connected = False
         self.m_raw_data = []
-        self.m_converted_array = [[] for i in range(8)]
-        self.m_vrms_array = [[] for i in range(8)]
+        self.m_converted_array = [[] for i in range(self.num_channels)]
+        self.m_vrms_array = [[] for i in range(self.num_channels)]
         self.cutoff_menu = ''
 
         self.m_serverThread = threading.Thread(target=self.serverThread)
@@ -132,20 +133,20 @@ class WiFiServer(BaseException):
         print("Closed Intan Sampling")
 
     def convertData(self):
-        converted_data = [[] for i in range(8)]
+        converted_data = [[] for i in range(self.num_channels)]
         ch_counter = 0
 
         for i in range(0, len(self.m_raw_data), 2):
             value = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True) * 0.195
             converted_data[ch_counter].append(value)
-            ch_counter = (ch_counter + 1) % 8
+            ch_counter = (ch_counter + 1) % self.num_channels
 
         self.m_converted_array = converted_data
 
 
 
     def plotOneChannel(self, channel_number):
-        if channel_number < 0 or channel_number >= 8:
+        if channel_number < 0 or channel_number >= self.num_channels:
             raise ValueError("Invalid channel number. It should be in the range [0, 7]")
 
         fig, ax = plt.subplots(figsize=(10, 5))
@@ -173,47 +174,47 @@ class WiFiServer(BaseException):
 
     #Considering that we have 8 channels !!
     def plotAllChannels(self):
-        fig, axs = plt.subplots(8, 1, figsize=(30, 10))
+        fig, axs = plt.subplots(self.num_channels, 1, figsize=(30, 10))
         plt.gca().cla()
-        self.m_converted_array = [[] for i in range(8)]
+        self.m_converted_array = [[] for i in range(self.num_channels)]
 
         ch_counter = 0
         for i in range(0, len(self.m_raw_data), 2):
             converted_data = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True)
             LSB_FLAG = int(hex(converted_data), 16) & 0x01
-            dataNumber = ch_counter // 8
-            channelNumber = ch_counter % 8
+            dataNumber = ch_counter // self.num_channels
+            channelNumber = ch_counter % self.num_channels
             if LSB_FLAG == 1:
                 if channelNumber == 0:
                     pass
                 else:
                     print("OUT OF SYNC !!", "dataCounter", dataNumber)
-                    diff_ch = 8 - channelNumber
+                    diff_ch = self.num_channels - channelNumber
                     ch_counter += diff_ch
 
-                    dataNumber = ch_counter // 8
-                    channelNumber = ch_counter % 8
+                    dataNumber = ch_counter // self.num_channels
+                    channelNumber = ch_counter % self.num_channels
                     print("NOW ON", dataNumber, "with", channelNumber)
-            self.m_converted_array[ch_counter % 8].append(converted_data * 0.195) #NOW IN uV (0.000000195 is V)
+            self.m_converted_array[ch_counter % self.num_channels].append(converted_data * 0.195) #NOW IN uV (0.000000195 is V)
             ch_counter += 1
 
         ch_counter = 0
-        for row in range(8):
+        for row in range(self.num_channels):
             k = [i for i in range(len(self.m_converted_array[ch_counter]))]
             #VERSION FOR PYTHON 3.10
-            axs[row].plot(k, self.m_converted_array[ch_counter])
-            axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
-            fft_data = np.fft.fft(self.m_converted_array[ch_counter])
-            freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
-            peak_coef = np.argmax(np.abs(fft_data))
-            peak_freq = freqs[peak_coef]
-            peak_freq = peak_freq * self.m_samp_freq
-            print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
+            # axs[row].plot(k, self.m_converted_array[ch_counter])
+            # axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
+            # fft_data = np.fft.fft(self.m_converted_array[ch_counter])
+            # freqs = np.fft.fftfreq(len(self.m_converted_array[ch_counter]))
+            # peak_coef = np.argmax(np.abs(fft_data))
+            # peak_freq = freqs[peak_coef]
+            # peak_freq = peak_freq * self.m_samp_freq
+            # print(" CH:", ch_counter, " FREQUENCE DU SIGNAL ", peak_freq)
 
             ch_counter += 1
 
         ch_counter = 0
-        for row in range(8):
+        for row in range(self.num_channels):
             k = [i for i in range(len(self.m_converted_array[ch_counter]))]
             #VERSION FOR PYTHON 3.10
             axs[row].plot(k, self.m_converted_array[ch_counter])
@@ -229,7 +230,7 @@ class WiFiServer(BaseException):
         plt.show()
 
     def calculateVrmsForAllChannels(self):
-        noDC_value = [[] for i in range(8)]
+        noDC_value = [[] for i in range(self.num_channels)]
         for ch_number, channel_data in enumerate(self.m_converted_array):
             if channel_data:
                 meanValue = np.mean(np.array(channel_data))
@@ -270,9 +271,8 @@ class WiFiServer(BaseException):
         print(self.m_socket.recv(8))
 
     def calculateSamplingLoops(self, SAMPLING_TIME):
-        NUM_CHANNEL = len(self.m_channels)
         BYTES_PER_CHANNEL = 2
-        BYTES_PER_SEC = self.m_samp_freq * BYTES_PER_CHANNEL * NUM_CHANNEL
+        BYTES_PER_SEC = self.m_samp_freq * BYTES_PER_CHANNEL * self.num_channels
         TOTAL_NUMBER_OF_BYTES = BYTES_PER_SEC * SAMPLING_TIME
         LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / self.m_buffer_size) # Number of times we want to receive data from the Headstage before plotting the results
 
@@ -348,8 +348,10 @@ if __name__ == "__main__":
     HOST_IP_ADDR = ""
 
     # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
+    # TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    SAMPLING_TIME = 8  # Time sampling in seconds
+
+    SAMPLING_TIME = 18  # Time sampling in seconds
     FREQ_SAMPLING = 12000
     BUFFER_SIZE = 1024*1500  # Maximum value possible for the WiFi UDP Socket communication
 

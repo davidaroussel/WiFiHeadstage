@@ -261,38 +261,40 @@ begin
     if i_Controller_Mode = x"2" then
 		case stm32_state is
 			when 0 =>
-				if NUM_DATA < to_integer(unsigned(int_FIFO_COUNT)) then
+				if (NUM_DATA-1) < to_integer(unsigned(int_FIFO_COUNT)) then
 					stm32_state <= 1; -- Move to next state
+					int_FIFO_RE <= '1'; -- Enable FIFO data
 				else
 					stm32_state <= 0;
 				end if;
 			when 1 =>
+				stm32_state <= 2;
+			when 2 =>
+				stm32_state <= 3;
+			when 3 =>
 				if NUM_DATA > stm32_counter then
-					int_FIFO_RE <= '1'; -- Enable FIFO data
 					temp_buffer(stm32_counter*32 + 31 downto stm32_counter*32) := int_FIFO_Q;
 					stm32_counter <= stm32_counter + 1;
-					stm32_state <= 1;
+					stm32_state <= 3;
 				else
 					int_FIFO_RE <= '0';
 					int_STM32_TX_Byte <= temp_buffer;
 					int_STM32_TX_DV <= '1';
-					stm32_state <= 2; -- Move to next state
+					stm32_state <= 4; -- Move to next state
 				end if;
-			when 2 =>
+			when 4 =>
 				stm32_counter <= 0;
 				int_STM32_TX_DV <= '0';
-				stm32_state <= 3;
-			when 3 =>
-				stm32_state <= 4;
-			when 4 =>
-				stm32_state <= 5;
-			when 5 =>
-				if int_STM32_TX_Ready = '1' then
-					stm32_state <= 6;
-				else
-					stm32_state <= 5;
-				end if;
+				stm32_state <= 6;
+				
+				
 			when 6 =>
+				if int_STM32_TX_Ready = '1' then
+					stm32_state <= 7;
+				else
+					stm32_state <= 6;
+				end if;
+			when 7 =>
 				stm32_state <= 0;
 			when others =>
 				null;
