@@ -2,7 +2,7 @@
 # do {C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/sim/sim.mdo}
 # Loading project sim
 # Model Technology ModelSim - Lattice FPGA Edition vlog 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 19:59:54 on May 31,2024
+# Start time: 16:36:27 on Jun 05,2024
 # vlog -reportprogress 300 "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl" -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v -suppress 2388 
 # -- Compiling module FIFO_MEM
 # -- Compiling module FIFO_MEM_ipgen_lscc_fifo
@@ -13,24 +13,24 @@
 # 
 # Top level modules:
 # 	FIFO_MEM
-# End time: 19:59:54 on May 31,2024, Elapsed time: 0:00:00
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 19:59:54 on May 31,2024
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/Controller_RHD64.vhd 
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity Controller_RHD64
-# -- Compiling architecture RTL of Controller_RHD64
+# -- Compiling entity Controller_RHD64_FIFO
+# -- Compiling architecture RTL of Controller_RHD64_FIFO
 # -- Loading package vl_types
 # -- Loading entity FIFO_MEM
-# End time: 19:59:54 on May 31,2024, Elapsed time: 0:00:00
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 19:59:54 on May 31,2024
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master.vhd 
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
@@ -38,11 +38,11 @@
 # -- Loading package MATH_REAL
 # -- Compiling entity SPI_Master
 # -- Compiling architecture RTL of SPI_Master
-# End time: 19:59:54 on May 31,2024, Elapsed time: 0:00:00
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 19:59:54 on May 31,2024
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master_CS.vhd 
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
@@ -51,22 +51,62 @@
 # -- Compiling architecture RTL of SPI_Master_CS
 # -- Loading package MATH_REAL
 # -- Loading entity SPI_Master
-# End time: 19:59:54 on May 31,2024, Elapsed time: 0:00:00
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 19:59:54 on May 31,2024
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/stimulus/Controller_RHD64_tb.vhd 
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity Controller_RHD64_tb
-# -- Compiling architecture sim of Controller_RHD64_tb
-# -- Loading entity Controller_RHD64
-# End time: 19:59:54 on May 31,2024, Elapsed time: 0:00:00
+# -- Compiling entity Controller_RHD64_Sampling
+# -- Compiling architecture RTL of Controller_RHD64_Sampling
+# -- Loading entity Controller_RHD64_FIFO
+# -- Loading entity SPI_Master_CS
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -L work -L pmi_work -L ovi_ice40up -suppress vsim-7033,vsim-8630,3009,3389 Controller_RHD64_tb 
-# Start time: 19:59:54 on May 31,2024
+# Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# ** Warning: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd(6): (vcom-1615) Existing entity 'Controller_RHD64_FIFO' at C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd(6) will be overwritten.
+# -- Compiling entity Controller_RHD64_FIFO
+# ** Warning: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd(50): (vcom-1615) Existing architecture 'Controller_RHD64_FIFO(RTL)' at C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd(50) will be overwritten.
+# -- Compiling architecture RTL of Controller_RHD64_FIFO
+# -- Loading package vl_types
+# -- Loading entity FIFO_MEM
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Controller_RHD64_Sampling_tb
+# -- Compiling architecture Testbench of Controller_RHD64_Sampling_tb
+# -- Loading entity Controller_RHD64_Sampling
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
+# Start time: 16:36:28 on Jun 05,2024
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Controller_RHD64_FIFO_tb
+# -- Compiling architecture sim of Controller_RHD64_FIFO_tb
+# -- Loading entity Controller_RHD64_FIFO
+# End time: 16:36:28 on Jun 05,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -L work -L pmi_work -L ovi_ice40up -suppress vsim-7033,vsim-8630,3009,3389 Controller_RHD64_Sampling_tb 
+# Start time: 16:36:28 on Jun 05,2024
 # //  ModelSim - Lattice FPGA Edition 2023.3 Jul 18 2023
 # //
 # //  Copyright 1991-2023 Mentor Graphics Corporation
@@ -84,9 +124,10 @@
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
-# Loading work.controller_rhd64_tb(sim)
+# Loading work.controller_rhd64_sampling_tb(testbench)
+# Loading work.controller_rhd64_sampling(rtl)
 # Loading verilog.vl_types(body)
-# Loading work.controller_rhd64(rtl)
+# Loading work.controller_rhd64_fifo(rtl)
 # Loading ieee.math_real(body)
 # Loading work.spi_master_cs(rtl)
 # Loading work.spi_master(rtl)
@@ -94,5 +135,9 @@
 # Loading work.FIFO_MEM_ipgen_lscc_fifo
 # Loading work.FIFO_MEM_ipgen_lscc_fifo_main
 # Loading work.FIFO_MEM_ipgen_lscc_soft_fifo
-# End time: 19:59:59 on May 31,2024, Elapsed time: 0:00:05
-# Errors: 0, Warnings: 8
+# .main_pane.wave.interior.cs.body.pw.wf
+# ** Failure: Test Complete
+#    Time: 4005300 ns  Iteration: 0  Process: /controller_rhd64_sampling_tb/Testing File: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd
+# Break in Process Testing at C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd line 139
+# End time: 17:34:37 on Jun 05,2024, Elapsed time: 0:58:09
+# Errors: 1, Warnings: 11

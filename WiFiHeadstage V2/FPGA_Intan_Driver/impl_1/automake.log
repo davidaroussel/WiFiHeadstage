@@ -15,14 +15,14 @@ WARNING <35935050> - input port TRIM0 is not connected on this instance. VDB-505
 WARNING <35935050> - input port I is not connected on this instance. VDB-5050
 Top module name (Verilog): FIFO_MEM
 INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(11): compiling module FIFO_MEM. VERI-1018
-INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(119): compiling module FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,FAMILY=&quot;iCE40UP&quot;). VERI-1018
-INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(271): compiling module FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,FAMILY=&quot;iCE40UP&quot;). VERI-1018
-INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(2588): compiling module FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,FAMILY=&quot;iCE40UP&quot;). VERI-1018
+INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(121): compiling module FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;). VERI-1018
+INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(273): compiling module FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;). VERI-1018
+INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(2590): compiling module FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=1024,ADDRESS_WIDTH=10,DATA_WIDTH=32,ALMOST_FULL_DEASSERT_LVL=1022,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;). VERI-1018
 Last elaborated design is FIFO_MEM()
 Source compile complete.
 SDC Initialization for FIFO_MEM finished.
 SDC Distribution for FIFO_MEM finished.
-INFO <35831038> - Setting Controller_RHD64 as top module.
+INFO <35831038> - Setting SPI_Master_CS as top module.
 WARNING <35935050> - input port TRIM9 is not connected on this instance. VDB-5050
 WARNING <35935050> - input port TRIM8 is not connected on this instance. VDB-5050
 WARNING <35935050> - input port TRIM7 is not connected on this instance. VDB-5050
@@ -36,13 +36,19 @@ WARNING <35935050> - input port TRIM0 is not connected on this instance. VDB-505
 WARNING <35935050> - input port I is not connected on this instance. VDB-5050
 Analyzing Verilog file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v. VERI-1482
 Analyzing Verilog file fifo_mem.v. VERI-1482
-WARNING <35921084> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd(140): formal trim0 is not declared. VHDL-1084
 Top module language type = VHDL.
-ERROR <1009990> - Stopping Synthesis Tool flow due to error.
-Top module name (VHDL, mixed language): Controller_RHD64
+INFO <35901018> - fifo_mem.v(63): compiling module FIFO_MEM. VERI-1018
+WARNING <35935040> - Register tb_FIFO_RE clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register tb_TX_DV clock is stuck at Zero. VDB-5040
+WARNING <35921251> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(76): w_cpol should be on the sensitivity list of the process. VHDL-1251
+WARNING <35921613> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(107): incomplete sensitivity list specified, assuming completeness. VHDL-1613
+WARNING <35921251> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(185): w_cpol should be on the sensitivity list of the process. VHDL-1251
+WARNING <35921613> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(189): incomplete sensitivity list specified, assuming completeness. VHDL-1613
+INFO <35921172> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(183): others clause is never selected. VHDL-1172
+Top module name (VHDL, mixed language): SPI_Master_CS
 Source compile complete.
-SDC Initialization for Controller_RHD64 finished.
-SDC Distribution for Controller_RHD64 finished.
+SDC Initialization for SPI_Master_CS finished.
+SDC Distribution for SPI_Master_CS finished.
 Starting IP constraint check for FIFO_MEM.
 WARNING <35834005> - IP Module FIFO_MEM not found in top. Skipping Constraint Propagation...
 WARNING <35834002> - An error occurred during IP constraint checking.
@@ -59,7 +65,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Fri May 31 20:17:02 2024
+Wed Jun  5 12:34:40 2024
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/promote.xml 
@@ -93,7 +99,7 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - User-Selected Strategy Settings
 Optimization goal = Area
-Top-level module name = Controller_RHD64.
+Top-level module name = SPI_Master_CS.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -133,11 +139,17 @@ Verilog design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPG
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
 VHDL library = work
-VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/Controller_RHD64.vhd
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_SPI.vhd
 VHDL library = work
-VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master.vhd
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd
 VHDL library = work
-VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master_CS.vhd
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_SPI_tb.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd
 The -r option is OFF. [ Remove LOC Properties is OFF. ]
 WARNING <35935050> - input port TRIM9 is not connected on this instance. VDB-5050
 WARNING <35935050> - input port TRIM8 is not connected on this instance. VDB-5050
@@ -191,11 +203,187 @@ Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd
 
 INFO <35921014> - c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
-Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd. VHDL-1481
-Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo.vhd
 
-INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd(6): analyzing entity controller_rhd64. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd(47): analyzing architecture rtl. VHDL-1010
-ERROR <35929084> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_controller/hdl/controller_rhd64.vhd(140): formal trim0 is not declared. VHDL-1084
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo.vhd(6): analyzing entity controller_rhd64_fifo. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo.vhd(50): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd
 
-child process exited abnormally
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(6): analyzing entity spi_master. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(34): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd
+
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(44): analyzing entity spi_master_cs. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(74): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi.vhd
+
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi.vhd(5): analyzing entity controller_rhd64_spi. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi.vhd(67): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi_tb.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi_tb.vhd
+
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi_tb.vhd(5): analyzing entity controller_headstage_spi_tb. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_spi_tb.vhd(8): analyzing architecture testbench. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo_tb.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo_tb.vhd
+
+INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo_tb.vhd(6): analyzing entity controller_rhd64_fifo_tb. VHDL-1012
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/controller_rhd64_fifo_tb.vhd(9): analyzing architecture sim. VHDL-1010
+INFO <35921504> - The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/impl_1". VHDL-1504
+Top module language type = VHDL.
+WARNING <35935040> - Register tb_FIFO_RE clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register tb_TX_DV clock is stuck at Zero. VDB-5040
+WARNING <35921251> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(76): w_cpol should be on the sensitivity list of the process. VHDL-1251
+WARNING <35921613> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(107): incomplete sensitivity list specified, assuming completeness. VHDL-1613
+WARNING <35921251> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(185): w_cpol should be on the sensitivity list of the process. VHDL-1251
+WARNING <35921613> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master.vhd(189): incomplete sensitivity list specified, assuming completeness. VHDL-1613
+INFO <35921172> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(183): others clause is never selected. VHDL-1172
+Top module name (VHDL, mixed language): SPI_Master_CS
+                                                         
+
+
+### Number of Logic Cells: 5280
+
+
+### Number of RAM Blocks: 30
+
+
+### Number of DSP Blocks: 8
+
+
+### Number of PLLs: 1
+
+
+### Number of IO Pins: 56
+
+
+##########################################################
+
+
+                                                         
+
+
+INFO <35001774> - Extracted state machine for register 'r_SM_CS' with one-hot encoding
+State machine has 3 reachable states with original encodings of:
+
+ 00 
+
+ 01 
+
+ 10 
+
+original encoding -> new encoding (one-hot encoding)
+
+ 00 -> 001
+
+ 01 -> 010
+
+ 10 -> 100
+
+
+
+
+CRITICAL <35001747> - Bit(s) of register r_SM_CS_FSM stuck at '0': 3
+Initializing timer
+Starting design annotation....
+
+Starting full timing analysis...
+Worst slack in design -48767
+Initializing timer
+Starting design annotation....
+
+Starting full timing analysis...
+Worst slack in design -48767
+Initializing timer
+Starting design annotation....
+
+Starting full timing analysis...
+Worst slack in design -48767
+Initializing timer
+Starting design annotation....
+
+Starting full timing analysis...
+Worst slack in design -40467
+INFO <35001701> - Net i_TX_DV_c with fanout 1044 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_TX_DV_c with fanout 1044 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_SPI_MISO_c with fanout 2048 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_SPI_MISO_c with fanout 2048 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_SPI_MISO_c with fanout 2048 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_Rst_L_c with fanout 3134 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_Rst_L_c with fanout 3134 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_Rst_L_c with fanout 3134 was buffered for fixing max_fanout violation.
+INFO <35001701> - Net i_Rst_L_c with fanout 3134 was buffered for fixing max_fanout violation.
+
+################### Begin Area Report (SPI_Master_CS)######################
+Number of register bits => 3134 of 5280 (59 % )
+CCU2 => 25
+FD1P3XZ => 3134
+IB => 1028
+LUT4 => 2991
+OB => 2053
+################### End Area Report ##################
+Number of odd-length carry chains : 2
+Number of even-length carry chains : 2
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 1
+  Net : i_Clk_c, loads : 0
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : n22271, loads : 1000
+  Net : n22269, loads : 1000
+  Net : n22268, loads : 1000
+  Net : n22272, loads : 1000
+  Net : n22273, loads : 1000
+  Net : n22266, loads : 1000
+  Net : SPI_Master_1/n4482, loads : 1000
+  Net : SPI_Master_1/n4478, loads : 1000
+  Net : SPI_Master_1/r_TX_Bit_Count[1], loads : 393
+  Net : SPI_Master_1/r_TX_Bit_Count[0], loads : 338
+################### End Clock Report ##################
+
+Peak Memory Usage: 245 MB
+
+--------------------------------------------------------------
+Total CPU Time: 20 secs 
+Total REAL Time: 21 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: fa6e831c54695f544f667d474829ba712cea844f
+
+
+
+postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o FPGA_Intan_Driver_impl_1_syn.udb FPGA_Intan_Driver_impl_1.vm -ldc "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc"
+POSTSYN: Post Synthesis Process Radiant Software (64-bit) 2023.2.1.288.0
+Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o FPGA_Intan_Driver_impl_1_syn.udb -ldc C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/promote.xml FPGA_Intan_Driver_impl_1.vm 
+   Architecture:     iCE40UP
+   Device:           iCE40UP5K
+   Package:          SG48
+   Performance:      High-Performance_1.2V
+Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
+CPU Time to convert: 0.875
+REAL Time to convert: 1
+convert PEAK Memory Usage: 98 MB
+convert CURRENT Memory Usage: 89 MB
+Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
+Removing unused logic ...
+Starting design annotation....
+ 
+Constraint Summary:
+   Total number of constraints: 1
+   Total number of constraints dropped: 0
+ 
+Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
+POSTSYN finished successfully.
+Total CPU Time: 2 secs 
+Total REAL Time: 3 secs 
+Peak Memory Usage: 98 MB
+Checksum -- postsyn: bb6db52f10d8072b7516c7f09c017d5b4b5fb6b5
+
+

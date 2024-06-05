@@ -15,7 +15,7 @@ localparam ENABLE_ALMOST_EMPTY_FLAG = "TRUE";
 localparam ALMOST_EMPTY_ASSERTION = "static-dual";
 localparam ALMOST_EMPTY_ASSERT_LVL = 1;
 localparam ALMOST_EMPTY_DEASSERT_LVL = 2;
-localparam ENABLE_DATA_COUNT = "FALSE";
+localparam ENABLE_DATA_COUNT = "TRUE";
 `define iCE40UP
 `define ice40tp
 `define iCE40UP5K

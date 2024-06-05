@@ -7,4 +7,5 @@
         .empty_o( ),
         .almost_full_o( ),
         .almost_empty_o( ),
+        .data_cnt_o( ),
         .rd_data_o( ));

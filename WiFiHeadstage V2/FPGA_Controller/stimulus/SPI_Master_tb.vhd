@@ -35,10 +35,10 @@ architecture tb_arch of SPI_Master_TB is
       i_Clk   : in std_logic;        -- FPGA Clock
       i_TX_Byte   : in std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte to transmit on MOSI
       i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
-      o_TX_Ready  : inout std_logic;        -- Transmit Ready for next byte
+      o_TX_Ready  : out std_logic;        -- Transmit Ready for next byte
       o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
-      io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
-      io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
+      o_RX_Byte_Rising  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
+      o_RX_Byte_Falling : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
       o_SPI_Clk  : out std_logic;
       i_SPI_MISO : in  std_logic;
       o_SPI_MOSI : out std_logic
@@ -60,8 +60,8 @@ begin
       i_TX_DV            => s_tx_dv,
       o_TX_Ready         => s_tx_ready,
       o_RX_DV            => s_rx_dv,
-      io_RX_Byte_Rising  => s_rx_byte_rising,
-      io_RX_Byte_Falling => s_rx_byte_falling,
+      o_RX_Byte_Rising  => s_rx_byte_rising,
+      o_RX_Byte_Falling => s_rx_byte_falling,
       o_SPI_Clk          => s_spi_clk,
       i_SPI_MISO         => s_spi_miso,
       o_SPI_MOSI         => s_spi_mosi

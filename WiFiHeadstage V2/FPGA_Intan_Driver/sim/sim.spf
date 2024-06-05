@@ -1,12 +1,15 @@
-<RadiantSimulationProject language="1" name="sim" simType="ModelSim" path="." version="2.0" stage="0">
-    <Source worklib="work" include="none" path="FIFO_MEM/rtl/FIFO_MEM.v" type="VERILOG" langstandard="Verilog 2001"/>
-    <Source worklib="work" include="none" path="../FPGA_Controller/hdl/Controller_RHD64.vhd" type="VHDL" langstandard=""/>
-    <Source worklib="work" include="none" path="../FPGA_Controller/hdl/SPI_Master.vhd" type="VHDL" langstandard=""/>
-    <Source worklib="work" include="none" path="../FPGA_Controller/hdl/SPI_Master_CS.vhd" type="VHDL" langstandard=""/>
-    <Source worklib="work" include="none" path="../FPGA_Controller/stimulus/Controller_RHD64_tb.vhd" type="VHDL" langstandard=""/>
+<RadiantSimulationProject language="1" simType="ModelSim" stage="0" name="sim" path="." version="2.0">
+    <Source include="none" path="FIFO_MEM/rtl/FIFO_MEM.v" type="VERILOG" langstandard="Verilog 2001" worklib="work"/>
+    <Source include="none" path="source/impl_1/Controller_RHD64_Config.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/SPI_Master.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/SPI_Master_CS.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/Controller_RHD64_Sampling.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/Controller_RHD64_FIFO.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/Controller_RHD64_Sampling_tb.vhd" type="VHDL" langstandard="" worklib="work"/>
+    <Source include="none" path="source/impl_1/Controller_RHD64_FIFO_tb.vhd" type="VHDL" langstandard="" worklib="work"/>
     <SimLib value="pmi_work ovi_ice40up"/>
     <GlbInc value=""/>
     <Macro value=""/>
     <Udo value=""/>
-    <TopModule language="VHDL" name="Controller_RHD64_tb" instance=""/>
+    <TopModule language="VHDL" name="Controller_RHD64_Sampling_tb" instance=""/>
 </RadiantSimulationProject>

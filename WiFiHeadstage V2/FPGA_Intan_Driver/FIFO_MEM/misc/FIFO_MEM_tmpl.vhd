@@ -9,6 +9,7 @@ component FIFO_MEM is
         empty_o: out std_logic;
         almost_full_o: out std_logic;
         almost_empty_o: out std_logic;
+        data_cnt_o: out std_logic_vector(10 downto 0);
         rd_data_o: out std_logic_vector(31 downto 0)
     );
 end component;
@@ -23,5 +24,6 @@ __: FIFO_MEM port map(
     empty_o=>,
     almost_full_o=>,
     almost_empty_o=>,
+    data_cnt_o=>,
     rd_data_o=>
 );

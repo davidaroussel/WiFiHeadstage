@@ -12,17 +12,18 @@ entity SPI_Master is
   port (
    -- Control/Data Signals,
    i_Rst_L : in std_logic;        -- FPGA Reset
-   i_Clk   : in std_logic;        -- FPGA Clock
+   
+   : in std_logic;        -- FPGA Clock
    
    -- TX (MOSI) Signals
    i_TX_Byte   : in std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte to transmit on MOSI
    i_TX_DV     : in std_logic;          -- Data Valid Pulse with i_TX_Byte
-   o_TX_Ready  : buffer std_logic;        -- Transmit Ready for next byte
+   o_TX_Ready  : out std_logic;        -- Transmit Ready for next byte
    
    -- RX (MISO) Signals
    o_RX_DV   : out std_logic;                      -- Data Valid pulse (1 clock cycle)
-   io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
-   io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
+   o_RX_Byte_Rising  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);    -- Byte received on MISO Rising Edge
+   o_RX_Byte_Falling : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Falling Edge
 
    -- SPI Interface
    o_SPI_Clk  : out std_logic;
@@ -50,6 +51,8 @@ architecture RTL of SPI_Master is
 
   signal r_RX_Bit_Count : unsigned(RX_BIT_COUNT_WIDTH downto 0);
   signal r_TX_Bit_Count : unsigned(TX_BIT_COUNT_WIDTH downto 0);
+  
+  signal r_TX_Ready : std_logic;
 
 begin
 
@@ -65,11 +68,14 @@ begin
   --              the "in" side captures data on the trailing edge of clock
   w_CPHA <= '1' when (SPI_MODE = 1) or (SPI_MODE = 3) else '0';
 
+  
+  o_TX_Ready <= r_TX_Ready;
+
   -- Purpose: Generate SPI Clock correct number of times when DV pulse comes
   Edge_Indicator : process (i_Clk, i_Rst_L)
   begin
     if i_Rst_L = '1' then
-      o_TX_Ready      <= '0';
+      r_TX_Ready      <= '0';
       r_SPI_Clk_Edges <= 0;
       r_Leading_Edge  <= '0';
       r_Trailing_Edge <= '0';
@@ -82,10 +88,10 @@ begin
       r_Trailing_Edge <= '0';
       
       if i_TX_DV = '1' then
-        o_TX_Ready      <= '0';
+        r_TX_Ready      <= '0';
         r_SPI_Clk_Edges <= NUM_OF_BITS_PER_PACKET*2;  -- Total # rising + falling edges in one byte ALWAYS 16
       elsif r_SPI_Clk_Edges > 0 then
-        o_TX_Ready <= '0';
+        r_TX_Ready <= '0';
         
         if r_SPI_Clk_Count = CLKS_PER_HALF_BIT*2-1 then
           r_SPI_Clk_Edges <= r_SPI_Clk_Edges - 1;
@@ -101,7 +107,7 @@ begin
           r_SPI_Clk_Count <= r_SPI_Clk_Count + 1;
         end if;
       else
-        o_TX_Ready <= '1';
+        r_TX_Ready <= '1';
       end if;
     end if;
   end process Edge_Indicator;
@@ -132,7 +138,7 @@ begin
       r_TX_Bit_Count <= (others => '1');          -- Send MSB first
     elsif rising_edge(i_Clk) then
       -- If ready is high, reset bit counts to default
-      if o_TX_Ready = '1' then
+      if r_TX_Ready = '1' then
         r_TX_Bit_Count <= (others => '1');
       -- Catch the case where we start transaction and CPHA = 0
       elsif (r_TX_DV = '1' and w_CPHA = '0') then
@@ -151,23 +157,23 @@ begin
 MISO_Data : process (i_Clk, i_Rst_L)
 begin
   if i_Rst_L = '1' then
-    io_RX_Byte_Rising  <= (others => '0');
-    io_RX_Byte_Falling <= (others => '0');
+    o_RX_Byte_Rising  <= (others => '0');
+    o_RX_Byte_Falling <= (others => '0');
     o_RX_DV            <= '0';
     r_RX_Bit_Count     <= to_unsigned(NUM_OF_BITS_PER_PACKET*2 - 1, r_RX_Bit_Count'length);
   elsif rising_edge(i_Clk) then
-    if o_TX_Ready = '1' then -- Check if ready, if so reset count to default
+    if r_TX_Ready = '1' then -- Check if ready, if so reset count to default
       -- Default Assignments
       o_RX_DV        <= '0';
       r_RX_Bit_Count <= to_unsigned(NUM_OF_BITS_PER_PACKET*2 - 1, r_RX_Bit_Count'length);
     elsif r_Leading_Edge = '1' then
-      io_RX_Byte_Rising(to_integer(unsigned(r_RX_Bit_Count)/2)) <= i_SPI_MISO; -- Sample data
+      o_RX_Byte_Rising(to_integer(unsigned(r_RX_Bit_Count)/2)) <= i_SPI_MISO; -- Sample data
       r_RX_Bit_Count <= unsigned(r_RX_Bit_Count) - 1;
       if r_RX_Bit_Count = (r_RX_Bit_Count'range => '0') then
         o_RX_DV <= '1'; -- Byte done, pulse Data Valid
       end if;
     elsif r_Trailing_Edge = '1' then
-      io_RX_Byte_Falling(to_integer(unsigned(r_RX_Bit_Count)/2)) <= i_SPI_MISO; -- Sample data
+      o_RX_Byte_Falling(to_integer(unsigned(r_RX_Bit_Count)/2)) <= i_SPI_MISO; -- Sample data
       r_RX_Bit_Count <= unsigned(r_RX_Bit_Count) - 1;
       if r_RX_Bit_Count = (r_RX_Bit_Count'range => '0') then
         o_RX_DV <= '1'; -- Byte done, pulse Data Valid

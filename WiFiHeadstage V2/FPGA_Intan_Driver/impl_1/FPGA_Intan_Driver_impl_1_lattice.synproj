@@ -41,14 +41,17 @@
 -path "C:/lscc/radiant/2023.2/ispfpga/ice40tp/data" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/impl_1" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver"
 -ver "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v"
 -lib pmi -vhd "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd"
--lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/Controller_RHD64.vhd"
-"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master.vhd"
-"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Controller/hdl/SPI_Master_CS.vhd"
+-lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_SPI.vhd"
+"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd"
 -ver "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v"
+-lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd"
+"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd"
+"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_SPI_tb.vhd"
+"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd"
 
 
 -path "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver"
--top Controller_RHD64
+-top SPI_Master_CS
 -udb "FPGA_Intan_Driver_impl_1_rtl.udb"
 -output_hdl "FPGA_Intan_Driver_impl_1.vm"
 

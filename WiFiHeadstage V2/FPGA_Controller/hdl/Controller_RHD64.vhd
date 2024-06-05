@@ -29,8 +29,8 @@ entity Controller_RHD64 is
     -- RX (MISO) Signals
     o_RX_Count         : inout std_logic_vector;  -- Index RX byte
     o_RX_DV            : out std_logic;  -- Data Valid pulse (1 clock cycle)
-    io_RX_Byte_Rising  : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
-    io_RX_Byte_Falling : inout std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
+    o_RX_Byte_Rising  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
+    o_RX_Byte_Falling : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
 
     o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_WE     : out std_logic;
@@ -65,8 +65,8 @@ architecture RTL of Controller_RHD64 is
       -- RX (MISO) Signals
       o_RX_Count        : inout std_logic_vector;  -- Index RX byte
       o_RX_DV           : out std_logic;  -- Data Valid pulse (1 clock cycle)
-      io_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
-      io_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
+      o_RX_Byte_Rising  : inout std_logic_vector(15 downto 0);   -- Byte received on MISO Rising  CLK Edge
+      o_RX_Byte_Falling : inout std_logic_vector(15 downto 0);  -- Byte received on MISO Falling CLK Edge
       -- SPI Interface
       o_SPI_Clk  : out std_logic;
       i_SPI_MISO : in  std_logic;
@@ -135,7 +135,7 @@ begin
       o_SPI_Clk  => o_SPI_CLK,
       i_SPI_MISO => i_SPI_MISO,
       o_SPI_MOSI => o_SPI_MOSI,
-      o_SPI_CS_n => o_SPI_CS_n,
+      o_SPI_CS_n => o_SPI_CS_n
 
     );
 
