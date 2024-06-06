@@ -245,6 +245,9 @@ begin
       o_SPI_CS_n => o_STM32_SPI_CS_n
     );
 
+
+
+
 -- STM32 PROCESS, GETTING DATA ONTO THE FIFO OF THE CONTROLER_RHD64 MODULE
 process (i_Clk)
   variable temp_buffer : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);

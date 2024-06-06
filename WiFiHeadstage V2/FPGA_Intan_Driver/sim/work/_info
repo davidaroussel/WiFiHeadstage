@@ -10,41 +10,41 @@ z2
 !i10f 100
 cModel Technology
 Z0 dC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/sim
-Econtroller_rhd64_fifo
-Z1 w1717623382
+Econtroller_rhd64_config
+Z1 w1717636048
 Z2 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
 Z3 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
 Z4 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
-!i122 5
+!i122 4
 R0
-Z5 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd
-Z6 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd
+Z5 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd
+Z6 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd
 l0
-L6 1
-V>YY7@N`nUD@CmDd`TQ8Z<1
-!s100 a^QND=FSQ2H4X6f[i;kZn3
+L5 1
+VlZ@bPjg:T<[jVKPN;OZCU3
+!s100 7YND?ZzM]O3@;U^`VKdg72
 Z7 OT;C;2023.3;77
 32
-Z8 !s110 1717627863
+Z8 !s110 1717636155
 !i10b 1
-Z9 !s108 1717627863.000000
-Z10 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd|
-Z11 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd|
+Z9 !s108 1717636155.000000
+Z10 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd|
+Z11 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config.vhd|
 !i113 1
 Z12 o-work work -O0
 Z13 tExplicit 1 CvgOpt 0
 Artl
-DPx7 verilog 8 vl_types 0 22 P_cIh0I4AM[Slnb4Oe`Ag2
-DEx4 work 8 FIFO_MEM 0 22 Dg1SIo80bB@j0V0VzS_@n1
+Z14 DEx4 work 13 spi_master_cs 0 22 Znle9ebI`4Gl9Qn6EE?YO1
+Z15 DEx4 work 21 controller_rhd64_fifo 0 22 >YY7@N`nUD@CmDd`TQ8Z<1
 R2
 R3
 R4
-Z14 DEx4 work 21 controller_rhd64_fifo 0 22 >YY7@N`nUD@CmDd`TQ8Z<1
-!i122 5
-l118
-L50 153
-V7BU5HZL=77XPDmec@YF7[3
-!s100 e675aHfCU7djoW2jlL6M42
+Z16 DEx4 work 23 controller_rhd64_config 0 22 lZ@bPjg:T<[jVKPN;OZCU3
+!i122 4
+l163
+L66 252
+Vo5B>McImHF]lR@R1>[34a2
+!s100 8H@ZeASjRKi[dT?5_lU982
 R7
 32
 R8
@@ -55,59 +55,148 @@ R11
 !i113 1
 R12
 R13
-Econtroller_rhd64_fifo_tb
-R1
+Econtroller_rhd64_config_tb
+Z17 w1717635702
 R2
 R3
 R4
-!i122 7
+!i122 6
 R0
-Z15 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd
-Z16 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd
+Z18 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config_tb.vhd
+Z19 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config_tb.vhd
+l0
+L5 1
+VoB2X0@ZO4a2<m47`gGG<L2
+!s100 [P@lzkChbieQ3Q77SkMG<1
+R7
+32
+R8
+!i10b 1
+R9
+Z20 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config_tb.vhd|
+Z21 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Config_tb.vhd|
+!i113 1
+R12
+R13
+Atestbench
+R16
+R2
+R3
+R4
+DEx4 work 26 controller_rhd64_config_tb 0 22 oB2X0@ZO4a2<m47`gGG<L2
+!i122 6
+l60
+L8 126
+VaGi::L5_EIfdYETBPhh:k2
+!s100 D0QLY6ZShUc[Td?`kz=0m1
+R7
+32
+R8
+!i10b 1
+R9
+R20
+R21
+!i113 1
+R12
+R13
+Econtroller_rhd64_fifo
+Z22 w1717636135
+R2
+R3
+R4
+!i122 1
+R0
+Z23 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd
+Z24 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd
+l0
+L6 1
+V>YY7@N`nUD@CmDd`TQ8Z<1
+!s100 a^QND=FSQ2H4X6f[i;kZn3
+R7
+32
+R8
+!i10b 1
+R9
+Z25 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd|
+Z26 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd|
+!i113 1
+R12
+R13
+Artl
+DPx7 verilog 8 vl_types 0 22 P_cIh0I4AM[Slnb4Oe`Ag2
+DEx4 work 8 FIFO_MEM 0 22 Dg1SIo80bB@j0V0VzS_@n1
+R2
+R3
+R4
+R15
+!i122 1
+l118
+L50 151
+VNK[;0F@lVYWRP`[^6Nl3Y1
+!s100 ]Y4HX4>5dhR=ihR6Vj]F=3
+R7
+32
+R8
+!i10b 1
+R9
+R25
+R26
+!i113 1
+R12
+R13
+Econtroller_rhd64_fifo_tb
+Z27 w1717599936
+R2
+R3
+R4
+!i122 8
+R0
+Z28 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd
+Z29 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd
 l0
 L6 1
 VaUYOEUjaT6I5Dc>eAab4Q2
 !s100 l=63o;;e6zi?c?VHH367R1
 R7
 32
-Z17 !s110 1717627864
+R8
 !i10b 1
-Z18 !s108 1717627864.000000
-Z19 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd|
+R9
+Z30 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd|
 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd|
 !i113 1
 R12
 R13
 Asim
-R14
+R15
 R2
 R3
 R4
 DEx4 work 24 controller_rhd64_fifo_tb 0 22 aUYOEUjaT6I5Dc>eAab4Q2
-!i122 7
+!i122 8
 l60
 L9 233
 V7]5>gnI^6`f=_9A@LAo790
 !s100 LiY=lRm15Mo^F4K2ARcWL1
 R7
 32
-R17
+R8
 !i10b 1
-R18
-R19
-Z20 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd|
+R9
+R30
+Z31 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO_tb.vhd|
 !i113 1
 R12
 R13
 Econtroller_rhd64_sampling
-Z21 w1717627796
+Z32 w1717630828
 R2
 R3
 R4
-!i122 4
+!i122 5
 R0
-Z22 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd
-Z23 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd
+Z33 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd
+Z34 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd
 l0
 L5 1
 V;j>oPo5Y6>ZMRWjQo3D@01
@@ -117,42 +206,42 @@ R7
 R8
 !i10b 1
 R9
-Z24 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd|
-Z25 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd|
+Z35 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd|
+Z36 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd|
 !i113 1
 R12
 R13
 Artl
-Z26 DEx4 work 13 spi_master_cs 0 22 Znle9ebI`4Gl9Qn6EE?YO1
 R14
+R15
 R2
 R3
 R4
-Z27 DEx4 work 25 controller_rhd64_sampling 0 22 ;j>oPo5Y6>ZMRWjQo3D@01
-!i122 4
+Z37 DEx4 work 25 controller_rhd64_sampling 0 22 ;j>oPo5Y6>ZMRWjQo3D@01
+!i122 5
 l191
-L70 306
-VWmYO;jSF0A;H:SS5>^`:W1
-!s100 K:DM73FC=7l6o=1dWlSK93
+L70 309
+VTbA@l7_`AgHl[>HFiJ9EA2
+!s100 HNSW8KE8OoEKDVT:1hLl31
 R7
 32
 R8
 !i10b 1
 R9
-R24
-R25
+R35
+R36
 !i113 1
 R12
 R13
 Econtroller_rhd64_sampling_tb
-R1
+Z38 w1717619753
 R2
 R3
 R4
-!i122 6
+!i122 7
 R0
-Z28 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd
-Z29 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd
+Z39 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd
+Z40 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd
 l0
 L5 1
 VN0=C^APWQJ4NYcbc@OoGd3
@@ -162,18 +251,18 @@ R7
 R8
 !i10b 1
 R9
-Z30 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd|
-Z31 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd|
+Z41 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd|
+Z42 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd|
 !i113 1
 R12
 R13
 Atestbench
-R27
+R37
 R2
 R3
 R4
 DEx4 work 28 controller_rhd64_sampling_tb 0 22 N0=C^APWQJ4NYcbc@OoGd3
-!i122 6
+!i122 7
 l64
 L8 134
 V@dLVIT^j1kZI<^H7Y>=hk3
@@ -183,178 +272,178 @@ R7
 R8
 !i10b 1
 R9
-R30
-R31
+R41
+R42
 !i113 1
 R12
 R13
 vFIFO_MEM
-Z32 2C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
+Z43 2C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
 !s125 LATTICE_CONN
 R8
 !i10b 1
 !s100 YU[WbDKmU?Gz?T9hooMN;3
 IW:m;6U8iB58:?MG@ZR=nj0
 R0
-R1
-Z33 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
-Z34 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
+Z44 w1717550953
+Z45 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
+Z46 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v
 !i122 0
 L0 11 55
-Z35 VDg1SIo80bB@j0V0VzS_@n1
-Z36 OT;L;2023.3;77
+Z47 VDg1SIo80bB@j0V0VzS_@n1
+Z48 OT;L;2023.3;77
 r1
 !s85 0
 31
 R9
-Z37 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v|
-Z38 !s90 -reportprogress|300|+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v|-suppress|2388|
+Z49 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v|
+Z50 !s90 -reportprogress|300|+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v|-suppress|2388|
 !s101 -O0
 !i113 1
-Z39 o-suppress 2388 -work work -O0
-Z40 !s92 -suppress 2388 {+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl} -work work -O0
-Z41 tCvgOpt 0
+Z51 o-suppress 2388 -work work -O0
+Z52 !s92 -suppress 2388 {+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/FIFO_MEM/rtl} -work work -O0
+Z53 tCvgOpt 0
 n@f@i@f@o_@m@e@m
 vFIFO_MEM_ipgen_lscc_fifo
-R32
+R43
 R8
 !i10b 1
 !s100 mU9;k>zP=VAehTFW=S9U]1
 I20IfnkjioZUN3?lTdfC]c2
 R0
-R1
-R33
-R34
+R44
+R45
+R46
 !i122 0
 L0 121 97
-R35
-R36
+R47
+R48
 r1
 !s85 0
 31
 R9
-R37
-R38
+R49
+R50
 !s101 -O0
 !i113 1
-R39
-R40
-R41
+R51
+R52
+R53
 n@f@i@f@o_@m@e@m_ipgen_lscc_fifo
 vFIFO_MEM_ipgen_lscc_fifo_hw_core
-R32
+R43
 R8
 !i10b 1
 !s100 ATgGGJzN51[3@gDV[3Cin1
 IdGiXa6oJ=S?hcz5K]EKDH1
 R0
-R1
-R33
-R34
+R44
+R45
+R46
 !i122 0
 L0 2277 258
-R35
-R36
+R47
+R48
 r1
 !s85 0
 31
 R9
-R37
-R38
+R49
+R50
 !s101 -O0
 !i113 1
-R39
-R40
-R41
+R51
+R52
+R53
 n@f@i@f@o_@m@e@m_ipgen_lscc_fifo_hw_core
 vFIFO_MEM_ipgen_lscc_fifo_main
-R32
+R43
 R8
 !i10b 1
 !s100 <UfK5:AR0^NCibgaj@VH11
 I_cl1P]<j<dRgEca^6dI;J3
 R0
-R1
-R33
-R34
+R44
+R45
+R46
 !i122 0
 L0 273 136
-R35
-R36
+R47
+R48
 r1
 !s85 0
 31
 R9
-R37
-R38
+R49
+R50
 !s101 -O0
 !i113 1
-R39
-R40
-R41
+R51
+R52
+R53
 n@f@i@f@o_@m@e@m_ipgen_lscc_fifo_main
 vFIFO_MEM_ipgen_lscc_hard_fifo
-R32
+R43
 R8
 !i10b 1
 !s100 J:FEdzQR_61`nV2I7QI150
 I<TFj35[g=O@PEXI^nA21c2
 R0
-R1
-R33
-R34
+R44
+R45
+R46
 !i122 0
 L0 465 1756
-R35
-R36
+R47
+R48
 r1
 !s85 0
 31
 R9
-R37
-R38
+R49
+R50
 !s101 -O0
 !i113 1
-R39
-R40
-R41
+R51
+R52
+R53
 n@f@i@f@o_@m@e@m_ipgen_lscc_hard_fifo
 vFIFO_MEM_ipgen_lscc_soft_fifo
-R32
+R43
 R8
 !i10b 1
 !s100 8LL]bzl3Ca=K^NWH^gTT91
 IdnGC@Y:o7]ZI?An4O:;Nf0
 R0
-R1
-R33
-R34
+R44
+R45
+R46
 !i122 0
 L0 2590 604
-R35
-R36
+R47
+R48
 r1
 !s85 0
 31
 R9
-R37
-R38
+R49
+R50
 !s101 -O0
 !i113 1
-R39
-R40
-R41
+R51
+R52
+R53
 n@f@i@f@o_@m@e@m_ipgen_lscc_soft_fifo
 Espi_master
-R1
-Z42 DPx4 ieee 9 math_real 0 22 :8NNHF3SFI6^on5?4X[S`1
+Z54 w1717445290
+Z55 DPx4 ieee 9 math_real 0 22 :8NNHF3SFI6^on5?4X[S`1
 R2
 R3
 R4
 !i122 2
 R0
-Z43 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
-Z44 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
+Z56 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
+Z57 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
 l0
 L6 1
 V_09RSRYgA9]IgYE>N_<Ez3
@@ -364,17 +453,17 @@ R7
 R8
 !i10b 1
 R9
-Z45 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd|
-Z46 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd|
+Z58 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd|
+Z59 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd|
 !i113 1
 R12
 R13
 Artl
-R42
+R55
 R2
 R3
 R4
-Z47 DEx4 work 10 spi_master 0 22 _09RSRYgA9]IgYE>N_<Ez3
+Z60 DEx4 work 10 spi_master 0 22 _09RSRYgA9]IgYE>N_<Ez3
 !i122 2
 l54
 L34 158
@@ -385,20 +474,20 @@ R7
 R8
 !i10b 1
 R9
-R45
-R46
+R58
+R59
 !i113 1
 R12
 R13
 Espi_master_cs
-R1
+Z61 w1717593869
 R2
 R3
 R4
 !i122 3
 R0
-Z48 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd
-Z49 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd
+Z62 8C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd
+Z63 FC:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd
 l0
 L44 1
 VZnle9ebI`4Gl9Qn6EE?YO1
@@ -408,18 +497,18 @@ R7
 R8
 !i10b 1
 R9
-Z50 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd|
-Z51 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd|
+Z64 !s90 -reportprogress|300|-work|work|C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd|
+Z65 !s107 C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd|
 !i113 1
 R12
 R13
 Artl
-R42
-R47
+R55
+R60
 R2
 R3
 R4
-R26
+R14
 !i122 3
 l116
 L74 137
@@ -430,8 +519,8 @@ R7
 R8
 !i10b 1
 R9
-R50
-R51
+R64
+R65
 !i113 1
 R12
 R13
