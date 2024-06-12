@@ -66,14 +66,6 @@ begin
 
   -- Instantiate the Controller_Headstage
   UUT : entity work.Controller_RHD64_Config
-    generic map (
-      STM32_SPI_NUM_BITS_PER_PACKET => STM32_SPI_NUM_BITS_PER_PACKET,
-      STM32_CLKS_PER_HALF_BIT       => STM32_CLKS_PER_HALF_BIT,
-	  STM32_CS_INACTIVE_CLKS        => STM32_CS_INACTIVE_CLKS,
-      RHD64_SPI_NUM_BITS_PER_PACKET => RHD64_SPI_NUM_BITS_PER_PACKET,
-      RHD64_CLKS_PER_HALF_BIT       => RHD64_CLKS_PER_HALF_BIT,
-	  RHD64_CS_INACTIVE_CLKS        => RHD64_CS_INACTIVE_CLKS
-	  )
     port map (
       i_Rst_L 			=> tb_Rst_L,
       i_Clk             => tb_Clk,
