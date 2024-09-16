@@ -566,7 +566,7 @@ def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directo
 
 if __name__ == '__main__':
     src_directory = r'../analysis_results/'
-    base_directory = r'C:\Users\david\OneDrive\Ph.D G. ELECTRIQUE\Wi-Fi Headstage\SCOPE\2024-04-25\GOOD'
+    base_directory = r'C:\Users\david\Documents\Open Ephys\Testing'
     # Get current date and time with second precision
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # Define the save directory with the current date and time
@@ -595,10 +595,10 @@ if __name__ == '__main__':
         num_samples, num_channels = data.shape
         # plot_spikes_one_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_all_spikes_separate_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
-        # plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
+        plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         print(continuous.metadata['sample_rate'])
-        plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'],
-                                   directory_name=directory_name, save_directory=save_directory, save_figure=True)
+        # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'],
+        #                            directory_name=directory_name, save_directory=save_directory, save_figure=True)
 
         #
         # snr_vrms_data = format_csv_data(num_channels)

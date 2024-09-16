@@ -31,10 +31,16 @@ def main():
                      [8, 9, 10, 11, 12, 13, 14, 15],
                      [16, 17, 18, 19, 20, 21, 22, 23],
                      [24, 25, 26, 27, 28, 29, 30, 31]]
-    CHANNELS = CHANNELS_LIST[2]
+    CHANNELS = CHANNELS_LIST[1]
+    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
+                 8, 9, 10, 11, 12, 13, 14, 15,
+                 16, 17, 18, 19, 20, 21, 22, 23,
+                 24, 25, 26, 27, 28, 29, 30, 31]
+
+    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 12000
+    FREQUENCY   = 2000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA  = Queue()
@@ -47,10 +53,14 @@ def main():
     TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
-    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    # while not TASK_WiFiServer.m_connected:
-    #     time.sleep(1)
-    # TASK_WiFiServer.configureIntanChip()
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+    while not TASK_WiFiServer.m_connected:
+        time.sleep(1)
+
+    TASK_WiFiServer.configureNumberChannel()
+    TASK_WiFiServer.configureIntanChip()
+    TASK_WiFiServer.configureIntanSamplingFreq(FREQUENCY)
+
 
     # Start other threads
     if CSV_WRITING:
@@ -60,14 +70,14 @@ def main():
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
-    # gui_starter.acquire()
-    # time.sleep(1)
-    # print("SENDING ")
+    gui_starter.acquire()
+    time.sleep(1)
+    print("SENDING ")
     #
     # gui_starter.record()
     # time.sleep(1)
     # print("RECORDING ")
-
+    #
     # counter = 0
     # while True:
     #     gui_ttl.send_ttl(line=channel, state=state)

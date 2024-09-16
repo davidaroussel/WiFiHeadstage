@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:8000/"
+BASE_URL = "http://10.63.56.1:10006/"
 
 def get_subjects(subject_name=None):
     url = BASE_URL + 'subjects/'

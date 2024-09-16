@@ -11,6 +11,7 @@ class WiFiHeadstageReceiver(BaseException):
     def __init__(self, p_queue, p_channels, p_buffer_size, p_buffer_factor, p_port, p_host_addr=""):
         BaseException.__init__(self)
         self.channels = p_channels
+        self.num_channels = len(p_channels)
         self.queue_raw_data = p_queue
         self.buffer_size = p_buffer_size
         self.buffer_factor = p_buffer_factor
@@ -21,7 +22,7 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_socketConnectionThread = threading.Thread(target=self.connectSocket)
         self.m_connected = False
         self.m_received_data = 0
-        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataSimulator)
+        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataFromIntan)
         # For plotting
         self.k = []
         self.converted_array = []
@@ -49,16 +50,76 @@ class WiFiHeadstageReceiver(BaseException):
                 print(f"Connected by {addr}")
                 self.m_connected = True
 
-    def continuedDataFromIntan(self):
-        BUFFER_SIZE = self.buffer_size * self.buffer_factor
-        print("---STARTING HEADSTAGE_RECV THREAD---")
+    def readMenu(self):
+        self.m_thread_socket.sendall(b"0")
+        print(self.m_thread_socket.recv(1024).decode("utf-8"))
+
+    def getID(self, p_id):
+        self.m_conn.sendall(b"9")
+        self.m_conn.sendall(p_id.to_bytes(1, 'big'))
+        time.sleep(1)
+        print("Intan Chip {}: {}".format(p_id, self.m_conn.recv(8)))
+
+    def configureNumberChannel(self):
+        command = b"7"
+        time.sleep(1)
+        print(f"Setting number of channels to : {self.num_channels}")
+        b_num_channels = self.num_channels.to_bytes(1, byteorder='big')
+        self.m_conn.sendall(command + b_num_channels)
+        time.sleep(0.001)
+
+    def configureIntanChip(self):
+        if not self.m_connected:
+            print("Not connected.")
+            return
+
+        try:
+            self.m_thread_socket.sendall(b"A")
+            response = self.m_thread_socket.recv(1024).decode("utf-8")
+            # print(response)
+            print("Low Pass  - 10 KHz")
+            print("High Pass - 100 Hz")
+            # Configure the Intan chip
+            input1 = "2"
+            input2 = "4"
+            self.m_thread_socket.sendall(bytes(input1, 'ascii') + bytes(input2, 'ascii'))
+        except UnicodeDecodeError as e:
+            print(f"Error configuring Intan Chip: {e}")
+            print("Already configured")
+
+    def configureIntanSamplingFreq(self, sample_freq):
+        command = b"D"
+        time.sleep(1)
+        high_byte = (sample_freq >> 8) & 0xFF
+        low_byte = sample_freq & 0xFF
+        data1 = high_byte.to_bytes(1, 'big')
+        data2 = low_byte.to_bytes(1, 'big')
+        print(f"Sampling Frequence: {sample_freq}Hz")
+        self.m_conn.sendall(command + data1 + data2)
+        time.sleep(0.001)
+
+    def receiveSeqDataFromIntan(self, sample_size):
         command = b"B"
         num_channels = len(self.channels)
         for ch in self.channels:
             command = command + ch.to_bytes(1, 'big')
-            self.m_thread_socket.sendall(command)  # Start Intan Timer
+        self.m_conn.sendall(command)  # Start Intan Timer
+        time.sleep(1)
+        self.m_received_data = self.m_conn.recv((num_channels * sample_size))
+        self.m_conn.sendall(b"C")  # Stop Intan Timer
+        print(self.m_received_data)
         time.sleep(0.1)
-        trash_packet = self.m_thread_socket.recv(BUFFER_SIZE)
+
+    def continuedDataFromIntan(self):
+        BUFFER_SIZE = self.buffer_size * self.buffer_factor
+        print("---STARTING HEADSTAGE_RECV THREAD---")
+        command = b"B"
+        time.sleep(1)
+        for ch in self.channels:
+            command = command + ch.to_bytes(1, 'big')
+        self.m_thread_socket.sendall(command)  # Start Intan Timer
+        time.sleep(0.001)
+        # trash_packet = self.m_thread_socket.recv(BUFFER_SIZE)
         while 1:
             data = []
             while len(data) < BUFFER_SIZE:
@@ -77,42 +138,3 @@ class WiFiHeadstageReceiver(BaseException):
 
     def stopDataFromIntan(self):
         self.m_thread_socket.sendall(b"C")  # Stop Intan Timer
-
-    def readMenu(self):
-        self.m_thread_socket.sendall(b"0")
-        print(self.m_thread_socket.recv(1024).decode("utf-8"))
-
-    def configureIntanChip(self):
-        if not self.m_connected:
-            print("Not connected.")
-            return
-
-        try:
-            self.m_thread_socket.sendall(b"A")
-            response = self.m_thread_socket.recv(1024).decode("utf-8")
-            print(response)
-            # Configure the Intan chip
-            input1 = "2"
-            input2 = "4"
-            self.m_thread_socket.sendall(bytes(input1, 'ascii') + bytes(input2, 'ascii'))
-        except UnicodeDecodeError as e:
-            print(f"Error configuring Intan Chip: {e}")
-            print("Already configured")
-
-    def receiveSeqDataFromIntan(self, sample_size):
-        command = b"B"
-        num_channels = len(self.channels)
-        for ch in self.channels:
-            command = command + ch.to_bytes(1, 'big')
-        self.m_conn.sendall(command)  # Start Intan Timer
-        time.sleep(1)
-        self.m_received_data = self.m_conn.recv((num_channels * sample_size))
-        self.m_conn.sendall(b"C")  # Stop Intan Timer
-        print(self.m_received_data)
-        time.sleep(0.1)
-
-    def getID(self, p_id):
-        self.m_conn.sendall(b"9")
-        self.m_conn.sendall(p_id.to_bytes(1, 'big'))
-        time.sleep(1)
-        print("Intan Chip {}: {}".format(p_id, self.m_conn.recv(8)))

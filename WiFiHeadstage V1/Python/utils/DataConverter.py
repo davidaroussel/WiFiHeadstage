@@ -26,8 +26,10 @@ class DataConverter():
 
     def convertData(self):
         print("---STARTING DATA_CONVERSION THREAD---")
-        converted_array_mV = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
-        converted_array_Ephys = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
+        # converted_array_mV = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
+        # converted_array_Ephys = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
+        converted_array_mV = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
+        converted_array_Ephys = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
         QUEUE_STACK = [[],[]]
         counter = 0
         sin_counter = 0
@@ -42,6 +44,7 @@ class DataConverter():
         converting_value = (0.000000195/maxOpenEphysValue)*OpenEphysOffset
         TEMP_STACK  = []
         maxData = self.buffer_size*self.num_channels
+        activeSampling = False
         while 1:
             item = self.queue_raw_data.get()
             if item is None:
@@ -70,6 +73,7 @@ class DataConverter():
 
                     if LSB_FLAG == 1:
                         #print("LSB FLAG from CH", channelNumber)
+                        activeSampling = True
                         if channelNumber == 0:
                             pass
                         else:

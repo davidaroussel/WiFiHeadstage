@@ -52,6 +52,16 @@ class WiFiServer(BaseException):
         self.m_socket.sendall(b"0")
         print(self.m_socket.recv(1024).decode("cp1252'"))
 
+    def configureNumberChannel(self):
+        command = b"7"
+        time.sleep(1)
+
+        print(f"Setting number of channels to : {self.num_channels}")
+        b_num_channels = self.num_channels.to_bytes(1, byteorder='big')
+        self.m_socket.sendall(command + b_num_channels)
+        time.sleep(0.001)
+
+
     def configureIntanChip(self):
         self.m_socket.sendall(b"A")
         try:
@@ -73,6 +83,17 @@ class WiFiServer(BaseException):
         choice_highfreq = self.findCutoffChoice(input2, "low")
         print(choice_highfreq)
         self.m_socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
+
+    def configureIntanSamplingFreq(self, sample_freq):
+        command = b"D"
+        time.sleep(1)
+        high_byte = (sample_freq >> 8) & 0xFF
+        low_byte = sample_freq & 0xFF
+        data1 = high_byte.to_bytes(1, 'big')
+        data2 = low_byte.to_bytes(1, 'big')
+        print(f"Setting sampling frequency to: {sample_freq}Hz")
+        self.m_socket.sendall(command + data1 + data2)
+        time.sleep(0.001)
 
     def restartDevice(self):
         self.m_socket.sendall(b"C")
@@ -233,7 +254,7 @@ class WiFiServer(BaseException):
         noDC_value = [[] for i in range(self.num_channels)]
         for ch_number, channel_data in enumerate(self.m_converted_array):
             if channel_data:
-                meanValue = np.mean(np.array(channel_data))
+                meanValue = np.mean(np.array(channel_data[36000:]))
                 for data in channel_data:
                     noDC_value[ch_number].append(data - meanValue)
 
@@ -347,12 +368,19 @@ if __name__ == "__main__":
     SOCKET_PORT = 5000
     HOST_IP_ADDR = ""
 
-    # TESTING_CHANNELS = [0, 1, 2, 3, 32, 33, 34, 35]
-    # TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
-    TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
+    CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
+                     [8, 9, 10, 11, 12, 13, 14, 15],
+                     [16, 17, 18, 19, 20, 21, 22, 23],
+                     [24, 25, 26, 27, 28, 29, 30, 31]]
+    TESTING_CHANNELS = CHANNELS_LIST[1]
+    TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
+    TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
+                 8, 9, 10, 11, 12, 13, 14, 15,
+                 16, 17, 18, 19, 20, 21, 22, 23,
+                 24, 25, 26, 27, 28, 29, 30, 31]
 
-    SAMPLING_TIME = 18  # Time sampling in seconds
-    FREQ_SAMPLING = 12000
+    SAMPLING_TIME = 30  # Time sampling in seconds
+    FREQ_SAMPLING = 2000
     BUFFER_SIZE = 1024*1500  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.
@@ -365,10 +393,12 @@ if __name__ == "__main__":
     while not(HEADSTAGESERVER.m_connected):
         time.sleep(1)
 
-    # HEADSTAGESERVER.getID(0)
+    HEADSTAGESERVER.getID(0)
     # HEADSTAGESERVER.restartDevice()
 
+    HEADSTAGESERVER.configureNumberChannel()
     HEADSTAGESERVER.configureIntanChip()
+    HEADSTAGESERVER.configureIntanSamplingFreq(FREQ_SAMPLING)
     HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
     HEADSTAGESERVER.convertData()
 
