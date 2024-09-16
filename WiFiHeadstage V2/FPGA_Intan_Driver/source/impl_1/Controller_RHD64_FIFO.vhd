@@ -165,17 +165,14 @@ begin
       int_FIFO_DATA <= (others => '0');
       int_FIFO_WE   <= '0';   	  
     elsif rising_edge(i_Clk) then
-		if i_Controller_Mode = x"2" then
-		  if int_RX_DV = '1' then
-			-- Push MISO data into the FIFO
-			int_FIFO_WE <= '1';
-			int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
-			int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
-		  else
-			int_FIFO_WE <= '0';
-		  end if;
-		end if;
-		
+	  if int_RX_DV = '1' then
+		-- Push MISO data into the FIFO
+		int_FIFO_WE <= '1';
+		int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
+		int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
+	  else
+		int_FIFO_WE <= '0';
+	  end if;
 	end if;
   end process;
  
