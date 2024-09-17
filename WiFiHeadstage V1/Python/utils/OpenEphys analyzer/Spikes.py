@@ -12,12 +12,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-from sklearn.cluster import KMeans, DBSCAN
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-
-from kneed import KneeLocator
+import matplotlib.ticker as ticker
 
 # Bandpass filter function
 def bandpass_filter(data, lowcut, highcut, fs):
@@ -32,10 +27,47 @@ def bandpass_filter(data, lowcut, highcut, fs):
     return filtered_data
 
 # Spike detection function
-def detect_spikes(data, threshold_factor=4):
+def detect_spikes(data, threshold_factor=4, window_size=30):
+    """
+    Detect spikes based on the threshold and find the highest amplitude for each spike within a window size.
+
+    Parameters:
+    - data: The signal data to analyze.
+    - threshold_factor: Multiplier for the standard deviation to set the threshold.
+    - window_size: Size of the window to search for the highest amplitude around each detected spike.
+
+    Returns:
+    - spike_times: Array of indices where spikes are detected based on the highest amplitude within the window.
+    """
+    # Calculate the threshold
     threshold = threshold_factor * np.std(data)
-    spike_times = np.where(data > threshold)[0]
-    return spike_times
+
+    # Find potential spike indices where data exceeds the threshold
+    potential_spike_indices = np.where(data > threshold)[0]
+
+    # Initialize an empty list to store the final spike times
+    spike_times = []
+
+    # Ensure the window size is valid
+    half_window = window_size // 2
+
+    # Iterate over potential spike indices
+    for idx in potential_spike_indices:
+        # Define the window boundaries
+        start_idx = max(0, idx - half_window)
+        end_idx = min(len(data), idx + half_window)
+
+        # Extract the windowed segment
+        window_segment = data[start_idx:end_idx]
+
+        # Find the index of the maximum value within the window
+        max_idx_within_window = start_idx + np.argmax(window_segment)
+
+        # Add the max index to the spike times if it's not already included
+        if max_idx_within_window not in spike_times:
+            spike_times.append(max_idx_within_window)
+
+    return np.array(spike_times)
 
 # Extract spike waveforms
 def extract_spikes(data, spike_times, window_size=30):
@@ -219,295 +251,6 @@ def plot_snr_and_vrms(experiment_data):
     plt.show()
 
 
-
-def find_optimal_clusters(spike_waveforms, max_clusters=10):
-    n_samples = len(spike_waveforms)
-
-    if n_samples < 2:
-        return 1
-
-    max_clusters = min(max_clusters, n_samples - 1)
-
-    inertia = []
-    for n_clusters in range(2, max_clusters + 1):
-        kmeans = KMeans(n_clusters=n_clusters, random_state=0)
-        kmeans.fit(spike_waveforms)
-        inertia.append(kmeans.inertia_)
-
-    if not inertia:
-        return 2  # Default to 2 if no inertia values are computed
-
-    kneedle = KneeLocator(range(2, max_clusters + 1), inertia, curve='convex', direction='decreasing')
-    optimal_clusters = kneedle.elbow
-
-    return optimal_clusters if optimal_clusters else 2  # Default to 2 if no knee is found
-
-
-def plot_clustered_spikes(data, num_channels, lowcut, highcut, fs, directory_name, save_directory, save_figure=False):
-    # Calculate the number of rows and columns for the subplots to make them square
-    num_cols = int(np.ceil(np.sqrt(num_channels)))
-    num_rows = int(np.ceil(num_channels / num_cols))
-
-    fig, axs = plt.subplots(num_rows, num_cols, figsize=(15, 15))
-    fig.suptitle(f'Clusters of Spikes for Each Channel - Directory: {directory_name}')
-
-    clusters_data = {}  # Dictionary to store clusters data for each channel
-
-    for channel_index in range(num_channels):
-        print(f"\nProcessing Channel {channel_index + 1}")
-        data_channel = data[:, channel_index]
-        filtered_data = bandpass_filter(data_channel, lowcut, highcut, fs)
-        spike_times = detect_spikes(filtered_data)
-        spike_waveforms = extract_spikes(filtered_data, spike_times)
-
-        if len(spike_waveforms) < 2:
-            print(f"Not enough spike waveforms detected for Channel {channel_index + 1}")
-            continue
-
-        # Find the optimal number of clusters
-        num_clusters = find_optimal_clusters(spike_waveforms)
-        print(f"Optimal number of clusters for Channel {channel_index + 1}: {num_clusters}")
-
-        # Perform PCA
-        pca = PCA(n_components=2)
-        pca_result = pca.fit_transform(spike_waveforms)
-
-        # Perform k-means clustering
-        kmeans = KMeans(n_clusters=num_clusters, random_state=0)
-        clusters = kmeans.fit_predict(spike_waveforms)
-
-        clusters_data[channel_index] = {}  # Initialize clusters data for this channel
-        for i, spike_time in enumerate(spike_times):
-            if i < len(clusters):
-                cluster_label = clusters[i]
-                if cluster_label not in clusters_data[channel_index]:
-                    clusters_data[channel_index][cluster_label] = []
-                clusters_data[channel_index][cluster_label].append(spike_time)
-            else:
-                print("Index out of bounds:", i)
-
-
-        # Plot the PCA results with clustered points
-        row = channel_index // num_cols
-        col = channel_index % num_cols
-        axs[row, col].scatter(pca_result[:, 0], pca_result[:, 1], c=clusters, cmap='viridis', s=50)
-        axs[row, col].set_title(f'Channel {channel_index + 1}')
-        axs[row, col].set_xlabel('PCA Component 1')
-        axs[row, col].set_ylabel('PCA Component 2')
-
-    # Hide unused subplots if num_channels is not a perfect square
-    for i in range(num_channels, num_rows * num_cols):
-        row = i // num_cols
-        col = i % num_cols
-        fig.delaxes(axs[row, col])
-
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.95)
-    if save_figure:
-        save_path = os.path.join(save_directory, f"spike_clusters_{directory_name}.png")
-        plt.savefig(save_path)
-        print(f"Clustered spikes figure saved: {save_path}")
-    plt.show()
-    return clusters_data
-
-
-def plot_raw_spikes(data, clusters, num_channels, lowcut, highcut, fs, directory_name, save_directory,
-                    save_figure=False):
-    # Calculate the number of rows and columns for the subplots to make them square
-    num_cols = int(np.ceil(np.sqrt(num_channels)))
-    num_rows = int(np.ceil(num_channels / num_cols))
-
-    fig, axs = plt.subplots(num_rows, num_cols, figsize=(15, 10))
-    fig.suptitle(f'Raw Spikes for Each Channel - Directory: {directory_name}')
-
-    for channel_index in range(num_channels):
-        print(f"\nProcessing Channel {channel_index + 1}")
-        data_channel = data[:, channel_index]
-        filtered_data = bandpass_filter(data_channel, lowcut, highcut, fs)
-        spike_times = detect_spikes(filtered_data)
-
-        if len(spike_times) == 0:
-            print(f"No spike waveforms detected for Channel {channel_index + 1}")
-            continue
-
-        window_size = 20
-        cluster_colors = {}  # Dictionary to store cluster colors for each channel
-
-        for spike_time in spike_times:
-            start_index = max(0, spike_time - window_size)
-            end_index = min(len(data_channel), spike_time + window_size)
-            cluster_color = 'blue'  # Default color if spike does not belong to any cluster
-            if channel_index in clusters:
-                for cluster_label in clusters[channel_index]:
-                    if spike_time in clusters[channel_index][cluster_label]:  # If spike belongs to a cluster
-                        cluster_color = plt.cm.viridis(
-                            cluster_label / len(clusters[channel_index]))  # Assign cluster color
-                        break
-            axs[channel_index // num_cols, channel_index % num_cols].plot(filtered_data[start_index:end_index],
-                                                                          label=f'Spike {spike_time}',
-                                                                          color=cluster_color)
-
-        axs[channel_index // num_cols, channel_index % num_cols].set_title(
-            f'Channel {channel_index + 1}, Clusters: {len(clusters[channel_index])}')
-        axs[channel_index // num_cols, channel_index % num_cols].set_xlabel('Time (samples)')
-        axs[channel_index // num_cols, channel_index % num_cols].set_ylabel('Amplitude (mV)')
-
-    # Hide unused subplots if num_channels is not a perfect square
-    for i in range(num_channels, num_rows * num_cols):
-        row = i // num_cols
-        col = i % num_cols
-        fig.delaxes(axs[row, col])
-
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.92)
-    if save_figure:
-        save_path = os.path.join(save_directory, f"raw_spikes_{directory_name}.png")
-        plt.savefig(save_path)
-        print(f"Raw spikes figure saved: {save_path}")
-    plt.show()
-
-def plot_global_spike_clusters(data, num_channels, lowcut, highcut, fs, directory_name, save_directory, save_figure=False):
-    num_samples, num_channels = data.shape
-
-    # Combine all channels into one array for clustering
-    combined_data = np.ravel(data)
-
-    # Filter the combined data
-    filtered_combined_data = bandpass_filter(combined_data, lowcut, highcut, fs)
-
-    # Detect spikes in the combined filtered data
-    spike_times = detect_spikes(filtered_combined_data)
-
-    if len(spike_times) == 0:
-        print("No spike waveforms detected.")
-        return None, None
-
-    # Extract spike waveforms from the combined data
-    spike_waveforms = extract_spikes(filtered_combined_data, spike_times)
-
-    if len(spike_waveforms) < 2:
-        print("Not enough spike waveforms detected.")
-        return None, None
-
-    # Find the optimal number of clusters
-    num_clusters = find_optimal_clusters(spike_waveforms)
-
-    print(f"Optimal number of clusters: {num_clusters}")
-
-    # Perform PCA
-    pca = PCA(n_components=2)
-    pca_result = pca.fit_transform(spike_waveforms)
-
-    # Perform k-means clustering
-    kmeans = KMeans(n_clusters=num_clusters, random_state=0)
-    clusters = kmeans.fit_predict(spike_waveforms)
-
-    # Plot the PCA results with clustered points
-    plt.figure(figsize=(10, 6))
-    plt.scatter(pca_result[:, 0], pca_result[:, 1], c=clusters, cmap='viridis', s=50)
-    plt.title(f'Global Spike Clusters - Directory: {directory_name}')
-    plt.xlabel('PCA Component 1')
-    plt.ylabel('PCA Component 2')
-    plt.colorbar(label='Cluster')
-    plt.tight_layout()
-
-    if save_figure:
-        save_path = os.path.join(save_directory, f"global_spike_clusters_{directory_name}.png")
-        plt.savefig(save_path)
-        print(f"Global spike clusters figure saved: {save_path}")
-    plt.show()
-
-    # Generate clusters data
-    clusters_data = {}
-    for i, spike_time in enumerate(spike_times):
-        if i < len(clusters):
-            cluster_label = clusters[i]
-            if cluster_label not in clusters_data:
-                clusters_data[cluster_label] = []
-            clusters_data[cluster_label].append(spike_time)
-        else:
-            print("Index out of bounds:", i)
-
-    return clusters_data
-
-
-def plot_raw_and_clustered_spikes(data, num_channels, lowcut, highcut, fs, directory_name, save_directory,
-                                  save_figure=False):
-
-    clusters_data = {}  # Dictionary to store clusters data for each channel
-
-    for channel_index in range(num_channels):
-        print(f"\nProcessing Channel {channel_index + 1}")
-        data_channel = data[:, channel_index]
-        filtered_data = bandpass_filter(data_channel, lowcut, highcut, fs)
-        spike_times = detect_spikes(filtered_data)
-        spike_waveforms = extract_spikes(filtered_data, spike_times)
-
-        if len(spike_waveforms) < 2:
-            print(f"Not enough spike waveforms detected for Channel {channel_index + 1}")
-            continue
-
-        # Find the optimal number of clusters
-        num_clusters = find_optimal_clusters(spike_waveforms)
-        print(f"Optimal number of clusters for Channel {channel_index + 1}: {num_clusters}")
-
-        # Perform PCA
-        pca = PCA(n_components=2)
-        pca_result = pca.fit_transform(spike_waveforms)
-
-        # Perform k-means clustering
-        kmeans = KMeans(n_clusters=num_clusters, random_state=0)
-        clusters = kmeans.fit_predict(spike_waveforms)
-
-        clusters_data[channel_index] = {}  # Initialize clusters data for this channel
-        for i, spike_time in enumerate(spike_times):
-            if i < len(clusters):
-                cluster_label = clusters[i]
-                if cluster_label not in clusters_data[channel_index]:
-                    clusters_data[channel_index][cluster_label] = []
-                clusters_data[channel_index][cluster_label].append(spike_time)
-            else:
-                print("Index out of bounds:", i)
-
-        # Plot clustered PCA
-        fig, axs = plt.subplots(1, 2, figsize=(15, 5))
-        cluster_colors = plt.cm.viridis(np.linspace(0, 1, num_clusters))
-        axs[1].scatter(pca_result[:, 0], pca_result[:, 1], c=cluster_colors[clusters], s=50)
-        axs[1].set_title(f'Channel {channel_index}, Clustered PCA')
-        axs[1].set_xlabel('PCA Component 1')
-        axs[1].set_ylabel('PCA Component 2')
-
-        if len(spike_times) == 0:
-            print(f"No spike waveforms detected for Channel {channel_index + 1}")
-            continue
-
-        window_size = 20
-
-        for spike_time in spike_times:
-            start_index = max(0, spike_time - window_size)
-            end_index = min(len(data_channel), spike_time + window_size)
-            cluster_color = 'blue'  # Default color if spike does not belong to any cluster
-            if channel_index in clusters_data:
-                for cluster_label in clusters_data[channel_index]:
-                    if spike_time in clusters_data[channel_index][cluster_label]:  # If spike belongs to a cluster
-                        cluster_color = cluster_colors[cluster_label]  # Assign cluster color
-                        break
-            axs[0].plot(filtered_data[start_index:end_index], label=f'Spike {spike_time}', color=cluster_color)
-            axs[0].set_title(f'Channel {channel_index}, Raw Spikes')
-            axs[0].set_xlabel('Time (samples)')
-            axs[0].set_ylabel('Amplitude (mV)')
-
-        plt.tight_layout()
-        if save_figure:
-            save_path = os.path.join(save_directory, f"raw_and_clustered_spikes_{directory_name}_channel_{channel_index}.png")
-            plt.savefig(save_path)
-            print(f"Raw and clustered spikes figure saved: {save_path}")
-        # plt.show()
-
-    return clusters_data
-
-
-
 def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directory, save_figure=False):
     window_size = int(fs)  # Define the window size (1 second before and after the spike)
     plt.figure(figsize=(15, num_channels * 2 + 2))  # Increased figure height
@@ -552,7 +295,7 @@ def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directo
             plt.ylabel('Amplitude (uV)', y=0.5)
     plt.xlabel('Time (s)')
     # Set main title for the figure
-    plt.suptitle("Python GUI - 1 second of raw data from a single isolated neuron")
+    plt.suptitle("1 second of raw data from a single isolated neuron")
 
     if save_figure:
         save_path = os.path.join(save_directory, f"spike_around_best_{directory_name}.png")
@@ -560,6 +303,90 @@ def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directo
         print(f"Spike around best figure saved: {save_path}")
     plt.show()
 
+
+
+def plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False):
+    enlarged_window = 15 * fs
+    time_window = 0.5 * fs  # 0.5 seconds before and after the spike
+    total_window = 2 * time_window  # Total window size (1 second)
+    zoomed_window = 0.01 * fs
+    zoomed_window_red = 0.002 * fs
+
+    for channel_index in range(num_channels):
+        channel_data = data[:, channel_index]
+
+        # Detect spikes in the current channel
+        spike_indices = detect_spikes(channel_data)
+
+        if len(spike_indices) == 0:
+            print(f"No spikes detected for Channel {channel_index + 1}")
+            continue
+
+        # Find the spike with the highest amplitude
+        best_spike_index = max(spike_indices, key=lambda x: abs(channel_data[x]))
+
+        start_index_enlarged = int(max(0, best_spike_index - enlarged_window))
+        end_index_enlarged = int(min(len(channel_data), best_spike_index + enlarged_window))
+        time_enlarged = np.arange(start_index_enlarged, end_index_enlarged) / fs  # Time axis for the window
+
+        start_index = int(max(0, best_spike_index - time_window))
+        end_index = int(min(len(channel_data), best_spike_index + time_window))
+        time = np.arange(start_index, end_index) / fs  # Time axis for the window
+
+        start_index_zoom_red = int(max(0, best_spike_index - (zoomed_window_red)))
+        end_index_zoomed_red = int(min(len(channel_data), best_spike_index + (zoomed_window_red)))
+        time_zoomed_red = np.arange(start_index_zoom_red, end_index_zoomed_red) / fs  # Time axis for the window
+
+
+        # Plot the data for the 10 seconds before and after the best spike
+        fig, ax = plt.subplots(figsize=(15, 10))
+        ax.plot(time_enlarged, channel_data[start_index_enlarged:end_index_enlarged], color='black')
+        ax.plot(time_zoomed_red, channel_data[start_index_zoom_red:end_index_zoomed_red], color='red')
+        ax.set_title(f'Channel {channel_index + 1} - Best Spike')
+        ax.set_xlabel('Time (s)')
+        ax.set_ylabel('Amplitude (µV)')
+
+        if save_figure:
+            save_path = os.path.join(save_directory, f"best_spike_channel_{channel_index + 1}.png")
+            plt.savefig(save_path)
+            print(f"Best spike with surrounding data figure saved: {save_path}")
+
+
+        # Plot the data for the 10 seconds before and after the best spike
+        fig, ax = plt.subplots(figsize=(15, 10))
+        ax.plot(time, channel_data[start_index:end_index], color='black')
+        ax.plot(time_zoomed_red, channel_data[start_index_zoom_red:end_index_zoomed_red], color='red')
+        ax.set_title(f'Channel {channel_index + 1} - Best Spike')
+        ax.set_xlabel('Time (s)')
+        ax.set_ylabel('Amplitude (µV)')
+
+        # Set the Y-axis limit based on the maximum amplitude across all channels
+        max_amplitude = np.max(np.abs(channel_data[start_index:end_index]))
+        y_limit = (-max_amplitude, max_amplitude)
+        ax.set_ylim(y_limit)
+        ax.xaxis.set_major_locator(ticker.MaxNLocator(5))  # Set maximum 5 major ticks on the X-axis
+
+        if save_figure:
+            save_path = os.path.join(save_directory, f"best_spike_channel_{channel_index + 1}.png")
+            plt.savefig(save_path)
+            print(f"Best spike with surrounding data figure saved: {save_path}")
+
+
+
+        fig, ax = plt.subplots(figsize=(15, 10))
+        ax.plot(time_zoomed_red, channel_data[start_index_zoom_red:end_index_zoomed_red], color='red')
+        ax.set_title(f'Channel {channel_index + 1} - Best Spike - Zoomed')
+        ax.set_xlabel('Time (s)')
+        ax.set_ylabel('Amplitude (µV)')
+
+        # Set the Y-axis limit based on the maximum amplitude across all channels
+
+        if save_figure:
+            save_path = os.path.join(save_directory, f"best_spike_channel_{channel_index + 1} - Zoomed.png")
+            plt.savefig(save_path)
+            print(f"Best spike with surrounding data figure saved: {save_path}")
+
+        plt.show()
 
 
 
@@ -593,10 +420,12 @@ if __name__ == '__main__':
         # data = continuous.get_samples(10000, 30000)
         data = continuous.get_samples(start_sample_index, num_samples_continuous)
         num_samples, num_channels = data.shape
+        fs = continuous.metadata['sample_rate']
+        print(fs)
         # plot_spikes_one_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_all_spikes_separate_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
-        plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
-        print(continuous.metadata['sample_rate'])
-        # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'],
-        #                            directory_name=directory_name, save_directory=save_directory, save_figure=True)
+        # plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
+        # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
 
+
+        plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False)

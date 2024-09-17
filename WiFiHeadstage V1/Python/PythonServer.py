@@ -17,6 +17,7 @@ class WiFiServer(BaseException):
     #p_host_addr: Standard loopback interface address (localhost)
     def __init__(self, p_port, p_host_addr, channels, samp_freq, buffer_size):
         BaseException.__init__(self)
+        self.m_clients = []
         self.m_port = p_port
         self.m_socket = 0
         self.m_host_addr = p_host_addr
@@ -32,7 +33,6 @@ class WiFiServer(BaseException):
         self.m_vrms_array = [[] for i in range(self.num_channels)]
         self.cutoff_menu = ''
 
-        self.m_serverThread = threading.Thread(target=self.serverThread)
         directory = "./sampling data"
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         self.csv_directory = os.path.join(directory, timestamp)
@@ -47,6 +47,89 @@ class WiFiServer(BaseException):
         if self.m_thread_socket:
             self.m_thread_socket.shutdown(socket.SHUT_RDWR)
             self.m_serverThread.join()
+
+
+    def serverThread(self):
+        print("WAITING FOR THE DEVICE")
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
+            self.s.bind((self.m_host_addr, self.m_port))
+            self.s.listen()
+
+            while True:  # Server will continuously listen for new clients
+                conn, addr = self.s.accept()
+                print(f"Connected by {addr}")
+                self.m_connected = True
+                conn.setblocking(True)
+
+                # Start a new thread to handle the client
+                client_thread = threading.Thread(target=self.handle_client, args=(conn, addr))
+                client_thread.start()
+
+                # Add the connection to the list of clients
+                self.clients.append(conn)
+
+        # print("WAITING FOR THE DEVICE")
+        # with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
+        #     self.s.bind((self.m_host_addr, self.m_port))
+        #     self.s.listen()
+        #     conn, addr = self.s.accept()
+        #     self.m_socket = conn
+        #     self.m_thread_socket = conn
+        #     if conn:
+        #         print(f"Connected by {addr}")
+        #         self.m_connected = True
+        #         self.s.setblocking(True)
+
+
+    def handle_client(self, conn, addr):
+        try:
+            while True:
+                # Handle the client communication here
+                data = conn.recv(1024)
+                if not data:
+                    break
+                # Process the data or respond to the client
+                print(f"Received from {addr}: {data}")
+                conn.sendall(b"Message received")
+        except Exception as e:
+            print(f"Error with client {addr}: {e}")
+        finally:
+            # Clean up and close the connection
+            print(f"Client {addr} disconnected")
+            conn.close()
+            self.clients.remove(conn)
+
+    def stopServer(self):
+        for conn in self.clients:
+            conn.shutdown(socket.SHUT_RDWR)
+            conn.close()
+        self.m_serverThread.join()
+
+    def calculateSamplingLoops(self, SAMPLING_TIME):
+        BYTES_PER_CHANNEL = 2
+        BYTES_PER_SEC = self.m_samp_freq * BYTES_PER_CHANNEL * self.num_channels
+        TOTAL_NUMBER_OF_BYTES = BYTES_PER_SEC * SAMPLING_TIME
+        LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / self.m_buffer_size) # Number of times we want to receive data from the Headstage before plotting the results
+        REAL_SAMPLING_TIME = (LOOPS * self.m_buffer_size) / BYTES_PER_SEC
+        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of",
+              TOTAL_NUMBER_OF_BYTES, " bytes")
+        return LOOPS
+
+
+    def findCutoffChoice(self, input, cutoff):
+        choice_index = None
+
+        choice_index = self.cutoff_menu.rfind(input + '-')
+
+        retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
+        choice_cutoff = self.cutoff_menu[choice_index:retline_index]
+        return choice_cutoff
+
+    def getID(self, p_id):
+        self.m_socket.sendall(b"9")
+        self.m_socket.sendall(p_id.to_bytes(1, 'big'))
+        time.sleep(1)
+        print(self.m_socket.recv(8))
 
     def readMenu(self):
         self.m_socket.sendall(b"0")
@@ -100,14 +183,6 @@ class WiFiServer(BaseException):
         time.sleep(0.5)
         self.m_socket.sendall(b"C")
 
-    def findCutoffChoice(self, input, cutoff):
-        choice_index = None
-
-        choice_index = self.cutoff_menu.rfind(input + '-')
-
-        retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
-        choice_cutoff = self.cutoff_menu[choice_index:retline_index]
-        return choice_cutoff
 
     #This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)
     def receiveData(self, buffer_size, loops):
@@ -272,37 +347,6 @@ class WiFiServer(BaseException):
                 print(f"Channel {i}: | {avg_vrms:.4f} uV")
         print("-----------|---------------")
 
-    def serverThread(self):
-        print("WAITING FOR THE DEVICE")
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
-            self.s.bind((self.m_host_addr, self.m_port))
-            self.s.listen()
-            conn, addr = self.s.accept()
-            self.m_socket = conn
-            self.m_thread_socket = conn
-            if conn:
-                print(f"Connected by {addr}")
-                self.m_connected = True
-                self.s.setblocking(True)
-
-    def getID(self, p_id):
-        self.m_socket.sendall(b"9")
-        self.m_socket.sendall(p_id.to_bytes(1, 'big'))
-        time.sleep(1)
-        print(self.m_socket.recv(8))
-
-    def calculateSamplingLoops(self, SAMPLING_TIME):
-        BYTES_PER_CHANNEL = 2
-        BYTES_PER_SEC = self.m_samp_freq * BYTES_PER_CHANNEL * self.num_channels
-        TOTAL_NUMBER_OF_BYTES = BYTES_PER_SEC * SAMPLING_TIME
-        LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / self.m_buffer_size) # Number of times we want to receive data from the Headstage before plotting the results
-
-        REAL_SAMPLING_TIME = (LOOPS * self.m_buffer_size) / BYTES_PER_SEC
-        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of",
-              TOTAL_NUMBER_OF_BYTES, " bytes")
-
-        return LOOPS
-
     def writeDataToCSV(self, data):
         timestamp = datetime.now().strftime("%H-%M-%S")
         filename = f"{timestamp}.csv"
@@ -367,17 +411,18 @@ if __name__ == "__main__":
     # Port 5000, IP assign by router, possible to configure the router to have this static IP
     SOCKET_PORT = 5000
     HOST_IP_ADDR = ""
-
     CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
                      [8, 9, 10, 11, 12, 13, 14, 15],
                      [16, 17, 18, 19, 20, 21, 22, 23],
                      [24, 25, 26, 27, 28, 29, 30, 31]]
     TESTING_CHANNELS = CHANNELS_LIST[1]
+
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
+
     TESTING_CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-                 8, 9, 10, 11, 12, 13, 14, 15,
-                 16, 17, 18, 19, 20, 21, 22, 23,
-                 24, 25, 26, 27, 28, 29, 30, 31]
+                        8, 9, 10, 11, 12, 13, 14, 15,
+                        16, 17, 18, 19, 20, 21, 22, 23,
+                        24, 25, 26, 27, 28, 29, 30, 31]
 
     SAMPLING_TIME = 30  # Time sampling in seconds
     FREQ_SAMPLING = 2000
