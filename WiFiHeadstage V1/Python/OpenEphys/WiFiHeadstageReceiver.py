@@ -7,6 +7,7 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from queue import Queue
 
+
 class WiFiHeadstageReceiver(BaseException):
     def __init__(self, p_queue, p_channels, p_buffer_size, p_buffer_factor, p_port, p_host_addr=""):
         BaseException.__init__(self)
@@ -67,7 +68,6 @@ class WiFiHeadstageReceiver(BaseException):
         b_num_channels = self.num_channels.to_bytes(1, byteorder='big')
         self.m_conn.sendall(command + b_num_channels)
         time.sleep(0.001)
-
 
     def findCutoffChoice(self, input, cutoff):
         cutoff_value = None

@@ -1,12 +1,10 @@
 import socket
 import os
-import math
 import threading
 import time
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from numpy.fft import fft
 import numpy as np
 import csv
 from datetime import datetime
