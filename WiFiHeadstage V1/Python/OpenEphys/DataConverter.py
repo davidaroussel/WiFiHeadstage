@@ -77,13 +77,15 @@ class DataConverter():
                         if channelNumber == 0:
                             pass
                         else:
-                            print("OUT OF SYNC !!", "dataCounter", dataNumber)
                             diff_ch = self.num_channels - channelNumber
                             dataCounter += diff_ch
 
                             dataNumber = dataCounter // self.num_channels
                             channelNumber = dataCounter % self.num_channels
-                            print("NOW ON", dataNumber, "with", channelNumber)
+
+                            print("OutofSync")
+                            # print("OUT OF SYNC !!", "dataCounter", dataNumber)
+                            # print("NOW ON", dataNumber, "with", channelNumber)
 
 
                     if channelNumber == None:

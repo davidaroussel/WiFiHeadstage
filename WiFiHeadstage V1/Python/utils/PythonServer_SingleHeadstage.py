@@ -1,15 +1,15 @@
 import socket
 import os
-import math
 import threading
 import time
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from numpy.fft import fft
 import numpy as np
 import csv
 from datetime import datetime
+
+from Headstage_Driver import HeadstageDriver
 
 
 class WiFiServer(BaseException):
@@ -17,7 +17,6 @@ class WiFiServer(BaseException):
     #p_host_addr: Standard loopback interface address (localhost)
     def __init__(self, p_port, p_host_addr, channels, samp_freq, buffer_size):
         BaseException.__init__(self)
-        self.clients = []
         self.m_port = p_port
         self.m_socket = 0
         self.m_host_addr = p_host_addr
@@ -33,6 +32,7 @@ class WiFiServer(BaseException):
         self.m_vrms_array = [[] for i in range(self.num_channels)]
         self.cutoff_menu = ''
 
+        self.m_serverThread = threading.Thread(target=self.serverThread)
         directory = "./sampling data"
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         self.csv_directory = os.path.join(directory, timestamp)
@@ -41,204 +41,65 @@ class WiFiServer(BaseException):
     def startServer(self):
         self.m_serverThread.start()
 
+    #Stop the server
     def stopServer(self):
-        # if self.m_thread_socket:
-        #     self.m_thread_socket.shutdown(socket.SHUT_RDWR)
-        #     self.m_serverThread.join()
-
-        for conn in self.clients:
-            conn.shutdown(socket.SHUT_RDWR)
-            conn.close()
-        self.m_serverThread.join()
+        if self.m_thread_socket:
+            self.m_thread_socket.shutdown(socket.SHUT_RDWR)
+            self.m_serverThread.join()
 
     def serverThread(self):
         print("WAITING FOR THE DEVICE")
-        # with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
-        #     self.s.bind((self.m_host_addr, self.m_port))
-        #     self.s.listen()
-        #     conn, addr = self.s.accept()
-        #     self.m_socket = conn
-        #     self.m_thread_socket = conn
-        #     if conn:
-        #         print(f"Connected by {addr}")
-        #         self.m_connected = True
-        #         self.s.setblocking(True)
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.s:
             self.s.bind((self.m_host_addr, self.m_port))
             self.s.listen()
-            # self.clients = []  # List to keep track of connected clients
-
-            while True:  # Server will continuously listen for new clients
-                m_socket, addr = self.s.accept()
+            conn, addr = self.s.accept()
+            self.m_socket = conn
+            self.m_thread_socket = conn
+            if conn:
                 print(f"Connected by {addr}")
                 self.m_connected = True
-                m_socket.setblocking(True)
+                self.s.setblocking(True)
 
-                # Add the connection to the list of clients
-                headstage_id = self.getHeadstageID(m_socket)
-                headstage_object = {"name": headstage_id, "socket": m_socket}
-                self.clients.append(headstage_object)
-
-
-    def handle_client(self, conn, addr):
-        try:
-            while True:
-                # Handle the client communication here
-                data = conn.recv(1024)
-                if not data:
-                    break
-                # Process the data or respond to the client
-                print(f"Received from {addr}: {data}")
-                conn.sendall(b"Message received")
-        except Exception as e:
-            print(f"Error with client {addr}: {e}")
-        finally:
-            # Clean up and close the connection
-            print(f"Client {addr} disconnected")
-            conn.close()
-            self.clients.remove(conn)
-
-    def getMenu(self, socket):
-        socket.sendall(b"0")
-        print(socket.recv(1024).decode("cp1252'"))
-
-    def getHeadstageID(self, socket):
-        socket.sendall(b"1")
-        headstage_id = socket.recv(1024).decode("cp1252'")
-        return headstage_id
-
-    def verifyIntanChip(self, socket, p_id):
-        socket.sendall(b"2")
-        socket.sendall(p_id.to_bytes(1, 'big'))
-        time.sleep(1)
-        print(socket.recv(8))
-
-    def configureNumberChannel(self, socket):
-        command = b"3"
-        time.sleep(1)
-
-        print(f"Setting number of channels to : {self.num_channels}")
-        b_num_channels = self.num_channels.to_bytes(1, byteorder='big')
-        socket.sendall(command + b_num_channels)
-        time.sleep(0.001)
-
-    def configureIntanSamplingFreq(self, socket, sample_freq):
-        command = b"4"
-        time.sleep(1)
-        high_byte = (sample_freq >> 8) & 0xFF
-        low_byte = sample_freq & 0xFF
-        data1 = high_byte.to_bytes(1, 'big')
-        data2 = low_byte.to_bytes(1, 'big')
-        print(f"Setting sampling frequency to: {sample_freq}Hz")
-        socket.sendall(command + data1 + data2)
-        time.sleep(0.001)
-
-
-    def configureIntanChip(self, socket):
-        socket.sendall(b"5")
-        try:
-            recv_message = socket.recv(1024)
-            self.cutoff_menu = recv_message.decode("utf-8")
-        except UnicodeDecodeError:
-            # Handle the decoding error here, for example:
-            print("Error decoding received data")
-            return
-        print(self.cutoff_menu)
-
-        input1 = "M"
-        choice_lowfreq = self.findCutoffChoice(input1, "high")
-        print("Low-pass selection:")
-        print(choice_lowfreq)
-
-        input2 = "0"
-        choice_highfreq = self.findCutoffChoice(input2, "low")
-        print("High-pass selection:")
-        print(choice_highfreq)
-        socket.sendall(b""+bytes(input1, 'ascii')+bytes(input2, 'ascii'))
-
-
-    #This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)
-    def receiveData(self, socket, buffer_size, loops):
+    # This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)
+    def receiveData(self, buffer_size, loops):
         BUFFER_SIZE = buffer_size
         self.m_raw_data = []
         command = b"A"
         time.sleep(1)
         for ch in self.m_channels:
             command = command + ch.to_bytes(1, 'big')
-        socket.sendall(command)  # Start Intan Timer
+        self.m_socket.sendall(command)  # Start Intan Timer
         time.sleep(0.001)
 
         for i in range(loops):
-            pourcentage = round((i/loops) * 100, 3)
+            pourcentage = round((i / loops) * 100, 3)
             print(pourcentage, "%")
 
             data = []
             while len(data) < BUFFER_SIZE:
-                rest_packet = socket.recv(BUFFER_SIZE)
+                rest_packet = self.m_socket.recv(BUFFER_SIZE)
                 if not rest_packet:
                     print("BOOBOO")
                 data += bytearray(rest_packet)
-                #time.sleep(0.001)
+                # time.sleep(0.001)
             self.m_raw_data.extend(data)
 
-
-        socket.sendall(b"B")  # Stop Intan Timer
+        self.m_socket.sendall(b"B")  # Stop Intan Timer
         time.sleep(0.1)
 
-        #EMPTY SOCKET BUFFER
+        # EMPTY SOCKET BUFFER
         trash_bufsize = buffer_size
         while True:
-            packet = socket.recv(trash_bufsize)
+            packet = self.m_socket.recv(trash_bufsize)
             if len(packet) < trash_bufsize:
                 break
-
-    def stopDataFromIntan(self, socket):
-        socket.sendall(b"B")  # Stop Intan Timer
-        time.sleep(0.1)
-        socket.sendall(b"B")  # Stop Intan Timer
-        #EMPTY SOCKET BUFFER
-        trash_bufsize = 128
-        packet = socket.recv(trash_bufsize)
-        print("Closed Intan Sampling")
-
-
-    def restartDevice(self, socket):
-        socket.sendall(b"B")
-        time.sleep(0.5)
-        socket.sendall(b"B")
-
-    def calculateSamplingLoops(self, SAMPLING_TIME):
-        BYTES_PER_CHANNEL = 2
-        BYTES_PER_SEC = self.m_samp_freq * BYTES_PER_CHANNEL * self.num_channels
-        TOTAL_NUMBER_OF_BYTES = BYTES_PER_SEC * SAMPLING_TIME
-        LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / self.m_buffer_size) # Number of times we want to receive data from the Headstage before plotting the results
-
-        REAL_SAMPLING_TIME = (LOOPS * self.m_buffer_size) / BYTES_PER_SEC
-        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of",
-              TOTAL_NUMBER_OF_BYTES, " bytes")
-
-        return LOOPS
-
-    def findCutoffChoice(self, input, cutoff):
-        cutoff_value = None
-        if cutoff == 'high':
-            choice_index = self.cutoff_menu.find(input + '-')
-            retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
-            choice_cutoff = self.cutoff_menu[choice_index:retline_index]
-            midpoint = len(choice_cutoff) // 2
-            cutoff_value = choice_cutoff[:midpoint].strip()
-        elif cutoff == 'low':
-            choice_index = self.cutoff_menu.rfind(input + '-')
-            retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
-            cutoff_value = self.cutoff_menu[choice_index:retline_index]
-        return cutoff_value
 
     def convertData(self):
         converted_data = [[] for i in range(self.num_channels)]
         ch_counter = 0
 
         for i in range(0, len(self.m_raw_data), 2):
-            value = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True)
+            value = int.from_bytes([self.m_raw_data[i + 1], self.m_raw_data[i]], byteorder='big', signed=True) * 0.195
             converted_data[ch_counter].append(value)
             ch_counter = (ch_counter + 1) % self.num_channels
 
@@ -350,6 +211,7 @@ class WiFiServer(BaseException):
                 print(f"Channel {i}: | {avg_vrms:.4f} uV")
         print("-----------|---------------")
 
+
     def writeDataToCSV(self, data):
         timestamp = datetime.now().strftime("%H-%M-%S")
         filename = f"{timestamp}.csv"
@@ -427,68 +289,55 @@ if __name__ == "__main__":
                  24, 25, 26, 27, 28, 29, 30, 31]
 
     SAMPLING_TIME = 30  # Time sampling in seconds
-    FREQ_SAMPLING = 3500
+    FREQ_SAMPLING = 2000
     BUFFER_SIZE = 1024*1500  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.
     # Loops is the number of time we want to receive data
     HEADSTAGESERVER = WiFiServer(SOCKET_PORT, HOST_IP_ADDR, TESTING_CHANNELS, FREQ_SAMPLING, BUFFER_SIZE)
-    LOOPS = HEADSTAGESERVER.calculateSamplingLoops(SAMPLING_TIME)
+    HEADSTAGEDRIVER = HeadstageDriver()
+
+    LOOPS = HEADSTAGEDRIVER.calculateSamplingLoops(SAMPLING_TIME, FREQ_SAMPLING, len(TESTING_CHANNELS), BUFFER_SIZE)
 
     HEADSTAGESERVER.startServer()
 
     while not(HEADSTAGESERVER.m_connected):
         time.sleep(1)
 
+    HEADSTAGESERVER.verifyIntanChip(0)
+    # HEADSTAGESERVER.restartDevice()
+
+    HEADSTAGESERVER.configureNumberChannel()
+    HEADSTAGESERVER.configureIntanChip()
+    HEADSTAGESERVER.configureIntanSamplingFreq(FREQ_SAMPLING)
+    HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
+    HEADSTAGESERVER.convertData()
+
+    HEADSTAGESERVER.calculateVrmsForAllChannels()
+
+    # HEADSTAGESERVER.plotOneChannel(2)
+    HEADSTAGESERVER.plotAllChannels()
+
+    # data_for_csv = HEADSTAGESERVER.createDataForCSV()
+    # HEADSTAGESERVER.writeDataToCSV(data_for_csv)
     while True:
-        print("-------- Device Menu --------")
-        for idx, client in enumerate(HEADSTAGESERVER.clients):
-            print(f"#{idx} : {client["name"]} - {client['socket'].getpeername()} ")
-        print("Quit")
-        print("-----------------------------")
-        device_number = input("Select a device: ")
-        if device_number.lower() == "quit":
-            exit()
-        if device_number.isdigit():
-            if int(device_number) <= (len(HEADSTAGESERVER.clients) - 1):
-                selected_headstage = HEADSTAGESERVER.clients[int(device_number)]['socket']
-                HEADSTAGESERVER.getMenu(selected_headstage)
-                HEADSTAGESERVER.verifyIntanChip(selected_headstage, p_id=0)
-
-                # HEADSTAGESERVER.restartDevice(selected_headstage)
-                HEADSTAGESERVER.configureNumberChannel(selected_headstage)
-                HEADSTAGESERVER.configureIntanChip(selected_headstage)
-                HEADSTAGESERVER.configureIntanSamplingFreq(selected_headstage, FREQ_SAMPLING)
-                HEADSTAGESERVER.receiveData(selected_headstage, BUFFER_SIZE, LOOPS)
-                HEADSTAGESERVER.convertData()
-
-                HEADSTAGESERVER.calculateVrmsForAllChannels()
-
-                # HEADSTAGESERVER.plotOneChannel(2)
-                HEADSTAGESERVER.plotAllChannels()
-
-                # data_for_csv = HEADSTAGESERVER.createDataForCSV()
-                # HEADSTAGESERVER.writeDataToCSV(data_for_csv)
-
-
-    # while True:
-    #     print("WiFi Headstage Menu")
-    #     print("1. Samples the channels")
-    #     print("2. Validate Data")
-    #     print("3. Exit")
-    #     choice = input("Select an option: ")
-    #     if choice == "1":
-    #         HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
-    #         HEADSTAGESERVER.plotAllChannels()
-    #         data_for_csv = HEADSTAGESERVER.createDataForCSV()
-    #         HEADSTAGESERVER.writeDataToCSV(data_for_csv)
-    #         # Add your code for Option 1 here
-    #     elif choice == "2":
-    #         HEADSTAGESERVER.ValidateData()
-    #         break
-    #     elif choice == "3":
-    #         HEADSTAGESERVER.stopDataFromIntan()
-    #         HEADSTAGESERVER.stopServer()
-    #         break
-    #     else:
-    #         print("Invalid choice. Please select a valid option.")
+        print("WiFi Headstage Menu")
+        print("1. Samples the channels")
+        print("2. Validate Data")
+        print("3. Exit")
+        choice = input("Select an option: ")
+        if choice == "1":
+            HEADSTAGESERVER.receiveData(BUFFER_SIZE, LOOPS)
+            HEADSTAGESERVER.plotAllChannels()
+            data_for_csv = HEADSTAGESERVER.createDataForCSV()
+            HEADSTAGESERVER.writeDataToCSV(data_for_csv)
+            # Add your code for Option 1 here
+        elif choice == "2":
+            print("No Option Coded")
+            continue
+        elif choice == "3":
+            HEADSTAGESERVER.stopDataFromIntan()
+            HEADSTAGESERVER.stopServer()
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")

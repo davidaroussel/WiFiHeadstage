@@ -1,9 +1,9 @@
 import time
 from queue import Queue
 from utils.WiFiHeadstageReceiver import WiFiHeadstageReceiver
-from utils.DataConverter import DataConverter
-from utils.CSVWriter import CSVWriter
-from utils.OpenEphysSender import OpenEphysSender
+from OpenEphys.DataConverter import DataConverter
+from OpenEphys.CSVWriter import CSVWriter
+from OpenEphys.OpenEphysSender import OpenEphysSender
 
 from open_ephys.control import OpenEphysHTTPServer
 from open_ephys.control.network_control import NetworkControl
@@ -27,20 +27,23 @@ def main():
     OPENEPHYS_PORT = 10001
 
     #HEADSTAGE CONFIGS
-    CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
-                     [8, 9, 10, 11, 12, 13, 14, 15],
-                     [16, 17, 18, 19, 20, 21, 22, 23],
-                     [24, 25, 26, 27, 28, 29, 30, 31]]
-    CHANNELS = CHANNELS_LIST[1]
+    # CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
+    #                  [8, 9, 10, 11, 12, 13, 14, 15],
+    #                  [16, 17, 18, 19, 20, 21, 22, 23],
+    #                  [24, 25, 26, 27, 28, 29, 30, 31]]
+    # CHANNELS = CHANNELS_LIST[1]
+    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
+    #              8, 9, 10, 11, 12, 13, 14, 15,
+    #              16, 17, 18, 19, 20, 21, 22, 23,
+    #              24, 25, 26, 27, 28, 29, 30, 31]
+
     CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-                 8, 9, 10, 11, 12, 13, 14, 15,
-                 16, 17, 18, 19, 20, 21, 22, 23,
-                 24, 25, 26, 27, 28, 29, 30, 31]
+                8, 9, 10, 11, 12, 13, 14, 15]
 
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 2000
+    FREQUENCY   = 7000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA  = Queue()
@@ -60,7 +63,6 @@ def main():
     TASK_WiFiServer.configureNumberChannel()
     TASK_WiFiServer.configureIntanChip()
     TASK_WiFiServer.configureIntanSamplingFreq(FREQUENCY)
-
 
     # Start other threads
     if CSV_WRITING:
