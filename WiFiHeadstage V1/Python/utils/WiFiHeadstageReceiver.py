@@ -68,6 +68,22 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_conn.sendall(command + b_num_channels)
         time.sleep(0.001)
 
+
+    def findCutoffChoice(self, input, cutoff):
+        cutoff_value = None
+        if cutoff == 'high':
+            choice_index = self.cutoff_menu.find(input + '-')
+            retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
+            choice_cutoff = self.cutoff_menu[choice_index:retline_index]
+            midpoint = len(choice_cutoff) // 2
+            cutoff_value = choice_cutoff[:midpoint].strip()
+        elif cutoff == 'low':
+            choice_index = self.cutoff_menu.rfind(input + '-')
+            retline_index = self.cutoff_menu[choice_index:].find("\r\n") + choice_index
+            cutoff_value = self.cutoff_menu[choice_index:retline_index]
+
+        return cutoff_value
+
     def configureIntanChip(self):
         if not self.m_connected:
             print("Not connected.")
@@ -75,14 +91,22 @@ class WiFiHeadstageReceiver(BaseException):
 
         try:
             self.m_thread_socket.sendall(b"A")
-            response = self.m_thread_socket.recv(1024).decode("utf-8")
-            # print(response)
-            print("Low Pass  - 10 KHz")
-            print("High Pass - 100 Hz")
-            # Configure the Intan chip
+            recv_message = self.m_thread_socket.recv(1024)
+            self.cutoff_menu = recv_message.decode("utf-8")
+
+            print(self.cutoff_menu)
+
             input1 = "2"
+            choice_lowfreq = self.findCutoffChoice(input1, "high")
+            print("Low-pass selection:")
+            print(choice_lowfreq)
+
             input2 = "4"
-            self.m_thread_socket.sendall(bytes(input1, 'ascii') + bytes(input2, 'ascii'))
+            choice_highfreq = self.findCutoffChoice(input2, "low")
+            print("High-pass selection:")
+            print(choice_highfreq)
+            self.m_thread_socket.sendall(b"" + bytes(input1, 'ascii') + bytes(input2, 'ascii'))
+
         except UnicodeDecodeError as e:
             print(f"Error configuring Intan Chip: {e}")
             print("Already configured")
