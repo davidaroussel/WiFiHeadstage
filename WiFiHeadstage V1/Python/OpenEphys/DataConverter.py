@@ -1,6 +1,7 @@
 # Coded by D. Roussel at BIOMEDICAL MICROSYSTEMS LABORATORY
 # Original version 13/03/2023
 
+import os
 import time
 import csv
 import numpy as np
@@ -44,7 +45,7 @@ class DataConverter():
         converting_value = (0.000000195/maxOpenEphysValue)*OpenEphysOffset
         TEMP_STACK  = []
         maxData = self.buffer_size*self.num_channels
-        activeSampling = False
+        sync_counter = 0
         while 1:
             item = self.queue_raw_data.get()
             if item is None:
@@ -82,8 +83,9 @@ class DataConverter():
 
                             dataNumber = dataCounter // self.num_channels
                             channelNumber = dataCounter % self.num_channels
-
-                            print("OutofSync")
+                            sync_counter += 1
+                            os.system('cls')
+                            print(f"OutofSync {sync_counter}")
                             # print("OUT OF SYNC !!", "dataCounter", dataNumber)
                             # print("NOW ON", dataNumber, "with", channelNumber)
 

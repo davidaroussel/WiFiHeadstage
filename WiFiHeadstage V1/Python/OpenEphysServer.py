@@ -1,6 +1,6 @@
 import time
 from queue import Queue
-from utils.WiFiHeadstageReceiver import WiFiHeadstageReceiver
+from OpenEphys.WiFiHeadstageReceiver import WiFiHeadstageReceiver
 from OpenEphys.DataConverter import DataConverter
 from OpenEphys.CSVWriter import CSVWriter
 from OpenEphys.OpenEphysSender import OpenEphysSender
@@ -8,14 +8,12 @@ from OpenEphys.OpenEphysSender import OpenEphysSender
 from open_ephys.control import OpenEphysHTTPServer
 from open_ephys.control.network_control import NetworkControl
 
-
 def main():
 
     channel = 5
     state = 1
     gui_starter = OpenEphysHTTPServer(address='127.0.0.1')
     gui_ttl = NetworkControl(ip_address='127.0.0.1', port=5556)
-
 
     #MODES
     CSV_WRITING = False
@@ -27,23 +25,28 @@ def main():
     OPENEPHYS_PORT = 10001
 
     #HEADSTAGE CONFIGS
-    # CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
-    #                  [8, 9, 10, 11, 12, 13, 14, 15],
-    #                  [16, 17, 18, 19, 20, 21, 22, 23],
-    #                  [24, 25, 26, 27, 28, 29, 30, 31]]
-    # CHANNELS = CHANNELS_LIST[1]
+    # 8 CHANNELS CONFIGURATION
+    CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
+                     [8, 9, 10, 11, 12, 13, 14, 15],
+                     [16, 17, 18, 19, 20, 21, 22, 23],
+                     [24, 25, 26, 27, 28, 29, 30, 31]]
+    CHANNELS = CHANNELS_LIST[1]
+
+    # 32 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
     #              8, 9, 10, 11, 12, 13, 14, 15,
     #              16, 17, 18, 19, 20, 21, 22, 23,
     #              24, 25, 26, 27, 28, 29, 30, 31]
 
-    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-                8, 9, 10, 11, 12, 13, 14, 15]
+    # 16 CHANNELS CONFIGURATION
+    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
+    #             8, 9, 10, 11, 12, 13, 14, 15]
 
+    # 12 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 7000
+    FREQUENCY   = 12000
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA  = Queue()
@@ -60,9 +63,11 @@ def main():
     while not TASK_WiFiServer.m_connected:
         time.sleep(1)
 
+    TASK_WiFiServer.getHeadstageID()
+    TASK_WiFiServer.verifyIntanChip()
     TASK_WiFiServer.configureNumberChannel()
     TASK_WiFiServer.configureIntanChip()
-    TASK_WiFiServer.configureIntanSamplingFreq(FREQUENCY)
+    TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
     # Start other threads
     if CSV_WRITING:

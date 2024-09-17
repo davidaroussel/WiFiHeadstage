@@ -4,6 +4,7 @@ import math
 class HeadstageDriver:
     def __init__(self):
         self.cutoff_menu = None
+
     def getMenu(self, socket):
         socket.sendall(b"0")
         print(socket.recv(1024).decode("cp1252'"))
@@ -28,7 +29,7 @@ class HeadstageDriver:
         socket.sendall(command + b_num_channels)
         time.sleep(0.001)
 
-    def configureIntanSamplingFreq(self, socket, sample_freq):
+    def configureSamplingFreq(self, socket, sample_freq):
         command = b"4"
         time.sleep(1)
         high_byte = (sample_freq >> 8) & 0xFF
@@ -75,7 +76,7 @@ class HeadstageDriver:
 
     def restartDevice(self, socket):
         socket.sendall(b"B")
-        time.sleep(0.5)
+        time.sleep(1.0)
         socket.sendall(b"B")
 
     def findCutoffChoice(self, input, cutoff):
