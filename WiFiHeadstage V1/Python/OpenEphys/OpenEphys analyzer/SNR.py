@@ -12,51 +12,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-
-# Bandpass filter function
-def bandpass_filter(data, lowcut, highcut, fs):
-    nyquist = 0.5 * fs
-    low = lowcut / nyquist
-    high = highcut / nyquist
-    b, a = butter(N=4, Wn=[low, high], btype='band')
-    padlen = 3 * max(len(a), len(b))
-    if len(data) < padlen:
-        raise ValueError("The length of the input vector x must be greater than padlen.")
-    filtered_data = filtfilt(b, a, data, padlen=padlen)
-    return filtered_data
-
-# Spike detection function
-def detect_spikes(data, threshold_factor=4):
-    threshold = threshold_factor * np.std(data)
-    spike_times = np.where(data > threshold)[0]
-    return spike_times
-
-# Extract spike waveforms
-def extract_spikes(data, spike_times, window_size=30):
-    spikes = []
-    for t in spike_times:
-        if t > window_size and t < len(data) - window_size:
-            spikes.append(data[t - window_size:t + window_size])
-    return np.array(spikes)
-
-# Calculate RMS of signal (average spike waveform)
-def rms(signal):
-    return np.sqrt(np.mean(signal ** 2))
-
-# Estimate noise by selecting segments without spikes
-def extract_noise(data, spike_times, window_size=30, noise_duration=1000):
-    noise_segments = []
-    last_spike = 0
-    for t in spike_times:
-        if t - last_spike > noise_duration:
-            noise_segment = data[last_spike + window_size:t - window_size]
-            noise_segments.append(noise_segment)
-        last_spike = t
-    if noise_segments:
-        noise_segments = np.concatenate(noise_segments)
-        return noise_segments
-    else:
-        return np.array([])
+from Tools import *
 
 # Function to write SNR and Vrms values to a CSV file
 def write_csv(experiment_data, csv_filename):

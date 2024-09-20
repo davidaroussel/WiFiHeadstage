@@ -14,100 +14,8 @@ import matplotlib.pyplot as plt
 
 import matplotlib.ticker as ticker
 
-# Bandpass filter function
-def bandpass_filter(data, lowcut, highcut, fs):
-    nyquist = 0.5 * fs
-    low = lowcut / nyquist
-    high = highcut / nyquist
-    b, a = butter(N=4, Wn=[low, high], btype='band')
-    padlen = 3 * max(len(a), len(b))
-    if len(data) < padlen:
-        raise ValueError("The length of the input vector x must be greater than padlen.")
-    filtered_data = filtfilt(b, a, data, padlen=padlen)
-    return filtered_data
+from Tools import *
 
-# Spike detection function
-def detect_spikes(data, threshold_factor=4, window_size=30):
-    """
-    Detect spikes based on the threshold and find the highest amplitude for each spike within a window size.
-
-    Parameters:
-    - data: The signal data to analyze.
-    - threshold_factor: Multiplier for the standard deviation to set the threshold.
-    - window_size: Size of the window to search for the highest amplitude around each detected spike.
-
-    Returns:
-    - spike_times: Array of indices where spikes are detected based on the highest amplitude within the window.
-    """
-    # Calculate the threshold
-    threshold = threshold_factor * np.std(data)
-
-    # Find potential spike indices where data exceeds the threshold
-    potential_spike_indices = np.where(data > threshold)[0]
-
-    # Initialize an empty list to store the final spike times
-    spike_times = []
-
-    # Ensure the window size is valid
-    half_window = window_size // 2
-
-    # Iterate over potential spike indices
-    for idx in potential_spike_indices:
-        # Define the window boundaries
-        start_idx = max(0, idx - half_window)
-        end_idx = min(len(data), idx + half_window)
-
-        # Extract the windowed segment
-        window_segment = data[start_idx:end_idx]
-
-        # Find the index of the maximum value within the window
-        max_idx_within_window = start_idx + np.argmax(window_segment)
-
-        # Add the max index to the spike times if it's not already included
-        if max_idx_within_window not in spike_times:
-            spike_times.append(max_idx_within_window)
-
-    return np.array(spike_times)
-
-# Extract spike waveforms
-def extract_spikes(data, spike_times, window_size=30):
-    spikes = []
-    for t in spike_times:
-        if t > window_size and t < len(data) - window_size:
-            spikes.append(data[t - window_size:t + window_size])
-    return np.array(spikes)
-
-# Calculate RMS of signal (average spike waveform)
-def rms(signal):
-    return np.sqrt(np.mean(signal ** 2))
-
-# Estimate noise by selecting segments without spikes
-def extract_noise(data, spike_times, window_size=30, noise_duration=1000):
-    noise_segments = []
-    last_spike = 0
-    for t in spike_times:
-        if t - last_spike > noise_duration:
-            noise_segment = data[last_spike + window_size:t - window_size]
-            noise_segments.append(noise_segment)
-        last_spike = t
-    if noise_segments:
-        noise_segments = np.concatenate(noise_segments)
-        return noise_segments
-    else:
-        return np.array([])
-
-# Function to write SNR and Vrms values to a CSV file
-def write_csv(experiment_data, csv_filename):
-    with open(csv_filename, 'w', newline='') as csvfile:
-        fieldnames = ['Experiment', 'Channel', 'SNR (dB)', 'Vrms']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        writer.writeheader()
-        for experiment, data in experiment_data.items():
-            for channel, (snr, vrms) in enumerate(data, start=1):
-                writer.writerow({'Experiment': experiment, 'Channel': channel, 'SNR (dB)': snr, 'Vrms': vrms})
-            # Insert a blank row between each project
-            writer.writerow({})
 
 def plot_spikes_one_figure(data, num_channels, lowcut, highcut, fs, directory_name, save_directory, save_figure=False):
     plt.figure(figsize=(10, 6))
@@ -304,7 +212,6 @@ def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directo
     plt.show()
 
 
-
 def plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False):
     enlarged_window = 15 * fs
     time_window = 0.5 * fs  # 0.5 seconds before and after the spike
@@ -387,8 +294,6 @@ def plot_best_spike_with_surrounding_individual(data, num_channels, fs, director
             print(f"Best spike with surrounding data figure saved: {save_path}")
 
         plt.show()
-
-
 
 
 if __name__ == '__main__':

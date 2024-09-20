@@ -376,26 +376,3 @@ if __name__ == "__main__":
 
                 # data_for_csv = HEADSTAGE_SERVER.createDataForCSV()
                 # HEADSTAGE_SERVER.writeDataToCSV(data_for_csv)
-
-
-    # while True:
-    #     print("WiFi Headstage Menu")
-    #     print("1. Samples the channels")
-    #     print("2. Validate Data")
-    #     print("3. Exit")
-    #     choice = input("Select an option: ")
-    #     if choice == "1":
-    #         HEADSTAGE_SERVER.receiveData(BUFFER_SIZE, LOOPS)
-    #         HEADSTAGE_SERVER.plotAllChannels()
-    #         data_for_csv = HEADSTAGE_SERVER.createDataForCSV()
-    #         HEADSTAGE_SERVER.writeDataToCSV(data_for_csv)
-    #         # Add your code for Option 1 here
-    #     elif choice == "2":
-    #         HEADSTAGE_SERVER.ValidateData()
-    #         break
-    #     elif choice == "3":
-    #         HEADSTAGE_SERVER.stopDataFromIntan()
-    #         HEADSTAGE_SERVER.stopServer()
-    #         break
-    #     else:
-    #         print("Invalid choice. Please select a valid option.")
