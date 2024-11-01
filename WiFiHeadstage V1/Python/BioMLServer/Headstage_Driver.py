@@ -1,29 +1,33 @@
 import time
 import math
 
+
 class HeadstageDriver:
     def __init__(self):
         self.cutoff_menu = None
 
     def getMenu(self, socket):
-        socket.sendall(b"0")
+        command = b"0"
+        socket.sendall(command)
         print(socket.recv(1024).decode("cp1252'"))
 
     def getHeadstageID(self, socket):
-        socket.sendall(b"1")
+        command = b"1"
+        socket.sendall(command)
         headstage_id = socket.recv(1024).decode("cp1252'")
         return headstage_id
 
     def verifyIntanChip(self, socket, p_id):
-        socket.sendall(b"2")
+        command = b"2"
+        socket.sendall(command)
         socket.sendall(p_id.to_bytes(1, 'big'))
         time.sleep(1)
-        print(socket.recv(8))
+        intanResponse = socket.recv(8)
+        return intanResponse
 
     def configureNumberChannel(self, socket, num_channels):
         command = b"3"
         time.sleep(1)
-
         print(f"Setting number of channels to : {num_channels}")
         b_num_channels = num_channels.to_bytes(1, byteorder='big')
         socket.sendall(command + b_num_channels)
@@ -97,10 +101,9 @@ class HeadstageDriver:
         BYTES_PER_CHANNEL = 2
         BYTES_PER_SEC = samp_freq * BYTES_PER_CHANNEL * num_channels
         TOTAL_NUMBER_OF_BYTES = BYTES_PER_SEC * samp_time
-        LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / buffer_size) # Number of times we want to receive data from the Headstage before plotting the results
-
+        # Number of times we want to receive data from the Headstage before plotting the results
+        LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / buffer_size)
         REAL_SAMPLING_TIME = (LOOPS * buffer_size) / BYTES_PER_SEC
-        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of",
-              TOTAL_NUMBER_OF_BYTES, " bytes")
+        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of", TOTAL_NUMBER_OF_BYTES, " bytes")
 
         return LOOPS

@@ -8,8 +8,8 @@ from OpenEphys.OpenEphysSender import OpenEphysSender
 from open_ephys.control import OpenEphysHTTPServer
 from open_ephys.control.network_control import NetworkControl
 
-def main():
 
+if __name__ == "__main__":
     channel = 5
     state = 1
     gui_starter = OpenEphysHTTPServer(address='127.0.0.1')
@@ -30,8 +30,9 @@ def main():
                      [8, 9, 10, 11, 12, 13, 14, 15],
                      [16, 17, 18, 19, 20, 21, 22, 23],
                      [24, 25, 26, 27, 28, 29, 30, 31]]
-    CHANNELS = CHANNELS_LIST[1]
+    CHANNELS = CHANNELS_LIST[0]
 
+    # CHANNELS = [ 4, 5, 6, 7]
     # 32 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
     #              8, 9, 10, 11, 12, 13, 14, 15,
@@ -39,8 +40,7 @@ def main():
     #              24, 25, 26, 27, 28, 29, 30, 31]
 
     # 16 CHANNELS CONFIGURATION
-    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-    #             8, 9, 10, 11, 12, 13, 14, 15]
+    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
     # 12 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
@@ -69,6 +69,8 @@ def main():
     TASK_WiFiServer.configureIntanChip()
     TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
+
+
     # Start other threads
     if CSV_WRITING:
         TASK_CSVWriter.startThread()
@@ -77,9 +79,9 @@ def main():
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
-    gui_starter.acquire()
-    time.sleep(1)
-    print("SENDING ")
+    # gui_starter.acquire()
+    # time.sleep(1)
+    # print("SENDING ")
     #
     # gui_starter.record()
     # time.sleep(1)
@@ -116,7 +118,3 @@ def main():
 
         TASK_WiFiServer.stopThread(TASK_WiFiServer.m_socketConnectionThread)
         print("Closed WiFi Server")
-
-
-if __name__ == "__main__":
-    main()
