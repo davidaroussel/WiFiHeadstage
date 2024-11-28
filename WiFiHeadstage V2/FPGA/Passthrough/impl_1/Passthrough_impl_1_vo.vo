@@ -1,0 +1,65 @@
+
+// Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
+
+// backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/promote.xml Passthrough_impl_1.udb 
+// Netlist created on Fri Oct 18 15:35:45 2024
+// Netlist written on Fri Oct 18 15:35:54 2024
+// Design is for device iCE40UP5K
+// Design is for package SG48
+// Design is for performance grade High-Performance_1.2V
+
+`timescale 1 ns / 1 ps
+
+module passthrough ( data_in, data_out );
+  input  data_in;
+  output data_out;
+  wire   data_out_c_c;
+
+  data_in data_in_I( .PADDI(data_out_c_c), .data_in(data_in));
+  data_out data_out_I( .PADDO(data_out_c_c), .data_out(data_out));
+endmodule
+
+module data_in ( output PADDI, input data_in );
+  wire   GNDI;
+
+  BB_B_B \data_out_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(data_in));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (data_in => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module BB_B_B ( input T_N, I, output O, inout B );
+
+  BB_B INST10( .T_N(T_N), .I(I), .O(O), .B(B));
+endmodule
+
+module gnd ( output PWR0 );
+
+  VLO INST1( .Z(PWR0));
+endmodule
+
+module data_out ( input PADDO, output data_out );
+  wire   VCCI;
+
+  BB_OD_B \data_out_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(data_out));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => data_out) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module BB_OD_B ( input T_N, I, output O, inout B );
+
+  BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
+endmodule
+
+module vcc ( output PWR1 );
+
+  VHI INST1( .Z(PWR1));
+endmodule

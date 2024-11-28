@@ -1,0 +1,40 @@
+(DELAYFILE
+  (SDFVERSION "3.0")
+  (DESIGN "passthrough")
+  (DATE "Fri Oct 18 15:35:54 2024")
+  (VENDOR "Lattice")
+  (PROGRAM "backanno")
+  (VERSION "Radiant Software (64-bit) 2023.2.1.288.0")
+  (DIVIDER /)
+  (VOLTAGE 1.26:1.20:1.14)
+  (PROCESS "default")
+  (TEMPERATURE -40:25:85)
+  (TIMESCALE 1ps)
+  (CELL
+    (CELLTYPE "data_in")
+    (INSTANCE data_in_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH data_in PADDI (460:485:510)(460:485:510))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "data_out")
+    (INSTANCE data_out_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH PADDO data_out (1914:2001:2088)(1914:2001:2088))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "passthrough")
+    (INSTANCE )
+    (DELAY
+      (ABSOLUTE
+        (INTERCONNECT data_in_I/PADDI data_out_I/PADDO (5393:5426:5459)(5393:5426:5459))
+      )
+    )
+  )
+)
