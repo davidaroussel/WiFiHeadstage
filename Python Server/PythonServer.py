@@ -308,7 +308,7 @@ class WiFiServer(BaseException):
 
 if __name__ == "__main__":
     # Port 5000, IP assign by router, possible to configure the router to have this static IP
-    SOCKET_PORT = 10000
+    SOCKET_PORT = 5000
     HOST_IP_ADDR = ""
 
     # 8 CHANNELS CONFIGURATION
