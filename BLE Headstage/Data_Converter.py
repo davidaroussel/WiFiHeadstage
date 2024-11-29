@@ -25,7 +25,7 @@ class DataConverter():
         self.m_dataConversionTread.join()
 
     def convertData(self):
-        print("---STARTING DATA_CONVERSION THREAD---")
+        print("Starting Data Conversion Thread")
 
         # Arrays to hold the converted data for each channel
         converted_array_mV = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)

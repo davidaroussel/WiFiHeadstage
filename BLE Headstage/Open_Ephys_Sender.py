@@ -41,7 +41,7 @@ class OpenEphysSender:
     # NEEDS A DIFFERENT PLUGGIN THAT IS AVAILABLE, BUT NEEDS RECOMPILING TO SWITCH WITH THE UDP VERSION
     # Was tested briefly but never really used since I needed more bandwidth
     def sendToOpenEphysTCP(self):
-        print("---STARTING SEND_OPENEPHYS THREAD---")
+        print("STARTING SEND_OPENEPHYS THREAD")
         offset = 0          # Offset of bytes in this packet; only used for buffers > ~64 kB
         dataType = 2        # Enumeration value based on OpenCV.Mat data types
         elementSize = 2     # Number of bytes per element. elementSize = 2 for U16
@@ -79,7 +79,7 @@ class OpenEphysSender:
 
     def sendToOpenEphysUDP(self):
         # SPECIFY THE IP AND PORT #
-        print("---STARTING SEND_OPENEPHYS THREAD---")
+        print("Starting OpenEphys Thread")
         openEphys_AddrPort = ("localhost", self.port)
         openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
@@ -90,7 +90,6 @@ class OpenEphysSender:
         while True:
             t1 = self.currentTime()
             item = self.queue_conv_data.get()
-            print("Sending", len(item), "to OpenEphys")
             if len(item) > max_udp_size:
                 half_point = len(item) // 2
                 item_part1 = item[:half_point]

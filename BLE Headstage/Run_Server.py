@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # CHANNELS = CHANNELS_LIST[3]
 
     BUFFER_SOCKET_FACTOR = 100
-    BUFFER_SIZE = 256
+    BUFFER_SIZE = 1024
 
     FREQUENCY  = 20000
     CHANNELS = [0, 1]
@@ -47,7 +47,6 @@ if __name__ == "__main__":
     TASK_DataConverter   = DataConverter(QUEUE_RAW_DATA, QUEUE_EPHYS_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
     TASK_OpenEphysSender = OpenEphysSender(QUEUE_EPHYS_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
 
-
     #START THREADS
     TASK_BLEHost.startBLE_Thread()
     while not TASK_BLEHost._connected:
@@ -58,6 +57,7 @@ if __name__ == "__main__":
     counter = 0
     while not TASK_BLEHost.first_response:
         counter += 1
+
 
     # Start other threads
     if OPENEPHYS_SENDING:
@@ -87,10 +87,12 @@ if __name__ == "__main__":
     #         quit()
 
     # Continuous loop until "stop" is entered
-    user_input = input("\n Enter 'stop' to disable sampling: ")
+    print("\r")
+    user_input = input("Enter 'stop' to disable sampling: ")
     if user_input.strip().lower() == "stop":
         TASK_BLEHost.stopRecording()
-        print("Closed Intan")
+        TASK_BLEHost.disconnect()
+        print("Closed BLE Module")
 
         if OPENEPHYS_SENDING:
             TASK_OpenEphysSender.stopThread()

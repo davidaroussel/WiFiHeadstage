@@ -34,6 +34,7 @@ class SpinalCordSystem_BLE:
 
     # ----------Public methods----------
     def startBLE_Thread(self):
+        print("Starting BLE Host Thread")
         if self._m_BLE_Thread == 0:
             self._m_BLE_Thread = threading.Thread(target=self.__connect_to_BLEbetween_callback)
             self._m_BLE_Thread.start()
@@ -130,6 +131,7 @@ class SpinalCordSystem_BLE:
 
         retry_count = 5  # Number of attempts to retry
         retry_delay = 2  # Delay in seconds between retries
+        device_not_found = 0
 
         while retry_count > 0:
             try:
@@ -143,9 +145,10 @@ class SpinalCordSystem_BLE:
             if len(self._devices) == 0:
                 print('No BLE device detected')
             else:
+                print("\r")
                 for i in range(0, len(self._devices), 1):
                     if self.device_name == self._devices[i].name:
-                        print("Device: " + self.device_name + " found!")
+                        print(f"Device: {self.device_name} found!")
                         index = i
                         break
 
@@ -163,8 +166,23 @@ class SpinalCordSystem_BLE:
                         print("Unable to connect after several attempts.")
                         break
             else:
-                print("Unable to connect, device not found.")
-                break
+                if device_not_found == 0:
+                    print("Unable to connect, device not found. Give it a sec ")
+
+                if device_not_found == 1:
+                    print("Unable to connect, device not found. Humm weird...  ")
+
+                if device_not_found >= 2:
+                    print("Unable to connect, device not found. Alright unplug and replug the device")
+
+                retry_count -= 1  # Decrease retry count for the next attempt
+                if retry_count > 0:
+                    print(f"Retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    print("Unable to connect after several attempts.")
+                    break
+                device_not_found += 1
 
         loop.close()
 
@@ -181,8 +199,8 @@ class SpinalCordSystem_BLE:
             service_found = False
             for ser in services:
                 if ser.description == 'Nordic UART Service':
-                    print('Connected')
-                    print('Ready to receive commands')
+                    print(f'Device is connected')
+                    # print('Ready to receive commands')
                     service_found = True
                     await self._m_client.start_notify(self._tx_charac, self.__callback)
                     self._connected = True
