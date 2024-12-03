@@ -332,7 +332,7 @@ if __name__ == "__main__":
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
 
     SAMPLING_TIME = 30  # Time sampling in seconds
-    FREQ_SAMPLING = 4000
+    FREQ_SAMPLING = 6000
     BUFFER_SIZE = 1024*1000  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.

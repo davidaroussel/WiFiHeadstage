@@ -35,7 +35,7 @@ UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
 
 # ---- CONVERT DATA TO BYTES ---- #
-bytesToSend = allData.flatten().tobytes()
+bytesToSend = allData.flatten()
 totalBytes = len(bytesToSend)
 bufferIndex = 0
 

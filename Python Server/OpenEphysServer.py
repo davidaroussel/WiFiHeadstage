@@ -30,7 +30,7 @@ if __name__ == "__main__":
                      [8, 9, 10, 11, 12, 13, 14, 15],
                      [16, 17, 18, 19, 20, 21, 22, 23],
                      [24, 25, 26, 27, 28, 29, 30, 31]]
-    CHANNELS = CHANNELS_LIST[3]
+    CHANNELS = CHANNELS_LIST[0]
 
     # 32 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
@@ -41,12 +41,12 @@ if __name__ == "__main__":
     # 16 CHANNELS CONFIGURATION
     CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
                      [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]]
-    # CHANNELS = CHANNELS_LIST[0]
+    CHANNELS = CHANNELS_LIST[0]
 
     # 12 CHANNELS CONFIGURATION
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 12000
+    FREQUENCY   = 6000
 
     # CHANNELS_LIST = [[0, 1, 2, 3],
     #                  [4, 5, 6, 7],

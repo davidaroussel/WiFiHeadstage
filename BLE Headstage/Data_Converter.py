@@ -1,6 +1,3 @@
-# Coded by D. Roussel at BIOMEDICAL MICROSYSTEMS LABORATORY
-# Original version 13/03/2023
-
 import os
 import time
 import csv
@@ -17,7 +14,6 @@ class DataConverter():
         self.buffer_factor = p_buffer_factor
         self.m_dataConversionTread = Thread(target=self.convertData)
 
-
     def startThread(self):
         self.m_dataConversionTread.start()
 
@@ -28,7 +24,6 @@ class DataConverter():
         print("Starting Data Conversion Thread")
 
         # Arrays to hold the converted data for each channel
-        converted_array_mV = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
         converted_array_Ephys = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
         TEMP_STACK = []
 
@@ -40,71 +35,48 @@ class DataConverter():
         value_per_uV = 1 / (0.005 / OpenEphysFactor)
         maxOpenEphysValue = 0.005
         converting_value = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
+        BUFFER_SIZE = self.buffer_size * self.buffer_factor
+        sin_counter = 0
+        data_counter = 0
 
-        sync_counter = 0
-        dataCounter = 0
-
+        # Data conversion loop
         while True:
             item = self.queue_raw_data.get()
-            if item is None:
-                time.sleep(0.001)
-                continue
-
             channel_number = item[0]
             channel_data = item[1]
+            if item is None:
+                time.sleep(0.001)
+            else:
+                if TEMP_STACK:
+                    channel_data = TEMP_STACK + channel_data
+                    TEMP_STACK = []
 
-            # Merge TEMP_STACK if it's not empty
-            if TEMP_STACK:
-                channel_data = TEMP_STACK + channel_data
-                TEMP_STACK = []
+                item_size = len(channel_data)
+                rest_item_size = item_size % BUFFER_SIZE
+                rest_index = self.buffer_size * (rest_item_size // self.buffer_size)
+                if len(channel_data) >= BUFFER_SIZE:
+                    TEMP_STACK += channel_data[BUFFER_SIZE:]
+                channel_data = channel_data[:BUFFER_SIZE + rest_index]
+                TEMP_STACK = TEMP_STACK[rest_index:]
 
-            item_size = len(channel_data)
-            rest_item_size = item_size % self.buffer_size
-            rest_index = self.buffer_size * (rest_item_size // self.buffer_size)
+                # Loop through each data point for each channel
+                for i, data in enumerate(channel_data):
+                    if channel_number == 0:
+                        # converted_array_Ephys[channel_number][data_counter % self.buffer_size] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter] * 10 / 1000) * value_per_uV)  # in mV
+                        # sin_counter += 1
+                        converted_array_Ephys[channel_number][data_counter] = 10000
+                    else:
+                        converted_array_Ephys[channel_number][data_counter % self.num_channels] = 000
+                        # mV_value = OpenEphysOffset + (data * converting_value)  # in mV
+                        # converted_array_Ephys[channel_number][data_counter % self.buffer_size] = mV_value  # in mV
 
-            # If the channel_data exceeds the buffer size, the excess goes into TEMP_STACK
-            if item_size >= self.buffer_size:
-                TEMP_STACK = channel_data[self.buffer_size:]
-            channel_data = channel_data[:self.buffer_size + rest_index]
 
-            # Store any leftover data in TEMP_STACK
-            TEMP_STACK = TEMP_STACK[rest_item_size:]
+                    data_counter += 1
 
-            # Ensure channel_number is valid
-            if channel_number is None or not (0 <= channel_number < self.num_channels):
-                print(f"Invalid channel_number: {channel_number}, skipping this batch")
-                continue
-
-            # Convert data and fill the corresponding channel buffer
-            for idx, data in enumerate(channel_data):
-                dataNumber = dataCounter // self.num_channels
-
-                # Inject sinusoidal data into selected channels
-                if channel_number % 2 == 0:  # For example, inject sine wave on even channels
-                    mV_value = OpenEphysOffset + (SIN_WAVE_DATA[dataNumber % len(SIN_WAVE_DATA)] * converting_value)
-                else:
-                    mV_value = OpenEphysOffset + (data * converting_value)  # Normal conversion
-
-                # Ensure data fits within the buffer size range
-                if 0 <= dataNumber < self.buffer_size:
-                    converted_array_Ephys[channel_number][dataNumber] = mV_value
-                else:
-                    print(f"Invalid dataNumber: {dataNumber} for channel {channel_number}, skipping value")
-
-                dataCounter += 1
-
-                # Check if the buffer is filled and ready to be sent to the queue
-                if dataCounter > 0 and (dataCounter % (self.buffer_size * self.num_channels)) == 0:
-                    # Flatten and send the converted data to the queue
-                    np_conv = converted_array_Ephys.flatten().tobytes()  # Flatten and convert to bytes
-                    self.queue_ephys_data.put(np_conv)
-                    dataCounter = 0  # Reset counter after sending data
-
-            # CSV_HEADER = ["RAW DATA", "CONV DATA"]
-            # QUEUE_STACK[0].append(self.queue_raw_data.qsize())
-            # QUEUE_STACK[1].append(self.queue_ephys_data.qsize())
-
-            # print("RAW  QUEUE : ", self.queue_raw_data.qsize())
-            # print("CONV QUEUE : ", self.queue_ephys_data.qsize())
-            # print("------------------")
-
+                    # If we've processed enough data, place it in the queue
+                    if data_counter >= self.buffer_size * self.num_channels:
+                        np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
+                        self.queue_ephys_data.put(np_conv)
+                        converted_array_Ephys.fill(0)  # Clear the array for the next batch
+                        data_counter = 0  # Reset data counter
+                        sin_counter = 0  # Reset sine wave counter
