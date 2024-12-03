@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # MODES
     CSV_WRITING = True
     OPENEPHYS_SENDING = True
-    DATA_SIMULATOR = True  # Change to False to use BLE host
+    DATA_SIMULATOR = False
 
     # GLOBAL VARIABLES
     HOST_ADDR = ""
@@ -26,9 +26,9 @@ if __name__ == "__main__":
     OPENEPHYS_PORT = 10001
 
     # CHANNEL CONFIGURATION
-    CHANNELS = [0, 1]
+    CHANNELS = [0, 1] #TODO Make it configurable on the BLE side
     BUFFER_SOCKET_FACTOR = 100
-    BUFFER_SIZE = 1024
+    BUFFER_SIZE = 112*10
     FREQUENCY = 15000
 
     # CONSTRUCTORS
@@ -38,9 +38,8 @@ if __name__ == "__main__":
     if DATA_SIMULATOR:
         # BLE Simulator initialization
         TASK_BLE_Simulator = BLE_Simulator(CHANNELS, FREQUENCY, QUEUE_RAW_DATA, BUFFER_SIZE)
-        # Initialize sine wave on channel 0 and square wave on channel 1
-        TASK_BLE_Simulator.init_wave([0], wave_type="sine", amplitude=20000, frequency=20)
-        TASK_BLE_Simulator.init_wave([1], wave_type="square", amplitude=30000, frequency=600)
+        TASK_BLE_Simulator.init_wave([0], wave_type="sine", amplitude=20000, frequency=12)
+        TASK_BLE_Simulator.init_wave([1], wave_type="square", amplitude=30000, frequency=30)
         TASK_BLE_Simulator.start()
         print("Started BLE Simulator")
     else:

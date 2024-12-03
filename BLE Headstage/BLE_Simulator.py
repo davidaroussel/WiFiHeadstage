@@ -61,16 +61,10 @@ class BLE_Simulator:
 
         for channel_id in self.channels:
             channel_data = []
-            for _ in range((packet_size - 3) // (2 * len(self.channels))):  # 2 bytes per sample
+            for i in range(3, len(packet), 2): # 2 bytes per sample
                 wave_value = self._generate_wave(channel_id, self.wave_generators[channel_id]["time"])
                 channel_data.append(wave_value)
                 self.wave_generators[channel_id]["time"] += self.sample_period
-
-            # Prepare packet structure
-            channel_data_bytes = b"".join(struct.pack("<h", v) for v in channel_data)  # 16-bit signed integers
-            packet[0] = channel_id
-            packet[1:3] = struct.pack("<H", 0)  # No lost bytes
-            packet[3:] = channel_data_bytes[:packet_size - 3]
 
             self.queue_raw.put((channel_id, channel_data))
             self.data_counter += 1
@@ -134,7 +128,7 @@ if __name__ == "__main__":
     simulator.init_wave([1], wave_type="square", amplitude=30000, frequency=60)  # Square wave for channel 1
     simulator.start()
 
-    time.sleep(1)  # Run the simulator for 1 second
+    time.sleep(10)  # Run the simulator for 1 second
     simulator.stop()
     simulator.join()
 

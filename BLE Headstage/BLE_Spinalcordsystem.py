@@ -8,15 +8,16 @@ import time
 import threading
 import os, sys
 import struct
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
 
 # Class for communicating with the BLE device
 class SpinalCordSystem_BLE:
-
     def __init__(self, p_name, p_queue_raw_data=Queue(), p_channels=None, p_buffer_factor=None):
         self.queue_raw = p_queue_raw_data
         self.channels = p_channels
-        self.buffer_factor = p_buffer_factor
         self.first_response = False
         self._devices = []
         self._packets_to_send = []
@@ -109,7 +110,6 @@ class SpinalCordSystem_BLE:
         for i in range(3, len(p_data), 2):
             sample = struct.unpack('<h', p_data[i:i + 2])[0]
             channel_data.append(sample)
-
         # Print the decoded information
         # print(f"Channel: {channel_id}, Lost Bytes: {lost_bytes}, Data Samples: {channel_data}, Tpye: {type(channel_data)}")
         self.queue_raw.put((channel_id, channel_data))
@@ -229,8 +229,8 @@ if __name__ == "__main__":
     while not test._connected:
         time.sleep(1)
 
-    test.sendInitiationPacket() #SENDING THAT COMMAND TWICE ?? Doing it in startBLE_Thread() ... __connect_to_BLE()
-                                # The other command was redundant
+    test.sendInitiationPacket()
+
     while not test.first_response:
         counter += 1
     time.sleep(1)
@@ -243,10 +243,24 @@ if __name__ == "__main__":
     test.stopThread()
     print(f"Number of data AFTER stop : {test.data_counter}")
 
+    channel_data_dict = {}
 
+    while not test.queue_raw.empty():
+        channel_id, channel_data = test.queue_raw.get()
+        if channel_id not in channel_data_dict:
+            channel_data_dict[channel_id] = []
+        channel_data_dict[channel_id].extend(channel_data)
 
-
-
-
-
-
+    num_channels = len(channel_data_dict)
+    fig, axes = plt.subplots(num_channels, 1, figsize=(10, 5 * num_channels))
+    if num_channels == 1:
+        axes = [axes]
+    for idx, (channel_id, data) in enumerate(channel_data_dict.items()):
+        axes[idx].plot(data, label=f"Channel {channel_id}")
+        axes[idx].set_title(f"Channel {channel_id}")
+        axes[idx].set_xlabel("Sample Index")
+        axes[idx].set_ylabel("Data Value")
+        axes[idx].grid(True)
+        axes[idx].legend()
+    plt.tight_layout()  # Adjust layout to prevent overlap
+    plt.show()
