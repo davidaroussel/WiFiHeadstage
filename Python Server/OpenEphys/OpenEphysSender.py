@@ -14,7 +14,8 @@ def currentTime():
 
 
 class OpenEphysSender:
-    def __init__(self, q_queue, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
+    def __init__(self, force_diff, q_queue, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
+        self.force_diff = force_diff
         self.queue_conv_data = q_queue
         self.buffer_size = p_buffer_size
         self.buffer_factor = p_buffer_factor
@@ -84,8 +85,12 @@ class OpenEphysSender:
         openEphys_AddrPort = ("localhost", self.port)
         openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
-        buffersPerSecond = self.frequency / self.buffer_size
-        bufferInterval = 1 / buffersPerSecond
+        if self.force_diff:
+            buffersPerSecond = (self.frequency / self.buffer_size) / 2
+            bufferInterval = 1 / buffersPerSecond
+        else:
+            buffersPerSecond = self.frequency / self.buffer_size
+            bufferInterval = 1 / buffersPerSecond
 
         max_udp_size = 65535
         while True:

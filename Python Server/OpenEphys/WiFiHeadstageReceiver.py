@@ -24,7 +24,7 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_socketConnectionThread = threading.Thread(target=self.connectSocket)
         self.m_connected = False
         self.m_received_data = 0
-        self.m_headstageRecvThread = threading.Thread(target=self.continuedDataFromIntan)
+        self.m_headstageRecvThread = threading.Thread(target=self.receiveSeqDataFromIntan)
         # For plotting
         self.k = []
         self.converted_array = []
