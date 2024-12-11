@@ -2,9 +2,9 @@
 <RadiantProject version="4.2" radiant="2023.2.1.288.0" title="Passthrough" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
-        <Options/>
+        <Options def_top="passthrough"/>
         <Source name="source/impl_1/Passthrough.vhd" type="VHDL" type_short="VHDL">
-            <Options/>
+            <Options top_module="passthrough"/>
         </Source>
         <Source name="Constrain.pdc" type="Physical Constraints File" type_short="PDC">
             <Options/>

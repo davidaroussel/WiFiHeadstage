@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -9,6 +9,7 @@ C_SRCS += \
 ../Core/Apps/SPI_communication.c \
 ../Core/Apps/Task_Apps_Start.c \
 ../Core/Apps/Task_FPGA_communication.c \
+../Core/Apps/Task_RHD64_SPI_communication.c \
 ../Core/Apps/Task_TCP_Transmit.c \
 ../Core/Apps/Task_UDP_Transmit.c \
 ../Core/Apps/Task_Wifi_menu.c \
@@ -19,6 +20,7 @@ OBJS += \
 ./Core/Apps/SPI_communication.o \
 ./Core/Apps/Task_Apps_Start.o \
 ./Core/Apps/Task_FPGA_communication.o \
+./Core/Apps/Task_RHD64_SPI_communication.o \
 ./Core/Apps/Task_TCP_Transmit.o \
 ./Core/Apps/Task_UDP_Transmit.o \
 ./Core/Apps/Task_Wifi_menu.o \
@@ -29,6 +31,7 @@ C_DEPS += \
 ./Core/Apps/SPI_communication.d \
 ./Core/Apps/Task_Apps_Start.d \
 ./Core/Apps/Task_FPGA_communication.d \
+./Core/Apps/Task_RHD64_SPI_communication.d \
 ./Core/Apps/Task_TCP_Transmit.d \
 ./Core/Apps/Task_UDP_Transmit.d \
 ./Core/Apps/Task_Wifi_menu.d \
@@ -42,7 +45,7 @@ Core/Apps/%.o Core/Apps/%.su Core/Apps/%.cyclo: ../Core/Apps/%.c Core/Apps/subdi
 clean: clean-Core-2f-Apps
 
 clean-Core-2f-Apps:
-	-$(RM) ./Core/Apps/Intan_utils.cyclo ./Core/Apps/Intan_utils.d ./Core/Apps/Intan_utils.o ./Core/Apps/Intan_utils.su ./Core/Apps/SPI_communication.cyclo ./Core/Apps/SPI_communication.d ./Core/Apps/SPI_communication.o ./Core/Apps/SPI_communication.su ./Core/Apps/Task_Apps_Start.cyclo ./Core/Apps/Task_Apps_Start.d ./Core/Apps/Task_Apps_Start.o ./Core/Apps/Task_Apps_Start.su ./Core/Apps/Task_FPGA_communication.cyclo ./Core/Apps/Task_FPGA_communication.d ./Core/Apps/Task_FPGA_communication.o ./Core/Apps/Task_FPGA_communication.su ./Core/Apps/Task_TCP_Transmit.cyclo ./Core/Apps/Task_TCP_Transmit.d ./Core/Apps/Task_TCP_Transmit.o ./Core/Apps/Task_TCP_Transmit.su ./Core/Apps/Task_UDP_Transmit.cyclo ./Core/Apps/Task_UDP_Transmit.d ./Core/Apps/Task_UDP_Transmit.o ./Core/Apps/Task_UDP_Transmit.su ./Core/Apps/Task_Wifi_menu.cyclo ./Core/Apps/Task_Wifi_menu.d ./Core/Apps/Task_Wifi_menu.o ./Core/Apps/Task_Wifi_menu.su ./Core/Apps/Wifi_autoconnect.cyclo ./Core/Apps/Wifi_autoconnect.d ./Core/Apps/Wifi_autoconnect.o ./Core/Apps/Wifi_autoconnect.su
+	-$(RM) ./Core/Apps/Intan_utils.cyclo ./Core/Apps/Intan_utils.d ./Core/Apps/Intan_utils.o ./Core/Apps/Intan_utils.su ./Core/Apps/SPI_communication.cyclo ./Core/Apps/SPI_communication.d ./Core/Apps/SPI_communication.o ./Core/Apps/SPI_communication.su ./Core/Apps/Task_Apps_Start.cyclo ./Core/Apps/Task_Apps_Start.d ./Core/Apps/Task_Apps_Start.o ./Core/Apps/Task_Apps_Start.su ./Core/Apps/Task_FPGA_communication.cyclo ./Core/Apps/Task_FPGA_communication.d ./Core/Apps/Task_FPGA_communication.o ./Core/Apps/Task_FPGA_communication.su ./Core/Apps/Task_RHD64_SPI_communication.cyclo ./Core/Apps/Task_RHD64_SPI_communication.d ./Core/Apps/Task_RHD64_SPI_communication.o ./Core/Apps/Task_RHD64_SPI_communication.su ./Core/Apps/Task_TCP_Transmit.cyclo ./Core/Apps/Task_TCP_Transmit.d ./Core/Apps/Task_TCP_Transmit.o ./Core/Apps/Task_TCP_Transmit.su ./Core/Apps/Task_UDP_Transmit.cyclo ./Core/Apps/Task_UDP_Transmit.d ./Core/Apps/Task_UDP_Transmit.o ./Core/Apps/Task_UDP_Transmit.su ./Core/Apps/Task_Wifi_menu.cyclo ./Core/Apps/Task_Wifi_menu.d ./Core/Apps/Task_Wifi_menu.o ./Core/Apps/Task_Wifi_menu.su ./Core/Apps/Wifi_autoconnect.cyclo ./Core/Apps/Wifi_autoconnect.d ./Core/Apps/Wifi_autoconnect.o ./Core/Apps/Wifi_autoconnect.su
 
 .PHONY: clean-Core-2f-Apps
 
