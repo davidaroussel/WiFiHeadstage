@@ -1,3 +1,4 @@
+import sys
 import time
 from queue import Queue
 from OpenEphys.WiFiHeadstageReceiver import WiFiHeadstageReceiver
@@ -43,27 +44,27 @@ if __name__ == "__main__":
                      [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]]
     CHANNELS = CHANNELS_LIST[0]
 
+    CHANNELS = [4, 5, 6, 7, 10, 11, 14, 15]
+
     # 12 CHANNELS CONFIGURATION
     BUFFER_SOCKET_FACTOR = 100
     BUFFER_SIZE = 1024
-    FREQUENCY   = 6000
+    FREQUENCY   = 12000
 
-    # CHANNELS_LIST = [[0, 1, 2, 3],
-    #                  [4, 5, 6, 7],
-    #                  [8, 9, 10, 11],
-    #                  [12, 13, 14, 15],
-    #                  [16, 17, 18, 19],
-    #                  [20, 21, 22, 23],
-    #                  [24, 25, 26, 27],
-    #                  [28, 29, 30, 31]]
-    # CHANNELS = CHANNELS_LIST[5]
-
-
+    CHANNELS_LIST = [[0, 1, 2, 3],
+                     [4, 5, 6, 7],
+                     [8, 9, 10, 11],
+                     [12, 13, 14, 15],
+                     [16, 17, 18, 19],
+                     [20, 21, 22, 23],
+                     [24, 25, 26, 27],
+                     [28, 29, 30, 31]]
+    # CHANNELS = CHANNELS_LIST[0]
 
     #CONSTRUCTORS
-    QUEUE_RAW_DATA  = Queue()
+    QUEUE_RAW_DATA   = Queue()
     QUEUE_EPHYS_DATA = Queue()
-    QUEUE_CSV_DATA = Queue()
+    QUEUE_CSV_DATA   = Queue()
 
     TASK_WiFiServer      = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR,  p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
     TASK_DataConverter   = DataConverter(QUEUE_RAW_DATA, QUEUE_EPHYS_DATA, QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE,BUFFER_SOCKET_FACTOR)
@@ -72,16 +73,14 @@ if __name__ == "__main__":
 
     #START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    while not TASK_WiFiServer.m_connected:
-        time.sleep(1)
-
-    TASK_WiFiServer.getHeadstageID()
-    TASK_WiFiServer.verifyIntanChip()
-    TASK_WiFiServer.configureNumberChannel()
-    TASK_WiFiServer.configureIntanChip()
-    TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
-
-
+    # while not TASK_WiFiServer.m_connected:
+    #     time.sleep(0.5)
+    #
+    # TASK_WiFiServer.getHeadstageID()
+    # TASK_WiFiServer.verifyIntanChip()
+    # TASK_WiFiServer.configureNumberChannel()
+    # TASK_WiFiServer.configureIntanChip()
+    # TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
     # Start other threads
     if CSV_WRITING:
@@ -91,42 +90,10 @@ if __name__ == "__main__":
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
-    # gui_starter.acquire()
-    # time.sleep(1)
-    # print("SENDING ")
-    #
-    # gui_starter.record()
-    # time.sleep(1)
-    # print("RECORDING ")
-    #
-    # counter = 0
-    # while True:
-    #     gui_ttl.send_ttl(line=channel, state=state)
-    #     time.sleep(1)
-    #     state = not state
-    #     counter += 1
-    #
-    #     if counter == 100:
-    #         gui_starter.idle()
-    #         print("STOP ")
-    #         quit()
-
     # Continuous loop until "stop" is entered
     user_input = input("\n Enter 'stop' to disable sampling: ")
     if user_input.strip().lower() == "stop":
         TASK_WiFiServer.stopDataFromIntan()
         print("Closed Intan")
-
-        if CSV_WRITING:
-            TASK_CSVWriter.stopThread()
-            print("Closed CSV Writer")
-
-        if OPENEPHYS_SENDING:
-            TASK_OpenEphysSender.stopThread()
-            print("Closed OpenEphys Sender")
-
-        TASK_DataConverter.stopThread()
         print("Closed everything")
-
-        TASK_WiFiServer.stopThread(TASK_WiFiServer.m_socketConnectionThread)
-        print("Closed WiFi Server")
+        sys.exit(-1)

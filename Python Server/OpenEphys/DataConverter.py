@@ -85,7 +85,8 @@ class DataConverter():
                             channelNumber = dataCounter % self.num_channels
                             sync_counter += 1
                             os.system('cls')
-                            print(f"OutofSync {sync_counter}")
+                            if sync_counter%10==0:
+                                print(f"OutofSync {sync_counter}")
                             # print("OUT OF SYNC !!", "dataCounter", dataNumber)
                             # print("NOW ON", dataNumber, "with", channelNumber)
 

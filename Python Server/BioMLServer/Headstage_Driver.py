@@ -53,9 +53,9 @@ class HeadstageDriver:
             # Handle the decoding error here, for example:
             print("Error decoding received data")
             return
-        print(self.cutoff_menu)
+        # print(self.cutoff_menu)
 
-        input1 = "M"
+        input1 = "4"
         choice_lowfreq = self.findCutoffChoice(input1, "high")
         print("Low-pass selection:")
         print(choice_lowfreq)
