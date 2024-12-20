@@ -44,12 +44,12 @@ if __name__ == "__main__":
                      [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]]
     CHANNELS = CHANNELS_LIST[0]
 
-    CHANNELS = [4, 5, 6, 7, 10, 11, 14, 15]
+    CHANNELS = [4, 8]
 
     # 12 CHANNELS CONFIGURATION
     BUFFER_SOCKET_FACTOR = 100
-    BUFFER_SIZE = 1024
-    FREQUENCY   = 12000
+    BUFFER_SIZE = 64
+    FREQUENCY   = 25000
 
     CHANNELS_LIST = [[0, 1, 2, 3],
                      [4, 5, 6, 7],
@@ -73,14 +73,14 @@ if __name__ == "__main__":
 
     #START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
-    # while not TASK_WiFiServer.m_connected:
-    #     time.sleep(0.5)
-    #
-    # TASK_WiFiServer.getHeadstageID()
-    # TASK_WiFiServer.verifyIntanChip()
-    # TASK_WiFiServer.configureNumberChannel()
-    # TASK_WiFiServer.configureIntanChip()
-    # TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
+    while not TASK_WiFiServer.m_connected:
+        time.sleep(0.5)
+
+    TASK_WiFiServer.getHeadstageID()
+    TASK_WiFiServer.verifyIntanChip()
+    TASK_WiFiServer.configureNumberChannel()
+    TASK_WiFiServer.configureIntanChip()
+    TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
     # Start other threads
     if CSV_WRITING:
