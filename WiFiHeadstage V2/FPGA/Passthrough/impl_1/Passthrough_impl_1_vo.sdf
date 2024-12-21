@@ -1,7 +1,7 @@
 (DELAYFILE
   (SDFVERSION "3.0")
-  (DESIGN "passthrough")
-  (DATE "Fri Oct 18 15:35:54 2024")
+  (DESIGN "Controller_RHD64_Config")
+  (DATE "Sat Dec 21 12:25:18 2024")
   (VENDOR "Lattice")
   (PROGRAM "backanno")
   (VERSION "Radiant Software (64-bit) 2023.2.1.288.0")
@@ -11,29 +11,89 @@
   (TEMPERATURE -40:25:85)
   (TIMESCALE 1ps)
   (CELL
-    (CELLTYPE "data_in")
-    (INSTANCE data_in_I)
+    (CELLTYPE "MISO_master")
+    (INSTANCE MISO_master_I)
     (DELAY
       (ABSOLUTE
-        (IOPATH data_in PADDI (460:485:510)(460:485:510))
+        (IOPATH PADDO MISO_master (1914:2001:2088)(1914:2001:2088))
       )
     )
   )
   (CELL
-    (CELLTYPE "data_out")
-    (INSTANCE data_out_I)
+    (CELLTYPE "SCLK_slave")
+    (INSTANCE SCLK_slave_I)
     (DELAY
       (ABSOLUTE
-        (IOPATH PADDO data_out (1914:2001:2088)(1914:2001:2088))
+        (IOPATH PADDO SCLK_slave (1914:2001:2088)(1914:2001:2088))
       )
     )
   )
   (CELL
-    (CELLTYPE "passthrough")
+    (CELLTYPE "MOSI_slave")
+    (INSTANCE MOSI_slave_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH PADDO MOSI_slave (1914:2001:2088)(1914:2001:2088))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "SS_slave")
+    (INSTANCE SS_slave_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH PADDO SS_slave (1914:2001:2088)(1914:2001:2088))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "SCLK_master")
+    (INSTANCE SCLK_master_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH SCLK_master PADDI (460:485:510)(460:485:510))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "MOSI_master")
+    (INSTANCE MOSI_master_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH MOSI_master PADDI (460:485:510)(460:485:510))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "SS_master")
+    (INSTANCE SS_master_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH SS_master PADDI (460:485:510)(460:485:510))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "MISO_slave")
+    (INSTANCE MISO_slave_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH MISO_slave PADDI (460:485:510)(460:485:510))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "Controller_RHD64_Config")
     (INSTANCE )
     (DELAY
       (ABSOLUTE
-        (INTERCONNECT data_in_I/PADDI data_out_I/PADDO (5393:5426:5459)(5393:5426:5459))
+        (INTERCONNECT MISO_slave_I/PADDI MISO_master_I/PADDO (8856:9021:9186)
+          (8856:9021:9186))
+        (INTERCONNECT SCLK_master_I/PADDI SCLK_slave_I/PADDO (8037:8175:8314)
+          (8037:8175:8314))
+        (INTERCONNECT MOSI_master_I/PADDI MOSI_slave_I/PADDO (9147:9325:9504)
+          (9147:9325:9504))
+        (INTERCONNECT SS_master_I/PADDI SS_slave_I/PADDO (8341:8492:8644)(8341:8492:8644))
       )
     )
   )

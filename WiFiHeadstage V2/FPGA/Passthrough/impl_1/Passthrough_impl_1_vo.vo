@@ -1,33 +1,42 @@
 
 // Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-// backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/promote.xml Passthrough_impl_1.udb 
-// Netlist created on Fri Oct 18 15:35:45 2024
-// Netlist written on Fri Oct 18 15:35:54 2024
+// backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml Passthrough_impl_1.udb 
+// Netlist created on Sat Dec 21 12:25:13 2024
+// Netlist written on Sat Dec 21 12:25:18 2024
 // Design is for device iCE40UP5K
 // Design is for package SG48
 // Design is for performance grade High-Performance_1.2V
 
 `timescale 1 ns / 1 ps
 
-module passthrough ( data_in, data_out );
-  input  data_in;
-  output data_out;
-  wire   data_out_c_c;
+module Controller_RHD64_Config ( MISO_master, SCLK_slave, MOSI_slave, SS_slave, 
+                                 SCLK_master, MOSI_master, SS_master, 
+                                 MISO_slave );
+  input  SCLK_master, MOSI_master, SS_master, MISO_slave;
+  output MISO_master, SCLK_slave, MOSI_slave, SS_slave;
+  wire   MISO_master_c_c, SCLK_slave_c_c, MOSI_slave_c_c, SS_slave_c_c;
 
-  data_in data_in_I( .PADDI(data_out_c_c), .data_in(data_in));
-  data_out data_out_I( .PADDO(data_out_c_c), .data_out(data_out));
+  MISO_master MISO_master_I( .PADDO(MISO_master_c_c), 
+    .MISO_master(MISO_master));
+  SCLK_slave SCLK_slave_I( .PADDO(SCLK_slave_c_c), .SCLK_slave(SCLK_slave));
+  MOSI_slave MOSI_slave_I( .PADDO(MOSI_slave_c_c), .MOSI_slave(MOSI_slave));
+  SS_slave SS_slave_I( .PADDO(SS_slave_c_c), .SS_slave(SS_slave));
+  SCLK_master SCLK_master_I( .PADDI(SCLK_slave_c_c), .SCLK_master(SCLK_master));
+  MOSI_master MOSI_master_I( .PADDI(MOSI_slave_c_c), .MOSI_master(MOSI_master));
+  SS_master SS_master_I( .PADDI(SS_slave_c_c), .SS_master(SS_master));
+  MISO_slave MISO_slave_I( .PADDI(MISO_master_c_c), .MISO_slave(MISO_slave));
 endmodule
 
-module data_in ( output PADDI, input data_in );
-  wire   GNDI;
+module MISO_master ( input PADDO, output MISO_master );
+  wire   VCCI;
 
-  BB_B_B \data_out_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
-    .B(data_in));
-  gnd DRIVEGND( .PWR0(GNDI));
+  BB_B_B \MISO_master_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(MISO_master));
+  vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (data_in => PADDI) = (0:0:0,0:0:0);
+    (PADDO => MISO_master) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
@@ -37,29 +46,100 @@ module BB_B_B ( input T_N, I, output O, inout B );
   BB_B INST10( .T_N(T_N), .I(I), .O(O), .B(B));
 endmodule
 
+module vcc ( output PWR1 );
+
+  VHI INST1( .Z(PWR1));
+endmodule
+
+module SCLK_slave ( input PADDO, output SCLK_slave );
+  wire   VCCI;
+
+  BB_B_B \SCLK_slave_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(SCLK_slave));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => SCLK_slave) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module MOSI_slave ( input PADDO, output MOSI_slave );
+  wire   VCCI;
+
+  BB_B_B \MOSI_slave_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(MOSI_slave));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => MOSI_slave) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module SS_slave ( input PADDO, output SS_slave );
+  wire   VCCI;
+
+  BB_B_B \SS_slave_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(SS_slave));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => SS_slave) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module SCLK_master ( output PADDI, input SCLK_master );
+  wire   GNDI;
+
+  BB_B_B \SCLK_slave_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(SCLK_master));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (SCLK_master => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
 module gnd ( output PWR0 );
 
   VLO INST1( .Z(PWR0));
 endmodule
 
-module data_out ( input PADDO, output data_out );
-  wire   VCCI;
+module MOSI_master ( output PADDI, input MOSI_master );
+  wire   GNDI;
 
-  BB_OD_B \data_out_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(data_out));
-  vcc DRIVEVCC( .PWR1(VCCI));
+  BB_B_B \MOSI_slave_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(MOSI_master));
+  gnd DRIVEGND( .PWR0(GNDI));
 
   specify
-    (PADDO => data_out) = (0:0:0,0:0:0);
+    (MOSI_master => PADDI) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
 
-module BB_OD_B ( input T_N, I, output O, inout B );
+module SS_master ( output PADDI, input SS_master );
+  wire   GNDI;
 
-  BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
+  BB_B_B \SS_slave_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(SS_master));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (SS_master => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
 endmodule
 
-module vcc ( output PWR1 );
+module MISO_slave ( output PADDI, input MISO_slave );
+  wire   GNDI;
 
-  VHI INST1( .Z(PWR1));
+  BB_B_B \MISO_master_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(MISO_slave));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (MISO_slave => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
 endmodule

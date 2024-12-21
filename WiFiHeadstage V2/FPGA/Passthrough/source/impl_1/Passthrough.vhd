@@ -1,17 +1,31 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- Entity declaration
-entity passthrough is
+entity Controller_RHD64_Config is
     Port (
-        data_in  : in  std_logic;  -- Input pin
-        data_out : out std_logic   -- Output pin
-    );
-end passthrough;
+        -- SPI Master Interface
+        SCLK_master : in  STD_LOGIC;
+        MOSI_master : in  STD_LOGIC;
+        MISO_master : out STD_LOGIC;
+        SS_master   : in  STD_LOGIC;
 
--- Architecture body
-architecture Behavioral of passthrough is
+        -- SPI Slave Interface
+        SCLK_slave  : out STD_LOGIC;
+        MOSI_slave  : out STD_LOGIC;
+        MISO_slave  : in  STD_LOGIC;
+        SS_slave    : out STD_LOGIC
+    );
+end Controller_RHD64_Config;
+
+architecture Behavioral of Controller_RHD64_Config is
 begin
-    -- Simply pass the input data to the output
-    data_out <= data_in;
+
+    -- Connect SPI master signals to SPI slave signals
+    SCLK_slave  <= SCLK_master;
+    MOSI_slave  <= MOSI_master;
+    MISO_master <= MISO_slave;
+    SS_slave    <= SS_master;
+
 end Behavioral;

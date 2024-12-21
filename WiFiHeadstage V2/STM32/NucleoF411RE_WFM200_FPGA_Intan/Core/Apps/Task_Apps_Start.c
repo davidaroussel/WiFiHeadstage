@@ -36,7 +36,6 @@ uint16_t UDP_FREQUENCY = 16/2;
 
 void start_app_task(void)
 {
-
 //	INIT_UPD();
 	INIT_TCP();
 
@@ -52,12 +51,12 @@ void start_app_task(void)
   	while (!TCP_Connected){
   		HAL_Delay(10);
   	}
-  	printf("Init Menu \r\n");
+  	printf("Init RHD \r\n");
   	WIFI_MENU_INIT();
 //  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 //  	TASK_TCP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 
-  	//TASK_RHD64_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+//  	TASK_RHD64_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 //  	TASK_FPGA_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 
 }

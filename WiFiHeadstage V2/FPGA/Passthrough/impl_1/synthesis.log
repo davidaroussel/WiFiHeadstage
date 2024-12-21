@@ -5,12 +5,11 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Thu Oct 17 11:08:39 2024
+Sat Dec 21 12:22:39 2024
 
 
-Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/promote.xml 
+Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml 
 
-The -top option is not used.
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -39,6 +38,7 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - synthesis: User-Selected Strategy Settings
 Optimization goal = Area
+Top-level module name = Controller_RHD64_Config.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -67,16 +67,15 @@ ROM style = auto
 RAM style = auto
 The -comp option is FALSE.
 The -syn option is FALSE.
--path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough (searchpath added)
--path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/impl_1 (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1 (searchpath added)
 -path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
-CRITICAL <35001476> - synthesis: A top-level module has not been specified for the mixed language design.
 Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
 VHDL library = work
-VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/source/impl_1/Passthrough.vhd
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/source/impl_1/Passthrough.vhd
 The -r option is OFF. [ Remove LOC Properties is OFF. ]
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
 WARNING <35935050> - synthesis: input port TRIM8 is not connected on this instance. VDB-5050
@@ -129,15 +128,14 @@ Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd
 
 INFO <35921014> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
-Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/passthrough/source/impl_1/passthrough.vhd. VHDL-1481
-Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/passthrough/source/impl_1/passthrough.vhd
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd
 
-INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/passthrough/source/impl_1/passthrough.vhd(5): analyzing entity passthrough. VHDL-1012
-INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/passthrough/source/impl_1/passthrough.vhd(13): analyzing architecture behavioral. VHDL-1010
-WARNING <35001200> - synthesis: Setting passthrough as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
-INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/impl_1". VHDL-1504
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(6): analyzing entity controller_rhd64_config. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(22): analyzing architecture behavioral. VHDL-1010
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
 Top module language type = VHDL.
-Top module name (VHDL, mixed language): passthrough
+Top module name (VHDL, mixed language): Controller_RHD64_Config
                                                          
 
 
@@ -162,18 +160,30 @@ Top module name (VHDL, mixed language): passthrough
                                                          
 
 
-CRITICAL <35002028> - synthesis: I/O Port data_in 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port data_out 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
 
 
 
-CRITICAL <35002028> - synthesis: I/O Port data_in 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port data_out 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
 
-################### Begin Area Report (passthrough)######################
+################### Begin Area Report (Controller_RHD64_Config)######################
 Number of register bits => 0 of 5280 (0 % )
-IB => 1
-OB => 1
+IB => 4
+OB => 4
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
 Number of even-length carry chains : 0
@@ -185,14 +195,20 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : data_out_c_c, loads : 1
-  Net : data_out, loads : 0
+  Net : SCLK_slave_c_c, loads : 1
+  Net : MOSI_slave_c_c, loads : 1
+  Net : MISO_master_c_c, loads : 1
+  Net : SS_slave_c_c, loads : 1
+  Net : MISO_master, loads : 0
+  Net : SCLK_slave, loads : 0
+  Net : MOSI_slave, loads : 0
+  Net : SS_slave, loads : 0
 ################### End Clock Report ##################
 
-Peak Memory Usage: 90 MB
+Peak Memory Usage: 85 MB
 
 --------------------------------------------------------------
-Total CPU Time: 6 secs 
-Total REAL Time: 8 secs 
+Total CPU Time: 1 secs 
+Total REAL Time: 3 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 3db6274228d6a526b6406aaeb3d8040fcdd7e54
+Checksum -- synthesis -- netlist: d500768f6926e933336ac5ecb9684e1c72f856b

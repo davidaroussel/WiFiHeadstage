@@ -55,7 +55,24 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
 
     // Process the received data
     char *data = (char *)p->payload;
-    printf("Received data: %s\r\n", data);
+    if (p->len < 1) {
+        printf("Received empty or invalid data\r\n");
+        pbuf_free(p);
+        return ERR_VAL;
+    }
+    else {
+    	//    	data[p->len] = '\0';  // Ensure the received data is null-terminated
+
+    	// Print each byte of data to ensure it captures all received content
+        osDelay(10);
+
+        printf("Received data (length: %d): ", p->len);
+        for (int i = 0; i < p->len; i++) {
+            printf("%c", data[i]);  // Print character by character
+        }
+        printf("\r\n");
+    }
+
 
     switch (data[0]) {
         case '0':
@@ -85,14 +102,31 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
             break;
 
         case '3':
-            printf("Executing Configure Number of Channels task\r\n");
+            if (p->len < 2) {
+            	printf("Invalid data length for Configure Number of Channels\r\n");
+                break;
+            }
+            uint8_t num_channels = data[1];
+            printf("Configuring number of channels to: %d\r\n", num_channels);
+            // Further processing
             break;
 
         case '4':
-            printf("Executing Configure Sampling Frequency task\r\n");
+            if (p->len < 2) {
+                printf("Invalid data length for Configure Sampling Frequency\r\n");
+                break;
+            }
+            uint16_t sample_freq = (data[1] << 8) | data[2];
+            printf("Configuring sampling frequency to: %d Hz\r\n", sample_freq);
+            // Further processing
             break;
 
         case '5':
+
+            if (p->len < 1) {
+            	printf("Invalid data length for Intan Configuration\r\n");
+                break;
+            }
             printf("Executing Configure Intan Chip task\r\n");
             char config[] = "Please select the proper configuration\r\n"
             				              "High pass:                  Low pass:\r\n"
@@ -120,7 +154,19 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
             				              "L- 0.3 Hz\r\n"
             				              "M- 0.25 Hz\r\n";
             send_response(pcb, config, strlen(config));  // Intan Config
-            break;
+            // Wait for the second message
+			printf("Waiting for configuration choices...\r\n");
+			// Logic to receive and process the second message from the client
+			// Example:
+			char user_input[2]; // Assumes 2 characters: low-pass and high-pass
+			int received = recv(pcb, user_input, sizeof(user_input), 0); // Adjust as needed
+			if (received == 2) {
+				printf("Received choices: Low-pass=%c, High-pass=%c\r\n", user_input[0], user_input[1]);
+				// Process the received choices...
+			} else {
+				printf("Error: Expected 2 bytes for configuration choices\r\n");
+			}
+			break;
 
         case 'A':
             printf("Executing Start Intan Sampling task\r\n");

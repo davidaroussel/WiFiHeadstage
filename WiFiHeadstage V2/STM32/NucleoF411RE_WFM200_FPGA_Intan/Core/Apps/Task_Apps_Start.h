@@ -20,7 +20,7 @@
 #define spi_master_mode
 
 //TODO add WiFi INFO
-#define WLAN_SSID_DEFAULT       "Maison"                         ///< wifi ssid for client mode
+#define WLAN_SSID_DEFAULT       "Maison Up"                         ///< wifi ssid for client mode
 #define WLAN_PASSKEY_DEFAULT    "D94C96J02L09"                         ///< wifi password for client mode
 #define WLAN_SECURITY_DEFAULT   WFM_SECURITY_MODE_WPA2_PSK        ///< wifi security mode for client mode: WFM_SECURITY_MODE_OPEN/WFM_SECURITY_MODE_WEP/WFM_SECURITY_MODE_WPA2_WPA1_PSK
 #define SOFTAP_SSID_DEFAULT     "silabs_softap"                   ///< wifi ssid for soft ap mode
@@ -40,8 +40,8 @@
 #include "main.h"
 
 void start_app_task(void);
-
-#define  DEFAULT_IP_ADDR        "10.63.56.126"
+#define DEFAULT_IP_ADDR 		"192.168.0.154"
+//#define  DEFAULT_IP_ADDR        "10.63.56.126"
 //#define  DEFAULT_IP_ADDR        "192.168.1.5"
 #define  UDP_SERVER_PORT_DEFAULT 10000
 #define  TCP_SERVER_PORT_DEFAULT 10000

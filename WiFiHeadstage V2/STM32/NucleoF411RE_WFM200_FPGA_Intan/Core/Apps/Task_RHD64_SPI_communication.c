@@ -18,7 +18,7 @@ SemaphoreHandle_t spi_data_ready;
 
 
 
-//#define udp_mode_only
+#define udp_mode_only
 extern SPI_HandleTypeDef hspi4;
 
 extern bool spi_flag;
@@ -279,11 +279,8 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 	uint16_t rx_vector[2];
 	uint8_t last_bit[1];
 
-
 	uint8_t DATA_CH0[2];
 	uint8_t DATA_CH32[2];
-
-
 
 	uint16_t UDP_vector[32][2];
 
@@ -336,8 +333,8 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 	convert63_cmd[1] = 0b0000000000000000;
 
 
-	tx_vector[0] = 0b11101010;
-	reg_value = 0b00000000;
+	convert0_cmd[0] = 0b11101010;
+	convert0_cmd[1] = 0b00000000;
 
 	uint16_t intan_cmd[5][2];
 	intan_cmd[0][0] = 0b1111110011001100;
@@ -359,12 +356,6 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 	{
     	if (spi_flag){
     		spi_flag = false;
-			//SET FULL_TASK_Scope_Pin
-			FULL_TASK_SCOPE_Port->BSRR = FULL_TASK_SCOPE_Pin;
-			//SET SPI_TASK_Scope_Pin
-			SPI_TASK_SCOPE_Port->BSRR = SPI_TASK_SCOPE_Pin;
-
-
 			for (int i = 0; i< 32; i++){
 				SPI_SEND_RECV_32(hspi, convert63_cmd, rx_vector, last_bit_testing);
 				//MSB
@@ -450,17 +441,17 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 
 #ifdef udp_mode_only
 
-	  uint8_t bufferTest[SPI_DMA_BUFFER_SIZE] = {};
+//	  uint8_t bufferTest[SPI_DMA_BUFFER_SIZE] = {};
 
 
 	while(1)
 	{
-		//SET FULL_TASK_Scope_Pin
-		FULL_TASK_SCOPE_Port->BSRR = FULL_TASK_SCOPE_Pin;
-		//SET SPI_TASK_Scope_Pin
-		SPI_TASK_SCOPE_Port->BSRR = SPI_TASK_SCOPE_Pin;
-
-		spi_message.buffer = (void*)transmit_vector;
+//		//SET FULL_TASK_Scope_Pin
+//		FULL_TASK_SCOPE_Port->BSRR = FULL_TASK_SCOPE_Pin;
+//		//SET SPI_TASK_Scope_Pin
+//		SPI_TASK_SCOPE_Port->BSRR = SPI_TASK_SCOPE_Pin;
+//
+//		spi_message.buffer = (void*)transmit_vector;
 		if (spi_flag){
 			if (arg != 0){
 
@@ -471,7 +462,7 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 					printf("problem in queueSend \r\n");
 				}
 				//RESET SPI_TASK_Scope_Pin
-				SPI_TASK_SCOPE_Port->BSRR = (uint32_t)SPI_TASK_SCOPE_Pin << 16U;
+//				SPI_TASK_SCOPE_Port->BSRR = (uint32_t)SPI_TASK_SCOPE_Pin << 16U;
 			}
 		}
 		else{

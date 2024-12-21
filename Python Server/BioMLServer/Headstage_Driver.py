@@ -20,7 +20,7 @@ class HeadstageDriver:
     def verifyIntanChip(self, socket, p_id):
         command = b"2"
         socket.sendall(command)
-        socket.sendall(p_id.to_bytes(1, 'big'))
+        # socket.sendall(p_id.to_bytes(1, 'big'))
         time.sleep(1)
         intanResponse = socket.recv(8)
         return intanResponse
@@ -38,11 +38,11 @@ class HeadstageDriver:
         time.sleep(1)
         high_byte = (sample_freq >> 8) & 0xFF
         low_byte = sample_freq & 0xFF
-        data1 = high_byte.to_bytes(1, 'big')
-        data2 = low_byte.to_bytes(1, 'big')
-        print(f"Setting sampling frequency to: {sample_freq}Hz")
-        socket.sendall(command + data1 + data2)
-        time.sleep(0.001)
+        data = command + high_byte.to_bytes(1, 'big') + low_byte.to_bytes(1, 'big')
+        print(f"Sending command: {data}")
+        socket.sendall(data)
+        response = socket.recv(1024).decode("utf-8")
+        print(f"Received response: {response}")
 
     def configureIntanChip(self, socket):
         socket.sendall(b"5")

@@ -36,12 +36,13 @@
 
 -use_io_insertion 1
 -resolve_mixed_drivers 0
--path "C:/lscc/radiant/2023.2/ispfpga/ice40tp/data" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/impl_1" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough"
+-path "C:/lscc/radiant/2023.2/ispfpga/ice40tp/data" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough"
 -ver "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v"
 -lib pmi -vhd "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd"
--lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/source/impl_1/Passthrough.vhd"
+-lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/source/impl_1/Passthrough.vhd"
 
 
+-top Controller_RHD64_Config
 -udb "Passthrough_impl_1_rtl.udb"
 -output_hdl "Passthrough_impl_1.vm"
 

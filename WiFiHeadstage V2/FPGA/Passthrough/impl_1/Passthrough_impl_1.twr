@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Fri Oct 18 15:35:46 2024
+Sat Dec 21 12:25:14 2024
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -8,17 +8,17 @@ Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
 
-Command line:    timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt Passthrough_impl_1.twr Passthrough_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/Passthrough/promote.xml
+Command line:    timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt Passthrough_impl_1.twr Passthrough_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml
 
------------------------------------------
-Design:          passthrough
+-------------------------------------------
+Design:          Controller_RHD64_Config
 Family:          iCE40UP
 Device:          iCE40UP5K
 Package:         SG48
 Performance:     High-Performance_1.2V
 Package Status:                     Preliminary    Version 1.5
 **Performance Hardware Data Status :   Advanced Version 1.0
------------------------------------------
+-------------------------------------------
 
 
 =====================================================================
@@ -89,13 +89,19 @@ create_generated_clock,
 ...
 
 -------------------------------------------------------------------
-     Listing 2 Start or End Points      |           Type           
+     Listing 8 Start or End Points      |           Type           
 -------------------------------------------------------------------
-data_in                                 |                     input
-data_out                                |                    output
+SCLK_master                             |                     input
+MOSI_master                             |                     input
+SS_master                               |                     input
+MISO_slave                              |                     input
+MISO_master                             |                    output
+SCLK_slave                              |                    output
+MOSI_slave                              |                    output
+SS_slave                                |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                         2
+Number of I/O ports without constraint  |                         8
                                         |                          
 -------------------------------------------------------------------
 
