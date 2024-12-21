@@ -21,13 +21,13 @@ class HeadstageDriver:
         command = b"2"
         socket.sendall(command)
         # socket.sendall(p_id.to_bytes(1, 'big'))
-        time.sleep(1)
+        time.sleep(0.5)
         intanResponse = socket.recv(8)
         return intanResponse
 
     def configureNumberChannel(self, socket, num_channels):
         command = b"3"
-        time.sleep(1)
+        time.sleep(0.5)
         print(f"Setting number of channels to : {num_channels}")
         b_num_channels = num_channels.to_bytes(1, byteorder='big')
         socket.sendall(command + b_num_channels)
@@ -35,14 +35,13 @@ class HeadstageDriver:
 
     def configureSamplingFreq(self, socket, sample_freq):
         command = b"4"
-        time.sleep(1)
+        time.sleep(0.5)
         high_byte = (sample_freq >> 8) & 0xFF
         low_byte = sample_freq & 0xFF
         data = command + high_byte.to_bytes(1, 'big') + low_byte.to_bytes(1, 'big')
-        print(f"Sending command: {data}")
         socket.sendall(data)
-        response = socket.recv(1024).decode("utf-8")
-        print(f"Received response: {response}")
+        # response = socket.recv(1024).decode("utf-8")
+        # print(f"{response}")
 
     def configureIntanChip(self, socket):
         socket.sendall(b"5")
@@ -50,10 +49,9 @@ class HeadstageDriver:
             recv_message = socket.recv(1024)
             self.cutoff_menu = recv_message.decode("utf-8")
         except UnicodeDecodeError:
-            # Handle the decoding error here, for example:
             print("Error decoding received data")
             return
-        # print(self.cutoff_menu)
+        print(self.cutoff_menu)
 
         input1 = "4"
         choice_lowfreq = self.findCutoffChoice(input1, "high")
@@ -64,6 +62,7 @@ class HeadstageDriver:
         choice_highfreq = self.findCutoffChoice(input2, "low")
         print("High-pass selection:")
         print(choice_highfreq)
+        time.sleep(0.5)
         socket.sendall(b"" + bytes(input1, 'ascii') + bytes(input2, 'ascii'))
 
         # This version will call socket.recv as long as the buffer is not filled (was not necessary, seems to work with the 1ms sleep)

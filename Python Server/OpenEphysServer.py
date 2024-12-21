@@ -80,7 +80,7 @@ if __name__ == "__main__":
     TASK_WiFiServer.verifyIntanChip()
     TASK_WiFiServer.configureNumberChannel()
     TASK_WiFiServer.configureIntanChip()
-    # TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
+    TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
     # # Start other threads
     # if CSV_WRITING:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     #     TASK_OpenEphysSender.startThread()
     # TASK_DataConverter.startThread()
     # TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
-    #
+
     # # Continuous loop until "stop" is entered
     # user_input = input("\n Enter 'stop' to disable sampling: ")
     # if user_input.strip().lower() == "stop":

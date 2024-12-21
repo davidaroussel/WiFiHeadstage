@@ -15,11 +15,15 @@
 
 #define DEVICE_ID "Headstage V2      ID:0"
 
+static int intan_config_mode  = 0;
+
 extern struct tcp_pcb *tpcb;
 extern ip_addr_t server_addr;
 
 void wifi_menu_start(void const *arg);
 static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err);
+void intan_cutoff_menu(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err);
+
 
 void WIFI_MENU_INIT(void *arg) {
 
@@ -41,7 +45,6 @@ void wifi_menu_start(void const *arg) {
     }
 }
 
-
 // Function prototype
 static err_t send_response(struct tcp_pcb *pcb, const char *message, size_t length);
 
@@ -60,6 +63,32 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
         pbuf_free(p);
         return ERR_VAL;
     }
+
+    // Handle Intan configuration mode
+    if (intan_config_mode) {
+        if (p->len < 2) {
+            printf("Error: Expected 2 bytes for configuration choices, received %d byte(s)\r\n", p->len);
+        } else {
+            char high_pass = data[0];
+            char low_pass = data[1];
+
+            if (((high_pass >= '0' && high_pass <= '9') || (high_pass >= 'A' && high_pass <= 'M')) &&
+                ((low_pass >= '0' && low_pass <= '9') || (low_pass >= 'A' && low_pass <= 'H'))) {
+                printf("Configuration choices received:\r\n");
+                printf("High-pass filter: %c\r\n", high_pass);
+                printf("Low-pass filter: %c\r\n", low_pass);
+                printf("Applying configuration...\r\n");
+                // TODO: Apply the configuration
+            } else {
+                printf("Invalid configuration choices received: High-pass=%c, Low-pass=%c\r\n", high_pass, low_pass);
+            }
+        }
+
+        intan_config_mode = 0;  // Exit Intan configuration mode
+        pbuf_free(p);
+        return ERR_OK;
+    }
+
     else {
     	//    	data[p->len] = '\0';  // Ensure the received data is null-terminated
 
@@ -67,9 +96,8 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
         osDelay(10);
 
         printf("Received data (length: %d): ", p->len);
-        for (int i = 0; i < p->len; i++) {
-            printf("%c", data[i]);  // Print character by character
-        }
+		printf("%c", data[0]);  // Print character by character
+
         printf("\r\n");
     }
 
@@ -154,20 +182,10 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
             				              "L- 0.3 Hz\r\n"
             				              "M- 0.25 Hz\r\n";
             send_response(pcb, config, strlen(config));  // Intan Config
-            // Wait for the second message
-			printf("Waiting for configuration choices...\r\n");
-			// Logic to receive and process the second message from the client
-			// Example:
-			char user_input[2]; // Assumes 2 characters: low-pass and high-pass
-			int received = recv(pcb, user_input, sizeof(user_input), 0); // Adjust as needed
-			if (received == 2) {
-				printf("Received choices: Low-pass=%c, High-pass=%c\r\n", user_input[0], user_input[1]);
-				// Process the received choices...
-			} else {
-				printf("Error: Expected 2 bytes for configuration choices\r\n");
-			}
-			break;
 
+			printf("Waiting for configuration choices...\r\n");
+			intan_config_mode = 1;  // Enter Intan configuration mode
+			break;
         case 'A':
             printf("Executing Start Intan Sampling task\r\n");
             break;
