@@ -24,7 +24,7 @@ if __name__ == "__main__":
     HOST_ADDR      = ""
     HEADSTAGE_PORT = 5000
     OPENEPHYS_PORT = 10001
-
+#alllllo
     #HEADSTAGE CONFIGS
     # 8 CHANNELS CONFIGURATION
     CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
