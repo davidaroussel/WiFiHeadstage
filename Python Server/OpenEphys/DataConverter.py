@@ -90,29 +90,29 @@ class DataConverter:
                             # print("OUT OF SYNC !!", "dataCounter", dataNumber)
                             # print("NOW ON", dataNumber, "with", channelNumber)
 
-
-                    if channelNumber == None:
-                        converted_array_Ephys[channelNumber][dataNumber] = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter]*10/1000) * value_per_uV) # now in mV
-                        # sin_counter += 1
-                        # converted_array_Ephys[channelNumber][dataNumber] = (OpenEphysOffset+ (OpenEphysOffset/2))
+                    if channelNumber is None:
+                        converted_value = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter] * 10 / 1000) * value_per_uV)
+                        converted_value = np.clip(converted_value, -32768, 32767)  # Ensure within int16 range
+                        converted_array_Ephys[channelNumber][dataNumber] = converted_value
                     else:
-                        mV_value = OpenEphysOffset + (converted_data * converting_value)  # now in mV
+                        mV_value = OpenEphysOffset + (converted_data * converting_value)
+                        mV_value = np.clip(mV_value, -32768, 32767)  # Ensure within int16 range
                         if dataNumber < self.buffer_size:
-                            converted_array_Ephys[channelNumber][dataNumber] = mV_value #now in mV
-                            converted_array_mV[channelNumber][dataNumber] = converted_data  # raw data
+                            converted_array_Ephys[channelNumber][dataNumber] = mV_value
+                            converted_array_mV[channelNumber][dataNumber] = converted_data
                         else:
-                            print("Appending list, it actually happenned")
-                            converted_array_Ephys[channelNumber].append(mV_value) #now in mV
-                            converted_array_mV[channelNumber].append(converted_data)   # raw dat
-                    dataCounter = dataCounter + 1
+                            print("Appending list, it actually happened")
+                            converted_array_Ephys[channelNumber].append(mV_value)
+                            converted_array_mV[channelNumber].append(converted_data)
 
-                    if dataCounter > 0:
-                        if (dataCounter % (self.buffer_size*self.num_channels)) == 0:
-                            np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
-                            self.queue_ephys_data.put(np_conv)
-                            self.queue_csv_data.put(converted_array_mV)
-                            sin_counter = 0
-                            dataCounter = 0
+                    dataCounter += 1
+
+                    if dataCounter > 0 and (dataCounter % (self.buffer_size * self.num_channels)) == 0:
+                        np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
+                        self.queue_ephys_data.put(np_conv)
+                        self.queue_csv_data.put(converted_array_mV)
+                        sin_counter = 0
+                        dataCounter = 0
 
 
             # CSV_HEADER = ["RAW DATA", "CONV DATA"]
