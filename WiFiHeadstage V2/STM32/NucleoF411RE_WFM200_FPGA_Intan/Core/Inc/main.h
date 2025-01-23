@@ -61,8 +61,8 @@ extern "C" {
 //#define SPI_TASK_SCOPE_Port GPIOC
 //#define SPI_TASK_SCOPE_Pin GPIO_PIN_6
 //
-//#define FULL_TASK_SCOPE_Port GPIOC
-//#define FULL_TASK_SCOPE_Pin GPIO_PIN_5
+#define MUX_TOGGLE_Port GPIOA
+#define MUX_TOGGLE_Pin GPIO_PIN_13
 
 
 //INTAN RHD SPI PIN (SPI 4)
@@ -81,23 +81,17 @@ extern "C" {
 
 //INTAN RHS SPI PIN (SPI3)
 //TODO MUST BE INIT
-//#define RHS_SPI_MOSI_1_Port GPIOB
-//#define RHS_SPI_MOSI_1_Pin GPIO_PIN_5
-//
-//#define RHS_SPI_MISO_1_Port GPIOB
-//#define RHS_SPI_MISO_1_Pin GPIO_PIN_4
-//
-//#define RHS_SPI_MOSI_2_Port GPIOC
-//#define RHS_SPI_MOSI_2_Pin GPIO_PIN_12
-//
-//#define RHS_SPI_MISO_2_Port GPIOC
-//#define RHS_SPI_MISO_2_Pin GPIO_PIN_11
-//
-//#define RHS_SPI_CLK_Port GPIOC
-//#define RHS_SPI_CLK_Pin GPIO_PIN_10
-//
-//#define RHS_SPI_CS_Port GPIOC
-//#define RHS_SPI_CS_Pin GPIO_PIN_1
+#define RHS_SPI_MOSI_Port GPIOC
+#define RHS_SPI_MOSI_Pin GPIO_PIN_12
+
+#define RHS_SPI_MISO_Port GPIOC
+#define RHS_SPI_MISO_Pin GPIO_PIN_11
+
+#define RHS_SPI_CLK_Port GPIOC
+#define RHS_SPI_CLK_Pin GPIO_PIN_10
+
+#define RHS_SPI_CS_Port GPIOD
+#define RHS_SPI_CS_Pin GPIO_PIN_2
 
 
 

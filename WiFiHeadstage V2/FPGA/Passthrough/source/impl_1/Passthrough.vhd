@@ -15,7 +15,10 @@ entity Controller_RHD64_Config is
         SCLK_slave  : out STD_LOGIC;
         MOSI_slave  : out STD_LOGIC;
         MISO_slave  : in  STD_LOGIC;
-        SS_slave    : out STD_LOGIC
+        SS_slave    : out STD_LOGIC;
+		
+		LED_CTL : in STD_LOGIC;
+		LED_OUT : out STD_LOGIC
     );
 end Controller_RHD64_Config;
 
@@ -27,5 +30,7 @@ begin
     MOSI_slave  <= MOSI_master;
     MISO_master <= MISO_slave;
     SS_slave    <= SS_master;
+	
+	LED_OUT <= LED_CTL;
 
 end Behavioral;

@@ -15,20 +15,13 @@ Package Status:                     Preliminary    Version 1.5.
 
 
 
-WARNING <1026001> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc (1) : No port matched &apos;data_in&apos;.
-WARNING <1026001> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc (2) : No port matched &apos;data_out&apos;.
-WARNING <1027013> - No port matched 'data_in'.
-WARNING <1014301> - Can't resolve object 'data_in' in constraint 'ldc_set_location -site {23} [get_ports data_in]'.
-WARNING <1027013> - No port matched 'data_out'.
-WARNING <1014301> - Can't resolve object 'data_out' in constraint 'ldc_set_location -site {40} [get_ports data_out]'.
-WARNING <1011001> - Remove invalid constraint 'ldc_set_location -site {23} [get_ports data_in]'.
-WARNING <1011001> - Remove invalid constraint 'ldc_set_location -site {40} [get_ports data_out]'.
 Design:  Controller_RHD64_Config
 Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:  High-Performance_1.2V
 
+INFO <52291017> - Port 'LED_OUT' is located on BB_OD pad '40'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
 Running general design DRC...
 
 
@@ -40,15 +33,15 @@ Design Summary:
    Number of LUT4s:             0 out of  5280 (0%)
       Number of logic LUT4s:               0
       Number of ripple logic:              0 (0 LUT4s)
-   Number of IO sites used:   8 out of 39 (21%)
-      Number of IO sites used for general PIO: 8
+   Number of IO sites used:   10 out of 39 (26%)
+      Number of IO sites used for general PIO: 9
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 8 out of 36 (22%)
-      Number of IO sites used for OD+RGB IO buffers: 0 out of 3 (0%)
+      Number of IO sites used for PIO+I3C: 9 out of 36 (25%)
+      Number of IO sites used for OD+RGB IO buffers: 1 out of 3 (33%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 8 out of 39 (21%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 10 out of 39 (26%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  0 out of 1 (0%)
@@ -65,6 +58,7 @@ Design Summary:
    Number of Clock Enables:  0
    Number of LSRs:  0
    Top 10 highest fanout non-clock nets:
+      Net LED_OUT_c_c: 1 loads
       Net MISO_master_c_c: 1 loads
       Net MOSI_slave_c_c: 1 loads
       Net SCLK_slave_c_c: 1 loads
@@ -74,28 +68,25 @@ Running physical design DRC...
  
 
 
-   Number of warnings:  8
+   Number of warnings:  0
    Number of errors:    0
 
 Constraint Summary:
    Total number of constraints: 10
-   Total number of constraints dropped: 2
-   Dropped constraints are:
-     ldc_set_location -site {23} [get_ports data_in]
-     ldc_set_location -site {40} [get_ports data_out]
+   Total number of constraints dropped: 0
 
 
 Total CPU Time: 0 secs  
 Total REAL Time: 0 secs  
-Peak Memory Usage: 63 MB
+Peak Memory Usage: 62 MB
 
-Checksum -- map: 75f34e3ee034e4062f8143c9ad57025299dc44f7
+Checksum -- map: 3d3e9cc738e5a317fb67597a873f6c9e95120cf5
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
 
 pnmainc -run pnmain "Passthrough_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "Passthrough_impl_1_map.udb"
-Sat Dec 21 12:25:13 2024
+Sat Dec 21 15:44:08 2024
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -117,13 +108,13 @@ Performance Grade:   High-Performance_1.2V
 Device SLICE utilization summary after final SLICE packing:
    SLICE              0/2640          0% used
 
-Number of Signals: 4
-Number of Connections: 4
+Number of Signals: 5
+Number of Connections: 5
 Device utilization summary:
 
    SLICE              0/2640          0% used
-   PIO                8/56           14% used
-                      8/36           22% bonded
+   PIO                9/56           16% used
+                      9/36           25% bonded
    IOLOGIC            0/56            0% used
    DSP                0/8             0% used
    I2C                0/2             0% used
@@ -139,22 +130,22 @@ Device utilization summary:
    PLL                0/1             0% used
    RGBOUTBUF          0/3             0% used
    I3C                0/2             0% used
-   OPENDRAIN          0/3             0% used
+   OPENDRAIN          1/3            33% used
 
 Pin Constraint Summary:
-   8 out of 8 pins locked (100% locked).
+   9 out of 9 pins locked (100% locked).
 Starting Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
 ...
 Finished Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
 
 Starting Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs 
 
-Placer score = 6672.
+Placer score = 7344.
 Finished Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs 
 
 Starting Placer Phase 2.
 .
-Placer score =  6672
+Placer score =  7344
 Finished Placer Phase 2.  CPU time: 0 secs , REAL time: 0 secs 
 
 
@@ -168,16 +159,16 @@ Global Clocks :
 
 
 I/O Usage Summary (final):
-   8 out of 56 (14.3%) I/O sites used.
-   8 out of 36 (22.2%) bonded I/O sites used.
-   Number of I/O components: 8; differential: 0
+   9 out of 56 (16.1%) I/O sites used.
+   9 out of 36 (25.0%) bonded I/O sites used.
+   Number of I/O components: 9; differential: 0
    Number of Vref pins used: 0
 
 I/O Bank Usage Summary:
 +----------+---------------+------------+------------+------------+
 | I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+---------------+------------+------------+------------+
-| 0        | 4 / 14 ( 28%) | 3.3V       |            |            |
+| 0        | 5 / 14 ( 35%) | 3.3V       |            |            |
 | 1        | 4 / 14 ( 28%) | 3.3V       |            |            |
 | 2        | 0 / 8 (  0%)  | OFF        |            |            |
 +----------+---------------+------------+------------+------------+
@@ -185,7 +176,7 @@ I/O Bank Usage Summary:
 Total Placer CPU time: 0 secs , REAL time: 0 secs 
 
 
-Checksum -- place: b6e8c8e8e929f30ac83a7980dad9869210ec418d
+Checksum -- place: 1dd20f0642d90b0bdd60754a2e8ef51ab4ebad82
 Writing design to file Passthrough_impl_1_par.dir/5_1.udb ...
 
 
@@ -194,7 +185,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 12:25:13 12/21/24
+Start NBR router at 15:44:08 12/21/24
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -212,11 +203,11 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-0 connections routed (of 4 total) (0.00%)
+0 connections routed (of 5 total) (0.00%)
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 12:25:13 12/21/24
+Start NBR section for initial routing at 15:44:08 12/21/24
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
@@ -226,20 +217,20 @@ Routing in Serial Mode ......
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 12:25:13 12/21/24
+Start NBR section for normal routing at 15:44:08 12/21/24
 Level 4, iteration 1
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 12:25:13 12/21/24
+Start NBR section for post-routing at 15:44:08 12/21/24
 
 End NBR router with 0 unrouted connection
 
-Checksum -- route: 19ef63ae767626971c28499e2d8fd7ce981a7fb8
+Checksum -- route: 2967db3568587f5b59d64f2785b89bd51f38ca
 
 Total CPU time 0 secs 
 Total REAL time: 0 secs 
 Completely routed.
-End of route.  4 routed (100.00%); 0 unrouted.
+End of route.  5 routed (100.00%); 0 unrouted.
 
 Writing design to file Passthrough_impl_1_par.dir/5_1.udb ...
 
@@ -256,7 +247,7 @@ Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 0 secs 
 Total REAL Time: 0 secs 
-Peak Memory Usage: 74.83 MB
+Peak Memory Usage: 74.99 MB
 
 
 par done!
@@ -291,7 +282,7 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  0  counted  8  covered  0
+Connections ignored  0  counted  10  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
@@ -299,7 +290,7 @@ Total CPU Time: 0 secs
 Total REAL Time: 0 secs 
 Peak Memory Usage: 98 MB
 
- 0.551141s wall, 0.203125s user + 0.046875s system = 0.250000s CPU (45.4%)
+ 0.544343s wall, 0.171875s user + 0.046875s system = 0.218750s CPU (40.2%)
 
 
 tmcheck -par "Passthrough_impl_1.par" 
@@ -353,7 +344,7 @@ Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs
 ibisgen "Passthrough_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Sat Dec 21 12:25:17 2024
+Sat Dec 21 15:44:12 2024
 
 Loading Passthrough_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.

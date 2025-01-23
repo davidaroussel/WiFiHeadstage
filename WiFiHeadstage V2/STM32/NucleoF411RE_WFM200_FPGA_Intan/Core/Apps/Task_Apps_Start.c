@@ -37,7 +37,7 @@ uint16_t UDP_FREQUENCY = 16/2;
 void start_app_task(void)
 {
 //	INIT_UPD();
-	INIT_TCP();
+//	INIT_TCP();
 
 //	osTimerDef(periodicTimer, PTCallback);
 //	periodicTimerHandle = osTimerCreate(osTimer(periodicTimer), osTimerPeriodic, NULL);
@@ -48,9 +48,9 @@ void start_app_task(void)
   	}
 
   	//osTimerStart(periodicTimerHandle, UDP_FREQUENCY);
-  	while (!TCP_Connected){
-  		HAL_Delay(10);
-  	}
+//  	while (!TCP_Connected){
+//  		HAL_Delay(10);
+//  	}
   	printf("Init RHD \r\n");
 //  	WIFI_MENU_INIT();
 //  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);

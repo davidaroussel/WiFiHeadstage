@@ -318,7 +318,7 @@ def plot_best_spike_with_surrounding_individual(data, num_channels, fs, director
 
 if __name__ == '__main__':
     src_directory = r'../../analysis_results/'
-    base_directory = r'C:\Users\david\OneDrive\Ph.D G. ELECTRIQUE\Wi-Fi Headstage\SCOPE\2024-04-25\GOOD\New folder'
+    base_directory = r'C:\Users\david\Documents\Open Ephys\New folder'
     # Get current date and time with second precision
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # Define the save directory with the current date and time
@@ -333,23 +333,34 @@ if __name__ == '__main__':
     for experiment_directory in experiment_directories:
         directory_name = os.path.basename(experiment_directory)
         print(f"\nProcessing Experiment Directory: {directory_name}")
+
         session = Session(experiment_directory)
         recordnode = session.recordnodes[0]
         recording = recordnode.recordings[0]
         continuous = recording.continuous[0]
-        start_sample_index = 0
+
         # Get the length of the continuous data
         num_samples_continuous = continuous.samples.shape[0]
-        print(f"{num_samples_continuous} of samples")
+        sample_rate = continuous.metadata['sample_rate']
+        recording_duration_seconds = num_samples_continuous / sample_rate
+        start_sample_index = 0
 
-        # data = continuous.get_samples(10000, 30000)
-        data = continuous.get_samples(start_sample_index, num_samples_continuous)
+        print(f"{num_samples_continuous} samples recorded at {sample_rate} Hz.")
+        print(f"Recording duration: {recording_duration_seconds:.2f} seconds")
+
+        # Store the recording duration in the experiment_data dictionary
+        experiment_data[directory_name] = {
+            "num_samples": num_samples_continuous,
+            "sample_rate": sample_rate,
+            "duration_seconds": recording_duration_seconds,
+        }
+
+        data = continuous.get_samples(2000000, num_samples_continuous)
         num_samples, num_channels = data.shape
-        fs = continuous.metadata['sample_rate']
-        print(fs)
+        print(f"Numbers of channels: {num_channels}")
         # plot_spikes_one_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_all_spikes_separate_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
-        # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
+        plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
 
-        plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False)
+        # plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False)
