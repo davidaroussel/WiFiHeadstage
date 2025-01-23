@@ -92,11 +92,11 @@ class DataConverter:
 
                     if channelNumber is None:
                         converted_value = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter] * 10 / 1000) * value_per_uV)
-                        converted_value = np.clip(converted_value, -32768, 32767)  # Ensure within int16 range
+                        converted_value = np.clip(converted_value, 0, 65535)  # Ensure within int16 range
                         converted_array_Ephys[channelNumber][dataNumber] = converted_value
                     else:
                         mV_value = OpenEphysOffset + (converted_data * converting_value)
-                        mV_value = np.clip(mV_value, -32768, 32767)  # Ensure within int16 range
+                        mV_value = np.clip(mV_value, 0, 65535)  # Ensure within int16 range
                         if dataNumber < self.buffer_size:
                             converted_array_Ephys[channelNumber][dataNumber] = mV_value
                             converted_array_mV[channelNumber][dataNumber] = converted_data
