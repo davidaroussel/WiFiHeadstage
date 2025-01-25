@@ -83,17 +83,17 @@ if __name__ == "__main__":
     TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
 
     # # Start other threads
-    # if CSV_WRITING:
-    #     TASK_CSVWriter.startThread()
-    # if OPENEPHYS_SENDING:
-    #     TASK_OpenEphysSender.startThread()
-    # TASK_DataConverter.startThread()
-    # TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
+    if CSV_WRITING:
+        TASK_CSVWriter.startThread()
+    if OPENEPHYS_SENDING:
+        TASK_OpenEphysSender.startThread()
+    TASK_DataConverter.startThread()
+    TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
     # # Continuous loop until "stop" is entered
-    # user_input = input("\n Enter 'stop' to disable sampling: ")
-    # if user_input.strip().lower() == "stop":
-    #     TASK_WiFiServer.stopDataFromIntan()
-    #     print("Closed Intan")
-    #     print("Closed everything")
-    #     sys.exit(-1)
+    user_input = input("\n Enter 'stop' to disable sampling: ")
+    if user_input.strip().lower() == "stop":
+        TASK_WiFiServer.stopDataFromIntan()
+        print("Closed Intan")
+        print("Closed everything")
+        sys.exit(-1)
