@@ -2,8 +2,8 @@
 // Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
 
 // backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml Passthrough_impl_1.udb 
-// Netlist created on Sat Dec 21 12:25:13 2024
-// Netlist written on Sat Dec 21 12:25:18 2024
+// Netlist created on Sat Dec 21 15:44:08 2024
+// Netlist written on Sat Dec 21 15:44:12 2024
 // Design is for device iCE40UP5K
 // Design is for package SG48
 // Design is for performance grade High-Performance_1.2V
@@ -12,10 +12,11 @@
 
 module Controller_RHD64_Config ( MISO_master, SCLK_slave, MOSI_slave, SS_slave, 
                                  SCLK_master, MOSI_master, SS_master, 
-                                 MISO_slave );
-  input  SCLK_master, MOSI_master, SS_master, MISO_slave;
-  output MISO_master, SCLK_slave, MOSI_slave, SS_slave;
-  wire   MISO_master_c_c, SCLK_slave_c_c, MOSI_slave_c_c, SS_slave_c_c;
+                                 MISO_slave, LED_CTL, LED_OUT );
+  input  SCLK_master, MOSI_master, SS_master, MISO_slave, LED_CTL;
+  output MISO_master, SCLK_slave, MOSI_slave, SS_slave, LED_OUT;
+  wire   MISO_master_c_c, SCLK_slave_c_c, MOSI_slave_c_c, SS_slave_c_c, 
+         LED_OUT_c_c;
 
   MISO_master MISO_master_I( .PADDO(MISO_master_c_c), 
     .MISO_master(MISO_master));
@@ -26,6 +27,8 @@ module Controller_RHD64_Config ( MISO_master, SCLK_slave, MOSI_slave, SS_slave,
   MOSI_master MOSI_master_I( .PADDI(MOSI_slave_c_c), .MOSI_master(MOSI_master));
   SS_master SS_master_I( .PADDI(SS_slave_c_c), .SS_master(SS_master));
   MISO_slave MISO_slave_I( .PADDI(MISO_master_c_c), .MISO_slave(MISO_slave));
+  LED_CTL LED_CTL_I( .PADDI(LED_OUT_c_c), .LED_CTL(LED_CTL));
+  LED_OUT LED_OUT_I( .PADDO(LED_OUT_c_c), .LED_OUT(LED_OUT));
 endmodule
 
 module MISO_master ( input PADDO, output MISO_master );
@@ -142,4 +145,33 @@ module MISO_slave ( output PADDI, input MISO_slave );
     (MISO_slave => PADDI) = (0:0:0,0:0:0);
   endspecify
 
+endmodule
+
+module LED_CTL ( output PADDI, input LED_CTL );
+  wire   GNDI;
+
+  BB_B_B \LED_OUT_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), .B(LED_CTL));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (LED_CTL => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module LED_OUT ( input PADDO, output LED_OUT );
+  wire   VCCI;
+
+  BB_OD_B \LED_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(LED_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => LED_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module BB_OD_B ( input T_N, I, output O, inout B );
+
+  BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
 endmodule

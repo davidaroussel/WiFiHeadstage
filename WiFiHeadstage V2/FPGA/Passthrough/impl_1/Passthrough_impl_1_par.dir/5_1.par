@@ -1,6 +1,6 @@
 
 Lattice Place and Route Report for Design "Passthrough_impl_1_map.udb"
-Sat Dec 21 12:25:13 2024
+Sat Dec 21 15:44:08 2024
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -22,13 +22,13 @@ Performance Grade:   High-Performance_1.2V
 Device SLICE utilization summary after final SLICE packing:
    SLICE              0/2640          0% used
 
-Number of Signals: 4
-Number of Connections: 4
+Number of Signals: 5
+Number of Connections: 5
 Device utilization summary:
 
    SLICE              0/2640          0% used
-   PIO                8/56           14% used
-                      8/36           22% bonded
+   PIO                9/56           16% used
+                      9/36           25% bonded
    IOLOGIC            0/56            0% used
    DSP                0/8             0% used
    I2C                0/2             0% used
@@ -44,22 +44,22 @@ Device utilization summary:
    PLL                0/1             0% used
    RGBOUTBUF          0/3             0% used
    I3C                0/2             0% used
-   OPENDRAIN          0/3             0% used
+   OPENDRAIN          1/3            33% used
 
 Pin Constraint Summary:
-   8 out of 8 pins locked (100% locked).
+   9 out of 9 pins locked (100% locked).
 Starting Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
 ...
 Finished Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
 
 Starting Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs 
 
-Placer score = 6672.
+Placer score = 7344.
 Finished Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs 
 
 Starting Placer Phase 2.
 .
-Placer score =  6672
+Placer score =  7344
 Finished Placer Phase 2.  CPU time: 0 secs , REAL time: 0 secs 
 
 
@@ -73,16 +73,16 @@ Global Clocks :
 
 
 I/O Usage Summary (final):
-   8 out of 56 (14.3%) I/O sites used.
-   8 out of 36 (22.2%) bonded I/O sites used.
-   Number of I/O components: 8; differential: 0
+   9 out of 56 (16.1%) I/O sites used.
+   9 out of 36 (25.0%) bonded I/O sites used.
+   Number of I/O components: 9; differential: 0
    Number of Vref pins used: 0
 
 I/O Bank Usage Summary:
 +----------+---------------+------------+------------+------------+
 | I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+---------------+------------+------------+------------+
-| 0        | 4 / 14 ( 28%) | 3.3V       |            |            |
+| 0        | 5 / 14 ( 35%) | 3.3V       |            |            |
 | 1        | 4 / 14 ( 28%) | 3.3V       |            |            |
 | 2        | 0 / 8 (  0%)  | OFF        |            |            |
 +----------+---------------+------------+------------+------------+
@@ -90,7 +90,7 @@ I/O Bank Usage Summary:
 Total Placer CPU time: 0 secs , REAL time: 0 secs 
 
 
-Checksum -- place: b6e8c8e8e929f30ac83a7980dad9869210ec418d
+Checksum -- place: 1dd20f0642d90b0bdd60754a2e8ef51ab4ebad82
 Writing design to file Passthrough_impl_1_par.dir/5_1.udb ...
 
 
@@ -99,7 +99,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 12:25:13 12/21/24
+Start NBR router at 15:44:08 12/21/24
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -117,11 +117,11 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-0 connections routed (of 4 total) (0.00%)
+0 connections routed (of 5 total) (0.00%)
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 12:25:13 12/21/24
+Start NBR section for initial routing at 15:44:08 12/21/24
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
@@ -131,20 +131,20 @@ Routing in Serial Mode ......
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 12:25:13 12/21/24
+Start NBR section for normal routing at 15:44:08 12/21/24
 Level 4, iteration 1
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 12:25:13 12/21/24
+Start NBR section for post-routing at 15:44:08 12/21/24
 
 End NBR router with 0 unrouted connection
 
-Checksum -- route: 19ef63ae767626971c28499e2d8fd7ce981a7fb8
+Checksum -- route: 2967db3568587f5b59d64f2785b89bd51f38ca
 
 Total CPU time 0 secs 
 Total REAL time: 0 secs 
 Completely routed.
-End of route.  4 routed (100.00%); 0 unrouted.
+End of route.  5 routed (100.00%); 0 unrouted.
 
 Writing design to file Passthrough_impl_1_par.dir/5_1.udb ...
 
@@ -164,7 +164,7 @@ Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 0 secs 
 Total REAL Time: 0 secs 
-Peak Memory Usage: 74.83 MB
+Peak Memory Usage: 74.99 MB
 
 
 par done!

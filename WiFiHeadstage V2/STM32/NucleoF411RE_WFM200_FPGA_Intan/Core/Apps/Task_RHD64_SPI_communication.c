@@ -20,6 +20,8 @@ SemaphoreHandle_t spi_data_ready;
 
 #define udp_mode_only
 extern SPI_HandleTypeDef hspi4;
+extern SPI_HandleTypeDef hspi3;
+
 
 extern bool spi_flag;
 
@@ -52,12 +54,14 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b11011110;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	printf("Char Receving Data:        %c \r\n", &rx_vector);
 
 	// Register 1 - Supply sensor & ADC buffer bias current
 	reg_address = 0b10000001;
 	reg_value = 0b00100000; //(ADC BUFFER BIAS AT 32)
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	printf("Char Receving Data:        %c \r\n", &rx_vector);
 
 	// Register 2 - MUX bias current
 	reg_address = 0b10000010;

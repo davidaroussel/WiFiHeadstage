@@ -20,7 +20,7 @@ class HeadstageDriver:
     def verifyIntanChip(self, socket, p_id):
         command = b"2"
         socket.sendall(command)
-        # socket.sendall(p_id.to_bytes(1, 'big'))
+        socket.sendall(p_id.to_bytes(1, 'big'))
         time.sleep(0.5)
         intanResponse = socket.recv(8)
         return intanResponse
@@ -54,12 +54,12 @@ class HeadstageDriver:
         print(self.cutoff_menu)
 
         input1 = "4"
-        choice_lowfreq = self.findCutoffChoice(input1, "high")
+        choice_lowfreq = self.findCutoffChoice(input1, "low")
         print("Low-pass selection:")
         print(choice_lowfreq)
 
         input2 = "0"
-        choice_highfreq = self.findCutoffChoice(input2, "low")
+        choice_highfreq = self.findCutoffChoice(input2, "high")
         print("High-pass selection:")
         print(choice_highfreq)
         time.sleep(0.5)

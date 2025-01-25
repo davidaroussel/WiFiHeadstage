@@ -38,6 +38,11 @@
 
 UART_HandleTypeDef huart2;
 
+SPI_HandleTypeDef hspi3;
+DMA_HandleTypeDef hdma_spi3_rx;
+DMA_HandleTypeDef hdma_spi3_tx;
+
+
 SPI_HandleTypeDef hspi4;
 DMA_HandleTypeDef hdma_spi4_rx;
 DMA_HandleTypeDef hdma_spi4_tx;
@@ -62,6 +67,7 @@ static void MX_DMA_Init(void);
 static void MX_USART2_UART_Init(void);
 //static void MX_SPI1_Init(void);
 static void MX_SPI4_Init(void);
+static void MX_SPI3_Init(void);
 
 
 #ifdef spi_mode_only
@@ -86,6 +92,7 @@ int main(void)
   //MX_SPI1_Init(); THIS WILL BE HANDLE BY THE SL_WFX_DRIVER --> SL_WFX_INIT()
 
   //THIS INIT TAKES CARE OF MOSI,MISO AND CLK GPIO
+  MX_SPI3_Init();
   MX_SPI4_Init();
   /* Clear the console and buffer */
   printf("\033\143");
@@ -238,6 +245,32 @@ static void MX_SPI4_Init(void)
 }
 
 /**
+  * @brief SPI4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI3_Init(void)
+{
+
+  /* SPI4 parameter configuration*/
+  hspi3.Instance = SPI3;
+  hspi3.Init.Mode = SPI_MODE_MASTER;
+  hspi3.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi3.Init.DataSize = SPI_DATASIZE_16BIT;
+  hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi3.Init.NSS = SPI_NSS_SOFT;
+  hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi3.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi3) != HAL_OK)
+  {
+	Error_Handler();
+  }
+}
+
+/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -333,14 +366,14 @@ static void MX_GPIO_Init(void)
 
 
  //EXTRA PINOUTS HERE
-
-
   /*Configure GPIO pin: RHD_CS */
-//  GPIO_InitStruct.Pin = UDP_TASK_SCOPE_Pin;
-//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//  GPIO_InitStruct.Pull = GPIO_NOPULL;
-//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-//  HAL_GPIO_Init(UDP_TASK_SCOPE_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin = MUX_TOGGLE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(MUX_TOGGLE_Port, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(MUX_TOGGLE_Port, MUX_TOGGLE_Pin, GPIO_PIN_RESET);
+  printf("RESET PIN\r\n");
 //
 //  /*Configure GPIO pin: RHD_CS */
 //  GPIO_InitStruct.Pin = SPI_TASK_SCOPE_Pin;
