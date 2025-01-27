@@ -20,6 +20,11 @@ spi.open(1, 0)  # SPI bus 1, device 0
 spi.max_speed_hz = 1000000  # 1 MHz
 spi.mode = 0b01  # SPI mode 1
 
+command = 232
+top = command >> 8
+bottom = command & 0xff
+print(top, bottom)
+
 def read_write_to_intan_chip(command, chip_id):
     """
     Sends a command to the Intan chip and reads the response.

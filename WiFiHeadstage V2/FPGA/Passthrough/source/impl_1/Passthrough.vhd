@@ -5,13 +5,13 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Controller_RHD64_Config is
     Port (
-        -- SPI Master Interface
+        -- SPI Master Interface FROM STM32
         SCLK_master : in  STD_LOGIC;
         MOSI_master : in  STD_LOGIC;
         MISO_master : out STD_LOGIC;
         SS_master   : in  STD_LOGIC;
 
-        -- SPI Slave Interface
+        -- SPI Slave Interface TO RHD BOARD
         SCLK_slave  : out STD_LOGIC;
         MOSI_slave  : out STD_LOGIC;
         MISO_slave  : in  STD_LOGIC;

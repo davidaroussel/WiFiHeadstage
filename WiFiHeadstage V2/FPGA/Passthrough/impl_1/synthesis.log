@@ -1,15 +1,3 @@
-synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
-
-Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
-Copyright (c) 1995 AT&T Corp.   All rights reserved.
-Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
-Copyright (c) 2001 Agere Systems   All rights reserved.
-Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Dec 21 15:42:14 2024
-
-
-Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml 
-
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -65,7 +53,7 @@ Remove Duplicate Registers = TRUE
 Output HDL file name = Passthrough_impl_1.vm.
 ROM style = auto
 RAM style = auto
-The -comp option is FALSE.
+The -comp option is TRUE.
 The -syn option is FALSE.
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough (searchpath added)
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1 (searchpath added)
@@ -136,85 +124,5 @@ INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
 Top module language type = VHDL.
 Top module name (VHDL, mixed language): Controller_RHD64_Config
-                                                         
+LSE: Compile Design done
 
-
-### Number of Logic Cells: 5280
-
-
-### Number of RAM Blocks: 30
-
-
-### Number of DSP Blocks: 8
-
-
-### Number of PLLs: 1
-
-
-### Number of IO Pins: 56
-
-
-##########################################################
-
-
-                                                         
-
-
-CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_OUT 's net has no driver and is unused.
-
-
-
-CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_OUT 's net has no driver and is unused.
-
-################### Begin Area Report (Controller_RHD64_Config)######################
-Number of register bits => 0 of 5280 (0 % )
-IB => 5
-OB => 5
-################### End Area Report ##################
-Number of odd-length carry chains : 0
-Number of even-length carry chains : 0
-
-################### Begin Clock Report ######################
-Clock Nets
-Number of Clocks: 0
-Clock Enable Nets
-Number of Clock Enables: 0
-Highest fanout non-clock nets
-Top 10 highest fanout non-clock nets:
-  Net : SCLK_slave_c_c, loads : 1
-  Net : MOSI_slave_c_c, loads : 1
-  Net : MISO_master_c_c, loads : 1
-  Net : SS_slave_c_c, loads : 1
-  Net : LED_OUT_c_c, loads : 1
-  Net : MISO_master, loads : 0
-  Net : SCLK_slave, loads : 0
-  Net : MOSI_slave, loads : 0
-  Net : SS_slave, loads : 0
-  Net : LED_OUT, loads : 0
-################### End Clock Report ##################
-
-Peak Memory Usage: 85 MB
-
---------------------------------------------------------------
-Total CPU Time: 1 secs 
-Total REAL Time: 5 secs 
---------------------------------------------------------------
-Checksum -- synthesis -- netlist: ccdd3b42a99d5d9bce9ff2cd2976e4182c72f593
