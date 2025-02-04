@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
-Mapped on: Sat Dec 21 15:44:05 2024
+Mapped on: Mon Jan 27 14:28:44 2025
 
 Design Information
 ------------------
@@ -89,37 +89,37 @@ IO (PIO) Attributes
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MISO_master         | OUTPUT    |           |       |       |           |
+| MISO_master         | OUTPUT    | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SCLK_slave          | OUTPUT    |           |       |       |           |
+| MOSI_slave          | OUTPUT    | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MOSI_slave          | OUTPUT    |           |       |       |           |
+| SCLK_slave          | OUTPUT    | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SS_slave            | OUTPUT    |           |       |       |           |
+| SS_slave            | OUTPUT    | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SCLK_master         | INPUT     |           |       |       |           |
+| MOSI_master         | INPUT     | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MOSI_master         | INPUT     |           |       |       |           |
+| SCLK_master         | INPUT     | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SS_master           | INPUT     |           |       |       |           |
+| SS_master           | INPUT     | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MISO_slave          | INPUT     |           |       |       |           |
+| MISO_slave          | INPUT     | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| LED_CTL             | INPUT     |           |       |       |           |
+| LED_CTL             | INPUT     | LVCMOS18  |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| LED_OUT             | OUTPUT    |           |       |       | OD        |
+| LED_OUT             | OUTPUT    | LVCMOS18  |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
 
 Removed logic
 -------------
 
-Block SCLK_slave_c_pad.vlo_inst was optimized away.
+Block MOSI_slave_c_pad.vlo_inst was optimized away.
 Block MISO_master_pad.vhi_inst was optimized away.
 
 Constraint Summary
 ------------------
 
-   Total number of constraints: 10
+   Total number of constraints: 20
    Total number of constraints dropped: 0
 
 Run Time and Memory Usage
@@ -136,8 +136,8 @@ Run Time and Memory Usage
 
 Run Time and Memory Usage (cont)
 --------------------------------
-   Peak Memory Usage: 62 MB
-Checksum -- map: 3d3e9cc738e5a317fb67597a873f6c9e95120cf5
+   Peak Memory Usage: 63 MB
+Checksum -- map: a896ef4f5b51999419812c9e97576529da0f2878
 
 
 

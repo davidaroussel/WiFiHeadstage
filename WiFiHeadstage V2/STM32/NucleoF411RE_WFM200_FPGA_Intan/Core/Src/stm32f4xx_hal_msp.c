@@ -154,8 +154,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**SPI4 GPIO Configuration
     PA1      ------> SPI4_MOSI
-    PB12     ------> SPI4_CS
+    PA11      ------> SPI4_MISO
     PB13     ------> SPI4_SCK
+    PB12     ------> SPI4_CS
     */
     GPIO_InitStruct.Pin = RHD_SPI_MOSI_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -163,6 +164,13 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI4;
     HAL_GPIO_Init(RHD_SPI_MOSI_Port, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = RHD_SPI_MISO_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
+    HAL_GPIO_Init(RHD_SPI_MISO_Port, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin   = RHD_SPI_CLK_Pin;
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
@@ -172,10 +180,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     HAL_GPIO_Init(RHD_SPI_CLK_Port, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin   = RHD_SPI_CS_Pin;
-    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
     HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
 
 

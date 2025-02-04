@@ -42,7 +42,7 @@ if (a)
 <DIV id="content" onclick="hideTocList()"><PRE>
 <A name="Par"></A>Copyright (c) 2002-2022 Lattice Semiconductor Corporation,  All rights reserved.
 
-Sat Dec 21 15:44:08 2024
+Mon Jan 27 14:28:50 2025
 
 Command Line: par -w -n 1 -t 1 -s 1 -cores 1 -hsp m -exp parPathBased=ON \
 	Passthrough_impl_1_map.udb Passthrough_impl_1.udb 
@@ -60,7 +60,7 @@ Total (real) run time for 1-seed: 0 secs
 par done!
 
 Lattice Place and Route Report for Design &quot;Passthrough_impl_1_map.udb&quot;
-Sat Dec 21 15:44:08 2024
+Mon Jan 27 14:28:50 2025
 
 
 <A name="par_best"></A><B><U><big>Best Par Run</big></U></B>
@@ -146,15 +146,15 @@ I/O Bank Usage Summary:
 +----------+---------------+------------+------------+------------+
 | I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+---------------+------------+------------+------------+
-| 0        | 5 / 14 ( 35%) | 3.3V       |            |            |
-| 1        | 4 / 14 ( 28%) | 3.3V       |            |            |
+| 0        | 5 / 14 ( 35%) | 1.8V       |            |            |
+| 1        | 4 / 14 ( 28%) | 1.8V       |            |            |
 | 2        | 0 / 8 (  0%)  | OFF        |            |            |
 +----------+---------------+------------+------------+------------+
 
 Total Placer CPU time: 0 secs , REAL time: 0 secs 
 
 
-Checksum -- place: 1dd20f0642d90b0bdd60754a2e8ef51ab4ebad82
+Checksum -- place: 635ddb4dc8df086d389a61611ecfc10f76ac37c4
 Writing design to file Passthrough_impl_1_par.dir/5_1.udb ...
 
 
@@ -163,7 +163,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 15:44:08 12/21/24
+Start NBR router at 14:28:50 01/27/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -185,7 +185,7 @@ Preassignment Summary:
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 15:44:08 12/21/24
+Start NBR section for initial routing at 14:28:50 01/27/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
@@ -195,15 +195,15 @@ Routing in Serial Mode ......
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 15:44:08 12/21/24
+Start NBR section for normal routing at 14:28:50 01/27/25
 Level 4, iteration 1
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 15:44:08 12/21/24
+Start NBR section for post-routing at 14:28:50 01/27/25
 
 End NBR router with 0 unrouted connection
 
-Checksum -- route: 2967db3568587f5b59d64f2785b89bd51f38ca
+Checksum -- route: 9dfeeb33425321cb36a1bf2ffdf56fd9d2492bdb
 
 Total CPU time 0 secs 
 Total REAL time: 0 secs 
@@ -228,7 +228,7 @@ Note: user must run &apos;timing&apos; for timing closure signoff.
 
 Total CPU  Time: 0 secs 
 Total REAL Time: 0 secs 
-Peak Memory Usage: 74.99 MB
+Peak Memory Usage: 74.39 MB
 
 
 par done!

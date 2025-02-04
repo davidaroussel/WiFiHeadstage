@@ -34,18 +34,17 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *p_arg);
 
 void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	uint16_t tx_vector;
-	uint16_t rx_vector;
-	uint8_t misosplit_a[2];
-	uint8_t misosplit_b[2];
+	uint16_t rx_vector[1] = {0xFFFF};
 	uint8_t last_bit[1];
 	uint16_t reg_address;
 	uint16_t reg_value;
+	//SET CS_PIN
+	RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
 
-
-	for (int i = 0; i<3 ; i++){
+	for (int i = 0; i<1000 ; i++){
 		// Register 63 for DUMMY READ on BOOT
 		tx_vector = 0b1111111100000000;
-		SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+		SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	}
 
@@ -53,151 +52,152 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_address = 0b10000000;
 	reg_value = 0b11011110;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
-	printf("Char Receving Data:        %c \r\n", &rx_vector);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 1 - Supply sensor & ADC buffer bias current
 	reg_address = 0b10000001;
 	reg_value = 0b00100000; //(ADC BUFFER BIAS AT 32)
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
-	printf("Char Receving Data:        %c \r\n", &rx_vector);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 2 - MUX bias current
 	reg_address = 0b10000010;
 	reg_value = 0b00101000; //(MUX BIAS AT 40)
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 3 - MUX Load, Temp sensor, Aux digital output
 	reg_address = 0b10000011;
 	reg_value = 0b00000010;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 4 - ADC output format & DSP offset removal
 	reg_address = 0b10000100;
 	reg_value = 0b11010110;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 5 - Impedance check control
 	reg_address = 0b10000101;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 6 - Impedance check DAC [unchanged]
 	reg_address = 0b10000110;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 7 - Impedance check amplifier select [unchanged]
 	reg_address = 0b10000111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 8-13 - On-chip amplifier bandwidth select
 	// 	Reg. 8 -> 30
 	reg_address = 0b10001000;
 	reg_value = 0b00011110;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// 	Reg. 9 -> 5
 	reg_address = 0b10001001;
 	reg_value = 0b00000101;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 10 -> 43
 	reg_address = 0b10001010;
 	reg_value = 0b00101011;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 11 -> 6
 	reg_address = 0b10001011;
 	reg_value = 0b00000110;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// 	Reg. 12 -> 54
 	reg_address = 0b10001100;
 	reg_value = 0b00110110;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// 	Reg. 13 -> 0
 	reg_address = 0b10001101;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Register 14-21 - Individual amplifier power
 	//	Reg. 14
 	reg_address = 0b10001110;
 	reg_value = 0b111111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+
+	printf("Char Receiving Data :         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
+	printf("-------------------------------------------  \r\n");
 
 	//	Reg. 15
 	reg_address = 0b10001111;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 16
 	reg_address = 0b10010000;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 17
 	reg_address = 0b10010001;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 18
 	reg_address = 0b10010010;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 19
 	reg_address = 0b10010011;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 20
 	reg_address = 0b10010100;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	//	Reg. 21
 	reg_address = 0b10010101;
 	reg_value = 0b11111111;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	// Calibrate ADC
 	HAL_Delay(100);
 	reg_address = 0b01010101;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	for (int i = 0; i<9 ; i++){
 		// Register 63 for DUMMY READ on BOOT
 		reg_address = 0b11111111;
 		reg_value = 0b00000000;
 		tx_vector = (reg_address << 8) | reg_value;
-		SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+		SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
 	}
 
@@ -205,59 +205,58 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_address = 0b11101000;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+ 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+//	printf("Char Receiving Data 3 (hex):         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
+//	printf("-------------------------------------------  \r\n");
+
 
 	//Read Register 41
 	reg_address = 0b11101001;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+//	printf("Char Receiving Data 3 (hex):         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
+//	printf("-------------------------------------------  \r\n");
+
 
 	//Read Register 42
 	reg_address = 0b11101010;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
-
-
-//	printf("Sending Data to read Reg40: %x - %x \r\n",  reg_address, tx_vector[1]);
-//	printf("Receving Data: %x - %c / %x \r\n",  rx_vector[0],data, misosplit_b[0]);
-
-
-
-//	printf("Char Receving Data: %c %c \r\n", data_a, data_b);
-	printf("Char Receving Data:        %c \r\n", &rx_vector);
-//	printf("Hex  Receving Data: 0x%x 0x%x \r\n", data_a, data_b);
-
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+	printf("Char Receiving Data - Should be I :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);        // Print as 16-bit hex
+	printf("-------------------------------------------  \r\n");
 
 	//Read Register 43
 	reg_address = 0b11101011;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, &tx_vector, &rx_vector, last_bit);
-
-//	printf("Char Receving Data: %c %c \r\n", data_a, data_b);
-	printf("Char Receving Data:        %c \r\n", rx_vector);
-
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);           // Print as unsigned integer
+	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	printf("-------------------------------------------  \r\n");
 
 	//Read Register 44
 	reg_address = 0b11101100;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
-	SPI_SEND_RECV_32(hspi, tx_vector, rx_vector, last_bit);
-//	printf("Char Receving Data: %c %c \r\n", data_a, data_b);
-	printf("Char Receving Data:        %c \r\n", rx_vector);
+	// Should Receive T
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+	printf("Char Receiving Data - Should be T :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	printf("-------------------------------------------  \r\n");
 
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+	printf("Char Receiving Data - Should be A :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	printf("-------------------------------------------  \r\n");
 
-
-	SPI_SEND_RECV_32(hspi, tx_vector, rx_vector, last_bit);
-//	printf("Char Receving Data: %c %c \r\n", data_a, data_b);
-	printf("Char Receving Data:        %c \r\n", rx_vector);
-
-
-	SPI_SEND_RECV_32(hspi, tx_vector, rx_vector, &last_bit);
-	//printf("Char Receving Data: %c %c \r\n", data_a, data_b);
-	printf("Char Receving Data:        %c \r\n", rx_vector);
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
+	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	printf("-------------------------------------------  \r\n");
 
 
 	printf("FUCK OFF CA MARCHE !!!! \r\n");
@@ -269,6 +268,7 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 
 void TASK_RHD64_SPI_COMMUNICATION_INIT (void *arg) {
 	//CREATE xQueue
+	printf("Starting RHD Task \r\n");
 	osThreadDef(RHD64_SPI_handle, RHD64_SPI_COMMUNICATION_task_entry, osPriorityNormal, 0, configMINIMAL_STACK_SIZE*10);
 
 	if (osThreadCreate(osThread(RHD64_SPI_handle), (void *)arg) == NULL){
@@ -309,6 +309,8 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 //		}
 //	}
 
+
+	printf("Init RHD \r\n");
 	INIT_RHD64(hspi);
 
 

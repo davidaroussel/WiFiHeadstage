@@ -225,22 +225,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   */
 static void MX_SPI4_Init(void)
 {
-
-  /* SPI4 parameter configuration*/
+  /* SPI4 parameter configuration */
   hspi4.Instance = SPI4;
-  hspi4.Init.Mode = SPI_MODE_SLAVE;
-  hspi4.Init.Direction = SPI_DIRECTION_2LINES_RXONLY;
+  hspi4.Init.Mode = SPI_MODE_MASTER;
+  hspi4.Init.Direction = SPI_DIRECTION_2LINES;
   hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 1
+  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 1
   hspi4.Init.NSS = SPI_NSS_SOFT;
+  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
   hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
   hspi4.Init.CRCPolynomial = 10;
+
   if (HAL_SPI_Init(&hspi4) != HAL_OK)
   {
-	Error_Handler();
+    Error_Handler();
   }
 }
 
@@ -308,7 +309,6 @@ static void MX_DMA_Init(void)
   HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
 
-
 }
 
 
@@ -347,7 +347,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(WFM_RESET_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : WFM_RESET_Pin */
+  /*Configure GPIO pin : WFM_WUP_Pin */
    GPIO_InitStruct.Pin = WFM_WUP_Pin;
    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
    GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -361,19 +361,15 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(WFM_SPI_WIRQ_Port, &GPIO_InitStruct);
 
 
-
-
-
-
  //EXTRA PINOUTS HERE
   /*Configure GPIO pin: RHD_CS */
-  GPIO_InitStruct.Pin = MUX_TOGGLE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  HAL_GPIO_Init(MUX_TOGGLE_Port, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(MUX_TOGGLE_Port, MUX_TOGGLE_Pin, GPIO_PIN_RESET);
-  printf("RESET PIN\r\n");
+//  GPIO_InitStruct.Pin = MUX_TOGGLE_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//  HAL_GPIO_Init(MUX_TOGGLE_Port, &GPIO_InitStruct);
+//  HAL_GPIO_WritePin(MUX_TOGGLE_Port, MUX_TOGGLE_Pin, GPIO_PIN_RESET);
+//  printf("RESET PIN\r\n");
 //
 //  /*Configure GPIO pin: RHD_CS */
 //  GPIO_InitStruct.Pin = SPI_TASK_SCOPE_Pin;
@@ -411,8 +407,8 @@ static void MX_GPIO_Init(void)
 //  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 //  GPIO_InitStruct.Pull = GPIO_NOPULL;
 //  HAL_GPIO_Init(WFM_GPIO_WIRQ_Port, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
+//
+//  /* EXTI interrupt init*/
 //  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 10, 0);
 //  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
@@ -427,7 +423,7 @@ static void MX_GPIO_Init(void)
 PUTCHAR_PROTOTYPE
 {
   /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART3 and Loop until the end of transmission */
+  /* e.g. write a character to the USART2 and Loop until the end of transmission */
   HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
 
   return ch;

@@ -6,16 +6,16 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity Controller_RHD64_Config is
     Port (
         -- SPI Master Interface FROM STM32
-        SCLK_master : in  STD_LOGIC;
-        MOSI_master : in  STD_LOGIC;
-        MISO_master : out STD_LOGIC;
-        SS_master   : in  STD_LOGIC;
+        MOSI_master : in  STD_LOGIC; -- IO 20A --> PIN 11
+        MISO_master : out STD_LOGIC; -- IO 18A --> PIN 10
+        SCLK_master : in  STD_LOGIC; -- IO 16A --> PIN 9
+        SS_master   : in  STD_LOGIC; -- IO 13B --> PIN 6
 
         -- SPI Slave Interface TO RHD BOARD
-        SCLK_slave  : out STD_LOGIC;
-        MOSI_slave  : out STD_LOGIC;
-        MISO_slave  : in  STD_LOGIC;
-        SS_slave    : out STD_LOGIC;
+        MOSI_slave  : out STD_LOGIC; -- IO 36B --> PIN 25
+        MISO_slave  : in  STD_LOGIC; -- IO 39A --> PIN 26
+        SCLK_slave  : out STD_LOGIC; -- IO 38B --> PIN 27
+        SS_slave    : out STD_LOGIC; -- IO 43A --> PIN 32
 		
 		LED_CTL : in STD_LOGIC;
 		LED_OUT : out STD_LOGIC

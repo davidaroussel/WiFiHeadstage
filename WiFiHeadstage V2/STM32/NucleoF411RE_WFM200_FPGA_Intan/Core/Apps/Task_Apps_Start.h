@@ -23,11 +23,11 @@
 //#define WLAN_SSID_DEFAULT       "Maison"                         ///< wifi ssid for client mode
 //#define WLAN_PASSKEY_DEFAULT    "D94C96J02L09"                         ///< wifi password for client mode
 
-#define WLAN_SSID_DEFAULT       "Maison Up"                         ///< wifi ssid for client mode
-#define WLAN_PASSKEY_DEFAULT    "D94C96J02L09"                         ///< wifi password for client mode
+//#define WLAN_SSID_DEFAULT       "Maison Up"                         ///< wifi ssid for client mode
+//#define WLAN_PASSKEY_DEFAULT    "D94C96J02L09"                         ///< wifi password for client mode
 
-//#define WLAN_SSID_DEFAULT       "BioML_Headstage"                         ///< wifi ssid for client mode
-//#define WLAN_PASSKEY_DEFAULT    "51120biom"                         ///< wifi password for client mode
+#define WLAN_SSID_DEFAULT       "BioML_Headstage"                         ///< wifi ssid for client mode
+#define WLAN_PASSKEY_DEFAULT    "51120biom"                         ///< wifi password for client mode
 
 #define WLAN_SECURITY_DEFAULT   WFM_SECURITY_MODE_WPA2_PSK        ///< wifi security mode for client mode: WFM_SECURITY_MODE_OPEN/WFM_SECURITY_MODE_WEP/WFM_SECURITY_MODE_WPA2_WPA1_PSK
 #define SOFTAP_SSID_DEFAULT     "silabs_softap"                   ///< wifi ssid for soft ap mode

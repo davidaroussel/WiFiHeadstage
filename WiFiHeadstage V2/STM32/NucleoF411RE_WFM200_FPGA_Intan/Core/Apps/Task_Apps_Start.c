@@ -51,7 +51,6 @@ void start_app_task(void)
 //  	while (!TCP_Connected){
 //  		HAL_Delay(10);
 //  	}
-  	printf("Init RHD \r\n");
 //  	WIFI_MENU_INIT();
 //  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 //  	TASK_TCP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
