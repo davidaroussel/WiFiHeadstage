@@ -36,8 +36,8 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	uint16_t tx_vector;
 	uint16_t rx_vector[1] = {0xFFFF};
 	uint8_t last_bit[1];
-	uint16_t reg_address;
-	uint16_t reg_value;
+	uint8_t reg_address;
+	uint8_t reg_value;
 	//SET CS_PIN
 	RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
 
@@ -140,9 +140,6 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 
-	printf("Char Receiving Data :         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
-	printf("-------------------------------------------  \r\n");
-
 	//	Reg. 15
 	reg_address = 0b10001111;
 	reg_value = 0b11111111;
@@ -201,9 +198,12 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 
 	}
 
+
+
 	//Read Register 40
 	reg_address = 0b11101000;
 	reg_value = 0b00000000;
+
 	tx_vector = (reg_address << 8) | reg_value;
  	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
 //	printf("Char Receiving Data 3 (hex):         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
@@ -218,13 +218,17 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 //	printf("Char Receiving Data 3 (hex):         0x%04X \r\n", rx_vector[0]);        // Print as 16-bit hex
 //	printf("-------------------------------------------  \r\n");
 
+	uint16_t formated_value;
 
 	//Read Register 42
 	reg_address = 0b11101010;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
-	printf("Char Receiving Data - Should be I :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);        // Print as 16-bit hex
+	formated_value = rx_vector[0] << 1;
+	printf("Char Receiving Data - Should be I :       %c - 0x%04X \r\n", (char)formated_value, formated_value);
+
+//	printf("Char Receiving Data - Should be I :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);        // Print as 16-bit hex
 	printf("-------------------------------------------  \r\n");
 
 	//Read Register 43
@@ -232,7 +236,9 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);           // Print as unsigned integer
-	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	formated_value = rx_vector[0] << 1;
+	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)formated_value, formated_value);
+//	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
 	printf("-------------------------------------------  \r\n");
 
 	//Read Register 44
@@ -241,21 +247,28 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	// Should Receive T
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
-	printf("Char Receiving Data - Should be T :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	formated_value = rx_vector[0] << 1;
+	printf("Char Receiving Data - Should be T :       %c - 0x%04X \r\n", (char)formated_value, formated_value);
+//	printf("Char Receiving Data - Should be T :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+
 	printf("-------------------------------------------  \r\n");
 
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
-	printf("Char Receiving Data - Should be A :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	formated_value = rx_vector[0] << 1;
+	printf("Char Receiving Data - Should be A :       %c - 0x%04X \r\n", (char)formated_value, formated_value);
+//	printf("Char Receiving Data - Should be A :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
 	printf("-------------------------------------------  \r\n");
 
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV_32(hspi, &tx_vector, rx_vector, last_bit);
-	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
+	formated_value = rx_vector[0] << 1;
+	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)formated_value, formated_value);
+//	printf("Char Receiving Data - Should be N :       %c - 0x%04X \r\n", (char)rx_vector[0], rx_vector[0]);
 	printf("-------------------------------------------  \r\n");
 
 

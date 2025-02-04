@@ -61,6 +61,7 @@ void SPI_SEND_RECV_32(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_pt
             txallowed = 1U;
         }
     }
+
     // SET CS_PIN
     RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
 }
