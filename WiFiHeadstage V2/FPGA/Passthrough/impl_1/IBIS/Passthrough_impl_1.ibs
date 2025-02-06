@@ -1,7 +1,7 @@
 |************************************************************************
 | IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
-| Report Generate Date: Jan 27 2025
-| Report Generate Time: 14:28:58
+| Report Generate Date: Feb  5 2025
+| Report Generate Time: 10:51:23
 |************************************************************************
 |IBIS file ice40up.ibs   
 |Lattice Semiconductor Corporation   
@@ -136,15 +136,17 @@ L_pkg          2.652nH         1.989nH         3.504nH
 C_pkg          0.2807pF        0.2236pF        0.3481pF
 |
 [Pin]  signal_name          model_name           R_pin     L_pin     C_pin
-10            MISO_master          lvc180a040aaaaaaaaou
 25            MOSI_slave           lvc180a040aaaaaaaaou
+10            MISO_master          lvc180a040aaaaaaaaou
 27            SCLK_slave           lvc180a040aaaaaaaaou
 32            SS_slave             lvc180a040aaaaaaaaou
+47            pll_clk              lvc180a040aaaaaaaaou
 11            MOSI_master          lvc180axxxaaaaaaaain
 9             SCLK_master          lvc180axxxaaaaaaaain
 6             SS_master            lvc180axxxaaaaaaaain
 26            MISO_slave           lvc180axxxaaaaaaaain
 23            LED_CTL              lvc180axxxbaaaaaaain
+35            ext_clk              lvc180axxxbaaaaaaain
 |************************************************************************
 [Model] lvc180a040aaaaaaaaou
 Model_type Output

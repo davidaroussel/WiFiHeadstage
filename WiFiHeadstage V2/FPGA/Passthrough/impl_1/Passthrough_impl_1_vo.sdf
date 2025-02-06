@@ -1,7 +1,7 @@
 (DELAYFILE
   (SDFVERSION "3.0")
   (DESIGN "Controller_RHD64_Config")
-  (DATE "Mon Jan 27 14:28:59 2025")
+  (DATE "Wed Feb  5 10:51:24 2025")
   (VENDOR "Lattice")
   (PROGRAM "backanno")
   (VERSION "Radiant Software (64-bit) 2023.2.1.288.0")
@@ -11,20 +11,20 @@
   (TEMPERATURE -40:25:85)
   (TIMESCALE 1ps)
   (CELL
-    (CELLTYPE "MISO_master")
-    (INSTANCE MISO_master_I)
-    (DELAY
-      (ABSOLUTE
-        (IOPATH PADDO MISO_master (3237:3285:3334)(3237:3285:3334))
-      )
-    )
-  )
-  (CELL
     (CELLTYPE "MOSI_slave")
     (INSTANCE MOSI_slave_I)
     (DELAY
       (ABSOLUTE
         (IOPATH PADDO MOSI_slave (3237:3285:3334)(3237:3285:3334))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "MISO_master")
+    (INSTANCE MISO_master_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH PADDO MISO_master (3237:3285:3334)(3237:3285:3334))
       )
     )
   )
@@ -105,10 +105,10 @@
     (INSTANCE )
     (DELAY
       (ABSOLUTE
-        (INTERCONNECT MISO_slave_I/PADDI MISO_master_I/PADDO (8856:9021:9186)
-          (8856:9021:9186))
         (INTERCONNECT MOSI_master_I/PADDI MOSI_slave_I/PADDO (9173:9332:9491)
           (9173:9332:9491))
+        (INTERCONNECT MISO_slave_I/PADDI MISO_master_I/PADDO (8856:9021:9186)
+          (8856:9021:9186))
         (INTERCONNECT SCLK_master_I/PADDI SCLK_slave_I/PADDO (7904:8029:8155)
           (7904:8029:8155))
         (INTERCONNECT SS_master_I/PADDI SS_slave_I/PADDO (7852:7990:8129)(7852:7990:8129))

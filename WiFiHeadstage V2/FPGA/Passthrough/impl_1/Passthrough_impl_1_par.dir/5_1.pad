@@ -6,7 +6,7 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Mon Jan 27 14:28:50 2025
+Wed Feb  5 10:51:14 2025
 
 Pinout by Port Name:
 +-------------+----------+---------------+-------+------------------------------------------+
@@ -22,6 +22,8 @@ Pinout by Port Name:
 | SCLK_slave  | 27/0     | LVCMOS18_OUT  | PR19B | DRIVE:4mA IO_TYPE:LVCMOS18 PULLMODE:NA   |
 | SS_master   | 6/1      | LVCMOS18_IN   | PL14B | DRIVE:NA IO_TYPE:LVCMOS18 PULLMODE:NA    |
 | SS_slave    | 32/0     | LVCMOS18_OUT  | PR17A | DRIVE:4mA IO_TYPE:LVCMOS18 PULLMODE:NA   |
+| ext_clk     | 35/0     | LVCMOS18_IN   | PR13B | DRIVE:NA IO_TYPE:LVCMOS18 PULLMODE:100K  |
+| pll_clk     | 47/2     | LVCMOS18_OUT  | PL7A  | DRIVE:4mA IO_TYPE:LVCMOS18 PULLMODE:NA   |
 +-------------+----------+---------------+-------+------------------------------------------+
 
 Vccio by Bank:
@@ -30,6 +32,7 @@ Vccio by Bank:
 +------+-------+
 | 0    | 1.8V  |
 | 1    | 1.8V  |
+| 2    | 1.8V  |
 +------+-------+
 
 Pinout by Pin Number:
@@ -61,7 +64,7 @@ Pinout by Pin Number:
 | 31/0     |     unused, PULL:UP |            |               | PR17B |                  |
 | 32/0     | SS_slave            | LOCATED    | LVCMOS18_OUT  | PR17A |                  |
 | 34/0     |     unused, PULL:UP |            |               | PR14B |                  |
-| 35/0     |     unused, PULL:UP |            |               | PR13B | GPLL_IN/PCLKT0_1 |
+| 35/0     | ext_clk             | LOCATED    | LVCMOS18_IN   | PR13B | GPLL_IN/PCLKT0_1 |
 | 36/0     |     unused, PULL:UP |            |               | PR10B |                  |
 | 37/0     |     unused, PULL:UP |            |               | PR14A | PCLKT0_0         |
 | 38/0     |     unused, PULL:UP |            |               | PR9B  |                  |
@@ -73,7 +76,7 @@ Pinout by Pin Number:
 | 44/2     |     unused, PULL:UP |            |               | PL7B  | PCLKT2_0         |
 | 45/2     |     unused, PULL:UP |            |               | PL8B  |                  |
 | 46/2     |     unused, PULL:UP |            |               | PL6A  |                  |
-| 47/2     |     unused, PULL:UP |            |               | PL7A  |                  |
+| 47/2     | pll_clk             |            | LVCMOS18_OUT  | PL7A  |                  |
 | 48/2     |     unused, PULL:UP |            |               | PL8A  |                  |
 | PL6B/2   |     unused, PULL:UP |            |               | PL6B  |                  |
 | PL9B/2   |     unused, PULL:UP |            |               | PL9B  |                  |
@@ -106,6 +109,8 @@ ldc_set_location -site {9} [ get_ports {SCLK_master} ]
 ldc_set_location -site {27} [ get_ports {SCLK_slave} ]
 ldc_set_location -site {6} [ get_ports {SS_master} ]
 ldc_set_location -site {32} [ get_ports {SS_slave} ]
+ldc_set_location -site {35} [ get_ports {ext_clk} ]
+ldc_set_location -site {47} [ get_ports {pll_clk} ]
 
 
 
@@ -113,5 +118,5 @@ ldc_set_location -site {32} [ get_ports {SS_slave} ]
 
 Copyright (c) 2002-2022 Lattice Semiconductor Corporation,  All rights reserved.
 
-Mon Jan 27 14:28:50 2025
+Wed Feb  5 10:51:14 2025
 

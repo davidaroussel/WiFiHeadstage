@@ -1,5 +1,5 @@
 // Verilog netlist produced by program LSE :  version Radiant Software (64-bit) 2023.2.1.288.0
-// Netlist written on Mon Jan 27 12:25:03 2025
+// Netlist written on Wed Feb  5 10:41:07 2025
 // Source file index table: 
 // Object locations will have the form @<file_index>(<first_ line>[<left_column>],<last_line>[<right_column>])
 // file 0 "c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd"
@@ -62,21 +62,23 @@
 
 module Controller_RHD64_Config (input MOSI_master, output MISO_master, input SCLK_master, 
             input SS_master, output MOSI_slave, input MISO_slave, output SCLK_slave, 
-            output SS_slave, input LED_CTL, output LED_OUT);
+            output SS_slave, input LED_CTL, output LED_OUT, input ext_clk, 
+            output pll_clk);
     
     
-    wire MOSI_slave_c_c, MISO_master_c_c, SCLK_slave_c_c, SS_slave_c_c, 
-        LED_OUT_c_c, VCC_net, GND_net;
+    wire GND_net, VCC_net, MOSI_slave_c_c, MISO_master_c_c, SCLK_slave_c_c, 
+        SS_slave_c_c, LED_OUT_c_c, ext_clk_c, pll_clk_c;
     
-    VLO i24 (.Z(GND_net));
-    (* lineinfo="@0(10[9],10[20])" *) OB MISO_master_pad (.I(MISO_master_c_c), 
-            .O(MISO_master));
+    VHI i2 (.Z(VCC_net));
     (* lineinfo="@0(15[9],15[19])" *) OB MOSI_slave_pad (.I(MOSI_slave_c_c), 
             .O(MOSI_slave));
+    (* lineinfo="@0(10[9],10[20])" *) OB MISO_master_pad (.I(MISO_master_c_c), 
+            .O(MISO_master));
     (* lineinfo="@0(17[9],17[19])" *) OB SCLK_slave_pad (.I(SCLK_slave_c_c), 
             .O(SCLK_slave));
     (* lineinfo="@0(18[9],18[17])" *) OB SS_slave_pad (.I(SS_slave_c_c), .O(SS_slave));
-    (* lineinfo="@0(21[3],21[10])" *) OB LED_OUT_pad (.I(LED_OUT_c_c), .O(LED_OUT));
+    (* lineinfo="@0(21[9],21[16])" *) OB LED_OUT_pad (.I(LED_OUT_c_c), .O(LED_OUT));
+    (* lineinfo="@0(26[9],26[16])" *) OB pll_clk_pad (.I(pll_clk_c), .O(pll_clk));
     (* lineinfo="@0(9[9],9[20])" *) IB MOSI_slave_c_pad (.I(MOSI_master), 
             .O(MOSI_slave_c_c));
     (* lineinfo="@0(11[9],11[20])" *) IB SCLK_slave_c_pad (.I(SCLK_master), 
@@ -84,7 +86,8 @@ module Controller_RHD64_Config (input MOSI_master, output MISO_master, input SCL
     (* lineinfo="@0(12[9],12[18])" *) IB SS_slave_c_pad (.I(SS_master), .O(SS_slave_c_c));
     (* lineinfo="@0(16[9],16[19])" *) IB MISO_master_c_pad (.I(MISO_slave), 
             .O(MISO_master_c_c));
-    (* lineinfo="@0(20[3],20[10])" *) IB LED_OUT_c_pad (.I(LED_CTL), .O(LED_OUT_c_c));
-    VHI i25 (.Z(VCC_net));
+    (* lineinfo="@0(20[9],20[16])" *) IB LED_OUT_c_pad (.I(LED_CTL), .O(LED_OUT_c_c));
+    (* lineinfo="@0(24[9],24[16])" *) IB ext_clk_pad (.I(ext_clk), .O(ext_clk_c));
+    VLO i1 (.Z(GND_net));
     
 endmodule

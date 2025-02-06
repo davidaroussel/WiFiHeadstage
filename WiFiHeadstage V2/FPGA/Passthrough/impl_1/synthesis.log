@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Mon Jan 27 12:24:57 2025
+Wed Feb  5 10:41:01 2025
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml 
@@ -133,7 +133,7 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd
 
 INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(6): analyzing entity controller_rhd64_config. VHDL-1012
-INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(25): analyzing architecture behavioral. VHDL-1010
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(31): analyzing architecture behavioral. VHDL-1010
 WARNING <35001200> - synthesis: Setting Controller_RHD64_Config as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
 Top module language type = VHDL.
@@ -188,11 +188,15 @@ CRITICAL <35002028> - synthesis: I/O Port LED_OUT 's net has no driver and is un
 
 ################### Begin Area Report (Controller_RHD64_Config)######################
 Number of register bits => 0 of 5280 (0 % )
-IB => 5
-OB => 5
+IB => 6
+OB => 6
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
 Number of even-length carry chains : 0
+
+################### Begin BlackBox Report ######################
+SB_PLL40_PAD("SIMPLE",0,63,3,1)(1,6) => 1
+################### End BlackBox Report ##################
 
 ################### Begin Clock Report ######################
 Clock Nets
@@ -206,11 +210,11 @@ Top 10 highest fanout non-clock nets:
   Net : SCLK_slave_c_c, loads : 1
   Net : SS_slave_c_c, loads : 1
   Net : LED_OUT_c_c, loads : 1
-  Net : MISO_master, loads : 0
+  Net : ext_clk_c, loads : 1
+  Net : pll_clk_c, loads : 1
   Net : MOSI_slave, loads : 0
+  Net : MISO_master, loads : 0
   Net : SCLK_slave, loads : 0
-  Net : SS_slave, loads : 0
-  Net : LED_OUT, loads : 0
 ################### End Clock Report ##################
 
 Peak Memory Usage: 91 MB
@@ -219,4 +223,4 @@ Peak Memory Usage: 91 MB
 Total CPU Time: 6 secs 
 Total REAL Time: 6 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 69681f6666b6fad781c2dc37f8b5304d10c5ebf9
+Checksum -- synthesis -- netlist: 188e253fc742d810bf917f3734aafaf2df8911ee

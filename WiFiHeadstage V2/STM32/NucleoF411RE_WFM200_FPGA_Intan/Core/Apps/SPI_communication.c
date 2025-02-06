@@ -9,8 +9,8 @@
 #include "SPI_communication.h"
 
 
-void SPI_SEND_RECV_32(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_ptr, uint8_t *last_bit) {
-    uint16_t Size = 1;
+void SPI_SEND_RECV(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_ptr, uint8_t size) {
+    uint16_t Size = size;
 
     /* Variable used to alternate Rx and Tx during transfer */
     uint32_t txallowed = 1U;
