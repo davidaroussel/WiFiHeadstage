@@ -153,6 +153,8 @@ int main(void)
   MX_ICACHE_Init();
   /* USER CODE BEGIN 2 */
 
+  printf("Doing Stuff \r\n");
+
   // Write register value to pause all used timers when execution pauses during debug
   SET_BIT(DBGMCU->APB1FZR1, 0b10); // enable pausing TIM3 during debug
   SET_BIT(DBGMCU->APB2FZR, 0b100000000000); // enable pausing TIM1 during debug
@@ -639,7 +641,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 12000000;
+  huart1.Init.BaudRate = 921600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;

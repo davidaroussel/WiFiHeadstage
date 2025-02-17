@@ -60,8 +60,8 @@ all: main-build
 main-build: rhd_acquisition.elf secondary-outputs
 
 # Tool invocations
-rhd_acquisition.elf rhd_acquisition.map: $(OBJS) $(USER_OBJS) C:\Users\afoy\Desktop\Software_Projects\STM32_Projects\U5_workspace\rhd_acquisition\STM32U5A5ZJTXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "rhd_acquisition.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Users\afoy\Desktop\Software_Projects\STM32_Projects\U5_workspace\rhd_acquisition\STM32U5A5ZJTXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="rhd_acquisition.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+rhd_acquisition.elf rhd_acquisition.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFi\ Headstage\WiFiHeadstage\ V2\STM32\STM32U5\ Intan\ Driver\rhd_acquisition\STM32U5A5ZJTXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "rhd_acquisition.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Users\david\Desktop\WiFi Headstage\WiFiHeadstage V2\STM32\STM32U5 Intan Driver\rhd_acquisition\STM32U5A5ZJTXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="rhd_acquisition.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

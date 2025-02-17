@@ -96,6 +96,12 @@ class DataConverter:
                         converted_array_Ephys[channelNumber][dataNumber] = converted_value
                     else:
                         mV_value = OpenEphysOffset + (converted_data * converting_value)
+
+                        # maxOpenEphysValue = 0.005V to have the 5mV, which is the max input voltage for the Intan chip
+                        # OpenEphysOffset = 32768 to have the 0V in the middle of the 32bits encoding
+                        # convertedData = the actual 16 bits data returned by the Intan chip
+                        mV_value = OpenEphysOffset + (converted_data * ((0.000000195/maxOpenEphysValue) * OpenEphysOffset))
+
                         mV_value = np.clip(mV_value, 0, 65535)  # Ensure within int16 range
                         if dataNumber < self.buffer_size:
                             converted_array_Ephys[channelNumber][dataNumber] = mV_value
