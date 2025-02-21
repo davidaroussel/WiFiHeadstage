@@ -56,7 +56,7 @@ Core/Apps/Task_RHD64_SPI_communication.o: \
  ../Drivers/wfx_fmac_driver/sl_wfx_constants.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration_defaults.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration.h \
- ../Drivers/wfx_fmac_driver/sl_status.h \
+ ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Init_RHS.h \
  ../Core/Apps/Task_FPGA_communication.h
 ../Core/Apps/Intan_utils.h:
 ../Core/Apps/Task_Apps_Start.h:
@@ -118,4 +118,5 @@ Core/Apps/Task_RHD64_SPI_communication.o: \
 ../Drivers/wfx_fmac_driver/sl_wfx_configuration_defaults.h:
 ../Drivers/wfx_fmac_driver/sl_wfx_configuration.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
+../Core/Apps/Init_RHS.h:
 ../Core/Apps/Task_FPGA_communication.h:

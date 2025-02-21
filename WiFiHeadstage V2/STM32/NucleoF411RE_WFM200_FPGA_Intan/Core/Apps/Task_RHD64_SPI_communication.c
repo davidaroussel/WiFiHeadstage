@@ -7,16 +7,16 @@
 
 #include "Intan_utils.h"
 #include "Task_RHD64_SPI_communication.h"
+#include "Init_RHS.h"
 #include "stm32f4xx_hal.h"
 #include "Task_FPGA_communication.h"
 #include "Task_Apps_Start.h"
+
 
 #define RHD64_ADC_CONVERSION 0.195
 
 
 SemaphoreHandle_t spi_data_ready;
-
-
 
 #define udp_mode_only
 extern SPI_HandleTypeDef hspi4;
@@ -28,21 +28,23 @@ extern bool spi_flag;
 //extern osTimerId periodicTimerHandle;
 
 
-void RHD64_SPI_COMMUNICATION_task_entry(void const *p_arg);
+void RHD_SPI_COMMUNICATION_task_entry(void const *p_arg);
 
 
-
-void INIT_RHD64(SPI_HandleTypeDef *hspi){
+void INIT_RHD(SPI_HandleTypeDef *hspi){
 	uint16_t tx_vector;
 	uint16_t rx_vector[1] = {0xFFFF};
 	uint8_t data_size = 1; //Number of Bytes to send
 	uint8_t reg_address;
 	uint8_t reg_value;
 	uint16_t formated_value;
+	uint8_t bit_shifting = 1;
+	const char *rhd_versions[] = {"RHD2132", "RHD2216", "RHD2164"};
+	const char *rhd_detected = rhd_versions[2];
 	//SET CS_PIN
 	RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
 
-	for (int i = 0; i<1000 ; i++){
+	for (int i = 0; i<10 ; i++){
 		// Register 63 for DUMMY READ on BOOT
 		tx_vector = 0b1111111100000000;
 		SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
@@ -199,6 +201,34 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 
 	}
 
+	//Read Register 59 MISO MARKER
+	reg_address = 0b11111011;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+	//Send dummy CMD to RECV N-2 MISO
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+	//Send dummy CMD to RECV N-2 MISO
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+	printf("Char Receiving Data - MISO MARKER :   %c - 0x%04X \r\n", (int)formated_value, formated_value);
+	printf("------------------------------------------------  \r\n");
+
+	if (formated_value == 0x00){
+		bit_shifting = 0;
+		printf("Shifting Bit to 0 \r\n");
+		printf("------------------------------------------------  \r\n");
+	}
 
 	//Read Register 40
 	reg_address = 0b11101000;
@@ -217,7 +247,7 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
+	formated_value = rx_vector[0] << bit_shifting;
 	printf("Char Receiving Data - Should be I :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
 
@@ -226,7 +256,7 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
+	formated_value = rx_vector[0] << bit_shifting;
 	printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
 
@@ -235,27 +265,26 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
+	formated_value = rx_vector[0] << bit_shifting;
 	printf("Char Receiving Data - Should be T :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
 
 
-	//Read Register 59 MISO MARKER
-	reg_address = 0b11111011;
+	//Read Register 63
+	reg_address = 0b11111111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
+	formated_value = rx_vector[0] << bit_shifting;
 	printf("Char Receiving Data - Should be A :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
-
 
 	//Send dummy CMD to RECV N-2 MISO
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
+	formated_value = rx_vector[0] << bit_shifting;
 	printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
 
@@ -264,31 +293,34 @@ void INIT_RHD64(SPI_HandleTypeDef *hspi){
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
-	formated_value = rx_vector[0] << 1;
-	printf("Char Receiving Data - MISO MARKER :   %c - 0x%04X \r\n", (int)formated_value, formated_value);
+	formated_value = rx_vector[0] << bit_shifting;
+
+	if (formated_value == 0x01){
+		rhd_detected = rhd_versions[0];
+	}
+	else if (formated_value == 0x02){
+		rhd_detected = rhd_versions[1];
+	}
+
+	printf("Char Receiving Data - CHIP ID : %s - 0x%04X \r\n", rhd_detected, formated_value);
 	printf("------------------------------------------------  \r\n");
-
-
-	printf("FUCK OFF CA MARCHE !!!! \r\n");
 
  }
 
 
 
 
-void TASK_RHD64_SPI_COMMUNICATION_INIT (void *arg) {
+void TASK_RHD_SPI_COMMUNICATION_INIT (void *arg) {
 	//CREATE xQueue
 	printf("Starting RHD Task \r\n");
-	osThreadDef(RHD64_SPI_handle, RHD64_SPI_COMMUNICATION_task_entry, osPriorityNormal, 0, configMINIMAL_STACK_SIZE*10);
+	osThreadDef(RHD64_SPI_handle, RHD_SPI_COMMUNICATION_task_entry, osPriorityNormal, 0, configMINIMAL_STACK_SIZE*10);
 
 	if (osThreadCreate(osThread(RHD64_SPI_handle), (void *)arg) == NULL){
 		printf("Booboo created SPI task \r\n");
 	}
 }
 
-void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
-
-
+void RHD_SPI_COMMUNICATION_task_entry(void const *arg){
 	uint16_t tx_vector[2];
 	uint16_t rx_vector[2];
 	uint8_t last_bit[1];
@@ -303,25 +335,21 @@ void RHD64_SPI_COMMUNICATION_task_entry(void const *arg){
 	spi_to_udp_t spi_message = {0};
 
 	SPI_HandleTypeDef *hspi;
-	hspi = &hspi4;
-
-	//Activate SPI
-	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
-
-	//Activating the 16bit data mode
-	SPI4->CR1 |= 0x800;
-
-
-//	for (int i = 0; i<SPI_DMA_BUFFER_SIZE; i+=2){
-//		for (int j = 0; j < SPI_LOOP_FOR_1MS; j++){
-//			tx_vector[i] = i;
-//			tx_vector[i+1] = i+1;
-//		}
-//	}
-
 
 	printf("Init RHD \r\n");
-	INIT_RHD64(hspi);
+	hspi = &hspi4;
+	//Activate SPI
+	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
+	//Activating the 16bit data mode
+	hspi->Instance->CR1 |= SPI_CR1_DFF;
+	INIT_RHD(hspi);
+
+
+	printf("Init RHS \r\n");
+	hspi = &hspi3;
+	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
+	hspi->Instance->CR1 |= SPI_CR1_DFF;
+	INIT_RHS(hspi);
 
 
 

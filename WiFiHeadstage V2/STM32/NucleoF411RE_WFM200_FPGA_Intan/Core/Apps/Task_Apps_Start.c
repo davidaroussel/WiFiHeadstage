@@ -55,7 +55,8 @@ void start_app_task(void)
 //  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 //  	TASK_TCP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 
-  	TASK_RHD64_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+  	TASK_RHD_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+
 //  	TASK_FPGA_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 
 }

@@ -14,8 +14,8 @@
 #include "SPI_communication.h"
 
 
-void TASK_RHD64_SPI_COMMUNICATION_INIT (void *arg);
-void INIT_RHD64(SPI_HandleTypeDef *hspi);
+void TASK_RHD_SPI_COMMUNICATION_INIT (void *arg);
+void INIT_RHD(SPI_HandleTypeDef *hspi);
 
 
 

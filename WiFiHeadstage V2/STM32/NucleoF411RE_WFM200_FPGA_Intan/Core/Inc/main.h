@@ -80,7 +80,6 @@ extern "C" {
 
 
 //INTAN RHS SPI PIN (SPI3)
-//TODO MUST BE INIT
 #define RHS_SPI_MOSI_Port GPIOC
 #define RHS_SPI_MOSI_Pin GPIO_PIN_12
 

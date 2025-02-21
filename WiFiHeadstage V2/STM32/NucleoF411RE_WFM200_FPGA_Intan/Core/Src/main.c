@@ -98,7 +98,7 @@ int main(void)
   printf("\033\143");
 //  printf("\033[3J");
   printf("Hello, welcome to the WFM200 driver \r\n");
-  HAL_Delay(1000);
+  HAL_Delay(100);
 
 
 #ifndef spi_mode_only
@@ -262,6 +262,7 @@ static void MX_SPI3_Init(void)
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

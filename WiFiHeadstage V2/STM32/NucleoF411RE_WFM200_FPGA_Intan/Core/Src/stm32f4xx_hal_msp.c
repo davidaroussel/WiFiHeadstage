@@ -239,37 +239,42 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
 	  GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
 	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-	  GPIO_InitStruct.Pin = RHS_SPI_CS_Pin;
-	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+	  GPIO_InitStruct.Pin   = RHS_SPI_CS_Pin;
+	  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	  HAL_GPIO_Init(RHS_SPI_CS_Port, &GPIO_InitStruct);
+
 
 	  /* SPI3 DMA Init */
-	  /* SPI3_RX Init */
-	  hdma_spi3_rx.Instance = DMA1_Stream0; // Adjust stream and channel as per your hardware
-	  hdma_spi3_rx.Init.Channel = DMA_CHANNEL_0;
-	  hdma_spi3_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
-	  hdma_spi3_rx.Init.PeriphInc = DMA_PINC_DISABLE;
-	  hdma_spi3_rx.Init.MemInc = DMA_MINC_ENABLE;
-	  hdma_spi3_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-	  hdma_spi3_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-	  hdma_spi3_rx.Init.Mode = DMA_NORMAL;
-	  hdma_spi3_rx.Init.Priority = DMA_PRIORITY_HIGH;
-	  hdma_spi3_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-	  if (HAL_DMA_Init(&hdma_spi3_rx) != HAL_OK)
-	  {
-		  Error_Handler();
-	  }
-
-	  __HAL_LINKDMA(hspi, hdmarx, hdma_spi3_rx);
-
-
-	  /* DMA interrupt init */
-	  /* DMA1_Stream0_IRQn RX interrupt configuration */
-	  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
-
-	  /* SPI3 interrupt Init */
-	  HAL_NVIC_SetPriority(SPI3_IRQn, 5, 0);
-	  HAL_NVIC_EnableIRQ(SPI3_IRQn);
+//	  /* SPI3_RX Init */
+//	  hdma_spi3_rx.Instance = DMA1_Stream0; // Adjust stream and channel as per your hardware
+//	  hdma_spi3_rx.Init.Channel = DMA_CHANNEL_0;
+//	  hdma_spi3_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+//	  hdma_spi3_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+//	  hdma_spi3_rx.Init.MemInc = DMA_MINC_ENABLE;
+//	  hdma_spi3_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+//	  hdma_spi3_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+//	  hdma_spi3_rx.Init.Mode = DMA_NORMAL;
+//	  hdma_spi3_rx.Init.Priority = DMA_PRIORITY_HIGH;
+//	  hdma_spi3_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+//	  if (HAL_DMA_Init(&hdma_spi3_rx) != HAL_OK)
+//	  {
+//		  Error_Handler();
+//	  }
+//
+//	  __HAL_LINKDMA(hspi, hdmarx, hdma_spi3_rx);
+//
+//
+//	  /* DMA interrupt init */
+//	  /* DMA1_Stream0_IRQn RX interrupt configuration */
+//	  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 5, 0);
+//	  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+//
+//	  /* SPI3 interrupt Init */
+//	  HAL_NVIC_SetPriority(SPI3_IRQn, 5, 0);
+//	  HAL_NVIC_EnableIRQ(SPI3_IRQn);
 
           /* USER CODE BEGIN SPI3_MspInit 1 */
 
