@@ -7,6 +7,9 @@
  */
 #include "Init_RHS.h"
 
+#define PRINT_COMMAND_INFO false
+
+
 char* binary_string(uint32_t value) {
     static char buffer[40];  // 32 bits + 7 spaces + null terminator
     int index = 0;
@@ -52,8 +55,11 @@ void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb
     }
 
     // Single printf statement
-    printf("Command: %s | Register: %d | LSB : 0x%04X | Flags: %s \r\n", cmd_type, reg_address, lsb_value, flag_info);
-    printf("------------------------------------------------  \r\n");
+    if (PRINT_COMMAND_INFO){
+    	printf("Command: %s | Register: %d | LSB : 0x%04X | Flags: %s \r\n", cmd_type, reg_address, lsb_value, flag_info);
+		printf("------------------------------------------------  \r\n");
+    }
+
 }
 
 
@@ -473,8 +479,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	//	printf("Receiving Data: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-	//	printf("------------------------------------------------  \r\n");
 	printf("Should be I and N:  %c   %c\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
+	printf("------------------------------------------------  \r\n");
 //	print_configuration(cmd_selector, reg_address, lsb_value);
 
 	// Register 254 - Read Number of Channel and Die Revision
@@ -485,8 +491,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	//	printf("Receiving Data: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-	//	printf("------------------------------------------------  \r\n");
 	printf("Should be T and A:  %c   %c\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
+	printf("------------------------------------------------  \r\n");
 //	print_configuration(cmd_selector, reg_address, lsb_value);
 
 
@@ -498,9 +504,10 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 //	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-//	printf("------------------------------------------------  \r\n");
+
 	printf("Should be N and 0:  %c   %01X\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
-//	print_configuration(cmd_selector, reg_address, lsb_value);
+	printf("------------------------------------------------  \r\n");
+	//	print_configuration(cmd_selector, reg_address, lsb_value);
 
 	// Register 255 - Read Dummy
 	cmd_selector = READ_CMD;
@@ -510,8 +517,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 //	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-//	printf("------------------------------------------------  \r\n");
 	printf("Die Revision : %d | #channel: %d\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
+	printf("------------------------------------------------  \r\n");
 //	print_configuration(cmd_selector, reg_address, lsb_value);
 
 	// Register 255 - Read Dummy
@@ -522,9 +529,64 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 //	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-//	printf("------------------------------------------------  \r\n");
 	printf("Char Receiving Data - CHIP ID : %d \r\n", (rx_vector[1] & 0xFF));
+	printf("------------------------------------------------  \r\n");
 //	print_configuration(cmd_selector, reg_address, lsb_value);
 
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_0;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+//	print_configuration(cmd_selector, reg_address, lsb_value);
+
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+//	print_configuration(cmd_selector, reg_address, lsb_value);
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+//	print_configuration(cmd_selector, reg_address, lsb_value);
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+//	print_configuration(cmd_selector, reg_address, lsb_value);
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+//	print_configuration(cmd_selector, reg_address, lsb_value);
 
 }

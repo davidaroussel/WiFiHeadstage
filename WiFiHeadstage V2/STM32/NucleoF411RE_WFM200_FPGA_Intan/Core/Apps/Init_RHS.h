@@ -19,7 +19,7 @@ void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb
 void INIT_RHS(SPI_HandleTypeDef *hspi);
 
 
-#define CONVERT_CMD  0b00000000
+#define CONVERT_CMD  0b00000
 #define WRITE_CMD    0b10000000
 #define READ_CMD     0b11000000
 #define CLEAR_CMD    0b01101010
@@ -61,6 +61,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi);
 #define REGISTER_48  0b00110000
 #define REGISTER_49  0b00110001
 #define REGISTER_50  0b00110010
+
+#define REGISTER_63  0b00111111
 
 #define REGISTER_64  0b01000000
 #define REGISTER_65  0b01000001
