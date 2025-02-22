@@ -70,106 +70,106 @@ void config_intan(SPI_HandleTypeDef *hspi)
 	// Register 0 - ADC config.
 	tx[0] = 0b1100000000000000;
 	tx[1] = 0b1111001111111100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 1 - Supply sensor & ADC buffer bias current
 	tx[0] = 0b1100000000000011;
 	tx[1] = 0b0000110000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 2 - MUX bias current
 	tx[0] = 0b1100000000001100;
 	tx[1] = 0b0000110011000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 3 - MUX Load, Temp sensor, Aux digital output
 	tx[0] = 0b1100000000001111;
 	tx[1] = 0b0000000000001100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 4 - ADC output format & DSP offset removal
 	tx[0] = 0b1100000000110000;
 	tx[1] = 0b1111001100111100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 5 - Impedance check control
 	tx[0] = 0b1100000000110011;
 	tx[1] = 0b0000000000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 6 - Impedance check DAC [unchanged]
 	tx[0] = 0b1100000000111100;
 	tx[1] = 0b0000000000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 7 - Impedance check amplifier select [unchanged]
 	tx[0] = 0b1100000000111111;
 	tx[1] = 0b0000000000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 8-13 - On-chip amplifier bandwidth select
 	// 	Reg. 8 -> 30
 	tx[0] = 0b1100000011000000;
 	tx[1] = 0b0000001111111100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	// 	Reg. 9 -> 5
 	tx[0] = 0b1100000011000011;
 	tx[1] = 0b0000000000110011;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 10 -> 43
 	tx[0] = 0b1100000011001100;
 	tx[1] = 0b0000110011001111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 11 -> 6
 	tx[0] = 0b1100000011001111;
 	tx[1] = 0b0000000000111100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	// 	Reg. 12 -> 54
 	tx[0] = 0b1100000011110000;
 	tx[1] = 0b0000111100111100;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	// 	Reg. 13 -> 0
 	tx[0] = 0b1100000011110011;
 	tx[1] = 0b0000000000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Register 14-21 - Individual amplifier power
 	//	Reg. 14
 	tx[0] = 0b1100000011111100;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 15
 	tx[0] = 0b1100000011111111;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 16
 	tx[0] = 0b1100001100000000;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 17
 	tx[0] = 0b1100001100000011;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 18
 	tx[0] = 0b1100001100001100;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 19
 	tx[0] = 0b1100001100001111;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 20
 	tx[0] = 0b1100001100110000;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 	//	Reg. 21
 	tx[0] = 0b1100001100110011;
 	tx[1] = 0b1111111111111111;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 
 	// Calibrate ADC
 	HAL_Delay(100);
 	tx[0] = 0b0011001100110011;
 	tx[1] = 0b0000000000000000;
-	SPI_SEND_RECV_32(hspi, tx, rx, last_bit);
+	SPI_SEND_RECV(hspi, tx, rx, last_bit);
 }

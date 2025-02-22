@@ -15,8 +15,15 @@
 #include "Task_Apps_Start.h"
 
 char* binary_string(uint32_t value);
+
+void print_debug_binary(uint16_t *rx_vector);
 void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb_value);
-void INIT_RHS(SPI_HandleTypeDef *hspi);
+
+void RHS2116_Read_Register(SPI_HandleTypeDef *hspi, uint8_t Register);
+void RHS2116_Clear_Command(SPI_HandleTypeDef *hspi);
+void RHS2116_Disable_Stim(SPI_HandleTypeDef *hspi, uint8_t Register);
+void RHS2116_PowerUp_DCCouple_LowGain_Amp(SPI_HandleTypeDef *hspi, uint8_t Register);
+void RHS2116_Configure_ADC_Sampling_Rate(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t adc_buffer_bias, uint8_t mux_bias);
 
 
 #define CONVERT_CMD  0b00000
