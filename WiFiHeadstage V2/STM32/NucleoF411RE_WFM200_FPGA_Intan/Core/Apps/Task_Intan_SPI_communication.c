@@ -58,10 +58,8 @@ void RHD_SPI_COMMUNICATION_task_entry(void const *arg){
 
 	printf("Init RHD \r\n");
 	hspi = &hspi4;
-	//Activate SPI
-	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
-	//Activating the 16bit data mode
-	hspi->Instance->CR1 |= SPI_CR1_DFF;
+	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);  //Activate SPI
+	hspi->Instance->CR1 |= SPI_CR1_DFF; 		//Activating the 16bit data mode
 	INIT_RHD(hspi);
 
 

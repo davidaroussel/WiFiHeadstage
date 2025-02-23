@@ -114,6 +114,28 @@ void RHS2116_Disable_Stim(SPI_HandleTypeDef *hspi, uint8_t Register){
 	print_configuration(cmd_selector, reg_address, lsb_value);
 }
 
+void RHS2116_Enable_Stim(SPI_HandleTypeDef *hspi){
+	// Register 32 - Write Disable Stim A
+	cmd_selector = WRITE_CMD;
+	reg_address = REGISTER_32;
+	lsb_value = 0b1010101010101010;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+
+	// Register 33 - Write Disable Stim B
+	cmd_selector = WRITE_CMD;
+	reg_address = REGISTER_33;
+	lsb_value = 0b0000000011111111 ;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
 
 void RHS2116_PowerUp_DCCouple_LowGain_Amp(SPI_HandleTypeDef *hspi, uint8_t Register){
 	// Register 38 - Power Up DC-couple low-gain amplifiers

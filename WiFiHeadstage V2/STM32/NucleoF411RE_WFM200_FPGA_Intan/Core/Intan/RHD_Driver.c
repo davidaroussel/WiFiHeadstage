@@ -9,7 +9,7 @@
 
 void INIT_RHD(SPI_HandleTypeDef *hspi){
 	uint16_t tx_vector;
-	uint16_t rx_vector[1] = {0xFFFF};
+	uint16_t rx_vector[1];
 	uint8_t data_size = 1; //Number of Bytes to send
 	uint8_t reg_address;
 	uint8_t reg_value;
