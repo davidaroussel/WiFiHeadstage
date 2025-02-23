@@ -41,6 +41,7 @@ RM := rm -rf
 -include Core/TraceAnalyser/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Intan/subdir.mk
 -include Core/Apps/subdir.mk
 -include objects.mk
 

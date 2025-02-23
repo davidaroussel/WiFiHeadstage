@@ -1,5 +1,5 @@
-Core/Apps/Intan_utils.o: ../Core/Apps/Intan_utils.c \
- ../Core/Apps/Task_Apps_Start.h \
+Core/Intan/RHD_Driver.o: ../Core/Intan/RHD_Driver.c \
+ ../Core/Intan/Intan_utils.h ../Core/Apps/Task_Apps_Start.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -44,9 +44,10 @@ Core/Apps/Intan_utils.o: ../Core/Apps/Intan_utils.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/main.h ../Core/Inc/sl_wfx_host_pin.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/main.h \
+ ../Core/Inc/sl_wfx_host_pin.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_host_api.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_api.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_general_api.h \
@@ -56,6 +57,7 @@ Core/Apps/Intan_utils.o: ../Core/Apps/Intan_utils.c \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration_defaults.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_configuration.h \
  ../Drivers/wfx_fmac_driver/sl_status.h
+../Core/Intan/Intan_utils.h:
 ../Core/Apps/Task_Apps_Start.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -101,8 +103,9 @@ Core/Apps/Intan_utils.o: ../Core/Apps/Intan_utils.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:
 ../Core/Inc/sl_wfx_host_pin.h:

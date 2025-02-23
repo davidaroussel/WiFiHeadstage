@@ -94,17 +94,17 @@ Core/Apps/Wifi_autoconnect.o: ../Core/Apps/Wifi_autoconnect.c \
  ../Drivers/wfx_fmac_driver/sl_status.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h \
  ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Task_Apps_Start.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/main.h ../Core/Inc/ethernetif.h \
- ../Core/Inc/sl_wfx_host_events.h ../Core/Inc/sl_wfx_host.h \
- ../Drivers/wfx_fmac_driver/sl_wfx.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/main.h \
+ ../Core/Inc/ethernetif.h ../Core/Inc/sl_wfx_host_events.h \
+ ../Core/Inc/sl_wfx_host.h ../Drivers/wfx_fmac_driver/sl_wfx.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_host_api.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_version.h \
  ../Drivers/wfx_fmac_driver/bus/sl_wfx_bus.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_constants.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_registers.h \
- ../Core/Inc/demo_config.h ../Core/Apps/Task_Apps_Start.h
+ ../Core/Inc/demo_config.h
 ../Core/Inc/dhcp_client.h:
 ../Core/Inc/dhcp_server.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/dhcp.h:
@@ -203,8 +203,9 @@ Core/Apps/Wifi_autoconnect.o: ../Core/Apps/Wifi_autoconnect.c \
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
 ../Core/Apps/Task_Apps_Start.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:
 ../Core/Inc/ethernetif.h:
@@ -217,4 +218,3 @@ Core/Apps/Wifi_autoconnect.o: ../Core/Apps/Wifi_autoconnect.c \
 ../Drivers/wfx_fmac_driver/sl_wfx_constants.h:
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_registers.h:
 ../Core/Inc/demo_config.h:
-../Core/Apps/Task_Apps_Start.h:

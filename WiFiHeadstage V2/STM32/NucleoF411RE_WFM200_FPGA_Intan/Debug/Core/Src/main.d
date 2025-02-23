@@ -61,9 +61,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/demo_config.h ../Core/Inc/main.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h \
  ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Task_Apps_Start.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/sl_wfx_host.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/sl_wfx_host.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/netif.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/opt.h \
  ../Core/Inc/lwipopts.h \
@@ -162,8 +162,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
 ../Core/Apps/Task_Apps_Start.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/sl_wfx_host.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/netif.h:

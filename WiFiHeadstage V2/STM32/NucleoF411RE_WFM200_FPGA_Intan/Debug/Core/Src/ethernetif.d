@@ -83,9 +83,9 @@ Core/Src/ethernetif.o: ../Core/Src/ethernetif.c \
  ../Drivers/wfx_fmac_driver/sl_wfx_host_api.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h \
  ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Task_Apps_Start.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/main.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/timeouts.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/sys.h \
  ../Middlewares/Third_Party/LwIP/system/arch/sys_arch.h \
@@ -184,8 +184,9 @@ Core/Src/ethernetif.o: ../Core/Src/ethernetif.c \
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
 ../Core/Apps/Task_Apps_Start.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/timeouts.h:

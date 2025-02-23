@@ -113,9 +113,10 @@ Core/Src/lwip_freertos.o: ../Core/Src/lwip_freertos.c \
  ../Core/Inc/sl_wfx_host_pin.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h \
  ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Task_Apps_Start.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/main.h ../Core/Inc/dhcp_client.h ../Core/Inc/demo_config.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/main.h \
+ ../Core/Inc/dhcp_client.h ../Core/Inc/demo_config.h \
  ../Core/Inc/wifi_cli.h
 ../Core/Apps/Wifi_autoconnect.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
@@ -235,8 +236,9 @@ Core/Src/lwip_freertos.o: ../Core/Src/lwip_freertos.c \
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
 ../Core/Apps/Task_Apps_Start.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:
 ../Core/Inc/dhcp_client.h:

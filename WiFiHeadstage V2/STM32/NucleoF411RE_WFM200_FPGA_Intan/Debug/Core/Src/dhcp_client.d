@@ -97,9 +97,9 @@ Core/Src/dhcp_client.o: ../Core/Src/dhcp_client.c \
  ../Drivers/wfx_fmac_driver/sl_status.h \
  ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h \
  ../Drivers/wfx_fmac_driver/sl_status.h ../Core/Apps/Task_Apps_Start.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
- ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
- ../Core/Inc/main.h
+ ../Core/Apps/Task_Intan_SPI_communication.h \
+ ../Core/Apps/SPI_communication.h ../Core/Apps/Task_Apps_Start.h \
+ ../Core/Apps/Task_UDP_Transmit.h ../Core/Inc/main.h
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -201,7 +201,8 @@ Core/Src/dhcp_client.o: ../Core/Src/dhcp_client.c \
 ../Drivers/wfx_fmac_driver/firmware/sl_wfx_cmd_api.h:
 ../Drivers/wfx_fmac_driver/sl_status.h:
 ../Core/Apps/Task_Apps_Start.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
+../Core/Apps/Task_Apps_Start.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:

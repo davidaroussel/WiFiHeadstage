@@ -5,8 +5,8 @@
  *      Author: david
  */
 
-#ifndef APPS_INIT_RHS_H_
-#define APPS_INIT_RHS_H_
+#ifndef APPS_RHS_DRIVER_H_
+#define APPS_RHS_DRIVER_H_
 
 #include <string.h>
 #include <stdbool.h>
@@ -36,9 +36,25 @@ void RHS2116_Impedance_Check_Control(SPI_HandleTypeDef *hspi, uint8_t Register,
 void RHS2116_Impedence_Check_DAC(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t Zcheck_DAC);
 void RHS2116_Amplifier_Bandwidth_Select_Upper(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t RH_sel1, uint8_t RH_sel2);
 void RHS2116_Amplifier_Bandwidth_Select_Lower(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t RL_sel1, uint8_t RL_sel2, uint8_t RL_sel3);
-void RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t AC_amp_power);
-void RHS2116_Fast_Settle(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fast_settle);
-void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fL_select);
+void RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t AC_amp_power);
+void RHS2116_Fast_Settle(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t amp_fast_settle);
+void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t amp_fL_select);
+void RHS2116_Stimulation_Step_Size(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t step_sel1, uint8_t step_sel2, uint8_t step_sel3);
+void RHS2116_Stimulation_Bias(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t stim_nbias, uint8_t stim_pbias);
+void RHS2116_Voltage_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t charge_recovery_DAC);
+void RHS2116_Current_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t Imax_sel1, uint8_t Imax_sel2, uint8_t Imax_sel3);
+void RHS2116_Stimulation_Turn_ON_OFF(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t stim_status);
+void RHS2116_Stimulator_Polarity(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t stim_pol);
+void RHS2116_Charge_Recovery_Switches(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t charge_recovery_switch);
+void RHS2116_Current_Limited_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t CL_charge_recovery_enable);
+void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude);
+void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude);
+
+void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi);
+uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Register);
+uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register);
+
+void INIT_RHS(SPI_HandleTypeDef *hspi);
 
 #define CONVERT_CMD  0b00000
 #define WRITE_CMD    0b10000000
@@ -125,4 +141,4 @@ void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, u
 #define REGISTER_254 0b11111110
 #define REGISTER_255 0b11111111
 
-#endif /* APPS_INIT_RHS_H_ */
+#endif /* APPS_RHS_DRIVER_H_ */

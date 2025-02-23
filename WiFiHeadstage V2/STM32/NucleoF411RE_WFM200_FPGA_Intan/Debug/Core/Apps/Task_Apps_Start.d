@@ -44,7 +44,7 @@ Core/Apps/Task_Apps_Start.o: ../Core/Apps/Task_Apps_Start.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Apps/Task_RHD64_SPI_communication.h \
+ ../Core/Apps/Task_Intan_SPI_communication.h \
  ../Core/Apps/SPI_communication.h ../Core/Apps/Task_UDP_Transmit.h \
  ../Core/Inc/main.h ../Core/Inc/sl_wfx_host_pin.h \
  ../Drivers/wfx_fmac_driver/sl_wfx_host_api.h \
@@ -102,7 +102,7 @@ Core/Apps/Task_Apps_Start.o: ../Core/Apps/Task_Apps_Start.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Apps/Task_RHD64_SPI_communication.h:
+../Core/Apps/Task_Intan_SPI_communication.h:
 ../Core/Apps/SPI_communication.h:
 ../Core/Apps/Task_UDP_Transmit.h:
 ../Core/Inc/main.h:
