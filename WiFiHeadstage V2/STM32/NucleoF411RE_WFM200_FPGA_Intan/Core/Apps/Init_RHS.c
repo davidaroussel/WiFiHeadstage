@@ -142,7 +142,7 @@ void RHS2116_Configure_ADC_Sampling_Rate(SPI_HandleTypeDef *hspi, uint8_t Regist
 
 
 void RHS2116_ADCFormat_DSPSetting_AuxOutput(SPI_HandleTypeDef *hspi, uint8_t Register,
-		uint8_t DSPcutoffFreq, uint8_t DSPenable, uint8_t ABSmode, uint8_t TWOScomp,weakMISO,
+		uint8_t DSPcutoffFreq, uint8_t DSPenable, uint8_t ABSmode, uint8_t TWOScomp, uint8_t weakMISO,
 		uint8_t digout1_HiZ, uint8_t digout1, uint8_t digout2_HiZ, uint8_t digout2, uint8_t digoutOD){
 
 	// Register 1 - Set all auxiliary digital outputs to a high-impedance state. Set DSP high-pass filter to 4.665 Hz.
@@ -302,7 +302,7 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	uint8_t Zcheck_load = 0b0;
 	uint8_t Zcheck_DAC_power = 0b1;
 	uint8_t Zcheck_select = 0b000000;
-	RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select)
+	RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select);
 
 	// Register 3 - Initialize impedance check DAC to midrange value
 	// IN EXEMPLE : 0x0080 --> 0bxxxxxxxx 10000000

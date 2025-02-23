@@ -26,7 +26,7 @@ void RHS2116_PowerUp_DCCouple_LowGain_Amp(SPI_HandleTypeDef *hspi, uint8_t Regis
 void RHS2116_Configure_ADC_Sampling_Rate(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t adc_buffer_bias, uint8_t mux_bias);
 
 void RHS2116_ADCFormat_DSPSetting_AuxOutput(SPI_HandleTypeDef *hspi, uint8_t Register,
-											uint8_t DSPcutoffFreq, uint8_t DSPenable, uint8_t ABSmode, uint8_t TWOScomp,weakMISO,
+											uint8_t DSPcutoffFreq, uint8_t DSPenable, uint8_t ABSmode, uint8_t TWOScomp, uint8_t weakMISO,
 											uint8_t digout1_HiZ, uint8_t digout1, uint8_t digout2_HiZ, uint8_t digout2, uint8_t digoutOD);
 
 void RHS2116_Impedance_Check_Control(SPI_HandleTypeDef *hspi, uint8_t Register,
@@ -38,6 +38,7 @@ void RHS2116_Amplifier_Bandwidth_Select_Upper(SPI_HandleTypeDef *hspi, uint8_t R
 void RHS2116_Amplifier_Bandwidth_Select_Lower(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t RL_sel1, uint8_t RL_sel2, uint8_t RL_sel3);
 void RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t AC_amp_power);
 void RHS2116_Fast_Settle(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fast_settle);
+void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fL_select);
 
 #define CONVERT_CMD  0b00000
 #define WRITE_CMD    0b10000000
