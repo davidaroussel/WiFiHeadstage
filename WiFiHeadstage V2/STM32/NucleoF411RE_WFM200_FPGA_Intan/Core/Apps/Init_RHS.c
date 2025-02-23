@@ -141,6 +141,131 @@ void RHS2116_Configure_ADC_Sampling_Rate(SPI_HandleTypeDef *hspi, uint8_t Regist
 }
 
 
+void RHS2116_ADCFormat_DSPSetting_AuxOutput(SPI_HandleTypeDef *hspi, uint8_t Register,
+		uint8_t DSPcutoffFreq, uint8_t DSPenable, uint8_t ABSmode, uint8_t TWOScomp,weakMISO,
+		uint8_t digout1_HiZ, uint8_t digout1, uint8_t digout2_HiZ, uint8_t digout2, uint8_t digoutOD){
+
+	// Register 1 - Set all auxiliary digital outputs to a high-impedance state. Set DSP high-pass filter to 4.665 Hz.
+	// IN EXEMPLE : 0x051A --> 0bxxx 0 0 1 0 1 0 0 0 1 1010
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = (digoutOD << 12) | (digout2 << 11)    | (digout2_HiZ << 10)
+			  | (digout1 << 9)   | (digout1_HiZ << 8) | (weakMISO << 7)
+			  | (TWOScomp << 6)  | (ABSmode << 5)  | (DSPenable << 4) | DSPcutoffFreq;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+
+
+}
+
+
+void RHS2116_Impedance_Check_Control(SPI_HandleTypeDef *hspi, uint8_t Register,
+									uint8_t Zcheck_en, uint8_t Zcheck_scale, uint8_t Zcheck_load,
+									uint8_t Zcheck_DAC_power, uint8_t Zcheck_select){
+	// Register 2 - Power up DAC used for impedance testing, but disable impedance testing for now.
+	// IN EXEMPLE : 0x0040 --> 0bxx 000000 x 1 0 00 xx 0
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = (Zcheck_select << 8)  | (Zcheck_DAC_power << 6)  | (Zcheck_load << 5)  | (Zcheck_scale << 4) | Zcheck_en;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
+
+void RHS2116_Impedence_Check_DAC(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t Zcheck_DAC){
+	// Register 3 - Initialize impedance check DAC to midrange value
+	// IN EXEMPLE : 0x0080 --> 0bxxxxxxxx 10000000
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = Zcheck_DAC;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
+
+void RHS2116_Amplifier_Bandwidth_Select_Upper(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t RH_sel1, uint8_t RH_sel2){
+	// Register 4 - Set upper cutoff frequency of AC-coupled high-gain amplifiers to 7.5 kHz.
+	// IN EXEMPLE : 0x0016 --> 0bxxxxx 00000 010110
+
+	// Register 5 - Set upper cutoff frequency of AC-coupled high-gain amplifiers to 7.5 kHz.
+	// IN EXEMPLE : 0x0017 --> 0bxxxxx 00000 010111
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = (RH_sel2 << 6) | RH_sel1;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] =  lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
+
+void RHS2116_Amplifier_Bandwidth_Select_Lower(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t RL_sel1, uint8_t RL_sel2, uint8_t RL_sel3){
+	// Register 6 - Set lower cutoff frequency of AC-coupled high-gain amplifiers to 5 Hz
+	// IN EXEMPLE : 0x00A8 --> 0bxx 0 000001 0101000
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = (RL_sel3 << 13) | (RL_sel2 << 7) | RL_sel1;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] =  lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
+void  RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t AC_amp_power){
+	// Register 8 - Power up all AC-coupled high-gain amplifiers.
+	// IN EXEMPLE : 0xFFFF
+	cmd_selector = WRITE_CMD;
+	reg_address = Register;
+	lsb_value = AC_amp_power;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] =  lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
+void RHS2116_Fast_Settle(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fast_settle){
+	// Register 10 - Turn off fast settle function on all channels. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
+	// IN EXEMPLE : 0x0000
+	cmd_selector = WRITE_CMD;
+	cmd_selector |= (1 << U_FLAG);
+	reg_address = Register;
+	lsb_value = amp_fast_settle;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] =  lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+
+}
+
+
+void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t amp_fL_select){
+	// Register 12 - Set all amplifiers to the lower cutoff frequency set by Register 6. Bits in this register can be set to zero during and immediately following stimulation
+	// pulses to rapidly recover from stimulation artifacts. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
+	// IN EXEMPLE : 0xFFFF --> 0xFFFF
+	cmd_selector = WRITE_CMD;
+	cmd_selector |= (1 << U_FLAG);
+	reg_address = Register;
+	lsb_value = amp_fL_select;
+	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[1] =  lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(cmd_selector, reg_address, lsb_value);
+}
+
 void INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	//SET CS_PIN
@@ -155,13 +280,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	RHS2116_Clear_Command(hspi);
 	RHS2116_Configure_ADC_Sampling_Rate(hspi, REGISTER_0, 32, 40);
 
-
-
-
 	// Register 1 - Set all auxiliary digital outputs to a high-impedance state. Set DSP high-pass filter to 4.665 Hz.
 	// IN EXEMPLE : 0x051A --> 0bxxx 0 0 1 0 1 0 0 0 1 1010
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_1;
 	uint8_t DSPcutoffFreq = 0b1010;
 	uint8_t DSPenable = 0b1;
 	uint8_t ABSmode = 0b0;
@@ -172,139 +292,64 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	uint8_t digout2_HiZ = 0b1;
 	uint8_t digout2 = 0b0;
 	uint8_t digoutOD = 0b0;
-	lsb_value = (digoutOD << 12) | (digout2 << 11)    | (digout2_HiZ << 10)
-			  | (digout1 << 9)   | (digout1_HiZ << 8) | (weakMISO << 7)
-			  | (TWOScomp << 6)  | (ABSmode << 5)  | (DSPenable << 4) | DSPcutoffFreq;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	//	printf("Receiving Data: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-	//	printf("------------------------------------------------  \r\n");
-	print_configuration(cmd_selector, reg_address, lsb_value);
-
-
+	RHS2116_ADCFormat_DSPSetting_AuxOutput(hspi, REGISTER_1,
+											DSPcutoffFreq, DSPenable,ABSmode, TWOScomp,weakMISO,
+											digout1_HiZ, digout1, digout2_HiZ, digout2, digoutOD);
 	// Register 2 - Power up DAC used for impedance testing, but disable impedance testing for now.
 	// IN EXEMPLE : 0x0040 --> 0bxx 000000 x 1 0 00 xx 0
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_2;
 	uint8_t Zcheck_en = 0b0;
 	uint8_t Zcheck_scale = 0b00;
 	uint8_t Zcheck_load = 0b0;
 	uint8_t Zcheck_DAC_power = 0b1;
 	uint8_t Zcheck_select = 0b000000;
-	lsb_value = (Zcheck_select << 8)  | (Zcheck_DAC_power << 6)  | (Zcheck_load << 5)  | (Zcheck_scale << 4) | Zcheck_en;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select)
 
 	// Register 3 - Initialize impedance check DAC to midrange value
 	// IN EXEMPLE : 0x0080 --> 0bxxxxxxxx 10000000
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_3;
 	uint8_t Zcheck_DAC = 0b10000000;
-	lsb_value = Zcheck_DAC;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-
+	RHS2116_Impedence_Check_DAC(hspi, REGISTER_3, Zcheck_DAC);
 
 	// Register 4 - Set upper cutoff frequency of AC-coupled high-gain amplifiers to 7.5 kHz.
 	// IN EXEMPLE : 0x0016 --> 0bxxxxx 00000 010110
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_4;
 	uint8_t RH1_sel1  = 0b010110;
 	uint8_t RH1_sel2  = 0b00000;
-	lsb_value = (RH1_sel2 << 6) | RH1_sel1;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Amplifier_Bandwidth_Select_Upper(hspi, REGISTER_4, RH1_sel1, RH1_sel2);
 
 	// Register 5 - Set upper cutoff frequency of AC-coupled high-gain amplifiers to 7.5 kHz.
 	// IN EXEMPLE : 0x0017 --> 0bxxxxx 00000 010111
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_5;
 	uint8_t RH2_sel1  = 0b010111;
 	uint8_t RH2_sel2  = 0b00000;
-	lsb_value = (RH2_sel2 << 6) | RH2_sel1;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Amplifier_Bandwidth_Select_Upper(hspi, REGISTER_5, RH2_sel1, RH2_sel2);
 
 	// Register 6 - Set lower cutoff frequency of AC-coupled high-gain amplifiers to 5 Hz
 	// IN EXEMPLE : 0x00A8 --> 0bxx 0 000001 0101000
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_6;
 	uint8_t RL_Asel1  = 0b0101000;
 	uint8_t RL_Asel2  = 0b000001;
 	uint8_t RL_Asel3  = 0b0;
-	lsb_value = (RL_Asel3 << 13) | (RL_Asel2 << 7) | RL_Asel1;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Amplifier_Bandwidth_Select_Lower(hspi, REGISTER_6, RL_Asel1, RL_Asel2, RL_Asel3);
 
 	// Register 7 - Set alternate lower cutoff frequency (to be used for stimulation artifact recovery) to 1000 Hz
 	// IN EXEMPLE : 0x000A --> 0bxx 0 000000 0001010
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_7;
 	uint8_t RL_Bsel1  = 0b0001010;
 	uint8_t RL_Bsel2  = 0b000000;
 	uint8_t RL_Bsel3  = 0b0;
-	lsb_value = (RL_Bsel3 << 13) | (RL_Bsel2 << 7) | RL_Bsel1;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Amplifier_Bandwidth_Select_Lower(hspi, REGISTER_7, RL_Bsel1, RL_Bsel2, RL_Bsel3);
 
 	// Register 8 - Power up all AC-coupled high-gain amplifiers.
 	// IN EXEMPLE : 0xFFFF
-	cmd_selector = WRITE_CMD;
-	reg_address = REGISTER_8;
 	uint16_t AC_amp_power  = 0b1111111111111111;
-	lsb_value = AC_amp_power;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Amplifier_Power_Up(hspi, REGISTER_8, AC_amp_power);
 
 	// Register 10 - Turn off fast settle function on all channels. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
 	// IN EXEMPLE : 0x0000
-	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
-	reg_address = REGISTER_10;
 	uint16_t amp_fast_settle  = 0b0000000000000000;
-	lsb_value = amp_fast_settle;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	RHS2116_Fast_Settle(hspi, REGISTER_10, amp_fast_settle);
 
 	// Register 12 - Set all amplifiers to the lower cutoff frequency set by Register 6. Bits in this register can be set to zero during and immediately following stimulation
 	// pulses to rapidly recover from stimulation artifacts. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
 	// IN EXEMPLE : 0xFFFF --> 0xFFFF
-	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
-	reg_address = REGISTER_12;
 	uint16_t amp_fL_select  = 0b1111111111111111;
-	lsb_value = amp_fL_select;
-	tx_vector[0] = (cmd_selector << 8) | (reg_address);
-	tx_vector[1] =  lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-
+	RHS2116_Amplifier_Lower_Cutoff(hspi, REGISTER_12, amp_fL_select);
 
 
 	// Register 34 - Set up a stimulation step size of 1 µA, giving us a stimulation range of ±255 µA on each channel.
