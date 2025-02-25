@@ -1,72 +1,171 @@
 #include <stdio.h>
-#include <wiringPi.h>
-#include <wiringPiSPI.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <linux/ioctl.h>
+#include <linux/types.h>
+#include <linux/spi/spidev.h>
+#include <gpiod.h>
 
-#define SPI_CHANNEL 1        // SPI1 is channel 1 (GPIO 20, 21, 19, 16)
-#define SPI_SPEED 500000     // SPI speed (adjust if needed)
-#define SPI_MODE 0           // SPI mode 0 (CPOL = 0, CPHA = 0)
-#define MOSI_PIN 20          // GPIO 20 for MOSI
-#define MISO_PIN 19          // GPIO 19 for MISO
-#define CLK_PIN 21           // GPIO 21 for Clock
-#define CS_PIN 16            // GPIO 16 for Chip Select
+#define SPI_DEVICE          "/dev/spidev1.0"
+#define SPI_SPEED           25000000  // 1 MHz SPI Speed
+#define SPI_MODE            SPI_MODE_0  // SPI Mode 0
+#define GPIO_CHIP_NAME      "gpiochip0"  // GPIO chip
+#define GPIO_CS_PIN         16  // GPIO 16 for CS (Pin 36)
 
-unsigned char intan_characters[5];
+uint8_t tx_buffer[16];
+uint8_t rx_buffer[16];
+uint32_t len_data = 16;
+int fd;
+int ret;
+struct spi_ioc_transfer trx;
+struct gpiod_chip *chip;
+struct gpiod_line *cs_line;  // CS (Chip Select) line
 
-// Dummy function for Write_To_Intan_Chip (to replace actual implementation)
-void Write_To_Intan_Chip(unsigned char *data, int p_id) {
-    // SPI write functionality
-    wiringPiSPIDataRW(SPI_CHANNEL, data, 4); // Writing 4 bytes at a time
-}
+// Function to set the SPI settings
+int setup_spi(int fd) {
+    uint8_t mode = SPI_MODE_0;  // SPI Mode: Clock Polarity (CPOL) = 0, Clock Phase (CPHA) = 0
+    uint8_t bits = 8; 
+     // 8 bits per word (since the hardware only supports 8 bits)
+    uint32_t speed = SPI_SPEED;  // Clock speed in Hz (500kHz for example)
+    uint16_t delay = 0;  // No delay
 
-void ReadWrite_To_Intan_Chip(char *data_r, unsigned char command, int p_id) {
-    char data[4] = {command, 0, 0, 0}; // Example SPI command
-    Write_To_Intan_Chip(data, p_id);
-    // Read the response (assuming 4 bytes)
-    wiringPiSPIDataRW(SPI_CHANNEL, data, 4);
-    for (int i = 0; i < 4; i++) {
-        data_r[i] = data[i];
-    }
-}
-
-char* readIntanCharactersforTest(int p_id) {
-    char data_r[4] = {0, 0, 0, 0};
-
-    ReadWrite_To_Intan_Chip(data_r, 0b11101000, p_id);
-    ReadWrite_To_Intan_Chip(data_r, 0b11101001, p_id);
-    ReadWrite_To_Intan_Chip(data_r, 0b11101010, p_id);
-    intan_characters[0] = data_r[1];
-
-    ReadWrite_To_Intan_Chip(data_r, 0b11101011, p_id);
-    intan_characters[1] = data_r[1];
-
-    ReadWrite_To_Intan_Chip(data_r, 0b11101100, p_id);
-    intan_characters[2] = data_r[1];
-
-    ReadWrite_To_Intan_Chip(data_r, 0b11101100, p_id);
-    intan_characters[3] = data_r[1];
-
-    ReadWrite_To_Intan_Chip(data_r, 0b11101100, p_id);
-    intan_characters[4] = data_r[1];
-
-    return intan_characters;
-}
-
-int main() {
-    // Setup wiringPi and SPI
-    wiringPiSetupGpio(); // Use BCM GPIO numbering
-    if (wiringPiSPISetup(SPI_CHANNEL, SPI_SPEED) < 0) {
-        printf("SPI setup failed: %s\n", strerror(errno));
+    // Set SPI mode
+    if (ioctl(fd, SPI_IOC_WR_MODE, &mode) == -1) {
+        perror("Error setting SPI mode");
         return -1;
     }
 
-    // Configure the chip here
-    unsigned char p_high_freq_no = 1;
-    unsigned char p_low_freq_no = 5;
-    int p_id = 0;  // Example chip ID
+    // Set bits per word to 8 (hardware limitation)
+    if (ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits) == -1) {
+        perror("Error setting bits per word");
+        return -1;
+    }
 
-    // Test read from Intan chip
-    char* result = readIntanCharactersforTest(p_id);
-    printf("Received data: %s\n", result);
+    // Set max speed
+    if (ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed) == -1) {
+        perror("Error setting max speed");
+        return -1;
+    }
+
+    // Set the delay between transactions
+    if (ioctl(fd, SPI_IOC_WR_LSB_FIRST, &delay) == -1) {
+        perror("Error setting delay");
+        return -1;
+    }
+
+    return 0;
+}
+
+int init_gpio_for_cs(struct gpiod_chip **chip, struct gpiod_line **cs_line, int fd) {
+    // Open the GPIO chip
+    *chip = gpiod_chip_open_by_name(GPIO_CHIP_NAME);
+    if (!*chip) {
+        perror("Failed to open GPIO chip");
+        close(fd);
+        return 1;
+    }
+
+    // Get the CS pin (GPIO 16)
+    *cs_line = gpiod_chip_get_line(*chip, GPIO_CS_PIN);
+    if (!*cs_line) {
+        perror("Failed to get GPIO line for CS");
+        gpiod_chip_close(*chip);
+        close(fd);
+        return 1;
+    }
+
+    // Configure the CS pin as an output and set its default state to high (deselect chip)
+    int ret = gpiod_line_request_output(*cs_line, "SPI_CS", 1);
+    if (ret < 0) {
+        perror("Failed to configure CS pin");
+        gpiod_chip_close(*chip);
+        close(fd);
+        return 1;
+    }
+
+    // Initially set CS high (deselect chip)
+    gpiod_line_set_value(*cs_line, 1);
+
+    return 0;
+}
+
+
+// Function to send SPI commands (16-bit)
+void send_spi_command(uint16_t command) {
+    tx_buffer[0] = (command >> 8) & 0xFF;  // High byte
+    tx_buffer[1] = command & 0xFF;         // Low byte
+
+    // Pull CS low (activate chip select)
+    gpiod_line_set_value(cs_line, 0);
+
+    // Set up the SPI transaction structure
+    trx.tx_buf = (unsigned long)tx_buffer;  // Pointer to the transmit buffer
+    trx.rx_buf = (unsigned long)rx_buffer;  // Pointer to the receive buffer
+    trx.bits_per_word = 8;                  // 8 bits per word
+    trx.speed_hz = SPI_SPEED;               // Set the SPI speed
+    trx.len = 2;                            // Length of data in bytes (2 bytes for 16-bit word)
+
+    // Execute the SPI transfer
+    ret = ioctl(fd, SPI_IOC_MESSAGE(1), &trx);
+    if (ret == -1) {
+        perror("SPI transfer failed");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+
+    // Pull CS high (deactivate chip select)
+    gpiod_line_set_value(cs_line, 1);
+
+    // Print the sent command and the received data
+    // printf("Sent command: 0x%04x, Received: 0x%02x%02x\n", command, rx_buffer[0], rx_buffer[1]);
+}
+
+int main(void) {
+    // Open SPI device
+    fd = open(SPI_DEVICE, O_RDWR);
+    if (fd < 0) {
+        perror("Error opening SPI device");
+        return 1;
+    }
+
+    // Set up the SPI communication parameters
+    if (setup_spi(fd) < 0) {
+        close(fd);
+        return 1;
+    }
+
+    // Initialize GPIO for CS (Chip Select)
+    ret = init_gpio_for_cs(&chip, &cs_line, fd);
+    if (ret != 0) {
+        perror("Error initializing GPIO");
+        return 1;  
+    }
+
+    // Commands to send (16-bit values)
+    uint16_t commands[] = {
+        0b1110100000000000,
+        0b1110100100000000,
+        0b1110101000000000,
+        0b1110101100000000,
+        0b1110110000000000
+    };
+
+    // Send each command via SPI
+    for (int i = 0; i < 5; i++) {
+        send_spi_command(commands[i]);
+    }
+
+    // Close the GPIO line and chip
+    gpiod_chip_close(chip);
+
+    // Close the SPI device
+    close(fd);
 
     return 0;
 }
