@@ -7,7 +7,7 @@
  */
 #include "RHS_Driver.h"
 
-#define PRINT_COMMAND_INFO true
+#define PRINT_COMMAND_INFO false
 #define PRINT_DEBUG_BINARY false
 
 uint16_t tx_vector[2];
@@ -40,7 +40,8 @@ void print_debug_binary(uint16_t *rx_vector){
 	}
 }
 
-void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb_value) {
+void print_configuration(uint16_t tx_vector, uint8_t reg_address, uint16_t lsb_value) {
+    uint8_t cmd_selector = tx_vector >> 8; // Extract the upper 8 bits for command selector
     const char *cmd_type = "Unknown";
     if ((cmd_selector & 0b11000000) == CONVERT_CMD) {
         cmd_type = "CONVERT";
@@ -52,19 +53,24 @@ void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb
         cmd_type = "CLEAR";
     }
 
-    char *flag_info = "";
-    if (cmd_selector & 0b00010000) { // Binary equivalent for M_Flag
-        flag_info = "M_FLAG";
+    char flag_info[50] = "";
+    if (cmd_selector & 0b00100000) { // U_FLAG
+        strcat(flag_info, "U_FLAG");
     }
-    if (cmd_selector & 0b00100000) { // Binary equivalent for U_Flag
-        if (*flag_info) {
-            flag_info = strcat(flag_info, " | U_FLAG");
-        } else {
-            flag_info = "U_FLAG";
-        }
+    if (cmd_selector & 0b00010000) { // M_FLAG
+        if (flag_info[0]) strcat(flag_info, " | ");
+        strcat(flag_info, "M_FLAG");
     }
-    if (!*flag_info) {
-        flag_info = "None";
+    if (cmd_selector & 0b00001000) { // D_FLAG
+        if (flag_info[0]) strcat(flag_info, " | ");
+        strcat(flag_info, "D_FLAG");
+    }
+    if (cmd_selector & 0b00000100) { // H_FLAG
+        if (flag_info[0]) strcat(flag_info, " | ");
+        strcat(flag_info, "H_FLAG");
+    }
+    if (flag_info[0] == '\0') {
+        strcpy(flag_info, "None");
     }
 
     if (PRINT_COMMAND_INFO){
@@ -84,7 +90,7 @@ void RHS2116_Read_Register(SPI_HandleTypeDef *hspi, uint8_t Register){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -97,7 +103,7 @@ void RHS2116_Clear_Command(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -111,7 +117,7 @@ void RHS2116_Disable_Stim(SPI_HandleTypeDef *hspi, uint8_t Register){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Enable_Stim(SPI_HandleTypeDef *hspi){
@@ -123,7 +129,7 @@ void RHS2116_Enable_Stim(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 	// Register 33 - Write Disable Stim B
 	cmd_selector = WRITE_CMD;
@@ -133,7 +139,7 @@ void RHS2116_Enable_Stim(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -146,7 +152,7 @@ void RHS2116_PowerUp_DCCouple_LowGain_Amp(SPI_HandleTypeDef *hspi, uint8_t Regis
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -159,7 +165,7 @@ void RHS2116_Configure_ADC_Sampling_Rate(SPI_HandleTypeDef *hspi, uint8_t Regist
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -178,7 +184,7 @@ void RHS2116_ADCFormat_DSPSetting_AuxOutput(SPI_HandleTypeDef *hspi, uint8_t Reg
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 
 }
@@ -196,7 +202,7 @@ void RHS2116_Impedance_Check_Control(SPI_HandleTypeDef *hspi, uint8_t Register,
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -210,7 +216,7 @@ void RHS2116_Impedence_Check_DAC(SPI_HandleTypeDef *hspi, uint8_t Register, uint
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -227,7 +233,7 @@ void RHS2116_Amplifier_Bandwidth_Select_Upper(SPI_HandleTypeDef *hspi, uint8_t R
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -241,7 +247,7 @@ void RHS2116_Amplifier_Bandwidth_Select_Lower(SPI_HandleTypeDef *hspi, uint8_t R
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void  RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t AC_amp_power){
@@ -254,21 +260,21 @@ void  RHS2116_Amplifier_Power_Up(SPI_HandleTypeDef *hspi, uint8_t Register, uint
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Fast_Settle(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t amp_fast_settle){
 	// Register 10 - Turn off fast settle function on all channels. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
 	// IN EXEMPLE : 0x0000
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = amp_fast_settle;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 }
 
@@ -278,14 +284,14 @@ void RHS2116_Amplifier_Lower_Cutoff(SPI_HandleTypeDef *hspi, uint8_t Register, u
 	// pulses to rapidly recover from stimulation artifacts. (This command does not take effect until the U flag is asserted since Register 10 is a triggered register.)
 	// IN EXEMPLE : 0xFFFF --> 0xFFFF
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = amp_fL_select;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 
@@ -299,7 +305,7 @@ void RHS2116_Stimulation_Step_Size(SPI_HandleTypeDef *hspi, uint8_t Register, ui
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Stimulation_Bias(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t stim_nbias, uint8_t stim_pbias){
@@ -312,7 +318,7 @@ void RHS2116_Stimulation_Bias(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Voltage_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t charge_recovery_DAC){
@@ -325,7 +331,7 @@ void RHS2116_Voltage_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, 
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Current_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint8_t Imax_sel1, uint8_t Imax_sel2, uint8_t Imax_sel3){
@@ -338,63 +344,63 @@ void RHS2116_Current_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, 
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Stimulation_Turn_ON_OFF(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t stim_status){
 	// Register 42 - Turn all stimulators off. (This command does not take effect until the U flag is asserted since Register 42 is a triggered register.)
 	//IN EXEMPLE : 0x0000
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = stim_status;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Stimulator_Polarity(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t stim_pol){
 	// Register 44 - Set all stimulators to negative polarity. (This command does not take effect until the U flag is asserted since Register 44 is a triggered register.)
 	//IN EXEMPLE : 0x0000
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = stim_pol;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Charge_Recovery_Switches(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t charge_recovery_switch){
 	// Register 46 - Open all charge recovery switches. (This command does not take effect until the U flag is asserted since Register 46 is a triggered register.)
 	//IN EXEMPLE : 0x0000
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = charge_recovery_switch;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Current_Limited_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t CL_charge_recovery_enable){
 	// Register 48 - Disable all current-limited charge recovery circuits. (This command does not take effect until the U flag is asserted since Register 48 is a triggered register.)
 	//IN EXEMPLE : 0x0000
 	cmd_selector = WRITE_CMD;
-	cmd_selector |= (1 << U_FLAG);
 	reg_address = Register;
 	lsb_value = CL_charge_recovery_enable;
 	tx_vector[0] = (cmd_selector << 8) | (reg_address);
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	tx_vector[1] =  lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude){
@@ -410,13 +416,14 @@ void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uin
 
 	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
 	    reg_address = register_addresses[i];
-	    cmd_selector = WRITE_CMD | (1 << U_FLAG);
+	    cmd_selector = WRITE_CMD;
 	    lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
 	    tx_vector[0] = (cmd_selector << 8) | reg_address;
+	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	    tx_vector[1] = lsb_value;
 	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	    print_debug_binary(rx_vector);
-	    print_configuration(cmd_selector, reg_address, lsb_value);
+	    print_configuration(tx_vector[0], reg_address, lsb_value);
 	}
 }
 
@@ -432,13 +439,14 @@ void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uin
 
 	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
 	    reg_address = register_addresses[i];
-	    cmd_selector = WRITE_CMD | (1 << U_FLAG);
+	    cmd_selector = WRITE_CMD;
 	    lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
 	    tx_vector[0] = (cmd_selector << 8) | reg_address;
+	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
 	    tx_vector[1] = lsb_value;
 	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	    print_debug_binary(rx_vector);
-	    print_configuration(cmd_selector, reg_address, lsb_value);
+	    print_configuration(tx_vector[0], reg_address, lsb_value);
 	}
 }
 
@@ -451,7 +459,7 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 	// Register 252 - Read T and A
 	cmd_selector = READ_CMD;
@@ -461,7 +469,7 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 	// Register 253 - Read N and 0
 	cmd_selector = READ_CMD;
@@ -471,7 +479,7 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 	printf("Should be I and N:  %c   %c\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
 	printf("------------------------------------------------  \r\n");
 
@@ -483,7 +491,7 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 	printf("Should be T and A:  %c   %c\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
 	printf("------------------------------------------------  \r\n");
 
@@ -495,7 +503,7 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 	printf("Should be N and 0:  %c   %01X\r\n", (rx_vector[1] >> 8) & 0xFF, rx_vector[1] & 0xFF);
 	printf("------------------------------------------------  \r\n");
 }
@@ -509,7 +517,7 @@ uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Re
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 	// Register 255 - Read Dummy
 	cmd_selector = READ_CMD;
@@ -519,7 +527,7 @@ uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Re
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
 	// Register 255 - Read Dummy
 	cmd_selector = READ_CMD;
@@ -529,7 +537,7 @@ uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Re
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 
     // Combine values into a 16-bit return value
     uint8_t die_revision = (rx_vector[1] >> 8) & 0xFF;
@@ -550,7 +558,7 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register){
     tx_vector[1] = lsb_value;
     SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
     print_debug_binary(rx_vector);
-    print_configuration(cmd_selector, reg_address, lsb_value);
+    print_configuration(tx_vector[0], reg_address, lsb_value);
 
     // Register 255 - Read Dummy
     cmd_selector = READ_CMD;
@@ -560,7 +568,7 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register){
     tx_vector[1] = lsb_value;
     SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
     print_debug_binary(rx_vector);
-    print_configuration(cmd_selector, reg_address, lsb_value);
+    print_configuration(tx_vector[0], reg_address, lsb_value);
 
     // Register 255 - Read Dummy
     cmd_selector = READ_CMD;
@@ -570,7 +578,7 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register){
     tx_vector[1] = lsb_value;
     SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
     print_debug_binary(rx_vector);
-    print_configuration(cmd_selector, reg_address, lsb_value);
+    print_configuration(tx_vector[0], reg_address, lsb_value);
 
     // Extract Chip ID (lower 8 bits)
     uint8_t chip_id = rx_vector[1] & 0xFF;
@@ -579,6 +587,35 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register){
     printf("------------------------------------------------  \r\n");
 
     return chip_id;
+}
+
+
+void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi){
+	for (int loop = 0 ; loop < 1; loop ++){
+		// Register 0
+		cmd_selector = CONVERT_CMD;
+		reg_address = REGISTER_0;
+		lsb_value = 0b0000000000000000;
+		tx_vector[0] = (cmd_selector << 12) | (reg_address);
+		tx_vector[1] = lsb_value;
+		SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	//	print_debug_binary(rx_vector);
+	//	print_configuration(tx_vector[0], reg_address, lsb_value);
+	//	printf("For CH %u Receiving Data : 0x%04X%04X | %s\r\n", REGISTER_0, rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	//	printf("------------------------------------------------  \r\n");
+
+		for (int i = 1; i<15; i++){
+			reg_address = REGISTER_63;
+			lsb_value = 0b0000000000000000;
+			tx_vector[0] = (cmd_selector << 12) | (reg_address);
+			tx_vector[1] = lsb_value;
+			SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	//		print_debug_binary(rx_vector);
+	//		print_configuration(tx_vector[0], reg_address, lsb_value);
+	//		printf("For CH %u Receiving Data : 0x%04X%04X | %s\r\n", i, rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	//		printf("------------------------------------------------  \r\n");
+		}
+	}
 }
 
 
@@ -733,11 +770,11 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	uint16_t result = RHS2116_Read_NumChannel_DieRevision(hspi, REGISTER_254);
 	uint8_t die_revision = (result >> 8) & 0xFF;
 	uint8_t num_channels = result & 0xFF;
-	printf("Extracted: Die Revision : %d | Num Channels : %d\n", die_revision, num_channels);
+	printf("Extracted: Die Revision : %d | Num Channels : %d \r\n", die_revision, num_channels);
 
 	// Should Return Chip ID
 	uint8_t chip_id = RHS2116_Read_Chip_ID(hspi, REGISTER_255);
-	printf("Extracted CHIP ID: %d\n", chip_id);
+	printf("Extracted CHIP ID: %d \r\n", chip_id);
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
@@ -747,9 +784,23 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-	printf("------------------------------------------------  \r\n");
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+//	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+//	printf("------------------------------------------------  \r\n");
+
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[0] |= (1 << D_FLAG);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+//	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+//	printf("------------------------------------------------  \r\n");
 
 
 	// Register 0
@@ -760,21 +811,8 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
-	printf("------------------------------------------------  \r\n");
-
-
-	// Register 0
-	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
-	lsb_value = 0b0000000000000000;
-	tx_vector[0] = (cmd_selector << 12) | (reg_address);
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+	printf("Receiving Data - Should be 16bits on MSB: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
 	printf("------------------------------------------------  \r\n");
 
 	// Register 0
@@ -782,11 +820,12 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	reg_address = REGISTER_63;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[0] |= (1 << D_FLAG);
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+	printf("Receiving Data - Should be 10bits on LSB: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
 	printf("------------------------------------------------  \r\n");
 
 	// Register 0
@@ -797,8 +836,23 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	tx_vector[1] = lsb_value;
 	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
 	print_debug_binary(rx_vector);
-	print_configuration(cmd_selector, reg_address, lsb_value);
-	printf("Receiving Data : 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+	printf("Receiving Data - Should be 16bits on MSB: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
 	printf("------------------------------------------------  \r\n");
+
+	// Register 0
+	cmd_selector = CONVERT_CMD;
+	reg_address = REGISTER_63;
+	lsb_value = 0b0000000000000000;
+	tx_vector[0] = (cmd_selector << 12) | (reg_address);
+	tx_vector[0] |= (1 << D_FLAG);
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+	printf("Receiving Data - Should be 10bits on LSB: 0x%04X%04X | %s\r\n", rx_vector[0], rx_vector[1], binary_string((uint32_t)(rx_vector[0] << 16 | rx_vector[1])));
+	printf("------------------------------------------------  \r\n");
+
+	RHS2116_Convert_Register(hspi);
 
 }

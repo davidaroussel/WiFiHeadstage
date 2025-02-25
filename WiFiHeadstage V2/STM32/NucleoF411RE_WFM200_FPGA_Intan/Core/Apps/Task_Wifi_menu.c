@@ -12,6 +12,8 @@
 #include "lwip/tcp.h"
 #include "Task_Apps_Start.h"
 #include "Task_TCP_Transmit.h"
+#include "Task_Intan_SPI_communication.h"
+
 
 #define DEVICE_ID "Headstage V2      ID:0"
 
@@ -19,12 +21,10 @@ static int intan_config_mode  = 0;
 
 extern struct tcp_pcb *tpcb;
 extern ip_addr_t server_addr;
-
-void wifi_menu_start(void const *arg);
-static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err);
-void intan_cutoff_menu(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err);
-
-
+extern TaskHandle_t samplingTaskHandle;
+extern TIM_HandleTypeDef htim2;
+extern volatile uint8_t sampling_enabled;
+extern uint32_t global_counter;
 void WIFI_MENU_INIT(void *arg) {
 
     osThreadDef(wifi_menu_handle, wifi_menu_start, osPriorityRealtime, 0, configMINIMAL_STACK_SIZE);
@@ -96,6 +96,9 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
         osDelay(10);
 
         printf("Received data (length: %d): ", p->len);
+//        for(int i = 0; i<p->len; i++){
+//        	printf("%c", data[i]);  // Print character by character
+//        }
 		printf("%c", data[0]);  // Print character by character
 
         printf("\r\n");
@@ -187,10 +190,30 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
 			intan_config_mode = 1;  // Enter Intan configuration mode
 			break;
         case 'A':
-            printf("Executing Start Intan Sampling task\r\n");
-            break;
+			char *channels = (char *)malloc((p->len - 1) * sizeof(char));
+			if (channels == NULL) {
+				printf("Memory allocation failed for channels array\n");
+				return ERR_MEM;  // Return error code for memory allocation failure
+			}
+
+			printf("Channels : [ ");
+			for (int i = 1; i < p->len; i++) {
+				channels[i - 1] = data[i];
+				printf("%d ", channels[i - 1]);
+			}
+			printf("] \r\n");
+
+
+			free(channels);
+
+			printf("Executing Start Intan Sampling task\r\n");
+			StartSampling();
+
+			break;
 
         case 'B':
+        	StopSampling();
+        	printf("Global Counter %d \r\n", global_counter);
             printf("Executing Stop Intan Sampling task\r\n");
             break;
 
@@ -198,7 +221,6 @@ static err_t wifi_menu_recv_callback(void *arg, struct tcp_pcb *pcb, struct pbuf
             printf("Unknown command received\r\n");
             break;
     }
-
     // Free the received buffer
     pbuf_free(p);
 

@@ -17,7 +17,7 @@
 char* binary_string(uint32_t value);
 
 void print_debug_binary(uint16_t *rx_vector);
-void print_configuration(uint8_t cmd_selector, uint8_t reg_address, uint16_t lsb_value);
+void print_configuration(uint16_t tx_vector, uint8_t reg_address, uint16_t lsb_value);
 
 void RHS2116_Read_Register(SPI_HandleTypeDef *hspi, uint8_t Register);
 void RHS2116_Clear_Command(SPI_HandleTypeDef *hspi);
@@ -55,15 +55,20 @@ void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi);
 uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Register);
 uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register);
 
+void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi);
+
 void INIT_RHS(SPI_HandleTypeDef *hspi);
 
-#define CONVERT_CMD  0b00000
+#define CONVERT_CMD  0b000000
 #define WRITE_CMD    0b10000000
 #define READ_CMD     0b11000000
 #define CLEAR_CMD    0b01101010
 
-#define M_FLAG  4
-#define U_FLAG  5
+
+#define H_FLAG  10
+#define D_FLAG  11
+#define M_FLAG  12
+#define U_FLAG  13
 
 
 #define REGISTER_0   0b00000000

@@ -49,10 +49,20 @@
 void start_app_task(void);
 //#define DEFAULT_IP_ADDR 		"192.168.0.154"
 //#define DEFAULT_IP_ADDR 		"192.168.56.1"
-#define  DEFAULT_IP_ADDR      "192.168.1.144"
+#define  DEFAULT_IP_ADDR      "192.168.1.147"
 //#define  DEFAULT_IP_ADDR      "192.168.1.5"
 #define  UDP_SERVER_PORT_DEFAULT 10000
-#define  TCP_SERVER_PORT_DEFAULT 10000
+#define  TCP_SERVER_PORT_DEFAULT 5001
+
+
+
+void TIM2_IRQHandler(void);
+void Timer2_Init(void);
+void StartSampling(void);
+void StopSampling(void);
+void SampleFunction(void);
+
+#define TIMER_FREQUENCY  10000  // 5 kHz
 
 
 // STRUCT FOR SPI - SOCKET MESSAGE

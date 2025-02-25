@@ -131,9 +131,9 @@ sl_status_t sl_wfx_host_deinit (void) {
  *****************************************************************************/
 sl_status_t sl_wfx_host_reset_chip(void) {
   HAL_GPIO_WritePin(WFM_RESET_GPIO_Port, WFM_RESET_Pin, GPIO_PIN_RESET);
-  HAL_Delay(10);
+  HAL_Delay(100);
   HAL_GPIO_WritePin(WFM_RESET_GPIO_Port, WFM_RESET_Pin, GPIO_PIN_SET);
-  HAL_Delay(10);
+  HAL_Delay(100);
 
   return SL_STATUS_OK;
 }
@@ -199,7 +199,7 @@ sl_status_t sl_wfx_host_wait_for_confirmation (uint8_t confirmation_id,
   
   for (uint32_t i = 0; i < timeout_ms; i++) {
     /* Wait for an event posted by the function sl_wfx_host_post_event() */
-    if (xQueueReceive(sl_wfx_confirmation_queue, &posted_event_id, 1) == pdTRUE) {
+    if (xQueueReceive(sl_wfx_confirmation_queue, &posted_event_id, 25) == pdTRUE) {
       /* Once a message is received, check if it is the expected ID */
       if (confirmation_id == posted_event_id) {
         /* Pass the confirmation reply and return*/
@@ -515,6 +515,7 @@ void sl_wfx_connect_callback (sl_wfx_connect_ind_t *connect) {
       strcpy(event_log, "Connection authentication failure");
       printf(event_log);
       printf("\r\n");
+      wifi_autoconnexion_init();
       break;
     }
   default:

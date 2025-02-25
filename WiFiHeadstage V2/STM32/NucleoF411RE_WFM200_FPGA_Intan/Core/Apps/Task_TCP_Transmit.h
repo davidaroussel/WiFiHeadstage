@@ -10,6 +10,6 @@
 
 
 void TASK_TCP_TRANSMIT_INIT(void *arg);
-
+int INIT_TCP(void);
 
 #endif /* APPS_TASK_TCP_TRANSMIT_H_ */

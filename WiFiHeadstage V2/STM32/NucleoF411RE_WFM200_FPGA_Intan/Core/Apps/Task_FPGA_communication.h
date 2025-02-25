@@ -16,6 +16,7 @@
 
 void TASK_RHD_SPI_COMMUNICATION_INIT (void *arg);
 void INIT_RHD(SPI_HandleTypeDef *hspi);
+void Intan_Sampling_task_entry(void const *arg);
 
 
 

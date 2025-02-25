@@ -53,7 +53,7 @@ int INIT_TCP(void) {
     }
 
     tcp_arg(tpcb, NULL);
-    err = tcp_connect(tpcb, &server_addr, 10000, tcp_connected);
+    err = tcp_connect(tpcb, &server_addr, TCP_SERVER_PORT_DEFAULT, tcp_connected);
     if (err != ERR_OK) {
         printf("TCP connection failed with error %d\n", err);
         tcp_close(tpcb);
@@ -62,6 +62,8 @@ int INIT_TCP(void) {
 
     return ERR_OK;
 }
+
+
 
 void TCP_TRANSMIT_task_entry(void const *arg);
 
