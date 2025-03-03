@@ -312,11 +312,11 @@ if __name__ == "__main__":
     HOST_IP_ADDR = ""
 
     # 8 CHANNELS CONFIGURATION
-    # CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
-    #                  [8, 9, 10, 11, 12, 13, 14, 15],
-    #                  [16, 17, 18, 19, 20, 21, 22, 23],
-    #                  [24, 25, 26, 27, 28, 29, 30, 31]]
-    # CHANNELS = CHANNELS_LIST[1]
+    CHANNELS_LIST = [[0, 1, 2, 3, 4, 5, 6, 7],
+                     [8, 9, 10, 11, 12, 13, 14, 15],
+                     [16, 17, 18, 19, 20, 21, 22, 23],
+                     [24, 25, 26, 27, 28, 29, 30, 31]]
+    CHANNELS = CHANNELS_LIST[1]
 
     # 32 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
@@ -325,14 +325,14 @@ if __name__ == "__main__":
     #              24, 25, 26, 27, 28, 29, 30, 31]
 
     # 16 CHANNELS CONFIGURATION
-    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-                8, 9, 10, 11, 12, 13, 14, 15]
+    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
+    #             8, 9, 10, 11, 12, 13, 14, 15]
 
     # 12 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
 
     SAMPLING_TIME = 30  # Time sampling in seconds
-    FREQ_SAMPLING = 6000
+    FREQ_SAMPLING = 5000
     BUFFER_SIZE = 1024*1000  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.

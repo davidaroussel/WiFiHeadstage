@@ -7,9 +7,9 @@ import numpy as np
 
 # ---- SPECIFY THE SIGNAL PROPERTIES ---- #
 totalDuration = 100   # the total duration of the signal
-numChannels = 8     # number of channels to send
-bufferSize = 64    # size of the data buffer
-Freq = 12000        # sample rate of the signal
+numChannels = 32     # number of channels to send
+bufferSize = 256    # size of the data buffer
+Freq = 25000        # sample rate of the signal
 testingValue1 = 1000  # high value
 testingValue2= -1000  # low value
 
@@ -28,7 +28,7 @@ oneCycle = np.concatenate((intList_1, intList_2))
 allData = np.tile(oneCycle, (numChannels, totalDuration)).T
 
 # ---- SPECIFY THE IP AND PORT ---- #
-serverAddressPort = ("192.168.1.121", 10001)
+serverAddressPort = ("localhost", 10001)
 
 # ---- CREATE THE SOCKET OBJECT ---- #
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
@@ -47,7 +47,7 @@ def currentTime():
 # ---- STREAM DATA ---- #
 while (bufferIndex < totalBytes):
     t1 = currentTime()
-    print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
+    # print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
     UDPClientSocket.sendto(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer], serverAddressPort)
     t2 = currentTime()
 

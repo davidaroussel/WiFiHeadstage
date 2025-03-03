@@ -109,6 +109,5 @@ class WiFiHeadstageReceiver(BaseException):
         BUFFER_SIZE = self.buffer_size * self.buffer_factor
         data = [0 for i in range(0, BUFFER_SIZE)]
         while 1:
-
             self.queue_raw_data.put(data)
             time.sleep(0.001)

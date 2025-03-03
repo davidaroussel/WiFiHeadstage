@@ -84,9 +84,10 @@ class DataConverter:
                             dataNumber = dataCounter // self.num_channels
                             channelNumber = dataCounter % self.num_channels
                             sync_counter += 1
-                            os.system('cls')
                             if sync_counter%10 == 0:
-                                print(f"OutofSync {sync_counter}")
+                                # print(f"OutofSync {sync_counter}")
+                                # print("Oups")
+                                pass
                             # print("OUT OF SYNC !!", "dataCounter", dataNumber)
                             # print("NOW ON", dataNumber, "with", channelNumber)
 
@@ -107,7 +108,7 @@ class DataConverter:
                             converted_array_Ephys[channelNumber][dataNumber] = mV_value
                             converted_array_mV[channelNumber][dataNumber] = converted_data
                         else:
-                            print("Appending list, it actually happened")
+                            # print("Appending list, it actually happened")
                             converted_array_Ephys[channelNumber].append(mV_value)
                             converted_array_mV[channelNumber].append(converted_data)
 
@@ -116,7 +117,7 @@ class DataConverter:
                     if dataCounter > 0 and (dataCounter % (self.buffer_size * self.num_channels)) == 0:
                         np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
                         self.queue_ephys_data.put(np_conv)
-                        self.queue_csv_data.put(converted_array_mV)
+                        # self.queue_csv_data.put(converted_array_mV)
                         sin_counter = 0
                         dataCounter = 0
 
