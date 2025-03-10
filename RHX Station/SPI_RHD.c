@@ -13,10 +13,11 @@
 #include <gpiod.h>
 
 #define SPI_DEVICE          "/dev/spidev1.0"
-#define SPI_SPEED           25000000  // 1 MHz SPI Speed
+#define SPI_SPEED           25000000  // 25 MHz SPI Speed
 #define SPI_MODE            SPI_MODE_0  // SPI Mode 0
 #define GPIO_CHIP_NAME      "gpiochip0"  // GPIO chip
 #define GPIO_CS_PIN         16  // GPIO 16 for CS (Pin 36)
+#define GPIO_TOGGLE_PIN     12  // GPIO 12 to toggle (Pin 32)
 
 uint8_t tx_buffer[16];
 uint8_t rx_buffer[16];
@@ -26,13 +27,13 @@ int ret;
 struct spi_ioc_transfer trx;
 struct gpiod_chip *chip;
 struct gpiod_line *cs_line;  // CS (Chip Select) line
+struct gpiod_line *toggle_line;  // Line for toggling GPIO 12
 
 // Function to set the SPI settings
 int setup_spi(int fd) {
     uint8_t mode = SPI_MODE_0;  // SPI Mode: Clock Polarity (CPOL) = 0, Clock Phase (CPHA) = 0
     uint8_t bits = 8; 
-     // 8 bits per word (since the hardware only supports 8 bits)
-    uint32_t speed = SPI_SPEED;  // Clock speed in Hz (500kHz for example)
+    uint32_t speed = SPI_SPEED;  // Clock speed in Hz
     uint16_t delay = 0;  // No delay
 
     // Set SPI mode
@@ -41,7 +42,7 @@ int setup_spi(int fd) {
         return -1;
     }
 
-    // Set bits per word to 8 (hardware limitation)
+    // Set bits per word to 8
     if (ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits) == -1) {
         perror("Error setting bits per word");
         return -1;
@@ -62,7 +63,8 @@ int setup_spi(int fd) {
     return 0;
 }
 
-int init_gpio_for_cs(struct gpiod_chip **chip, struct gpiod_line **cs_line, int fd) {
+// Function to initialize GPIO for CS and Toggle
+int init_gpio(struct gpiod_chip **chip, struct gpiod_line **cs_line, struct gpiod_line **toggle_line, int fd) {
     // Open the GPIO chip
     *chip = gpiod_chip_open_by_name(GPIO_CHIP_NAME);
     if (!*chip) {
@@ -80,8 +82,17 @@ int init_gpio_for_cs(struct gpiod_chip **chip, struct gpiod_line **cs_line, int 
         return 1;
     }
 
+    // Get the Toggle pin (GPIO 12)
+    *toggle_line = gpiod_chip_get_line(*chip, GPIO_TOGGLE_PIN);
+    if (!*toggle_line) {
+        perror("Failed to get GPIO line for Toggle");
+        gpiod_chip_close(*chip);
+        close(fd);
+        return 1;
+    }
+
     // Configure the CS pin as an output and set its default state to high (deselect chip)
-    int ret = gpiod_line_request_output(*cs_line, "SPI_CS", 1);
+    ret = gpiod_line_request_output(*cs_line, "SPI_CS", 1);
     if (ret < 0) {
         perror("Failed to configure CS pin");
         gpiod_chip_close(*chip);
@@ -89,8 +100,18 @@ int init_gpio_for_cs(struct gpiod_chip **chip, struct gpiod_line **cs_line, int 
         return 1;
     }
 
-    // Initially set CS high (deselect chip)
+    // Configure the Toggle pin as an output
+    ret = gpiod_line_request_output(*toggle_line, "GPIO_TOGGLE", 1);
+    if (ret < 0) {
+        perror("Failed to configure Toggle pin");
+        gpiod_chip_close(*chip);
+        close(fd);
+        return 1;
+    }
+
+    // Initially set CS high (deselect chip) and toggle pin low
     gpiod_line_set_value(*cs_line, 1);
+    gpiod_line_set_value(*toggle_line, 0); // Start with GPIO 12 LOW
 
     return 0;
 }
@@ -123,7 +144,7 @@ void send_spi_command(uint16_t command) {
     gpiod_line_set_value(cs_line, 1);
 
     // Print the sent command and the received data
-    // printf("Sent command: 0x%04x, Received: 0x%02x%02x\n", command, rx_buffer[0], rx_buffer[1]);
+    printf("Sent command: 0x%04x, Received: 0x%02x%02x\n", command, rx_buffer[0], rx_buffer[1]);
 }
 
 int main(void) {
@@ -140,12 +161,14 @@ int main(void) {
         return 1;
     }
 
-    // Initialize GPIO for CS (Chip Select)
-    ret = init_gpio_for_cs(&chip, &cs_line, fd);
+    // Initialize GPIO for CS (Chip Select) and Toggle GPIO 12
+    ret = init_gpio(&chip, &cs_line, &toggle_line, fd);
     if (ret != 0) {
         perror("Error initializing GPIO");
         return 1;  
     }
+
+    gpiod_line_set_value(toggle_line, 1);
 
     // Commands to send (16-bit values)
     uint16_t commands[] = {

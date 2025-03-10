@@ -29,8 +29,8 @@ class DataConverter:
         print("---STARTING DATA_CONVERSION THREAD---")
         # converted_array_mV = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
         # converted_array_Ephys = [[[] for j in range(self.buffer_size)] for i in range(self.num_channels)]
-        converted_array_mV = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
-        converted_array_Ephys = np.zeros((self.num_channels, self.buffer_size), dtype=np.int16)
+        converted_array_mV = np.zeros((self.num_channels, self.buffer_size + 1), dtype=np.int16)
+        converted_array_Ephys = np.zeros((self.num_channels, self.buffer_size + 1) , dtype=np.int16)
         QUEUE_STACK = [[],[]]
         counter = 0
         sin_counter = 0
@@ -108,12 +108,15 @@ class DataConverter:
                             converted_array_Ephys[channelNumber][dataNumber] = mV_value
                             converted_array_mV[channelNumber][dataNumber] = converted_data
                         else:
+                            pass
                             # print("Appending list, it actually happened")
-                            converted_array_Ephys[channelNumber].append(mV_value)
-                            converted_array_mV[channelNumber].append(converted_data)
+                            # converted_array_Ephys[channelNumber].append(mV_value)
+                            # converted_array_mV[channelNumber].append(converted_data)
 
                     dataCounter += 1
-
+                    print(dataCounter)
+                    if dataCounter == 2047:
+                        pass
                     if dataCounter > 0 and (dataCounter % (self.buffer_size * self.num_channels)) == 0:
                         np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
                         self.queue_ephys_data.put(np_conv)

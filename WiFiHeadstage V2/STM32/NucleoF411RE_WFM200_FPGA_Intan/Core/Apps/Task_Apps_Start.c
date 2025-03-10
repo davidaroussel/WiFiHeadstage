@@ -48,12 +48,12 @@ void TIM2_IRQHandler(void) {
 
 
 void Timer2_Init(void) {
-	__HAL_RCC_TIM2_CLK_ENABLE();  // Enable TIM2 clock
+	__HAL_RCC_TIM2_CLK_ENABLE();
 
-	uint32_t system_clock = 100000000; // Assume 100 MHz system clock
-	uint32_t target_frequency = TIMER_FREQUENCY;  // Desired frequency
+	uint32_t system_clock = 100000000;
+	uint32_t target_frequency = TIMER_FREQUENCY;
 	uint32_t prescaler = 9;
-	uint32_t period = 999;  // Keep period small for high frequencies
+	uint32_t period = 999;
 
 	printf("System Clock: %lu Hz \r\n", system_clock);
 	printf("Target Timer Frequency: %d Hz \r\n", target_frequency);
@@ -75,12 +75,12 @@ void Timer2_Init(void) {
 
 void StartSampling(void) {
     printf("Starting Sampling at %d Hz...\r\n", TIMER_FREQUENCY);
-    HAL_TIM_Base_Start_IT(&htim2);  // Start timer with interrupt
+    HAL_TIM_Base_Start_IT(&htim2);
 }
 
 void StopSampling(void) {
     printf("Stopping Sampling...\r\n");
-    HAL_TIM_Base_Stop_IT(&htim2);  // Stop timer
+    HAL_TIM_Base_Stop_IT(&htim2);
 }
 
 

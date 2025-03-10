@@ -1,4 +1,4 @@
-import spidev
+mport spidev
 import RPi.GPIO as GPIO
 import time
 
@@ -6,24 +6,26 @@ import time
 MOSI = 20
 MISO = 19
 SCLK = 21
-CS = 7
+CS = 16
 CONTROL_GPIO = 12
+
+# Disable GPIO warnings
+GPIO.setwarnings(False)
 
 # Initialize GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(CS, GPIO.OUT, initial=GPIO.HIGH)
-GPIO.setup(CONTROL_GPIO, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(CONTROL_GPIO, GPIO.OUT, initial=GPIO.HIGH)
 
 # Initialize SPI
 spi = spidev.SpiDev()
-spi.open(1, 0)  # SPI bus 1, device 0
-spi.max_speed_hz = 1000000  # 1 MHz
-spi.mode = 0b01  # SPI mode 1
 
-command = 232
-top = command >> 8
-bottom = command & 0xff
-print(top, bottom)
+try:
+    spi.open(1, 0)  # SPI bus 1, device 0
+    spi.max_speed_hz = 2500000 # 1 MHz
+    spi.mode = 0b0  # SPI mode 1
+except FileNotFoundError:
+    print("Error: Could not open SPI device. Make sure SPI is enabled on your Raspberry Pi.")
 
 def read_write_to_intan_chip(command, chip_id):
     """
@@ -31,6 +33,8 @@ def read_write_to_intan_chip(command, chip_id):
     """
     GPIO.output(CS, GPIO.LOW)
     response = spi.xfer2([command >> 8, command & 0xFF])
+#     bin_value = [bin(num) for num in response]
+    #print(f"Commande : {command:016b}, Response: {response} - {bin_value}")
     GPIO.output(CS, GPIO.HIGH)
     return response
 
@@ -39,11 +43,25 @@ def read_intan_characters_for_test(chip_id):
     Reads Intan chip characters for testing.
     """
     intan_characters = []
-    commands = [0b11101000, 0b11101001, 0b11101010, 0b11101011, 0b11101100]
+    commands = [0b1110100000000000, 0b1110100100000000, 0b1110101000000000, 0b1110101100000000, 0b1110110000000000]
     for command in commands:
         data = read_write_to_intan_chip(command, chip_id)
-        intan_characters.append(data[1])
-    return intan_characters
+        ascii_data = hex(data[1])
+        intan_characters.append(ascii_data)
+        
+    
+    # Dummy command to retrieve n+2 
+    command = 0b0000000000000000
+    data = read_write_to_intan_chip(command, chip_id)
+    ascii_data = hex(data[1])
+    intan_characters.append(ascii_data)
+    data = read_write_to_intan_chip(command, chip_id)
+    ascii_data = hex(data[1])
+    intan_characters.append(ascii_data)
+    
+    ret_val = intan_characters[2:]
+    
+    return ret_val
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
     """
@@ -120,11 +138,20 @@ def cleanup():
     spi.close()
     GPIO.cleanup()
 
-# Example usage
-try:
+if __name__ == "__main__":
+    # Example usage
     chip_id = 0  # Example chip ID
-    configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
-    intan_characters = read_intan_characters_for_test(chip_id)
-    print("Intan Characters:", intan_characters)
-finally:
-    cleanup()
+
+    command = 0b0000000000000000
+    data = read_write_to_intan_chip(command, chip_id)
+    data = read_write_to_intan_chip(command, chip_id)
+    
+    configure_intan_chip(0, 0, chip_id)
+    
+    #     configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
+    for i in range(1000):
+        intan_characters = read_intan_characters_for_test(chip_id)
+        print("Intan Characters:", intan_characters)
+        ascii_value = ''.join(chr(int(h,16)) for h in intan_characters)
+        print("ASCII : ", ascii_value)
+        time.sleep(0.25)
