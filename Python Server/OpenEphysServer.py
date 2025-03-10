@@ -8,7 +8,7 @@ from OpenEphys.OpenEphysSender import OpenEphysSender
 
 from open_ephys.control import OpenEphysHTTPServer
 from open_ephys.control.network_control import NetworkControl
-
+import keyboard
 
 if __name__ == "__main__":
     channel = 3
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # 12 CHANNELS CONFIGURATION
     BUFFER_SOCKET_FACTOR = 20
     BUFFER_SIZE = 64
-    FREQUENCY   = 3000
+    FREQUENCY   = 2800
 
     CHANNELS_LIST = [[0, 1, 2, 3],
                      [4, 5, 6, 7],
@@ -101,9 +101,37 @@ if __name__ == "__main__":
 
 
     # Continuous loop until "stop" is entered
-    user_input = input("\n Enter 'stop' to disable sampling: ")
-    if user_input.strip().lower() == "stop":
-        TASK_WiFiServer.stopDataFromIntan()
-        print("Closed Intan")
-        print("Closed everything")
-        # sys.exit()
+    # user_input = input("\n Enter 'stop' to disable sampling: ")
+    # if user_input.strip().lower() == "stop":
+    #     TASK_WiFiServer.stopDataFromIntan()
+    #     print("Closed Intan")
+    #     print("Closed everything")
+    #     # sys.exit()
+
+    channels_mapping = {
+        2: ("q", "a"),
+        3: ("w", "s"),
+        4: ("e", "d"),
+        5: ("r", "f")
+    }
+
+    # Initialize previous state tracking
+    prev_state = {key: False for keys in channels_mapping.values() for key in keys}
+
+    while True:
+        for channel, (key_on, key_off) in channels_mapping.items():
+            if keyboard.is_pressed(key_on):
+                if not prev_state[key_on]:  # Detect new press
+                    gui_ttl.send_ttl(line=channel, state=1)  # Turn ON
+                    print(f"Channel {channel} ON")
+                    prev_state[key_on] = True
+            else:
+                prev_state[key_on] = False  # Reset when released
+
+            if keyboard.is_pressed(key_off):
+                if not prev_state[key_off]:  # Detect new press
+                    gui_ttl.send_ttl(line=channel, state=0)  # Turn OFF
+                    print(f"Channel {channel} OFF")
+                    prev_state[key_off] = True
+            else:
+                prev_state[key_off] = False  # Reset when released
