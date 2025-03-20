@@ -106,29 +106,36 @@ class WiFiServer(BaseException):
         socket.sendall(command)  # Start Intan Timer
         time.sleep(0.001)
 
-        for i in range(loops):
-            pourcentage = round((i/loops) * 100, 3)
-            print(pourcentage, "%")
+        start_time = None  # Initialize timer
 
+        for i in range(loops):
+            # pourcentage = round((i / loops) * 100, 3)
+            # print(pourcentage, "%")
             data = []
             while len(data) < BUFFER_SIZE:
                 rest_packet = socket.recv(BUFFER_SIZE)
                 if not rest_packet:
                     print("BOOBOO")
+                if start_time is None:
+                    start_time = time.time()  # Start timer on first received byte
                 data += bytearray(rest_packet)
-                #time.sleep(0.001)
             self.m_raw_data.extend(data)
+            print("Loops: ", i, "Packets: ", len(self.m_raw_data) / BUFFER_SIZE)
 
+        end_time = time.time()  # Stop timer after last received byte
 
         socket.sendall(b"B")  # Stop Intan Timer
         time.sleep(0.1)
 
-        #EMPTY SOCKET BUFFER
+        # EMPTY SOCKET BUFFER
         trash_bufsize = buffer_size
-        while True:
-            packet = socket.recv(trash_bufsize)
-            if len(packet) < trash_bufsize:
-                break
+        # while True:
+        #     packet = socket.recv(trash_bufsize)
+        #     if len(packet) < trash_bufsize:
+        #         break
+
+        if start_time:
+            print(f"Total time taken: {end_time - start_time:.6f} seconds")
 
     def convertData(self):
         converted_data = [[] for i in range(self.num_channels)]
@@ -197,6 +204,7 @@ class WiFiServer(BaseException):
         ch_counter = 0
         for row in range(self.num_channels):
             k = [i for i in range(len(self.m_converted_array[ch_counter]))]
+            print("Size of received buffer:", len(k))
             #VERSION FOR PYTHON 3.10
             # axs[row].plot(k, self.m_converted_array[ch_counter])
             # axs[row].title.set_text("CHANNEL {}".format(self.m_channels[ch_counter]))
@@ -331,9 +339,11 @@ if __name__ == "__main__":
     # 12 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
 
-    SAMPLING_TIME = 30  # Time sampling in seconds
-    FREQ_SAMPLING = 3000
-    BUFFER_SIZE = 64*1000  # Maximum value possible for the WiFi UDP Socket communication
+    CHANNELS = [0, 1, 2, 3]
+
+    SAMPLING_TIME = 20  # Time sampling in seconds
+    FREQ_SAMPLING = 24000
+    BUFFER_SIZE = 256  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.
     # Loops is the number of time we want to receive data
@@ -347,6 +357,7 @@ if __name__ == "__main__":
     while not(HEADSTAGE_SERVER.m_connected):
         time.sleep(1)
 
+    HEADSTAGE_DRIVER.stopDataFromIntan(HEADSTAGE_SERVER.m_socket)
     # Add the connection to the list of clients
     headstage_id = HEADSTAGE_DRIVER.getHeadstageID(HEADSTAGE_SERVER.m_socket)
     headstage_object = {"name": headstage_id, "socket": HEADSTAGE_SERVER.m_socket}
@@ -368,7 +379,7 @@ if __name__ == "__main__":
         if device_number.isdigit():
             if int(device_number) <= (len(HEADSTAGE_SERVER.clients) - 1):
                 selected_headstage = HEADSTAGE_SERVER.clients[int(device_number)]['socket']
-                HEADSTAGE_DRIVER.restartDevice(selected_headstage)
+                HEADSTAGE_DRIVER.stopDataFromIntan(selected_headstage)
                 HEADSTAGE_DRIVER.getMenu(selected_headstage)
                 HEADSTAGE_DRIVER.verifyIntanChip(selected_headstage, p_id=0)
                 HEADSTAGE_DRIVER.getHeadstageID(selected_headstage)

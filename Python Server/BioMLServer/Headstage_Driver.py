@@ -74,7 +74,7 @@ class HeadstageDriver:
         socket.sendall(b"B")  # Stop Intan Timer
         # EMPTY SOCKET BUFFER
         trash_bufsize = 128
-        packet = socket.recv(trash_bufsize)
+        # packet = socket.recv(trash_bufsize)
         print("Closed Intan Sampling")
 
     def restartDevice(self, socket):
@@ -103,6 +103,7 @@ class HeadstageDriver:
         # Number of times we want to receive data from the Headstage before plotting the results
         LOOPS = math.floor(TOTAL_NUMBER_OF_BYTES / buffer_size)
         REAL_SAMPLING_TIME = (LOOPS * buffer_size) / BYTES_PER_SEC
-        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of", TOTAL_NUMBER_OF_BYTES, " bytes")
+        REAL_BUFFER_SIZE = LOOPS * buffer_size
+        print("Will sample for ", REAL_SAMPLING_TIME, "sec representing", LOOPS, " loops for a total of", REAL_BUFFER_SIZE, " bytes")
 
         return LOOPS

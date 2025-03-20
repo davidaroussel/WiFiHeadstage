@@ -11,7 +11,7 @@ import csv
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-
+import matplotlib.ticker as mticker
 import matplotlib.ticker as ticker
 
 from Tools import *
@@ -221,7 +221,7 @@ def plot_spikes_around_best(data, num_channels, fs, directory_name, save_directo
     plt.show()
 
 def plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False):
-    enlarged_window = 15 * fs
+    enlarged_window = 100 * fs
     time_window = 0.5 * fs  # 0.5 seconds before and after the spike
     total_window = 2 * time_window  # Total window size (1 second)
     zoomed_window = 1.5 * fs
@@ -316,6 +316,34 @@ def plot_best_spike_with_surrounding_individual(data, num_channels, fs, director
         plt.show()
 
 
+def plot_all_data(data, num_channels, fs, directory_name, save_directory, save_figure=False):
+    """
+    Plots all channels with their respective data in a single figure using subplots.
+    X-axis represents the sample index.
+    """
+    # Set up figure with subplots
+    fig, axs = plt.subplots(num_channels, 1, figsize=(12, 2 * num_channels), sharex=True)
+    fig.suptitle(f'Raw Data for All Channels - Directory: {directory_name}')
+
+    for channel_index in range(num_channels):
+        axs[channel_index].plot(np.arange(data.shape[0]), data[:, channel_index], color='black')
+        axs[channel_index].set_ylabel(f'Ch {channel_index + 1}')
+        axs[channel_index].grid(True, linestyle='--', alpha=0.6)
+
+    axs[-1].set_xlabel('Sample Index')  # Label only the last subplot for clarity
+    axs[-1].xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{int(x)}'))  # Disable scientific notation
+
+    plt.tight_layout(rect=[0, 0, 1, 0.96])  # Adjust layout to fit title
+
+    if save_figure:
+        save_path = os.path.join(save_directory, f"all_data_{directory_name}.png")
+        plt.savefig(save_path)
+        print(f"Figure saved: {save_path}")
+
+    plt.show()
+
+
+
 if __name__ == '__main__':
     src_directory = r'../../analysis_results/'
     base_directory = r'C:\Users\david\Documents\Open Ephys\New folder'
@@ -355,12 +383,14 @@ if __name__ == '__main__':
             "duration_seconds": recording_duration_seconds,
         }
 
-        data = continuous.get_samples(2000000, num_samples_continuous)
+        data = continuous.get_samples(0, num_samples_continuous)
         num_samples, num_channels = data.shape
         print(f"Numbers of channels: {num_channels}")
         # plot_spikes_one_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_all_spikes_separate_figure(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
         # plot_extracted_noise(data, num_channels, lowcut=180.0, highcut=3000.0, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=True)
-        plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
+        # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
 
-        # plot_best_spike_with_surrounding_individual(data, num_channels, fs, directory_name, save_directory, save_figure=False)
+        # plot_best_spike_with_surrounding_individual(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
+
+        plot_all_data(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)

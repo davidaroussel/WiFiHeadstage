@@ -30,6 +30,7 @@ class WiFiHeadstageReceiver(BaseException):
         self.converted_array = []
 
         self.HeadstageDriver = HeadstageDriver()
+        self.headstage_packet_size = []
 
     def startThread(self, threadID):
         if threadID.is_alive():
@@ -81,14 +82,25 @@ class WiFiHeadstageReceiver(BaseException):
         self.m_thread_socket.sendall(command)  # Start Intan Timer
         time.sleep(0.001)
         # trash_packet = self.m_thread_socket.recv(BUFFER_SIZE)
+
+        time_start = time.time()
+        data_size = 0
         while 1:
             data = []
             while len(data) < BUFFER_SIZE:
                 rest_packet = self.m_thread_socket.recv(BUFFER_SIZE)
+                # print("Lenght ", len(rest_packet))
                 if not rest_packet:
                     print("BOOBOO")
                 data += bytearray(rest_packet)
+            data_size += len(data)
             self.queue_raw_data.put(data)
+
+            # time_stop = time.time()
+            # if time_stop - time_start > 10.0:
+            #     self.stopDataFromIntan()
+            #     print(data_size)
+
 
     def stopDataFromIntan(self):
         self.m_thread_socket.sendall(b"B")  # Stop Intan Timer

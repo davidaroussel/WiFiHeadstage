@@ -86,40 +86,40 @@ class OpenEphysSender:
 
         buffersPerSecond = self.frequency / self.buffer_size
         bufferInterval = 1 / buffersPerSecond
-
+        print(buffersPerSecond)
         max_udp_size = 65535
         while True:
             t1 = self.currentTime()
             item = self.queue_conv_data.get()
+            # print(len(item))
+            # if len(item) > max_udp_size:
+            #     half_point = len(item) // 2
+            #     item_part1 = item[:half_point]
+            #     item_part2 = item[half_point:]
+            #     half_interval = bufferInterval / 2
+            #
+            #     openEphys_Socket.sendto(item_part1, openEphys_AddrPort)
+            #     t2 = self.currentTime()
+            #
+            #     # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
+            #     while ((t2 - t1) < half_interval):
+            #         t2 = self.currentTime()
+            #
+            #     t1 = self.currentTime()
+            #     openEphys_Socket.sendto(item_part2, openEphys_AddrPort)
+            #     t2 = self.currentTime()
+            #
+            #     # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
+            #     while ((t2 - t1) < half_interval):
+            #         t2 = self.currentTime()
+            # else:
 
-            if len(item) > max_udp_size:
-                half_point = len(item) // 2
-                item_part1 = item[:half_point]
-                item_part2 = item[half_point:]
-                half_interval = bufferInterval / 2
+            openEphys_Socket.sendto(item, openEphys_AddrPort)
+            t2 = self.currentTime()
 
-                openEphys_Socket.sendto(item_part1, openEphys_AddrPort)
+            # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
+            while ((t2 - t1) < bufferInterval):
                 t2 = self.currentTime()
-
-                # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-                while ((t2 - t1) < half_interval):
-                    t2 = self.currentTime()
-
-                t1 = self.currentTime()
-                openEphys_Socket.sendto(item_part2, openEphys_AddrPort)
-                t2 = self.currentTime()
-
-                # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-                while ((t2 - t1) < half_interval):
-                    t2 = self.currentTime()
-            else:
-
-                openEphys_Socket.sendto(item, openEphys_AddrPort)
-                t2 = self.currentTime()
-
-                # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-                while ((t2 - t1) < bufferInterval):
-                    t2 = self.currentTime()
 
     def plotData(self):
         # SPECIFY THE IP AND PORT #
