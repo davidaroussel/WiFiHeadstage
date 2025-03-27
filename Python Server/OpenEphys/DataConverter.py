@@ -114,9 +114,7 @@ class DataConverter:
                             # converted_array_mV[channelNumber].append(converted_data)
 
                     dataCounter += 1
-                    print(dataCounter)
-                    if dataCounter == 2047:
-                        pass
+                    # print(dataCounter)
                     if dataCounter > 0 and (dataCounter % (self.buffer_size * self.num_channels)) == 0:
                         np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
                         self.queue_ephys_data.put(np_conv)

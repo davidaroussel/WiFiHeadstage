@@ -64,32 +64,20 @@ class WiFiHeadstageSimulator:
             # DC value is constant and mapped to signed range
             return int(amplitude)  # DC wave has a constant value
 
-    def _generate_data_packet(self):
-        packet_size = 227
-        packet = bytearray(packet_size)
-
-        for channel_id in self.channels:
-            channel_data = []
-            for i in range(3, len(packet), 2): # 2 bytes per sample
-                wave_value = self._generate_wave(channel_id, self.wave_generators[channel_id]["time"])
-                channel_data.append(wave_value)
-                self.wave_generators[channel_id]["time"] += self.sample_period
-
-            self.queue_raw_data.put((channel_id, channel_data))
 
     def continuedDataSimulator(self):
         BUFFER_SIZE = self.buffer_size * self.buffer_factor
         NUM_CHANNEL = self.num_channels
 
         # Create an array to hold data for each channel, indexed by channel index
-        data = [[0 for _ in range(BUFFER_SIZE // self.num_channels)] for _ in range(NUM_CHANNEL)]
+        data = [[0 for _ in range(BUFFER_SIZE)] for _ in range(NUM_CHANNEL)]
 
         for channel_index, channel in enumerate(self.channels):
             wave_values = []  # Will store the waveform for this channel
             time_point = 0
 
             # Generate waveform for each channel
-            for _ in range(BUFFER_SIZE // self.num_channels):  # Each sample is two 8-bit words
+            for _ in range(BUFFER_SIZE // 2):  # Each sample is two 8-bit words
                 sample_value = self._generate_wave(channel, time_point)  # Get waveform value
                 lsb = 1 if channel == 0 else 0  # Set LSB to 1 for the first channel, 0 otherwise
 
@@ -111,8 +99,6 @@ class WiFiHeadstageSimulator:
         while 1:
             # Send the data packet
             self.queue_raw_data.put(flattened_data)
-
-            # Adjust sleep to maintain the proper frequency
             time.sleep(1 / self.frequency)
 
     def startThread(self):
@@ -133,7 +119,7 @@ if __name__ == "__main__":
     # GLOBAL VARIABLES
     HOST_ADDR      = ""
     HEADSTAGE_PORT = 5000
-    OPENEPHYS_PORT = 10001
+    OPENEPHYS_PORT = 10003
 
     # HEADSTAGE CONFIGS
     # 8 CHANNELS CONFIGURATION
@@ -154,11 +140,12 @@ if __name__ == "__main__":
                      [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]]
     # CHANNELS = CHANNELS_LIST[0]
 
+    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7]
 
     # 12 CHANNELS CONFIGURATION
-    BUFFER_SOCKET_FACTOR =20
+    BUFFER_SOCKET_FACTOR = 1
     BUFFER_SIZE = 256
-    FREQUENCY   = 12000
+    FREQUENCY   = 25000
 
     CHANNELS_LIST = [[0, 1, 2, 3],
                      [4, 5, 6, 7],
@@ -178,23 +165,25 @@ if __name__ == "__main__":
     TASK_HeadstageSimulator = WiFiHeadstageSimulator(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, FREQUENCY, BUFFER_SOCKET_FACTOR)
     TASK_DataConverter = DataConverter(QUEUE_RAW_DATA, QUEUE_EPHYS_DATA, QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
     TASK_OpenEphysSender = OpenEphysSender(QUEUE_EPHYS_DATA, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
-    TASK_CSVWriter = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
-
-
 
     # Start other threads
-    if CSV_WRITING:
-        TASK_CSVWriter.startThread()
     if OPENEPHYS_SENDING:
         TASK_OpenEphysSender.startThread()
     TASK_DataConverter.startThread()
 
     for CHANNEL in CHANNELS:
-        if CHANNEL % 2 == 0:
-            TASK_HeadstageSimulator.init_wave([CHANNEL], wave_type="dc", amplitude=12000, frequency=50)  # Max amplitude for signed 16-bit
-        else:
-            TASK_HeadstageSimulator.init_wave([CHANNEL], wave_type="dc", amplitude=8000, frequency=130)  # Square wave for channel 1
+        # if CHANNEL:
+        TASK_HeadstageSimulator.init_wave([CHANNEL], wave_type="dc", amplitude=20000, frequency=2000)  # Max amplitude for signed 16-bit
+        # else:
+        #     TASK_HeadstageSimulator.init_wave([CHANNEL], wave_type="dc", amplitude=8000, frequency=130)  # Square wave for channel 1
     TASK_HeadstageSimulator.startThread()
+
+    time.sleep(0.01)
+    print("Match Parameters with OpenEphys")
+    print("Socket        : ", OPENEPHYS_PORT)
+    print("Sampling Rate : ", FREQUENCY, "Hz")
+    print("Number Of CH  : ", len(CHANNELS))
+    print("Buffer Size   : ", BUFFER_SIZE, "bytes")
 
     # Continuous loop until "stop" is entered
     user_input = input("\n Enter 'stop' to disable sampling: ")

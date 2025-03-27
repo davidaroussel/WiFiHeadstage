@@ -331,8 +331,7 @@ def plot_all_data(data, num_channels, fs, directory_name, save_directory, save_f
         axs[channel_index].grid(True, linestyle='--', alpha=0.6)
 
     axs[-1].set_xlabel('Sample Index')  # Label only the last subplot for clarity
-    axs[-1].xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{int(x)}'))  # Disable scientific notation
-
+    axs[-1].xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{int(x)}'))
     plt.tight_layout(rect=[0, 0, 1, 0.96])  # Adjust layout to fit title
 
     if save_figure:
