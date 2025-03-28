@@ -88,6 +88,9 @@ class OpenEphysSender:
         bufferInterval = 1 / buffersPerSecond
         print(buffersPerSecond)
         max_udp_size = 65535
+
+        inter_bufferInterval = 0.9 * bufferInterval
+
         while True:
             t1 = self.currentTime()
             item = self.queue_conv_data.get()
@@ -118,7 +121,7 @@ class OpenEphysSender:
             t2 = self.currentTime()
 
             # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-            while ((t2 - t1) < bufferInterval):
+            while ((t2 - t1) < inter_bufferInterval):
                 t2 = self.currentTime()
 
     def plotData(self):

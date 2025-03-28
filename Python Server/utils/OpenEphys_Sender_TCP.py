@@ -13,7 +13,7 @@ import matplotlib.patches as mpatches
 totalDuration = 600 # the total duration of the signal
 numChannels = 4  # number of channels to send
 numSamples = 500  # size of the data buffer
-Freq = 30000  # sample rate of the signal
+Freq = 15000  # sample rate of the signal
 testingValue1 = 1000  # high value
 testingValue2 = -1000  # low value
 
@@ -59,7 +59,7 @@ bufferIndex = 0
 print("Starting transmission")
 
 bufferInterval_ns = bufferInterval * 1000000000
-checkup_time_ns = 0.1 * math.pow(10, 9) # lets validate the total number of byte sent every 1 seconds
+checkup_time_ns = 1 * math.pow(10, 9) # lets validate the total number of byte sent every 1 seconds
 checkup_time_sec = checkup_time_ns / math.pow(10, 9)
 
 expected_packet_sent = buffersPerSecond * (checkup_time_ns/math.pow(10,9))
@@ -99,7 +99,7 @@ try:
                     # print(expected_bytes_sent - total_bytes_sent)
                     missing_packet = expected_packet_sent - total_packet_sent
                     missing_packet_list.append(missing_packet)
-                    # print(missing_packet_list[-1])
+                    print(missing_packet_list[-1])
                     elapse_time = 0
                     total_packet_sent = 0
                     total_bytes_sent = 0
