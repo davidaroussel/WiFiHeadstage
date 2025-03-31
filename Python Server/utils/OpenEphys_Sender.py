@@ -37,9 +37,9 @@ def generate_waveform(wave_type: str, frequency: float, num_samples: int, amplit
 
 # ---- SPECIFY THE SIGNAL PROPERTIES ---- #
 totalDuration = 40  # the total duration of the signal
-numChannels = 1     # number of channels to send
+numChannels = 16    # number of channels to send
 bufferSize = 256    # size of the data buffer
-Freq = 10000        # sample rate of the signal
+Freq = 3500        # sample rate of the signal
 testingValue1 = 5000   # high value
 testingValue2 = -5000  # low value
 
@@ -51,14 +51,14 @@ bufferInterval = 1 / buffersPerSecond
 # ---- GENERATE THE DATA ---- #
 OpenEphysOffset = 32768
 convertedValue1 = OpenEphysOffset+(5000/0.195)
-convertedValue2 = OpenEphysOffset+(2500/0.195)
+convertedValue2 = OpenEphysOffset+(-5000/0.195)
 convertedValue3 = OpenEphysOffset+(-2500/0.195)
 convertedValue4 = OpenEphysOffset+(-5000/0.195)
-intList_1 = (np.ones((int(Freq/4),)) * convertedValue1).astype('uint16')
-intList_2 = (np.ones((int(Freq/4),)) * convertedValue2).astype('uint16')
+intList_1 = (np.ones((int(Freq/2),)) * convertedValue1).astype('uint16')
+intList_2 = (np.ones((int(Freq/2),)) * convertedValue2).astype('uint16')
 intList_3 = (np.ones((int(Freq/4),)) * convertedValue3).astype('uint16')
 intList_4 = (np.ones((int(Freq/4),)) * convertedValue4).astype('uint16')
-oneCycle = np.concatenate((intList_1, intList_2, intList_3, intList_4))
+oneCycle = np.concatenate((intList_1, intList_2))
 
 allData = np.tile(oneCycle, (numChannels, totalDuration)).T
 
@@ -84,12 +84,12 @@ axs[1].legend()
 
 # Show the plot
 plt.tight_layout()
-plt.show()
+# plt.show()
 
-allData = np.tile(waveform, (numChannels, totalDuration)).T
+# allData = np.tile(waveform, (numChannels, totalDuration)).T
 
 # ---- SPECIFY THE IP AND PORT ---- #
-serverAddressPort = ("localhost", 9001)
+serverAddressPort = ("localhost", 10001)
 
 # ---- CREATE THE SOCKET OBJECT ---- #
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
@@ -110,10 +110,10 @@ new_buffer_interval = bufferInterval * 0.98
 # ---- STREAM DATA ---- #
 while (bufferIndex < totalBytes):
     t1 = currentTime()
-    # print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
+    print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
     UDPClientSocket.sendto(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer], serverAddressPort)
     t2 = currentTime()
-    print(min(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]), max(bytesToSend[bufferIndex:bufferIndex + bytesPerBuffer]))
+    # print(min(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]), max(bytesToSend[bufferIndex:bufferIndex + bytesPerBuffer]))
 
     while ((t2 - t1) <= new_buffer_interval):
         t2 = currentTime()

@@ -48,9 +48,9 @@ if __name__ == "__main__":
     # CHANNELS = [3, 8, 21, 27] #4, 9, 22, 28
 
     # 12 CHANNELS CONFIGURATION
-    BUFFER_SOCKET_FACTOR = 100
+    BUFFER_SOCKET_FACTOR = 1
     BUFFER_SIZE = 256
-    FREQUENCY   = 3000
+    FREQUENCY   = 3500
 
     CHANNELS_LIST = [[0, 1, 2, 3],
                      [4, 5, 6, 7],
@@ -117,21 +117,29 @@ if __name__ == "__main__":
 
     # Initialize previous state tracking
     prev_state = {key: False for keys in channels_mapping.values() for key in keys}
-
-    # while True:
-    #     for channel, (key_on, key_off) in channels_mapping.items():
-    #         if keyboard.is_pressed(key_on):
-    #             if not prev_state[key_on]:  # Detect new press
-    #                 gui_ttl.send_ttl(line=channel, state=1)  # Turn ON
-    #                 print(f"Channel {channel} ON")
-    #                 prev_state[key_on] = True
-    #         else:
-    #             prev_state[key_on] = False  # Reset when released
-    #
-    #         if keyboard.is_pressed(key_off):
-    #             if not prev_state[key_off]:  # Detect new press
-    #                 gui_ttl.send_ttl(line=channel, state=0)  # Turn OFF
-    #                 print(f"Channel {channel} OFF")
-    #                 prev_state[key_off] = True
-    #         else:
-    #             prev_state[key_off] = False  # Reset when released
+    # try:
+    #     pass
+    #     # while True:
+    #     #     pass
+    #     #     # for channel, (key_on, key_off) in channels_mapping.items():
+    #     #     #     if keyboard.is_pressed(key_on):
+    #     #     #         if not prev_state[key_on]:  # Detect new press
+    #     #     #             gui_ttl.send_ttl(line=channel, state=1)  # Turn ON
+    #     #     #             print(f"Channel {channel} ON")
+    #     #     #             prev_state[key_on] = True
+    #     #     #     else:
+    #     #     #         prev_state[key_on] = False  # Reset when released
+    #     #     #
+    #     #     #     if keyboard.is_pressed(key_off):
+    #     #     #         if not prev_state[key_off]:  # Detect new press
+    #     #     #             gui_ttl.send_ttl(line=channel, state=0)  # Turn OFF
+    #     #     #             print(f"Channel {channel} OFF")
+    #     #     #             prev_state[key_off] = True
+    #     #     #     else:
+    #     #     #         prev_state[key_off] = False  # Reset when released
+    # except KeyboardInterrupt:
+    #     print("Closing...")
+    # finally:
+    #     print("Stopping Headstage Sampling...")
+    #     TASK_WiFiServer.stopDataFromIntan()
+    #     print("Done !")

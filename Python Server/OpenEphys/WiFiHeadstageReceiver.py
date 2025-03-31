@@ -40,7 +40,9 @@ class WiFiHeadstageReceiver(BaseException):
 
     def stopThread(self, threadID):
         if threadID == self.m_socketConnectionThread:
-            self.m_thread_socket.shutdown(socket.SHUT_RDWR)
+            self.m_thread_socket.close()
+            threadID.join()
+        elif threadID == self.m_headstageRecvThread:
             threadID.join()
 
     def connectSocket(self):
@@ -94,6 +96,7 @@ class WiFiHeadstageReceiver(BaseException):
                     print("BOOBOO")
                 data += bytearray(rest_packet)
             data_size += len(data)
+            # print(len(data))
             self.queue_raw_data.put(data)
 
             # time_stop = time.time()

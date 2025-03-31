@@ -23,14 +23,15 @@ class OpenEphysSender:
         self.port = p_port
         self.buffServer_Flag = False
         self.buffServer_Thread = Thread(target=self.sendToOpenEphysUDP)
+        self.openEphys_Socket = 0
 
     def startThread(self):
         self.buffServer_Thread.start()
 
     # Stop the server
     def stopThread(self):
-        if self.buffServer_Flag:
-            self.buffServer_Thread.join()
+        self.openEphys_Socket.close()
+        self.buffServer_Thread.join()
 
     def currentTime(self):
         return time.time_ns() / (10 ** 9)
@@ -82,7 +83,7 @@ class OpenEphysSender:
         # SPECIFY THE IP AND PORT #
         print("---STARTING SEND_OPENEPHYS THREAD---")
         openEphys_AddrPort = ("localhost", self.port)
-        openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
+        self.openEphys_Socket = socket(family=AF_INET, type=SOCK_DGRAM)
 
         buffersPerSecond = self.frequency / self.buffer_size
         bufferInterval = 1 / buffersPerSecond
@@ -116,8 +117,8 @@ class OpenEphysSender:
             #     while ((t2 - t1) < half_interval):
             #         t2 = self.currentTime()
             # else:
-
-            openEphys_Socket.sendto(item, openEphys_AddrPort)
+            # print("Sending", len(item), "bytes")
+            self.openEphys_Socket.sendto(item, openEphys_AddrPort)
             t2 = self.currentTime()
 
             # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
