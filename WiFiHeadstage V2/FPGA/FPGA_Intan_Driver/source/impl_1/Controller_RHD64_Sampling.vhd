@@ -86,8 +86,8 @@ architecture RTL of Controller_RHD64_Sampling is
       i_TX_DV            : in  std_logic;
       o_TX_Ready         : out std_logic;
       o_RX_DV            : out std_logic;
-      o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);
-      o_RX_Byte_Falling : out std_logic_vector(15 downto 0);
+      o_RX_Byte_Rising   : out std_logic_vector(15 downto 0);
+      o_RX_Byte_Falling  : out std_logic_vector(15 downto 0);
       o_FIFO_Data        : out std_logic_vector(31 downto 0);
       o_FIFO_COUNT       : out std_logic_vector(10 downto 0);
 	  o_FIFO_WE          : out std_logic;
@@ -185,7 +185,9 @@ architecture RTL of Controller_RHD64_Sampling is
 
 	signal stm32_state : integer := 0;
 
-    signal NUM_DATA : integer := (STM32_SPI_NUM_BITS_PER_PACKET / (2*RHD64_SPI_NUM_BITS_PER_PACKET));
+	signal NUM_DATA : integer := (STM32_SPI_NUM_BITS_PER_PACKET / (2*RHD64_SPI_NUM_BITS_PER_PACKET));
+	 
+	type t_data_array is array (0 to 4) of std_logic_vector(15 downto 0);
 
 begin
   Controller_RHD64_1 : entity work.Controller_RHD64_FIFO
@@ -300,78 +302,83 @@ begin
 				stm32_state <= 0;
 			when others =>
 				null;
-		end case;
-	end if;
-  end if;
-end process;
-
-
-
-
-
-
-
-  -- RHD64 PROCESS, PUTTING DATA ONTO THE FIFO OF THE CONTROLER_RHD64 MODULE
-	process (i_Clk)
-		variable state : integer := 0;
-	begin
-	  if i_Rst_L = '1' then
-		counter <= 0;
-	  elsif rising_edge(i_Clk) then
-		if i_Controller_Mode = x"2" then
-		  case state is
-			when 0 =>
-			  -- Sending pattern from the list
-			  int_RHD64_TX_Byte <= std_logic_vector(to_unsigned(counter, 16));
-			  int_RHD64_TX_DV   <= '1';
-			  counter <= counter + 1;
-			  state := 1;
-
-			when 1 =>
-			  int_RHD64_TX_DV <= '0';
-			  state := 2;	
-
-
-			when 2 =>
-			  if int_RHD64_TX_Ready = '1' then
-				state := 3;
-			  else
-				state := 2;
-			  end if;
-
-			when 3 =>
-			  -- FSM is done
-			  state := 0;
-
-			when others =>
-			  null; -- Optional, handle unexpected states
-		  end case;
+			end case;
 		end if;
 	  end if;
 	end process;
 
+
+	process (i_Clk)
+        -- Declare variables inside the process
+        variable state      : integer := 0;
+        variable data_array : t_data_array := (
+            0 => x"E800",
+            1 => x"E900",
+            2 => x"EA00",
+            3 => x"EB00",
+            4 => x"EC00"
+        );
+        variable index      : integer := 0;
+    begin
+        if i_Rst_L = '1' then
+            index := 0;
+            counter <= 0;
+        elsif rising_edge(i_Clk) then
+            if i_Controller_Mode = x"2" then
+                case state is
+                    when 0 =>
+                        -- Send the current value from the array
+                        int_RHD64_TX_Byte <= data_array(index);
+                        int_RHD64_TX_DV   <= '1';
+                        state := 1;
+
+                    when 1 =>
+                        int_RHD64_TX_DV <= '0';
+                        state := 2;
+
+                    when 2 =>
+                        if int_RHD64_TX_Ready = '1' then
+                            state := 3;
+                        end if;
+
+                    when 3 =>
+                        -- Move to next value in array
+                        if index < 4 then
+                            index := index + 1;
+                        else
+                            index := 0;  -- Reset or stop depending on your needs
+                        end if;
+                        state := 0;
+
+                    when others =>
+                        null;
+                end case;
+            end if;
+        end if;
+    end process;
+
 	o_NUM_DATA  <= NUM_DATA;
 	o_STM32_State <=stm32_state;
 
-  o_stm32_counter <= stm32_counter;
-  o_FIFO_RE <= int_FIFO_RE;  
+	o_stm32_counter <= stm32_counter;
+	o_FIFO_RE <= int_FIFO_RE;  
 
-  o_STM32_TX_Byte <= int_STM32_TX_Byte;
-  o_RHD64_TX_Byte <= int_RHD64_TX_Byte;
+	o_STM32_TX_Byte <= int_STM32_TX_Byte;
+	o_RHD64_TX_Byte <= int_RHD64_TX_Byte;
 
-  o_STM32_TX_DV <= int_STM32_TX_DV;
-  o_RHD64_TX_DV <= int_RHD64_TX_DV;
+	o_STM32_TX_DV <= int_STM32_TX_DV;
+	o_RHD64_TX_DV <= int_RHD64_TX_DV;
 
-  o_STM32_RX_Byte_Rising <= int_STM32_RX_Byte_Rising;
+	o_STM32_RX_Byte_Rising <= int_STM32_RX_Byte_Rising;
 
-  o_STM32_TX_Ready <= int_STM32_TX_Ready;
-  o_RHD64_TX_Ready <= int_RHD64_TX_Ready;
+	o_STM32_TX_Ready <= int_STM32_TX_Ready;
+	o_RHD64_TX_Ready <= int_RHD64_TX_Ready;
 
-  o_FIFO_COUNT   <= int_FIFO_COUNT;
-  o_FIFO_Q       <= int_FIFO_Q;
-  o_FIFO_EMPTY   <= int_FIFO_EMPTY;
-  o_FIFO_FULL    <= int_FIFO_FULL;
-  o_FIFO_AEMPTY  <= int_FIFO_AEMPTY;
-  o_FIFO_AFULL   <= int_FIFO_AFULL;
+	o_FIFO_COUNT   <= int_FIFO_COUNT;
+	o_FIFO_Q       <= int_FIFO_Q;
+	o_FIFO_EMPTY   <= int_FIFO_EMPTY;
+	o_FIFO_FULL    <= int_FIFO_FULL;
+	o_FIFO_AEMPTY  <= int_FIFO_AEMPTY;
+	o_FIFO_AFULL   <= int_FIFO_AFULL;
 
 end architecture RTL;

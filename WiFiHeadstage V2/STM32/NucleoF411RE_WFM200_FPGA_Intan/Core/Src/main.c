@@ -98,12 +98,13 @@ int main(void)
   printf("\033\143");
 //  printf("\033[3J");
   printf("Hello, welcome to the WFM200 driver \r\n");
-  HAL_Delay(100);
+  HAL_Delay(500);
 
 
 #ifndef spi_mode_only
   /* Task init */
 //  vTraceEnable(TRC_START);
+  //MAKE SURE POWER OF WFM200 IS ON-BOARD-LDO
   sl_wfx_task_start();
   wifi_events_start();
   //wifi_cli_start();					/*NOT GOING TO USE THE CLI SINCE THERE WILL NOT BE ANY USART CONNECTION*/

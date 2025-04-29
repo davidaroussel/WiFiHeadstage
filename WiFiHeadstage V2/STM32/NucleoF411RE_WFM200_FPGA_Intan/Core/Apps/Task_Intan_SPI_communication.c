@@ -97,16 +97,22 @@ void Intan_Sampling_task_entry(void const *arg) {
 	uint32_t counter = 0;
 	SPI_HandleTypeDef *hspi;
 	hspi = &hspi3;
+	int seconds = 0;
     while(1) {
-        if (TIMER_FLAG) {
-			// Start processing when the flag is raised
-			RHS2116_Convert_Register(hspi);
-			global_counter +=1;
-			TIMER_FLAG = false;
-        }
-        else{
-        	vTaskDelay(1);
-        }
+    	seconds += 1;
+        HAL_Delay(1000);
+        printf("Number of seconds: %i \r\n", seconds);
+        vTaskDelay(1);
+
+//        if (TIMER_FLAG) {
+//			// Start processing when the flag is raised
+//			RHS2116_Convert_Register(hspi);
+//			global_counter +=1;
+//			TIMER_FLAG = false;
+//        }
+//        else{
+//        	vTaskDelay(1);
+//        }
     }
 }
 

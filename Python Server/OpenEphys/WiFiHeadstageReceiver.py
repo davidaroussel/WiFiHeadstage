@@ -74,27 +74,36 @@ class WiFiHeadstageReceiver(BaseException):
     def configureSamplingFreq(self, samp_freq):
         self.HeadstageDriver.configureSamplingFreq(self.m_socket, samp_freq)
 
+    def check_fifo_state(self):
+        command = b"9"
+        time.sleep(0.5)
+        self.m_thread_socket.sendall(command)  # Start Intan Timer
+
     def continuedDataFromIntan(self):
-        BUFFER_SIZE = self.buffer_size * self.buffer_factor
         print("---STARTING HEADSTAGE_RECV THREAD---")
+        BUFFER_SIZE = self.buffer_size * self.buffer_factor
         command = b"A"
         time.sleep(1)
         for ch in self.channels:
             command = command + ch.to_bytes(1, 'big')
         self.m_thread_socket.sendall(command)  # Start Intan Timer
         time.sleep(0.001)
-        # trash_packet = self.m_thread_socket.recv(BUFFER_SIZE)
 
         time_start = time.time()
         data_size = 0
         while 1:
             data = []
             while len(data) < BUFFER_SIZE:
-                rest_packet = self.m_thread_socket.recv(BUFFER_SIZE)
-                # print("Lenght ", len(rest_packet))
-                if not rest_packet:
+                recv_packet = self.m_thread_socket.recv(BUFFER_SIZE)
+                if not recv_packet:
                     print("BOOBOO")
-                data += bytearray(rest_packet)
+
+                # if len(rest_packet) != BUFFER_SIZE:
+                #     print("Lenght ", len(rest_packet), " !!")
+                # else:
+                #     print("Lenght ", len(rest_packet))
+
+                data += bytearray(recv_packet)
             data_size += len(data)
             # print(len(data))
             self.queue_raw_data.put(data)

@@ -5,15 +5,15 @@ set ::bali::simulation::Para(DEVICEFAMILYNAME) {iCE40UP}
 set ::bali::simulation::Para(PROJECT) {sim}
 set ::bali::simulation::Para(MDOFILE) {}
 set ::bali::simulation::Para(PROJECTPATH) {C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim}
-set ::bali::simulation::Para(FILELIST) {"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling_tb.vhd" }
+set ::bali::simulation::Para(FILELIST) {"C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level.vhd" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level_tb.vhd" }
 set ::bali::simulation::Para(GLBINCLIST) {}
-set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none" "none" "none"}
-set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" "work" "work" }
-set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VHDL" "VHDL" "VHDL" "VHDL" "VHDL" }
-set ::bali::simulation::Para(LANGSTDLIST) {"Verilog 2001" "" "" "" "" "" }
+set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none" "none" "none" "none"}
+set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" "work" "work" "work" }
+set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VHDL" "VHDL" "VHDL" "VHDL" "VHDL" "VHDL" }
+set ::bali::simulation::Para(LANGSTDLIST) {"Verilog 2001" "" "" "" "" "" "" }
 set ::bali::simulation::Para(SIMLIBLIST) {pmi_work ovi_ice40up}
 set ::bali::simulation::Para(MACROLIST) {}
-set ::bali::simulation::Para(SIMULATIONTOPMODULE) {Controller_RHD64_Sampling_tb}
+set ::bali::simulation::Para(SIMULATIONTOPMODULE) {top_level_tb}
 set ::bali::simulation::Para(SIMULATIONINSTANCE) {}
 set ::bali::simulation::Para(LANGUAGE) {VHDL}
 set ::bali::simulation::Para(SDFPATH)  {}

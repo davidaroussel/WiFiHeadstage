@@ -39,9 +39,6 @@ def read_write_to_intan_chip(command, chip_id):
     return response
 
 def read_intan_characters_for_test(chip_id):
-    """
-    Reads Intan chip characters for testing.
-    """
     intan_characters = []
     commands = [0b1110100000000000, 0b1110100100000000, 0b1110101000000000, 0b1110101100000000, 0b1110110000000000]
     for command in commands:
@@ -50,8 +47,8 @@ def read_intan_characters_for_test(chip_id):
         intan_characters.append(ascii_data)
         
     
-    # Dummy command to retrieve n+2 
-    command = 0b0000000000000000
+    # Dummy command to retrieve n+2 !!!!!!!!!!!
+    command = 0b0000000000000000 #DUMMY BYTES HERE
     data = read_write_to_intan_chip(command, chip_id)
     ascii_data = hex(data[1])
     intan_characters.append(ascii_data)
@@ -59,7 +56,7 @@ def read_intan_characters_for_test(chip_id):
     ascii_data = hex(data[1])
     intan_characters.append(ascii_data)
     
-    ret_val = intan_characters[2:]
+    ret_val = intan_characters[2:] #CROPPING THE ARRAY TO ONLY HAVE THE 2-7 DATA, REMOVE THE 0 AND 1
     
     return ret_val
 
