@@ -43,17 +43,17 @@ def read_intan_characters_for_test(chip_id, bit_shifting):
     commands = [0b1110100000000000, 0b1110100100000000, 0b1110101000000000, 0b1110101100000000, 0b1110110000000000]
     for command in commands:
         data = read_write_to_intan_chip(command, chip_id)
-        ascii_data = hex(data[1] << bit_shifting)
+        ascii_data = hex(int(data[1]) << bit_shifting)
         intan_characters.append(ascii_data)
         
     
     # Dummy command to retrieve n+2 !!!!!!!!!!!
     command = 0b0000000000000000 #DUMMY BYTES HERE
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1] << bit_shifting)
+    ascii_data = hex(int(data[1]) << bit_shifting)
     intan_characters.append(ascii_data)
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1] << bit_shifting)
+    ascii_data = hex(int(data[1]) << bit_shifting)
     intan_characters.append(ascii_data)
     
     ret_val = intan_characters[2:] #CROPPING THE ARRAY TO ONLY HAVE THE 2-7 DATA, REMOVE THE 0 AND 1
@@ -61,6 +61,7 @@ def read_intan_characters_for_test(chip_id, bit_shifting):
     return ret_val
 
 def indentify_intan_chip(chip_id):
+    rhd_versions = ["RHD2132", "RHD2216", "None", "RHD2164"]
     bit_shifting = None
 
     # Read Register 59 MISO MARKER
@@ -79,10 +80,14 @@ def indentify_intan_chip(chip_id):
     else:
         big_shifting = 1
         print("BIT SHIFTING TO 1 ")
-    print("MISO MARKER:", ascii_data)
-    print("MISO MARKER2:", miso_marker)
+
+    Intan_Chip_ID = read_write_to_intan_chip(command, chip_id)
+    print("Intan CHIP ID: ", Intan_Chip_ID)
+    print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID])
 
     return bit_shifting
+
+
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
     """
@@ -160,30 +165,19 @@ def cleanup():
     GPIO.cleanup()
 
 if __name__ == "__main__":
-    # Example usage
-    chip_id = 0  # Example chip ID
+    chip_id = 0  # Example chip ID (Not Used Right Now)
 
-    command = 0b0000000000000000
-    data = read_write_to_intan_chip(command, chip_id)
-    data = read_write_to_intan_chip(command, chip_id)
+    command = 0b1111111100000000 # Dummy CMD To Wake Up Chip
+    read_write_to_intan_chip(command, chip_id)
+    read_write_to_intan_chip(command, chip_id)
 
     configure_intan_chip(0, 0, chip_id)
 
     bit_shifting = indentify_intan_chip(chip_id)
 
-    if bit_shifting == 0:
-        #     configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
-        for i in range(1000):
-            intan_characters = read_intan_characters_for_test(chip_id)
-            print("Intan Characters:", intan_characters)
-            ascii_value = ''.join(chr(int(h,16)) for h in intan_characters)
-            print("ASCII : ", ascii_value)
-            time.sleep(2)
-    else:
-        for i in range(1000):
-            intan_characters = read_intan_characters_for_test(chip_id, bit_shifting)
-            formatted_value = int(intan_characters[0]) << bit_shifting
-            print("Intan Characters:", formatted_value)
-            ascii_value = ''.join(chr(int(h, 16)) for h in intan_characters)
-            print("ASCII : ", ascii_value)
-            time.sleep(2)
+    for i in range(1000):
+        intan_characters = read_intan_characters_for_test(chip_id, bit_shifting)
+        print("Intan Characters:", intan_characters)
+        ascii_value = ''.join(chr(int(h, 16)) for h in intan_characters)
+        print("ASCII : ", ascii_value)
+        time.sleep(2)
