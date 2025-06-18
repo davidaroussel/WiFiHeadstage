@@ -72,6 +72,7 @@ def indentify_intan_chip(chip_id):
     command = 0b1111111100000000
     read_write_to_intan_chip(command, chip_id)
     miso_marker = read_write_to_intan_chip(command, chip_id)
+    print(miso_marker)
     ascii_data = hex(miso_marker[1])
 
     if miso_marker[1] == 0:
@@ -82,8 +83,8 @@ def indentify_intan_chip(chip_id):
         print("BIT SHIFTING TO 1 ")
 
     Intan_Chip_ID = read_write_to_intan_chip(command, chip_id)
-    print("Intan CHIP ID: ", Intan_Chip_ID)
-    print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID])
+    print("Intan CHIP ID: ", Intan_Chip_ID[1])
+    print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID[1]-1])
 
     return bit_shifting
 
