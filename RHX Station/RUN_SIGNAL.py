@@ -76,8 +76,6 @@ def indentify_intan_chip(chip_id):
     command = 0b1111111100000000
     read_write_to_intan_chip(command, chip_id)
     miso_marker = read_write_to_intan_chip(command, chip_id)
-    print(miso_marker)
-    ascii_data = hex(miso_marker[1])
 
     if miso_marker[1] == 0:
         bit_shifting = 0
@@ -184,6 +182,31 @@ def sample_intan_channels(channels, sampling_rate, duration_seconds, chip_id):
 
     return data_out
 
+def plot_sampled_data(sampled_data):
+    num_channels = len(sampled_data)
+    fig, axes = plt.subplots(num_channels, 1, figsize=(10, 2.5 * num_channels), sharex=True, sharey=True)
+
+    # If there's only one channel, axes is not a list
+    if num_channels == 1:
+        axes = [axes]
+
+    # Find global min/max for y-axis scaling
+    all_values = [value for samples in sampled_data.values() for value in samples]
+    ymin = min(all_values)
+    ymax = max(all_values)
+
+    for idx, (ch, samples) in enumerate(sampled_data.items()):
+        ax = axes[idx]
+        ax.plot(samples, label=f'Channel {ch}')
+        ax.set_ylim([ymin, ymax])
+        ax.set_ylabel("Raw Value")
+        ax.set_title(f"Channel {ch}")
+        ax.grid(True)
+        if idx == num_channels - 1:
+            ax.set_xlabel("Sample Index")
+
+    plt.tight_layout()
+    plt.show()
 
 # Clean up on exit
 def cleanup():
@@ -210,14 +233,7 @@ if __name__ == "__main__":
         chip_id=chip_id
     )
 
-    for ch, samples in sampled_data.items():
-        plt.plot(samples, label=f'Channel {ch}')
-
-    plt.title("Intan Sampled Data")
-    plt.xlabel("Sample Index")
-    plt.ylabel("Raw Value")
-    plt.legend()
-    plt.show()
+    plot_sampled_data(sampled_data)
 
 
     # for i in range(1000):
