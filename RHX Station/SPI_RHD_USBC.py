@@ -61,6 +61,8 @@ def read_intan_characters_for_test(chip_id):
     return ret_val
 
 def indentify_intan_chip(chip_id):
+    bit_shifting = None
+
     # Read Register 59 MISO MARKER
     command = 0b1111101100000000
     read_write_to_intan_chip(command, chip_id)
@@ -70,8 +72,17 @@ def indentify_intan_chip(chip_id):
     read_write_to_intan_chip(command, chip_id)
     miso_marker = read_write_to_intan_chip(command, chip_id)
     ascii_data = hex(miso_marker[1])
+
+    if miso_marker[1] == 0:
+        bit_shifting = 0
+        print("BIT SHIFTING TO 0 ")
+    else:
+        big_shifting = 1
+        print("BIT SHIFTING TO 1 ")
     print("MISO MARKER:", ascii_data)
     print("MISO MARKER2:", miso_marker)
+
+    return bit_shifting
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
     """
@@ -156,14 +167,17 @@ if __name__ == "__main__":
     data = read_write_to_intan_chip(command, chip_id)
     data = read_write_to_intan_chip(command, chip_id)
 
-    indentify_intan_chip(chip_id)
-
     configure_intan_chip(0, 0, chip_id)
-    
-    #     configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
-    for i in range(1000):
-        intan_characters = read_intan_characters_for_test(chip_id)
-        print("Intan Characters:", intan_characters)
-        ascii_value = ''.join(chr(int(h,16)) for h in intan_characters)
-        print("ASCII : ", ascii_value)
-        time.sleep(0.25)
+
+    bit_shifting = indentify_intan_chip(chip_id)
+
+    if bit_shifting == 0:
+        #     configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
+        for i in range(1000):
+            intan_characters = read_intan_characters_for_test(chip_id)
+            print("Intan Characters:", intan_characters)
+            ascii_value = ''.join(chr(int(h,16)) for h in intan_characters)
+            print("ASCII : ", ascii_value)
+            time.sleep(0.25)
+    else:
+        print("CA SENVIENS MON CHUM")
