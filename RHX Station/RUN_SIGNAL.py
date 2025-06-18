@@ -170,13 +170,13 @@ def sample_intan_channels(channels, sampling_rate, duration_seconds, chip_id):
             ch_shifted = ch << 8
             proper_command = command | ch_shifted
 
-            print("COMMAND: ", command, " -- CHANNEL: ", ch_shifted, " -- FORMATTED COMMAND: ", proper_command)
+            #print("COMMAND: ", command, " -- CHANNEL: ", ch_shifted, " -- FORMATTED COMMAND: ", proper_command)
             read_write_to_intan_chip(command, chip_id)
 
         # Retrieve the results (n+2 latency)
         for ch in channels:
             response = read_write_to_intan_chip(dummy_command, chip_id)
-            value = (response[0] << 8) | response[1]
+            value = int.from_bytes([response[0], response[1]], byteorder='big', signed=True)
             data_out[ch].append(value)
 
         # Maintain target sample rate
@@ -205,8 +205,8 @@ if __name__ == "__main__":
     # Sample from channels 0–3 for 2 seconds at 10 kHz
     sampled_data = sample_intan_channels(
         channels=[0, 1, 2, 3],
-        sampling_rate=1000,
-        duration_seconds=5,
+        sampling_rate=10,
+        duration_seconds=15,
         chip_id=chip_id
     )
 
