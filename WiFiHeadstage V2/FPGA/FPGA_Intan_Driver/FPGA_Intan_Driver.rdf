@@ -2,17 +2,35 @@
 <RadiantProject version="4.2" radiant="2023.2.1.288.0" title="FPGA_Intan_Driver" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
-        <Options hdl_sort="off" top="Controller_RHD64_Config"/>
-        <Source name="source/impl_1/Controller_RHD64_Modes.vhd" type="VHDL" type_short="VHDL">
+        <Options hdl_sort="off" top="top_level"/>
+        <Source name="source/impl_1/top_level_tb.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
-        <Source name="source/impl_1/Controller_RHD64_Config.vhd" type="VHDL" type_short="VHDL">
-            <Options top_module="Controller_RHD64_Config"/>
-        </Source>
-        <Source name="source/impl_1/Controller_RHD64_Sampling.vhd" type="VHDL" type_short="VHDL">
+        <Source name="source/impl_1/Controller_RHD_Sampling_tb.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
-        <Source name="source/impl_1/Controller_RHD64_FIFO.vhd" type="VHDL" type_short="VHDL">
+        <Source name="source/impl_1/Controller_RHD_FIFO_tb.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/FIFO_tb.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/SPI_Master_CS_tb.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/SPI_Master_tb.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/top_level.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="PLL_SPI/PLL_SPI.ipx" type="IPX_Module" type_short="IPX">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD_Sampling.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD_FIFO.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
         <Source name="FIFO_MEM/FIFO_MEM.ipx" type="IPX_Module" type_short="IPX">
@@ -24,16 +42,13 @@
         <Source name="source/impl_1/SPI_Master.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
-        <Source name="source/impl_1/Controller_RHD64_Modes_tb.vhd" type="VHDL" type_short="VHDL">
+        <Source name="source/impl_1/pll_wrapper.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
             <Options/>
         </Source>
-        <Source name="source/impl_1/Controller_RHD64_Sampling_tb.vhd" type="VHDL" type_short="VHDL">
+        <Source name="source/impl_1/pll_48mhz.v" type="Verilog" type_short="Verilog" excluded="TRUE">
             <Options/>
         </Source>
-        <Source name="source/impl_1/Controller_RHD64_FIFO_tb.vhd" type="VHDL" type_short="VHDL">
-            <Options/>
-        </Source>
-        <Source name="fpga_constraint.sdc" type="Pre-Synthesis Constraints File" type_short="SDC">
+        <Source name="Constrain.pdc" type="Physical Constraints File" type_short="PDC">
             <Options/>
         </Source>
         <Source name="FPGA_Intan_Driver/FPGA_Intan_Driver.spf" type="Simulation Project File" type_short="SPF">

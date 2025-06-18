@@ -1,8 +1,24 @@
 # Reading pref.tcl
+# ERROR: No extended dataflow license exists
 # do {C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/sim.mdo}
 # Loading project sim
+# Error 31: Unable to unlink file "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/work/_lib.qdb".
+# Error 31: Unable to unlink file "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/work/_lib1_0.qdb".
+# Error 31: Unable to unlink file "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/work/_lib1_0.qpg".
+# Error 31: Unable to unlink file "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/work/_lib1_0.qtl".
+# Error 133: Unable to remove directory "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/work".
 # Model Technology ModelSim - Lattice FPGA Edition vlog 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:49 on Apr 29,2025
+# Start time: 12:55:27 on May 08,2025
+# vlog -reportprogress 300 "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl" -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v -suppress 2388 
+# -- Compiling module PLL_SPI
+# -- Compiling module PLL_SPI_ipgen_lscc_pll
+# 
+# Top level modules:
+# 	PLL_SPI
+# End time: 12:55:27 on May 08,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Lattice FPGA Edition vlog 2023.3 Compiler 2023.07 Jul 18 2023
+# Start time: 12:55:27 on May 08,2025
 # vlog -reportprogress 300 "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl" -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v -suppress 2388 
 # -- Compiling module FIFO_MEM
 # -- Compiling module FIFO_MEM_ipgen_lscc_fifo
@@ -13,23 +29,23 @@
 # 
 # Top level modules:
 # 	FIFO_MEM
-# End time: 12:35:49 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:27 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:49 on Apr 29,2025
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_FIFO.vhd 
+# Start time: 12:55:27 on May 08,2025
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_FIFO.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity Controller_RHD64_FIFO
-# -- Compiling architecture RTL of Controller_RHD64_FIFO
+# -- Compiling entity Controller_RHD_FIFO
+# -- Compiling architecture RTL of Controller_RHD_FIFO
 # -- Loading package vl_types
 # -- Loading entity FIFO_MEM
-# End time: 12:35:49 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:49 on Apr 29,2025
+# Start time: 12:55:28 on May 08,2025
 # vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -38,10 +54,10 @@
 # -- Loading package MATH_REAL
 # -- Compiling entity SPI_Master
 # -- Compiling architecture RTL of SPI_Master
-# End time: 12:35:49 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:49 on Apr 29,2025
+# Start time: 12:55:28 on May 08,2025
 # vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -51,23 +67,23 @@
 # -- Compiling architecture RTL of SPI_Master_CS
 # -- Loading package MATH_REAL
 # -- Loading entity SPI_Master
-# End time: 12:35:49 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:49 on Apr 29,2025
-# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD64_Sampling.vhd 
+# Start time: 12:55:28 on May 08,2025
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity Controller_RHD64_Sampling
-# -- Compiling architecture RTL of Controller_RHD64_Sampling
-# -- Loading entity Controller_RHD64_FIFO
+# -- Compiling entity Controller_RHD_Sampling
+# -- Compiling architecture RTL of Controller_RHD_Sampling
+# -- Loading entity Controller_RHD_FIFO
 # -- Loading entity SPI_Master_CS
-# End time: 12:35:49 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:50 on Apr 29,2025
+# Start time: 12:55:28 on May 08,2025
 # vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -75,11 +91,13 @@
 # -- Loading package NUMERIC_STD
 # -- Compiling entity top_level
 # -- Compiling architecture RTL of top_level
-# -- Loading entity Controller_RHD64_Sampling
-# End time: 12:35:50 on Apr 29,2025, Elapsed time: 0:00:00
+# -- Loading package vl_types
+# -- Loading entity PLL_SPI
+# -- Loading entity Controller_RHD_Sampling
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
-# Start time: 12:35:50 on Apr 29,2025
+# Start time: 12:55:28 on May 08,2025
 # vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -88,10 +106,22 @@
 # -- Compiling entity top_level_tb
 # -- Compiling architecture Testbench of top_level_tb
 # -- Loading entity top_level
-# End time: 12:35:50 on Apr 29,2025, Elapsed time: 0:00:00
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -L work -L pmi_work -L ovi_ice40up -suppress vsim-7033,vsim-8630,3009,3389 top_level_tb 
-# Start time: 12:35:50 on Apr 29,2025
+# Model Technology ModelSim - Lattice FPGA Edition vcom 2023.3 Compiler 2023.07 Jul 18 2023
+# Start time: 12:55:28 on May 08,2025
+# vcom -reportprogress 300 -work work C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity Controller_RHD_Sampling_tb
+# -- Compiling architecture Testbench of Controller_RHD_Sampling_tb
+# -- Loading entity Controller_RHD_Sampling
+# End time: 12:55:28 on May 08,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -L work -L pmi_work -L ovi_ice40up -suppress vsim-7033,vsim-8630,3009,3389 Controller_RHD_Sampling_tb 
+# Start time: 12:55:28 on May 08,2025
 # //  ModelSim - Lattice FPGA Edition 2023.3 Jul 18 2023
 # //
 # //  Copyright 1991-2023 Mentor Graphics Corporation
@@ -105,27 +135,15 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.top_level_tb(testbench)
-# Loading work.top_level(rtl)
-# Loading work.controller_rhd64_sampling(rtl)
-# Loading verilog.vl_types(body)
-# Loading work.controller_rhd64_fifo(rtl)
-# Loading ieee.math_real(body)
-# Loading work.spi_master_cs(rtl)
-# Loading work.spi_master(rtl)
-# Loading work.FIFO_MEM
-# Loading work.FIFO_MEM_ipgen_lscc_fifo
-# Loading work.FIFO_MEM_ipgen_lscc_fifo_main
-# Loading work.FIFO_MEM_ipgen_lscc_soft_fifo
-# .main_pane.wave.interior.cs.body.pw.wf
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 10 ns  Iteration: 0  Instance: /top_level_tb/uut/Controller_inst
-# ** Failure: Test Complete
-#    Time: 405 us  Iteration: 0  Process: /top_level_tb/Testing File: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level_tb.vhd
-# Break in Process Testing at C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/top_level_tb.vhd line 70
-# End time: 13:04:21 on Apr 29,2025, Elapsed time: 0:28:31
-# Errors: 1, Warnings: 11
+# ** Error: License checkout has been disallowed because
+# only one session is allowed to run on an uncounted nodelocked
+# license and an instance of ModelSim is already running with a
+# nodelocked license on this machine.
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO # End time: 12:56:32 on May 08,2025, Elapsed time: 0:04:43
+# Errors: 1, Warnings: 12
+do PAUSED at line 29
+# End time: 12:56:26 on May 08,2025, Elapsed time: 0:00:58
+# Errors: 1, Warnings: 12

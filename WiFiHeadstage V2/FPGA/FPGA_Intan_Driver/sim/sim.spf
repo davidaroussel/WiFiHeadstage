@@ -1,14 +1,16 @@
-<RadiantSimulationProject simType="ModelSim" path="." stage="0" name="sim" language="1" version="2.0">
-    <Source langstandard="Verilog 2001" include="none" type="VERILOG" path="FIFO_MEM/rtl/FIFO_MEM.v" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/Controller_RHD64_FIFO.vhd" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/SPI_Master.vhd" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/SPI_Master_CS.vhd" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/Controller_RHD64_Sampling.vhd" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/top_level.vhd" worklib="work"/>
-    <Source langstandard="" include="none" type="VHDL" path="source/impl_1/top_level_tb.vhd" worklib="work"/>
+<RadiantSimulationProject name="sim" simType="ModelSim" path="." language="1" version="2.0" stage="0">
+    <Source langstandard="Verilog 2001" path="PLL_SPI/rtl/PLL_SPI.v" worklib="work" include="none" type="VERILOG"/>
+    <Source langstandard="Verilog 2001" path="FIFO_MEM/rtl/FIFO_MEM.v" worklib="work" include="none" type="VERILOG"/>
+    <Source langstandard="" path="source/impl_1/Controller_RHD_FIFO.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/SPI_Master.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/SPI_Master_CS.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/Controller_RHD_Sampling.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/top_level.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/top_level_tb.vhd" worklib="work" include="none" type="VHDL"/>
+    <Source langstandard="" path="source/impl_1/Controller_RHD_Sampling_tb.vhd" worklib="work" include="none" type="VHDL"/>
     <SimLib value="pmi_work ovi_ice40up"/>
     <GlbInc value=""/>
     <Macro value=""/>
     <Udo value=""/>
-    <TopModule instance="" name="top_level_tb" language="VHDL"/>
+    <TopModule instance="" name="Controller_RHD_Sampling_tb" language="VHDL"/>
 </RadiantSimulationProject>

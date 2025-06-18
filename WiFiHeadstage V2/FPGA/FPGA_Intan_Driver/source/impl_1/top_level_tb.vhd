@@ -11,7 +11,9 @@ architecture Testbench of top_level_tb is
     constant CLK_PERIOD : time := 10 ns;  -- 100 MHz Clock
 
     -- DUT Signals
-    signal i_Clk               : std_logic := '0';
+    signal i_clk               : std_logic := '0';
+	
+    signal pll_clk               : std_logic := '0';
    
     -- STM32 SPI Signals
     signal o_STM32_SPI_Clk      : std_logic;
@@ -19,32 +21,35 @@ architecture Testbench of top_level_tb is
     signal o_STM32_SPI_MOSI     : std_logic;
     signal o_STM32_SPI_CS_n     : std_logic := '1';
 
-    -- RHD64 SPI Signals
-    signal o_RHD64_SPI_Clk      : std_logic;
-    signal i_RHD64_SPI_MISO     : std_logic;
-    signal o_RHD64_SPI_MOSI     : std_logic;
-    signal o_RHD64_SPI_CS_n     : std_logic := '1';
+    -- RHD SPI Signals
+    signal o_RHD_SPI_Clk      : std_logic;
+    signal i_RHD_SPI_MISO     : std_logic;
+    signal o_RHD_SPI_MOSI     : std_logic;
+    signal o_RHD_SPI_CS_n     : std_logic := '1';
+	
+	--signal o_reset_counter : std_logic_vector(7 downto 0);
+	--signal o_controller_mode : std_logic_vector(3 downto 0);
 
 
 begin
-	i_Clk <= not i_Clk after CLK_PERIOD;
-	i_RHD64_SPI_MISO <= o_RHD64_SPI_MOSI;
-	i_STM32_SPI_MISO <= o_STM32_SPI_MOSI;
+	i_clk <= not i_clk after CLK_PERIOD;
+	i_RHD_SPI_MISO <= o_RHD_SPI_MOSI;
 	  
 
     -- Instantiate the DUT
     uut: entity work.top_level
         generic map (
-            STM32_SPI_NUM_BITS_PER_PACKET => 1024,
-            STM32_CLKS_PER_HALF_BIT       => 2,
-            STM32_CS_INACTIVE_CLKS        => 4,
-            RHD64_SPI_NUM_BITS_PER_PACKET => 16,
-            RHD64_CLKS_PER_HALF_BIT       => 4,
-            RHD64_CS_INACTIVE_CLKS        => 4
+            STM32_SPI_NUM_BITS_PER_PACKET => 32,
+            STM32_CLKS_PER_HALF_BIT       => 16,
+            STM32_CS_INACTIVE_CLKS        => 64,
+            RHD_SPI_NUM_BITS_PER_PACKET => 16,
+            RHD_CLKS_PER_HALF_BIT       => 32,
+            RHD_CS_INACTIVE_CLKS        => 64
         )
         port map (
             -- Control Signals
-            i_Clk             => i_Clk,
+            i_clk             => i_clk,
+			pll_clk             => pll_clk,
 
             -- STM32 SPI
             o_STM32_SPI_Clk   => o_STM32_SPI_Clk,
@@ -52,11 +57,15 @@ begin
             o_STM32_SPI_MOSI  => o_STM32_SPI_MOSI,
             o_STM32_SPI_CS_n  => o_STM32_SPI_CS_n,
 			
-            -- RHD64 SPI
-            o_RHD64_SPI_Clk   => o_RHD64_SPI_Clk,
-            i_RHD64_SPI_MISO  => i_RHD64_SPI_MISO,
-            o_RHD64_SPI_MOSI  => o_RHD64_SPI_MOSI,
-            o_RHD64_SPI_CS_n  => o_RHD64_SPI_CS_n
+            -- RHD SPI
+            o_RHD_SPI_Clk   => o_RHD_SPI_Clk,
+            i_RHD_SPI_MISO  => i_RHD_SPI_MISO,
+            o_RHD_SPI_MOSI  => o_RHD_SPI_MOSI,
+            o_RHD_SPI_CS_n  => o_RHD_SPI_CS_n
+			
+			--o_Controller_Mode => o_controller_mode,
+			--o_reset_Counter => o_reset_counter
+			
         );
 
     -- Simple stimulus process

@@ -42,8 +42,8 @@ if (a)
 <DIV id="content" onclick="hideTocList()"><PRE>
 |************************************************************************
 | IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
-| Report Generate Date: Apr 29 2025
-| Report Generate Time: 12:56:10
+| Report Generate Date: May  8 2025
+| Report Generate Time: 15:08:08
 |************************************************************************
 |IBIS file ice40up.ibs   
 |Lattice Semiconductor Corporation   
@@ -178,14 +178,15 @@ L_pkg          2.652nH         1.989nH         3.504nH
 C_pkg          0.2807pF        0.2236pF        0.3481pF
 |
 [Pin]  signal_name          model_name           R_pin     L_pin     C_pin
-35            i_Clk                lvc330axxxbaaaaaaain
-32            o_RHD64_SPI_CS_n     lvc330a080aaaaaaaaou
-25            o_RHD64_SPI_MOSI     lvc330a080aaaaaaaaou
-27            o_RHD64_SPI_Clk      lvc330a080aaaaaaaaou
+25            o_RHD_SPI_MOSI       lvc330a080aaaaaaaaou
+27            o_RHD_SPI_Clk        lvc330a080aaaaaaaaou
 6             o_STM32_SPI_CS_n     lvc330a080aaaaaaaaou
 11            o_STM32_SPI_MOSI     lvc330a080aaaaaaaaou
 9             o_STM32_SPI_Clk      lvc330a080aaaaaaaaou
-26            i_RHD64_SPI_MISO     lvc330axxxbaaaaaaain
+45            pll_clk              lvc330a080aaaaaaaaou
+32            o_RHD_SPI_CS_n       lvc330a080aaaaaaaaou
+35            i_clk                lvc330axxxbaaaaaaain
+26            i_RHD_SPI_MISO       lvc330axxxbaaaaaaain
 |************************************************************************
 [Model] lvc330a080aaaaaaaaou
 Model_type Output

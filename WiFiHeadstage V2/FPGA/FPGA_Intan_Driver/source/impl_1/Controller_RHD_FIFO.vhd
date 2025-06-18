@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
-entity Controller_RHD64_FIFO is
+entity Controller_RHD_FIFO is
   generic (
       SPI_MODE               : integer := 0;
       CLKS_PER_HALF_BIT      : integer := 3;
@@ -36,18 +36,18 @@ entity Controller_RHD64_FIFO is
 
     o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_WE     : out std_logic;
-	o_FIFO_COUNT  : out std_logic_vector(10 downto 0);
+	o_FIFO_COUNT  : out std_logic_vector(7 downto 0);
     i_FIFO_RE     : in std_logic;
-    o_FIFO_Q      : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
+	o_FIFO_Q 	  : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_EMPTY  : out std_logic;
     o_FIFO_FULL   : out std_logic;
     o_FIFO_AEMPTY : out std_logic;
     o_FIFO_AFULL  : out std_logic
   );
-end entity Controller_RHD64_FIFO;
+end entity Controller_RHD_FIFO;
 
 
-architecture RTL of Controller_RHD64_FIFO is
+architecture RTL of Controller_RHD_FIFO is
 
   -- Component declaration for SPI_Master_CS
   component SPI_Master_CS is
@@ -91,7 +91,7 @@ architecture RTL of Controller_RHD64_FIFO is
         empty_o: out std_logic;
         almost_full_o: out std_logic;
         almost_empty_o: out std_logic;
-		data_cnt_o: out std_logic_vector(10 downto 0);
+		data_cnt_o: out std_logic_vector(7 downto 0);
         rd_data_o: out std_logic_vector(31 downto 0)
     );
   end component;
@@ -113,7 +113,10 @@ architecture RTL of Controller_RHD64_FIFO is
   signal int_FIFO_EMPTY : std_logic;
   signal int_FIFO_AEMPTY: std_logic;
   signal int_FIFO_AFULL : std_logic;
-  signal int_FIFO_COUNT : std_logic_vector(10 downto 0);
+  signal int_FIFO_COUNT : std_logic_vector(7 downto 0);
+  
+  	signal init_FIFO_State : std_logic;
+	signal init_FIFO_Read : std_logic;
   
 begin
 	int_FIFO_RE <= i_FIFO_RE;
@@ -158,29 +161,51 @@ begin
       rd_data_o     => int_FIFO_Q
   );
 
-  -- SPI RHD64 to FIFO logic
+  -- SPI RHD to FIFO logic
   process (i_Clk, i_Rst_L)
   begin
     if i_Rst_L = '1' then	
-      int_FIFO_DATA <= (others => '0');
-      int_FIFO_WE   <= '0';   	  
+      int_FIFO_DATA <= (others => '1');
+      int_FIFO_WE   <= '0';   	
+	  init_FIFO_Read <= '0';  	
+	  init_FIFO_State <= '0';
     elsif rising_edge(i_Clk) then
-	  if int_RX_DV = '1' then
-		-- Push MISO data into the FIFO
-		int_FIFO_WE <= '1';
-		int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
-		int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
-	  else
-		int_FIFO_WE <= '0';
-	  end if;
+		if i_Controller_Mode = x"0" then
+			if init_FIFO_State = '0' then
+				int_FIFO_WE <= '1';
+				int_FIFO_DATA(31 downto 0) <= x"BBBBBBBB";
+				init_FIFO_State <= '1';
+			else
+				int_FIFO_WE <= '0';
+			end if;
+			
+		elsif i_Controller_Mode = x"2" then
+		  if int_RX_DV = '1' then
+			int_FIFO_WE <= '1';
+			int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
+			int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
+		  else
+			int_FIFO_WE <= '0';
+		  end if;
+		end if;
+		
+		  --if int_RX_DV = '1' then
+			 -- --Push MISO data into the FIFO
+			--int_FIFO_WE <= '1';
+			--int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
+			--int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
+		  --else
+			--int_FIFO_WE <= '0';
+		  --end if;
+		
 	end if;
   end process;
  
   -- SIGNALING FOR CONTROLLER TESTBENCH
   -- data access ports
-  o_FIFO_Data <= int_FIFO_DATA;
-  o_FIFO_Q  <= int_FIFO_Q;
-  o_FIFO_WE <= int_FIFO_WE;
+  o_FIFO_Q     <= int_FIFO_Q;
+  o_FIFO_Data  <= int_FIFO_DATA;
+  o_FIFO_WE    <= int_FIFO_WE;
   o_FIFO_COUNT <= int_FIFO_COUNT;
  
   -- TX (MOSI) Signals

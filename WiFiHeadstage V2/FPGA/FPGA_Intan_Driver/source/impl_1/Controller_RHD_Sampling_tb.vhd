@@ -2,20 +2,22 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity Controller_RHD64_Sampling_tb is
-end entity Controller_RHD64_Sampling_tb;
+entity Controller_RHD_Sampling_tb is
+end entity Controller_RHD_Sampling_tb;
 
-architecture Testbench of Controller_RHD64_Sampling_tb is
+architecture Testbench of Controller_RHD_Sampling_tb is
   -- Constants
   constant CLK_PERIOD                    : time := 10 ns;
-  constant STM32_SPI_NUM_BITS_PER_PACKET : integer := 1024;  -- Adds delay between bytes
-  constant RHD64_SPI_NUM_BITS_PER_PACKET : integer := 16;  -- Adds delay between bytes
+  constant STM32_SPI_NUM_BITS_PER_PACKET : integer := 256; 
+  constant RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;  
   
-  constant STM32_CLKS_PER_HALF_BIT : integer := 8;  -- Adds delay between bytes
-  constant RHD64_CLKS_PER_HALF_BIT : integer := 16;  -- Adds delay between bytes
+  constant STM32_CLKS_PER_HALF_BIT : integer := 2;  -- Adds delay between bytes
+  constant RHD_CLKS_PER_HALF_BIT : integer := 2;  -- Adds delay between bytes
   
-  constant STM32_CS_INACTIVE_CLKS : integer := 8;
-  constant RHD64_CS_INACTIVE_CLKS : integer := 4;
+  constant STM32_CS_INACTIVE_CLKS : integer := 4;
+  constant RHD_CS_INACTIVE_CLKS : integer := 4;
+  
+  constant RHD_SPI_DDR_MODE : integer := 0;
   
 -- Signals
   signal tb_Controller_Mode : std_logic_vector (3 downto 0);
@@ -41,42 +43,44 @@ architecture Testbench of Controller_RHD64_Sampling_tb is
   signal tb_FIFO_Data    : std_logic_vector(31 downto 0);
   signal tb_FIFO_WE      : std_logic;
   signal tb_FIFO_RE      : std_logic;
-  signal tb_FIFO_COUNT   : std_logic_vector(10 downto 0);
+  signal tb_FIFO_COUNT   : std_logic_vector(7 downto 0);
   signal tb_FIFO_Q       : std_logic_vector(31 downto 0) ;
   signal tb_FIFO_EMPTY   : std_logic;
   signal tb_FIFO_FULL    : std_logic;
   signal tb_FIFO_AEMPTY  : std_logic;
   signal tb_FIFO_AFULL   : std_logic;
 
-  -- RHD64 SPI Interface
-  signal tb_RHD64_SPI_Clk          : std_logic;
-  signal tb_RHD64_SPI_MISO         : std_logic;
-  signal tb_RHD64_SPI_MOSI         : std_logic;
-  signal tb_RHD64_SPI_CS_n         : std_logic;
-  signal tb_RHD64_TX_Byte          : std_logic_vector(RHD64_SPI_NUM_BITS_PER_PACKET-1 downto 0) := (others => '0');
-  signal tb_RHD64_TX_DV            : std_logic := '0';
-  signal tb_RHD64_TX_Ready         : std_logic;
-  signal tb_RHD64_RX_DV            : std_logic;
-  signal tb_RHD64_RX_Byte_Rising   : std_logic_vector(RHD64_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-  signal tb_RHD64_RX_Byte_Falling  : std_logic_vector(RHD64_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+  -- RHD SPI Interface
+  signal tb_RHD_SPI_Clk          : std_logic;
+  signal tb_RHD_SPI_MISO         : std_logic;
+  signal tb_RHD_SPI_MOSI         : std_logic;
+  signal tb_RHD_SPI_CS_n         : std_logic;
+  signal tb_RHD_TX_Byte          : std_logic_vector(RHD_SPI_NUM_BITS_PER_PACKET-1 downto 0) := (others => '0');
+  signal tb_RHD_TX_DV            : std_logic := '0';
+  signal tb_RHD_TX_Ready         : std_logic;
+  signal tb_RHD_RX_DV            : std_logic;
+  signal tb_RHD_RX_Byte_Rising   : std_logic_vector(RHD_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+  signal tb_RHD_RX_Byte_Falling  : std_logic_vector(RHD_SPI_NUM_BITS_PER_PACKET-1 downto 0);
   
 
 begin
 
   tb_Clk <= not tb_Clk after CLK_PERIOD;
-  tb_RHD64_SPI_MISO <= tb_RHD64_SPI_MOSI;
+  tb_RHD_SPI_MISO <= tb_RHD_SPI_MOSI;
   tb_STM32_SPI_MISO <= tb_STM32_SPI_MOSI;
   
 
   -- Instantiate the Controller_Headstage
-  UUT : entity work.Controller_RHD64_Sampling
+  UUT : entity work.Controller_RHD_Sampling
     generic map (
       STM32_SPI_NUM_BITS_PER_PACKET => STM32_SPI_NUM_BITS_PER_PACKET,
       STM32_CLKS_PER_HALF_BIT       => STM32_CLKS_PER_HALF_BIT,
 	  STM32_CS_INACTIVE_CLKS        => STM32_CS_INACTIVE_CLKS,
-      RHD64_SPI_NUM_BITS_PER_PACKET => RHD64_SPI_NUM_BITS_PER_PACKET,
-      RHD64_CLKS_PER_HALF_BIT       => RHD64_CLKS_PER_HALF_BIT,
-	  RHD64_CS_INACTIVE_CLKS        => RHD64_CS_INACTIVE_CLKS
+	  
+	  RHD_SPI_DDR_MODE            => RHD_SPI_DDR_MODE,
+      RHD_SPI_NUM_BITS_PER_PACKET => RHD_SPI_NUM_BITS_PER_PACKET,
+      RHD_CLKS_PER_HALF_BIT       => RHD_CLKS_PER_HALF_BIT,
+	  RHD_CS_INACTIVE_CLKS        => RHD_CS_INACTIVE_CLKS
 	  )
     port map (
 	  o_NUM_DATA           => tb_NUM_DATA,
@@ -103,16 +107,16 @@ begin
       o_FIFO_FULL    => tb_FIFO_FULL,
       o_FIFO_AEMPTY  => tb_FIFO_AEMPTY,
       o_FIFO_AFULL   => tb_FIFO_AFULL,
-      o_RHD64_SPI_Clk          => tb_RHD64_SPI_Clk,
-      i_RHD64_SPI_MISO         => tb_RHD64_SPI_MISO,
-      o_RHD64_SPI_MOSI         => tb_RHD64_SPI_MOSI,
-      o_RHD64_SPI_CS_n         => tb_RHD64_SPI_CS_n,
-      o_RHD64_TX_Byte          => tb_RHD64_TX_Byte,
-      o_RHD64_TX_DV            => tb_RHD64_TX_DV,
-      o_RHD64_TX_Ready         => tb_RHD64_TX_Ready,
-      o_RHD64_RX_DV            => tb_RHD64_RX_DV,
-      o_RHD64_RX_Byte_Rising   => tb_RHD64_RX_Byte_Rising,
-      o_RHD64_RX_Byte_Falling  => tb_RHD64_RX_Byte_Falling
+      o_RHD_SPI_Clk          => tb_RHD_SPI_Clk,
+      i_RHD_SPI_MISO         => tb_RHD_SPI_MISO,
+      o_RHD_SPI_MOSI         => tb_RHD_SPI_MOSI,
+      o_RHD_SPI_CS_n         => tb_RHD_SPI_CS_n,
+      o_RHD_TX_Byte          => tb_RHD_TX_Byte,
+      o_RHD_TX_DV            => tb_RHD_TX_DV,
+      o_RHD_TX_Ready         => tb_RHD_TX_Ready,
+      o_RHD_RX_DV            => tb_RHD_RX_DV,
+      o_RHD_RX_Byte_Rising   => tb_RHD_RX_Byte_Rising,
+      o_RHD_RX_Byte_Falling  => tb_RHD_RX_Byte_Falling
     );
 
   Testing : process is
@@ -123,8 +127,11 @@ begin
     tb_Rst_L <= '1';
     wait for 100 ns;
     tb_Rst_L <= '0';
-
-	wait for 10 * CLK_PERIOD;
+	
+	wait for 100 * CLK_PERIOD;
+	tb_Controller_Mode <= x"1";
+	
+	wait for 100 * CLK_PERIOD;
 	tb_Controller_Mode <= x"2";
 	
     -- Wait for 4000 clock cycles

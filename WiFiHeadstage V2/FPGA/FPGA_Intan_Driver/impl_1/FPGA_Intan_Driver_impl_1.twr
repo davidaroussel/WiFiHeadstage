@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Tue Apr 29 12:56:00 2025
+Thu May  8 15:08:00 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -30,6 +30,7 @@ Package Status:                     Preliminary    Version 1.5
         1.3  Overall Summary
         1.4  Unconstrained Report
         1.5  Combinational Loop
+        1.6  Error/Warning Messages
     2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
         2.1  Clock Summary
         2.2  Endpoint slacks
@@ -48,6 +49,7 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
+[IGNORED:]create_generated_clock -name {pll_clk_internal} -source [get_pins pll_spi_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 11 [get_pins pll_spi_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -71,9 +73,27 @@ There is no start point satisfying reporting criteria
 
 
 Clocked but unconstrained timing end points
---------------------------------------------------
-There is no end point satisfying reporting criteria
-
+-------------------------------------------------------------------
+         Listing 10 End Points          |           Type           
+-------------------------------------------------------------------
+reset_counter_1419__i7/D                |    No arrival or required
+reset_counter_1419__i6/D                |    No arrival or required
+reset_counter_1419__i5/D                |    No arrival or required
+reset_counter_1419__i4/D                |    No arrival or required
+reset_counter_1419__i3/D                |    No arrival or required
+reset_counter_1419__i2/D                |    No arrival or required
+reset_counter_1419__i1/D                |    No arrival or required
+reset_counter_1419__i0/D                |    No arrival or required
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.genblk4.data_cnt_r_res1_i7/D                           
+                                        |    No arrival or required
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.genblk4.data_cnt_r_res1_i6/D                           
+                                        |    No arrival or required
+-------------------------------------------------------------------
+                                        |                          
+Number of unconstrained timing end poin |                          
+ts                                      |                      4851
+                                        |                          
+-------------------------------------------------------------------
 
 1.4.2  Start/End Points Without Timing Constraints
 ---------------------------------------------------
@@ -91,15 +111,15 @@ create_generated_clock,
 -------------------------------------------------------------------
      Listing 9 Start or End Points      |           Type           
 -------------------------------------------------------------------
-i_Clk                                   |                     input
-i_RHD64_SPI_MISO                        |                     input
+i_clk                                   |                     input
+i_RHD_SPI_MISO                          |                     input
 i_STM32_SPI_MISO                        |                     input
-o_RHD64_SPI_CS_n                        |                    output
-o_RHD64_SPI_MOSI                        |                    output
-o_RHD64_SPI_Clk                         |                    output
+o_RHD_SPI_MOSI                          |                    output
+o_RHD_SPI_Clk                           |                    output
 o_STM32_SPI_CS_n                        |                    output
 o_STM32_SPI_MOSI                        |                    output
 o_STM32_SPI_Clk                         |                    output
+o_RHD_SPI_CS_n                          |                    output
 -------------------------------------------------------------------
                                         |                          
 Number of I/O ports without constraint  |                         9
@@ -108,21 +128,116 @@ Number of I/O ports without constraint  |                         9
 
 Nets without clock definition
 Define a clock on a top level port or a generated clock on a clock divider pin associated with this net(s).
--------------------------------------------------------------------
-            Listing 1 Net(s)            |        Source pin        
--------------------------------------------------------------------
-i_Clk_c                                 |       i_Clk_pad.bb_inst/O
--------------------------------------------------------------------
-                                        |                          
-Number of clock nets without clock defi |                          
-nition                                  |                         1
-                                        |                          
--------------------------------------------------------------------
+--------------------------------------------------
+There is no instance satisfying reporting criteria
+
 
 
 1.5  Combinational Loop
 ========================
-None
+Combinational Loops
+-------------------
+++++ Loop1
+Controller_inst/i5813_2_lut/A	->	Controller_inst/i5813_2_lut/Z
+
+++++ Loop2
+Controller_inst/i5808_2_lut/A	->	Controller_inst/i5808_2_lut/Z
+
+++++ Loop3
+Controller_inst/i5809_2_lut/A	->	Controller_inst/i5809_2_lut/Z
+
+++++ Loop4
+Controller_inst/i5810_2_lut/A	->	Controller_inst/i5810_2_lut/Z
+
+++++ Loop5
+Controller_inst/i5811_2_lut/A	->	Controller_inst/i5811_2_lut/Z
+
+++++ Loop6
+Controller_inst/i5812_2_lut/A	->	Controller_inst/i5812_2_lut/Z
+
+++++ Loop7
+Controller_inst/i5814_2_lut/A	->	Controller_inst/i5814_2_lut/Z
+
+++++ Loop8
+Controller_inst/i5846_2_lut/A	->	Controller_inst/i5846_2_lut/Z
+
+++++ Loop9
+Controller_inst/i5798_2_lut/A	->	Controller_inst/i5798_2_lut/Z
+
+++++ Loop10
+Controller_inst/i5801_2_lut/A	->	Controller_inst/i5801_2_lut/Z
+
+++++ Loop11
+Controller_inst/i5841_2_lut/A	->	Controller_inst/i5841_2_lut/Z
+
+++++ Loop12
+Controller_inst/i5840_2_lut/A	->	Controller_inst/i5840_2_lut/Z
+
+++++ Loop13
+Controller_inst/i5839_2_lut/A	->	Controller_inst/i5839_2_lut/Z
+
+++++ Loop14
+Controller_inst/i5838_2_lut/A	->	Controller_inst/i5838_2_lut/Z
+
+++++ Loop15
+Controller_inst/i5837_2_lut/A	->	Controller_inst/i5837_2_lut/Z
+
+++++ Loop16
+Controller_inst/i5836_2_lut/A	->	Controller_inst/i5836_2_lut/Z
+
+++++ Loop17
+Controller_inst/i5835_2_lut/A	->	Controller_inst/i5835_2_lut/Z
+
+++++ Loop18
+Controller_inst/i5834_2_lut/A	->	Controller_inst/i5834_2_lut/Z
+
+++++ Loop19
+Controller_inst/i5833_2_lut/A	->	Controller_inst/i5833_2_lut/Z
+
+++++ Loop20
+Controller_inst/i5832_2_lut/A	->	Controller_inst/i5832_2_lut/Z
+
+++++ Loop21
+Controller_inst/i5827_2_lut/A	->	Controller_inst/i5827_2_lut/Z
+
+++++ Loop22
+Controller_inst/i5824_2_lut/A	->	Controller_inst/i5824_2_lut/Z
+
+++++ Loop23
+Controller_inst/i5823_2_lut/A	->	Controller_inst/i5823_2_lut/Z
+
+++++ Loop24
+Controller_inst/i5802_2_lut/A	->	Controller_inst/i5802_2_lut/Z
+
+++++ Loop25
+Controller_inst/i5803_2_lut/A	->	Controller_inst/i5803_2_lut/Z
+
+++++ Loop26
+Controller_inst/i5804_2_lut/A	->	Controller_inst/i5804_2_lut/Z
+
+++++ Loop27
+Controller_inst/i5805_2_lut/A	->	Controller_inst/i5805_2_lut/Z
+
+++++ Loop28
+Controller_inst/i5806_2_lut/A	->	Controller_inst/i5806_2_lut/Z
+
+++++ Loop29
+Controller_inst/i5807_2_lut/A	->	Controller_inst/i5807_2_lut/Z
+
+++++ Loop30
+Controller_inst/i5800_2_lut/A	->	Controller_inst/i5800_2_lut/Z
+
+++++ Loop31
+Controller_inst/i5799_2_lut/A	->	Controller_inst/i5799_2_lut/Z
+
+++++ Loop32
+Controller_inst/i5683_2_lut/A	->	Controller_inst/i5683_2_lut/Z
+
+
+1.6  Error/Warning Messages
+============================
+WARNING "70001944" - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -130,6 +245,22 @@ None
 
 2.1  Clock Summary
 =======================
+
+2.1.1 Clock "pll_clk_internal"
+=======================
+create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+
+Single Clock Domain
+-------------------------------------------------------------------------------------------------------
+         Clock pll_clk_internal         |                    |       Period       |     Frequency      
+-------------------------------------------------------------------------------------------------------
+ From pll_clk_internal                  |             Target |               +INF |          0.000 MHz 
+                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
+                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
+-------------------------------------------------------------------------------------------------------
+
+Clock Domain Crossing
 
 2.2  Endpoint slacks
 =======================

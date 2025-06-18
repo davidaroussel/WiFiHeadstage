@@ -5,7 +5,7 @@
 	<Chain>
 		<Comm>SPI</Comm>
 		<Device>
-			<SelectedProg value="TRUE"/>
+			<SelectedProg value="FALSE"/>
 			<Pos>1</Pos>
 			<Vendor>Lattice</Vendor>
 			<Family>iCE40 UltraPlus</Family>
@@ -17,12 +17,13 @@
 				<BScanLen>1</BScanLen>
 				<BScanVal>0</BScanVal>
 			</Bypass>
-			<File>../../../FPGA/Passthrough/impl_1/Passthrough_impl_1.bin</File>
-			<FileTime>01/27/25 14:28:58</FileTime>
+			<File>../../impl_1/Blinking_impl_1.bin</File>
+			<FileTime>06/09/25 15:49:10</FileTime>
 			<MemoryType>External SPI Flash Memory (SPI FLASH)</MemoryType>
 			<Operation>Erase,Program,Verify</Operation>
 			<Option>
 				<SVFVendor>JTAG STANDARD</SVFVendor>
+				<SVFProcessor>SVF Processor</SVFProcessor>
 				<AccessMode>Direct Programming</AccessMode>
 			</Option>
 			<FPGALoader>
@@ -46,6 +47,7 @@
 					<Option>
 						<SVFVendor>JTAG STANDARD</SVFVendor>
 						<IOState>HighZ</IOState>
+						<SVFProcessor>SVF Processor</SVFProcessor>
 						<AccessMode>Direct Programming</AccessMode>
 					</Option>
 				</Device>
@@ -59,7 +61,7 @@
 					<IDCode>0x16</IDCode>
 					<Package>16-pin SOIC</Package>
 					<Operation>Erase,Program,Verify</Operation>
-					<File>../../../FPGA/Passthrough/impl_1/Passthrough_impl_1.bin</File>
+					<File>../../impl_1/Blinking_impl_1.bin</File>
 					<AddressBase>0x00000000</AddressBase>
 					<EndAddress>0x00010000</EndAddress>
 					<DeviceSize>32</DeviceSize>
@@ -80,6 +82,92 @@
 					</LocalChainList>
 					<Option>
 						<SVFVendor>JTAG STANDARD</SVFVendor>
+						<SVFProcessor>SVF Processor</SVFProcessor>
+					</Option>
+				</Device>
+			</FPGADevice>
+			</FPGALoader>
+		</Device>
+		<Device>
+			<SelectedProg value="TRUE"/>
+			<Pos>2</Pos>
+			<Vendor>Lattice</Vendor>
+			<Family>iCE40 UltraPlus</Family>
+			<Name>iCE40UP5K</Name>
+			<Package>All</Package>
+			<Bypass>
+				<InstrLen>8</InstrLen>
+				<InstrVal>11111111</InstrVal>
+				<BScanLen>1</BScanLen>
+				<BScanVal>0</BScanVal>
+			</Bypass>
+			<File>../../impl_1/Blinking_impl_1.bin</File>
+			<FileTime>06/09/25 15:49:10</FileTime>
+			<JedecChecksum>0x1E59</JedecChecksum>
+			<MemoryType>External SPI Flash Memory (SPI FLASH)</MemoryType>
+			<Operation>Erase,Program,Verify</Operation>
+			<Option>
+				<SVFVendor>JTAG STANDARD</SVFVendor>
+				<SVFProcessor>SVF Processor</SVFProcessor>
+				<AccessMode>Direct Programming</AccessMode>
+			</Option>
+			<FPGALoader>
+			<CPLDDevice>
+				<Device>
+					<Pos>2</Pos>
+					<Vendor>Lattice</Vendor>
+					<Family>iCE40 UltraPlus</Family>
+					<Name>iCE40UP5K</Name>
+					<IDCode>0x11200639</IDCode>
+					<Package>All</Package>
+					<PON>iCE40UP5K</PON>
+					<Bypass>
+						<InstrLen>8</InstrLen>
+						<InstrVal>11111111</InstrVal>
+						<BScanLen>1</BScanLen>
+						<BScanVal>0</BScanVal>
+					</Bypass>
+					<MemoryType>Compressed Random Access Memory (CRAM)</MemoryType>
+					<Operation>Bypass</Operation>
+					<Option>
+						<SVFVendor>JTAG STANDARD</SVFVendor>
+						<IOState>HighZ</IOState>
+						<SVFProcessor>SVF Processor</SVFProcessor>
+						<AccessMode>Direct Programming</AccessMode>
+					</Option>
+				</Device>
+			</CPLDDevice>
+			<FlashDevice>
+				<Device>
+					<Pos>1</Pos>
+					<Vendor>WinBond</Vendor>
+					<Family>SPI Serial Flash</Family>
+					<Name>W25Q32JV</Name>
+					<IDCode>0x15</IDCode>
+					<Package>6*5 8-pad WSON</Package>
+					<Operation>Erase,Program,Verify</Operation>
+					<File>../../impl_1/Blinking_impl_1.bin</File>
+					<AddressBase>0x00000000</AddressBase>
+					<EndAddress>0x003F0000</EndAddress>
+					<DeviceSize>32</DeviceSize>
+					<DataSize>104156</DataSize>
+					<NumberOfDevices>1</NumberOfDevices>
+					<ReInitialize value="FALSE"/>
+				</Device>
+			</FlashDevice>
+			<FPGADevice>
+				<Device>
+					<Pos>1</Pos>
+					<Name></Name>
+					<File>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.bin</File>
+					<LocalChainList>
+						<LocalDevice index="-99"
+							name="Unknown"
+							file="C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.bin"/>
+					</LocalChainList>
+					<Option>
+						<SVFVendor>JTAG STANDARD</SVFVendor>
+						<SVFProcessor>SVF Processor</SVFProcessor>
 					</Option>
 				</Device>
 			</FPGADevice>

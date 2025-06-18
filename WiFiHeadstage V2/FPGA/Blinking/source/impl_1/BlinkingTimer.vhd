@@ -5,7 +5,9 @@ use IEEE.NUMERIC_STD.ALL;
 entity Blinker is
     Port (
         CLK  : in  std_logic;    
-        LED  : out std_logic     
+        LED_1  : out std_logic;
+		LED_2  : out std_logic;
+		LED_3  : out std_logic    		
     );
 end Blinker;
 
@@ -28,5 +30,7 @@ begin
         end if;
     end process;
 
-    LED <= led_state; 
+    LED_1 <= led_state;
+	LED_2 <= led_state;
+	LED_3 <= led_state;
 end Behavioral;

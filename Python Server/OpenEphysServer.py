@@ -13,7 +13,7 @@ if __name__ == "__main__":
     #MODES
     CSV_WRITING         = False
     OPENEPHYS_SENDING   = True
-    TTL_GENERATOR       = True
+    TTL_GENERATOR       = False
     CONFIGURE_OPENEPHYS = True
     PRINT_OE_INFO       = True
 
@@ -123,30 +123,30 @@ if __name__ == "__main__":
     print("Number Of CH  : ", len(CHANNELS))
     print("Buffer Size   : ", BUFFER_SIZE, "bytes")
 
-    try:
-        while(1):
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Ctrl+C pressed")
-    finally:
-        print("Closing Acquisition...")
-        OE_config.Network_Events_Connect()
-        OE_config.GUI_Stop_Recording()
-        OE_config.GUI_Stop_Acquisition()
-        print("Done Closing Acquisition")
+    # try:
+    #     while(1):
+    #         time.sleep(1)
+    # except KeyboardInterrupt:
+    #     print("Ctrl+C pressed")
+    # finally:
+    #     print("Closing Acquisition...")
+    #     OE_config.Network_Events_Connect()
+    #     OE_config.GUI_Stop_Recording()
+    #     OE_config.GUI_Stop_Acquisition()
+    #     print("Done Closing Acquisition")
 
-    # OE_config.Network_Events_Connect()
-    # OE_config.GUI_Start_Acquisition()
-    # time.sleep(2)
-    # OE_config.get_GUI_Acquisition_status()
-    # OE_config.get_GUI_Recording_status()
-    # time.sleep(1)
-    # OE_config.GUI_Start_Recording()
-    # time.sleep(1)
-    # OE_config.get_GUI_Acquisition_status()
-    # OE_config.get_GUI_Recording_status()
-    # time.sleep(5)
-    # OE_config.GUI_Stop_Recording()
-    # time.sleep(2)
-    # OE_config.GUI_Stop_Acquisition()
+    OE_config.Network_Events_Connect()
+    OE_config.GUI_Start_Acquisition()
+    time.sleep(2)
+    OE_config.get_GUI_Acquisition_status()
+    OE_config.get_GUI_Recording_status()
+    time.sleep(1)
+    OE_config.GUI_Start_Recording()
+    time.sleep(1)
+    OE_config.get_GUI_Acquisition_status()
+    OE_config.get_GUI_Recording_status()
+    time.sleep(5)
+    OE_config.GUI_Stop_Recording()
+    time.sleep(2)
+    OE_config.GUI_Stop_Acquisition()
 

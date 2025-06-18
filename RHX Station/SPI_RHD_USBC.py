@@ -1,4 +1,4 @@
-mport spidev
+import spidev
 import RPi.GPIO as GPIO
 import time
 
@@ -59,6 +59,19 @@ def read_intan_characters_for_test(chip_id):
     ret_val = intan_characters[2:] #CROPPING THE ARRAY TO ONLY HAVE THE 2-7 DATA, REMOVE THE 0 AND 1
     
     return ret_val
+
+def indentify_intan_chip(chip_id):
+    # Read Register 59 MISO MARKER
+    command = 0b1111101100000000
+    read_write_to_intan_chip(command, chip_id)
+
+    # Read Register 63 Dummy Register
+    command = 0b1111111100000000
+    read_write_to_intan_chip(command, chip_id)
+    miso_marker = read_write_to_intan_chip(command, chip_id)
+    ascii_data = hex(miso_marker[1])
+    print("MISO MARKER:", ascii_data)
+    print("MISO MARKER2:", miso_marker)
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
     """
@@ -142,7 +155,9 @@ if __name__ == "__main__":
     command = 0b0000000000000000
     data = read_write_to_intan_chip(command, chip_id)
     data = read_write_to_intan_chip(command, chip_id)
-    
+
+    indentify_intan_chip(chip_id)
+
     configure_intan_chip(0, 0, chip_id)
     
     #     configure_intan_chip(3, 5, chip_id)  # Configure with example frequency params
