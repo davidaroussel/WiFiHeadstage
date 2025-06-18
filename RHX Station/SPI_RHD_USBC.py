@@ -38,22 +38,22 @@ def read_write_to_intan_chip(command, chip_id):
     GPIO.output(CS, GPIO.HIGH)
     return response
 
-def read_intan_characters_for_test(chip_id):
+def read_intan_characters_for_test(chip_id, bit_shifting):
     intan_characters = []
     commands = [0b1110100000000000, 0b1110100100000000, 0b1110101000000000, 0b1110101100000000, 0b1110110000000000]
     for command in commands:
         data = read_write_to_intan_chip(command, chip_id)
-        ascii_data = hex(data[1])
+        ascii_data = hex(data[1] << bit_shifting)
         intan_characters.append(ascii_data)
         
     
     # Dummy command to retrieve n+2 !!!!!!!!!!!
     command = 0b0000000000000000 #DUMMY BYTES HERE
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1])
+    ascii_data = hex(data[1] << bit_shifting)
     intan_characters.append(ascii_data)
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1])
+    ascii_data = hex(data[1] << bit_shifting)
     intan_characters.append(ascii_data)
     
     ret_val = intan_characters[2:] #CROPPING THE ARRAY TO ONLY HAVE THE 2-7 DATA, REMOVE THE 0 AND 1
@@ -178,6 +178,12 @@ if __name__ == "__main__":
             print("Intan Characters:", intan_characters)
             ascii_value = ''.join(chr(int(h,16)) for h in intan_characters)
             print("ASCII : ", ascii_value)
-            time.sleep(0.25)
+            time.sleep(2)
     else:
-        print("CA SENVIENS MON CHUM")
+        for i in range(1000):
+            intan_characters = read_intan_characters_for_test(chip_id, bit_shifting)
+            formatted_value = int(intan_characters[0]) << bit_shifting
+            print("Intan Characters:", formatted_value)
+            ascii_value = ''.join(chr(int(h, 16)) for h in intan_characters)
+            print("ASCII : ", ascii_value)
+            time.sleep(2)
