@@ -1,6 +1,8 @@
 import spidev
 import RPi.GPIO as GPIO
 import time
+import matplotlib.pyplot as plt
+
 
 # GPIO Pins configuration
 MOSI = 20
@@ -40,28 +42,32 @@ def read_write_to_intan_chip(command, chip_id):
     return response
 
 
-def read_intan_characters_for_test(chip_id):
+def read_intan_characters_for_test(chip_id, bit_shifting):
     intan_characters = []
     commands = [0b1110100000000000, 0b1110100100000000, 0b1110101000000000, 0b1110101100000000, 0b1110110000000000]
     for command in commands:
         data = read_write_to_intan_chip(command, chip_id)
-        ascii_data = hex(data[1])
+        ascii_data = hex(int(data[1]) << bit_shifting)
         intan_characters.append(ascii_data)
 
     # Dummy command to retrieve n+2 !!!!!!!!!!!
     command = 0b0000000000000000  # DUMMY BYTES HERE
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1])
+    ascii_data = hex(int(data[1]) << bit_shifting)
     intan_characters.append(ascii_data)
     data = read_write_to_intan_chip(command, chip_id)
-    ascii_data = hex(data[1])
+    ascii_data = hex(int(data[1]) << bit_shifting)
     intan_characters.append(ascii_data)
 
     ret_val = intan_characters[2:]  # CROPPING THE ARRAY TO ONLY HAVE THE 2-7 DATA, REMOVE THE 0 AND 1
 
     return ret_val
 
+
 def indentify_intan_chip(chip_id):
+    rhd_versions = ["RHD2132", "RHD2216", "None", "RHD2164"]
+    bit_shifting = None
+
     # Read Register 59 MISO MARKER
     command = 0b1111101100000000
     read_write_to_intan_chip(command, chip_id)
@@ -70,8 +76,22 @@ def indentify_intan_chip(chip_id):
     command = 0b1111111100000000
     read_write_to_intan_chip(command, chip_id)
     miso_marker = read_write_to_intan_chip(command, chip_id)
+    print(miso_marker)
+    ascii_data = hex(miso_marker[1])
 
-    print("MISO MARKER:", miso_marker)
+    if miso_marker[1] == 0:
+        bit_shifting = 0
+        print("BIT SHIFTING TO 0 ")
+    else:
+        big_shifting = 1
+        print("BIT SHIFTING TO 1 ")
+
+    Intan_Chip_ID = read_write_to_intan_chip(command, chip_id)
+    print("Intan CHIP ID: ", Intan_Chip_ID[1])
+    print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID[1] - 1])
+
+    return bit_shifting
+
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
     """
@@ -135,14 +155,34 @@ def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
         read_write_to_intan_chip(0b1110100000000000, chip_id)  # Dummy for calibration sequence
 
 
-def sample_intan_channels(data_out, channels, count, chip_id):
-    """
-    Samples Intan channels and stores the data.
-    """
-    for i in range(count):
-        command = channels[i] if i < count - 2 else 0
-        response = read_write_to_intan_chip(command, chip_id)
-        data_out.append(response)
+def sample_intan_channels(channels, sampling_rate, duration_seconds, chip_id):
+
+    num_samples = int(sampling_rate * duration_seconds)
+    data_out = {ch: [] for ch in channels}
+    dummy_command = 0b0000000000000000
+
+    print(f"Starting sampling for {duration_seconds}s at {sampling_rate} Hz ({num_samples} samples/channel)")
+
+    for sample_idx in range(num_samples):
+        for ch in channels:
+            # Issue convert command for the current channel
+            command = 0b0000000000000000
+            ch_shifted = ch << 8
+            proper_command = command | ch_shifted
+
+            print("COMMAND: ", command, " -- CHANNEL: ", ch_shifted, " -- FORMATTED COMMAND: ", proper_command)
+            read_write_to_intan_chip(command, chip_id)
+
+        # Retrieve the results (n+2 latency)
+        for ch in channels:
+            response = read_write_to_intan_chip(dummy_command, chip_id)
+            value = (response[0] << 8) | response[1]
+            data_out[ch].append(value)
+
+        # Maintain target sample rate
+        time.sleep(1.0 / sampling_rate)
+
+    return data_out
 
 
 # Clean up on exit
@@ -152,17 +192,37 @@ def cleanup():
 
 
 if __name__ == "__main__":
-    chip_id = 0
+    chip_id = 0  # Example chip ID (Not Used Right Now)
 
-    dummy_command = 0b1111111100000000
-    data = read_write_to_intan_chip(dummy_command, chip_id) #Dummy
-    data = read_write_to_intan_chip(dummy_command, chip_id) #Dummy
+    command = 0b1111111100000000  # Dummy CMD To Wake Up Chip
+    read_write_to_intan_chip(command, chip_id)
+    read_write_to_intan_chip(command, chip_id)
 
     configure_intan_chip(0, 0, chip_id)
 
-    for i in range(1000):
-        intan_characters = read_intan_characters_for_test(chip_id)
-        print("Intan Characters:", intan_characters)
-        ascii_value = ''.join(chr(int(h, 16)) for h in intan_characters)
-        print("ASCII : ", ascii_value)
-        time.sleep(0.25)
+    bit_shifting = indentify_intan_chip(chip_id)
+
+    # Sample from channels 0–3 for 2 seconds at 10 kHz
+    sampled_data = sample_intan_channels(
+        channels=[0, 1, 2, 3],
+        sampling_rate=1000,
+        duration_seconds=5,
+        chip_id=chip_id
+    )
+
+    for ch, samples in sampled_data.items():
+        plt.plot(samples, label=f'Channel {ch}')
+
+    plt.title("Intan Sampled Data")
+    plt.xlabel("Sample Index")
+    plt.ylabel("Raw Value")
+    plt.legend()
+    plt.show()
+
+
+    # for i in range(1000):
+    #     intan_characters = read_intan_characters_for_test(chip_id, bit_shifting)
+    #     print("Intan Characters:", intan_characters)
+    #     ascii_value = ''.join(chr(int(h, 16)) for h in intan_characters)
+    #     print("ASCII : ", ascii_value)
+    #     time.sleep(2)
