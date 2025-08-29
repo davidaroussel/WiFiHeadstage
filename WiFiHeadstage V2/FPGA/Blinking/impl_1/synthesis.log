@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Mon Jun  9 15:16:19 2025
+Wed Aug 27 14:12:15 2025
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Blinking_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml 
@@ -133,7 +133,7 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd
 
 INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd(5): analyzing entity blinker. VHDL-1012
-INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd(14): analyzing architecture behavioral. VHDL-1010
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd(18): analyzing architecture behavioral. VHDL-1010
 WARNING <35001200> - synthesis: Setting Blinker as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1". VHDL-1504
 Top module language type = VHDL.
@@ -162,17 +162,20 @@ Top module name (VHDL, mixed language): Blinker
                                                          
 
 
+WARNING <35001771> - synthesis: Initial value found on net gnd will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net pwr will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb2_sig will be ignored due to unrecognized driver type
 
 
 
 
 ################### Begin Area Report (Blinker)######################
-Number of register bits => 33 of 5280 (0 % )
+Number of register bits => 35 of 5280 (0 % )
 CCU2 => 17
-FD1P3XZ => 33
+FD1P3XZ => 35
 IB => 1
-LUT4 => 12
-OB => 3
+LUT4 => 15
+OB => 7
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
 Number of even-length carry chains : 1
@@ -185,16 +188,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : n206, loads : 33
-  Net : LED_3_c, loads : 4
+  Net : n363, loads : 35
+  Net : step[0], loads : 4
+  Net : step[2], loads : 3
+  Net : step[1], loads : 3
   Net : counter[31], loads : 2
   Net : counter[30], loads : 2
   Net : counter[29], loads : 2
   Net : counter[28], loads : 2
   Net : counter[27], loads : 2
   Net : counter[26], loads : 2
-  Net : counter[25], loads : 2
-  Net : counter[24], loads : 2
 ################### End Clock Report ##################
 
 Peak Memory Usage: 92 MB
@@ -203,4 +206,4 @@ Peak Memory Usage: 92 MB
 Total CPU Time: 6 secs 
 Total REAL Time: 7 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 94541db5f8edc24a5866d2fd8549068d12cb6784
+Checksum -- synthesis -- netlist: a89c9cf2e5b326094f337f3840f93f3dea281f8a

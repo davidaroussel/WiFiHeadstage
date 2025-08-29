@@ -83,9 +83,12 @@ def indentify_intan_chip(chip_id):
         print("BIT SHIFTING TO 1 ")
 
     Intan_Chip_ID = read_write_to_intan_chip(command, chip_id)
-    print("Intan CHIP ID: ", Intan_Chip_ID[1])
-    print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID[1]-1])
-
+    if len(Intan_Chip_ID) >= 2:
+        print("Intan CHIP ID: ", Intan_Chip_ID[1])
+        print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID[1]-1])
+    else:
+        print("NO INTAN CHIP DETECTED !!")
+        exit()
     return bit_shifting
 
 

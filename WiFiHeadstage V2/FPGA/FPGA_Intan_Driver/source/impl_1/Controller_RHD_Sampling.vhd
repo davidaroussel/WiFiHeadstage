@@ -5,13 +5,13 @@ use ieee.numeric_std.all;
 entity Controller_RHD_Sampling is
   generic (
       STM32_SPI_NUM_BITS_PER_PACKET : integer := 64;
-      STM32_CLKS_PER_HALF_BIT 		: integer := 2;
+      STM32_CLKS_PER_HALF_BIT 		: integer := 4;
 	  STM32_CS_INACTIVE_CLKS 		: integer := 4;
 	  
 	  
 	  RHD_SPI_DDR_MODE 				: integer := 1;
       RHD_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
-      RHD_CLKS_PER_HALF_BIT 		: integer := 4;
+      RHD_CLKS_PER_HALF_BIT 		: integer := 8;
 	  RHD_CS_INACTIVE_CLKS 			: integer := 4
     );
   port (
@@ -320,9 +320,11 @@ begin
 					int_FIFO_RE <= '0';
 					temp_buffer <= temp_array(0)  & temp_array(1)  & temp_array(2)  & temp_array(3)  & temp_array(4)  & temp_array(5)  & temp_array(6)  & temp_array(7)  & 
 							       temp_array(8)  & temp_array(9)  & temp_array(10) & temp_array(11) & temp_array(12) & temp_array(13) & temp_array(14) & temp_array(15) &
-								   temp_array(16)  & temp_array(17)  & temp_array(18)  & temp_array(19)  & temp_array(20)  & temp_array(21)  & temp_array(22)  & temp_array(23)  & 
-							       temp_array(24)  & temp_array(25)  & temp_array(26) & temp_array(27) & temp_array(28) & temp_array(29) & temp_array(30) & temp_array(31);
+								   temp_array(16) & temp_array(17) & temp_array(18) & temp_array(19) & temp_array(20) & temp_array(21) & temp_array(22) & temp_array(23) & 
+							       temp_array(24) & temp_array(25) & temp_array(26) & temp_array(27) & temp_array(28) & temp_array(29) & temp_array(30) & temp_array(31);
 					--temp_buffer <= x"0123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF0000000000000000";
+					--temp_buffer <= x"0123456789ABCDEF";
+					--temp_buffer <= x"0000000F0000000F";
 					stm32_state <= 5;
 				end if;
 			

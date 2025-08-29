@@ -31,9 +31,6 @@ except FileNotFoundError:
 
 
 def read_write_to_intan_chip(command, chip_id):
-    """
-    Sends a command to the Intan chip and reads the response.
-    """
     GPIO.output(CS, GPIO.LOW)
     response = spi.xfer2([command >> 8, command & 0xFF])
     #     bin_value = [bin(num) for num in response]
@@ -83,7 +80,7 @@ def indentify_intan_chip(chip_id):
     else:
         big_shifting = 1
         print("BIT SHIFTING TO 1 ")
-
+    Intan_Chip_ID = None
     Intan_Chip_ID = read_write_to_intan_chip(command, chip_id)
     print("Intan CHIP ID: ", Intan_Chip_ID[1])
     print("Intan CHIP   : ", rhd_versions[Intan_Chip_ID[1] - 1])
@@ -92,9 +89,6 @@ def indentify_intan_chip(chip_id):
 
 
 def configure_intan_chip(high_freq_no, low_freq_no, chip_id):
-    """
-    Configures the Intan chip with provided frequency parameters.
-    """
     upper_cutoff_parameters = [
         [8, 0, 4, 0], [11, 0, 8, 0], [17, 0, 16, 0],
         [22, 0, 23, 0], [33, 0, 37, 0], [3, 1, 13, 1],
@@ -163,15 +157,13 @@ def sample_intan_channels(channels, sampling_rate, duration_seconds, chip_id):
 
     for sample_idx in range(num_samples):
         for ch in channels:
-            # Issue convert command for the current channel
-            command = 0b0000000000000000
+            command = 0b0000000000000000 #CONVERT CMD TEMPLATE
             ch_shifted = ch << 8
             proper_command = command | ch_shifted
-
             #print("COMMAND: ", command, " -- CHANNEL: ", ch_shifted, " -- FORMATTED COMMAND: ", proper_command)
             read_write_to_intan_chip(command, chip_id)
 
-        # Retrieve the results (n+2 latency)
+        # n+2 latency
         for ch in channels:
             response = read_write_to_intan_chip(dummy_command, chip_id)
             value = int.from_bytes([response[0], response[1]], byteorder='big', signed=True)
@@ -186,11 +178,9 @@ def plot_sampled_data(sampled_data):
     num_channels = len(sampled_data)
     fig, axes = plt.subplots(num_channels, 1, figsize=(10, 2.5 * num_channels), sharex=True, sharey=True)
 
-    # If there's only one channel, axes is not a list
     if num_channels == 1:
         axes = [axes]
 
-    # Find global min/max for y-axis scaling
     all_values = [value for samples in sampled_data.values() for value in samples]
     ymin = min(all_values)
     ymax = max(all_values)
@@ -232,6 +222,7 @@ if __name__ == "__main__":
         duration_seconds=15,
         chip_id=chip_id
     )
+    print("DONE SAMPLING")
 
     plot_sampled_data(sampled_data)
 

@@ -13,7 +13,7 @@ set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VHDL" "VHDL" "VHDL"
 set ::bali::simulation::Para(LANGSTDLIST) {"Verilog 2001" "Verilog 2001" "" "" "" "" "" "" "" }
 set ::bali::simulation::Para(SIMLIBLIST) {pmi_work ovi_ice40up}
 set ::bali::simulation::Para(MACROLIST) {}
-set ::bali::simulation::Para(SIMULATIONTOPMODULE) {Controller_RHD_Sampling_tb}
+set ::bali::simulation::Para(SIMULATIONTOPMODULE) {top_level_tb}
 set ::bali::simulation::Para(SIMULATIONINSTANCE) {}
 set ::bali::simulation::Para(LANGUAGE) {VHDL}
 set ::bali::simulation::Para(SDFPATH)  {}

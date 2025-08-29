@@ -95,7 +95,7 @@ void start_app_task(void)
 
   	//	INIT_UPD();
 
-	TASK_RHD_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+//	TASK_RHD_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 
 //  	Timer2_Init();
 

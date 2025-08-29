@@ -4,15 +4,15 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 1024;
-        STM32_CLKS_PER_HALF_BIT       : integer := 1;
-        STM32_CS_INACTIVE_CLKS        : integer := 1;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 64;
+        STM32_CLKS_PER_HALF_BIT       : integer := 16;
+        STM32_CS_INACTIVE_CLKS        : integer := 16;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD_CS_INACTIVE_CLKS        : integer := 1
+        RHD_CLKS_PER_HALF_BIT       : integer := 32;
+        RHD_CS_INACTIVE_CLKS        : integer := 32
 		
     );
     port (
@@ -24,18 +24,23 @@ entity top_level is
         pll_clk     : out STD_LOGIC;
 
         -- STM32 SPI Interface
-        o_STM32_SPI_Clk  : out std_logic;
-        i_STM32_SPI_MISO : in  std_logic;
         o_STM32_SPI_MOSI : out std_logic;
+        i_STM32_SPI_MISO : in  std_logic;
+        o_STM32_SPI_Clk  : out std_logic;
         o_STM32_SPI_CS_n : out std_logic;
 
         -- RHD SPI Interface
-        o_RHD_SPI_Clk  : out std_logic;
-        i_RHD_SPI_MISO : in  std_logic;
         o_RHD_SPI_MOSI : out std_logic;
-        o_RHD_SPI_CS_n : out std_logic
+		i_RHD_SPI_MISO : in  std_logic;
+        o_RHD_SPI_Clk  : out std_logic;
+        o_RHD_SPI_CS_n : out std_logic;
 		
+		RGB_1  : out std_logic;
+        RGB_2  : out std_logic;
+		RGB_3  : out std_logic;
+        RGB_4  : out std_logic
 		--o_Controller_Mode : out std_logic_vector(3 downto 0);
+		--o_reset : out std_logic;
 		--o_reset_Counter : out std_logic_vector(7 downto 0)
 
     );
@@ -61,12 +66,21 @@ architecture RTL of top_level is
 	
     signal pll_clk_internal : std_logic;
     signal pll_locked       : std_logic;
-
+	
+	constant CLOCK_FREQ   : integer := 12000000;
+    constant TOGGLE_COUNT : integer := CLOCK_FREQ / 1;
+	signal counter : integer := 0;
+    signal step    : integer range 0 to 4 := 0;
+	signal rgb1_sig : std_logic := '1';
+    signal rgb2_sig : std_logic := '1';
+    signal rgb3_sig : std_logic := '1';
+	signal rgb4_sig : std_logic := '1';
+    signal stop_counting : std_logic := '0';
 begin
 
 
     -- Use pll_clk_internal in your SPI logic
-
+
 	pll_spi_inst : entity work.PLL_SPI port map(
 		ref_clk_i   => i_clk,
 		rst_n_i     => '1',
@@ -117,38 +131,89 @@ begin
             o_RHD_SPI_CS_n    => o_RHD_SPI_CS_n
         );
 
-
+	--o_reset <= w_reset;
 	--o_Controller_Mode <= w_Controller_Mode;
 	--o_reset_Counter   <=  std_logic_vector(to_signed(reset_counter, 8));
 	
+-- Timing process
+    process(pll_clk_internal)
+    begin
+        if rising_edge(pll_clk_internal) then
+			if counter < TOGGLE_COUNT - 1 then
+				counter <= counter + 1;
+			else
+				counter <= 0;
+				step <= (step + 1) mod 4;
+			end if;
 
-	 Reset_Process : process(pll_clk_internal)
+        end if;
+    end process;
+
+    -- LED/RGB control process
+    process(step)
+    begin
+        rgb1_sig <= '1';
+        rgb2_sig <= '1';
+        rgb3_sig <= '1';
+		rgb4_sig <= '1';
+		case step is
+			when 0 => 
+				rgb1_sig <= '0';
+				rgb2_sig <= '1';
+				rgb3_sig <= '1';
+				rgb4_sig <= '1';
+			when 1 => 
+				rgb1_sig <= '1';
+				rgb2_sig <= '0';
+				rgb3_sig <= '1';
+				rgb4_sig <= '1';
+			when 2 => 
+				rgb1_sig <= '1';
+				rgb2_sig <= '1';
+				rgb3_sig <= '0';
+				rgb4_sig <= '1';
+			when 3 => 
+				rgb1_sig <= '1';
+				rgb2_sig <= '1';
+				rgb3_sig <= '1';
+				rgb4_sig <= '0';
+			when others => null;
+		end case;
+
+	end process;
+
+	Reset_Process : process(pll_clk_internal)
     begin
         if rising_edge(pll_clk_internal) then
             -- Reset logic
-            if reset_counter < 10 then
-                reset_counter <= reset_counter + 1;
+            if reset_counter < 20 then
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
             else
                 w_reset <= '0';  -- Release reset after 10 cycles
 
-                -- Controller mode sequencing
-                case reset_counter is
-                    when 50 =>
-                        w_Controller_Mode <= x"1";
-                    when 100 =>
-                        w_Controller_Mode <= x"2";
-                    when others =>
-                        null;
-                end case;
-				
-                -- Increment counter beyond reset
-                if reset_counter < 200 then  -- Prevent overflow
-                    reset_counter <= reset_counter + 1;
-                end if;
-            end if;
+				-- Controller mode sequencing
+				case reset_counter is
+					when 50 =>
+						w_Controller_Mode <= x"1";
+					when 100 =>
+						w_Controller_Mode <= x"2";
+						stop_counting <= '1';
+					when others =>
+						null;
+				end case;
+			end if;
+			
+			if stop_counting = '0' then
+				reset_counter <= reset_counter + 1;
+			end if;
+			
         end if;
     end process Reset_Process;
+
+    RGB_1 <= rgb1_sig;
+    RGB_2 <= rgb2_sig;
+    RGB_3 <= rgb3_sig;
+	RGB_4 <= rgb4_sig;
 
 end architecture RTL;
