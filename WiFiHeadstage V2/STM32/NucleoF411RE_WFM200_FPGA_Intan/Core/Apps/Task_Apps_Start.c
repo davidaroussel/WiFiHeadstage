@@ -95,19 +95,19 @@ void start_app_task(void)
 
   	//	INIT_UPD();
 
-	TASK_RHD_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
+//	TASK_RHD_SPI_COMMUNICATION_INIT((void*) spi_to_wifi_queue);
 
-  	Timer2_Init();
+//  	Timer2_Init();
 
 	INIT_INTAN();
 
-	INIT_TCP();
-
-  	while (!TCP_Connected){
-  		HAL_Delay(10);
-  	}
-
-  	WIFI_MENU_INIT((void*) spi_to_wifi_queue);
+//	INIT_TCP();
+//
+//  	while (!TCP_Connected){
+//  		HAL_Delay(10);
+//  	}
+//
+//  	WIFI_MENU_INIT((void*) spi_to_wifi_queue);
 
 //  	TASK_UDP_TRANSMIT_INIT((void*) spi_to_wifi_queue);
 //  	TASK_TCP_TRANSMIT_INIT((void*) spi_to_wifi_queue);

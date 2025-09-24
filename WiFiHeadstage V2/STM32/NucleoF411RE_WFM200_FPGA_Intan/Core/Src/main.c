@@ -98,12 +98,13 @@ int main(void)
   printf("\033\143");
 //  printf("\033[3J");
   printf("Hello, welcome to the WFM200 driver \r\n");
-  HAL_Delay(100);
+  HAL_Delay(500);
 
 
 #ifndef spi_mode_only
   /* Task init */
 //  vTraceEnable(TRC_START);
+  //MAKE SURE POWER OF WFM200 IS ON-BOARD-LDO
   sl_wfx_task_start();
   wifi_events_start();
   //wifi_cli_start();					/*NOT GOING TO USE THE CLI SINCE THERE WILL NOT BE ANY USART CONNECTION*/
@@ -234,7 +235,7 @@ static void MX_SPI4_Init(void)
   hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 0
   hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 0
   hspi4.Init.NSS = SPI_NSS_SOFT;
-  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
   hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -262,7 +263,7 @@ static void MX_SPI3_Init(void)
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

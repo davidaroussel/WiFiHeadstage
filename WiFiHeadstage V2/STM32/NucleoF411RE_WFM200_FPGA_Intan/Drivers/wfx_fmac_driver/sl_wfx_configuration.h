@@ -21,7 +21,7 @@
 // <o SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS> Timeout period in milliseconds<250-10000>
 // <i> Default: 5000
 // <i> Timeout period in milliseconds for requests.
-#define SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS             (100000)
+#define SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS             (1000)
 
 // </h>
 

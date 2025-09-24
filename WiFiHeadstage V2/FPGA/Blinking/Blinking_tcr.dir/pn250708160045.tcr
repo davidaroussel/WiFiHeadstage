@@ -1,0 +1,10 @@
+#Start recording tcl command: 7/8/2025 13:21:56
+#Project Location: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking; Project name: Blinking
+prj_open "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/Blinking.rdf"
+launch_programmer_prj "C:/lscc/radiant/2023.2"
+prj_run Export -impl impl_1
+prj_run Export -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Map -impl impl_1
+prj_run Export -impl impl_1
+#Stop recording: 7/8/2025 16:00:45

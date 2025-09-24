@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BuildStatus>
     <Strategy name="Strategy1">
+<<<<<<< HEAD
         <Milestone name="Export" build_result="0" build_time="1747959774">
             <Task name="Bitgen" build_result="0" update_result="2" update_time="1747959774"/>
             <Task name="IBIS" build_result="0" update_result="2" update_time="1747959774"/>
@@ -18,13 +19,33 @@
         <Milestone name="Synthesis" build_result="0" build_time="1747959773">
             <Task name="Lattice_Synthesis" build_result="0" update_result="2" update_time="1747959773"/>
             <Task name="LSE_Compile" build_result="2" update_result="0" update_time="1747960012"/>
+=======
+        <Milestone name="Export" build_result="2" build_time="1754659803">
+            <Task name="Bitgen" build_result="2" update_result="0" update_time="1754659803"/>
+            <Task name="IBIS" build_result="2" update_result="0" update_time="1754659803"/>
+            <Task name="TimingSimFileVlg" build_result="2" update_result="0" update_time="1754659804"/>
+        </Milestone>
+        <Milestone name="Map" build_result="2" build_time="1754659783">
+            <Task name="Map" build_result="2" update_result="0" update_time="1754659783"/>
+            <Task name="MapTrace" build_result="0" update_result="2" update_time="1729177957"/>
+        </Milestone>
+        <Milestone name="PAR" build_result="2" build_time="1754659795">
+            <Task name="PAR" build_result="2" update_result="0" update_time="1754659795"/>
+            <Task name="PARTrace" build_result="2" update_result="0" update_time="1754659796"/>
+            <Task name="IOTiming" build_result="0" update_result="3" update_time="0"/>
+        </Milestone>
+        <Milestone name="Synthesis" build_result="2" build_time="1754659776">
+            <Task name="Lattice_Synthesis" build_result="2" update_result="0" update_time="1754659776"/>
+            <Task name="LSE_Compile" build_result="2" update_result="0" update_time="1754659776"/>
+>>>>>>> 9dd07cb2d5a599d432ee4088ba2da1e286a09168
             <Task name="SynTrace" build_result="0" update_result="2" update_time="1729177704"/>
             <Task name="SynVerilogSimFile" build_result="0" update_result="2" update_time="1729177704"/>
         </Milestone>
-        <Report name="IBIS/Passthrough_impl_1.ibs" last_build_time="1738770683" last_build_size="61883"/>
-        <Report name="Passthrough_impl_1.bgn" last_build_time="1738770683" last_build_size="1220"/>
-        <Report name="Passthrough_impl_1.bin" last_build_time="1738770683" last_build_size="104156"/>
+        <Report name="IBIS/Passthrough_impl_1.ibs" last_build_time="1754659803" last_build_size="61883"/>
+        <Report name="Passthrough_impl_1.bgn" last_build_time="1754659802" last_build_size="1220"/>
+        <Report name="Passthrough_impl_1.bin" last_build_time="1754659802" last_build_size="104156"/>
         <Report name="Passthrough_impl_1.lsedata" last_build_time="0" last_build_size="0"/>
+<<<<<<< HEAD
         <Report name="Passthrough_impl_1.twr.html" last_build_time="1738770676" last_build_size="12121"/>
         <Report name="Passthrough_impl_1.udb" last_build_time="1738770674" last_build_size="2412"/>
         <Report name="Passthrough_impl_1_map.udb" last_build_time="1738770663" last_build_size="2050"/>
@@ -32,5 +53,14 @@
         <Report name="Passthrough_impl_1_syn.udb" last_build_time="1738770068" last_build_size="1134"/>
         <Report name="Passthrough_impl_1_vo.sdf" last_build_time="1738770684" last_build_size="2751"/>
         <Report name="Passthrough_impl_1_vo.vo" last_build_time="1738770684" last_build_size="5446"/>
+=======
+        <Report name="Passthrough_impl_1.twr.html" last_build_time="1754659796" last_build_size="12121"/>
+        <Report name="Passthrough_impl_1.udb" last_build_time="1754659795" last_build_size="2401"/>
+        <Report name="Passthrough_impl_1_map.udb" last_build_time="1754659783" last_build_size="2055"/>
+        <Report name="Passthrough_impl_1_rtl.udb" last_build_time="1745848438" last_build_size="796"/>
+        <Report name="Passthrough_impl_1_syn.udb" last_build_time="1754659776" last_build_size="1134"/>
+        <Report name="Passthrough_impl_1_vo.sdf" last_build_time="1754659804" last_build_size="2751"/>
+        <Report name="Passthrough_impl_1_vo.vo" last_build_time="1754659804" last_build_size="5446"/>
+>>>>>>> 9dd07cb2d5a599d432ee4088ba2da1e286a09168
     </Strategy>
 </BuildStatus>

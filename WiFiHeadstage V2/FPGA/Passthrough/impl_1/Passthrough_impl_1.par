@@ -1,6 +1,6 @@
 Copyright (c) 2002-2022 Lattice Semiconductor Corporation,  All rights reserved.
 
-Wed Feb  5 10:51:09 2025
+Fri Aug  8 09:29:49 2025
 
 Command Line: par -w -n 1 -t 1 -s 1 -cores 1 -hsp m -exp parPathBased=ON \
 	Passthrough_impl_1_map.udb Passthrough_impl_1.udb 
@@ -9,16 +9,16 @@ Command Line: par -w -n 1 -t 1 -s 1 -cores 1 -hsp m -exp parPathBased=ON \
 Level/       Number       Estimated       Timing       Estimated Worst    Timing          Run      Run
 Cost [udb]   Unrouted     Worst Slack     Score        Slack(hold)        Score(hold)     Time     Status
 ----------   --------     -----------     ------       ---------------    -----------     ----     ------
-5_1   *      0            -               -            -                  -               05       Completed
+5_1   *      0            -               -            -                  -               06       Completed
 
 * : Design saved.
 
-Total (real) run time for 1-seed: 5 secs 
+Total (real) run time for 1-seed: 6 secs 
 
 par done!
 
 Lattice Place and Route Report for Design "Passthrough_impl_1_map.udb"
-Wed Feb  5 10:51:09 2025
+Fri Aug  8 09:29:49 2025
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -119,7 +119,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 10:51:14 02/05/25
+Start NBR router at 09:29:54 08/08/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -141,7 +141,7 @@ Preassignment Summary:
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 10:51:14 02/05/25
+Start NBR section for initial routing at 09:29:55 08/08/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
@@ -151,11 +151,11 @@ Routing in Serial Mode ......
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 10:51:14 02/05/25
+Start NBR section for normal routing at 09:29:55 08/08/25
 Level 4, iteration 1
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 10:51:14 02/05/25
+Start NBR section for post-routing at 09:29:55 08/08/25
 
 End NBR router with 0 unrouted connection
 
@@ -183,8 +183,8 @@ PAR_SUMMARY::Number of errors = 0
 Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 5 secs 
-Total REAL Time: 5 secs 
-Peak Memory Usage: 75.37 MB
+Total REAL Time: 6 secs 
+Peak Memory Usage: 75.29 MB
 
 
 par done!

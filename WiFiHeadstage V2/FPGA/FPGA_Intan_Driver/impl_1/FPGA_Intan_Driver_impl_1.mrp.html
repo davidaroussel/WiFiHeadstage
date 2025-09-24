@@ -1,0 +1,341 @@
+<HTML>
+<HEAD>
+<TITLE>Map Report</TITLE>
+<link href="" rel="stylesheet" type="text/css" media="screen"/>
+<link href="" rel="stylesheet" type="text/css" media="print"/>
+<style type="text/css">
+#toc {
+  position: fixed;
+  right: 2px;
+  top: 2px;
+  padding: 2px 5px 2px 5px;
+  background-color:rgba(210,210,210,0.1);
+  border-style: solid;
+  border-color: rgba(192,192,192,0.8);
+  border-width:1px;
+}
+#toc_list {
+  display: none;
+  }
+</style>
+
+<script type="text/javascript">
+<!--
+function showTocList() {
+var a = document.getElementById("toc_list");
+a.style.display = "block";
+}
+
+function hideTocList() {
+var a = document.getElementById("toc_list");
+if (a)
+    a.style.display = "none";
+}
+
+//-->
+</script>
+
+</HEAD>
+
+<BODY>
+
+<DIV id="content" onclick="hideTocList()"><PRE>
+<A name="Mrp"></A>                         Lattice Mapping Report File
+
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:  High-Performance_1.2V
+
+Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
+Mapped on: Tue Jul 22 15:49:00 2025
+
+<A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
+
+Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
+     C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/FPGA_Intan_Driver/Constrain.pdc -o FPGA_Intan_Driver_impl_1_map.udb
+     -mp FPGA_Intan_Driver_impl_1.mrp -hierrpt -gui -msgset
+     C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/FPGA_Intan_Driver/promote.xml
+
+<A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
+
+   Number of slice registers: 451 out of  5280 (9%)
+   Number of I/O registers:      0 out of   117 (0%)
+   Number of LUT4s:           996 out of  5280 (19%)
+      Number of logic LUT4s:             600
+      Number of inserted feedthru LUT4s: 141
+      Number of replicated LUT4s:         33
+      Number of ripple logic:            111 (222 LUT4s)
+   Number of IO sites used:   12 out of 39 (31%)
+      Number of IO sites used for general PIO: 11
+      Number of IO sites used for I3C: 0 out of 2 (0%)
+      (note: If I3C is not used, its site can be used as general PIO)
+      Number of IO sites used for PIO+I3C: 11 out of 36 (31%)
+      Number of IO sites used for OD+RGB IO buffers: 1 out of 3 (33%)
+      (note: If RGB LED drivers are not used, sites can be used as OD outputs,
+       see TN1288 iCE40 LED Driver Usage Guide)
+      Number of IO sites used for PIO+I3C+OD+RGB: 12 out of 39 (31%)
+   Number of DSPs:             0 out of 8 (0%)
+   Number of I2Cs:             0 out of 2 (0%)
+   Number of High Speed OSCs:  0 out of 1 (0%)
+   Number of Low Speed OSCs:   0 out of 1 (0%)
+   Number of RGB PWM:          0 out of 1 (0%)
+   Number of RGB Drivers:      0 out of 1 (0%)
+   Number of SCL FILTERs:      0 out of 2 (0%)
+   Number of SRAMs:            0 out of 4 (0%)
+   Number of WARMBOOTs:        0 out of 1 (0%)
+   Number of SPIs:             0 out of 2 (0%)
+   Number of EBRs:             0 out of 30 (0%)
+   Number of PLLs:             1 out of 1 (100%)
+   Number of Clocks:  2
+      Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
+      Net pll_clk_internal: 427 loads, 427 rising, 0 falling (Driver: Pin
+     pll_spi_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
+   Number of Clock Enables:  29
+      Net n8493: 1 loads, 1 SLICEs
+      Net n8599: 1 loads, 1 SLICEs
+      Net Controller_inst.int_STM32_TX_DV: 64 loads, 64 SLICEs
+      Net Controller_inst.n6953: 4 loads, 4 SLICEs
+      Net Controller_inst.n18561: 1 loads, 1 SLICEs
+      Net Controller_inst.n14707: 1 loads, 1 SLICEs
+      Net Controller_inst.n4_adj_675: 32 loads, 32 SLICEs
+      Net Controller_inst.n3: 1 loads, 1 SLICEs
+      Net Controller_inst.n2457: 4 loads, 4 SLICEs
+      Net Controller_inst.n4_adj_677: 32 loads, 32 SLICEs
+      Net Controller_inst.int_RHD_TX_DV: 5 loads, 5 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n6968: 7 loads, 7 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n15699: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n5834: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n7011: 5 loads, 5 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n15064: 1 loads, 1
+     SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n9422: 8 loads, 8
+     SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6943: 1 loads, 1
+     SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6993: 5 loads, 5
+     SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6967: 5 loads,
+     5 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6946: 1 loads,
+     1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n7003: 6 loads,
+     6 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n8522: 6
+     loads, 6 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6939: 1
+     loads, 1 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6971: 4
+     loads, 4 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5866: 1
+     loads, 1 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6981: 3
+     loads, 3 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
+     RIC.u_fifo.rd_addr_nxt_w_0__N_391: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
+     RIC.u_fifo.wr_addr_nxt_w_0__N_383: 8 loads, 8 SLICEs
+   Number of LSRs:  3
+      Net n8493: 17 loads, 17 SLICEs
+      Net n11352: 1 loads, 1 SLICEs
+      Net w_reset: 397 loads, 397 SLICEs
+   Top 10 highest fanout non-clock nets:
+      Net w_reset: 494 loads
+      Net Controller_inst.int_STM32_TX_DV: 85 loads
+      Net VCC_net: 71 loads
+      Net Controller_inst.n2455: 64 loads
+      Net Controller_inst.stm32_state[0]: 45 loads
+      Net Controller_inst.n4391: 32 loads
+      Net Controller_inst.n4_adj_675: 32 loads
+      Net Controller_inst.n4_adj_677: 32 loads
+      Net Controller_inst.int_FIFO_RE: 27 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]:
+     27 loads
+
+   Number of warnings:  4
+   Number of errors:    0
+
+<A name="mrp_dwe"></A><B><U><big>Design Errors/Warnings</big></U></B>
+
+INFO &lt;52291017&gt; - map: Port &apos;pll_clk&apos; is located on BB_OD pad &apos;40&apos;. Its IO
+     buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not
+     applicable to BB_OD.
+WARNING &lt;71003020&gt; - map: Top module port &apos;i_STM32_SPI_MISO&apos; does not connect to
+     anything.
+WARNING &lt;71003020&gt; - map: Top module port &apos;i_RHD_SPI_MISO&apos; does not connect to
+     anything.
+WARNING &lt;71003020&gt; - map: Top module port &apos;i_STM32_SPI_MISO&apos; does not connect to
+     anything.
+WARNING &lt;71003020&gt; - map: Top module port &apos;i_RHD_SPI_MISO&apos; does not connect to
+     anything.
+
+<A name="mrp_ioa"></A><B><U><big>IO (PIO) Attributes</big></U></B>
+
++---------------------+-----------+-----------+-------+-------+-----------+
+| IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
+|                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB_1               | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_RHD_SPI_CS_n      | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_RHD_SPI_Clk       | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_RHD_SPI_MOSI      | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB_2               | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_STM32_SPI_CS_n    | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_STM32_SPI_Clk     | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| o_STM32_SPI_MOSI    | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB_3               | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB_4               | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| i_clk               | INPUT     |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| pll_clk             | OUTPUT    |           |       |       | OD        |
++---------------------+-----------+-----------+-------+-------+-----------+
+
+<A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
+
+
+<A name="mrp_pll"></A><B><U><big>PLL/DLL Summary</big></U></B>
+
+PLL 1:                                 Pin/Node Value
+  PLL Instance Name:
+       pll_spi_inst/lscc_pll_inst/u_PLL_B
+  Input Reference Clock:               PIN      i_clk_c
+  Output Clock(CoreA):                          NONE
+  Output Clock(GlobalA):               NODE     pll_clk_internal
+  Output Clock(CoreB):                          NONE
+  Output Clock(GlobalB):                        NONE
+  Feedback input:                      NODE
+       pll_spi_inst.lscc_pll_inst.feedback_w
+  Internal Feedback output:            NODE
+       pll_spi_inst.lscc_pll_inst.feedback_w
+  BYPASS signal:                                GND
+  LATCH signal:                                 GND
+  Lock Signal:                                  NONE
+  Input Clock Frequency (MHz):                  NA
+  Reference Divider:                            0
+  Feedback Divider:                             87
+  VCO Divider:                                  4
+  ENABLE_ICEGATE_PORTA:                         0
+  ENABLE_ICEGATE_PORTB:                         0
+  PLLOUT_SELECT_PORTA:                          GENCLK
+  PLLOUT_SELECT_PORTB:                          GENCLK
+  SHIFTREG_DIV_MODE:                            0
+  DELAY_ADJUSTMENT_MODE_RELATIVE:               FIXED
+  FDA_RELATIVE:                                 0
+  FEEDBACK_PATH:                                SIMPLE
+  DELAY_ADJUSTMENT_MODE_FEEDBACK:               FIXED
+  FDA_FEEDBACK:                                 0
+  FILTER_RANGE:                                 1
+  EXTERNAL_DIVIDE_FACTOR:                       NONE
+  TEST Mode:                                    0
+
+<A name="mrp_asic"></A><B><U><big>ASIC Components</big></U></B>
+
+Instance Name: pll_spi_inst/lscc_pll_inst/u_PLL_B
+         Type: PLL
+
+<A name="mrp_consum"></A><B><U><big>Constraint Summary</big></U></B>
+
+   Total number of constraints: 15
+   Total number of constraints dropped: 0
+
+<A name="mrp_runtime"></A><B><U><big>Run Time and Memory Usage</big></U></B>
+
+   Total CPU Time: 1 secs
+   Total REAL Time: 0 secs
+   Peak Memory Usage: 79 MB
+Checksum -- map: fc407a92891a9c06aafdcf5f711b4700718965fe
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995
+     AT&amp;T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent
+     Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems
+     All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor
+     Corporation,  All rights reserved.
+</PRE></DIV>
+<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
+<UL id="toc_list">
+<LI><A href=#mrp_di>Design Information</A></LI>
+<LI><A href=#mrp_ds>Design Summary</A></LI>
+<LI><A href=#mrp_dwe>Design Errors/Warnings</A></LI>
+<LI><A href=#mrp_ioa>IO (PIO) Attributes</A></LI>
+<LI><A href=#mrp_rm>Removed logic</A></LI>
+<LI><A href=#mrp_pll>PLL/DLL Summary</A></LI>
+<LI><A href=#mrp_asic>ASIC Components</A></LI>
+<LI><A href=#mrp_consum>Constraint Summary</A></LI>
+<LI><A href=#mrp_runtime>Run Time and Memory Usage</A></LI>
+</UL>
+</DIV>
+
+<button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
+<script type="text/javascript">
+<!--
+var scrollStep = 0;
+function scrollToTop(){
+  var funScroll = function() {
+    var top = document.body.scrollTop;
+    if (top == 0) {
+      scrollStep = 0;
+      return;
+    }
+    if (scrollStep == 0)
+      scrollStep = top/20 + 1;
+    top -= scrollStep;
+    if (top < 0)
+      top = 0;
+    document.body.scrollTop = top;
+    requestAnimationFrame(funScroll);
+  };
+  funScroll();
+}
+
+window.addEventListener('scroll', function(e) {
+  var backToTop = document.getElementById('back_to_top')
+  if (document.body.scrollTop > 0) {
+    backToTop.style.display = 'block';
+  } else {	backToTop.style.display = 'none'  }});
+
+//-->
+</script>
+
+<style type="text/css">
+#back_to_top {
+  bottom:20px; right:20px;
+  width:30px; height:30px;
+  font-size: 20px;
+  padding: 2px 5px 2px 5px;
+  position:fixed;
+  background-color:rgba(210,210,210,0.1);
+  border-style: solid;
+  border-color: rgba(192,192,192,0.8);
+  border-width:1px;
+  display:none;
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin:50% 50%;
+}
+#back_to_top:focus {
+  outline-width:0px;
+}
+</style>
+
+</BODY>
+

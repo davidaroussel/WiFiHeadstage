@@ -52,6 +52,7 @@ class DataConverter():
                 channel_number = item[0]
                 channel_data = item[1]
 
+
                 # Perform the conversion for each data point in channel_data
                 converted_data = [converting_value * value + OpenEphysOffset for value in channel_data]
 
@@ -79,3 +80,4 @@ class DataConverter():
                     sorted_dict_values.fill(0)
                     data_counter = 0  # Reset data counter
                     sin_counter = 0  # Reset sine wave counter
+

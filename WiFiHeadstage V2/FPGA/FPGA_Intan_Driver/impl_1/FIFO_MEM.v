@@ -1,5 +1,5 @@
 // Verilog netlist produced by program LSE 
-// Netlist written on Sat Dec 21 12:05:51 2024
+// Netlist written on Tue Jul 22 15:48:42 2025
 // Source file index table: 
 // Object locations will have the form @<file_index>(<first_ line>[<left_column>],<last_line>[<right_column>])
 // file 0 "c:/lscc/radiant/2023.2/ip/avant/fifo/rtl/lscc_fifo.v"
@@ -71,7 +71,7 @@ module FIFO_MEM (clk_i, rst_i, wr_en_i, rd_en_i, wr_data_i, full_o,
     output empty_o;
     output almost_full_o;
     output almost_empty_o;
-    output [10:0]data_cnt_o;
+    output [7:0]data_cnt_o;
     output [31:0]rd_data_o;
     
     

@@ -14,15 +14,16 @@ def currentTime():
 
 
 class OpenEphysSender:
-    def __init__(self, q_queue, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
+    def __init__(self, q_queue, p_channels, p_buffer_size, p_buffer_factor, p_frequency, p_port, p_host_addr=""):
         self.queue_conv_data = q_queue
+        self.channels = p_channels
         self.buffer_size = p_buffer_size
         self.buffer_factor = p_buffer_factor
         self.frequency = p_frequency
         self.host_addr = p_host_addr
         self.port = p_port
         self.buffServer_Flag = False
-        self.buffServer_Thread = Thread(target=self.sendToOpenEphysUDP)
+        self.buffServer_Thread = Thread(target=self.sendToOpenEphysTCP)
         self.openEphys_Socket = 0
 
     def startThread(self):
@@ -40,9 +41,9 @@ class OpenEphysSender:
     def sendToOpenEphysTCP(self):
         print("---STARTING SEND_OPENEPHYS THREAD---")
 
-        numChannels = 8  # number of channels to send
-        numSamples = 1024  # size of the data buffer
-        Freq = 12000  # sample rate of the signal
+        numChannels = len(self.channels)  # number of channels to send
+        numSamples = self.buffer_size  # size of the data buffer
+        Freq = self.frequency  # sample rate of the signal
         offset = 0  # Offset of bytes in this packet; only used for buffers > ~64 kB
         dataType = 2  # Enumeration value based on OpenCV.Mat data types
         elementSize = 2  # Number of bytes per element. elementSize = 2 for U16
@@ -60,8 +61,6 @@ class OpenEphysSender:
             openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
             openEphys_Socket.bind(openEphys_AddrPort)
             openEphys_Socket.listen(1)
-
-
             print("Waiting for external connection to start...")
             (tcpClient, address) = openEphys_Socket.accept()
             print("Connected.")
@@ -95,35 +94,13 @@ class OpenEphysSender:
         while True:
             t1 = self.currentTime()
             item = self.queue_conv_data.get()
-            # print(len(item))
-            # if len(item) > max_udp_size:
-            #     half_point = len(item) // 2
-            #     item_part1 = item[:half_point]
-            #     item_part2 = item[half_point:]
-            #     half_interval = bufferInterval / 2
-            #
-            #     openEphys_Socket.sendto(item_part1, openEphys_AddrPort)
-            #     t2 = self.currentTime()
-            #
-            #     # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-            #     while ((t2 - t1) < half_interval):
-            #         t2 = self.currentTime()
-            #
-            #     t1 = self.currentTime()
-            #     openEphys_Socket.sendto(item_part2, openEphys_AddrPort)
-            #     t2 = self.currentTime()
-            #
-            #     # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-            #     while ((t2 - t1) < half_interval):
-            #         t2 = self.currentTime()
-            # else:
-            # print("Sending", len(item), "bytes")
+
             self.openEphys_Socket.sendto(item, openEphys_AddrPort)
             t2 = self.currentTime()
 
-            # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
-            while ((t2 - t1) < inter_bufferInterval):
-                t2 = self.currentTime()
+            # # CHECKING TO MAKE SURE WE DONE SEND DATA TO FAST
+            # while ((t2 - t1) < inter_bufferInterval):
+            #     t2 = self.currentTime()
 
     def plotData(self):
         # SPECIFY THE IP AND PORT #

@@ -120,7 +120,7 @@ class WiFiServer(BaseException):
                     start_time = time.time()  # Start timer on first received byte
                 data += bytearray(rest_packet)
             self.m_raw_data.extend(data)
-            print("Loops: ", i, "Packets: ", len(self.m_raw_data) / BUFFER_SIZE)
+            # print("Loops: ", i, "Packets: ", len(self.m_raw_data) / BUFFER_SIZE)
 
         end_time = time.time()  # Stop timer after last received byte
 
@@ -333,16 +333,15 @@ if __name__ == "__main__":
     #              24, 25, 26, 27, 28, 29, 30, 31]
 
     # 16 CHANNELS CONFIGURATION
-    # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7,
-    #             8, 9, 10, 11, 12, 13, 14, 15]
+    CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
     # 12 CHANNELS CONFIGURATION
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 15, 16, 17, 18]
 
-    CHANNELS = [0, 1, 2, 3]
+    # CHANNELS = [0, 1, 2, 3]
 
     SAMPLING_TIME = 20  # Time sampling in seconds
-    FREQ_SAMPLING = 24000
+    FREQ_SAMPLING = 3500
     BUFFER_SIZE = 256  # Maximum value possible for the WiFi UDP Socket communication
 
     # Buffer Size for Headstage communication is 1024 bytes.
@@ -391,8 +390,10 @@ if __name__ == "__main__":
 
                 HEADSTAGE_SERVER.calculateVrmsForAllChannels()
 
-                # HEADSTAGE_SERVER.plotOneChannel(2)
-                HEADSTAGE_SERVER.plotAllChannels()
+                HEADSTAGE_SERVER.plotOneChannel(3)
+                HEADSTAGE_SERVER.plotOneChannel(4)
+                HEADSTAGE_SERVER.plotOneChannel(5)
+                HEADSTAGE_SERVER.plotOneChannel(6)
 
                 # data_for_csv = HEADSTAGE_SERVER.createDataForCSV()
                 # HEADSTAGE_SERVER.writeDataToCSV(data_for_csv)

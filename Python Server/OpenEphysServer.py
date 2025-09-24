@@ -5,26 +5,23 @@ from OpenEphys.WiFiHeadstageReceiver import WiFiHeadstageReceiver
 from OpenEphys.DataConverter import DataConverter
 from OpenEphys.CSVWriter import CSVWriter
 from OpenEphys.OpenEphysSender import OpenEphysSender
+from OpenEphys.TTL_Controller import TTL_Controller
+from OpenEphys.OpenEphys_Configuration import OpenEphys_Configuration
 
-from open_ephys.control import OpenEphysHTTPServer
-from open_ephys.control.network_control import NetworkControl
-import keyboard
 
 if __name__ == "__main__":
-    channel = 3
-    state = 1
-    gui_starter = OpenEphysHTTPServer(address='127.0.0.1')
-    gui_ttl = NetworkControl(ip_address='127.0.0.1', port=5556)
-
     #MODES
-    CSV_WRITING = False
-    OPENEPHYS_SENDING = True
+    CSV_WRITING         = False
+    OPENEPHYS_SENDING   = True
+    TTL_GENERATOR       = False
+    CONFIGURE_OPENEPHYS = True
+    PRINT_OE_INFO       = True
 
     #GLOBAL VARIABLES
     HOST_ADDR      = ""
     HEADSTAGE_PORT = 5000
     OPENEPHYS_PORT = 10001
-
+    TTL_EVENT_PORT = 5556
 
     #HEADSTAGE CONFIGS
     # 8 CHANNELS CONFIGURATION
@@ -45,13 +42,6 @@ if __name__ == "__main__":
                      [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]]
     CHANNELS = CHANNELS_LIST[0]
 
-    # CHANNELS = [3, 8, 21, 27] #4, 9, 22, 28
-
-    # 12 CHANNELS CONFIGURATION
-    BUFFER_SOCKET_FACTOR = 1
-    BUFFER_SIZE = 256
-    FREQUENCY   = 3500
-
     CHANNELS_LIST = [[0, 1, 2, 3],
                      [4, 5, 6, 7],
                      [8, 9, 10, 11],
@@ -60,17 +50,47 @@ if __name__ == "__main__":
                      [20, 21, 22, 23],
                      [24, 25, 26, 27],
                      [28, 29, 30, 31]]
-    # CHANNELS = CHANNELS_LIST[0]
+    CHANNELS = CHANNELS_LIST[0]
+
+    # CHANNELS = [3, 8, 21, 27] #4, 9, 22, 28
+
+    # 12 CHANNELS CONFIGURATION
+    BUFFER_SOCKET_FACTOR = 1
+    BUFFER_SIZE = 256
+    FREQUENCY   = 20000
+
+    ttl_channel_key_mapping = {
+        2: ("q", "a"),
+        3: ("w", "s"),
+        4: ("e", "d"),
+        5: ("r", "f")
+    }
+
+    retVal_list = []
+    OE_config = OpenEphys_Configuration()
+    if CONFIGURE_OPENEPHYS:
+        retVal_list.append(OE_config.get_GUI_status())
+        retVal_list.append(OE_config.get_GUI_recording_node())
+        retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+        retVal_list.append(OE_config.get_ES_processor_id())
+        retVal_list.append(OE_config.get_ES_info())
+        retVal_list.append(OE_config.set_ES_scale(0.195))
+        retVal_list.append(OE_config.set_ES_offset(32768))
+        retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
+        retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
+        retVal_list.append(OE_config.get_ES_info())
+    if PRINT_OE_INFO:
+        for retVal in retVal_list:
+            print(retVal)
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA   = Queue()
-    QUEUE_EPHYS_DATA = Queue()
     QUEUE_CSV_DATA   = Queue()
 
-    TASK_WiFiServer      = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR,  p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
-    TASK_DataConverter   = DataConverter(QUEUE_RAW_DATA, QUEUE_EPHYS_DATA, QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
-    TASK_OpenEphysSender = OpenEphysSender(QUEUE_EPHYS_DATA, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, FREQUENCY, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
-    TASK_CSVWriter       = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
+    TASK_WiFiServer    = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
+    TASK_DataConverter = DataConverter(QUEUE_RAW_DATA, QUEUE_CSV_DATA, CHANNELS, FREQUENCY, BUFFER_SIZE, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+    TASK_Manual_TTL    = TTL_Controller(OE_config, ttl_channel_key_mapping, port=TTL_EVENT_PORT, ip_addr=HOST_ADDR)
+    TASK_CSVWriter     = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
     #START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
@@ -83,63 +103,50 @@ if __name__ == "__main__":
     TASK_WiFiServer.configureNumberChannel()
     TASK_WiFiServer.configureIntanChip()
     TASK_WiFiServer.configureSamplingFreq(FREQUENCY)
+    TASK_WiFiServer.check_fifo_state()
 
     # Start other threads
     if CSV_WRITING:
         TASK_CSVWriter.startThread()
-    if OPENEPHYS_SENDING:
-        TASK_OpenEphysSender.startThread()
+    if TTL_GENERATOR:
+        TASK_Manual_TTL.startThread()
     TASK_DataConverter.startThread()
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_headstageRecvThread)
 
-    time.sleep(0.01)
-    print("Match Parameters with OpenEphys")
+    while not TASK_DataConverter.tcp_connected:
+        pass
+
+    time.sleep(0.1)
+    print("Match Parameters with OpenEphys !!")
     print("Socket        : ", OPENEPHYS_PORT)
     print("Sampling Rate : ", FREQUENCY, "Hz")
     print("Number Of CH  : ", len(CHANNELS))
     print("Buffer Size   : ", BUFFER_SIZE, "bytes")
 
-
-    # Continuous loop until "stop" is entered
-    # user_input = input("\n Enter 'stop' to disable sampling: ")
-    # if user_input.strip().lower() == "stop":
-    #     TASK_WiFiServer.stopDataFromIntan()
-    #     print("Closed Intan")
-    #     print("Closed everything")
-    #     # sys.exit()
-
-    channels_mapping = {
-        2: ("q", "a"),
-        3: ("w", "s"),
-        4: ("e", "d"),
-        5: ("r", "f")
-    }
-
-    # Initialize previous state tracking
-    prev_state = {key: False for keys in channels_mapping.values() for key in keys}
     # try:
-    #     pass
-    #     # while True:
-    #     #     pass
-    #     #     # for channel, (key_on, key_off) in channels_mapping.items():
-    #     #     #     if keyboard.is_pressed(key_on):
-    #     #     #         if not prev_state[key_on]:  # Detect new press
-    #     #     #             gui_ttl.send_ttl(line=channel, state=1)  # Turn ON
-    #     #     #             print(f"Channel {channel} ON")
-    #     #     #             prev_state[key_on] = True
-    #     #     #     else:
-    #     #     #         prev_state[key_on] = False  # Reset when released
-    #     #     #
-    #     #     #     if keyboard.is_pressed(key_off):
-    #     #     #         if not prev_state[key_off]:  # Detect new press
-    #     #     #             gui_ttl.send_ttl(line=channel, state=0)  # Turn OFF
-    #     #     #             print(f"Channel {channel} OFF")
-    #     #     #             prev_state[key_off] = True
-    #     #     #     else:
-    #     #     #         prev_state[key_off] = False  # Reset when released
+    #     while(1):
+    #         time.sleep(1)
     # except KeyboardInterrupt:
-    #     print("Closing...")
+    #     print("Ctrl+C pressed")
     # finally:
-    #     print("Stopping Headstage Sampling...")
-    #     TASK_WiFiServer.stopDataFromIntan()
-    #     print("Done !")
+    #     print("Closing Acquisition...")
+    #     OE_config.Network_Events_Connect()
+    #     OE_config.GUI_Stop_Recording()
+    #     OE_config.GUI_Stop_Acquisition()
+    #     print("Done Closing Acquisition")
+
+    OE_config.Network_Events_Connect()
+    OE_config.GUI_Start_Acquisition()
+    time.sleep(2)
+    OE_config.get_GUI_Acquisition_status()
+    OE_config.get_GUI_Recording_status()
+    time.sleep(1)
+    OE_config.GUI_Start_Recording()
+    time.sleep(1)
+    OE_config.get_GUI_Acquisition_status()
+    OE_config.get_GUI_Recording_status()
+    time.sleep(5)
+    OE_config.GUI_Stop_Recording()
+    time.sleep(2)
+    OE_config.GUI_Stop_Acquisition()
+
