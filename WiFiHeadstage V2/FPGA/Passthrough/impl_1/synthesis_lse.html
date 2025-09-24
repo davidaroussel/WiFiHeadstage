@@ -41,19 +41,6 @@ if (a)
 
 <DIV id="content" onclick="hideTocList()"><PRE>
 <A name="Syn"></A><B><U><big>Synthesis Report</big></U></B>
-synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
-
-Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
-Copyright (c) 1995 AT&T Corp.   All rights reserved.
-Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
-Copyright (c) 2001 Agere Systems   All rights reserved.
-Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Wed Feb  5 10:41:01 2025
-
-
-Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml 
-
-The -top option is not used.
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -82,6 +69,7 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - synthesis: User-Selected Strategy Settings
 Optimization goal = Area
+Top-level module name = Controller_RHD64_Config.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -108,13 +96,12 @@ Remove Duplicate Registers = TRUE
 Output HDL file name = Passthrough_impl_1.vm.
 ROM style = auto
 RAM style = auto
-The -comp option is FALSE.
+The -comp option is TRUE.
 The -syn option is FALSE.
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough (searchpath added)
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1 (searchpath added)
 -path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
-CRITICAL <35001476> - synthesis: A top-level module has not been specified for the mixed language design.
 Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
@@ -177,105 +164,11 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 
 INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(6): analyzing entity controller_rhd64_config. VHDL-1012
 INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(31): analyzing architecture behavioral. VHDL-1010
-WARNING <35001200> - synthesis: Setting Controller_RHD64_Config as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
 Top module language type = VHDL.
 Top module name (VHDL, mixed language): Controller_RHD64_Config
-                                                         
+LSE: Compile Design done
 
-
-### Number of Logic Cells: 5280
-
-
-### Number of RAM Blocks: 30
-
-
-### Number of DSP Blocks: 8
-
-
-### Number of PLLs: 1
-
-
-### Number of IO Pins: 56
-
-
-##########################################################
-
-
-                                                         
-
-
-CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_OUT 's net has no driver and is unused.
-
-
-
-CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port LED_OUT 's net has no driver and is unused.
-
-
-<A name="lse_area"></A><B><U><big>Area Report</big></U></B>
-
-################### Begin Area Report (Controller_RHD64_Config)######################
-Number of register bits => 0 of 5280 (0 % )
-IB => 6
-OB => 6
-################### End Area Report ##################
-Number of odd-length carry chains : 0
-Number of even-length carry chains : 0
-
-
-<A name="lse_bbox"></A><B><U><big>BlackBox Report</big></U></B>
-
-################### Begin BlackBox Report ######################
-SB_PLL40_PAD("SIMPLE",0,63,3,1)(1,6) => 1
-################### End BlackBox Report ##################
-
-
-<A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
-
-################### Begin Clock Report ######################
-Clock Nets
-Number of Clocks: 0
-Clock Enable Nets
-Number of Clock Enables: 0
-Highest fanout non-clock nets
-Top 10 highest fanout non-clock nets:
-  Net : MOSI_slave_c_c, loads : 1
-  Net : MISO_master_c_c, loads : 1
-  Net : SCLK_slave_c_c, loads : 1
-  Net : SS_slave_c_c, loads : 1
-  Net : LED_OUT_c_c, loads : 1
-  Net : ext_clk_c, loads : 1
-  Net : pll_clk_c, loads : 1
-  Net : MOSI_slave, loads : 0
-  Net : MISO_master, loads : 0
-  Net : SCLK_slave, loads : 0
-################### End Clock Report ##################
-
-Peak Memory Usage: 91 MB
-
---------------------------------------------------------------
-Total CPU Time: 6 secs 
-Total REAL Time: 6 secs 
---------------------------------------------------------------
-Checksum -- synthesis -- netlist: 188e253fc742d810bf917f3734aafaf2df8911ee
 
 
 
@@ -330,15 +223,6 @@ Checksum -- synthesis -- netlist: 188e253fc742d810bf917f3734aafaf2df8911ee
 <BR>
 <BR>
 </PRE></DIV>
-
-<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
-<UL id="toc_list">
-<LI><A href=#Syn>Top</A></LI>
-<LI><A href=#lse_area>Area Report</A></LI>
-<LI><A href=#lse_bbox>BlackBox Report</A></LI>
-<LI><A href=#lse_clock>Clock Report</A></LI>
-</UL>
-</DIV>
 
 <button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
 <script type="text/javascript">

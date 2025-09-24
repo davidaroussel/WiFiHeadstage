@@ -5,11 +5,11 @@ use ieee.numeric_std.all;
 entity Controller_RHD64_Sampling is
   generic (
       STM32_SPI_NUM_BITS_PER_PACKET : integer := 1024;
-      STM32_CLKS_PER_HALF_BIT 		: integer := 2;
-	  STM32_CS_INACTIVE_CLKS 		: integer := 4;
+      STM32_CLKS_PER_HALF_BIT 		 : integer := 2;
+	  STM32_CS_INACTIVE_CLKS 		 : integer := 4;
       RHD64_SPI_NUM_BITS_PER_PACKET : integer := 16;
-      RHD64_CLKS_PER_HALF_BIT 		: integer := 4;
-	  RHD64_CS_INACTIVE_CLKS 		: integer := 4
+      RHD64_CLKS_PER_HALF_BIT 		 : integer := 4;
+	  RHD64_CS_INACTIVE_CLKS 		 : integer := 4
     );
   port (
 	o_NUM_DATA       : out integer;
@@ -86,8 +86,8 @@ architecture RTL of Controller_RHD64_Sampling is
       i_TX_DV            : in  std_logic;
       o_TX_Ready         : out std_logic;
       o_RX_DV            : out std_logic;
-      o_RX_Byte_Rising  : out std_logic_vector(15 downto 0);
-      o_RX_Byte_Falling : out std_logic_vector(15 downto 0);
+      o_RX_Byte_Rising   : out std_logic_vector(15 downto 0);
+      o_RX_Byte_Falling  : out std_logic_vector(15 downto 0);
       o_FIFO_Data        : out std_logic_vector(31 downto 0);
       o_FIFO_COUNT       : out std_logic_vector(10 downto 0);
 	  o_FIFO_WE          : out std_logic;

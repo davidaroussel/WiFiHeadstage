@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RadiantProject version="4.2" radiant="2023.2.1.288.0" title="FPGA_Intan_Driver" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
+    <Options/>
+    <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="Controller_RHD64_FIFO_tb" hdl_sort="off" top="Controller_RHD64_Config"/>
+        <Source name="source/impl_1/Controller_RHD64_Modes.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_Config.vhd" type="VHDL" type_short="VHDL">
+            <Options top_module="Controller_RHD64_Config"/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_Sampling.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_FIFO.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="FIFO_MEM/FIFO_MEM.ipx" type="IPX_Module" type_short="IPX">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/SPI_Master_CS.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/SPI_Master.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_Modes_tb.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_Sampling_tb.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1/Controller_RHD64_FIFO_tb.vhd" type="VHDL" type_short="VHDL">
+            <Options/>
+        </Source>
+        <Source name="fpga_constraint.sdc" type="Pre-Synthesis Constraints File" type_short="SDC">
+            <Options/>
+        </Source>
+        <Source name="FPGA_Intan_Driver/FPGA_Intan_Driver.spf" type="Simulation Project File" type_short="SPF">
+            <Options/>
+        </Source>
+        <Source name="sim/sim.spf" type="Simulation Project File" type_short="SPF">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1.xcf" type="Programming Project File" type_short="Programming">
+            <Options/>
+        </Source>
+        <Source name="tim/tim.spf" type="Simulation Project File" type_short="SPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Strategy name="Strategy1" file="FPGA_Intan_Driver1.sty"/>
+</RadiantProject>
