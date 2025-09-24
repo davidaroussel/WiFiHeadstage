@@ -98,7 +98,7 @@ class signalProcessing:
                 # self.delayed_spikes = raw_data
 
 
-    def spike_sorting_task(self, plot_mode="overlay_spikes"):
+    def spike_sorting_task(self):
         raw_buffers = []  # to store raw data
         ret_buffers = []  # to store retVal
         finish = True
@@ -120,26 +120,6 @@ class signalProcessing:
 
         n_channels = raw_array.shape[0]
 
-        for ch in range(n_channels):
-            plt.figure(figsize=(12, 3))
-
-            if plot_mode == "full_signal":
-                plt.plot(raw_array[ch], label="Raw Data", alpha=0.7)
-                plt.plot(ret_array[ch], label="retVal", alpha=0.7)
-                plt.legend(["Raw Data", "retVal"])
-            elif plot_mode == "overlay_spikes":
-                # Only plot retVal buffers
-                for i, buf in enumerate(ret_buffers):
-                    plt.plot(buf[ch])
-                plt.legend(["retVal buffers"])
-            else:
-                raise ValueError("plot_mode must be 'full_signal' or 'overlay_spikes'")
-
-            plt.title(f"Channel {ch}")
-            plt.xlabel("Sample")
-            plt.ylabel("Amplitude")
-            plt.grid(True)
-            plt.show()
 
     def MTO_operator(self, x, k=5):
         x = np.asarray(x)
@@ -157,10 +137,10 @@ class signalProcessing:
     def spikeDetecting(self, signal_2d):
         #print(signal_2d.shape)
         self.num_calls += 1
-        self.spike_detected = np.zeros((self.channel_number, self.buffer_size))
+        # self.spike_detected = np.zeros((self.channel_number, self.buffer_size))
         for id_channel, data_channel in enumerate(signal_2d):
             if (self.num_calls < 2):
-                self.raw_data[id_channel][0:1024] = data_channel
+                self.raw_data[id_channel][0:self.buffer_size] = data_channel
                 #print("here 1")
             else:
                 if(self.num_calls == 2):

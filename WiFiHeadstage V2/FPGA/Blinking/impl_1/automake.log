@@ -9,7 +9,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Wed Aug 27 14:12:15 2025
+Tue Sep  2 15:55:34 2025
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Blinking_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml 
@@ -167,9 +167,10 @@ Top module name (VHDL, mixed language): Blinker
                                                          
 
 
-WARNING <35001771> - Initial value found on net gnd will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net pwr will be ignored due to unrecognized driver type
+WARNING <35001771> - Initial value found on net rgb1_sig will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net rgb2_sig will be ignored due to unrecognized driver type
+WARNING <35001771> - Initial value found on net rgb3_sig will be ignored due to unrecognized driver type
 
 
 
@@ -179,7 +180,7 @@ Number of register bits => 35 of 5280 (0 % )
 CCU2 => 17
 FD1P3XZ => 35
 IB => 1
-LUT4 => 15
+LUT4 => 17
 OB => 7
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
@@ -193,10 +194,10 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : n363, loads : 35
-  Net : step[0], loads : 4
-  Net : step[2], loads : 3
-  Net : step[1], loads : 3
+  Net : n366, loads : 35
+  Net : step[2], loads : 6
+  Net : step[1], loads : 5
+  Net : step[0], loads : 5
   Net : counter[31], loads : 2
   Net : counter[30], loads : 2
   Net : counter[29], loads : 2
@@ -209,9 +210,9 @@ Peak Memory Usage: 92 MB
 
 --------------------------------------------------------------
 Total CPU Time: 6 secs 
-Total REAL Time: 7 secs 
+Total REAL Time: 6 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: a89c9cf2e5b326094f337f3840f93f3dea281f8a
+Checksum -- synthesis -- netlist: d7eb34036f024a2fada29a86c13165f3aed99fa7
 
 
 
@@ -223,7 +224,7 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'Blinking_impl_1.vm' ...
-CPU Time to convert: 0.09375
+CPU Time to convert: 0.078125
 REAL Time to convert: 0
 convert PEAK Memory Usage: 31 MB
 convert CURRENT Memory Usage: 31 MB
@@ -239,7 +240,7 @@ POSTSYN finished successfully.
 Total CPU Time: 0 secs 
 Total REAL Time: 0 secs 
 Peak Memory Usage: 37 MB
-Checksum -- postsyn: 47f7c95f80f3a3d3e876f2bc51445331fe955b9
+Checksum -- postsyn: 3d063a4cce4664896883bf66d59382b732318a74
 
 
 
@@ -270,16 +271,17 @@ INFO <52291017> - Port 'RGB_2' is located on BB_OD pad '40'. Its IO buffer is ma
 INFO <52291017> - Port 'RGB_3' is located on BB_OD pad '41'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
 Running general design DRC...
 
-WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_1', it is ignored.
 WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_3', it is ignored.
+WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_2', it is ignored.
+WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_1', it is ignored.
 
 
 
 Design Summary:
    Number of slice registers:  35 out of  5280 (1%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:            51 out of  5280 (1%)
-      Number of logic LUT4s:              17
+   Number of LUT4s:            52 out of  5280 (1%)
+      Number of logic LUT4s:              18
       Number of ripple logic:             17 (34 LUT4s)
    Number of IO sites used:   8 out of 39 (21%)
       Number of IO sites used for general PIO: 5
@@ -305,26 +307,26 @@ Design Summary:
    Number of Clocks:  1
       Net CLK_c: 20 loads, 20 rising, 0 falling (Driver: Port CLK)
    Number of Clock Enables:  1
-      Net n363: 3 loads, 3 SLICEs
+      Net n366: 3 loads, 3 SLICEs
    Number of LSRs:  1
-      Net n363: 17 loads, 17 SLICEs
+      Net n366: 17 loads, 17 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net n363: 20 loads
-      Net step[0]: 4 loads
-      Net step[1]: 3 loads
-      Net step[2]: 3 loads
+      Net n366: 20 loads
+      Net step[2]: 6 loads
+      Net step[0]: 5 loads
+      Net step[1]: 5 loads
+      Net VCC_net: 5 loads
       Net counter[24]: 2 loads
       Net counter[26]: 2 loads
       Net counter[27]: 2 loads
       Net counter[28]: 2 loads
       Net counter[30]: 2 loads
-      Net counter[31]: 2 loads
 Running physical design DRC...
 
  
 
 
-   Number of warnings:  2
+   Number of warnings:  3
    Number of errors:    0
 
 Constraint Summary:
@@ -336,13 +338,13 @@ Total CPU Time: 0 secs
 Total REAL Time: 0 secs  
 Peak Memory Usage: 64 MB
 
-Checksum -- map: aee0d4779cb51958f4b5aa1ed74f9e484185d11
+Checksum -- map: d7ff01d2fe0d73ea20397c3c8dbc723a8c118301
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
 
 pnmainc -run pnmain "Blinking_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "Blinking_impl_1_map.udb"
-Wed Aug 27 14:12:33 2025
+Tue Sep  2 15:55:51 2025
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -360,12 +362,12 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
-Number of Signals: 118
-Number of Connections: 234
+Number of Signals: 119
+Number of Connections: 240
 Device utilization summary:
 
    SLICE (est.)      27/2640          1% used
-     LUT             51/5280          1% used
+     LUT             52/5280          1% used
      REG             35/5280          1% used
    PIO                5/56            9% used
                       5/36           13% bonded
@@ -399,18 +401,18 @@ Starting Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs
 ..  ..
 ....................
 
-Placer score = 8404.
+Placer score = 9306.
 
 Device SLICE utilization summary after final SLICE packing:
    SLICE             27/2640          1% used
 
-Finished Placer Phase 1. CPU time: 6 secs , REAL time: 7 secs 
+Finished Placer Phase 1. CPU time: 7 secs , REAL time: 7 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  36408
-Finished Placer Phase 2.  CPU time: 6 secs , REAL time: 7 secs 
+Placer score =  38012
+Finished Placer Phase 2.  CPU time: 7 secs , REAL time: 7 secs 
 
 
 ------------------ Clock Report ------------------
@@ -438,10 +440,10 @@ I/O Bank Usage Summary:
 | 2        | 0 / 8 (  0%)  | OFF        |            |            |
 +----------+---------------+------------+------------+------------+
 
-Total Placer CPU time: 6 secs , REAL time: 7 secs 
+Total Placer CPU time: 7 secs , REAL time: 7 secs 
 
 
-Checksum -- place: e1a2e1bd7fa2bd648e2e9acc5139ff796a07139
+Checksum -- place: f571279778793208a13d81dc35f5c3bcfb45f83
 Writing design to file Blinking_impl_1_par.dir/5_1.udb ...
 
 
@@ -450,7 +452,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 14:12:40 08/27/25
+Start NBR router at 15:55:58 09/02/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -470,7 +472,7 @@ Preassignment Summary:
 --------------------------------------------------------------------------------
 64 connections routed with dedicated routing resources
 1 global clock signals routed
-83 connections routed (of 232 total) (35.78%)
+83 connections routed (of 238 total) (34.87%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (1 used out of 8 available):
@@ -480,30 +482,40 @@ Primary clocks (1 used out of 8 available):
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 14:12:40 08/27/25
+Start NBR section for initial routing at 15:55:59 09/02/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+13(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 14:12:40 08/27/25
+Start NBR section for normal routing at 15:55:59 09/02/25
 Level 4, iteration 1
+11(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 2
+5(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 3
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 4
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 5
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 6
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 14:12:40 08/27/25
+Start NBR section for post-routing at 15:55:59 09/02/25
 
 End NBR router with 0 unrouted connection
 
-Checksum -- route: b9968a684043f4d3d4677bff60bc2b1943041a4
+Checksum -- route: b011e7d4b0fe522b9dd8164e1b69a3207058332
 
 Total CPU time 0 secs 
 Total REAL time: 0 secs 
 Completely routed.
-End of route.  232 routed (100.00%); 0 unrouted.
+End of route.  238 routed (100.00%); 0 unrouted.
 
 Writing design to file Blinking_impl_1_par.dir/5_1.udb ...
 
@@ -520,7 +532,7 @@ Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 7 secs 
 Total REAL Time: 8 secs 
-Peak Memory Usage: 101.09 MB
+Peak Memory Usage: 92.42 MB
 
 
 par done!
@@ -555,7 +567,7 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  19  counted  204  covered  0
+Connections ignored  19  counted  212  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
@@ -563,7 +575,7 @@ Total CPU Time: 0 secs
 Total REAL Time: 0 secs 
 Peak Memory Usage: 99 MB
 
- 0.918375s wall, 0.687500s user + 0.171875s system = 0.859375s CPU (93.6%)
+ 0.893720s wall, 0.781250s user + 0.109375s system = 0.890625s CPU (99.7%)
 
 
 tmcheck -par "Blinking_impl_1.par" 
@@ -617,7 +629,7 @@ Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs
 ibisgen "Blinking_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Wed Aug 27 14:12:48 2025
+Tue Sep  2 15:56:05 2025
 
 Loading Blinking_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.

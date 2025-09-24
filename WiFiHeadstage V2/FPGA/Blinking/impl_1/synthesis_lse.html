@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Wed Aug 27 14:12:15 2025
+Tue Sep  2 15:55:34 2025
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Blinking_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml 
@@ -205,9 +205,10 @@ Top module name (VHDL, mixed language): Blinker
                                                          
 
 
-WARNING <35001771> - synthesis: Initial value found on net gnd will be ignored due to unrecognized driver type
 WARNING <35001771> - synthesis: Initial value found on net pwr will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb1_sig will be ignored due to unrecognized driver type
 WARNING <35001771> - synthesis: Initial value found on net rgb2_sig will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb3_sig will be ignored due to unrecognized driver type
 
 
 
@@ -220,7 +221,7 @@ Number of register bits => 35 of 5280 (0 % )
 CCU2 => 17
 FD1P3XZ => 35
 IB => 1
-LUT4 => 15
+LUT4 => 17
 OB => 7
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
@@ -237,10 +238,10 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : n363, loads : 35
-  Net : step[0], loads : 4
-  Net : step[2], loads : 3
-  Net : step[1], loads : 3
+  Net : n366, loads : 35
+  Net : step[2], loads : 6
+  Net : step[1], loads : 5
+  Net : step[0], loads : 5
   Net : counter[31], loads : 2
   Net : counter[30], loads : 2
   Net : counter[29], loads : 2
@@ -253,9 +254,9 @@ Peak Memory Usage: 92 MB
 
 --------------------------------------------------------------
 Total CPU Time: 6 secs 
-Total REAL Time: 7 secs 
+Total REAL Time: 6 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: a89c9cf2e5b326094f337f3840f93f3dea281f8a
+Checksum -- synthesis -- netlist: d7eb34036f024a2fada29a86c13165f3aed99fa7
 
 
 

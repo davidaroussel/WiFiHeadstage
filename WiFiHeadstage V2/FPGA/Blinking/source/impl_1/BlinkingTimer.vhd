@@ -22,10 +22,10 @@ architecture Behavioral of Blinker is
     signal counter : integer := 0;
     signal step    : integer range 0 to 6 := 0;
 
-    signal led1_sig : std_logic := '0';
-    signal led2_sig : std_logic := '0';
-    signal led3_sig : std_logic := '0';
-    signal led4_sig : std_logic := '0';
+    signal led1_sig : std_logic := '1';
+    signal led2_sig : std_logic := '1';
+    signal led3_sig : std_logic := '1';
+    signal led4_sig : std_logic := '1';
 
     signal rgb1_sig : std_logic := '1';
     signal rgb2_sig : std_logic := '1';
@@ -49,32 +49,31 @@ begin
     process(step)
     begin
         -- Default states
-        led1_sig <= '0';
-        led2_sig <= '0';
-        led3_sig <= '0';
-        led4_sig <= '0';
+        led1_sig <= '1';
+        led2_sig <= '1';
+        led3_sig <= '1';
+        led4_sig <= '1';
         rgb1_sig <= '1';
         rgb2_sig <= '1';
         rgb3_sig <= '1';
 
         case step is
             when 0 => 
-				rgb2_sig <= '1';
-				rgb3_sig <= '1';
-            when 1 => 
+				rgb1_sig <= '0';
 				rgb2_sig <= '0';
 				rgb3_sig <= '0';
-            when 2 => 
+            when 1 => 
+				rgb1_sig <= '0';
 				rgb2_sig <= '1';
+				rgb3_sig <= '1';
+            when 2 => 
+
+				rgb1_sig <= '1';
+				rgb2_sig <= '0';
 				rgb3_sig <= '1';
             when 3 => 
-				rgb2_sig <= '0';
-				rgb3_sig <= '0';
-            when 4 => 
+				rgb1_sig <= '1';
 				rgb2_sig <= '1';
-				rgb3_sig <= '1';
-            when 5 => 
-				rgb2_sig <= '0';
 				rgb3_sig <= '0';
             when others => 
 				null;

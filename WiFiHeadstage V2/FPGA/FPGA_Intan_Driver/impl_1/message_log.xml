@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliMessageLog>
-    <Task name="Export">
+    <Task name="PAR">
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
@@ -13,8 +13,102 @@
             <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
         </Message>
         <Message>
-            <ID>1191031</ID>
-            <Severity>1</Severity>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
         </Message>
     </Task>
     <Task name="Synthesis">
@@ -80,7 +174,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v(11): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v(11):</Dynamic>
             <Dynamic>PLL_SPI</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v</Navigation>
             <Navigation>11</Navigation>
@@ -88,7 +182,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v(105): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v(105):</Dynamic>
             <Dynamic>PLL_SPI_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;87&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/PLL_SPI/rtl/PLL_SPI.v</Navigation>
             <Navigation>105</Navigation>
@@ -96,7 +190,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(428): </Dynamic>
+            <Dynamic>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(428):</Dynamic>
             <Dynamic>PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;87&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v</Navigation>
             <Navigation>428</Navigation>
@@ -169,7 +263,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(11): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(11):</Dynamic>
             <Dynamic>FIFO_MEM</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v</Navigation>
             <Navigation>11</Navigation>
@@ -177,7 +271,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(121): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(121):</Dynamic>
             <Dynamic>FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=127,ALMOST_FULL_DEASSERT_LVL=126,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v</Navigation>
             <Navigation>121</Navigation>
@@ -185,7 +279,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(273): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(273):</Dynamic>
             <Dynamic>FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=127,ALMOST_FULL_DEASSERT_LVL=126,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v</Navigation>
             <Navigation>273</Navigation>
@@ -193,7 +287,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(2590): </Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v(2590):</Dynamic>
             <Dynamic>FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=127,ALMOST_FULL_DEASSERT_LVL=126,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT=&quot;TRUE&quot;,FAMILY=&quot;iCE40UP&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v</Navigation>
             <Navigation>2590</Navigation>
@@ -265,7 +359,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>fifo_mem.v(63): </Dynamic>
+            <Dynamic>fifo_mem.v(63):</Dynamic>
             <Dynamic>FIFO_MEM</Dynamic>
             <Navigation>fifo_mem.v</Navigation>
             <Navigation>63</Navigation>
@@ -273,7 +367,7 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>pll_spi.v(63): </Dynamic>
+            <Dynamic>pll_spi.v(63):</Dynamic>
             <Dynamic>PLL_SPI</Dynamic>
             <Navigation>pll_spi.v</Navigation>
             <Navigation>63</Navigation>
@@ -340,7 +434,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(1): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(1):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>1</Navigation>
@@ -348,7 +442,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v(40): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v(40):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/adder_subtractor/rtl/lscc_add_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v</Navigation>
             <Navigation>40</Navigation>
@@ -356,7 +450,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(2): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(2):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>2</Navigation>
@@ -364,7 +458,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v(50): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v(50):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/adder/rtl/lscc_adder.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v</Navigation>
             <Navigation>50</Navigation>
@@ -372,7 +466,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(3): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(3):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>3</Navigation>
@@ -380,7 +474,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v(52): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v(52):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/complex_mult/rtl/lscc_complex_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v</Navigation>
             <Navigation>52</Navigation>
@@ -388,7 +482,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(4): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(4):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>4</Navigation>
@@ -396,7 +490,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v(39): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v(39):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/counter/rtl/lscc_cntr.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v</Navigation>
             <Navigation>39</Navigation>
@@ -404,7 +498,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(5): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(5):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>5</Navigation>
@@ -412,7 +506,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v(44): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v(44):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo/rtl/lscc_fifo.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v</Navigation>
             <Navigation>44</Navigation>
@@ -420,7 +514,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(6): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(6):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>6</Navigation>
@@ -428,7 +522,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v(47): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v(47):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo_dc/rtl/lscc_fifo_dc.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v</Navigation>
             <Navigation>47</Navigation>
@@ -436,7 +530,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(7): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(7):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>7</Navigation>
@@ -444,7 +538,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v(52): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v(52):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_accumulate/rtl/lscc_mult_accumulate.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v</Navigation>
             <Navigation>52</Navigation>
@@ -452,7 +546,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(8): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(8):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>8</Navigation>
@@ -460,7 +554,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v(53): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v(53):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub_sum/rtl/lscc_mult_add_sub_sum.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v</Navigation>
             <Navigation>53</Navigation>
@@ -468,7 +562,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(9): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(9):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>9</Navigation>
@@ -476,7 +570,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v(52): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v(52):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub/rtl/lscc_mult_add_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v</Navigation>
             <Navigation>52</Navigation>
@@ -484,7 +578,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(10): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(10):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>10</Navigation>
@@ -492,7 +586,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v(51): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v(51):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/multiplier/rtl/lscc_multiplier.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v</Navigation>
             <Navigation>51</Navigation>
@@ -500,7 +594,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(11): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(11):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>11</Navigation>
@@ -508,7 +602,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v(48): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v(48):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v</Navigation>
             <Navigation>48</Navigation>
@@ -516,7 +610,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(12): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(12):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>12</Navigation>
@@ -524,7 +618,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v(45): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v(45):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v</Navigation>
             <Navigation>45</Navigation>
@@ -532,7 +626,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(13): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(13):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>13</Navigation>
@@ -540,7 +634,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v(45): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v(45):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/rom/rtl/lscc_rom.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v</Navigation>
             <Navigation>45</Navigation>
@@ -548,7 +642,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(14): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(14):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>14</Navigation>
@@ -556,7 +650,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v(50): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v(50):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/subtractor/rtl/lscc_subtractor.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v</Navigation>
             <Navigation>50</Navigation>
@@ -564,7 +658,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(15): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(15):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>15</Navigation>
@@ -572,7 +666,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v(49): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v(49):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v</Navigation>
             <Navigation>49</Navigation>
@@ -580,7 +674,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(16): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(16):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>16</Navigation>
@@ -588,7 +682,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v(45): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v(45):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v</Navigation>
             <Navigation>45</Navigation>
@@ -596,7 +690,7 @@
         <Message>
             <ID>35901328</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(17): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(17):</Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_dsp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
             <Navigation>17</Navigation>
@@ -604,7 +698,7 @@
         <Message>
             <ID>35921014</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd(4): </Dynamic>
+            <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd(4):</Dynamic>
             <Dynamic>components</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd</Navigation>
             <Navigation>4</Navigation>
@@ -612,7 +706,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd(6): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd(6):</Dynamic>
             <Dynamic>controller_rhd_fifo</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd</Navigation>
             <Navigation>6</Navigation>
@@ -620,7 +714,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd(50): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd(50):</Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_fifo.vhd</Navigation>
             <Navigation>50</Navigation>
@@ -628,7 +722,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd(6): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd(6):</Dynamic>
             <Dynamic>spi_master</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd</Navigation>
             <Navigation>6</Navigation>
@@ -636,7 +730,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd(34): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd(34):</Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master.vhd</Navigation>
             <Navigation>34</Navigation>
@@ -644,7 +738,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(44): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(44):</Dynamic>
             <Dynamic>spi_master_cs</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd</Navigation>
             <Navigation>44</Navigation>
@@ -652,7 +746,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(74): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd(74):</Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/spi_master_cs.vhd</Navigation>
             <Navigation>74</Navigation>
@@ -660,7 +754,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(5): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(5):</Dynamic>
             <Dynamic>controller_rhd_sampling</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
             <Navigation>5</Navigation>
@@ -668,7 +762,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(72): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(72):</Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
             <Navigation>72</Navigation>
@@ -676,7 +770,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(5): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(5):</Dynamic>
             <Dynamic>top_level</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd</Navigation>
             <Navigation>5</Navigation>
@@ -684,7 +778,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(49): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(49):</Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd</Navigation>
             <Navigation>49</Navigation>
@@ -692,7 +786,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(5): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(5):</Dynamic>
             <Dynamic>top_level_tb</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd</Navigation>
             <Navigation>5</Navigation>
@@ -700,7 +794,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(8): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(8):</Dynamic>
             <Dynamic>testbench</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd</Navigation>
             <Navigation>8</Navigation>
@@ -708,7 +802,7 @@
         <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd(5): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd(5):</Dynamic>
             <Dynamic>controller_rhd_sampling_tb</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
             <Navigation>5</Navigation>
@@ -716,7 +810,7 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd(8): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd(8):</Dynamic>
             <Dynamic>testbench</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
             <Navigation>8</Navigation>
@@ -920,7 +1014,7 @@
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(364): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(364):</Dynamic>
             <Dynamic>data_array_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
             <Navigation>364</Navigation>
@@ -943,7 +1037,7 @@
         <Message>
             <ID>35931002</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v(139): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v(139):</Dynamic>
             <Dynamic>\pll_spi_inst/lscc_pll_inst/sclk_i</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v</Navigation>
             <Navigation>139</Navigation>
@@ -951,7 +1045,7 @@
         <Message>
             <ID>35931002</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v(140): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v(140):</Dynamic>
             <Dynamic>\pll_spi_inst/lscc_pll_inst/sdi_i</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/pll_spi/rtl/pll_spi.v</Navigation>
             <Navigation>140</Navigation>
@@ -1375,118 +1469,7 @@
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-    </Task>
-    <Task name="PAR">
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHD_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }]</Dynamic>
         </Message>
     </Task>
     <Task name="Map">
@@ -1515,6 +1498,23 @@
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Export">
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1191031</ID>
+            <Severity>1</Severity>
         </Message>
     </Task>
 </BaliMessageLog>

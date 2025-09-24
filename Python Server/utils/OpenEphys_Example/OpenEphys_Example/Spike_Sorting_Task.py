@@ -69,7 +69,7 @@ class Headstage_Simulator:
         print("Starting transmission")
 
         buffer_index = 0
-        while buffer_index < total_buffer_to_send-1:
+        while buffer_index < 300-1:
             t1 = time.perf_counter_ns()
             used_index = buffer_index*self.buffer_size
             data_to_send = [True, buffer_index, data[:, used_index:used_index+self.buffer_size]]
@@ -193,6 +193,7 @@ def channel_number_scaling_test(RAW_DATA):
 
 if __name__ == "__main__":
     BUFFER_SIZE = 1024
+    CHANNEL_NUMBER = 8 #TODO: MAKE THE NUMBER OF CHANNEL
 
     QUEUE_RAW_DATA = Queue()
     HEADSTAGE_SIMULATOR = Headstage_Simulator(QUEUE_RAW_DATA, BUFFER_SIZE)
