@@ -41,10 +41,7 @@ if (a)
 
 <DIV id="content" onclick="hideTocList()"><PRE>
 <A name="Syn"></A><B><U><big>Synthesis Report</big></U></B>
-<<<<<<< HEAD
-=======
 The -top option is not used.
->>>>>>> 9dd07cb2d5a599d432ee4088ba2da1e286a09168
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -73,7 +70,6 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - synthesis: User-Selected Strategy Settings
 Optimization goal = Area
-Top-level module name = Controller_RHD64_Config.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -100,12 +96,13 @@ Remove Duplicate Registers = TRUE
 Output HDL file name = Passthrough_impl_1.vm.
 ROM style = auto
 RAM style = auto
-The -comp option is TRUE.
+The -comp option is FALSE.
 The -syn option is FALSE.
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough (searchpath added)
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1 (searchpath added)
 -path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
+CRITICAL <35001476> - synthesis: A top-level module has not been specified for the mixed language design.
 Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
@@ -167,12 +164,8 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd
 
 INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(6): analyzing entity controller_rhd64_config. VHDL-1012
-INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(31): analyzing architecture behavioral. VHDL-1010
-INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
-Top module language type = VHDL.
-Top module name (VHDL, mixed language): Controller_RHD64_Config
-LSE: Compile Design done
-
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(45): analyzing architecture behavioral. VHDL-1010
+ERROR <35921033> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(86): cannot read from 'out' object pll_clk  use 'buffer' or 'inout'. VHDL-1033
 
 
 

@@ -8,7 +8,7 @@ end entity Controller_RHD_Sampling_tb;
 architecture Testbench of Controller_RHD_Sampling_tb is
   -- Constants
   constant CLK_PERIOD                    : time := 10 ns;
-  constant STM32_SPI_NUM_BITS_PER_PACKET : integer := 256; 
+  constant STM32_SPI_NUM_BITS_PER_PACKET : integer := 512; 
   constant RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;  
   
   constant STM32_CLKS_PER_HALF_BIT : integer := 2;  -- Adds delay between bytes

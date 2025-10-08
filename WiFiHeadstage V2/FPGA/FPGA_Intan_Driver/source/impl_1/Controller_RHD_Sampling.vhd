@@ -261,7 +261,7 @@ process (i_Clk)
 	variable temp_array : word_array_t;
 begin
   if i_Rst_L = '1' then
-	temp_buffer <= (others => '1');
+	temp_buffer <= (others => '0');
 	temp_array := (others => (others => '0'));
 	
     int_FIFO_RE <= '0';  -- Toggle back to '0'
@@ -272,6 +272,7 @@ begin
 	
 	init_FIFO_Read <= '0';
 	init_FIFO_State <= '0';
+
 	
 	if RHD_SPI_DDR_MODE = 1 then
 		NUM_DATA <= (STM32_SPI_NUM_BITS_PER_PACKET / (2*RHD_SPI_NUM_BITS_PER_PACKET));
@@ -294,12 +295,12 @@ begin
 			when 0 =>
 				if (NUM_DATA-1) < to_integer(unsigned(int_FIFO_COUNT)) then
 					stm32_state <= 1; -- Move to next state
-					--int_FIFO_RE <= '1'; -- Enable FIFO data
+					int_FIFO_RE <= '1'; -- Enable FIFO data
 				else
 					stm32_state <= 0;
 				end if;
 			when 1 =>
-				int_FIFO_RE <= '1'; -- Enable FIFO data
+				--int_FIFO_RE <= '1'; -- Enable FIFO data
 				stm32_state <= 2;
 			when 2 =>
 				stm32_state <= 3;
@@ -312,17 +313,20 @@ begin
 						--temp_buffer((NUM_DATA - 1 - stm32_counter)*16 + 15 downto (NUM_DATA - 1 - stm32_counter)*16) <= int_FIFO_Q(15 downto 0);
 						--temp_buffer <= x"0123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF0000000000000000";
 						temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
-						
 					end if;
 					stm32_counter <= stm32_counter + 1;
 					stm32_state <= 3;
 				else
 					int_FIFO_RE <= '0';
+					--temp_buffer <= temp_array(0)  & temp_array(1)  & temp_array(2)  & temp_array(3)  & temp_array(4)  & temp_array(5)  & temp_array(6)  & temp_array(7)  & 
+							       --temp_array(8)  & temp_array(9)  & temp_array(10) & temp_array(11) & temp_array(12) & temp_array(13) & temp_array(14) & temp_array(15);
+					
 					temp_buffer <= temp_array(0)  & temp_array(1)  & temp_array(2)  & temp_array(3)  & temp_array(4)  & temp_array(5)  & temp_array(6)  & temp_array(7)  & 
 							       temp_array(8)  & temp_array(9)  & temp_array(10) & temp_array(11) & temp_array(12) & temp_array(13) & temp_array(14) & temp_array(15) &
 								   temp_array(16) & temp_array(17) & temp_array(18) & temp_array(19) & temp_array(20) & temp_array(21) & temp_array(22) & temp_array(23) & 
 							       temp_array(24) & temp_array(25) & temp_array(26) & temp_array(27) & temp_array(28) & temp_array(29) & temp_array(30) & temp_array(31);
 					--temp_buffer <= x"0123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000123456789ABCDEF0000000000000000";
+					--temp_buffer <= x"0123456789ABCDEF00000000000000000123456789ABCDEF00000000000000000";
 					--temp_buffer <= x"0123456789ABCDEF";
 					--temp_buffer <= x"0000000F0000000F";
 					stm32_state <= 5;

@@ -46,11 +46,11 @@ void INIT_INTAN(){
 	INIT_RHD(hspi);
 
 
-	printf("Init RHS \r\n");
-	hspi = &hspi3;
-	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
-	hspi->Instance->CR1 |= SPI_CR1_DFF;
-	INIT_RHS(hspi);
+//	printf("Init RHS \r\n");
+//	hspi = &hspi3;
+//	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
+//	hspi->Instance->CR1 |= SPI_CR1_DFF;
+//	INIT_RHS(hspi);
 }
 
 //void SamplingTask(void const *argument) {

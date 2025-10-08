@@ -367,7 +367,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    primate_sequence = "1001084"
+    primate_sequence = "1001087"
     app = QApplication(sys.argv)
     csv_file = os.path.join("Dataset", "primates", f"{primate_sequence}.csv")
     metadata_file = os.path.join("Dataset", "primates", "primate_metadata.py")
