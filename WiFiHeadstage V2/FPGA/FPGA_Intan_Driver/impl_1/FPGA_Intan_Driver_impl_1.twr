@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Wed Oct  8 09:49:58 2025
+Fri Oct 10 12:21:21 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -30,6 +30,7 @@ Package Status:                     Preliminary    Version 1.5
         1.3  Overall Summary
         1.4  Unconstrained Report
         1.5  Combinational Loop
+        1.6  Error/Warning Messages
     2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
         2.1  Clock Summary
         2.2  Endpoint slacks
@@ -48,6 +49,7 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 4 -multiply_by 15 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -71,9 +73,27 @@ There is no start point satisfying reporting criteria
 
 
 Clocked but unconstrained timing end points
---------------------------------------------------
-There is no end point satisfying reporting criteria
-
+-------------------------------------------------------------------
+         Listing 10 End Points          |           Type           
+-------------------------------------------------------------------
+counter_1431__i31/D                     |    No arrival or required
+counter_1431__i31/SR                    |    No arrival or required
+counter_1431__i30/D                     |    No arrival or required
+counter_1431__i29/D                     |    No arrival or required
+{counter_1431__i29/SR   counter_1431__i30/SR}                           
+                                        |    No arrival or required
+counter_1431__i28/D                     |    No arrival or required
+counter_1431__i27/D                     |    No arrival or required
+{counter_1431__i27/SR   counter_1431__i28/SR}                           
+                                        |    No arrival or required
+counter_1431__i26/D                     |    No arrival or required
+counter_1431__i25/D                     |    No arrival or required
+-------------------------------------------------------------------
+                                        |                          
+Number of unconstrained timing end poin |                          
+ts                                      |                      4916
+                                        |                          
+-------------------------------------------------------------------
 
 1.4.2  Start/End Points Without Timing Constraints
 ---------------------------------------------------
@@ -109,16 +129,9 @@ Number of I/O ports without constraint  |                        27
 
 Nets without clock definition
 Define a clock on a top level port or a generated clock on a clock divider pin associated with this net(s).
--------------------------------------------------------------------
-            Listing 1 Net(s)            |        Source pin        
--------------------------------------------------------------------
-i_clk_c                                 |       i_clk_pad.bb_inst/O
--------------------------------------------------------------------
-                                        |                          
-Number of clock nets without clock defi |                          
-nition                                  |                         1
-                                        |                          
--------------------------------------------------------------------
+--------------------------------------------------
+There is no instance satisfying reporting criteria
+
 
 
 1.5  Combinational Loop
@@ -129,97 +142,103 @@ Combinational Loops
 Controller_inst/i5254_2_lut/A	->	Controller_inst/i5254_2_lut/Z
 
 ++++ Loop2
-Controller_inst/i5208_2_lut/A	->	Controller_inst/i5208_2_lut/Z
+Controller_inst/i5269_2_lut/A	->	Controller_inst/i5269_2_lut/Z
 
 ++++ Loop3
-Controller_inst/i5268_2_lut/A	->	Controller_inst/i5268_2_lut/Z
+Controller_inst/i5184_2_lut/A	->	Controller_inst/i5184_2_lut/Z
 
 ++++ Loop4
-Controller_inst/i5239_2_lut/A	->	Controller_inst/i5239_2_lut/Z
-
-++++ Loop5
-Controller_inst/i5240_2_lut/A	->	Controller_inst/i5240_2_lut/Z
-
-++++ Loop6
-Controller_inst/i5248_2_lut/A	->	Controller_inst/i5248_2_lut/Z
-
-++++ Loop7
-Controller_inst/i5249_2_lut/A	->	Controller_inst/i5249_2_lut/Z
-
-++++ Loop8
-Controller_inst/i5250_2_lut/A	->	Controller_inst/i5250_2_lut/Z
-
-++++ Loop9
-Controller_inst/i5251_2_lut/A	->	Controller_inst/i5251_2_lut/Z
-
-++++ Loop10
 Controller_inst/i5252_2_lut/A	->	Controller_inst/i5252_2_lut/Z
 
-++++ Loop11
+++++ Loop5
+Controller_inst/i5255_2_lut/A	->	Controller_inst/i5255_2_lut/Z
+
+++++ Loop6
 Controller_inst/i5253_2_lut/A	->	Controller_inst/i5253_2_lut/Z
 
-++++ Loop12
+++++ Loop7
 Controller_inst/i5256_2_lut/A	->	Controller_inst/i5256_2_lut/Z
 
-++++ Loop13
+++++ Loop8
 Controller_inst/i5257_2_lut/A	->	Controller_inst/i5257_2_lut/Z
 
-++++ Loop14
+++++ Loop9
 Controller_inst/i5258_2_lut/A	->	Controller_inst/i5258_2_lut/Z
 
-++++ Loop15
+++++ Loop10
 Controller_inst/i5259_2_lut/A	->	Controller_inst/i5259_2_lut/Z
 
-++++ Loop16
+++++ Loop11
 Controller_inst/i5260_2_lut/A	->	Controller_inst/i5260_2_lut/Z
 
-++++ Loop17
+++++ Loop12
 Controller_inst/i5261_2_lut/A	->	Controller_inst/i5261_2_lut/Z
 
-++++ Loop18
+++++ Loop13
 Controller_inst/i5262_2_lut/A	->	Controller_inst/i5262_2_lut/Z
 
-++++ Loop19
+++++ Loop14
+Controller_inst/i5251_2_lut/A	->	Controller_inst/i5251_2_lut/Z
+
+++++ Loop15
 Controller_inst/i5263_2_lut/A	->	Controller_inst/i5263_2_lut/Z
 
-++++ Loop20
+++++ Loop16
 Controller_inst/i5264_2_lut/A	->	Controller_inst/i5264_2_lut/Z
 
-++++ Loop21
+++++ Loop17
 Controller_inst/i5265_2_lut/A	->	Controller_inst/i5265_2_lut/Z
 
-++++ Loop22
+++++ Loop18
 Controller_inst/i5266_2_lut/A	->	Controller_inst/i5266_2_lut/Z
 
-++++ Loop23
+++++ Loop19
+Controller_inst/i5250_2_lut/A	->	Controller_inst/i5250_2_lut/Z
+
+++++ Loop20
 Controller_inst/i5267_2_lut/A	->	Controller_inst/i5267_2_lut/Z
 
+++++ Loop21
+Controller_inst/i5249_2_lut/A	->	Controller_inst/i5249_2_lut/Z
+
+++++ Loop22
+Controller_inst/i5268_2_lut/A	->	Controller_inst/i5268_2_lut/Z
+
+++++ Loop23
+Controller_inst/i5248_2_lut/A	->	Controller_inst/i5248_2_lut/Z
+
 ++++ Loop24
-Controller_inst/i5238_2_lut/A	->	Controller_inst/i5238_2_lut/Z
-
-++++ Loop25
-Controller_inst/i5241_2_lut/A	->	Controller_inst/i5241_2_lut/Z
-
-++++ Loop26
-Controller_inst/i5242_2_lut/A	->	Controller_inst/i5242_2_lut/Z
-
-++++ Loop27
-Controller_inst/i5243_2_lut/A	->	Controller_inst/i5243_2_lut/Z
-
-++++ Loop28
-Controller_inst/i5244_2_lut/A	->	Controller_inst/i5244_2_lut/Z
-
-++++ Loop29
-Controller_inst/i5245_2_lut/A	->	Controller_inst/i5245_2_lut/Z
-
-++++ Loop30
-Controller_inst/i5246_2_lut/A	->	Controller_inst/i5246_2_lut/Z
-
-++++ Loop31
 Controller_inst/i5247_2_lut/A	->	Controller_inst/i5247_2_lut/Z
 
+++++ Loop25
+Controller_inst/i5242_2_lut/A	->	Controller_inst/i5242_2_lut/Z
+
+++++ Loop26
+Controller_inst/i5236_2_lut/A	->	Controller_inst/i5236_2_lut/Z
+
+++++ Loop27
+Controller_inst/i5246_2_lut/A	->	Controller_inst/i5246_2_lut/Z
+
+++++ Loop28
+Controller_inst/i5245_2_lut/A	->	Controller_inst/i5245_2_lut/Z
+
+++++ Loop29
+Controller_inst/i5244_2_lut/A	->	Controller_inst/i5244_2_lut/Z
+
+++++ Loop30
+Controller_inst/i5243_2_lut/A	->	Controller_inst/i5243_2_lut/Z
+
+++++ Loop31
+Controller_inst/i5241_2_lut/A	->	Controller_inst/i5241_2_lut/Z
+
 ++++ Loop32
-Controller_inst/i5255_2_lut/A	->	Controller_inst/i5255_2_lut/Z
+Controller_inst/i5237_2_lut/A	->	Controller_inst/i5237_2_lut/Z
+
+
+1.6  Error/Warning Messages
+============================
+WARNING "70001944" - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 15 -divide_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -227,6 +246,22 @@ Controller_inst/i5255_2_lut/A	->	Controller_inst/i5255_2_lut/Z
 
 2.1  Clock Summary
 =======================
+
+2.1.1 Clock "pll_clk_int"
+=======================
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 15 -divide_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+
+Single Clock Domain
+-------------------------------------------------------------------------------------------------------
+           Clock pll_clk_int            |                    |       Period       |     Frequency      
+-------------------------------------------------------------------------------------------------------
+ From pll_clk_int                       |             Target |               +INF |          0.000 MHz 
+                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
+                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
+-------------------------------------------------------------------------------------------------------
+
+Clock Domain Crossing
 
 2.2  Endpoint slacks
 =======================

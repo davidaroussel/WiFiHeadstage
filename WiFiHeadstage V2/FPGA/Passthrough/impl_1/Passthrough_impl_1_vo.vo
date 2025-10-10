@@ -2,8 +2,8 @@
 // Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
 
 // backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml Passthrough_impl_1.udb 
-// Netlist created on Mon Oct  6 10:21:30 2025
-// Netlist written on Mon Oct  6 10:21:39 2025
+// Netlist created on Fri Oct 10 12:10:55 2025
+// Netlist written on Fri Oct 10 12:11:03 2025
 // Design is for device iCE40UP5K
 // Design is for package SG48
 // Design is for performance grade High-Performance_1.2V
@@ -11,120 +11,118 @@
 `timescale 1 ns / 1 ps
 
 module Controller_RHD64_Config ( MISO_master, MOSI_slave, SCLK_slave, SS_slave, 
-                                 LED1_OUT, LED2_OUT, LED3_OUT, pll_clk, 
-                                 MOSI_master, SCLK_master, SS_master, 
-                                 MISO_slave, ext_clk, RGB0_OUT, RGB1_OUT, 
-                                 RGB2_OUT, LED_CTL );
+                                 LED1_OUT, LED2_OUT, LED3_OUT, MOSI_master, 
+                                 SCLK_master, SS_master, MISO_slave, ext_clk, 
+                                 RGB0_OUT, RGB2_OUT, RGB1_OUT, LED_CTL );
   input  MOSI_master, SCLK_master, SS_master, MISO_slave, ext_clk, LED_CTL;
   output MISO_master, MOSI_slave, SCLK_slave, SS_slave, LED1_OUT, LED2_OUT, 
-         LED3_OUT, pll_clk, RGB0_OUT, RGB1_OUT, RGB2_OUT;
-  wire   n134, n1028, n498, \counter[31] , n371, ext_clk_c, n149, n150, n1004, 
-         \counter[16] , n482, \counter[15] , n484, n145, n146, n1010, 
-         \counter[20] , n486, \counter[19] , n488, n141, n142, n1016, 
-         \counter[24] , n490, \counter[23] , n492, n161, n162, n986, 
-         \counter[4] , n470, \counter[3] , n472, n165, n980, \counter[0] , 
-         VCC_net, n468, n155, n156, n995, \counter[10] , n476, \counter[9] , 
-         n478, n143, n144, n1013, \counter[22] , \counter[21] , n151, n152, 
-         n1001, \counter[14] , n480, \counter[13] , n157, n158, n992, 
-         \counter[8] , n474, \counter[7] , n147, n148, n1007, \counter[18] , 
-         \counter[17] , n163, n164, n983, \counter[2] , \counter[1] , n135, 
-         n136, n1025, \counter[30] , n496, \counter[29] , n137, n138, n1022, 
-         \counter[28] , n494, \counter[27] , n153, n154, n998, \counter[12] , 
-         \counter[11] , n159, n160, n989, \counter[6] , \counter[5] , n139, 
-         n140, n1019, \counter[26] , \counter[25] , n769, n46, \step[0] , 
-         \step[1] , \step[2] , n374, n757, n758, n12, n14, n13, n230, n607, n9, 
-         n760, n647, RGB2_OUT_c, RGB0_OUT_c, RGB1_OUT_c, MISO_master_c_c, 
+         LED3_OUT, RGB0_OUT, RGB2_OUT, RGB1_OUT;
+  wire   n134, n1023, n493, \counter[31] , n366, ext_clk_c, n149, n150, n999, 
+         \counter[16] , n477, \counter[15] , n479, n145, n146, n1005, 
+         \counter[20] , n481, \counter[19] , n483, n141, n142, n1011, 
+         \counter[24] , n485, \counter[23] , n487, n161, n162, n981, 
+         \counter[4] , n465, \counter[3] , n467, n165, n975, \counter[0] , 
+         VCC_net, n463, n155, n156, n990, \counter[10] , n471, \counter[9] , 
+         n473, n143, n144, n1008, \counter[22] , \counter[21] , n151, n152, 
+         n996, \counter[14] , n475, \counter[13] , n157, n158, n987, 
+         \counter[8] , n469, \counter[7] , n147, n148, n1002, \counter[18] , 
+         \counter[17] , n163, n164, n978, \counter[2] , \counter[1] , n135, 
+         n136, n1020, \counter[30] , n491, \counter[29] , n137, n138, n1017, 
+         \counter[28] , n489, \counter[27] , n153, n154, n993, \counter[12] , 
+         \counter[11] , n159, n160, n984, \counter[6] , \counter[5] , n139, 
+         n140, n1014, \counter[26] , \counter[25] , n764, n46, \step[0] , 
+         \step[1] , \step[2] , n752, n369, n753, n12, n14, n13, n230, n602, n9, 
+         n755, n642, RGB2_OUT_c, RGB0_OUT_c, RGB1_OUT_c, MISO_master_c_c, 
          MOSI_slave_c_c, SCLK_slave_c_c, SS_slave_c_c;
 
-  SLICE_0 SLICE_0( .DI0(n134), .D1(n1028), .D0(n498), .C0(\counter[31] ), 
-    .LSR(n371), .CLK(ext_clk_c), .CIN0(n498), .CIN1(n1028), .Q0(\counter[31] ), 
-    .F0(n134), .COUT0(n1028));
-  SLICE_1 SLICE_1( .DI1(n149), .DI0(n150), .D1(n1004), .C1(\counter[16] ), 
-    .D0(n482), .C0(\counter[15] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n482), 
-    .CIN1(n1004), .Q0(\counter[15] ), .Q1(\counter[16] ), .F0(n150), .F1(n149), 
-    .COUT1(n484), .COUT0(n1004));
-  SLICE_2 SLICE_2( .DI1(n145), .DI0(n146), .D1(n1010), .C1(\counter[20] ), 
-    .D0(n486), .C0(\counter[19] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n486), 
-    .CIN1(n1010), .Q0(\counter[19] ), .Q1(\counter[20] ), .F0(n146), .F1(n145), 
-    .COUT1(n488), .COUT0(n1010));
-  SLICE_3 SLICE_3( .DI1(n141), .DI0(n142), .D1(n1016), .C1(\counter[24] ), 
-    .D0(n490), .C0(\counter[23] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n490), 
-    .CIN1(n1016), .Q0(\counter[23] ), .Q1(\counter[24] ), .F0(n142), .F1(n141), 
-    .COUT1(n492), .COUT0(n1016));
-  SLICE_4 SLICE_4( .DI1(n161), .DI0(n162), .D1(n986), .C1(\counter[4] ), 
-    .D0(n470), .C0(\counter[3] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n470), 
-    .CIN1(n986), .Q0(\counter[3] ), .Q1(\counter[4] ), .F0(n162), .F1(n161), 
-    .COUT1(n472), .COUT0(n986));
-  SLICE_5 SLICE_5( .DI1(n165), .D1(n980), .C1(\counter[0] ), .B1(VCC_net), 
-    .LSR(n371), .CLK(ext_clk_c), .CIN1(n980), .Q1(\counter[0] ), .F1(n165), 
-    .COUT1(n468), .COUT0(n980));
-  SLICE_6 SLICE_6( .DI1(n155), .DI0(n156), .D1(n995), .C1(\counter[10] ), 
-    .D0(n476), .C0(\counter[9] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n476), 
-    .CIN1(n995), .Q0(\counter[9] ), .Q1(\counter[10] ), .F0(n156), .F1(n155), 
-    .COUT1(n478), .COUT0(n995));
-  SLICE_7 SLICE_7( .DI1(n143), .DI0(n144), .D1(n1013), .C1(\counter[22] ), 
-    .D0(n488), .C0(\counter[21] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n488), 
-    .CIN1(n1013), .Q0(\counter[21] ), .Q1(\counter[22] ), .F0(n144), .F1(n143), 
-    .COUT1(n490), .COUT0(n1013));
-  SLICE_8 SLICE_8( .DI1(n151), .DI0(n152), .D1(n1001), .C1(\counter[14] ), 
-    .D0(n480), .C0(\counter[13] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n480), 
-    .CIN1(n1001), .Q0(\counter[13] ), .Q1(\counter[14] ), .F0(n152), .F1(n151), 
-    .COUT1(n482), .COUT0(n1001));
-  SLICE_9 SLICE_9( .DI1(n157), .DI0(n158), .D1(n992), .C1(\counter[8] ), 
-    .D0(n474), .C0(\counter[7] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n474), 
-    .CIN1(n992), .Q0(\counter[7] ), .Q1(\counter[8] ), .F0(n158), .F1(n157), 
-    .COUT1(n476), .COUT0(n992));
-  SLICE_10 SLICE_10( .DI1(n147), .DI0(n148), .D1(n1007), .C1(\counter[18] ), 
-    .D0(n484), .C0(\counter[17] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n484), 
-    .CIN1(n1007), .Q0(\counter[17] ), .Q1(\counter[18] ), .F0(n148), .F1(n147), 
-    .COUT1(n486), .COUT0(n1007));
-  SLICE_11 SLICE_11( .DI1(n163), .DI0(n164), .D1(n983), .C1(\counter[2] ), 
-    .D0(n468), .C0(\counter[1] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n468), 
-    .CIN1(n983), .Q0(\counter[1] ), .Q1(\counter[2] ), .F0(n164), .F1(n163), 
-    .COUT1(n470), .COUT0(n983));
-  SLICE_12 SLICE_12( .DI1(n135), .DI0(n136), .D1(n1025), .C1(\counter[30] ), 
-    .D0(n496), .C0(\counter[29] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n496), 
-    .CIN1(n1025), .Q0(\counter[29] ), .Q1(\counter[30] ), .F0(n136), .F1(n135), 
-    .COUT1(n498), .COUT0(n1025));
-  SLICE_13 SLICE_13( .DI1(n137), .DI0(n138), .D1(n1022), .C1(\counter[28] ), 
-    .D0(n494), .C0(\counter[27] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n494), 
-    .CIN1(n1022), .Q0(\counter[27] ), .Q1(\counter[28] ), .F0(n138), .F1(n137), 
-    .COUT1(n496), .COUT0(n1022));
-  SLICE_14 SLICE_14( .DI1(n153), .DI0(n154), .D1(n998), .C1(\counter[12] ), 
-    .D0(n478), .C0(\counter[11] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n478), 
-    .CIN1(n998), .Q0(\counter[11] ), .Q1(\counter[12] ), .F0(n154), .F1(n153), 
-    .COUT1(n480), .COUT0(n998));
-  SLICE_15 SLICE_15( .DI1(n159), .DI0(n160), .D1(n989), .C1(\counter[6] ), 
-    .D0(n472), .C0(\counter[5] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n472), 
-    .CIN1(n989), .Q0(\counter[5] ), .Q1(\counter[6] ), .F0(n160), .F1(n159), 
-    .COUT1(n474), .COUT0(n989));
-  SLICE_16 SLICE_16( .DI1(n139), .DI0(n140), .D1(n1019), .C1(\counter[26] ), 
-    .D0(n492), .C0(\counter[25] ), .LSR(n371), .CLK(ext_clk_c), .CIN0(n492), 
-    .CIN1(n1019), .Q0(\counter[25] ), .Q1(\counter[26] ), .F0(n140), .F1(n139), 
-    .COUT1(n494), .COUT0(n1019));
-  SLICE_17 SLICE_17( .DI1(n769), .DI0(n46), .D1(\step[0] ), .C1(\step[1] ), 
-    .B1(\step[2] ), .D0(\step[1] ), .C0(\step[0] ), .A0(\step[2] ), .CE(n371), 
-    .CLK(ext_clk_c), .Q0(\step[1] ), .Q1(\step[0] ), .F0(n46), .F1(n769));
-  SLICE_20 SLICE_20( .D1(n374), .C1(n757), .B1(\counter[31] ), 
-    .A1(\counter[23] ), .C0(n758), .B0(\counter[22] ), .A0(n374), .F0(n757), 
-    .F1(n371));
+  SLICE_0 SLICE_0( .DI0(n134), .D1(n1023), .D0(n493), .C0(\counter[31] ), 
+    .LSR(n366), .CLK(ext_clk_c), .CIN0(n493), .CIN1(n1023), .Q0(\counter[31] ), 
+    .F0(n134), .COUT0(n1023));
+  SLICE_1 SLICE_1( .DI1(n149), .DI0(n150), .D1(n999), .C1(\counter[16] ), 
+    .D0(n477), .C0(\counter[15] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n477), 
+    .CIN1(n999), .Q0(\counter[15] ), .Q1(\counter[16] ), .F0(n150), .F1(n149), 
+    .COUT1(n479), .COUT0(n999));
+  SLICE_2 SLICE_2( .DI1(n145), .DI0(n146), .D1(n1005), .C1(\counter[20] ), 
+    .D0(n481), .C0(\counter[19] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n481), 
+    .CIN1(n1005), .Q0(\counter[19] ), .Q1(\counter[20] ), .F0(n146), .F1(n145), 
+    .COUT1(n483), .COUT0(n1005));
+  SLICE_3 SLICE_3( .DI1(n141), .DI0(n142), .D1(n1011), .C1(\counter[24] ), 
+    .D0(n485), .C0(\counter[23] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n485), 
+    .CIN1(n1011), .Q0(\counter[23] ), .Q1(\counter[24] ), .F0(n142), .F1(n141), 
+    .COUT1(n487), .COUT0(n1011));
+  SLICE_4 SLICE_4( .DI1(n161), .DI0(n162), .D1(n981), .C1(\counter[4] ), 
+    .D0(n465), .C0(\counter[3] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n465), 
+    .CIN1(n981), .Q0(\counter[3] ), .Q1(\counter[4] ), .F0(n162), .F1(n161), 
+    .COUT1(n467), .COUT0(n981));
+  SLICE_5 SLICE_5( .DI1(n165), .D1(n975), .C1(\counter[0] ), .B1(VCC_net), 
+    .LSR(n366), .CLK(ext_clk_c), .CIN1(n975), .Q1(\counter[0] ), .F1(n165), 
+    .COUT1(n463), .COUT0(n975));
+  SLICE_6 SLICE_6( .DI1(n155), .DI0(n156), .D1(n990), .C1(\counter[10] ), 
+    .D0(n471), .C0(\counter[9] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n471), 
+    .CIN1(n990), .Q0(\counter[9] ), .Q1(\counter[10] ), .F0(n156), .F1(n155), 
+    .COUT1(n473), .COUT0(n990));
+  SLICE_7 SLICE_7( .DI1(n143), .DI0(n144), .D1(n1008), .C1(\counter[22] ), 
+    .D0(n483), .C0(\counter[21] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n483), 
+    .CIN1(n1008), .Q0(\counter[21] ), .Q1(\counter[22] ), .F0(n144), .F1(n143), 
+    .COUT1(n485), .COUT0(n1008));
+  SLICE_8 SLICE_8( .DI1(n151), .DI0(n152), .D1(n996), .C1(\counter[14] ), 
+    .D0(n475), .C0(\counter[13] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n475), 
+    .CIN1(n996), .Q0(\counter[13] ), .Q1(\counter[14] ), .F0(n152), .F1(n151), 
+    .COUT1(n477), .COUT0(n996));
+  SLICE_9 SLICE_9( .DI1(n157), .DI0(n158), .D1(n987), .C1(\counter[8] ), 
+    .D0(n469), .C0(\counter[7] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n469), 
+    .CIN1(n987), .Q0(\counter[7] ), .Q1(\counter[8] ), .F0(n158), .F1(n157), 
+    .COUT1(n471), .COUT0(n987));
+  SLICE_10 SLICE_10( .DI1(n147), .DI0(n148), .D1(n1002), .C1(\counter[18] ), 
+    .D0(n479), .C0(\counter[17] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n479), 
+    .CIN1(n1002), .Q0(\counter[17] ), .Q1(\counter[18] ), .F0(n148), .F1(n147), 
+    .COUT1(n481), .COUT0(n1002));
+  SLICE_11 SLICE_11( .DI1(n163), .DI0(n164), .D1(n978), .C1(\counter[2] ), 
+    .D0(n463), .C0(\counter[1] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n463), 
+    .CIN1(n978), .Q0(\counter[1] ), .Q1(\counter[2] ), .F0(n164), .F1(n163), 
+    .COUT1(n465), .COUT0(n978));
+  SLICE_12 SLICE_12( .DI1(n135), .DI0(n136), .D1(n1020), .C1(\counter[30] ), 
+    .D0(n491), .C0(\counter[29] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n491), 
+    .CIN1(n1020), .Q0(\counter[29] ), .Q1(\counter[30] ), .F0(n136), .F1(n135), 
+    .COUT1(n493), .COUT0(n1020));
+  SLICE_13 SLICE_13( .DI1(n137), .DI0(n138), .D1(n1017), .C1(\counter[28] ), 
+    .D0(n489), .C0(\counter[27] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n489), 
+    .CIN1(n1017), .Q0(\counter[27] ), .Q1(\counter[28] ), .F0(n138), .F1(n137), 
+    .COUT1(n491), .COUT0(n1017));
+  SLICE_14 SLICE_14( .DI1(n153), .DI0(n154), .D1(n993), .C1(\counter[12] ), 
+    .D0(n473), .C0(\counter[11] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n473), 
+    .CIN1(n993), .Q0(\counter[11] ), .Q1(\counter[12] ), .F0(n154), .F1(n153), 
+    .COUT1(n475), .COUT0(n993));
+  SLICE_15 SLICE_15( .DI1(n159), .DI0(n160), .D1(n984), .C1(\counter[6] ), 
+    .D0(n467), .C0(\counter[5] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n467), 
+    .CIN1(n984), .Q0(\counter[5] ), .Q1(\counter[6] ), .F0(n160), .F1(n159), 
+    .COUT1(n469), .COUT0(n984));
+  SLICE_16 SLICE_16( .DI1(n139), .DI0(n140), .D1(n1014), .C1(\counter[26] ), 
+    .D0(n487), .C0(\counter[25] ), .LSR(n366), .CLK(ext_clk_c), .CIN0(n487), 
+    .CIN1(n1014), .Q0(\counter[25] ), .Q1(\counter[26] ), .F0(n140), .F1(n139), 
+    .COUT1(n489), .COUT0(n1014));
+  SLICE_17 SLICE_17( .DI1(n764), .DI0(n46), .D1(\step[0] ), .C1(\step[1] ), 
+    .B1(\step[2] ), .D0(\step[1] ), .C0(\step[0] ), .A0(\step[2] ), .CE(n366), 
+    .CLK(ext_clk_c), .Q0(\step[1] ), .Q1(\step[0] ), .F0(n46), .F1(n764));
+  SLICE_20 SLICE_20( .D1(\counter[23] ), .C1(n752), .B1(\counter[31] ), 
+    .A1(n369), .D0(n369), .C0(n753), .B0(\counter[22] ), .F0(n752), .F1(n366));
   SLICE_22 SLICE_22( .D1(\counter[29] ), .C1(n12), .B1(\counter[25] ), 
-    .A1(\counter[26] ), .D0(\counter[27] ), .C0(\counter[30] ), 
-    .B0(\counter[28] ), .A0(\counter[24] ), .F0(n12), .F1(n374));
-  SLICE_24 SLICE_24( .D0(\counter[3] ), .C0(\counter[5] ), .B0(\counter[7] ), 
+    .A1(\counter[26] ), .D0(\counter[28] ), .C0(\counter[30] ), 
+    .B0(\counter[27] ), .A0(\counter[24] ), .F0(n12), .F1(n369));
+  SLICE_24 SLICE_24( .D0(\counter[7] ), .C0(\counter[5] ), .B0(\counter[3] ), 
     .A0(\counter[4] ), .F0(n14));
-  SLICE_25 SLICE_25( .D1(\counter[9] ), .C1(n13), .B1(n14), .A1(\counter[8] ), 
-    .D0(\counter[0] ), .C0(\counter[2] ), .B0(\counter[6] ), .A0(\counter[1] ), 
+  SLICE_25 SLICE_25( .D1(n14), .C1(n13), .B1(\counter[9] ), .A1(\counter[8] ), 
+    .D0(\counter[2] ), .C0(\counter[6] ), .B0(\counter[1] ), .A0(\counter[0] ), 
     .F0(n13), .F1(n230));
-  SLICE_26 SLICE_26( .D1(\counter[15] ), .C1(n607), .B1(\counter[14] ), 
-    .A1(\counter[13] ), .D0(\counter[11] ), .C0(n230), .B0(\counter[10] ), 
-    .A0(\counter[12] ), .F0(n607), .F1(n9));
-  SLICE_28 SLICE_28( .D1(\counter[19] ), .C1(n760), .B1(\counter[20] ), 
-    .A1(\counter[21] ), .D0(\counter[18] ), .C0(n9), .B0(\counter[16] ), 
-    .A0(\counter[17] ), .F0(n760), .F1(n758));
-  SLICE_30 SLICE_30( .DI1(n647), .D1(\step[2] ), .B1(\step[0] ), 
-    .A1(\step[1] ), .D0(\step[1] ), .C0(\step[2] ), .A0(\step[0] ), .CE(n371), 
-    .CLK(ext_clk_c), .Q1(\step[2] ), .F0(RGB2_OUT_c), .F1(n647));
+  SLICE_26 SLICE_26( .D1(\counter[14] ), .C1(n602), .B1(\counter[13] ), 
+    .A1(\counter[15] ), .D0(\counter[10] ), .C0(n230), .B0(\counter[12] ), 
+    .A0(\counter[11] ), .F0(n602), .F1(n9));
+  SLICE_28 SLICE_28( .D1(\counter[19] ), .C1(n755), .B1(\counter[21] ), 
+    .A1(\counter[20] ), .D0(\counter[16] ), .C0(\counter[17] ), .B0(n9), 
+    .A0(\counter[18] ), .F0(n755), .F1(n753));
+  SLICE_30 SLICE_30( .DI1(n642), .D1(\step[2] ), .B1(\step[0] ), 
+    .A1(\step[1] ), .D0(\step[1] ), .C0(\step[2] ), .A0(\step[0] ), .CE(n366), 
+    .CLK(ext_clk_c), .Q1(\step[2] ), .F0(RGB2_OUT_c), .F1(n642));
   SLICE_31 SLICE_31( .D1(\step[0] ), .B1(\step[2] ), .C0(\step[2] ), 
     .B0(\step[1] ), .F0(RGB0_OUT_c), .F1(RGB1_OUT_c));
   SLICE_32 SLICE_32( .F0(VCC_net));
@@ -136,15 +134,14 @@ module Controller_RHD64_Config ( MISO_master, MOSI_slave, SCLK_slave, SS_slave,
   LED1_OUT LED1_OUT_I( .PADDO(VCC_net), .LED1_OUT(LED1_OUT));
   LED2_OUT LED2_OUT_I( .PADDO(VCC_net), .LED2_OUT(LED2_OUT));
   LED3_OUT LED3_OUT_I( .PADDO(VCC_net), .LED3_OUT(LED3_OUT));
-  pll_clk pll_clk_I( .pll_clk(pll_clk));
   MOSI_master MOSI_master_I( .PADDI(MOSI_slave_c_c), .MOSI_master(MOSI_master));
   SCLK_master SCLK_master_I( .PADDI(SCLK_slave_c_c), .SCLK_master(SCLK_master));
   SS_master SS_master_I( .PADDI(SS_slave_c_c), .SS_master(SS_master));
   MISO_slave MISO_slave_I( .PADDI(MISO_master_c_c), .MISO_slave(MISO_slave));
   ext_clk ext_clk_I( .PADDI(ext_clk_c), .ext_clk(ext_clk));
   RGB0_OUT RGB0_OUT_I( .PADDO(RGB0_OUT_c), .RGB0_OUT(RGB0_OUT));
-  RGB1_OUT RGB1_OUT_I( .PADDO(RGB1_OUT_c), .RGB1_OUT(RGB1_OUT));
   RGB2_OUT RGB2_OUT_I( .PADDO(RGB2_OUT_c), .RGB2_OUT(RGB2_OUT));
+  RGB1_OUT RGB1_OUT_I( .PADDO(RGB1_OUT_c), .RGB1_OUT(RGB1_OUT));
 endmodule
 
 module SLICE_0 ( input DI0, D1, D0, C0, LSR, CLK, CIN0, CIN1, output Q0, F0, 
@@ -742,11 +739,11 @@ module lut40001 ( input A, B, C, D, output Z );
   LUT4 #("0x05F0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module SLICE_20 ( input D1, C1, B1, A1, C0, B0, A0, output F0, F1 );
+module SLICE_20 ( input D1, C1, B1, A1, D0, C0, B0, output F0, F1 );
   wire   GNDI;
 
   lut40002 i1_4_lut_adj_3( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40003 i490_3_lut( .A(A0), .B(B0), .C(C0), .D(GNDI), .Z(F0));
+  lut40003 i490_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
 
   specify
@@ -754,21 +751,21 @@ module SLICE_20 ( input D1, C1, B1, A1, C0, B0, A0, output F0, F1 );
     (C1 => F1) = (0:0:0,0:0:0);
     (B1 => F1) = (0:0:0,0:0:0);
     (A1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
     (C0 => F0) = (0:0:0,0:0:0);
     (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
 
 module lut40002 ( input A, B, C, D, output Z );
 
-  LUT4 #("0x3120") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0x3022") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module lut40003 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xFEFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module SLICE_22 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
@@ -837,7 +834,7 @@ endmodule
 
 module lut40007 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xEA00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xC888") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module lut40008 ( input A, B, C, D, output Z );
@@ -870,7 +867,7 @@ endmodule
 
 module lut40010 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xA800") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0x8880") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module SLICE_28 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
@@ -1067,18 +1064,6 @@ module LED3_OUT ( input PADDO, output LED3_OUT );
 
 endmodule
 
-module pll_clk ( output pll_clk );
-  wire   VCCI, GNDI;
-
-  BB_B_B \pll_clk_pad.bb_inst ( .T_N(VCCI), .I(GNDI), .O(), .B(pll_clk));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-  endspecify
-
-endmodule
-
 module MOSI_master ( output PADDI, input MOSI_master );
   wire   GNDI;
 
@@ -1160,18 +1145,6 @@ module BB_OD_B ( input T_N, I, output O, inout B );
   BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
 endmodule
 
-module RGB1_OUT ( input PADDO, output RGB1_OUT );
-  wire   VCCI;
-
-  BB_OD_B \RGB1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB1_OUT));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (PADDO => RGB1_OUT) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
 module RGB2_OUT ( input PADDO, output RGB2_OUT );
   wire   VCCI;
 
@@ -1180,6 +1153,18 @@ module RGB2_OUT ( input PADDO, output RGB2_OUT );
 
   specify
     (PADDO => RGB2_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module RGB1_OUT ( input PADDO, output RGB1_OUT );
+  wire   VCCI;
+
+  BB_OD_B \RGB1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB1_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => RGB1_OUT) = (0:0:0,0:0:0);
   endspecify
 
 endmodule

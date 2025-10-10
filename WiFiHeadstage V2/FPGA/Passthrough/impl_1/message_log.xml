@@ -1,13 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliMessageLog>
+    <Task name="Map">
+        <Message>
+            <ID>1026001</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc</Dynamic>
+            <Dynamic>21</Dynamic>
+            <Dynamic>No port matched 'LED_OUT'.</Dynamic>
+            <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc</Navigation>
+            <Navigation>21</Navigation>
+        </Message>
+        <Message>
+            <ID>1026001</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc</Dynamic>
+            <Dynamic>25</Dynamic>
+            <Dynamic>No port matched 'pll_clk'.</Dynamic>
+            <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/Constrain.pdc</Navigation>
+            <Navigation>25</Navigation>
+        </Message>
+        <Message>
+            <ID>1027013</ID>
+            <Severity>16</Severity>
+            <Dynamic>port</Dynamic>
+            <Dynamic>LED_OUT</Dynamic>
+        </Message>
+        <Message>
+            <ID>1014301</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_OUT</Dynamic>
+            <Dynamic>ldc_set_port -iobuf {DRIVE=4 IO_TYPE=LVCMOS18} [get_ports LED_OUT]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1027013</ID>
+            <Severity>16</Severity>
+            <Dynamic>port</Dynamic>
+            <Dynamic>pll_clk</Dynamic>
+        </Message>
+        <Message>
+            <ID>1014301</ID>
+            <Severity>16</Severity>
+            <Dynamic>pll_clk</Dynamic>
+            <Dynamic>ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports pll_clk]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1011001</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_port -iobuf {DRIVE=4 IO_TYPE=LVCMOS18} [get_ports LED_OUT]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1011001</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports pll_clk]</Dynamic>
+        </Message>
+        <Message>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB0_OUT</Dynamic>
+            <Dynamic>39</Dynamic>
+        </Message>
+        <Message>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB1_OUT</Dynamic>
+            <Dynamic>40</Dynamic>
+        </Message>
+        <Message>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB2_OUT</Dynamic>
+            <Dynamic>41</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Export">
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+            <Dynamic>ldc_set_location -site {23} [get_ports LED_CTL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {23} [get_ports LED_CTL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1191031</ID>
+            <Severity>1</Severity>
+        </Message>
+    </Task>
     <Task name="Synthesis">
         <Message>
             <ID>35001786</ID>
             <Severity>1</Severity>
-        </Message>
-        <Message>
-            <ID>35001476</ID>
-            <Severity>256</Severity>
         </Message>
         <Message>
             <ID>35935050</ID>
@@ -347,18 +442,159 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(45): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(44): </Dynamic>
             <Dynamic>behavioral</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd</Navigation>
-            <Navigation>45</Navigation>
+            <Navigation>44</Navigation>
         </Message>
         <Message>
-            <ID>35921033</ID>
-            <Severity>4096</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(86): </Dynamic>
-            <Dynamic>pll_clk</Dynamic>
-            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd</Navigation>
-            <Navigation>86</Navigation>
+            <ID>35921504</ID>
+            <Severity>1</Severity>
+            <Dynamic></Dynamic>
+            <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>pwr</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>rgb1_sig</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>rgb2_sig</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>rgb3_sig</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MOSI_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MISO_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SCLK_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SS_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MOSI_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MISO_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SCLK_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SS_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MOSI_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MISO_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SCLK_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SS_master</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MOSI_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>MISO_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SCLK_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>SS_slave</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+    </Task>
+    <Task name="PAR">
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+            <Dynamic>ldc_set_location -site {23} [get_ports LED_CTL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {23} [get_ports LED_CTL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>LED_CTL</Dynamic>
         </Message>
     </Task>
 </BaliMessageLog>

@@ -50,9 +50,11 @@ Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
 Removing unused logic ...
 Starting design annotation....
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 15 -divide_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
  
 Constraint Summary:
-   Total number of constraints: 0
+   Total number of constraints: 1
    Total number of constraints dropped: 0
  
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
@@ -60,7 +62,7 @@ POSTSYN finished successfully.
 Total CPU Time: 1 secs 
 Total REAL Time: 2 secs 
 Peak Memory Usage: 64 MB
-Checksum -- postsyn: 8781ad5eb7b0e8f45b53bb9c281120f7e8fa6d46
+Checksum -- postsyn: 1bf6a233b512636d658dcdd9a4c18424a2de3cb7
 
 
 </PRE></DIV>

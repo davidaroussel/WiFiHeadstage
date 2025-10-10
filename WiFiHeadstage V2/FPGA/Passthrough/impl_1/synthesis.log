@@ -1,4 +1,15 @@
-The -top option is not used.
+synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+Fri Oct 10 12:10:29 2025
+
+
+Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Passthrough_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml 
+
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -27,6 +38,7 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - synthesis: User-Selected Strategy Settings
 Optimization goal = Area
+Top-level module name = Controller_RHD64_Config.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -59,7 +71,6 @@ The -syn option is FALSE.
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1 (searchpath added)
 -path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
-CRITICAL <35001476> - synthesis: A top-level module has not been specified for the mixed language design.
 Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
@@ -121,5 +132,95 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd
 
 INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(6): analyzing entity controller_rhd64_config. VHDL-1012
-INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(45): analyzing architecture behavioral. VHDL-1010
-ERROR <35921033> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(86): cannot read from 'out' object pll_clk  use 'buffer' or 'inout'. VHDL-1033
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd(44): analyzing architecture behavioral. VHDL-1010
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/impl_1". VHDL-1504
+Top module language type = VHDL.
+Top module name (VHDL, mixed language): Controller_RHD64_Config
+                                                         
+
+
+### Number of Logic Cells: 5280
+
+
+### Number of RAM Blocks: 30
+
+
+### Number of DSP Blocks: 8
+
+
+### Number of PLLs: 1
+
+
+### Number of IO Pins: 56
+
+
+##########################################################
+
+
+                                                         
+
+
+WARNING <35001771> - synthesis: Initial value found on net pwr will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb1_sig will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb2_sig will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb3_sig will be ignored due to unrecognized driver type
+CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
+
+
+
+CRITICAL <35002028> - synthesis: I/O Port MOSI_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_master 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MOSI_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port MISO_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SCLK_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port SS_slave 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port LED_CTL 's net has no driver and is unused.
+
+################### Begin Area Report (Controller_RHD64_Config)######################
+Number of register bits => 35 of 5280 (0 % )
+CCU2 => 17
+FD1P3XZ => 35
+IB => 5
+LUT4 => 17
+OB => 10
+################### End Area Report ##################
+Number of odd-length carry chains : 0
+Number of even-length carry chains : 1
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 1
+  Net : ext_clk_c, loads : 0
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : n366, loads : 35
+  Net : step[2], loads : 6
+  Net : step[1], loads : 5
+  Net : step[0], loads : 5
+  Net : counter[31], loads : 2
+  Net : counter[30], loads : 2
+  Net : counter[29], loads : 2
+  Net : counter[28], loads : 2
+  Net : counter[27], loads : 2
+  Net : counter[26], loads : 2
+################### End Clock Report ##################
+
+Peak Memory Usage: 87 MB
+
+--------------------------------------------------------------
+Total CPU Time: 6 secs 
+Total REAL Time: 7 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: 958ae43aae51db213fbede41b07975c678b2d9f0

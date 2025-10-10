@@ -5,14 +5,14 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 64;
-        STM32_CS_INACTIVE_CLKS        : integer := 16;
+        STM32_CLKS_PER_HALF_BIT       : integer := 1;
+        STM32_CS_INACTIVE_CLKS        : integer := 2;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 64;
-        RHD_CS_INACTIVE_CLKS        : integer := 16
+        RHD_CLKS_PER_HALF_BIT       : integer := 1;
+        RHD_CS_INACTIVE_CLKS        : integer := 2
 		
     );
     port (
@@ -20,8 +20,6 @@ entity top_level is
 
         -- External 12 MHz clock input
         i_clk     : in  STD_LOGIC;
-        -- PLL output clock
-        pll_clk     : out STD_LOGIC;
 
         -- STM32 SPI Interface
         o_STM32_SPI_MOSI : out std_logic; -- IO 20A --> PIN 11
@@ -100,19 +98,18 @@ architecture RTL of top_level is
     signal rgb3_sig : std_logic := '0';
 	
     signal stop_counting : std_logic := '0';
+	
+	signal pll_clk_int : std_logic;
+	
+	
+	
 begin
-
-
-    -- Use pll_clk_internal in your SPI logic
-
-	--pll_spi_inst : entity work.PLL_SPI port map(
-		--ref_clk_i   => i_clk,
-		--rst_n_i     => '1',
-		--outcore_o   => open,
-		--outglobal_o => pll_clk_internal
-	--);
-
-
+	pll_inst: entity CLK_48MHz port map(
+		ref_clk_i=>i_clk,
+		rst_n_i=>'1',
+		outcore_o=>OPEN,
+		outglobal_o=>pll_clk_int
+	);
     -- Instance of Controller_RHD_Sampling
     Controller_inst : entity work.Controller_RHD_Sampling
         generic map (
@@ -127,7 +124,7 @@ begin
         )
         port map (
             -- Global
-            i_Clk               => i_clk,
+            i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
 
@@ -162,9 +159,9 @@ begin
 	debug_RHD_SPI_MISO   <= i_RHD_SPI_MISO;
 	
     -- Timing process
-    process(i_clk)
+    process(pll_clk_int)
     begin
-        if rising_edge(i_clk) then
+        if rising_edge(pll_clk_int) then
             if counter < TOGGLE_COUNT - 1 then
                 counter <= counter + 1;
             else
@@ -232,9 +229,9 @@ begin
         end case;
     end process;
 
-	Reset_Process : process(i_clk)
+	Reset_Process : process(pll_clk_int)
     begin
-        if rising_edge(i_clk) then
+        if rising_edge(pll_clk_int) then
             -- Reset logic
             if reset_counter < 20 then
 				w_Controller_Mode <= x"0";

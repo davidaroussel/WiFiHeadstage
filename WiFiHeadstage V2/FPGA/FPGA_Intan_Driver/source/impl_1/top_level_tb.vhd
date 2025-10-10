@@ -55,7 +55,6 @@ begin
         )
         port map (
             i_clk     => i_clk_tb,
-            pll_clk   => pll_clk_tb,
 
             o_STM32_SPI_MOSI => o_STM32_SPI_MOSI_tb,
             i_STM32_SPI_MISO => i_STM32_SPI_MISO_tb,

@@ -1,0 +1,26 @@
+#Start recording tcl command: 10/9/2025 11:58:19
+#Project Location: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking; Project name: Blinking
+prj_open "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/Blinking.rdf"
+prj_run Export -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_add_source "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz/CLK_48MHz.ipx"
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_set_impl_opt -impl "impl_1" "top" "BlinkingTimer"
+prj_run Synthesis -impl impl_1
+prj_set_impl_opt -impl "impl_1" -rem "top"
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run Export -impl impl_1
+prj_run Export -impl impl_1
+prj_run Export -impl impl_1
+prj_save 
+prj_close
+#Stop recording: 10/10/2025 12:08:11
