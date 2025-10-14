@@ -10,7 +10,7 @@ set para(prj_dir) "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/F
 # synthesize VMs
 # propgate constraints
 file delete -force -- FPGA_Intan_Driver_impl_1_cpe.ldc
-run_engine_newmsg cpe -f "FPGA_Intan_Driver_impl_1.cprj" "CLK_48MHz.cprj" "FIFO_MEM.cprj" -a "iCE40UP"  -o FPGA_Intan_Driver_impl_1_cpe.ldc
+run_engine_newmsg cpe -f "FPGA_Intan_Driver_impl_1.cprj" "CLK_48MHz.cprj" "STM32_FIFO.cprj" "FIFO_MEM.cprj" -a "iCE40UP"  -o FPGA_Intan_Driver_impl_1_cpe.ldc
 # synthesize top design
 file delete -force -- FPGA_Intan_Driver_impl_1.vm FPGA_Intan_Driver_impl_1.ldc
 run_engine_newmsg synthesis -f "FPGA_Intan_Driver_impl_1_lattice.synproj"
