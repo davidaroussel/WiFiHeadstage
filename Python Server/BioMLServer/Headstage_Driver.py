@@ -11,9 +11,10 @@ class HeadstageDriver:
         socket.sendall(command)
         print(socket.recv(1024).decode("cp1252'"))
 
-    def getHeadstageID(self, socket):
+    def getHeadstageID(self, socket, p_id=0):
         command = b"1"
         socket.sendall(command)
+        socket.sendall(p_id.to_bytes(1, 'big'))
         headstage_id = socket.recv(1024).decode("cp1252'")
         return headstage_id
 

@@ -117,6 +117,8 @@ architecture RTL of Controller_RHD_FIFO is
   
   	signal init_FIFO_State : std_logic;
 	signal init_FIFO_Read : std_logic;
+	
+	signal init_FIFO_Count : integer := 0;
   
 begin
 	int_FIFO_RE <= i_FIFO_RE;
@@ -172,9 +174,13 @@ begin
     elsif rising_edge(i_Clk) then
 		if i_Controller_Mode = x"0" then
 			if init_FIFO_State = '0' then
-				int_FIFO_WE <= '1';
-				int_FIFO_DATA(31 downto 0) <= x"BBBBBBBB";
-				init_FIFO_State <= '1';
+				if init_FIFO_Count < 2 then
+					--int_FIFO_WE <= '1';
+					--int_FIFO_DATA(31 downto 0) <= x"BBBBBBBB";
+					--init_FIFO_Count <= init_FIFO_Count + 1;
+				else
+					init_FIFO_State <= '1';
+				end if;
 			else
 				int_FIFO_WE <= '0';
 			end if;

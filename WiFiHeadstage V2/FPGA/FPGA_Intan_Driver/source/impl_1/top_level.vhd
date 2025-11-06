@@ -6,13 +6,13 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 1;
-        STM32_CS_INACTIVE_CLKS        : integer := 2;
+        STM32_CS_INACTIVE_CLKS        : integer := 4;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD_CLKS_PER_HALF_BIT       : integer := 1;
-        RHD_CS_INACTIVE_CLKS        : integer := 2
+        RHD_CS_INACTIVE_CLKS        : integer := 4
 		
     );
     port (
@@ -67,7 +67,7 @@ architecture RTL of top_level is
     signal w_Controller_Mode    : std_logic_vector(3 downto 0) := (others => '0');
 	signal w_reset              : std_logic;
 	
-	signal reset_counter : integer range 0 to 250 := 0;
+	signal reset_counter : integer range 0 to 42000000 := 0;
 	
 	signal debug_STM32_SPI_MISO : std_logic;
 	signal debug_RHD_SPI_MISO   : std_logic;
@@ -107,7 +107,7 @@ architecture RTL of top_level is
 	signal int_RHD_SPI_CS_n : std_logic;
 	signal int_RHD_SPI_Clk  : std_logic;
 
-signal int_STM32_SPI_MOSI : std_logic;
+    signal int_STM32_SPI_MOSI : std_logic;
 	signal int_STM32_SPI_MISO : std_logic;
 	signal int_STM32_SPI_Clk  : std_logic;
 	signal int_STM32_SPI_CS_n : std_logic;
@@ -138,6 +138,8 @@ begin
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
+			rgb_info_1 => rgb2_sig,
+			rgb_info_2 => rgb3_sig,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -168,136 +170,45 @@ begin
 	
 	
 	Mode_Process : process(pll_clk_int)
-begin
-    if w_Controller_Mode = x"1" then
-        -- Passthrough: STM32 directly drives RHD
-        o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
-        o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
-        o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
-        i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
-        o_STM32_SPI_Clk  <= 'Z';
-        o_STM32_SPI_MOSI <= 'Z';
-        o_STM32_SPI_CS_n <= 'Z';
+	begin
+		--if w_Controller_Mode = x"3" then
+			---- Passthrough: STM32 directly drives RHD
+			--o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
+			--o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
+			--o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
+			--i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
+			--o_STM32_SPI_Clk  <= 'Z';
+			--o_STM32_SPI_MOSI <= 'Z';
+			--o_STM32_SPI_CS_n <= 'Z';
 
-    else
-        -- Normal mode: controller handles communication
-        o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
-        o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
-        o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+		--else
+			---- Normal mode: controller handles communication
+			--o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+			--o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+			--o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+			--int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
+
+
+			--o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+			--o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+			--o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+			--int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+		--end if;
+
+			-- Normal mode: controller handles communication
+		o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+		o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+		o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
 		int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
 
 
-        o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
-        o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
-        o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
-        int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
-    end if;
-end process;
+		o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+		o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+		o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+		int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+	end process;
 	
 
-
----- Timing process
-    --process(pll_clk_int)
-    --begin
-        --if rising_edge(pll_clk_int) then
-            --if counter < TOGGLE_COUNT - 1 then
-                --counter <= counter + 1;
-            --else
-                --counter <= 0;
-                --step <= (step + 1) mod 7;
-            --end if;
-        --end if;
-    --end process;
-	
-
-	---- LED/RGB control process
-    --process(step)
-    --begin
-        ---- Default states
-        --led1_sig <= '1';
-        --led2_sig <= '1';
-        --led3_sig <= '1';
-		--led4_sig <= '1';
-        --rgb1_sig <= '0';
-        --rgb2_sig <= '0';
-        --rgb3_sig <= '0';
-
-        --case step is
-            --when 0 => 
-				--rgb1_sig <= '0';
-				--rgb2_sig <= '0';
-				--rgb3_sig <= '0';
-				
-				--led1_sig <= '1';
-				--led2_sig <= '0';
-				--led3_sig <= '1';
-				--led4_sig <= '0';
-				
-            --when 1 => 
-				--rgb1_sig <= '0';
-				--rgb2_sig <= '1';
-				--rgb3_sig <= '1';
-				
-				--led1_sig <= '0';
-				--led2_sig <= '1';
-				--led3_sig <= '0';
-				--led4_sig <= '1';
-				
-            --when 2 => 
-				--rgb1_sig <= '1';
-				--rgb2_sig <= '0';
-				--rgb3_sig <= '1';
-				
-				--led1_sig <= '1';
-				--led2_sig <= '0';
-				--led3_sig <= '1';
-				--led4_sig <= '0';
-				
-            --when 3 => 
-				--rgb1_sig <= '1';
-				--rgb2_sig <= '1';
-				--rgb3_sig <= '0';
-				
-				--led1_sig <= '0';
-
-				--led2_sig <= '1';
-				--led3_sig <= '0';
-				--led4_sig <= '1';
-            --when others => 
-				--null;
-        --end case;
-    --end process;
-
-	--Reset_Process : process(pll_clk_int)
-    --begin
-        --if rising_edge(pll_clk_int) then
-            ---- Reset logic
-            --if reset_counter < 20 then
-				--w_Controller_Mode <= x"0";
-                --w_reset <= '1';  -- Hold reset active
-            --else
-                --w_reset <= '0';  -- Release reset after 10 cycles
-
-				---- Controller mode sequencing
-				--case reset_counter is
-					--when 50 =>
-						--w_Controller_Mode <= x"2";
-						--stop_counting <= '1';
-					----when 100 =>
-						----w_Controller_Mode <= x"2";
-						----stop_counting <= '1';
-					--when others =>
-						--null;
-				--end case;
-			--end if;
-			
-			--if stop_counting = '0' then
-				--reset_counter <= reset_counter + 1;
-			--end if;
-			
-        --end if;
-    --end process Reset_Process;
-	
 	Reset_Process : process(pll_clk_int)
     begin
         if rising_edge(pll_clk_int) then
@@ -307,12 +218,27 @@ end process;
                 w_reset <= '1';  -- Hold reset active
             else
                 w_reset <= '0';  -- Release reset after 10 cycles
-				stop_counting <= '1';
-				if CTRL0_IN = '0' then
-					w_Controller_Mode <= x"1";
-				elsif CTRL0_IN = '1' then
-					w_Controller_Mode <= x"2";
-				end if;
+
+				--if CTRL0_IN = '1' then
+					--w_Controller_Mode <= x"1";
+					--rgb1_sig <= '0';
+				--elsif CTRL0_IN = '0' then
+					--w_Controller_Mode <= x"2";
+					--rgb1_sig <= '1';
+				--end if;
+				
+
+				-- Controller mode sequencing
+				case reset_counter is
+					when 50 =>
+						w_Controller_Mode <= x"1";
+						
+					when 4000000 =>
+						w_Controller_Mode <= x"2";
+						stop_counting <= '1';
+					when others =>
+						null;
+				end case;
 			end if;
 			
 			if stop_counting = '0' then
@@ -321,13 +247,14 @@ end process;
 			
         end if;
     end process Reset_Process;
+	
 
 	LED1_OUT <= led1_sig;
     LED2_OUT <= led2_sig;
     LED3_OUT <= led3_sig;
 	LED4_OUT <= led4_sig;
 
-    RGB0_OUT <= CTRL0_IN;
+    RGB0_OUT <= rgb1_sig;
     RGB1_OUT <= rgb2_sig;
     RGB2_OUT <= rgb3_sig;
 
