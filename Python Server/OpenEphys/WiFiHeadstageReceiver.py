@@ -58,7 +58,7 @@ class WiFiHeadstageReceiver(BaseException):
                 self.m_connected = True
 
     def getHeadstageID(self):
-        module_id = self.HeadstageDriver.getHeadstageID(self.m_socket)
+        module_id = self.HeadstageDriver.getHeadstageID(self.m_socket,0)
         print("Headstage ID is: ", module_id)
 
     def verifyIntanChip(self):
