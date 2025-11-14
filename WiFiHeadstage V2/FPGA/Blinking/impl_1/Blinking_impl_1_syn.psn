@@ -1,10 +1,11 @@
 POSTSYN: Post Synthesis Process Radiant Software (64-bit) 2023.2.1.288.0
-Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml Blinking_impl_1.vm 
+Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb -ldc C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.ldc -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml Blinking_impl_1.vm 
    Architecture:     iCE40UP
    Device:           iCE40UP5K
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'Blinking_impl_1.vm' ...
+Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.ldc' ...
 Removing unused logic ...
 Starting design annotation....
  
@@ -16,5 +17,5 @@ Writing output file 'Blinking_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 0 secs 
 Total REAL Time: 0 secs 
-Peak Memory Usage: 37 MB
-Checksum -- postsyn: 3d063a4cce4664896883bf66d59382b732318a74
+Peak Memory Usage: 39 MB
+Checksum -- postsyn: 4d608984e5103ab7adfdcf72698485eb1034dbea

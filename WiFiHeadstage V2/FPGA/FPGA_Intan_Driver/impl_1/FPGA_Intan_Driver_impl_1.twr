@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Thu Nov  6 09:39:01 2025
+Fri Nov 14 09:39:21 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -30,7 +30,6 @@ Package Status:                     Preliminary    Version 1.5
         1.3  Overall Summary
         1.4  Unconstrained Report
         1.5  Combinational Loop
-        1.6  Error/Warning Messages
     2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
         2.1  Clock Summary
         2.2  Endpoint slacks
@@ -49,7 +48,6 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 3 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -73,25 +71,9 @@ There is no start point satisfying reporting criteria
 
 
 Clocked but unconstrained timing end points
--------------------------------------------------------------------
-         Listing 10 End Points          |           Type           
--------------------------------------------------------------------
-reset_counter_1593__i26/D               |    No arrival or required
-reset_counter_1593__i25/D               |    No arrival or required
-reset_counter_1593__i24/D               |    No arrival or required
-reset_counter_1593__i23/D               |    No arrival or required
-reset_counter_1593__i22/D               |    No arrival or required
-reset_counter_1593__i21/D               |    No arrival or required
-reset_counter_1593__i20/D               |    No arrival or required
-reset_counter_1593__i19/D               |    No arrival or required
-reset_counter_1593__i18/D               |    No arrival or required
-reset_counter_1593__i17/D               |    No arrival or required
--------------------------------------------------------------------
-                                        |                          
-Number of unconstrained timing end poin |                          
-ts                                      |                      5016
-                                        |                          
--------------------------------------------------------------------
+--------------------------------------------------
+There is no end point satisfying reporting criteria
+
 
 1.4.2  Start/End Points Without Timing Constraints
 ---------------------------------------------------
@@ -107,21 +89,13 @@ create_generated_clock,
 ...
 
 -------------------------------------------------------------------
-     Listing 10 Start or End Points     |           Type           
+     Listing 2 Start or End Points      |           Type           
 -------------------------------------------------------------------
-i_clk                                   |                     input
 i_RHD_SPI_MISO                          |                     input
-i_STM32_SPI_MISO                        |                     input
 CTRL0_IN                                |                     input
-o_RHD_SPI_CS_n                          |                    output
-o_RHD_SPI_Clk                           |                    output
-o_RHD_SPI_MOSI                          |                    output
-o_STM32_SPI_CS_n                        |                    output
-o_STM32_SPI_Clk                         |                    output
-o_STM32_SPI_MOSI                        |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                        22
+Number of I/O ports without constraint  |                         2
                                         |                          
 -------------------------------------------------------------------
 
@@ -134,109 +108,7 @@ There is no instance satisfying reporting criteria
 
 1.5  Combinational Loop
 ========================
-Combinational Loops
--------------------
-++++ Loop1
-Controller_inst/i7184_2_lut/A	->	Controller_inst/i7184_2_lut/Z
-
-++++ Loop2
-Controller_inst/i7187_2_lut/A	->	Controller_inst/i7187_2_lut/Z
-
-++++ Loop3
-Controller_inst/i7188_2_lut/A	->	Controller_inst/i7188_2_lut/Z
-
-++++ Loop4
-Controller_inst/i7189_2_lut/A	->	Controller_inst/i7189_2_lut/Z
-
-++++ Loop5
-Controller_inst/i7190_2_lut/A	->	Controller_inst/i7190_2_lut/Z
-
-++++ Loop6
-Controller_inst/i7191_2_lut/A	->	Controller_inst/i7191_2_lut/Z
-
-++++ Loop7
-Controller_inst/i7192_2_lut/A	->	Controller_inst/i7192_2_lut/Z
-
-++++ Loop8
-Controller_inst/i7193_2_lut/A	->	Controller_inst/i7193_2_lut/Z
-
-++++ Loop9
-Controller_inst/i7194_2_lut/A	->	Controller_inst/i7194_2_lut/Z
-
-++++ Loop10
-Controller_inst/i7195_2_lut/A	->	Controller_inst/i7195_2_lut/Z
-
-++++ Loop11
-Controller_inst/i7196_2_lut/A	->	Controller_inst/i7196_2_lut/Z
-
-++++ Loop12
-Controller_inst/i7197_2_lut/A	->	Controller_inst/i7197_2_lut/Z
-
-++++ Loop13
-Controller_inst/i7168_2_lut/A	->	Controller_inst/i7168_2_lut/Z
-
-++++ Loop14
-Controller_inst/i7033_2_lut/A	->	Controller_inst/i7033_2_lut/Z
-
-++++ Loop15
-Controller_inst/i7186_2_lut/A	->	Controller_inst/i7186_2_lut/Z
-
-++++ Loop16
-Controller_inst/i7169_2_lut/A	->	Controller_inst/i7169_2_lut/Z
-
-++++ Loop17
-Controller_inst/i7170_2_lut/A	->	Controller_inst/i7170_2_lut/Z
-
-++++ Loop18
-Controller_inst/i7171_2_lut/A	->	Controller_inst/i7171_2_lut/Z
-
-++++ Loop19
-Controller_inst/i7172_2_lut/A	->	Controller_inst/i7172_2_lut/Z
-
-++++ Loop20
-Controller_inst/i7185_2_lut/A	->	Controller_inst/i7185_2_lut/Z
-
-++++ Loop21
-Controller_inst/i7183_2_lut/A	->	Controller_inst/i7183_2_lut/Z
-
-++++ Loop22
-Controller_inst/i7182_2_lut/A	->	Controller_inst/i7182_2_lut/Z
-
-++++ Loop23
-Controller_inst/i7173_2_lut/A	->	Controller_inst/i7173_2_lut/Z
-
-++++ Loop24
-Controller_inst/i7181_2_lut/A	->	Controller_inst/i7181_2_lut/Z
-
-++++ Loop25
-Controller_inst/i7174_2_lut/A	->	Controller_inst/i7174_2_lut/Z
-
-++++ Loop26
-Controller_inst/i7175_2_lut/A	->	Controller_inst/i7175_2_lut/Z
-
-++++ Loop27
-Controller_inst/i7180_2_lut/A	->	Controller_inst/i7180_2_lut/Z
-
-++++ Loop28
-Controller_inst/i7179_2_lut/A	->	Controller_inst/i7179_2_lut/Z
-
-++++ Loop29
-Controller_inst/i7178_2_lut/A	->	Controller_inst/i7178_2_lut/Z
-
-++++ Loop30
-Controller_inst/i7177_2_lut/A	->	Controller_inst/i7177_2_lut/Z
-
-++++ Loop31
-Controller_inst/i7176_2_lut/A	->	Controller_inst/i7176_2_lut/Z
-
-++++ Loop32
-Controller_inst/i7198_2_lut/A	->	Controller_inst/i7198_2_lut/Z
-
-
-1.6  Error/Warning Messages
-============================
-WARNING "70001944" - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+None
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -244,22 +116,6 @@ WARNING "70001944" - No source clock for
 
 2.1  Clock Summary
 =======================
-
-2.1.1 Clock "pll_clk_int"
-=======================
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
-
-Single Clock Domain
--------------------------------------------------------------------------------------------------------
-           Clock pll_clk_int            |                    |       Period       |     Frequency      
--------------------------------------------------------------------------------------------------------
- From pll_clk_int                       |             Target |               +INF |          0.000 MHz 
-                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
-Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
-                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
--------------------------------------------------------------------------------------------------------
-
-Clock Domain Crossing
 
 2.2  Endpoint slacks
 =======================

@@ -8,6 +8,9 @@ set para(gui_mode) 1
 set para(prj_dir) "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking"
 # synthesize IPs
 # synthesize VMs
+# propgate constraints
+file delete -force -- Blinking_impl_1_cpe.ldc
+run_engine_newmsg cpe -f "Blinking_impl_1.cprj" "CLK_48MHz.cprj" -a "iCE40UP"  -o Blinking_impl_1_cpe.ldc
 # synthesize top design
 file delete -force -- Blinking_impl_1.vm Blinking_impl_1.ldc
 run_engine_newmsg synthesis -f "Blinking_impl_1_lattice.synproj"

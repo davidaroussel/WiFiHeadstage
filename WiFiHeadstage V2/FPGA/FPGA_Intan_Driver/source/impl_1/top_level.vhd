@@ -171,41 +171,41 @@ begin
 	
 	Mode_Process : process(pll_clk_int)
 	begin
-		--if w_Controller_Mode = x"3" then
-			---- Passthrough: STM32 directly drives RHD
-			--o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
-			--o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
-			--o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
-			--i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
-			--o_STM32_SPI_Clk  <= 'Z';
-			--o_STM32_SPI_MOSI <= 'Z';
-			--o_STM32_SPI_CS_n <= 'Z';
+		if w_Controller_Mode = x"1" then
+			-- Passthrough: STM32 directly drives RHD
+			o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
+			o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
+			o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
+			i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
+			o_STM32_SPI_Clk  <= 'Z';
+			o_STM32_SPI_MOSI <= 'Z';
+			o_STM32_SPI_CS_n <= 'Z';
 
-		--else
-			---- Normal mode: controller handles communication
-			--o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
-			--o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
-			--o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
-			--int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
-
-
-			--o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
-			--o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
-			--o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
-			--int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
-		--end if;
-
+		else
 			-- Normal mode: controller handles communication
-		o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
-		o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
-		o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
-		int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
+			o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+			o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+			o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+			int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
 
 
-		o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
-		o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
-		o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
-		int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+			o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+			o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+			o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+			int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+		end if;
+
+			---- Normal mode: controller handles communication
+		--o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+		--o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+		--o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+		--int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
+
+
+		--o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+		--o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+		--o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+		--int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
 	end process;
 	
 
@@ -219,31 +219,32 @@ begin
             else
                 w_reset <= '0';  -- Release reset after 10 cycles
 
-				--if CTRL0_IN = '1' then
-					--w_Controller_Mode <= x"1";
-					--rgb1_sig <= '0';
-				--elsif CTRL0_IN = '0' then
-					--w_Controller_Mode <= x"2";
-					--rgb1_sig <= '1';
-				--end if;
+				if CTRL0_IN = '0' then
+					w_Controller_Mode <= x"1";
+					rgb1_sig <= '0';
+				elsif CTRL0_IN = '1' then
+					w_Controller_Mode <= x"2";
+					rgb1_sig <= '1';
+				end if;
 				
 
-				-- Controller mode sequencing
-				case reset_counter is
-					when 50 =>
-						w_Controller_Mode <= x"1";
+				---- Controller mode sequencing
+				--case reset_counter is
+					--when 50 =>
+						--w_Controller_Mode <= x"1";
 						
-					when 4000000 =>
-						w_Controller_Mode <= x"2";
-						stop_counting <= '1';
-					when others =>
-						null;
-				end case;
+					--when 4000000 =>
+						--w_Controller_Mode <= x"2";
+						--stop_counting <= '1';
+					--when others =>
+						--null;
+				--end case;
+				
 			end if;
 			
-			if stop_counting = '0' then
-				reset_counter <= reset_counter + 1;
-			end if;
+			--if stop_counting = '0' then
+				--reset_counter <= reset_counter + 1;
+			--end if;
 			
         end if;
     end process Reset_Process;

@@ -349,6 +349,18 @@
             <Navigation>63</Navigation>
         </Message>
         <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>w_reset</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>w_reset</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
             <ID>35935050</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
@@ -838,6 +850,18 @@
             <Dynamic>sdi_i</Dynamic>
         </Message>
         <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>w_reset</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>w_reset</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
             <ID>35935050</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
@@ -851,6 +875,11 @@
             <ID>35001771</ID>
             <Severity>16</Severity>
             <Dynamic>rgb3_sig</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>pwr_2</Dynamic>
         </Message>
         <Message>
             <ID>35001771</ID>
@@ -1031,6 +1060,12 @@
             <Navigation>195</Navigation>
         </Message>
         <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving top_level/w_Controller_Mode[3:0]</Dynamic>
+            <Dynamic>3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
             <ID>35935049</ID>
             <Severity>16</Severity>
             <Dynamic>sclk_i</Dynamic>
@@ -1062,265 +1097,297 @@
             <Navigation>140</Navigation>
         </Message>
         <Message>
-            <ID>35001774</ID>
-            <Severity>1</Severity>
-            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS</Dynamic>
-            <Dynamic>one-hot</Dynamic>
-        </Message>
-        <Message>
-            <ID>35001774</ID>
-            <Severity>1</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS</Dynamic>
-            <Dynamic>one-hot</Dynamic>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[0][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35001747</ID>
             <Severity>256</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM</Dynamic>
-            <Dynamic>3</Dynamic>
+            <Dynamic>driving \Controller_inst/temp_array[1][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35001747</ID>
             <Severity>256</Severity>
-            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM</Dynamic>
-            <Dynamic>3</Dynamic>
+            <Dynamic>driving \Controller_inst/temp_array[2][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35001747</ID>
             <Severity>256</Severity>
-            <Dynamic>driving w_Controller_Mode[3:0]</Dynamic>
-            <Dynamic>3, 2</Dynamic>
+            <Dynamic>driving \Controller_inst/temp_array[3][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
+            <ID>35001747</ID>
             <Severity>256</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>driving \Controller_inst/temp_array[4][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
+            <ID>35001747</ID>
             <Severity>256</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
+            <Dynamic>driving \Controller_inst/temp_array[5][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[6][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[7][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[8][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[9][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[10][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[11][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[12][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[13][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[14][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[15][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[16][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[17][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[18][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[19][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[20][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[21][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[22][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[23][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[24][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[25][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[26][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[27][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[28][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[29][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[30][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_array[31][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i18</Dynamic>
+            <Dynamic>\Controller_inst/int_FIFO_RE</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/stm32_counter[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/stm32_state[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/int_STM32_TX_Byte[511:0]</Dynamic>
+            <Dynamic>511, 510, 509, 508, 507, 506, 505, 504, 503, 502, 501, 500, 499, 498, 497, 496, 495, 494, 493, 492, 491, 490, 489, 488, 487, 486, 485, 484, 483, 482, 481, 480, 479, 478, 477, 476, 475, 474, 473, 472, 471, 470, 469, 468, 467, 466, 465, 464, 463, 462, 461, 460, 459, 458, 457, 456, 455, 454, 453, 452, 451, 450, 449, 448, 447,    ....    43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_STM32_TX_DV</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i31</Dynamic>
+            <Dynamic>\Controller_inst/init_FIFO_Read</Dynamic>
             <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/int_RHD_TX_Byte[15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i30</Dynamic>
+            <Dynamic>\Controller_inst/int_RHD_TX_DV</Dynamic>
             <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/rhd_index[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i29</Dynamic>
+            <Dynamic>\Controller_inst/rhd_done_config</Dynamic>
             <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/data_array_send_count[6:0]</Dynamic>
+            <Dynamic>6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/rhd_state[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/alt_counter[1:0]</Dynamic>
+            <Dynamic>1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/full_cycle_count[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/temp_buffer[511:0]</Dynamic>
+            <Dynamic>511, 510, 509, 508, 507, 506, 505, 504, 503, 502, 501, 500, 499, 498, 497, 496, 495, 494, 493, 492, 491, 490, 489, 488, 487, 486, 485, 484, 483, 482, 481, 480, 479, 478, 477, 476, 475, 474, 473, 472, 471, 470, 469, 468, 467, 466, 465, 464, 463, 462, 461, 460, 459, 458, 457, 456, 455, 454, 453, 452, 451, 450, 449, 448, 447,    ....    43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
+            <Dynamic>\Controller_inst/rgd_info_sig_2</Dynamic>
+            <Dynamic>One</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i25</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i24</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i23</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i22</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i21</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i20</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i19</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i17</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i16</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i15</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i14</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i13</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i11</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i10</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i9</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i8</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i10</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i9</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i2</Dynamic>
+            <Dynamic>\Controller_inst/channel_array[0]_i0</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1332,53 +1399,396 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0</Dynamic>
+            <Dynamic>\Controller_inst/channel_array[0]_i2</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
-            <ID>70001944</ID>
+            <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>\Controller_inst/channel_array[0]_i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i7</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i8</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i9</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i10</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i11</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i12</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i13</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i14</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/channel_array[0]_i15</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count[9:0]</Dynamic>
+            <Dynamic>9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count[2:0]</Dynamic>
+            <Dynamic>1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count[2:0]</Dynamic>
+            <Dynamic>2</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS[1:0]</Dynamic>
+            <Dynamic>1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/r_CS_n</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/int_FIFO_WE</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/o_FIFO_Data[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges[10:0]</Dynamic>
+            <Dynamic>10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_Leading_Edge</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_Trailing_Edge</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Count</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte[511:0]</Dynamic>
+            <Dynamic>511, 510, 509, 508, 507, 506, 505, 504, 503, 502, 501, 500, 499, 498, 497, 496, 495, 494, 493, 492, 491, 490, 489, 488, 487, 486, 485, 484, 483, 482, 481, 480, 479, 478, 477, 476, 475, 474, 473, 472, 471, 470, 469, 468, 467, 466, 465, 464, 463, 462, 461, 460, 459, 458, 457, 456, 455, 454, 453, 452, 451, 450, 449, 448, 447,    ....    43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_SPI_MOSI</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/o_STM32_RX_Byte_Rising[511:0]</Dynamic>
+            <Dynamic>511, 510, 509, 508, 507, 506, 505, 504, 503, 502, 501, 500, 499, 498, 497, 496, 495, 494, 493, 492, 491, 490, 489, 488, 487, 486, 485, 484, 483, 482, 481, 480, 479, 478, 477, 476, 475, 474, 473, 472, 471, 470, 469, 468, 467, 466, 465, 464, 463, 462, 461, 460, 459, 458, 457, 456, 455, 454, 453, 452, 451, 450, 449, 448, 447,    ....    43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/o_RX_Byte_Falling[511:0]</Dynamic>
+            <Dynamic>511, 510, 509, 508, 507, 506, 505, 504, 503, 502, 501, 500, 499, 498, 497, 496, 495, 494, 493, 492, 491, 490, 489, 488, 487, 486, 485, 484, 483, 482, 481, 480, 479, 478, 477, 476, 475, 474, 473, 472, 471, 470, 469, 468, 467, 466, 465, 464, 463, 462, 461, 460, 459, 458, 457, 456, 455, 454, 453, 452, 451, 450, 449, 448, 447,    ....    43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_RX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_RX_Bit_Count[9:0]</Dynamic>
+            <Dynamic>9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_SPI_Clk</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_TX_Ready</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[8:0]</Dynamic>
+            <Dynamic>8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count[4:0]</Dynamic>
+            <Dynamic>4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count[2:0]</Dynamic>
+            <Dynamic>1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count[2:0]</Dynamic>
+            <Dynamic>2</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS[1:0]</Dynamic>
+            <Dynamic>1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_n</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges[5:0]</Dynamic>
+            <Dynamic>5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_Leading_Edge</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_Trailing_Edge</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Count</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte[15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_SPI_MOSI</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/o_RHD_RX_Byte_Rising[15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/o_RHD_RX_Byte_Falling[15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_RX_Bit_Count[4:0]</Dynamic>
+            <Dynamic>4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_SPI_Clk</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_TX_Ready</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Bit_Count[3:0]</Dynamic>
+            <Dynamic>3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.AFull.almost_full_ext_r</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.AEmpty.almost_empty_ext_r</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/int_FIFO_COUNT[7:0]</Dynamic>
+            <Dynamic>7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/int_FIFO_Q[31:0]</Dynamic>
+            <Dynamic>15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/mem_EBR.data_raw_r[31:0]</Dynamic>
+            <Dynamic>31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+        </Message>
+        <Message>
+            <ID>35811146</ID>
+            <Severity>1</Severity>
+            <Dynamic>i_clk_c</Dynamic>
         </Message>
     </Task>
     <Task name="PAR">
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -1394,7 +1804,7 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1404,7 +1814,7 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1414,7 +1824,7 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1424,28 +1834,25 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
         </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
+    </Task>
+    <Task name="Export">
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
+            <Dynamic>ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -1459,41 +1866,8 @@
             <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <ID>1191031</ID>
+            <Severity>1</Severity>
         </Message>
     </Task>
     <Task name="Map">
@@ -1518,7 +1892,7 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1528,45 +1902,12 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
+            <Dynamic>i_RHD_SPI_MISO</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-        </Message>
-    </Task>
-    <Task name="Export">
-        <Message>
-            <ID>1081100</ID>
-            <Severity>1</Severity>
-            <Dynamic>Bitstream authenticated.</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_STM32_SPI_MISO</Dynamic>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {23} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>1191031</ID>
-            <Severity>1</Severity>
         </Message>
     </Task>
 </BaliMessageLog>
