@@ -51,7 +51,8 @@ entity SPI_Master_CS is
   port (
    -- Control/Data Signals,
    i_Rst_L : in std_logic;     -- FPGA Reset
-   i_Clk   : in std_logic;     -- FPGA Clock
+   i_Clk   : in std_logic;     -- FPGA Clock
+
    -- SPI Interface
    o_SPI_Clk  : out std_logic;
    i_SPI_MISO : in  std_logic;

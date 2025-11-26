@@ -36,12 +36,17 @@
 
 -use_io_insertion 1
 -resolve_mixed_drivers 0
+-sdc "Blinking_impl_1_cpe.ldc"
+-path "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz"
 -path "C:/lscc/radiant/2023.2/ispfpga/ice40tp/data" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1" "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking"
 -ver "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v"
 -lib pmi -vhd "C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd"
 -lib "work" -vhd "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/source/impl_1/BlinkingTimer.vhd"
+-ver "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz/rtl/CLK_48MHz.v"
 
 
+-path "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking"
+-top Blinker
 -udb "Blinking_impl_1_rtl.udb"
 -output_hdl "Blinking_impl_1.vm"
 

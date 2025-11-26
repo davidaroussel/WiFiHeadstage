@@ -39,11 +39,15 @@ extern uint32_t global_counter;
 void INIT_INTAN(){
 	SPI_HandleTypeDef *hspi;
 
-	printf("Init RHD \r\n");
-	hspi = &hspi4;
-	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);  //Activate SPI
-	hspi->Instance->CR1 |= SPI_CR1_DFF; 		//Activating the 16bit data mode
-	INIT_RHD(hspi);
+//	printf("Init RHD \r\n");
+//	hspi = &hspi4;
+//	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);  //Activate SPI
+//	hspi->Instance->CR1 |= SPI_CR1_DFF; 		//Activating the 16bit data mode
+//	INIT_RHD(hspi);
+//	for (int i = 0; i<1000; i++){
+//		INIT_RHD(hspi);
+//		HAL_Delay(1000);
+//	}
 
 
 	printf("Init RHS \r\n");
@@ -51,6 +55,10 @@ void INIT_INTAN(){
 	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
 	hspi->Instance->CR1 |= SPI_CR1_DFF;
 	INIT_RHS(hspi);
+	for (int i = 0; i<1000; i++){
+		INIT_RHS(hspi);
+		HAL_Delay(1000);
+	}
 }
 
 //void SamplingTask(void const *argument) {

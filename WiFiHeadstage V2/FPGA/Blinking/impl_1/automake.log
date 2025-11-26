@@ -1,6 +1,53 @@
 
 "C:/lscc/radiant/2023.2/tcltk/windows/bin/tclsh" "Blinking_impl_1_synthesize.tcl"
 
+cpe -f Blinking_impl_1.cprj CLK_48MHz.cprj -a iCE40UP -o Blinking_impl_1_cpe.ldc
+WARNING <35831026> - No user LDC/SDC file specified in the project.
+WARNING <35935050> - input port TRIM9 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM8 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM7 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM6 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM5 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM4 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM3 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM2 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM0 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port I is not connected on this instance. VDB-5050
+Top module name (Verilog): CLK_48MHz
+INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz/rtl/CLK_48MHz.v(11): compiling module CLK_48MHz. VERI-1018
+INFO <35901018> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz/rtl/CLK_48MHz.v(105): compiling module CLK_48MHz_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;3&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;). VERI-1018
+INFO <35901018> - C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(428): compiling module PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;3&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;). VERI-1018
+WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
+WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
+Last elaborated design is CLK_48MHz()
+Source compile complete.
+INFO <35831038> - Setting Blinker as top module.
+WARNING <35831026> - No user LDC/SDC file specified in the project.
+WARNING <35935050> - input port TRIM9 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM8 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM7 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM6 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM5 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM4 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM3 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM2 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port TRIM0 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port I is not connected on this instance. VDB-5050
+Analyzing Verilog file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v. VERI-1482
+Analyzing Verilog file clk_48mhz.v. VERI-1482
+Top module language type = VHDL.
+Top module name (VHDL, mixed language): Blinker
+Source compile complete.
+Starting IP constraint check for CLK_48MHz.
+WARNING <35834005> - IP Module CLK_48MHz not found in top. Skipping Constraint Propagation...
+WARNING <35834002> - An error occurred during IP constraint checking.
+Writing output files.
+CPE Completed. Blinking_impl_1_cpe.ldc and CPEReport.txt produced.
+
+
+
 synthesis -f Blinking_impl_1_lattice.synproj
 synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
 
@@ -9,13 +56,12 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Tue Sep  2 15:55:34 2025
+Wed Nov 12 16:02:24 2025
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f Blinking_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml 
 
 INFO <35002000> - synthesis: Lattice Synthesis Engine Launched.
-The -top option is not used.
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -44,6 +90,7 @@ The -p option is iCE40UP5K.
 
 INFO <35001786> - User-Selected Strategy Settings
 Optimization goal = Area
+Top-level module name = Blinker.
 Target frequency = 200.000000 MHz.
 Maximum fanout = 1000.
 Timing path count = 3 (default)
@@ -72,12 +119,14 @@ ROM style = auto
 RAM style = auto
 The -comp option is FALSE.
 The -syn option is FALSE.
+-sdc option: SDC file input is Blinking_impl_1_cpe.ldc.
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz (searchpath added)
 -path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1 (searchpath added)
 -path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
-CRITICAL <35001476> - A top-level module has not been specified for the mixed language design.
 Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
+Verilog design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/CLK_48MHz/rtl/CLK_48MHz.v
 VHDL library = pmi
 VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
 VHDL library = work
@@ -130,6 +179,7 @@ INFO <35901328> - c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v(49): analyzing i
 INFO <35901328> - c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(16): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v. VERI-1328
 INFO <35901328> - c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v(45): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
 INFO <35901328> - c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_dsp.v. VERI-1328
+Analyzing Verilog file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/clk_48mhz/rtl/clk_48mhz.v. VERI-1482
 Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd
 
@@ -139,7 +189,6 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd(5): analyzing entity blinker. VHDL-1012
 INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/blinking/source/impl_1/blinkingtimer.vhd(18): analyzing architecture behavioral. VHDL-1010
-WARNING <35001200> - Setting Blinker as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
 INFO <35921504> - The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1". VHDL-1504
 Top module language type = VHDL.
 Top module name (VHDL, mixed language): Blinker
@@ -206,28 +255,29 @@ Top 10 highest fanout non-clock nets:
   Net : counter[26], loads : 2
 ################### End Clock Report ##################
 
-Peak Memory Usage: 92 MB
+Peak Memory Usage: 90 MB
 
 --------------------------------------------------------------
 Total CPU Time: 6 secs 
-Total REAL Time: 6 secs 
+Total REAL Time: 7 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: d7eb34036f024a2fada29a86c13165f3aed99fa7
+Checksum -- synthesis -- netlist: 76a5bd83ab9326989c49f9b2e3c2865b6274edd6
 
 
 
-postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb Blinking_impl_1.vm
+postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb Blinking_impl_1.vm -ldc "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.ldc"
 POSTSYN: Post Synthesis Process Radiant Software (64-bit) 2023.2.1.288.0
-Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml Blinking_impl_1.vm 
+Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V -oc Industrial -top -w -o Blinking_impl_1_syn.udb -ldc C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.ldc -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/promote.xml Blinking_impl_1.vm 
    Architecture:     iCE40UP
    Device:           iCE40UP5K
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'Blinking_impl_1.vm' ...
 CPU Time to convert: 0.078125
-REAL Time to convert: 0
+REAL Time to convert: 1
 convert PEAK Memory Usage: 31 MB
 convert CURRENT Memory Usage: 31 MB
+Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.ldc' ...
 Removing unused logic ...
 Starting design annotation....
  
@@ -239,8 +289,8 @@ Writing output file 'Blinking_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 0 secs 
 Total REAL Time: 0 secs 
-Peak Memory Usage: 37 MB
-Checksum -- postsyn: 3d063a4cce4664896883bf66d59382b732318a74
+Peak Memory Usage: 39 MB
+Checksum -- postsyn: 4d608984e5103ab7adfdcf72698485eb1034dbea
 
 
 
@@ -271,9 +321,6 @@ INFO <52291017> - Port 'RGB_2' is located on BB_OD pad '40'. Its IO buffer is ma
 INFO <52291017> - Port 'RGB_3' is located on BB_OD pad '41'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
 Running general design DRC...
 
-WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_3', it is ignored.
-WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_2', it is ignored.
-WARNING <51011064> - Constraint/Attribute PULLMODE = NA cannot be set on port 'RGB_1', it is ignored.
 
 
 
@@ -326,11 +373,11 @@ Running physical design DRC...
  
 
 
-   Number of warnings:  3
+   Number of warnings:  0
    Number of errors:    0
 
 Constraint Summary:
-   Total number of constraints: 16
+   Total number of constraints: 6
    Total number of constraints dropped: 0
 
 
@@ -338,13 +385,13 @@ Total CPU Time: 0 secs
 Total REAL Time: 0 secs  
 Peak Memory Usage: 64 MB
 
-Checksum -- map: d7ff01d2fe0d73ea20397c3c8dbc723a8c118301
+Checksum -- map: d77863acb8483312aa706c79d6844268aea2c053
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
 
 pnmainc -run pnmain "Blinking_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "Blinking_impl_1_map.udb"
-Tue Sep  2 15:55:51 2025
+Wed Nov 12 16:02:44 2025
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -389,8 +436,9 @@ Device utilization summary:
    OPENDRAIN          3/3           100% used
 
 Pin Constraint Summary:
-   5 out of 5 pins locked (100% locked).
-
+   1 out of 5 pins locked (20% locked).
+.
+............
 Finished Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
 
 
@@ -401,18 +449,18 @@ Starting Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs
 ..  ..
 ....................
 
-Placer score = 9306.
+Placer score = 6616.
 
 Device SLICE utilization summary after final SLICE packing:
    SLICE             27/2640          1% used
 
-Finished Placer Phase 1. CPU time: 7 secs , REAL time: 7 secs 
+Finished Placer Phase 1. CPU time: 6 secs , REAL time: 7 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  38012
-Finished Placer Phase 2.  CPU time: 7 secs , REAL time: 7 secs 
+Placer score =  32632
+Finished Placer Phase 2.  CPU time: 6 secs , REAL time: 7 secs 
 
 
 ------------------ Clock Report ------------------
@@ -435,15 +483,15 @@ I/O Bank Usage Summary:
 +----------+---------------+------------+------------+------------+
 | I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+---------------+------------+------------+------------+
-| 0        | 4 / 14 ( 28%) | 3.3V       |            |            |
-| 1        | 1 / 14 (  7%) | 3.3V       |            |            |
-| 2        | 0 / 8 (  0%)  | OFF        |            |            |
+| 0        | 1 / 14 (  7%) | 3.3V       |            |            |
+| 1        | 0 / 14 (  0%) | OFF        |            |            |
+| 2        | 4 / 8 ( 50%)  | 3.3V       |            |            |
 +----------+---------------+------------+------------+------------+
 
-Total Placer CPU time: 7 secs , REAL time: 7 secs 
+Total Placer CPU time: 6 secs , REAL time: 7 secs 
 
 
-Checksum -- place: f571279778793208a13d81dc35f5c3bcfb45f83
+Checksum -- place: 9a6371773ee5b71980f1714de46bd1e3c43428c8
 Writing design to file Blinking_impl_1_par.dir/5_1.udb ...
 
 
@@ -452,7 +500,7 @@ INFO - par: ASE feature is off due to non timing-driven settings.
 -----------------------------------------------------------------
 
 
-Start NBR router at 15:55:58 09/02/25
+Start NBR router at 16:02:51 11/12/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -482,35 +530,37 @@ Primary clocks (1 used out of 8 available):
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 15:55:59 09/02/25
+Start NBR section for initial routing at 16:02:51 11/12/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-13(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 15:55:59 09/02/25
+Start NBR section for normal routing at 16:02:51 11/12/25
 Level 4, iteration 1
-11(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+7(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 Level 4, iteration 2
-5(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 Level 4, iteration 3
 2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 Level 4, iteration 4
 1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 Level 4, iteration 5
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 Level 4, iteration 6
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
+Level 4, iteration 7
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; real time: 0 secs 
 
-Start NBR section for post-routing at 15:55:59 09/02/25
+Start NBR section for post-routing at 16:02:51 11/12/25
 
 End NBR router with 0 unrouted connection
 
-Checksum -- route: b011e7d4b0fe522b9dd8164e1b69a3207058332
+Checksum -- route: 30078952426e2c423c42246510e5bac973012ebc
 
 Total CPU time 0 secs 
 Total REAL time: 0 secs 
@@ -531,8 +581,8 @@ PAR_SUMMARY::Number of errors = 0
 Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 7 secs 
-Total REAL Time: 8 secs 
-Peak Memory Usage: 92.42 MB
+Total REAL Time: 7 secs 
+Peak Memory Usage: 93.38 MB
 
 
 par done!
@@ -575,7 +625,7 @@ Total CPU Time: 0 secs
 Total REAL Time: 0 secs 
 Peak Memory Usage: 99 MB
 
- 0.893720s wall, 0.781250s user + 0.109375s system = 0.890625s CPU (99.7%)
+ 0.985824s wall, 0.781250s user + 0.171875s system = 0.953125s CPU (96.7%)
 
 
 tmcheck -par "Blinking_impl_1.par" 
@@ -618,6 +668,7 @@ Preference Summary:
 
 Creating bit map...
 Saving bit stream in "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Blinking/impl_1/Blinking_impl_1.bin".
+INFO <1081100> - Bitstream authenticated.
 Bitstream generation complete!
 
 Total CPU Time: 0 secs 
@@ -629,7 +680,7 @@ Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs
 ibisgen "Blinking_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Tue Sep  2 15:56:05 2025
+Wed Nov 12 16:02:59 2025
 
 Loading Blinking_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.

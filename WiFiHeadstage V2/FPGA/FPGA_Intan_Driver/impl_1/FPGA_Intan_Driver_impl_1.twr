@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Tue Jul 22 15:49:22 2025
+Tue Nov 25 16:03:26 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -49,7 +49,7 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
-[IGNORED:]create_generated_clock -name {pll_clk_internal} -source [get_pins pll_spi_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 11 [get_pins pll_spi_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 3 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -76,22 +76,20 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-counter_1152__i31/D                     |    No arrival or required
-counter_1152__i31/SR                    |    No arrival or required
-counter_1152__i30/D                     |    No arrival or required
-counter_1152__i29/D                     |    No arrival or required
-{counter_1152__i29/SR   counter_1152__i30/SR}                           
-                                        |    No arrival or required
-counter_1152__i28/D                     |    No arrival or required
-counter_1152__i27/D                     |    No arrival or required
-{counter_1152__i27/SR   counter_1152__i28/SR}                           
-                                        |    No arrival or required
-counter_1152__i26/D                     |    No arrival or required
-counter_1152__i25/D                     |    No arrival or required
+reset_counter_1643__i1/D                |    No arrival or required
+reset_counter_1643__i26/D               |    No arrival or required
+reset_counter_1643__i25/D               |    No arrival or required
+reset_counter_1643__i24/D               |    No arrival or required
+reset_counter_1643__i23/D               |    No arrival or required
+reset_counter_1643__i22/D               |    No arrival or required
+reset_counter_1643__i21/D               |    No arrival or required
+reset_counter_1643__i20/D               |    No arrival or required
+reset_counter_1643__i19/D               |    No arrival or required
+reset_counter_1643__i18/D               |    No arrival or required
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
-ts                                      |                       808
+ts                                      |                      5007
                                         |                          
 -------------------------------------------------------------------
 
@@ -111,19 +109,19 @@ create_generated_clock,
 -------------------------------------------------------------------
      Listing 10 Start or End Points     |           Type           
 -------------------------------------------------------------------
+o_STM32_SPI_CS_n                        |                     input
+o_STM32_SPI_Clk                         |                     input
+o_STM32_SPI_MOSI                        |                     input
 i_clk                                   |                     input
-i_STM32_SPI_MISO                        |                     input
 i_RHD_SPI_MISO                          |                     input
-RGB_1                                   |                    output
+CTRL0_IN                                |                     input
 o_RHD_SPI_CS_n                          |                    output
 o_RHD_SPI_Clk                           |                    output
 o_RHD_SPI_MOSI                          |                    output
-RGB_2                                   |                    output
-o_STM32_SPI_CS_n                        |                    output
-o_STM32_SPI_Clk                         |                    output
+i_STM32_SPI_MISO                        |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                        13
+Number of I/O ports without constraint  |                        22
                                         |                          
 -------------------------------------------------------------------
 
@@ -139,298 +137,112 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-Controller_inst/i7971_2_lut/A	->	Controller_inst/i7971_2_lut/Z
+Controller_inst/i7316_2_lut/A	->	Controller_inst/i7316_2_lut/Z
 
 ++++ Loop2
-Controller_inst/i7969_2_lut/A	->	Controller_inst/i7969_2_lut/Z
+Controller_inst/i7322_2_lut/A	->	Controller_inst/i7322_2_lut/Z
 
 ++++ Loop3
-Controller_inst/i8007_2_lut/A	->	Controller_inst/i8007_2_lut/Z
+Controller_inst/i7323_2_lut/A	->	Controller_inst/i7323_2_lut/Z
 
 ++++ Loop4
-Controller_inst/i7967_2_lut/A	->	Controller_inst/i7967_2_lut/Z
+Controller_inst/i7324_2_lut/A	->	Controller_inst/i7324_2_lut/Z
 
 ++++ Loop5
-Controller_inst/i7965_2_lut/A	->	Controller_inst/i7965_2_lut/Z
+Controller_inst/i7325_2_lut/A	->	Controller_inst/i7325_2_lut/Z
 
 ++++ Loop6
-Controller_inst/i7697_2_lut/A	->	Controller_inst/i7697_2_lut/Z
+Controller_inst/i7326_2_lut/A	->	Controller_inst/i7326_2_lut/Z
 
 ++++ Loop7
-Controller_inst/i7963_2_lut/A	->	Controller_inst/i7963_2_lut/Z
+Controller_inst/i7327_2_lut/A	->	Controller_inst/i7327_2_lut/Z
 
 ++++ Loop8
-Controller_inst/i8015_2_lut/A	->	Controller_inst/i8015_2_lut/Z
+Controller_inst/i7328_2_lut/A	->	Controller_inst/i7328_2_lut/Z
 
 ++++ Loop9
-Controller_inst/i7995_2_lut/A	->	Controller_inst/i7995_2_lut/Z
+Controller_inst/i7329_2_lut/A	->	Controller_inst/i7329_2_lut/Z
 
 ++++ Loop10
-Controller_inst/i7961_2_lut/A	->	Controller_inst/i7961_2_lut/Z
+Controller_inst/i7156_2_lut/A	->	Controller_inst/i7156_2_lut/Z
 
 ++++ Loop11
-Controller_inst/i7993_2_lut/A	->	Controller_inst/i7993_2_lut/Z
+Controller_inst/i7300_2_lut/A	->	Controller_inst/i7300_2_lut/Z
 
 ++++ Loop12
-Controller_inst/i7955_2_lut/A	->	Controller_inst/i7955_2_lut/Z
+Controller_inst/i7301_2_lut/A	->	Controller_inst/i7301_2_lut/Z
 
 ++++ Loop13
-Controller_inst/i7959_2_lut/A	->	Controller_inst/i7959_2_lut/Z
+Controller_inst/i7321_2_lut/A	->	Controller_inst/i7321_2_lut/Z
 
 ++++ Loop14
-Controller_inst/i8013_2_lut/A	->	Controller_inst/i8013_2_lut/Z
+Controller_inst/i7302_2_lut/A	->	Controller_inst/i7302_2_lut/Z
 
 ++++ Loop15
-Controller_inst/i7957_2_lut/A	->	Controller_inst/i7957_2_lut/Z
+Controller_inst/i7303_2_lut/A	->	Controller_inst/i7303_2_lut/Z
 
 ++++ Loop16
-Controller_inst/i8011_2_lut/A	->	Controller_inst/i8011_2_lut/Z
+Controller_inst/i7320_2_lut/A	->	Controller_inst/i7320_2_lut/Z
 
 ++++ Loop17
-Controller_inst/i8005_2_lut/A	->	Controller_inst/i8005_2_lut/Z
+Controller_inst/i7319_2_lut/A	->	Controller_inst/i7319_2_lut/Z
 
 ++++ Loop18
-Controller_inst/i8009_2_lut/A	->	Controller_inst/i8009_2_lut/Z
+Controller_inst/i7304_2_lut/A	->	Controller_inst/i7304_2_lut/Z
 
 ++++ Loop19
-Controller_inst/i8003_2_lut/A	->	Controller_inst/i8003_2_lut/Z
+Controller_inst/i7318_2_lut/A	->	Controller_inst/i7318_2_lut/Z
 
 ++++ Loop20
-Controller_inst/i8001_2_lut/A	->	Controller_inst/i8001_2_lut/Z
+Controller_inst/i7317_2_lut/A	->	Controller_inst/i7317_2_lut/Z
 
 ++++ Loop21
-Controller_inst/i7999_2_lut/A	->	Controller_inst/i7999_2_lut/Z
+Controller_inst/i7305_2_lut/A	->	Controller_inst/i7305_2_lut/Z
 
 ++++ Loop22
-Controller_inst/i7997_2_lut/A	->	Controller_inst/i7997_2_lut/Z
+Controller_inst/i7315_2_lut/A	->	Controller_inst/i7315_2_lut/Z
 
 ++++ Loop23
-Controller_inst/i7991_2_lut/A	->	Controller_inst/i7991_2_lut/Z
+Controller_inst/i7314_2_lut/A	->	Controller_inst/i7314_2_lut/Z
 
 ++++ Loop24
-Controller_inst/i7989_2_lut/A	->	Controller_inst/i7989_2_lut/Z
+Controller_inst/i7306_2_lut/A	->	Controller_inst/i7306_2_lut/Z
 
 ++++ Loop25
-Controller_inst/i7987_2_lut/A	->	Controller_inst/i7987_2_lut/Z
+Controller_inst/i7313_2_lut/A	->	Controller_inst/i7313_2_lut/Z
 
 ++++ Loop26
-Controller_inst/i7985_2_lut/A	->	Controller_inst/i7985_2_lut/Z
+Controller_inst/i7312_2_lut/A	->	Controller_inst/i7312_2_lut/Z
 
 ++++ Loop27
-Controller_inst/i7983_2_lut/A	->	Controller_inst/i7983_2_lut/Z
+Controller_inst/i7311_2_lut/A	->	Controller_inst/i7311_2_lut/Z
 
 ++++ Loop28
-Controller_inst/i7981_2_lut/A	->	Controller_inst/i7981_2_lut/Z
+Controller_inst/i7310_2_lut/A	->	Controller_inst/i7310_2_lut/Z
 
 ++++ Loop29
-Controller_inst/i7979_2_lut/A	->	Controller_inst/i7979_2_lut/Z
+Controller_inst/i7307_2_lut/A	->	Controller_inst/i7307_2_lut/Z
 
 ++++ Loop30
-Controller_inst/i7977_2_lut/A	->	Controller_inst/i7977_2_lut/Z
+Controller_inst/i7309_2_lut/A	->	Controller_inst/i7309_2_lut/Z
 
 ++++ Loop31
-Controller_inst/i7975_2_lut/A	->	Controller_inst/i7975_2_lut/Z
+Controller_inst/i7308_2_lut/A	->	Controller_inst/i7308_2_lut/Z
 
 ++++ Loop32
-Controller_inst/i7973_2_lut/A	->	Controller_inst/i7973_2_lut/Z
+Controller_inst/i7330_2_lut/A	->	Controller_inst/i7330_2_lut/Z
 
 ++++ Loop33
-Controller_inst/i7966_2_lut/A	->	Controller_inst/i7966_2_lut/Z
+i_RHD_SPI_MISO_c_I_0_4_lut/A	->	i_RHD_SPI_MISO_c_I_0_4_lut/Z
 
 ++++ Loop34
-Controller_inst/i7964_2_lut/A	->	Controller_inst/i7964_2_lut/Z
-
-++++ Loop35
-Controller_inst/i7962_2_lut/A	->	Controller_inst/i7962_2_lut/Z
-
-++++ Loop36
-Controller_inst/i7960_2_lut/A	->	Controller_inst/i7960_2_lut/Z
-
-++++ Loop37
-Controller_inst/i7958_2_lut/A	->	Controller_inst/i7958_2_lut/Z
-
-++++ Loop38
-Controller_inst/i7956_2_lut/A	->	Controller_inst/i7956_2_lut/Z
-
-++++ Loop39
-Controller_inst/i7954_2_lut/A	->	Controller_inst/i7954_2_lut/Z
-
-++++ Loop40
-Controller_inst/i7953_2_lut/A	->	Controller_inst/i7953_2_lut/Z
-
-++++ Loop41
-Controller_inst/i7952_2_lut/A	->	Controller_inst/i7952_2_lut/Z
-
-++++ Loop42
-Controller_inst/i8045_2_lut/A	->	Controller_inst/i8045_2_lut/Z
-
-++++ Loop43
-Controller_inst/i8044_2_lut/A	->	Controller_inst/i8044_2_lut/Z
-
-++++ Loop44
-Controller_inst/i8043_2_lut/A	->	Controller_inst/i8043_2_lut/Z
-
-++++ Loop45
-Controller_inst/i8042_2_lut/A	->	Controller_inst/i8042_2_lut/Z
-
-++++ Loop46
-Controller_inst/i8041_2_lut/A	->	Controller_inst/i8041_2_lut/Z
-
-++++ Loop47
-Controller_inst/i8040_2_lut/A	->	Controller_inst/i8040_2_lut/Z
-
-++++ Loop48
-Controller_inst/i8039_2_lut/A	->	Controller_inst/i8039_2_lut/Z
-
-++++ Loop49
-Controller_inst/i8038_2_lut/A	->	Controller_inst/i8038_2_lut/Z
-
-++++ Loop50
-Controller_inst/i8037_2_lut/A	->	Controller_inst/i8037_2_lut/Z
-
-++++ Loop51
-Controller_inst/i8036_2_lut/A	->	Controller_inst/i8036_2_lut/Z
-
-++++ Loop52
-Controller_inst/i8035_2_lut/A	->	Controller_inst/i8035_2_lut/Z
-
-++++ Loop53
-Controller_inst/i8034_2_lut/A	->	Controller_inst/i8034_2_lut/Z
-
-++++ Loop54
-Controller_inst/i8033_2_lut/A	->	Controller_inst/i8033_2_lut/Z
-
-++++ Loop55
-Controller_inst/i8032_2_lut/A	->	Controller_inst/i8032_2_lut/Z
-
-++++ Loop56
-Controller_inst/i8031_2_lut/A	->	Controller_inst/i8031_2_lut/Z
-
-++++ Loop57
-Controller_inst/i8030_2_lut/A	->	Controller_inst/i8030_2_lut/Z
-
-++++ Loop58
-Controller_inst/i8029_2_lut/A	->	Controller_inst/i8029_2_lut/Z
-
-++++ Loop59
-Controller_inst/i8028_2_lut/A	->	Controller_inst/i8028_2_lut/Z
-
-++++ Loop60
-Controller_inst/i8027_2_lut/A	->	Controller_inst/i8027_2_lut/Z
-
-++++ Loop61
-Controller_inst/i8026_2_lut/A	->	Controller_inst/i8026_2_lut/Z
-
-++++ Loop62
-Controller_inst/i8025_2_lut/A	->	Controller_inst/i8025_2_lut/Z
-
-++++ Loop63
-Controller_inst/i8024_2_lut/A	->	Controller_inst/i8024_2_lut/Z
-
-++++ Loop64
-Controller_inst/i8023_2_lut/A	->	Controller_inst/i8023_2_lut/Z
-
-++++ Loop65
-Controller_inst/i8022_2_lut/A	->	Controller_inst/i8022_2_lut/Z
-
-++++ Loop66
-Controller_inst/i8021_2_lut/A	->	Controller_inst/i8021_2_lut/Z
-
-++++ Loop67
-Controller_inst/i8020_2_lut/A	->	Controller_inst/i8020_2_lut/Z
-
-++++ Loop68
-Controller_inst/i8019_2_lut/A	->	Controller_inst/i8019_2_lut/Z
-
-++++ Loop69
-Controller_inst/i8018_2_lut/A	->	Controller_inst/i8018_2_lut/Z
-
-++++ Loop70
-Controller_inst/i8046_2_lut/A	->	Controller_inst/i8046_2_lut/Z
-
-++++ Loop71
-Controller_inst/i8017_2_lut/A	->	Controller_inst/i8017_2_lut/Z
-
-++++ Loop72
-Controller_inst/i8016_2_lut/A	->	Controller_inst/i8016_2_lut/Z
-
-++++ Loop73
-Controller_inst/i8014_2_lut/A	->	Controller_inst/i8014_2_lut/Z
-
-++++ Loop74
-Controller_inst/i8008_2_lut/A	->	Controller_inst/i8008_2_lut/Z
-
-++++ Loop75
-Controller_inst/i8006_2_lut/A	->	Controller_inst/i8006_2_lut/Z
-
-++++ Loop76
-Controller_inst/i8004_2_lut/A	->	Controller_inst/i8004_2_lut/Z
-
-++++ Loop77
-Controller_inst/i8002_2_lut/A	->	Controller_inst/i8002_2_lut/Z
-
-++++ Loop78
-Controller_inst/i8000_2_lut/A	->	Controller_inst/i8000_2_lut/Z
-
-++++ Loop79
-Controller_inst/i7998_2_lut/A	->	Controller_inst/i7998_2_lut/Z
-
-++++ Loop80
-Controller_inst/i7996_2_lut/A	->	Controller_inst/i7996_2_lut/Z
-
-++++ Loop81
-Controller_inst/i7994_2_lut/A	->	Controller_inst/i7994_2_lut/Z
-
-++++ Loop82
-Controller_inst/i7992_2_lut/A	->	Controller_inst/i7992_2_lut/Z
-
-++++ Loop83
-Controller_inst/i7990_2_lut/A	->	Controller_inst/i7990_2_lut/Z
-
-++++ Loop84
-Controller_inst/i7988_2_lut/A	->	Controller_inst/i7988_2_lut/Z
-
-++++ Loop85
-Controller_inst/i7986_2_lut/A	->	Controller_inst/i7986_2_lut/Z
-
-++++ Loop86
-Controller_inst/i7984_2_lut/A	->	Controller_inst/i7984_2_lut/Z
-
-++++ Loop87
-Controller_inst/i7982_2_lut/A	->	Controller_inst/i7982_2_lut/Z
-
-++++ Loop88
-Controller_inst/i7980_2_lut/A	->	Controller_inst/i7980_2_lut/Z
-
-++++ Loop89
-Controller_inst/i7978_2_lut/A	->	Controller_inst/i7978_2_lut/Z
-
-++++ Loop90
-Controller_inst/i7976_2_lut/A	->	Controller_inst/i7976_2_lut/Z
-
-++++ Loop91
-Controller_inst/i7974_2_lut/A	->	Controller_inst/i7974_2_lut/Z
-
-++++ Loop92
-Controller_inst/i7972_2_lut/A	->	Controller_inst/i7972_2_lut/Z
-
-++++ Loop93
-Controller_inst/i7970_2_lut/A	->	Controller_inst/i7970_2_lut/Z
-
-++++ Loop94
-Controller_inst/i7968_2_lut/A	->	Controller_inst/i7968_2_lut/Z
-
-++++ Loop95
-Controller_inst/i8012_2_lut/A	->	Controller_inst/i8012_2_lut/Z
-
-++++ Loop96
-Controller_inst/i8010_2_lut/A	->	Controller_inst/i8010_2_lut/Z
+i_STM32_SPI_MISO_c_I_0_4_lut/A	->	i_STM32_SPI_MISO_c_I_0_4_lut/Z
 
 
 1.6  Error/Warning Messages
 ============================
 WARNING "70001944" - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -439,16 +251,18 @@ WARNING "70001944" - No source clock for
 2.1  Clock Summary
 =======================
 
-2.1.1 Clock "pll_clk_internal"
+2.1.1 Clock "pll_clk_int"
 =======================
-create_generated_clock -name {pll_clk_internal} -source [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 11 -divide_by 2 [get_pins {pll_spi_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
 
 Single Clock Domain
 -------------------------------------------------------------------------------------------------------
-         Clock pll_clk_internal         |                    |       Period       |     Frequency      
+           Clock pll_clk_int            |                    |       Period       |     Frequency      
 -------------------------------------------------------------------------------------------------------
- From pll_clk_internal                  |             Target |               +INF |          0.000 MHz 
-                                        | Actual (all paths) |               ---- |               ---- 
+ From pll_clk_int                       |             Target |               +INF |          0.000 MHz 
+                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
+                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
 -------------------------------------------------------------------------------------------------------
 
 Clock Domain Crossing

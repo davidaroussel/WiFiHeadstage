@@ -2,9 +2,12 @@
 <RadiantProject version="4.2" radiant="2023.2.1.288.0" title="Blinking" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
-        <Options/>
+        <Options def_top="Blinker"/>
         <Source name="source/impl_1/BlinkingTimer.vhd" type="VHDL" type_short="VHDL">
-            <Options/>
+            <Options top_module="Blinker"/>
+        </Source>
+        <Source name="CLK_48MHz/CLK_48MHz.ipx" type="IPX_Module" type_short="IPX">
+            <Options top_module="CLK_48MHz"/>
         </Source>
         <Source name="constraint.pdc" type="Physical Constraints File" type_short="PDC">
             <Options/>

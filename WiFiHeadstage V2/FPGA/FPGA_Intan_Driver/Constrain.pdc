@@ -1,14 +1,140 @@
 ldc_set_location -site {35} [get_ports i_clk]
+ldc_set_location -site {39} [get_ports RGB0_OUT]
+ldc_set_location -site {40} [get_ports RGB1_OUT]
+ldc_set_location -site {41} [get_ports RGB2_OUT]
+
+
+
+######(FOR Headstave V2 RHD64)#######
+#ldc_set_location -site {6}  [get_ports i_LED_SYNC]
+
+## TO RHD2132
+ldc_set_location -site {25} [get_ports o_RHD_SPI_MOSI]
 ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]
-ldc_set_location -site {32} [get_ports o_RHD_SPI_CS_n]
 ldc_set_location -site {27} [get_ports o_RHD_SPI_Clk]
-ldc_set_location -site {46} [get_ports o_RHD_SPI_MOSI]
-ldc_set_location -site {43} [get_ports o_STM32_SPI_CS_n]
-ldc_set_location -site {9} [get_ports o_STM32_SPI_Clk]
-ldc_set_location -site {11} [get_ports o_STM32_SPI_MOSI]
-ldc_set_port -iobuf {PULLMODE=NA} [get_ports i_RHD_SPI_MISO]
-ldc_set_location -site {31} [get_ports RGB_1]
-ldc_set_location -site {36} [get_ports RGB_2]
-ldc_set_location -site {34} [get_ports RGB_3]
-ldc_set_location -site {12} [get_ports RGB_4]
-ldc_set_location -site {40} [get_ports pll_clk]
+ldc_set_location -site {28} [get_ports o_RHD_SPI_CS_n]
+
+## TO RHD2216
+#ldc_set_location -site {3}  [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {48} [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {45} [get_ports o_RHD_SPI_Clk]
+#ldc_set_location -site {47} [get_ports o_RHD_SPI_CS_n]
+
+## TO STM32_PORT_1 (SPI5)
+ldc_set_location -site {46} [get_ports o_STM32_SPI_MOSI]
+ldc_set_location -site {43} [get_ports i_STM32_SPI_MISO]
+ldc_set_location -site {42} [get_ports o_STM32_SPI_Clk]
+ldc_set_location -site {38} [get_ports o_STM32_SPI_CS_n]
+ldc_set_location -site {18} [get_ports CTRL0_IN]
+
+## TO STM32_PORT_2 (SPI4) - Center Level Shifter
+#ldc_set_location -site {11} [get_ports o_STM32_SPI_MOSI]
+#ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]
+#ldc_set_location -site {9}  [get_ports o_STM32_SPI_Clk]
+#ldc_set_location -site {6}  [get_ports o_STM32_SPI_CS_n]
+#ldc_set_location -site {13} [get_ports CTRL0_IN]
+
+
+
+
+######(FOR Headstave V2 RHS64)#######
+## TO STIM ENABLE
+#ldc_set_location -site {37} [get_ports o_BOOST_ENABLE]
+#ldc_set_location -site {6}  [get_ports i_LED_SYNC]
+
+#### TO RHS2116 TOP ####
+#ldc_set_location -site {25} [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {27} [get_ports o_RHD_SPI_Clk]
+## RHS2116 RIGHT
+#ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]
+#ldc_set_location -site {28} [get_ports o_RHD_SPI_CS_n]
+## RHS2116 LEFT
+#ldc_set_location -site {2} [get_ports i_RHD_SPI_MISO]
+#ldc_set_location -site {32} [get_ports o_RHD_SPI_CS_n]
+
+#### TO RHS2116 MIDDLE ####
+#ldc_set_location -site {3}  [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {45} [get_ports o_RHD_SPI_Clk]
+## RHS2116 LEFT
+#ldc_set_location -site {48} [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {47} [get_ports o_RHD_SPI_CS_n]
+## RHS2116 RIGHT
+#ldc_set_location -site {4}  [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {44} [get_ports o_RHD_SPI_CS_n]
+
+#### TO STM32_PORT_1 (SPI5) ####
+#ldc_set_location -site {46} [get_ports o_STM32_SPI_MOSI]
+#ldc_set_location -site {43} [get_ports i_STM32_SPI_MISO]
+#ldc_set_location -site {42} [get_ports o_STM32_SPI_Clk]
+#ldc_set_location -site {38} [get_ports o_STM32_SPI_CS_n]
+#ldc_set_location -site {18} [get_ports CTRL0_IN]
+
+#### TO STM32_PORT_2 (SPI4) / ADC (MISO-CLK IDEM) ####
+#ldc_set_location -site {12} [get_ports o_STM32_SPI_MOSI]
+#ldc_set_location -site {11} [get_ports i_STM32_SPI_MISO]
+#ldc_set_location -site {10}  [get_ports o_STM32_SPI_Clk]
+#ldc_set_location -site {9}  [get_ports o_STM32_SPI_CS_n]
+#ldc_set_location -site {36} [get_ports ADC_CS]
+#ldc_set_location -site {13} [get_ports CTRL0_IN]
+
+
+
+
+
+######(FOR PoC Programmer)#######
+## TO STM32
+#ldc_set_location -site {11} [get_ports o_STM32_SPI_MOSI]
+#ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]
+#ldc_set_location -site {9} [get_ports o_STM32_SPI_Clk]
+#ldc_set_location -site {6} [get_ports o_STM32_SPI_CS_n]
+
+## TO RHD_USBC_1 or On-Board RHS
+#ldc_set_location -site {25} [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {26} [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {27} [get_ports o_RHD_SPI_Clk]
+#ldc_set_location -site {32} [get_ports o_RHD_SPI_CS_n]
+
+## TO RHD_USBC_2 or LVDS RHD
+#ldc_set_location -site {3} [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {48} [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {45} [get_ports o_RHD_SPI_Clk]
+#ldc_set_location -site {47} [get_ports o_RHD_SPI_CS_n]
+
+## TO LVDS RHS
+#ldc_set_location -site {42} [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {43} [get_ports {i_RHD_SPI_MISO}]
+#ldc_set_location -site {46} [get_ports o_RHD_SPI_Clk]
+#ldc_set_location -site {38} [get_ports o_RHD_SPI_CS_n]
+
+## TO LEDS AND MUXS
+#ldc_set_location -site {12} [get_ports CTRL0_IN]
+#ldc_set_location -site {34} [get_ports LED1_OUT]
+#ldc_set_location -site {31} [get_ports LED2_OUT]
+#ldc_set_location -site {36} [get_ports LED3_OUT]
+
+
+
+
+######(FOR DEV KIT)######
+# TO RHD
+#ldc_set_location -site {25} [get_ports o_RHD_SPI_MOSI]
+#ldc_set_location -site {26} [get_ports i_RHD_SPI_MISO]
+#ldc_set_location -site {27} [get_ports o_RHD_SPI_Clk]
+#ldc_set_location -site {32} [get_ports o_RHD_SPI_CS_n]
+
+# TO STM32
+#ldc_set_location -site {11} [get_ports o_STM32_SPI_MOSI]
+#ldc_set_location -site {10} [get_ports i_STM32_SPI_MISO]
+#ldc_set_location -site {9} [get_ports o_STM32_SPI_Clk]
+#ldc_set_location -site {6} [get_ports o_STM32_SPI_CS_n]
+
+# TO LEDS AND MUXS
+#ldc_set_location -site {23} [get_ports CTRL0_IN]
+
+##SPI TO RHS BOARD (NOT USED !!)
+#ldc_set_location -site {3}  [get_ports o_RHS_SPI_MOSI]
+#ldc_set_location -site {48} [get_ports i_RHS_SPI_MISO]
+#ldc_set_location -site {45} [get_ports o_RHS_SPI_Clk]
+#ldc_set_location -site {47} [get_ports o_RHS_SPI_CS_n]
+
+

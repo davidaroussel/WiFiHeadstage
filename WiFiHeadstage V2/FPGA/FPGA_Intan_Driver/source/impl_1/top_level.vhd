@@ -4,15 +4,15 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 64;
-        STM32_CLKS_PER_HALF_BIT       : integer := 16;
-        STM32_CS_INACTIVE_CLKS        : integer := 16;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
+        STM32_CLKS_PER_HALF_BIT       : integer := 1;
+        STM32_CS_INACTIVE_CLKS        : integer := 4;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 32;
-        RHD_CS_INACTIVE_CLKS        : integer := 32
+        RHD_CLKS_PER_HALF_BIT       : integer := 1;
+        RHD_CS_INACTIVE_CLKS        : integer := 4
 		
     );
     port (
@@ -20,39 +20,63 @@ entity top_level is
 
         -- External 12 MHz clock input
         i_clk     : in  STD_LOGIC;
-        -- PLL output clock
-        pll_clk     : out STD_LOGIC;
 
         -- STM32 SPI Interface
-        o_STM32_SPI_MOSI : out std_logic;
-        i_STM32_SPI_MISO : in  std_logic;
-        o_STM32_SPI_Clk  : out std_logic;
-        o_STM32_SPI_CS_n : out std_logic;
+        o_STM32_SPI_MOSI : inout STD_LOGIC; -- IO 20A --> PIN 11
+        i_STM32_SPI_MISO : inout STD_LOGIC; -- IO 18A --> PIN 10
+        o_STM32_SPI_Clk  : inout STD_LOGIC; -- IO 16A --> PIN 9
+        o_STM32_SPI_CS_n : inout STD_LOGIC; -- IO 13B --> PIN 6
 
-        -- RHD SPI Interface
-        o_RHD_SPI_MOSI : out std_logic;
-		i_RHD_SPI_MISO : in  std_logic;
-        o_RHD_SPI_Clk  : out std_logic;
-        o_RHD_SPI_CS_n : out std_logic;
+		-- RHD SPI Interface (USBC - INTAN SPI1)
+        -- SPI Slave Interface TO RHD BOARD (FOR PoC STM-WFM200-FPGA)
+        --o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 36B --> PIN 25
+        --i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 39A --> PIN 26 
+        --o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 38B --> PIN 27
+        --o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 43A --> PIN 32
+
+        -- RHD SPI Interface (USBC - INTAN SPI2)
+		-- SPI Slave Interface TO LVDS BOARD - RHD (FOR FPGA PoC Programmer)
+        o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 9B --> PIN 3
+		i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 4A --> PIN 48
+        o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 5B --> PIN 45
+        o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 2A --> PIN 47
 		
-		RGB_1  : out std_logic;
-        RGB_2  : out std_logic;
-		RGB_3  : out std_logic;
-        RGB_4  : out std_logic
-		--o_Controller_Mode : out std_logic_vector(3 downto 0);
-		--o_reset : out std_logic;
-		--o_reset_Counter : out std_logic_vector(7 downto 0)
+		CTRL0_IN     : in STD_LOGIC;
+		
+		-- IR SYNCHRONIZATION INPUT 
+		--i_LED_SYNC   : in STD_LOGIC;
+		
+		-- RHS BOOST Interface 
+		o_BOOST_ENABLE    : out STD_LOGIC;
+		
+        RGB0_OUT     : out STD_LOGIC;		--> PIN 39
+        RGB1_OUT     : out STD_LOGIC;		--> PIN 40
+        RGB2_OUT     : out STD_LOGIC;		--> PIN 41
+
+		LED1_OUT     : out STD_LOGIC;  -- IO 44B --> PIN 34
+		LED2_OUT     : out STD_LOGIC;  -- IO 42B --> PIN 31
+		LED3_OUT     : out STD_LOGIC;  -- IO 48B --> PIN 36
+		LED4_OUT     : out STD_LOGIC;   -- IO 22A --> PIN 12
+		
+		o_Controller_Mode : out STD_LOGIC_VECTOR(3 downto 0);
+		o_reset : out STD_LOGIC;
+		o_reset_Counter : out STD_LOGIC_VECTOR(7 downto 0)
 
     );
 end entity top_level;
 
 architecture RTL of top_level is
+
+	signal debug_MISO : std_logic;
 	
     -- Internal signals
     signal w_Controller_Mode    : std_logic_vector(3 downto 0) := (others => '0');
 	signal w_reset              : std_logic;
 	
-	signal reset_counter : integer range 0 to 250 := 0;
+	signal reset_counter : integer range 0 to 42000000 := 0;
+	
+	signal debug_STM32_SPI_MISO : std_logic;
+	signal debug_RHD_SPI_MISO   : std_logic;
 
     signal w_STM32_TX_Byte       : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_TX_DV         : std_logic;
@@ -71,24 +95,42 @@ architecture RTL of top_level is
     constant TOGGLE_COUNT : integer := CLOCK_FREQ / 1;
 	signal counter : integer := 0;
     signal step    : integer range 0 to 4 := 0;
-	signal rgb1_sig : std_logic := '1';
+	
+	signal led1_sig : std_logic := '1';
+    signal led2_sig : std_logic := '1';
+    signal led3_sig : std_logic := '1';
+    signal led4_sig : std_logic := '1';
+
+    signal rgb1_sig : std_logic := '1';
     signal rgb2_sig : std_logic := '1';
     signal rgb3_sig : std_logic := '1';
-	signal rgb4_sig : std_logic := '1';
+	
     signal stop_counting : std_logic := '0';
+	
+	signal pll_clk_int : std_logic;
+	signal int_RHD_SPI_MOSI : std_logic;
+	signal int_RHD_SPI_MISO : std_logic;
+	signal int_RHD_SPI_CS_n : std_logic;
+	signal int_RHD_SPI_Clk  : std_logic;
+
+    signal int_STM32_SPI_MOSI : std_logic;
+	signal int_STM32_SPI_MISO : std_logic;
+	signal int_STM32_SPI_Clk  : std_logic;
+	signal int_STM32_SPI_CS_n : std_logic;
+	
+	signal int_BOOST_ENABLE    : std_logic;
+	signal int_LED_SYNC 	   : std_logic;
+	
+	
+	
+	
 begin
-
-
-    -- Use pll_clk_internal in your SPI logic
-
-	pll_spi_inst : entity work.PLL_SPI port map(
-		ref_clk_i   => i_clk,
-		rst_n_i     => '1',
-		outcore_o   => open,
-		outglobal_o => pll_clk_internal
+	pll_inst: entity CLK_48MHz port map(
+		ref_clk_i=>i_clk,
+		rst_n_i=>'1',
+		outcore_o=>OPEN,
+		outglobal_o=>pll_clk_int
 	);
-
-
     -- Instance of Controller_RHD_Sampling
     Controller_inst : entity work.Controller_RHD_Sampling
         generic map (
@@ -103,20 +145,22 @@ begin
         )
         port map (
             -- Global
-            i_Clk               => pll_clk_internal,
+            i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
+			rgb_info_1 => rgb2_sig,
+			rgb_info_2 => rgb3_sig,
 
             -- STM32 SPI
-            o_STM32_SPI_Clk     => o_STM32_SPI_Clk,
-            i_STM32_SPI_MISO    => i_STM32_SPI_MISO,
-            o_STM32_SPI_MOSI    => o_STM32_SPI_MOSI,
-            o_STM32_SPI_CS_n    => o_STM32_SPI_CS_n,
+            o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
+            i_STM32_SPI_MISO    => int_STM32_SPI_MISO,
+            o_STM32_SPI_MOSI    => int_STM32_SPI_MOSI,
+            o_STM32_SPI_CS_n    => int_STM32_SPI_CS_n,
 
-            o_STM32_TX_Byte     => w_STM32_TX_Byte,
-            o_STM32_TX_DV       => w_STM32_TX_DV,
-            o_STM32_TX_Ready    => w_STM32_TX_Ready,
-            o_STM32_RX_DV       => w_STM32_RX_DV,
+            o_STM32_TX_Byte        => w_STM32_TX_Byte,
+            o_STM32_TX_DV          => w_STM32_TX_DV,
+            o_STM32_TX_Ready       => w_STM32_TX_Ready,
+            o_STM32_RX_DV          => w_STM32_RX_DV,
             o_STM32_RX_Byte_Rising => w_STM32_RX_Byte_Rising,
 
             -- FIFO
@@ -125,83 +169,88 @@ begin
             o_FIFO_WE           => w_FIFO_WE,
 
             -- RHD SPI
-            o_RHD_SPI_Clk     => o_RHD_SPI_Clk,
-            i_RHD_SPI_MISO    => i_RHD_SPI_MISO,
-            o_RHD_SPI_MOSI    => o_RHD_SPI_MOSI,
-            o_RHD_SPI_CS_n    => o_RHD_SPI_CS_n
+            o_RHD_SPI_Clk     => int_RHD_SPI_Clk,
+            i_RHD_SPI_MISO    => int_RHD_SPI_MISO,
+            o_RHD_SPI_MOSI    => int_RHD_SPI_MOSI,
+            o_RHD_SPI_CS_n    => int_RHD_SPI_CS_n
         );
-
-	--o_reset <= w_reset;
-	--o_Controller_Mode <= w_Controller_Mode;
-	--o_reset_Counter   <=  std_logic_vector(to_signed(reset_counter, 8));
+	o_reset <= w_reset;
+	o_Controller_Mode <= w_Controller_Mode;
+	o_reset_Counter   <=  std_logic_vector(to_signed(reset_counter, 8));
 	
--- Timing process
-    process(pll_clk_internal)
-    begin
-        if rising_edge(pll_clk_internal) then
-			if counter < TOGGLE_COUNT - 1 then
-				counter <= counter + 1;
-			else
-				counter <= 0;
-				step <= (step + 1) mod 4;
-			end if;
+	
+	Mode_Process : process(pll_clk_int)
+	begin
+		if w_Controller_Mode = x"1" then
+			-- Passthrough: STM32 directly drives RHD
+			o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
+			o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
+			o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
+			i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
+			o_STM32_SPI_Clk  <= 'Z';
+			o_STM32_SPI_MOSI <= 'Z';
+			o_STM32_SPI_CS_n <= 'Z';
 
-        end if;
-    end process;
+		else
+			-- Normal mode: controller handles communication
+			o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+			o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+			o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+			int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
 
-    -- LED/RGB control process
-    process(step)
-    begin
-        rgb1_sig <= '1';
-        rgb2_sig <= '1';
-        rgb3_sig <= '1';
-		rgb4_sig <= '1';
-		case step is
-			when 0 => 
-				rgb1_sig <= '0';
-				rgb2_sig <= '1';
-				rgb3_sig <= '1';
-				rgb4_sig <= '1';
-			when 1 => 
-				rgb1_sig <= '1';
-				rgb2_sig <= '0';
-				rgb3_sig <= '1';
-				rgb4_sig <= '1';
-			when 2 => 
-				rgb1_sig <= '1';
-				rgb2_sig <= '1';
-				rgb3_sig <= '0';
-				rgb4_sig <= '1';
-			when 3 => 
-				rgb1_sig <= '1';
-				rgb2_sig <= '1';
-				rgb3_sig <= '1';
-				rgb4_sig <= '0';
-			when others => null;
-		end case;
 
+			o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+			o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+			o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+			int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+		end if;
+
+			---- Normal mode: controller handles communication
+		--o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
+		--o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
+		--o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
+		--int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
+
+
+		--o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
+		--o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
+		--o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
+		--int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
 	end process;
+	
 
-	Reset_Process : process(pll_clk_internal)
+	Reset_Process : process(pll_clk_int)
     begin
-        if rising_edge(pll_clk_internal) then
+        if rising_edge(pll_clk_int) then
             -- Reset logic
             if reset_counter < 20 then
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
+				int_BOOST_ENABLE    <= '1';
             else
                 w_reset <= '0';  -- Release reset after 10 cycles
+
+				--if CTRL0_IN = '0' then
+					--w_Controller_Mode <= x"1";
+					--rgb1_sig <= '0';
+				--elsif CTRL0_IN = '1' then
+					--w_Controller_Mode <= x"2";
+					--rgb1_sig <= '1';
+				--end if;
+				
 
 				-- Controller mode sequencing
 				case reset_counter is
 					when 50 =>
 						w_Controller_Mode <= x"1";
-					when 100 =>
+						
+					when 4000000 =>
 						w_Controller_Mode <= x"2";
 						stop_counting <= '1';
 					when others =>
 						null;
 				end case;
+				
 			end if;
 			
 			if stop_counting = '0' then
@@ -210,10 +259,16 @@ begin
 			
         end if;
     end process Reset_Process;
+	
+	o_BOOST_ENABLE    <= int_BOOST_ENABLE;
 
-    RGB_1 <= rgb1_sig;
-    RGB_2 <= rgb2_sig;
-    RGB_3 <= rgb3_sig;
-	RGB_4 <= rgb4_sig;
+	LED1_OUT <= led1_sig;
+    LED2_OUT <= led2_sig;
+    LED3_OUT <= led3_sig;
+	LED4_OUT <= led4_sig;
+
+    RGB0_OUT <= rgb1_sig;
+    RGB1_OUT <= rgb2_sig;
+    RGB2_OUT <= rgb3_sig;
 
 end architecture RTL;
