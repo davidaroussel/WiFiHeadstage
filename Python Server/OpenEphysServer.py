@@ -14,7 +14,7 @@ if __name__ == "__main__":
     CSV_WRITING         = False
     OPENEPHYS_SENDING   = True
     TTL_GENERATOR       = False
-    CONFIGURE_OPENEPHYS = True
+    CONFIGURE_OPENEPHYS = False
     PRINT_OE_INFO       = True
 
     #GLOBAL VARIABLES
