@@ -6,41 +6,43 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Fri Nov 14 09:39:20 2025
+Tue Nov 25 16:03:08 2025
 
 Pinout by Port Name:
-+----------------------+----------+---------------+-------+------------------------------------------+
-| Port Name            | Pin/Bank | Buffer Type   | Site  | Properties                               |
-+----------------------+----------+---------------+-------+------------------------------------------+
-| LED1_OUT             | 48/2     | LVCMOS33_OUT  | PL8A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| LED2_OUT             | 42/0     | LVCMOS33_OUT  | PR9A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| LED3_OUT             | 44/2     | LVCMOS33_OUT  | PL7B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| LED4_OUT             | 3/2      | LVCMOS33_OUT  | PL10B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| RGB0_OUT             | 39/0     | OPENDRAIN_OUT | PR5A  | DRIVE:8mA                                |
-| RGB1_OUT             | 40/0     | OPENDRAIN_OUT | PR6A  | DRIVE:8mA                                |
-| RGB2_OUT             | 41/0     | OPENDRAIN_OUT | PR7A  | DRIVE:8mA                                |
-| i_STM32_SPI_MISO     | 10/1     | LVCMOS33_OUT  | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| i_clk                | 35/0     | LVCMOS33_IN   | PR13B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
-| o_Controller_Mode[0] | 18/1     | LVCMOS33_OUT  | PL23B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_Controller_Mode[1] | 19/1     | LVCMOS33_OUT  | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_Controller_Mode[2] | 23/0     | LVCMOS33_OUT  | PR20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_Controller_Mode[3] | 12/1     | LVCMOS33_OUT  | PL19A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_RHD_SPI_CS_n       | 32/0     | LVCMOS33_OUT  | PR17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_RHD_SPI_Clk        | 27/0     | LVCMOS33_OUT  | PR19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_RHD_SPI_MOSI       | 25/0     | LVCMOS33_OUT  | PR20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_STM32_SPI_CS_n     | 6/1      | LVCMOS33_OUT  | PL14B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_STM32_SPI_Clk      | 9/1      | LVCMOS33_OUT  | PL16A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_STM32_SPI_MOSI     | 11/1     | LVCMOS33_OUT  | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset              | 45/2     | LVCMOS33_OUT  | PL8B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[0]   | 20/1     | LVCMOS33_OUT  | PL20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[1]   | 26/0     | LVCMOS33_OUT  | PR19A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[2]   | 14/1     | LVCMOS33_OUT  | PL24A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[3]   | 31/0     | LVCMOS33_OUT  | PR17B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[4]   | 21/1     | LVCMOS33_OUT  | PL19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[5]   | 28/0     | LVCMOS33_OUT  | PR18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[6]   | 17/1     | LVCMOS33_OUT  | PL24B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| o_reset_Counter[7]   | 13/1     | LVCMOS33_OUT  | PL20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-+----------------------+----------+---------------+-------+------------------------------------------+
++----------------------+----------+---------------+-------+-------------------------------------------+
+| Port Name            | Pin/Bank | Buffer Type   | Site  | Properties                                |
++----------------------+----------+---------------+-------+-------------------------------------------+
+| LED1_OUT             | 3/2      | LVCMOS33_OUT  | PL10B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| LED2_OUT             | 37/0     | LVCMOS33_OUT  | PR14A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| LED3_OUT             | 13/1     | LVCMOS33_OUT  | PL20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| LED4_OUT             | 36/0     | LVCMOS33_OUT  | PR10B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| RGB0_OUT             | 39/0     | OPENDRAIN_OUT | PR5A  | DRIVE:8mA                                 |
+| RGB1_OUT             | 40/0     | OPENDRAIN_OUT | PR6A  | DRIVE:8mA                                 |
+| RGB2_OUT             | 41/0     | OPENDRAIN_OUT | PR7A  | DRIVE:8mA                                 |
+| i_RHD_SPI_MISO       | 26/0     | LVCMOS33_IN   | PR19A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K   |
+| i_STM32_SPI_MISO     | 43/0     | LVCMOS33_OUT  | PR10A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| i_clk                | 35/0     | LVCMOS33_IN   | PR13B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K   |
+| o_BOOST_ENABLE       | 4/2      | LVCMOS33_OUT  | PL10A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_Controller_Mode[0] | 6/1      | LVCMOS33_OUT  | PL14B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_Controller_Mode[1] | 10/1     | LVCMOS33_OUT  | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_Controller_Mode[2] | 19/1     | LVCMOS33_OUT  | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_Controller_Mode[3] | 20/1     | LVCMOS33_OUT  | PL20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_RHD_SPI_CS_n       | 28/0     | LVCMOS33_OUT  | PR18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_RHD_SPI_Clk        | 27/0     | LVCMOS33_OUT  | PR19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_RHD_SPI_MOSI       | 25/0     | LVCMOS33_OUT  | PR20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_STM32_SPI_CS_n     | 38/0     | LVCMOS33_BIDI | PR9B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| o_STM32_SPI_Clk      | 42/0     | LVCMOS33_BIDI | PR9A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| o_STM32_SPI_MOSI     | 46/2     | LVCMOS33_BIDI | PL6A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| o_reset              | 11/1     | LVCMOS33_OUT  | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[0]   | 16/1     | LVCMOS33_OUT  | PL25B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[1]   | 15/1     | LVCMOS33_OUT  | PL25A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[2]   | 34/0     | LVCMOS33_OUT  | PR14B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[3]   | 31/0     | LVCMOS33_OUT  | PR17B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[4]   | 32/0     | LVCMOS33_OUT  | PR17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[5]   | 17/1     | LVCMOS33_OUT  | PL24B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[6]   | 14/1     | LVCMOS33_OUT  | PL24A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
+| o_reset_Counter[7]   | 18/1     | LVCMOS33_OUT  | PL23B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA    |
++----------------------+----------+---------------+-------+-------------------------------------------+
 
 Vccio by Bank:
 +------+-------+
@@ -56,44 +58,44 @@ Pinout by Pin Number:
 | Pin/Bank | Pin Info             | Constraint | Buffer Type   | Site  | Dual Function    |
 +----------+----------------------+------------+---------------+-------+------------------+
 | 2/2      |     unused, PULL:UP  |            |               | PL9A  |                  |
-| 3/2      | LED4_OUT             |            | LVCMOS33_OUT  | PL10B |                  |
-| 4/2      |     unused, PULL:UP  |            |               | PL10A |                  |
-| 6/1      | o_STM32_SPI_CS_n     | LOCATED    | LVCMOS33_OUT  | PL14B |                  |
-| 9/1      | o_STM32_SPI_Clk      | LOCATED    | LVCMOS33_OUT  | PL16A |                  |
-| 10/1     | i_STM32_SPI_MISO     | LOCATED    | LVCMOS33_OUT  | PL17A |                  |
-| 11/1     | o_STM32_SPI_MOSI     | LOCATED    | LVCMOS33_OUT  | PL18A |                  |
-| 12/1     | o_Controller_Mode[3] |            | LVCMOS33_OUT  | PL19A |                  |
-| 13/1     | o_reset_Counter[7]   |            | LVCMOS33_OUT  | PL20A |                  |
-| 14/1     | o_reset_Counter[2]   |            | LVCMOS33_OUT  | PL24A | SPI_SO           |
-| 15/1     |     unused, PULL:UP  |            |               | PL25A | SPISCK           |
-| 16/1     |     unused, PULL:UP  |            |               | PL25B | SPI_SS           |
-| 17/1     | o_reset_Counter[6]   |            | LVCMOS33_OUT  | PL24B | SPI_SI           |
-| 18/1     | o_Controller_Mode[0] |            | LVCMOS33_OUT  | PL23B |                  |
-| 19/1     | o_Controller_Mode[1] |            | LVCMOS33_OUT  | PL22B |                  |
-| 20/1     | o_reset_Counter[0]   |            | LVCMOS33_OUT  | PL20B | PCLKT1_0         |
-| 21/1     | o_reset_Counter[4]   |            | LVCMOS33_OUT  | PL19B |                  |
-| 23/0     | o_Controller_Mode[2] |            | LVCMOS33_OUT  | PR20A |                  |
+| 3/2      | LED1_OUT             |            | LVCMOS33_OUT  | PL10B |                  |
+| 4/2      | o_BOOST_ENABLE       |            | LVCMOS33_OUT  | PL10A |                  |
+| 6/1      | o_Controller_Mode[0] |            | LVCMOS33_OUT  | PL14B |                  |
+| 9/1      |     unused, PULL:UP  |            |               | PL16A |                  |
+| 10/1     | o_Controller_Mode[1] |            | LVCMOS33_OUT  | PL17A |                  |
+| 11/1     | o_reset              |            | LVCMOS33_OUT  | PL18A |                  |
+| 12/1     |     unused, PULL:UP  |            |               | PL19A |                  |
+| 13/1     | LED3_OUT             |            | LVCMOS33_OUT  | PL20A |                  |
+| 14/1     | o_reset_Counter[6]   |            | LVCMOS33_OUT  | PL24A | SPI_SO           |
+| 15/1     | o_reset_Counter[1]   |            | LVCMOS33_OUT  | PL25A | SPISCK           |
+| 16/1     | o_reset_Counter[0]   |            | LVCMOS33_OUT  | PL25B | SPI_SS           |
+| 17/1     | o_reset_Counter[5]   |            | LVCMOS33_OUT  | PL24B | SPI_SI           |
+| 18/1     | o_reset_Counter[7]   |            | LVCMOS33_OUT  | PL23B |                  |
+| 19/1     | o_Controller_Mode[2] |            | LVCMOS33_OUT  | PL22B |                  |
+| 20/1     | o_Controller_Mode[3] |            | LVCMOS33_OUT  | PL20B | PCLKT1_0         |
+| 21/1     |     unused, PULL:UP  |            |               | PL19B |                  |
+| 23/0     |     unused, PULL:UP  |            |               | PR20A |                  |
 | 25/0     | o_RHD_SPI_MOSI       | LOCATED    | LVCMOS33_OUT  | PR20B |                  |
-| 26/0     | o_reset_Counter[1]   |            | LVCMOS33_OUT  | PR19A |                  |
+| 26/0     | i_RHD_SPI_MISO       | LOCATED    | LVCMOS33_IN   | PR19A |                  |
 | 27/0     | o_RHD_SPI_Clk        | LOCATED    | LVCMOS33_OUT  | PR19B |                  |
-| 28/0     | o_reset_Counter[5]   |            | LVCMOS33_OUT  | PR18A |                  |
+| 28/0     | o_RHD_SPI_CS_n       | LOCATED    | LVCMOS33_OUT  | PR18A |                  |
 | 31/0     | o_reset_Counter[3]   |            | LVCMOS33_OUT  | PR17B |                  |
-| 32/0     | o_RHD_SPI_CS_n       | LOCATED    | LVCMOS33_OUT  | PR17A |                  |
-| 34/0     |     unused, PULL:UP  |            |               | PR14B |                  |
+| 32/0     | o_reset_Counter[4]   |            | LVCMOS33_OUT  | PR17A |                  |
+| 34/0     | o_reset_Counter[2]   |            | LVCMOS33_OUT  | PR14B |                  |
 | 35/0     | i_clk                | LOCATED    | LVCMOS33_IN   | PR13B | GPLL_IN/PCLKT0_1 |
-| 36/0     |     unused, PULL:UP  |            |               | PR10B |                  |
-| 37/0     |     unused, PULL:UP  |            |               | PR14A | PCLKT0_0         |
-| 38/0     |     unused, PULL:UP  |            |               | PR9B  |                  |
+| 36/0     | LED4_OUT             |            | LVCMOS33_OUT  | PR10B |                  |
+| 37/0     | LED2_OUT             |            | LVCMOS33_OUT  | PR14A | PCLKT0_0         |
+| 38/0     | o_STM32_SPI_CS_n     | LOCATED    | LVCMOS33_BIDI | PR9B  |                  |
 | 39/0     | RGB0_OUT             | LOCATED    | OPENDRAIN_OUT | PR5A  | RGB0             |
 | 40/0     | RGB1_OUT             | LOCATED    | OPENDRAIN_OUT | PR6A  | RGB1             |
 | 41/0     | RGB2_OUT             | LOCATED    | OPENDRAIN_OUT | PR7A  | RGB2             |
-| 42/0     | LED2_OUT             |            | LVCMOS33_OUT  | PR9A  |                  |
-| 43/0     |     unused, PULL:UP  |            |               | PR10A |                  |
-| 44/2     | LED3_OUT             |            | LVCMOS33_OUT  | PL7B  | PCLKT2_0         |
-| 45/2     | o_reset              |            | LVCMOS33_OUT  | PL8B  |                  |
-| 46/2     |     unused, PULL:UP  |            |               | PL6A  |                  |
+| 42/0     | o_STM32_SPI_Clk      | LOCATED    | LVCMOS33_BIDI | PR9A  |                  |
+| 43/0     | i_STM32_SPI_MISO     | LOCATED    | LVCMOS33_OUT  | PR10A |                  |
+| 44/2     |     unused, PULL:UP  |            |               | PL7B  | PCLKT2_0         |
+| 45/2     |     unused, PULL:UP  |            |               | PL8B  |                  |
+| 46/2     | o_STM32_SPI_MOSI     | LOCATED    | LVCMOS33_BIDI | PL6A  |                  |
 | 47/2     |     unused, PULL:UP  |            |               | PL7A  |                  |
-| 48/2     | LED1_OUT             |            | LVCMOS33_OUT  | PL8A  |                  |
+| 48/2     |     unused, PULL:UP  |            |               | PL8A  |                  |
 | PL6B/2   |     unused, PULL:UP  |            |               | PL6B  |                  |
 | PL9B/2   |     unused, PULL:UP  |            |               | PL9B  |                  |
 | PL13A/1  |     unused, PULL:UP  |            |               | PL13A |                  |
@@ -116,31 +118,33 @@ Pinout by Pin Number:
 
 Locate Constraints for each Pin: 
 
-ldc_set_location -site {48} [ get_ports {LED1_OUT} ]
-ldc_set_location -site {42} [ get_ports {LED2_OUT} ]
-ldc_set_location -site {44} [ get_ports {LED3_OUT} ]
-ldc_set_location -site {3} [ get_ports {LED4_OUT} ]
-ldc_set_location -site {10} [ get_ports {i_STM32_SPI_MISO} ]
+ldc_set_location -site {3} [ get_ports {LED1_OUT} ]
+ldc_set_location -site {37} [ get_ports {LED2_OUT} ]
+ldc_set_location -site {13} [ get_ports {LED3_OUT} ]
+ldc_set_location -site {36} [ get_ports {LED4_OUT} ]
+ldc_set_location -site {26} [ get_ports {i_RHD_SPI_MISO} ]
+ldc_set_location -site {43} [ get_ports {i_STM32_SPI_MISO} ]
 ldc_set_location -site {35} [ get_ports {i_clk} ]
-ldc_set_location -site {18} [ get_ports {o_Controller_Mode[0]} ]
-ldc_set_location -site {19} [ get_ports {o_Controller_Mode[1]} ]
-ldc_set_location -site {23} [ get_ports {o_Controller_Mode[2]} ]
-ldc_set_location -site {12} [ get_ports {o_Controller_Mode[3]} ]
-ldc_set_location -site {32} [ get_ports {o_RHD_SPI_CS_n} ]
+ldc_set_location -site {4} [ get_ports {o_BOOST_ENABLE} ]
+ldc_set_location -site {6} [ get_ports {o_Controller_Mode[0]} ]
+ldc_set_location -site {10} [ get_ports {o_Controller_Mode[1]} ]
+ldc_set_location -site {19} [ get_ports {o_Controller_Mode[2]} ]
+ldc_set_location -site {20} [ get_ports {o_Controller_Mode[3]} ]
+ldc_set_location -site {28} [ get_ports {o_RHD_SPI_CS_n} ]
 ldc_set_location -site {27} [ get_ports {o_RHD_SPI_Clk} ]
 ldc_set_location -site {25} [ get_ports {o_RHD_SPI_MOSI} ]
-ldc_set_location -site {6} [ get_ports {o_STM32_SPI_CS_n} ]
-ldc_set_location -site {9} [ get_ports {o_STM32_SPI_Clk} ]
-ldc_set_location -site {11} [ get_ports {o_STM32_SPI_MOSI} ]
-ldc_set_location -site {45} [ get_ports {o_reset} ]
-ldc_set_location -site {20} [ get_ports {o_reset_Counter[0]} ]
-ldc_set_location -site {26} [ get_ports {o_reset_Counter[1]} ]
-ldc_set_location -site {14} [ get_ports {o_reset_Counter[2]} ]
+ldc_set_location -site {38} [ get_ports {o_STM32_SPI_CS_n} ]
+ldc_set_location -site {42} [ get_ports {o_STM32_SPI_Clk} ]
+ldc_set_location -site {46} [ get_ports {o_STM32_SPI_MOSI} ]
+ldc_set_location -site {11} [ get_ports {o_reset} ]
+ldc_set_location -site {16} [ get_ports {o_reset_Counter[0]} ]
+ldc_set_location -site {15} [ get_ports {o_reset_Counter[1]} ]
+ldc_set_location -site {34} [ get_ports {o_reset_Counter[2]} ]
 ldc_set_location -site {31} [ get_ports {o_reset_Counter[3]} ]
-ldc_set_location -site {21} [ get_ports {o_reset_Counter[4]} ]
-ldc_set_location -site {28} [ get_ports {o_reset_Counter[5]} ]
-ldc_set_location -site {17} [ get_ports {o_reset_Counter[6]} ]
-ldc_set_location -site {13} [ get_ports {o_reset_Counter[7]} ]
+ldc_set_location -site {32} [ get_ports {o_reset_Counter[4]} ]
+ldc_set_location -site {17} [ get_ports {o_reset_Counter[5]} ]
+ldc_set_location -site {14} [ get_ports {o_reset_Counter[6]} ]
+ldc_set_location -site {18} [ get_ports {o_reset_Counter[7]} ]
 
 
 
@@ -148,5 +152,5 @@ ldc_set_location -site {13} [ get_ports {o_reset_Counter[7]} ]
 
 Copyright (c) 2002-2022 Lattice Semiconductor Corporation,  All rights reserved.
 
-Fri Nov 14 09:39:20 2025
+Tue Nov 25 16:03:08 2025
 

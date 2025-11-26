@@ -7,16 +7,17 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
 Removing unused logic ...
-INFO <35811146> - Signal i_clk_c undriven or does not drive anything - clipped
 Starting design annotation....
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
  
 Constraint Summary:
-   Total number of constraints: 0
+   Total number of constraints: 1
    Total number of constraints dropped: 0
  
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
-Total CPU Time: 0 secs 
-Total REAL Time: 0 secs 
-Peak Memory Usage: 39 MB
-Checksum -- postsyn: ec2f637048e3499bf122ceaecae1a00ebb95e470
+Total CPU Time: 1 secs 
+Total REAL Time: 2 secs 
+Peak Memory Usage: 65 MB
+Checksum -- postsyn: 3c9c3656120769faad586e87fd4444dcc28647b0

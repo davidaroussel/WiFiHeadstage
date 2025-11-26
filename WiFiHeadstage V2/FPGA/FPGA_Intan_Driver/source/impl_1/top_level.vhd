@@ -22,26 +22,32 @@ entity top_level is
         i_clk     : in  STD_LOGIC;
 
         -- STM32 SPI Interface
-        o_STM32_SPI_MOSI : inout std_logic; -- IO 20A --> PIN 11
-        i_STM32_SPI_MISO : inout std_logic; -- IO 18A --> PIN 10
-        o_STM32_SPI_Clk  : inout std_logic; -- IO 16A --> PIN 9
-        o_STM32_SPI_CS_n : inout std_logic; -- IO 13B --> PIN 6
+        o_STM32_SPI_MOSI : inout STD_LOGIC; -- IO 20A --> PIN 11
+        i_STM32_SPI_MISO : inout STD_LOGIC; -- IO 18A --> PIN 10
+        o_STM32_SPI_Clk  : inout STD_LOGIC; -- IO 16A --> PIN 9
+        o_STM32_SPI_CS_n : inout STD_LOGIC; -- IO 13B --> PIN 6
 
 		-- RHD SPI Interface (USBC - INTAN SPI1)
         -- SPI Slave Interface TO RHD BOARD (FOR PoC STM-WFM200-FPGA)
-        --o_RHD_SPI_MOSI : out std_logic; -- IO 36B --> PIN 25
-        --i_RHD_SPI_MISO : in  std_logic; -- IO 39A --> PIN 26 
-        --o_RHD_SPI_Clk  : out std_logic; -- IO 38B --> PIN 27
-        --o_RHD_SPI_CS_n : out std_logic; -- IO 43A --> PIN 32
+        --o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 36B --> PIN 25
+        --i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 39A --> PIN 26 
+        --o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 38B --> PIN 27
+        --o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 43A --> PIN 32
 
         -- RHD SPI Interface (USBC - INTAN SPI2)
 		-- SPI Slave Interface TO LVDS BOARD - RHD (FOR FPGA PoC Programmer)
-        o_RHD_SPI_MOSI : out std_logic; -- IO 9B --> PIN 3
-		i_RHD_SPI_MISO : in  std_logic; -- IO 4A --> PIN 48
-        o_RHD_SPI_Clk  : out std_logic; -- IO 5B --> PIN 45
-        o_RHD_SPI_CS_n : out std_logic; -- IO 2A --> PIN 47
+        o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 9B --> PIN 3
+		i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 4A --> PIN 48
+        o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 5B --> PIN 45
+        o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 2A --> PIN 47
 		
-		CTRL0_IN     : in STD_logic;
+		CTRL0_IN     : in STD_LOGIC;
+		
+		-- IR SYNCHRONIZATION INPUT 
+		--i_LED_SYNC   : in STD_LOGIC;
+		
+		-- RHS BOOST Interface 
+		o_BOOST_ENABLE    : out STD_LOGIC;
 		
         RGB0_OUT     : out STD_LOGIC;		--> PIN 39
         RGB1_OUT     : out STD_LOGIC;		--> PIN 40
@@ -52,9 +58,9 @@ entity top_level is
 		LED3_OUT     : out STD_LOGIC;  -- IO 48B --> PIN 36
 		LED4_OUT     : out STD_LOGIC;   -- IO 22A --> PIN 12
 		
-		o_Controller_Mode : out std_logic_vector(3 downto 0);
-		o_reset : out std_logic;
-		o_reset_Counter : out std_logic_vector(7 downto 0)
+		o_Controller_Mode : out STD_LOGIC_VECTOR(3 downto 0);
+		o_reset : out STD_LOGIC;
+		o_reset_Counter : out STD_LOGIC_VECTOR(7 downto 0)
 
     );
 end entity top_level;
@@ -111,6 +117,10 @@ architecture RTL of top_level is
 	signal int_STM32_SPI_MISO : std_logic;
 	signal int_STM32_SPI_Clk  : std_logic;
 	signal int_STM32_SPI_CS_n : std_logic;
+	
+	signal int_BOOST_ENABLE    : std_logic;
+	signal int_LED_SYNC 	   : std_logic;
+	
 	
 	
 	
@@ -216,39 +226,41 @@ begin
             if reset_counter < 20 then
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
+				int_BOOST_ENABLE    <= '1';
             else
                 w_reset <= '0';  -- Release reset after 10 cycles
 
-				if CTRL0_IN = '0' then
-					w_Controller_Mode <= x"1";
-					rgb1_sig <= '0';
-				elsif CTRL0_IN = '1' then
-					w_Controller_Mode <= x"2";
-					rgb1_sig <= '1';
-				end if;
+				--if CTRL0_IN = '0' then
+					--w_Controller_Mode <= x"1";
+					--rgb1_sig <= '0';
+				--elsif CTRL0_IN = '1' then
+					--w_Controller_Mode <= x"2";
+					--rgb1_sig <= '1';
+				--end if;
 				
 
-				---- Controller mode sequencing
-				--case reset_counter is
-					--when 50 =>
-						--w_Controller_Mode <= x"1";
+				-- Controller mode sequencing
+				case reset_counter is
+					when 50 =>
+						w_Controller_Mode <= x"1";
 						
-					--when 4000000 =>
-						--w_Controller_Mode <= x"2";
-						--stop_counting <= '1';
-					--when others =>
-						--null;
-				--end case;
+					when 4000000 =>
+						w_Controller_Mode <= x"2";
+						stop_counting <= '1';
+					when others =>
+						null;
+				end case;
 				
 			end if;
 			
-			--if stop_counting = '0' then
-				--reset_counter <= reset_counter + 1;
-			--end if;
+			if stop_counting = '0' then
+				reset_counter <= reset_counter + 1;
+			end if;
 			
         end if;
     end process Reset_Process;
 	
+	o_BOOST_ENABLE    <= int_BOOST_ENABLE;
 
 	LED1_OUT <= led1_sig;
     LED2_OUT <= led2_sig;
