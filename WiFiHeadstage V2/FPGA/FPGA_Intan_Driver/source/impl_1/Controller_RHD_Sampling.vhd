@@ -22,8 +22,9 @@ entity Controller_RHD_Sampling is
     i_Rst_L        : in std_logic;
     i_Clk          : in std_logic;
 	
-	rgb_info_1 : out std_logic;
-	rgb_info_2 : out std_logic;
+	rgb_info_red   : out std_logic;
+	rgb_info_green : out std_logic;
+	rgb_info_blue  : out std_logic;
 
   	-- Controller Modes
 	i_Controller_Mode  : in std_logic_vector(3 downto 0);
@@ -179,18 +180,18 @@ architecture RTL of Controller_RHD_Sampling is
 	type word_array_t is array (0 to 31) of std_logic_vector(15 downto 0); -- Adjust size
 	
 	signal first_packet : std_logic;
-	signal rhd_index : integer := 0;
-	signal rhd_index_config : integer := 0;
+	signal rhd_index    : integer := 0;
+	signal rhd_state    : integer := 0;
 	
-	signal rhd_state : integer := 0;
-	signal rhd_state_config : integer := 0;
-	signal rgd_info_sig_1 : std_logic;
-	signal rgd_info_sig_2 : std_logic;
-	signal alt_counter : integer range 0 to 3 := 0;
-
-	signal data_array_send_count : integer range 0 to 100 := 0;
+	signal alt_counter : integer range 0 to 3 := 0;
+		signal data_array_send_count : integer range 0 to 100 := 0;
 
 	type t_data_array is array (0 to 63) of std_logic_vector(15 downto 0);
+	
+	signal rgd_info_sig_red   : std_logic;
+	signal rgd_info_sig_green : std_logic;
+	signal rgd_info_sig_blue  : std_logic;
+
 
 	signal data_array : t_data_array := (
 		-- Registers 40–63
@@ -282,11 +283,11 @@ architecture RTL of Controller_RHD_Sampling is
 
 	signal channel_array : t_channel_array := (
 				-- Registers 40–63
-		0  => x"E900",  -- REG40
-		1  => x"EA00",  -- REG41
-		2  => x"EB00",  -- REG42
-		3  => x"EC00",  -- REG43
-		4  => x"FC00",  -- REG44
+		0  => x"E800",  -- REG40
+		1  => x"E900",  -- REG41
+		2  => x"EA00",  -- REG42
+		3  => x"EB00",  -- REG43
+		4  => x"EC00",  -- REG44
 		5  => x"FD00",  -- REG61
 		6  => x"FE00",  -- REG62
 		7  => x"FF00",  -- REG63
@@ -438,7 +439,7 @@ begin
     stm32_state <= 0;    -- Reset state
 	int_STM32_TX_Byte <= (others => '0');
 	int_STM32_TX_DV <= '0';
-	
+	rgd_info_sig_blue <= '1';
 	init_FIFO_Read <= '0';
 	init_FIFO_State <= '0';
 	
@@ -459,7 +460,7 @@ begin
 		else
 			int_FIFO_RE <= '0';
 		end if;
-	
+
 	elsif i_Controller_Mode = x"2" then
 		case stm32_state is
 			when 0 =>
@@ -483,6 +484,7 @@ begin
 				stm32_state <= 4;
 			when 4 =>
 				stm32_state <= 5;
+				
 			when 5 =>
 				if NUM_DATA > stm32_counter then
 					if RHD_SPI_DDR_MODE = 1 then
@@ -540,13 +542,16 @@ begin
 			rhd_index           <= 0;
 			rhd_done_config     <= '0';
 			data_array_send_count <= 0;
-			rgd_info_sig_1      <= '1';
-			rgd_info_sig_2      <= '1';
+			rgd_info_sig_red      <= '1';
+			rgd_info_sig_green    <= '1';
 			rhd_state           <= 0;
 			alt_counter         <= 0;  
 			full_cycle_count     <= 0;  -- reset new counter
 		elsif rising_edge(i_Clk) then
-			if i_Controller_Mode = x"2" then
+			if i_Controller_Mode = x"1" then
+				rgd_info_sig_green <= '0';
+			elsif i_Controller_Mode = x"2" then
+				rgd_info_sig_green <= '1';
 				case rhd_state is
 
 					----------------------------------------------------------------
@@ -616,7 +621,7 @@ begin
 										full_cycle_count <= full_cycle_count + 1;
 									else
 										full_cycle_count <= 0;
-										rgd_info_sig_2 <= not rgd_info_sig_2;
+										rgd_info_sig_red <= not rgd_info_sig_red;
 
 										-- Only change CH0 after 10,000 full loops
 										if alt_counter < 3 then
@@ -656,9 +661,9 @@ begin
 		end if;
 	end process;
 
-
-	rgb_info_1 <= rgd_info_sig_1;
-	rgb_info_2 <= rgd_info_sig_2;
+	rgb_info_red <= rgd_info_sig_red;
+	rgb_info_green <= rgd_info_sig_green;
+	rgb_info_blue <= rgd_info_sig_blue;
 
 	o_NUM_DATA  <= NUM_DATA;
 	o_STM32_State <= stm32_state;

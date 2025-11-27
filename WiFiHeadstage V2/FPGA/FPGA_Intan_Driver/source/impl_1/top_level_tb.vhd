@@ -35,7 +35,6 @@ architecture sim of top_level_tb is
 
     signal o_Controller_Mode_tb : std_logic_vector(3 downto 0);
     signal o_reset_tb           : std_logic;
-    signal o_reset_Counter_tb   : std_logic_vector(7 downto 0);
 
 begin
 	i_clk_tb <= not i_clk_tb after CLK_PERIOD;
@@ -76,8 +75,7 @@ begin
             LED4_OUT => LED4_OUT_tb,
 
             o_Controller_Mode => o_Controller_Mode_tb,
-            o_reset           => o_reset_tb,
-            o_reset_Counter   => o_reset_Counter_tb
+            o_reset           => o_reset_tb
         );
 
 

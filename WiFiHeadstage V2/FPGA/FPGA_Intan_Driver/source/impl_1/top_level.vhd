@@ -22,24 +22,16 @@ entity top_level is
         i_clk     : in  STD_LOGIC;
 
         -- STM32 SPI Interface
-        o_STM32_SPI_MOSI : inout STD_LOGIC; -- IO 20A --> PIN 11
-        i_STM32_SPI_MISO : inout STD_LOGIC; -- IO 18A --> PIN 10
-        o_STM32_SPI_Clk  : inout STD_LOGIC; -- IO 16A --> PIN 9
-        o_STM32_SPI_CS_n : inout STD_LOGIC; -- IO 13B --> PIN 6
+        o_STM32_SPI_MOSI : inout STD_LOGIC; 
+        i_STM32_SPI_MISO : inout STD_LOGIC; 
+        o_STM32_SPI_Clk  : inout STD_LOGIC; 
+        o_STM32_SPI_CS_n : inout STD_LOGIC; 
 
-		-- RHD SPI Interface (USBC - INTAN SPI1)
-        -- SPI Slave Interface TO RHD BOARD (FOR PoC STM-WFM200-FPGA)
-        --o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 36B --> PIN 25
-        --i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 39A --> PIN 26 
-        --o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 38B --> PIN 27
-        --o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 43A --> PIN 32
-
-        -- RHD SPI Interface (USBC - INTAN SPI2)
-		-- SPI Slave Interface TO LVDS BOARD - RHD (FOR FPGA PoC Programmer)
-        o_RHD_SPI_MOSI : out STD_LOGIC; -- IO 9B --> PIN 3
-		i_RHD_SPI_MISO : in  STD_LOGIC; -- IO 4A --> PIN 48
-        o_RHD_SPI_Clk  : out STD_LOGIC; -- IO 5B --> PIN 45
-        o_RHD_SPI_CS_n : out STD_LOGIC; -- IO 2A --> PIN 47
+        -- RHD SPI Interface 
+        o_RHD_SPI_MOSI : out STD_LOGIC; 
+		i_RHD_SPI_MISO : in  STD_LOGIC; 
+        o_RHD_SPI_Clk  : out STD_LOGIC; 
+        o_RHD_SPI_CS_n : out STD_LOGIC; 
 		
 		CTRL0_IN     : in STD_LOGIC;
 		
@@ -56,11 +48,10 @@ entity top_level is
 		LED1_OUT     : out STD_LOGIC;  -- IO 44B --> PIN 34
 		LED2_OUT     : out STD_LOGIC;  -- IO 42B --> PIN 31
 		LED3_OUT     : out STD_LOGIC;  -- IO 48B --> PIN 36
-		LED4_OUT     : out STD_LOGIC;   -- IO 22A --> PIN 12
+		LED4_OUT     : out STD_LOGIC;  -- IO 22A --> PIN 12
 		
 		o_Controller_Mode : out STD_LOGIC_VECTOR(3 downto 0);
-		o_reset : out STD_LOGIC;
-		o_reset_Counter : out STD_LOGIC_VECTOR(7 downto 0)
+		o_reset : out STD_LOGIC
 
     );
 end entity top_level;
@@ -73,7 +64,7 @@ architecture RTL of top_level is
     signal w_Controller_Mode    : std_logic_vector(3 downto 0) := (others => '0');
 	signal w_reset              : std_logic;
 	
-	signal reset_counter : integer range 0 to 42000000 := 0;
+	signal reset_counter : integer range 0 to 168000000 := 0;
 	
 	signal debug_STM32_SPI_MISO : std_logic;
 	signal debug_RHD_SPI_MISO   : std_logic;
@@ -101,9 +92,9 @@ architecture RTL of top_level is
     signal led3_sig : std_logic := '1';
     signal led4_sig : std_logic := '1';
 
-    signal rgb1_sig : std_logic := '1';
-    signal rgb2_sig : std_logic := '1';
-    signal rgb3_sig : std_logic := '1';
+    signal rgb_sig_red   : std_logic := '1';
+    signal rgb_sig_green : std_logic := '1';
+    signal rgb_sig_blue  : std_logic := '1';
 	
     signal stop_counting : std_logic := '0';
 	
@@ -121,7 +112,12 @@ architecture RTL of top_level is
 	signal int_BOOST_ENABLE    : std_logic;
 	signal int_LED_SYNC 	   : std_logic;
 	
+	signal ctrl_sync0, ctrl_sync1 : std_logic := '0';
+	signal ctrl_counter : integer := 0;
+	signal ctrl_stable  : std_logic := '0';
+	constant DEBOUNCE_CYCLES : integer := 1000;
 	
+	signal int_MODE_STATUS : integer := 0;
 	
 	
 begin
@@ -148,8 +144,9 @@ begin
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
-			rgb_info_1 => rgb2_sig,
-			rgb_info_2 => rgb3_sig,
+			rgb_info_red   => rgb_sig_red,
+			rgb_info_green => rgb_sig_green,
+			rgb_info_blue  => rgb_sig_blue,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -176,7 +173,6 @@ begin
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
-	o_reset_Counter   <=  std_logic_vector(to_signed(reset_counter, 8));
 	
 	
 	Mode_Process : process(pll_clk_int)
@@ -219,6 +215,7 @@ begin
 	end process;
 	
 
+
 	Reset_Process : process(pll_clk_int)
     begin
         if rising_edge(pll_clk_int) then
@@ -228,28 +225,42 @@ begin
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
             else
-                w_reset <= '0';  -- Release reset after 10 cycles
+				stop_counting <= '1';
+                w_reset <= '0';  
 
-				--if CTRL0_IN = '0' then
-					--w_Controller_Mode <= x"1";
-					--rgb1_sig <= '0';
-				--elsif CTRL0_IN = '1' then
-					--w_Controller_Mode <= x"2";
-					--rgb1_sig <= '1';
-				--end if;
-				
+				case int_MODE_STATUS is 
+					when 0 => 
+						if CTRL0_IN = '1' then
+							w_Controller_Mode <= x"1";
+							int_MODE_STATUS <= 0;
+						elsif CTRL0_IN = '0' then
+							int_MODE_STATUS <= 1;
+						end if;
+					when 1 =>
+						if CTRL0_IN = '1' then
+							int_MODE_STATUS <= 0;
+						elsif CTRL0_IN = '0' then
+							w_Controller_Mode <= x"2";
+							int_MODE_STATUS <= 1;
+						end if;
 
-				-- Controller mode sequencing
-				case reset_counter is
-					when 50 =>
-						w_Controller_Mode <= x"1";
-						
-					when 4000000 =>
-						w_Controller_Mode <= x"2";
-						stop_counting <= '1';
 					when others =>
 						null;
 				end case;
+
+				-- Controller mode sequencing
+				--case reset_counter is
+					--when 50 =>
+						--w_Controller_Mode <= x"1";
+						
+					--when 36000000 =>
+						--w_Controller_Mode <= x"2";
+						--stop_counting <= '1';
+
+						
+					--when others =>
+						--null;
+				--end case;
 				
 			end if;
 			
@@ -267,8 +278,8 @@ begin
     LED3_OUT <= led3_sig;
 	LED4_OUT <= led4_sig;
 
-    RGB0_OUT <= rgb1_sig;
-    RGB1_OUT <= rgb2_sig;
-    RGB2_OUT <= rgb3_sig;
+    RGB0_OUT <= rgb_sig_blue;
+    RGB1_OUT <= rgb_sig_green;
+    RGB2_OUT <= rgb_sig_red;
 
 end architecture RTL;
