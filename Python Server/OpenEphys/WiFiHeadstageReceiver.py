@@ -58,6 +58,7 @@ class WiFiHeadstageReceiver(BaseException):
                 self.m_connected = True
 
     def getHeadstageID(self):
+
         module_id = self.HeadstageDriver.getHeadstageID(self.m_socket, p_id=0)
         print("Headstage ID is: ", module_id)
 

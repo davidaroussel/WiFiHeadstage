@@ -381,7 +381,7 @@ if __name__ == "__main__":
                 HEADSTAGE_DRIVER.stopDataFromIntan(selected_headstage)
                 HEADSTAGE_DRIVER.getMenu(selected_headstage)
                 HEADSTAGE_DRIVER.verifyIntanChip(selected_headstage, p_id=0)
-                HEADSTAGE_DRIVER.getHeadstageID(selected_headstage)
+                HEADSTAGE_DRIVER.getHeadstageID(selected_headstage, p_id=0)
                 HEADSTAGE_DRIVER.configureNumberChannel(selected_headstage, len(CHANNELS))
                 HEADSTAGE_DRIVER.configureIntanChip(selected_headstage)
                 HEADSTAGE_DRIVER.configureSamplingFreq(selected_headstage, FREQ_SAMPLING)
