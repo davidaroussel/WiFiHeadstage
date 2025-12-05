@@ -550,6 +550,7 @@ begin
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
 				rgd_info_sig_green <= '0';
+				rgd_info_sig_red <= '1';
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_green <= '1';
 				case rhd_state is

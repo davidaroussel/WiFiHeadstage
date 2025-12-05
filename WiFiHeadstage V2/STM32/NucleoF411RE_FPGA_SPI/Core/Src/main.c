@@ -31,24 +31,18 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_BUFFER_SIZE 256
-uint8_t spi_rx_buffer[SPI_RX_BUFFER_SIZE];
+#define SPI_RX_FPGA_BUFFER_SIZE 256
+uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 
-#define SPI_TX_BUFFER_SIZE 256
-uint8_t spi_tx_buffer[SPI_TX_BUFFER_SIZE];
-//uint8_t spi_tx_buffer[SPI_TX_BUFFER_SIZE] = {
-//    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-//    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
-//    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
-//    0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
-//    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
-//    0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
-//    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
-//    0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F
-//};
+#define SPI_TX_FPGA_BUFFER_SIZE 256
+uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
-uint8_t spi_tx_buffer_zero[SPI_TX_BUFFER_SIZE];
-uint8_t spi_tx_buffer_ones[SPI_TX_BUFFER_SIZE];
+
+#define SPI_RX_nRF_BUFFER_SIZE 256
+uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
+
+#define SPI_TX_nRF_BUFFER_SIZE 256
+uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
 
 
 
@@ -97,7 +91,8 @@ static void MX_SPI1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile uint8_t spi_data_ready = 0;
+volatile uint8_t spi_fpga_ready = 0;
+volatile uint8_t spi_nrf_ready = 0;
 volatile uint32_t spi_counter = 0;
 
 /* USER CODE END 0 */
@@ -127,16 +122,17 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  for (int i=0; i<SPI_TX_BUFFER_SIZE; i++){
-	  spi_tx_buffer_zero[i] = 0x00;
+
+  for (int i=0; i<SPI_TX_FPGA_BUFFER_SIZE; i++){
+	  spi_tx_fpga_buffer[i] = 0x33;
   }
 
-  for (int i=0; i<SPI_TX_BUFFER_SIZE; i++){
-	  spi_tx_buffer_ones[i] = 0xFF;
+  for (uint32_t i = 0; i < SPI_TX_nRF_BUFFER_SIZE; i++) {
+      spi_tx_nrf_buffer[i] = 0xAB;
   }
 
-
-
+  uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
+  printf("[INFO] FPGA loops required to transfer full nRF buffer: %u (nRF buffer: %u bytes, FPGA buffer: %u bytes)\r\n", fpga_nrf_loops, SPI_RX_nRF_BUFFER_SIZE, SPI_RX_FPGA_BUFFER_SIZE);
 
 
   /* USER CODE END SysInit */
@@ -147,48 +143,64 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI1_Init();
 
+  //FOR THE NRF TO WAIT UNTIL EVERYTHING IS READY
+   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+   HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_SET);
 
-  // Start SPI4 as MASTER
-  SPI4_Master_Init();
-  printf("Init SPI MASTER MODE\r\n");
-  HAL_Delay(1000);
+//  // Start SPI4 as MASTER
+//  SPI4_Master_Init();
+//  printf("[INFO] SPI MASTER mode initialized.\r\n");
+//  HAL_Delay(1000);
+//
+//  SPI_HandleTypeDef *hspi = &hspi4;
+//  int rhd_status = INIT_RHD(hspi);
+//
+//  // Poll for RHD detection
+//  while (rhd_status == 0) {
+//      printf("[WARN] RHD not detected. Retrying...\r\n");
+//      rhd_status = INIT_RHD(hspi);
+//      HAL_Delay(1000);
+//  }
+//  printf("[INFO] RHD detected via FPGA.\r\n");
+//
+//  HAL_Delay(500);
+//  printf("[INFO] Initializing RHD in passthrough mode...\r\n");
+//
+//  // De-init SPI before changing mode
+//  HAL_SPI_DeInit(&hspi4);
+//  printf("[INFO] SPI deinitialized.\r\n");
+//  HAL_Delay(1000);
+//
+//  // Re-init as SLAVE
+//  SPI4_Slave_Init();
+//  printf("[INFO] SPI SLAVE mode initialized.\r\n");
+//
+//  // Start SPI DMA transmission/reception
+//  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+//      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
+//      Error_Handler();
+//  }
+//
+//  printf("[INFO] Sending RDY_FPGA signal...\r\n");
+//  HAL_Delay(500);
+//  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
+//  printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 
-  SPI_HandleTypeDef *hspi;
-  int rhd_status;
-  hspi = &hspi4;
-  rhd_status = INIT_RHD(hspi);
-  while (rhd_status == 0) {
-	  printf("RHD NOT DETECTED !! \r\n");
-	  rhd_status = INIT_RHD(hspi);
-	  HAL_Delay(1000);
-  }
-  printf("RHD DETECTED THROUGH FPGA \r\n");
-
-  HAL_Delay(500);
-  printf("Init RHD in Passthrough Mode\r\n");
-
-
-  // De-init SPI before changing mode
-  HAL_SPI_DeInit(&hspi4);
-  printf("DeInit SPI\r\n");
-  HAL_Delay(1000);
 
 
 
-  // Re-init as SLAVE
-  SPI4_Slave_Init();
-  printf("Init SPI SLAVE MODE\r\n");
+// nRF SECTION
 
-  HAL_Delay(500);
-  printf("Start SPI Reception with DMA\r\n");
-  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_buffer_ones, spi_rx_buffer, SPI_RX_BUFFER_SIZE) != HAL_OK)
+  if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK)
   {
 	  Error_Handler();
   }
 
-  printf("SENDING RDY_FPGA\r\n");
-  HAL_Delay(500);
-  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
+   HAL_Delay(500);
+   printf("F411 SLAVE SIDE - TOGGLE LOW \r\n");
+   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+
+
 
 
   /* USER CODE END 2 */
@@ -198,22 +210,42 @@ int main(void)
   while (1)
   {
 
-      if (spi_data_ready)
+//      if (spi_fpga_ready)
+//      {
+//    	  spi_fpga_ready = 0; // clear flag
+//
+//          if (spi_counter % 10000 == 0)
+//          {
+//              printf("%lu: ", spi_counter);
+//
+//              for (int i = 0; i < SPI_RX_FPGA_BUFFER_SIZE; i+=2)
+//              {
+//                  printf("%02X%02X ", spi_rx_fpga_buffer[i], spi_rx_fpga_buffer[i+1]);
+//              }
+//              printf("\r\n");
+//              printf("\r\n");
+//          }
+//
+      if (spi_nrf_ready)
       {
-//    	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_12);
-          spi_data_ready = 0; // clear flag
+    	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+    	  spi_nrf_ready = 0; // clear flag
 
-          if (spi_counter % 10000 == 0)
+          if (spi_counter % 1 == 0)
           {
               printf("%lu: ", spi_counter);
 
-              for (int i = 0; i < SPI_RX_BUFFER_SIZE; i+=2)
+              for (int i = 0; i < SPI_RX_FPGA_BUFFER_SIZE; i+=2)
               {
-                  printf("%02X%02X ", spi_rx_buffer[i], spi_rx_buffer[i+1]);
+                  printf("%02X%02X ", spi_rx_nrf_buffer[i], spi_rx_nrf_buffer[i+1]);
               }
               printf("\r\n");
               printf("\r\n");
           }
+          HAL_Delay(1000);
+          HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+          HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+
       }
   }
   /* USER CODE END 3 */
@@ -281,18 +313,18 @@ static void MX_SPI1_Init(void)
 
   /* USER CODE END SPI1_Init 1 */
   /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 10;
+    hspi1.Instance = SPI1;
+	hspi1.Init.Mode = SPI_MODE_SLAVE;
+	hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+	hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
+	hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+	hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+	hspi1.Init.NSS = SPI_NSS_HARD_INPUT;  // SLAVE → external NSS
+	hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+	hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+	hspi1.Init.CRCPolynomial = 10;
+
   if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
     Error_Handler();
@@ -466,15 +498,20 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-    if (hspi->Instance == SPI4)
+    if (hspi->Instance == SPI1)
     {
         spi_counter++;
+        spi_nrf_ready = 1;
 
-        // Signal to main loop that new data is available
-        spi_data_ready = 1;
+    }
+
+    else  if (hspi->Instance == SPI4)
+    {
+        spi_counter++;
+        spi_fpga_ready = 1;
 
         // Restart DMA immediately
-        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_buffer, spi_rx_buffer, SPI_RX_BUFFER_SIZE);
+        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
     }
 }
 

@@ -59,8 +59,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define RDY_nRF_Pin GPIO_PIN_2
 #define RDY_nRF_GPIO_Port GPIOA
+
 #define FPGA_MUX_5_Pin GPIO_PIN_8
 #define FPGA_MUX_5_GPIO_Port GPIOA
+
 #define FPGA_MUX_4_Pin GPIO_PIN_9
 #define FPGA_MUX_4_GPIO_Port GPIOA
 

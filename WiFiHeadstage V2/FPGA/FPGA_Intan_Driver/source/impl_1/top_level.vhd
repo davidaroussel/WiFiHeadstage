@@ -225,7 +225,6 @@ begin
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
             else
-				stop_counting <= '1';
                 w_reset <= '0';  
 
 				case int_MODE_STATUS is 
@@ -247,13 +246,14 @@ begin
 					when others =>
 						null;
 				end case;
-
-				-- Controller mode sequencing
+				stop_counting <= '1';
+				
+				---- Controller mode sequencing
 				--case reset_counter is
 					--when 50 =>
 						--w_Controller_Mode <= x"1";
 						
-					--when 36000000 =>
+					--when 360000 =>
 						--w_Controller_Mode <= x"2";
 						--stop_counting <= '1';
 
