@@ -42,7 +42,7 @@ if (a)
 <DIV id="content" onclick="hideTocList()"><PRE>
 <A name="Par"></A>Copyright (c) 2002-2022 Lattice Semiconductor Corporation,  All rights reserved.
 
-Thu Dec  4 17:39:08 2025
+Mon Dec  8 18:06:07 2025
 
 Command Line: par -w -n 1 -t 1 -s 1 -cores 1 -hsp m -exp parPathBased=ON \
 	FPGA_Intan_Driver_impl_1_map.udb FPGA_Intan_Driver_impl_1.udb 
@@ -52,15 +52,15 @@ Command Line: par -w -n 1 -t 1 -s 1 -cores 1 -hsp m -exp parPathBased=ON \
 Level/       Number       Estimated       Timing       Estimated Worst    Timing          Run      Run
 Cost [udb]   Unrouted     Worst Slack     Score        Slack(hold)        Score(hold)     Time     Status
 ----------   --------     -----------     ------       ---------------    -----------     ----     ------
-5_1   *      0            -               0            -                  0               39       Completed
+5_1   *      0            -               0            -                  0               45       Completed
 * : Design saved.
 
-Total (real) run time for 1-seed: 40 secs 
+Total (real) run time for 1-seed: 45 secs 
 
 par done!
 
 Lattice Place and Route Report for Design &quot;FPGA_Intan_Driver_impl_1_map.udb&quot;
-Thu Dec  4 17:39:08 2025
+Mon Dec  8 18:06:07 2025
 
 
 <A name="par_best"></A><B><U><big>Best Par Run</big></U></B>
@@ -80,20 +80,32 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
+WARNING &lt;77001032&gt; - par: Unable to find the instance/port &apos;CTRL0_IN&apos; in the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;
+
+WARNING &lt;77001031&gt; - par: In the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;, the locate object is not specified
+
 WARNING &lt;70001944&gt; - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+WARNING &lt;77001032&gt; - par: Unable to find the instance/port &apos;CTRL0_IN&apos; in the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;
+
+WARNING &lt;77001031&gt; - par: In the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;, the locate object is not specified
+
 
 WARNING: Database constraint &quot;create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 3 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]&quot; does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
-Number of Signals: 6164
-Number of Connections: 16154
+WARNING &lt;71003020&gt; - par: Top module port &apos;CTRL0_IN&apos; does not connect to anything.
+WARNING &lt;71003020&gt; - par: Top module port &apos;CTRL0_IN&apos; does not connect to anything.
+WARNING &lt;71003020&gt; - par: Top module port &apos;CTRL0_IN&apos; does not connect to anything.
+WARNING &lt;71003020&gt; - par: Top module port &apos;CTRL0_IN&apos; does not connect to anything.
+Number of Signals: 6181
+Number of Connections: 16230
 
 <A name="par_dus"></A><B><U><big>Device utilization summary:</big></U></B>
 
-   SLICE (est.)    1823/2640         69% used
-     LUT           3442/5280         65% used
-     REG           2488/5280         47% used
-   PIO               20/56           36% used
-                     20/36           55% bonded
+   SLICE (est.)    1809/2640         69% used
+     LUT           3459/5280         66% used
+     REG           2489/5280         47% used
+   PIO               19/56           34% used
+                     19/36           52% bonded
    IOLOGIC            0/56            0% used
    DSP                0/8             0% used
    I2C                0/2             0% used
@@ -112,46 +124,50 @@ Number of Connections: 16154
    OPENDRAIN          3/3           100% used
 
 Pin Constraint Summary:
-   10 out of 20 pins locked (50% locked).
+   9 out of 19 pins locked (47% locked).
 .
 ............
-Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 3 secs 
+Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 4 secs 
 
 
-................
-Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 6 secs 
+.................
+Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 7 secs 
 
-Starting Placer Phase 1. CPU time: 6 secs , REAL time: 6 secs 
+Starting Placer Phase 1. CPU time: 6 secs , REAL time: 7 secs 
 ..  ..
 ....................
 
-Placer score = 596296.
+Placer score = 606870.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1803/2640         68% used
+   SLICE           1798/2640         68% used
 
 WARNING &lt;70001944&gt; - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
-Finished Placer Phase 1. CPU time: 24 secs , REAL time: 25 secs 
+WARNING &lt;77001032&gt; - par: Unable to find the instance/port &apos;CTRL0_IN&apos; in the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;
+
+WARNING &lt;77001031&gt; - par: In the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;, the locate object is not specified
+
+Finished Placer Phase 1. CPU time: 28 secs , REAL time: 29 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  626181
-Finished Placer Phase 2.  CPU time: 25 secs , REAL time: 25 secs 
+Placer score =  626347
+Finished Placer Phase 2.  CPU time: 29 secs , REAL time: 30 secs 
 
 
 
 <A name="par_clk"></A><B><U><big>Clock Report</big></U></B>
 
 Global Clocks :
-  PRIMARY &quot;pll_clk_int&quot; from OUTGLOBAL on comp &quot;pll_inst.lscc_pll_inst.u_PLL_B&quot; on site &quot;PLL_R13C32&quot;, clk load = 1322, ce load = 0, sr load = 0
-  PRIMARY &quot;o_reset_c&quot; from Q0 on comp &quot;SLICE_121&quot; on site &quot;R13C31C&quot;, clk load = 0, ce load = 0, sr load = 528
-  PRIMARY &quot;maxfan_replicated_net_999&quot; from Q1 on comp &quot;SLICE_125&quot; on site &quot;R8C2A&quot;, clk load = 0, ce load = 0, sr load = 509
-  PRIMARY &quot;Controller_inst.n10546&quot; from F1 on comp &quot;Controller_inst.SLICE_3148&quot; on site &quot;R14C5A&quot;, clk load = 0, ce load = 259, sr load = 0
-  PRIMARY &quot;Controller_inst.n10524&quot; from F1 on comp &quot;Controller_inst.SLICE_3009&quot; on site &quot;R6C22A&quot;, clk load = 0, ce load = 274, sr load = 0
-  PRIMARY &quot;Controller_inst.int_STM32_TX_DV&quot; from Q1 on comp &quot;Controller_inst.SLICE_3032&quot; on site &quot;R10C27C&quot;, clk load = 0, ce load = 256, sr load = 0
-  PRIMARY &quot;maxfan_replicated_net_1481&quot; from Q0 on comp &quot;SLICE_125&quot; on site &quot;R8C2A&quot;, clk load = 0, ce load = 0, sr load = 260
+  PRIMARY &quot;pll_clk_int&quot; from OUTGLOBAL on comp &quot;pll_inst.lscc_pll_inst.u_PLL_B&quot; on site &quot;PLL_R13C32&quot;, clk load = 1315, ce load = 0, sr load = 0
+  PRIMARY &quot;o_reset_c&quot; from Q1 on comp &quot;SLICE_3307&quot; on site &quot;R16C21D&quot;, clk load = 0, ce load = 0, sr load = 523
+  PRIMARY &quot;maxfan_replicated_net_999&quot; from Q1 on comp &quot;SLICE_124&quot; on site &quot;R8C2A&quot;, clk load = 0, ce load = 0, sr load = 510
+  PRIMARY &quot;Controller_inst.n10185&quot; from F1 on comp &quot;Controller_inst.SLICE_3025&quot; on site &quot;R14C4B&quot;, clk load = 0, ce load = 258, sr load = 0
+  PRIMARY &quot;Controller_inst.n10155&quot; from F1 on comp &quot;Controller_inst.SLICE_3052&quot; on site &quot;R14C12B&quot;, clk load = 0, ce load = 269, sr load = 0
+  PRIMARY &quot;Controller_inst.int_STM32_TX_DV&quot; from Q1 on comp &quot;Controller_inst.SLICE_3171&quot; on site &quot;R16C10A&quot;, clk load = 0, ce load = 257, sr load = 0
+  PRIMARY &quot;maxfan_replicated_net_1483&quot; from Q0 on comp &quot;SLICE_124&quot; on site &quot;R8C2A&quot;, clk load = 0, ce load = 0, sr load = 257
 
   PRIMARY  : 7 out of 8 (87%)
 
@@ -159,28 +175,32 @@ Global Clocks :
 
 
 I/O Usage Summary (final):
-   20 out of 56 (35.7%) I/O sites used.
-   20 out of 36 (55.6%) bonded I/O sites used.
-   Number of I/O components: 20; differential: 0
+   19 out of 56 (33.9%) I/O sites used.
+   19 out of 36 (52.8%) bonded I/O sites used.
+   Number of I/O components: 19; differential: 0
    Number of Vref pins used: 0
 
 I/O Bank Usage Summary:
-+----------+----------------+------------+------------+------------+
-| I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
-+----------+----------------+------------+------------+------------+
-| 0        | 11 / 14 ( 78%) | 3.3V       |            |            |
-| 1        | 5 / 14 ( 35%)  | 3.3V       |            |            |
-| 2        | 4 / 8 ( 50%)   | 3.3V       |            |            |
-+----------+----------------+------------+------------+------------+
++----------+---------------+------------+------------+------------+
+| I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
++----------+---------------+------------+------------+------------+
+| 0        | 9 / 14 ( 64%) | 3.3V       |            |            |
+| 1        | 6 / 14 ( 42%) | 3.3V       |            |            |
+| 2        | 4 / 8 ( 50%)  | 3.3V       |            |            |
++----------+---------------+------------+------------+------------+
 
-Total Placer CPU time: 25 secs , REAL time: 25 secs 
+Total Placer CPU time: 29 secs , REAL time: 30 secs 
 
 
-Checksum -- place: 80679426b48aacff99dcdbc374acb7efe56515
+Checksum -- place: 2c29af1d11bf95352022c53d5094185c58f48ccb
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
+WARNING &lt;77001032&gt; - par: Unable to find the instance/port &apos;CTRL0_IN&apos; in the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;
 
-Start NBR router at 17:39:34 12/04/25
+WARNING &lt;77001031&gt; - par: In the constraint &apos;ldc_set_location -site {13} [get_ports CTRL0_IN]&apos;, the locate object is not specified
+
+
+Start NBR router at 18:06:38 12/08/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -198,30 +218,30 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-2695 connections routed with dedicated routing resources
+2696 connections routed with dedicated routing resources
 7 global clock signals routed
-6103 connections routed (of 12762 total) (47.82%)
+6085 connections routed (of 12822 total) (47.46%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (7 used out of 8 available):
-#0  Signal &quot;maxfan_replicated_net_1481&quot;
-       Control loads: 260   out of   260 routed (100.00%)
+#0  Signal &quot;maxfan_replicated_net_1483&quot;
+       Control loads: 257   out of   257 routed (100.00%)
        Data    loads: 0     out of     1 routed (  0.00%)
-#1  Signal &quot;Controller_inst.int_STM32_TX_DV&quot;
-       Control loads: 256   out of   256 routed (100.00%)
-       Data    loads: 0     out of    22 routed (  0.00%)
-#3  Signal &quot;Controller_inst.n10524&quot;
-       Control loads: 274   out of   274 routed (100.00%)
+#1  Signal &quot;Controller_inst.n10155&quot;
+       Control loads: 269   out of   269 routed (100.00%)
+#3  Signal &quot;Controller_inst.int_STM32_TX_DV&quot;
+       Control loads: 257   out of   257 routed (100.00%)
+       Data    loads: 0     out of    21 routed (  0.00%)
 #4  Signal &quot;o_reset_c&quot;
-       Control loads: 528   out of   528 routed (100.00%)
+       Control loads: 523   out of   523 routed (100.00%)
        Data    loads: 0     out of     1 routed (  0.00%)
-#5  Signal &quot;Controller_inst.n10546&quot;
-       Control loads: 259   out of   259 routed (100.00%)
+#5  Signal &quot;Controller_inst.n10185&quot;
+       Control loads: 258   out of   258 routed (100.00%)
 #6  Signal &quot;maxfan_replicated_net_999&quot;
-       Control loads: 509   out of   509 routed (100.00%)
+       Control loads: 510   out of   510 routed (100.00%)
        Data    loads: 0     out of    32 routed (  0.00%)
 #7  Signal &quot;pll_clk_int&quot;
-       Clock   loads: 1322  out of  1322 routed (100.00%)
+       Clock   loads: 1315  out of  1315 routed (100.00%)
 Other clocks:
     Signal &quot;i_clk_c&quot;
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -233,21 +253,21 @@ Completed routing resource preassignment
 WARNING &lt;70001944&gt; - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
-Start NBR section for initial routing at 17:39:35 12/04/25
+Start NBR section for initial routing at 18:06:39 12/08/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-160(0.06%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+155(0.06%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 17:39:44 12/04/25
+Start NBR section for normal routing at 18:06:49 12/08/25
 Level 4, iteration 1
-12(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
+17(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 2
-9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
+13(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 3
 1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 4
@@ -255,18 +275,18 @@ Level 4, iteration 4
 Level 4, iteration 5
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 
-Start NBR section for post-routing at 17:39:45 12/04/25
+Start NBR section for post-routing at 18:06:49 12/08/25
 
 End NBR router with 0 unrouted connection
 WARNING &lt;70001944&gt; - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
-Checksum -- route: 9b39130faaa259cc49e922a4344b36db10e41896
+Checksum -- route: 265ea89d88ea56bc39301c19b7fc48d1df2322c2
 
 Total CPU time 13 secs 
-Total REAL time: 13 secs 
+Total REAL time: 14 secs 
 Completely routed.
-End of route.  12762 routed (100.00%); 0 unrouted.
+End of route.  12822 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -284,9 +304,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run &apos;timing&apos; for timing closure signoff.
 
-Total CPU  Time: 39 secs 
-Total REAL Time: 40 secs 
-Peak Memory Usage: 191.91 MB
+Total CPU  Time: 44 secs 
+Total REAL Time: 45 secs 
+Peak Memory Usage: 192.21 MB
 
 
 par done!

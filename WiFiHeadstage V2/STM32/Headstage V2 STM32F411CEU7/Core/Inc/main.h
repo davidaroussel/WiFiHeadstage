@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
+
+
+/* USER CODE BEGIN Private defines */
 #define RDY_nRF_Pin GPIO_PIN_2
 #define RDY_nRF_GPIO_Port GPIOA
 
@@ -105,10 +109,6 @@ void Error_Handler(void);
 
 #define RHS_SPI_CS_Port GPIOD
 #define RHS_SPI_CS_Pin GPIO_PIN_2
-
-
-/* USER CODE BEGIN Private defines */
-
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

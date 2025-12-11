@@ -33,24 +33,18 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_BUFFER_SIZE 256
-uint8_t spi_rx_buffer[SPI_RX_BUFFER_SIZE];
+#define SPI_RX_FPGA_BUFFER_SIZE 256
+uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 
-#define SPI_TX_BUFFER_SIZE 256
-uint8_t spi_tx_buffer[SPI_TX_BUFFER_SIZE];
-//uint8_t spi_tx_buffer[SPI_TX_BUFFER_SIZE] = {
-//    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-//    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
-//    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
-//    0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
-//    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
-//    0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
-//    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
-//    0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F
-//};
+#define SPI_TX_FPGA_BUFFER_SIZE 256
+uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
-uint8_t spi_tx_buffer_zero[SPI_TX_BUFFER_SIZE];
-uint8_t spi_tx_buffer_ones[SPI_TX_BUFFER_SIZE];
+
+#define SPI_RX_nRF_BUFFER_SIZE 256
+uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
+
+#define SPI_TX_nRF_BUFFER_SIZE 256
+uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
 
 /* USER CODE END PD */
 
@@ -75,7 +69,8 @@ DMA_HandleTypeDef hdma_spi4_tx;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
-static void MX_SPI4_Init(void);
+static void SPI4_Master_Init(void);
+static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -83,7 +78,9 @@ static void MX_SPI1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+volatile uint8_t spi_fpga_ready = 0;
+volatile uint8_t spi_nrf_ready = 0;
+volatile uint32_t spi_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -110,31 +107,73 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  for (int i=0; i<SPI_TX_FPGA_BUFFER_SIZE; i++){
+ 	  spi_tx_fpga_buffer[i] = 0x33;
+   }
+
+   for (uint32_t i = 0; i < SPI_TX_nRF_BUFFER_SIZE; i++) {
+       spi_tx_nrf_buffer[i] = 0xAB;
+   }
+
+//   uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_SPI4_Init();
   MX_SPI1_Init();
-
-  HAL_GPIO_WritePin(GPIOA, RDY_nRF_Pin, GPIO_PIN_RESET);   // keep RDY low
-  HAL_GPIO_WritePin(GPIOA, FPGA_MUX_4_Pin | FPGA_MUX_5_Pin, GPIO_PIN_RESET);  // set MUX4 and MUX5 high
   /* USER CODE BEGIN 2 */
-  SPI_HandleTypeDef *hspi;
 
-  printf("Init RHD \r\n");
-  hspi = &hspi4;
-  SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);  //Activate SPI
-  hspi->Instance->CR1 |= SPI_CR1_DFF; 		//Activating the 16bit data mode
-  INIT_RHD(hspi);
-  for (int i = 0; i<1000; i++){
-	  INIT_RHD(hspi);
+  //FOR THE NRF TO WAIT UNTIL EVERYTHING IS READY
+  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+
+
+   // Start SPI4 as MASTER
+  SPI4_Master_Init();
+  HAL_Delay(1000);
+
+  SPI_HandleTypeDef *hspi = &hspi4;
+  int rhd_status = INIT_RHD(hspi);
+
+
+
+   //Poll for RHD detection
+  while (rhd_status == 0) {
+	  rhd_status = INIT_RHD(hspi);
 	  HAL_Delay(1000);
   }
 
-  HAL_GPIO_WritePin(GPIOA, RDY_nRF_Pin, GPIO_PIN_SET);   // keep RDY low
+//  HAL_Delay(500);
+
+  // De-init SPI before changing mode
+  HAL_SPI_DeInit(&hspi4);
+//  HAL_Delay(3000);
+
+  // Re-init as SLAVE
+  SPI4_Slave_Init();
+
+  // Start SPI DMA transmission/reception
+  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+	  Error_Handler();
+  }
+
+  HAL_Delay(500);
+  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
+
+
+  //nRF SECTION
+   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK)
+   {
+ 	  Error_Handler();
+   }
+
+    HAL_Delay(500);
+    printf("F411 SLAVE SIDE - TOGGLE LOW \r\n");
+    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -142,11 +181,27 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+/* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+//	HAL_Delay(1000);
+//	HAL_GPIO_TogglePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin);
+//	HAL_GPIO_TogglePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin);
+	if (spi_fpga_ready)
+	{
+	  spi_fpga_ready = 0; // clear flag
+
+	}
+//	if (spi_nrf_ready)
+//	{
+//	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+//	  spi_nrf_ready = 0; // clear flag
+//
+//	  HAL_Delay(1000);
+//	  HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+//	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+//
+//	}
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -155,44 +210,77 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-  */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+    /** Configure the main internal regulator output voltage */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 200;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /** Initializes the RCC Oscillators according to the specified parameters */
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLM = 16;     // HSE / PLLM = 1 MHz
+    RCC_OscInitStruct.PLL.PLLN = 128;    // VCO = 200 MHz
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4; // SYSCLK = 100 MHz
+    RCC_OscInitStruct.PLL.PLLQ = 4;      // USB clock (optional)
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+    /** Initializes the CPU, AHB and APB buses clocks */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
+    {
+        Error_Handler();
+    }
 }
+
+//void SystemClock_Config(void)
+//{
+//  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+//  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+//
+//  /** Configure the main internal regulator output voltage
+//  */
+//  __HAL_RCC_PWR_CLK_ENABLE();
+//  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+//
+//  /** Initializes the RCC Oscillators according to the specified parameters
+//  * in the RCC_OscInitTypeDef structure.
+//  */
+//  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+//  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+//  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+//  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+//  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//
+//  /** Initializes the CPU, AHB and APB buses clocks
+//  */
+//  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+//                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+//  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+//  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+//  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+//  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+//
+//  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//}
 
 /**
   * @brief SPI1 Initialization Function
@@ -213,7 +301,7 @@ static void MX_SPI1_Init(void)
   hspi1.Instance = SPI1;
   hspi1.Init.Mode = SPI_MODE_SLAVE;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_HARD_INPUT;
@@ -236,36 +324,62 @@ static void MX_SPI1_Init(void)
   * @param None
   * @retval None
   */
-static void MX_SPI4_Init(void)
+static void SPI4_Master_Init(void)
 {
 
-  /* USER CODE BEGIN SPI4_Init 0 */
+	  /* SPI4 parameter configuration */
+	  hspi4.Instance = SPI4;
+	  hspi4.Init.Mode = SPI_MODE_MASTER;
+	  hspi4.Init.Direction = SPI_DIRECTION_2LINES;
+	  hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
+	  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 0
+	  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 0
+	  hspi4.Init.NSS = SPI_NSS_SOFT;
+	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+	  hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	  hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
+	  hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+	  hspi4.Init.CRCPolynomial = 10;
 
-  /* USER CODE END SPI4_Init 0 */
+	  if (HAL_SPI_Init(&hspi4) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
 
-  /* USER CODE BEGIN SPI4_Init 1 */
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin   = RHD_SPI_CS_Pin;
+	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
+}
 
-  /* USER CODE END SPI4_Init 1 */
-  /* SPI4 parameter configuration*/
-  hspi4.Instance = SPI4;
-  hspi4.Init.Mode = SPI_MODE_SLAVE;
-  hspi4.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
-  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi4.Init.NSS = SPI_NSS_HARD_INPUT;
-  hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi4.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi4) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI4_Init 2 */
 
-  /* USER CODE END SPI4_Init 2 */
 
+static void SPI4_Slave_Init(void)
+{
+    hspi4.Instance = SPI4;
+    hspi4.Init.Mode = SPI_MODE_SLAVE;
+    hspi4.Init.Direction = SPI_DIRECTION_2LINES;
+    hspi4.Init.DataSize = SPI_DATASIZE_8BIT;
+    hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
+    hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
+    hspi4.Init.NSS = SPI_NSS_HARD_INPUT;  // SLAVE → external NSS
+    hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
+    hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
+    hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+    hspi4.Init.CRCPolynomial = 10;
+
+    if (HAL_SPI_Init(&hspi4) != HAL_OK){
+        Error_Handler();
+    }
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = RHD_SPI_CS_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
+	HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
 }
 
 /**
@@ -311,7 +425,9 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RDY_nRF_Pin|FPGA_MUX_5_Pin|FPGA_MUX_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
   GPIO_InitStruct.Pin = RDY_nRF_Pin|FPGA_MUX_5_Pin|FPGA_MUX_4_Pin;
@@ -326,7 +442,26 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI1)
+    {
+        spi_counter++;
+        spi_nrf_ready = 1;
 
+    }
+
+    else  if (hspi->Instance == SPI4)
+    {
+        spi_counter++;
+        spi_fpga_ready = 1;
+        if (spi_counter <1000){
+
+        // Restart DMA immediately
+        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+        }
+   }
+}
 /* USER CODE END 4 */
 
 /**

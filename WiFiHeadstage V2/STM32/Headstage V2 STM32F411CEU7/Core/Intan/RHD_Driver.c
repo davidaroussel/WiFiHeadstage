@@ -7,7 +7,7 @@
 
 #include "Intan_utils.h"
 
-void INIT_RHD(SPI_HandleTypeDef *hspi){
+int INIT_RHD(SPI_HandleTypeDef *hspi){
 	uint16_t tx_vector;
 	uint16_t rx_vector[1];
 	uint8_t data_size = 1; //Number of Bytes to send
@@ -17,6 +17,7 @@ void INIT_RHD(SPI_HandleTypeDef *hspi){
 	uint8_t bit_shifting = 1;
 	const char *rhd_versions[] = {"RHD2132", "RHD2216", "RHD2164"};
 	const char *rhd_detected = rhd_versions[2];
+	int intan_connected = 1;
 	//SET CS_PIN
 	RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
 
@@ -26,6 +27,45 @@ void INIT_RHD(SPI_HandleTypeDef *hspi){
 		SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 
 	}
+
+	//Read Register 63
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+
+	//Send dummy CMD to RECV N-2 MISO
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+
+	//Send dummy CMD to RECV N-2 MISO
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+	if (formated_value == 0x01){
+		rhd_detected = rhd_versions[0];
+	}
+	else if (formated_value == 0x02){
+		rhd_detected = rhd_versions[1];
+	}
+	else if (formated_value == 0x04){
+		rhd_detected = rhd_versions[2];
+	}
+	else
+	{
+		intan_connected = 0;
+		return intan_connected;
+	}
+
 
 	// Register 0 - ADC config.
 	reg_address = 0b10000000;
@@ -264,6 +304,22 @@ void INIT_RHD(SPI_HandleTypeDef *hspi){
 	printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
 	printf("------------------------------------------------  \r\n");
 
+	//Read Register 63
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+
+	//Send dummy CMD to RECV N-2 MISO
+	reg_address = 0b11111111;
+	reg_value = 0b00000000;
+	tx_vector = (reg_address << 8) | reg_value;
+	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
+	formated_value = rx_vector[0] << bit_shifting;
+
+
 	//Send dummy CMD to RECV N-2 MISO
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
@@ -277,9 +333,20 @@ void INIT_RHD(SPI_HandleTypeDef *hspi){
 	else if (formated_value == 0x02){
 		rhd_detected = rhd_versions[1];
 	}
+	else if (formated_value == 0x04){
+		rhd_detected = rhd_versions[2];
+	}
+	else
+	{
+		intan_connected = 0;
+		return intan_connected;
+	}
 
 	printf("Char Receiving Data - CHIP ID : %s - 0x%04X \r\n", rhd_detected, formated_value);
 	printf("------------------------------------------------  \r\n");
+
+
+	return intan_connected;
 
  }
 

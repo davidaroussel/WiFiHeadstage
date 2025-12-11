@@ -6,13 +6,13 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 1;
-        STM32_CS_INACTIVE_CLKS        : integer := 4;
+        STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD_CLKS_PER_HALF_BIT       : integer := 1;
-        RHD_CS_INACTIVE_CLKS        : integer := 4
+        RHD_CS_INACTIVE_CLKS        : integer := 8
 		
     );
     port (
@@ -201,17 +201,6 @@ begin
 			int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
 		end if;
 
-			---- Normal mode: controller handles communication
-		--o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
-		--o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
-		--o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
-		--int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
-
-
-		--o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
-		--o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
-		--o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
-		--int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
 	end process;
 	
 
@@ -227,40 +216,40 @@ begin
             else
                 w_reset <= '0';  
 
-				case int_MODE_STATUS is 
-					when 0 => 
-						if CTRL0_IN = '1' then
-							w_Controller_Mode <= x"1";
-							int_MODE_STATUS <= 0;
-						elsif CTRL0_IN = '0' then
-							int_MODE_STATUS <= 1;
-						end if;
-					when 1 =>
-						if CTRL0_IN = '1' then
-							int_MODE_STATUS <= 0;
-						elsif CTRL0_IN = '0' then
-							w_Controller_Mode <= x"2";
-							int_MODE_STATUS <= 1;
-						end if;
+				--case int_MODE_STATUS is 
+					--when 0 => 
+						--if CTRL0_IN = '1' then
+							--w_Controller_Mode <= x"2";
+							--int_MODE_STATUS <= 0;
+						--elsif CTRL0_IN = '0' then
+							--int_MODE_STATUS <= 1;
+						--end if;
+					--when 1 =>
+						--if CTRL0_IN = '1' then
+							--int_MODE_STATUS <= 0;
+						--elsif CTRL0_IN = '0' then
+							--w_Controller_Mode <= x"1";
+							--int_MODE_STATUS <= 1;
+						--end if;
 
-					when others =>
-						null;
-				end case;
-				stop_counting <= '1';
-				
-				---- Controller mode sequencing
-				--case reset_counter is
-					--when 50 =>
-						--w_Controller_Mode <= x"1";
-						
-					--when 360000 =>
-						--w_Controller_Mode <= x"2";
-						--stop_counting <= '1';
-
-						
 					--when others =>
 						--null;
 				--end case;
+				--stop_counting <= '1';
+				
+				----Controller mode sequencing
+				case reset_counter is
+					when 50 =>
+						w_Controller_Mode <= x"1";
+						
+					when 72000000 =>
+						w_Controller_Mode <= x"2";
+						stop_counting <= '1';
+
+						
+					when others =>
+						null;
+				end case;
 				
 			end if;
 			
