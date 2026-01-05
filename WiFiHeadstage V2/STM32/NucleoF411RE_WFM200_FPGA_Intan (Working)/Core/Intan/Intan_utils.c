@@ -1,14 +1,10 @@
-/*
- * utils.c
- *
- *  Created on: May 6, 2021
- *      Author: SimonTam
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "Task_Apps_Start.h"
 
+
+//MISOSPLIT FROM SIMON TAM
 void misosplit(uint16_t data, uint8_t* a, uint8_t* b)
 {
 	uint8_t aa = 0;
@@ -30,35 +26,71 @@ void misosplit(uint16_t data, uint8_t* a, uint8_t* b)
 }
 
 
-void mosimerge(uint16_t data_in, uint32_t* data_out)
-{
+void SPI_SEND_RECV(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_ptr, uint8_t size) {
+	uint16_t Size = size;
 
-//	data_out[0] = data_in & 0x00;
-//	data_out[1] = data_in & 0x0F;
-//	data_out[0], data_out[1] = data_in & 0x00;
-//	data_out[2], data_out[3] = data_in & 0x01;
-//	data_out[4], data_out[5] = data_in & 0x02;
-//	data_out[6], data_out[7] = data_in & 0x03;
-//	data_out[8], data_out[9] = data_in & 0x04;
-//	data_out[10], data_out[11] = data_in & 0x05;
-//	data_out[12], data_out[13] = data_in & 0x06;
-//	data_out[14], data_out[15] = data_in & 0x07;
-//
-//	data_out[16], data_out[17] = data_in & 0x08;
-//	data_out[18], data_out[19] = data_in & 0x09;
-//	data_out[20], data_out[21] = data_in & 0x0a;
-//	data_out[22], data_out[23] = data_in & 0x0b;
-//	data_out[24], data_out[25] = data_in & 0x0c;
-//	data_out[26], data_out[27] = data_in & 0x0d;
-//	data_out[28], data_out[29] = data_in & 0x0e;
-//	data_out[30], data_out[31] = data_in & 0x0f;
+	/* Variable used to alternate Rx and Tx during transfer */
+	uint32_t txallowed = 1U;
+
+	/* Don't overwrite in case of HAL_SPI_STATE_BUSY_RX */
+	if (hspi->State != HAL_SPI_STATE_BUSY_RX) {
+		hspi->State = HAL_SPI_STATE_BUSY_TX_RX;
+	}
+
+	/* Set the transaction information */
+	hspi->ErrorCode = HAL_SPI_ERROR_NONE;
+	hspi->pRxBuffPtr = (uint8_t *)rx_ptr;
+	hspi->RxXferCount = Size;
+	hspi->RxXferSize = Size;
+	hspi->pTxBuffPtr = (uint8_t *)tx_ptr;
+	hspi->TxXferCount = Size;
+	hspi->TxXferSize = Size;
+
+	/* Init field not used in handle to zero */
+	hspi->RxISR = NULL;
+	hspi->TxISR = NULL;
+
+	/* Check if the SPI is already enabled */
+	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) {
+		/* Enable SPI peripheral */
+		__HAL_SPI_ENABLE(hspi);
+	}
+
+	// RESET CS_PIN
+	if (hspi->Instance == SPI3) {
+		RHS_SPI_CS_Port->BSRR = (uint32_t)RHS_SPI_CS_Pin << 16U;
+	} else if (hspi->Instance == SPI4) {
+		RHD_SPI_CS_Port->BSRR = (uint32_t)RHD_SPI_CS_Pin << 16U;
+	}
+
+	while ((hspi->TxXferCount > 0U) || (hspi->RxXferCount > 0U)) {
+		/* Check TXE flag */
+		if ((__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_TXE)) && (hspi->TxXferCount > 0U) && (txallowed == 1U)) {
+			hspi->Instance->DR = *((uint16_t *)hspi->pTxBuffPtr);
+			hspi->pTxBuffPtr += sizeof(uint16_t);
+			hspi->TxXferCount--;
+			/* Next Data is a reception (Rx). Tx not allowed */
+			txallowed = 0U;
+		}
+
+		/* Check RXNE flag */
+		if ((__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_RXNE)) && (hspi->RxXferCount > 0U)) {
+			*((uint16_t *)hspi->pRxBuffPtr) = (uint16_t)hspi->Instance->DR;
+			hspi->pRxBuffPtr += sizeof(uint16_t);
+			hspi->RxXferCount--;
+			/* Next Data is a Transmission (Tx). Tx is allowed */
+			txallowed = 1U;
+		}
+	}
+
+	// SET CS_PIN
+	if (hspi->Instance == SPI3){
+		RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
+	} else if (hspi->Instance == SPI4) {
+		RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
+	}
 }
 
-
-
-void convert_RHD_to_mV(){
-
-}
 
 
 void config_intan(SPI_HandleTypeDef *hspi)
@@ -173,3 +205,113 @@ void config_intan(SPI_HandleTypeDef *hspi)
 	tx[1] = 0b0000000000000000;
 	SPI_SEND_RECV(hspi, tx, rx, message_size);
 }
+
+
+
+void Dummy_Task_RHD2164_Startup(void const *arg){
+	uint16_t tx_vector[2];
+	uint16_t rx_vector[2];
+	uint8_t last_bit[1];
+
+	uint8_t DATA_CH0[2];
+	uint8_t DATA_CH32[2];
+
+	uint16_t UDP_vector[32][2];
+
+	uint16_t counter = 0;
+
+	spi_to_udp_t spi_message = {0};
+
+	SPI_HandleTypeDef *hspi;
+
+	spi_flag = true;
+	int last_bit_testing[1];
+//	uint16_t tx_16b[1];
+//	uint32_t tx_32b[1];
+//	tx_16b[0] = 0b1110101100000000;
+//	mosimerge(tx_16b[0], tx_32b[0]);
+//	printf("Sending Data: %x Receiving %x \r\n",  tx_16b[0], tx_32b[0]);
+
+	spi_message.spi_task_id = 1;
+	spi_message.message_lenght = sizeof(rx_vector)/2;
+
+	uint16_t convert0_cmd[2];
+	convert0_cmd[0] = 0b0000000000000000;
+	convert0_cmd[1] = 0b0000000000000000;
+	SPI_SEND_RECV_32(hspi, convert0_cmd, rx_vector, last_bit_testing);
+
+	uint16_t convert63_cmd[2];
+	convert63_cmd[0] = 0b0000111111111111;
+	convert63_cmd[1] = 0b0000000000000000;
+
+
+	uint16_t intan_cmd[5][2];
+	intan_cmd[0][0] = 0b1111110011001100;
+	intan_cmd[0][1] = 0b0000000000000000;
+
+	intan_cmd[1][0] = 0b1111110011001111;
+	intan_cmd[1][1] = 0b0000000000000000;
+
+	signed short int FINAL_DATA_CH0[1];
+	signed short int FINAL_DATA_CH32[1];
+
+	float CH0_31_value[32];
+	float CH32_63_value[32];
+
+	float temp_value_0;
+	float temp_value_32;
+
+	uint8_t data_size = 2; //Number of 16bits packet to send
+
+	config_intan(&hspi); //TODO CONFIRMER SI POINTEUR OU PAS POUR hspi
+
+
+    while(1)
+	{
+    	if (spi_flag){
+    		spi_flag = false;
+			for (int i = 0; i< 32; i++){
+				SPI_SEND_RECV(hspi, &convert63_cmd, rx_vector, data_size); //TODO CONFIRMER SI POINTEUR OU PAS POUR TX
+				(hspi, convert63_cmd, rx_vector, last_bit_testing);
+				//MSB
+				misosplit(rx_vector[0], &DATA_CH32[0], &DATA_CH0[0]);
+				//LSB
+				misosplit(rx_vector[1], &DATA_CH32[1], &DATA_CH0[1]);
+			}
+
+
+
+
+//			FINAL_DATA_CH0[0] = (((DATA_CH0[0] <<8) | DATA_CH0[1]));
+//			temp_value_0 = (FINAL_DATA_CH0[0] * RHD64_ADC_CONVERSION) / 1000;	//16 bit resolution  to 5mV scale
+//
+//			FINAL_DATA_CH32[0] = (((DATA_CH32[0]<<8) | DATA_CH32[1]));
+//			temp_value_32 = (FINAL_DATA_CH32[0] * RHD64_ADC_CONVERSION)/1000;	//16 bit resolution  to 5mV scale
+//
+//			printf("Sending Data: %x - %x \r\n",  intan_cmd[0][0], intan_cmd[0][1]);
+//			printf("CH0  Data: %x | %.3f mV \r\n", FINAL_DATA_CH0[0], temp_value_0);
+//			printf("CH32 Data: %x | %.3f mV\r\n", FINAL_DATA_CH32[0], temp_value_32);
+
+
+//			SPI_SEND_RECV_32(hspi, intan_cmd[1], rx_vector, last_bit_testing);
+//			//MSB
+//			misosplit(rx_vector[0], &DATA_CH32[0], &DATA_CH0[0]);
+//			//LSB
+//			misosplit(rx_vector[1], &DATA_CH32[1], &DATA_CH0[1]);
+//
+//			printf("Sending Data: %x - %x \r\n",   intan_cmd[1][0],  intan_cmd[1][1]);
+//			data_intan = DATA_CH0[1];
+//			printf("CH0  Data: %x - %x | %c \r\n",  DATA_CH0[0], DATA_CH0[1], data_intan);
+//			data_intan = DATA_CH32[1];
+//			printf("CH32 Data: %x - %x | %c \r\n",  DATA_CH32[0], DATA_CH32[1], data_intan);
+
+
+
+    	}
+		else{
+			HAL_Delay(1);
+		}
+	}
+
+}
+

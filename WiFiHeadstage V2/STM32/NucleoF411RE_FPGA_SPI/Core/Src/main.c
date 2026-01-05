@@ -37,14 +37,13 @@ uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 #define SPI_TX_FPGA_BUFFER_SIZE 256
 uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
-
-#define SPI_RX_nRF_BUFFER_SIZE 256
-uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
-
-#define SPI_TX_nRF_BUFFER_SIZE 256
-uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
-
-
+#define FPGA_CHUNK_SIZE 256
+#define FPGA_ACCUM_SIZE 8192
+#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE + 4) // 2B header + payload + 2B footer
+uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
+uint32_t fpga_accum_index = 0;
+uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
+uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
 
 
 
@@ -85,6 +84,7 @@ static void MX_USART2_UART_Init(void);
 static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
+static void Prepare_nRF_Frame(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -94,7 +94,7 @@ static void MX_SPI1_Init(void);
 volatile uint8_t spi_fpga_ready = 0;
 volatile uint8_t spi_nrf_ready = 0;
 volatile uint32_t spi_counter = 0;
-
+volatile uint8_t fpga_frame_ready = 0;
 /* USER CODE END 0 */
 
 /**
@@ -124,15 +124,8 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   for (int i=0; i<SPI_TX_FPGA_BUFFER_SIZE; i++){
-	  spi_tx_fpga_buffer[i] = 0x33;
+	  spi_tx_fpga_buffer[i] = i%255;
   }
-
-  for (uint32_t i = 0; i < SPI_TX_nRF_BUFFER_SIZE; i++) {
-      spi_tx_nrf_buffer[i] = 0xAB;
-  }
-
-  uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
-  printf("[INFO] FPGA loops required to transfer full nRF buffer: %u (nRF buffer: %u bytes, FPGA buffer: %u bytes)\r\n", fpga_nrf_loops, SPI_RX_nRF_BUFFER_SIZE, SPI_RX_FPGA_BUFFER_SIZE);
 
 
   /* USER CODE END SysInit */
@@ -145,60 +138,52 @@ int main(void)
 
   //FOR THE NRF TO WAIT UNTIL EVERYTHING IS READY
    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
-   HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_SET);
+   HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
 
-//  // Start SPI4 as MASTER
-//  SPI4_Master_Init();
+  // Start SPI4 as MASTER
+  SPI4_Master_Init();
 //  printf("[INFO] SPI MASTER mode initialized.\r\n");
 //  HAL_Delay(1000);
-//
-//  SPI_HandleTypeDef *hspi = &hspi4;
-//  int rhd_status = INIT_RHD(hspi);
-//
-//  // Poll for RHD detection
-//  while (rhd_status == 0) {
-//      printf("[WARN] RHD not detected. Retrying...\r\n");
-//      rhd_status = INIT_RHD(hspi);
+
+  SPI_HandleTypeDef *hspi = &hspi4;
+  int rhd_status = INIT_RHD(hspi);
+
+  // Poll for RHD detection
+  while (rhd_status == 0) {
+      printf("[WARN] RHD not detected. Retrying...\r\n");
+      rhd_status = INIT_RHD(hspi);
 //      HAL_Delay(1000);
-//  }
-//  printf("[INFO] RHD detected via FPGA.\r\n");
-//
+  }
+  printf("[INFO] RHD detected via FPGA.\r\n");
+
 //  HAL_Delay(500);
-//  printf("[INFO] Initializing RHD in passthrough mode...\r\n");
-//
-//  // De-init SPI before changing mode
-//  HAL_SPI_DeInit(&hspi4);
-//  printf("[INFO] SPI deinitialized.\r\n");
+  printf("[INFO] Initializing RHD in passthrough mode...\r\n");
+
+  // De-init SPI before changing mode
+  HAL_SPI_DeInit(&hspi4);
+  printf("[INFO] SPI deinitialized.\r\n");
 //  HAL_Delay(1000);
-//
-//  // Re-init as SLAVE
-//  SPI4_Slave_Init();
-//  printf("[INFO] SPI SLAVE mode initialized.\r\n");
-//
-//  // Start SPI DMA transmission/reception
-//  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
-//      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
-//      Error_Handler();
-//  }
-//
-//  printf("[INFO] Sending RDY_FPGA signal...\r\n");
-//  HAL_Delay(500);
-//  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
-//  printf("[INFO] RDY_FPGA pin set LOW.\r\n");
+
+  // Re-init as SLAVE
+  SPI4_Slave_Init();
+  printf("[INFO] SPI SLAVE mode initialized.\r\n");
+
+  // Start SPI DMA transmission/reception
+  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
+      Error_Handler();
+  }
+
+  printf("[INFO] Sending RDY_FPGA signal...\r\n");
+//  HAL_Delay(1000);
+  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_SET);
+  printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 
 
 
 
 // nRF SECTION
 
-  if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK)
-  {
-	  Error_Handler();
-  }
-
-   HAL_Delay(500);
-   printf("F411 SLAVE SIDE - TOGGLE LOW \r\n");
-   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 
 
 
@@ -207,47 +192,106 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-
+//  while (1)
+//  {
+//
 //      if (spi_fpga_ready)
 //      {
 //    	  spi_fpga_ready = 0; // clear flag
 //
-//          if (spi_counter % 10000 == 0)
-//          {
-//              printf("%lu: ", spi_counter);
+////          if (spi_counter % 100 == 0)
+////          {
+////              printf("%lu: ", spi_counter);
+////
+////              for (int i = 0; i < SPI_RX_FPGA_BUFFER_SIZE; i+=2)
+////              {
+////                  printf("%02X%02X ", spi_rx_fpga_buffer[i], spi_rx_fpga_buffer[i+1]);
+////              }
+////              printf("\r\n");
+////              printf("\r\n");
+////          }
 //
-//              for (int i = 0; i < SPI_RX_FPGA_BUFFER_SIZE; i+=2)
-//              {
-//                  printf("%02X%02X ", spi_rx_fpga_buffer[i], spi_rx_fpga_buffer[i+1]);
-//              }
-//              printf("\r\n");
-//              printf("\r\n");
-//          }
 //
-      if (spi_nrf_ready)
+//    	  // Safety: prevent overflow
+//		if (fpga_accum_index + SPI_RX_FPGA_BUFFER_SIZE <= FPGA_ACCUM_SIZE)
+//		{
+//		  memcpy(&fpga_accum_buffer[fpga_accum_index],
+//				 spi_rx_fpga_buffer,
+//				 SPI_RX_FPGA_BUFFER_SIZE);
+//
+//		  fpga_accum_index += SPI_RX_FPGA_BUFFER_SIZE;
+//		}
+//
+//		// Full frame ready (8192 bytes)
+//		if (fpga_accum_index >= FPGA_ACCUM_SIZE)
+//		{
+//		  fpga_frame_ready = 1;
+//		  fpga_accum_index = 0;
+//		}
+//
+//
+//      }
+//      if (spi_nrf_ready)
+//      {
+//    	  spi_nrf_ready = 0; // clear flag
+//    	  Prepare_nRF_Frame();
+////          if (spi_counter % 10 == 0)
+////          {
+////              printf("%lu: ", spi_counter);
+////
+////              for (int i = 0; i < SPI_RX_nRF_BUFFER_SIZE; i+=2)
+////              {
+////                  printf("%02X%02X ", spi_rx_nrf_buffer[i], spi_rx_nrf_buffer[i+1]);
+////              }
+////              printf("\r\n");
+////              printf("\r\n");
+////          }
+////          HAL_Delay(1);
+//          HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+//          HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+//
+//      }
+//  }
+
+  while (1)
+  {
+      if (spi_fpga_ready)
+      {
+          spi_fpga_ready = 0;
+
+          memcpy(&fpga_accum_buffer[fpga_accum_index],
+                 spi_rx_fpga_buffer,
+                 SPI_RX_FPGA_BUFFER_SIZE);
+
+          fpga_accum_index += SPI_RX_FPGA_BUFFER_SIZE;
+
+          if (fpga_accum_index >= FPGA_ACCUM_SIZE)
+          {
+              fpga_accum_index = 0;
+              fpga_frame_ready = 1;   // mark frame complete
+          }
+      }
+
+      // 🔽 THIS BLOCK GOES HERE 🔽
+      if (fpga_frame_ready)
       {
     	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
-    	  spi_nrf_ready = 0; // clear flag
+          fpga_frame_ready = 0;
+          spi_nrf_ready = 1;
+      }
 
-          if (spi_counter % 1 == 0)
-          {
-              printf("%lu: ", spi_counter);
+      if (spi_nrf_ready)
+      {
+          spi_nrf_ready = 0;
 
-              for (int i = 0; i < SPI_RX_FPGA_BUFFER_SIZE; i+=2)
-              {
-                  printf("%02X%02X ", spi_rx_nrf_buffer[i], spi_rx_nrf_buffer[i+1]);
-              }
-              printf("\r\n");
-              printf("\r\n");
-          }
-          HAL_Delay(1000);
-          HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+          Prepare_nRF_Frame();
+
+          HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+
           HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
-
       }
   }
+
   /* USER CODE END 3 */
 }
 
@@ -316,7 +360,7 @@ static void MX_SPI1_Init(void)
     hspi1.Instance = SPI1;
 	hspi1.Init.Mode = SPI_MODE_SLAVE;
 	hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-	hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
+	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
 	hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
 	hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
 	hspi1.Init.NSS = SPI_NSS_HARD_INPUT;  // SLAVE → external NSS
@@ -364,7 +408,6 @@ static void SPI4_Master_Init(void)
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
 }
-
 
 
 static void SPI4_Slave_Init(void)
@@ -500,8 +543,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
     if (hspi->Instance == SPI1)
     {
-        spi_counter++;
-        spi_nrf_ready = 1;
+
 
     }
 
@@ -509,12 +551,36 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
     {
         spi_counter++;
         spi_fpga_ready = 1;
-
+//        printf("SPI_COUNTER %i \r\n", spi_counter);
         // Restart DMA immediately
         HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+        if (spi_counter == 32){
+        	spi_nrf_ready = 1;
+        	spi_counter = 0;
+        }
     }
 }
 
+
+static void Prepare_nRF_Frame(void)
+{
+//	printf("PREPARE FRAME \r\n");
+
+    nrf_tx_buffer[0] = 0xAA;
+    nrf_tx_buffer[1] = 0x55;
+
+    memcpy(&nrf_tx_buffer[2],
+           fpga_accum_buffer,
+           FPGA_ACCUM_SIZE);
+
+    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x55;
+    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xAA;
+
+//    for(int i=0; i<NRF_FRAME_SIZE; i+=2)
+//		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+//	printf("\r\n\r\n");
+
+}
 
 /**
   * @brief  Retargets the C library printf function to the USART.

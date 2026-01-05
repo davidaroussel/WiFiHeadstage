@@ -5,13 +5,13 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 1;
+        STM32_CLKS_PER_HALF_BIT       : integer := 2;
         STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 1;
+        RHD_CLKS_PER_HALF_BIT       : integer := 2;
         RHD_CS_INACTIVE_CLKS        : integer := 8
 		
     );
@@ -237,7 +237,7 @@ begin
 				--end case;
 				--stop_counting <= '1';
 				
-				----Controller mode sequencing
+				--Controller mode sequencing
 				case reset_counter is
 					when 50 =>
 						w_Controller_Mode <= x"1";
