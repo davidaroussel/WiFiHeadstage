@@ -68,20 +68,20 @@ if __name__ == "__main__":
 
     retVal_list = []
     OE_config = OpenEphys_Configuration()
-    # if CONFIGURE_OPENEPHYS:
-    #     retVal_list.append(OE_config.get_GUI_status())
-    #     retVal_list.append(OE_config.get_GUI_recording_node())
-    #     retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
-    #     retVal_list.append(OE_config.get_ES_processor_id())
-    #     retVal_list.append(OE_config.get_ES_info())
-    #     retVal_list.append(OE_config.set_ES_scale(0.195))
-    #     retVal_list.append(OE_config.set_ES_offset(32768))
-    #     retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
-    #     retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
-    #     retVal_list.append(OE_config.get_ES_info())
-    # if PRINT_OE_INFO:
-    #     for retVal in retVal_list:
-    #         print(retVal)
+    if CONFIGURE_OPENEPHYS:
+        retVal_list.append(OE_config.get_GUI_status())
+        retVal_list.append(OE_config.get_GUI_recording_node())
+        retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+        retVal_list.append(OE_config.get_ES_processor_id())
+        retVal_list.append(OE_config.get_ES_info())
+        retVal_list.append(OE_config.set_ES_scale(0.195))
+        retVal_list.append(OE_config.set_ES_offset(32768))
+        retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
+        retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
+        retVal_list.append(OE_config.get_ES_info())
+    if PRINT_OE_INFO:
+        for retVal in retVal_list:
+            print(retVal)
 
     #CONSTRUCTORS
     QUEUE_RAW_DATA   = Queue()
@@ -92,8 +92,9 @@ if __name__ == "__main__":
     TASK_Manual_TTL    = TTL_Controller(OE_config, ttl_channel_key_mapping, port=TTL_EVENT_PORT, ip_addr=HOST_ADDR)
     TASK_CSVWriter     = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
-    #START THREADS
+    # START THREADS
     TASK_WiFiServer.startThread(TASK_WiFiServer.m_socketConnectionThread)
+
     while not TASK_WiFiServer.m_connected:
         time.sleep(0.5)
 

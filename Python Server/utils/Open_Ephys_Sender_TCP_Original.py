@@ -5,9 +5,9 @@ import numpy as np
 
 # ---- SPECIFY THE SIGNAL PROPERTIES ---- #
 totalDuration = 100  # the total duration of the signal
-numChannels = 4  # number of channels to send
-numSamples = 500  # size of the data buffer
-Freq = 30000  # sample rate of the signal
+numChannels = 32  # number of channels to send
+numSamples = 8192  # size of the data buffer
+Freq = 25000  # sample rate of the signal
 testingValue1 = 5000  # high value
 testingValue2 = -5000  # low value
 
@@ -40,7 +40,7 @@ allData = np.tile(oneCycle, (numChannels, totalDuration)).T
 
 # ---- CREATE THE SOCKET SERVER ---- #
 tcpServer = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
-tcpServer.bind(('localhost', 10001))
+tcpServer.bind(('localhost', 10003))
 tcpServer.listen(1)
 
 print("Waiting for external connection to start...")
