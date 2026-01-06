@@ -9,7 +9,7 @@ I/O cells:      22
                                CCU2       121          100.0
                             FD1P3XZ      2491          100.0
                                  IB         2          100.0
-                               LUT4       995          100.0
+                               LUT4      1004          100.0
                                  OB        17          100.0
                               PLL_B         1          100.0
 SUB MODULES
@@ -25,7 +25,7 @@ FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,AL
 SPI_Master(num_of_bits_per_packet=512)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=8)         1
-                              TOTAL      3643
+                              TOTAL      3652
 ----------------------------------------------------------------------
 Report for cell CLK_48MHz.v1
 Instance Path : pll_inst
@@ -50,7 +50,7 @@ Instance Path : Controller_inst
                               EBR_B         1          100.0
                                 FA2       106           87.6
                             FD1P3XZ      2457           98.6
-                               LUT4       902           90.7
+                               LUT4       917           91.3
 SUB MODULES
 Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=8)         1
                            FIFO_MEM         1
@@ -61,7 +61,7 @@ FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,AL
 SPI_Master(num_of_bits_per_packet=512)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=8)         1
-                              TOTAL      3475
+                              TOTAL      3490
 ----------------------------------------------------------------------
 Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=8).v1
 Instance Path : Controller_inst.SPI_Master_CS_STM32_1
@@ -69,10 +69,10 @@ Instance Path : Controller_inst.SPI_Master_CS_STM32_1
                                cell     count   Res Usage(%)
                                 FA2        16           13.2
                             FD1P3XZ       558           22.4
-                               LUT4       432           43.4
+                               LUT4       439           43.7
 SUB MODULES
 SPI_Master(num_of_bits_per_packet=512)         1
-                              TOTAL      1007
+                              TOTAL      1014
 ----------------------------------------------------------------------
 Report for cell SPI_Master(num_of_bits_per_packet=512).v1
 Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
@@ -80,8 +80,8 @@ Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
                                cell     count   Res Usage(%)
                                 FA2        11            9.1
                             FD1P3XZ       540           21.7
-                               LUT4       398           40.0
-                              TOTAL       949
+                               LUT4       408           40.6
+                              TOTAL       959
 ----------------------------------------------------------------------
 Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=8).v1
 Instance Path : Controller_inst.Controller_RHD_FIFO_1
@@ -90,7 +90,7 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1
                               EBR_B         1          100.0
                                 FA2        18           14.9
                             FD1P3XZ       225            9.0
-                               LUT4       162           16.3
+                               LUT4       155           15.4
 SUB MODULES
                            FIFO_MEM         1
 FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=127,ALMOST_FULL_DEASSERT_LVL=126,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
@@ -98,7 +98,7 @@ FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,AL
 FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=128,ADDRESS_WIDTH=7,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=127,ALMOST_FULL_DEASSERT_LVL=126,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
                          SPI_Master         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8)         1
-                              TOTAL       412
+                              TOTAL       405
 ----------------------------------------------------------------------
 Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8).v1
 Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1
@@ -106,10 +106,10 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1
                                cell     count   Res Usage(%)
                                 FA2         4            3.3
                             FD1P3XZ        70            2.8
-                               LUT4       104           10.5
+                               LUT4        97            9.7
 SUB MODULES
                          SPI_Master         1
-                              TOTAL       179
+                              TOTAL       172
 ----------------------------------------------------------------------
 Report for cell SPI_Master.v1
 Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1
@@ -117,8 +117,8 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master
                                cell     count   Res Usage(%)
                                 FA2         4            3.3
                             FD1P3XZ        57            2.3
-                               LUT4        76            7.6
-                              TOTAL       137
+                               LUT4        74            7.4
+                              TOTAL       135
 ----------------------------------------------------------------------
 Report for cell FIFO_MEM.v1
 Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1

@@ -242,7 +242,7 @@ begin
 					when 50 =>
 						w_Controller_Mode <= x"1";
 						
-					when 72000000 =>
+					when 36000000 =>
 						w_Controller_Mode <= x"2";
 						stop_counting <= '1';
 

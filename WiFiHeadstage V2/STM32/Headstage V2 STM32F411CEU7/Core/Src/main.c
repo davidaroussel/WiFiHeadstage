@@ -80,6 +80,7 @@ static void MX_DMA_Init(void);
 static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
+static void Prepare_nRF_Frame(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -180,14 +181,12 @@ int main(void)
 
 
   //nRF SECTION
-   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_TX_nRF_BUFFER_SIZE) != HAL_OK)
-   {
- 	  Error_Handler();
-   }
-
-    HAL_Delay(500);
-    printf("F411 SLAVE SIDE - TOGGLE LOW \r\n");
-    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+//   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_TX_nRF_BUFFER_SIZE) != HAL_OK)
+//   {
+// 	  Error_Handler();
+//   }
+//    HAL_Delay(10);
+//    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -195,26 +194,44 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 /* USER CODE END WHILE */
+	  if (spi_fpga_ready)
+	  {
 
-//	HAL_Delay(1000);
-//	HAL_GPIO_TogglePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin);
-//	HAL_GPIO_TogglePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin);
-	if (spi_fpga_ready)
-	{
-	  spi_fpga_ready = 0; // clear flag
+		  spi_fpga_ready = 0;
 
-	}
-	if (spi_nrf_ready)
-	{
-	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
-	  spi_nrf_ready = 0; // clear flag
+		  memcpy(&fpga_accum_buffer[fpga_accum_index],
+				 spi_rx_fpga_buffer,
+				 SPI_RX_FPGA_BUFFER_SIZE);
 
-	  HAL_Delay(1000);
-	  HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_TX_nRF_BUFFER_SIZE);
-	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
-	}
-  }
+		  fpga_accum_index += SPI_RX_FPGA_BUFFER_SIZE;
+
+		  if (fpga_accum_index >= FPGA_ACCUM_SIZE)
+		  {
+			  fpga_accum_index = 0;
+			  fpga_frame_ready = 1;   // mark frame complete
+		  }
+	  }
+
+	  if (fpga_frame_ready)
+	  {
+		  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+		  fpga_frame_ready = 0;
+		  spi_nrf_ready = 1;
+	  }
+
+	  if (spi_nrf_ready)
+	  {
+		  spi_nrf_ready = 0;
+
+		  Prepare_nRF_Frame();
+
+		  HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+
+		  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+	  }
+    }
 }
 
 /**
@@ -235,10 +252,10 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLM = 16;     // HSE / PLLM = 1 MHz
-    RCC_OscInitStruct.PLL.PLLN = 128;    // VCO = 200 MHz
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4; // SYSCLK = 100 MHz
-    RCC_OscInitStruct.PLL.PLLQ = 4;      // USB clock (optional)
+    RCC_OscInitStruct.PLL.PLLM = 16;
+    RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+    RCC_OscInitStruct.PLL.PLLQ = 4;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
     {
         Error_Handler();
@@ -258,42 +275,6 @@ void SystemClock_Config(void)
     }
 }
 
-//void SystemClock_Config(void)
-//{
-//  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-//  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-//
-//  /** Configure the main internal regulator output voltage
-//  */
-//  __HAL_RCC_PWR_CLK_ENABLE();
-//  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-//
-//  /** Initializes the RCC Oscillators according to the specified parameters
-//  * in the RCC_OscInitTypeDef structure.
-//  */
-//  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-//  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-//  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-//  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-//  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
-//
-//  /** Initializes the CPU, AHB and APB buses clocks
-//  */
-//  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-//                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-//  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-//  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-//  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-//  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-//
-//  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
-//}
 
 /**
   * @brief SPI1 Initialization Function
@@ -440,6 +421,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(debug_Port, debug_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
   GPIO_InitStruct.Pin = RDY_nRF_Pin|FPGA_MUX_5_Pin|FPGA_MUX_4_Pin;
@@ -447,6 +429,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = debug_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(debug_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -458,22 +446,45 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
     if (hspi->Instance == SPI1)
     {
-        spi_counter++;
-        spi_nrf_ready = 1;
+
 
     }
 
     else  if (hspi->Instance == SPI4)
     {
+    	HAL_GPIO_TogglePin(debug_Port, debug_Pin);
         spi_counter++;
         spi_fpga_ready = 1;
-        if (spi_counter <1000){
-
+//        printf("SPI_COUNTER %i \r\n", spi_counter);
         // Restart DMA immediately
         HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+        if (spi_counter == 32){
+        	spi_nrf_ready = 1;
+        	spi_counter = 0;
         }
-   }
+    }
 }
+
+static void Prepare_nRF_Frame(void)
+{
+//	printf("PREPARE FRAME \r\n");
+
+    nrf_tx_buffer[0] = 0xAA;
+    nrf_tx_buffer[1] = 0x55;
+
+    memcpy(&nrf_tx_buffer[2],
+           fpga_accum_buffer,
+           FPGA_ACCUM_SIZE);
+
+    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x55;
+    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xAA;
+
+//    for(int i=0; i<NRF_FRAME_SIZE; i+=2)
+//		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+//	printf("\r\n\r\n");
+
+}
+
 /* USER CODE END 4 */
 
 /**

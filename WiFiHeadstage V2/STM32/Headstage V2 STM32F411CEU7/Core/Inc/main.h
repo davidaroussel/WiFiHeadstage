@@ -70,6 +70,9 @@ void Error_Handler(void);
 #define FPGA_MUX_4_Pin GPIO_PIN_9
 #define FPGA_MUX_4_GPIO_Port GPIOA
 
+#define debug_Pin GPIO_PIN_9
+#define debug_Port GPIOB
+
 //Nordic nRF SPI PIN (SPI 1)
 #define nRF_SPI_MOSI_Port GPIOA
 #define nRF_SPI_MOSI_Pin GPIO_PIN_7
