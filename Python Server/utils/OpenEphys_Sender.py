@@ -110,7 +110,7 @@ new_buffer_interval = bufferInterval * 0.98
 # ---- STREAM DATA ---- #
 while (bufferIndex < totalBytes):
     t1 = currentTime()
-    print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
+    # print(len(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]))
     UDPClientSocket.sendto(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer], serverAddressPort)
     t2 = currentTime()
     # print(min(bytesToSend[bufferIndex:bufferIndex+bytesPerBuffer]), max(bytesToSend[bufferIndex:bufferIndex + bytesPerBuffer]))

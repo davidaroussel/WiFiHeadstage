@@ -2,7 +2,7 @@
 <RadiantProject version="4.2" radiant="2023.2.1.288.0" title="FPGA_Intan_Driver" device="iCE40UP5K-SG48I" performance_grade="High-Performance_1.2V" default_implementation="impl_1">
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
-        <Options hdl_sort="off" top="top_level"/>
+        <Options def_top="Controller_RHD_Sampling_tb" hdl_sort="off" top="top_level"/>
         <Source name="source/impl_1/top_level_tb.vhd" type="VHDL" type_short="VHDL">
             <Options/>
         </Source>
