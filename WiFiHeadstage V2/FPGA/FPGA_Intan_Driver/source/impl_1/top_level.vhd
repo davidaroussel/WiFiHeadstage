@@ -5,13 +5,13 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 2;
+        STM32_CLKS_PER_HALF_BIT       : integer := 4;
         STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 2;
+        RHD_CLKS_PER_HALF_BIT       : integer := 4;
         RHD_CS_INACTIVE_CLKS        : integer := 8
 		
     );
