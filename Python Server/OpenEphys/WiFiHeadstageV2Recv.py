@@ -60,39 +60,39 @@ class WiFiHeadstageReceiverV2(BaseException):
                 server_socket.bind((host, port))
                 server_socket.listen(1)
 
-                print("[INFO] Waiting for a client to connect...")
+                print("[HEADSTAGE] Waiting for a client to connect...")
                 conn, addr = server_socket.accept()
-                print(f"[INFO] Client connected from: {addr}")
+                print(f"[HEADSTAGE] Client connected from: {addr}")
                 self.m_connected = True
 
                 # Client receive loop
                 while True:
                     chunk = conn.recv(self.buffer_size)
                     if not chunk:
-                        print("[INFO] Client disconnected.")
+                        print("\n[HEADSTAGE] Client disconnected")
                         break
 
                     if counter % 100 == 0:
-                        print(f"[RECEIVED] {chunk}")
+                        # print(f"[RECEIVED] {chunk}")
                         counter = 1
                     counter += 1
                     self.queue_raw_data.put(chunk)
 
             except KeyboardInterrupt:
-                print("\n[INFO] Server stopped manually.")
+                print("\n[HEADSTAGE] Server stopped manually")
                 break
 
             except Exception as e:
-                print(f"[ERROR] Socket error: {e}")
+                print(f"[ERROR HEADSTAGE] Socket error: {e}")
                 time.sleep(1)  # Prevent tight crash loop
 
             finally:
                 if conn:
                     conn.close()
-                    print("[INFO] Client socket closed.")
+                    print("[HEADSTAGE] Client socket closed")
                 if server_socket:
                     server_socket.close()
-                    print("[INFO] Server socket closed. Restarting...\n")
+                    print("[HEADSTAGE] Server socket closed. Restarting...\n")
 
     #TODO
     def getHeadstageID(self):

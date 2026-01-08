@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # 12 CHANNELS CONFIGURATION
     HEADSTAGE_BUFFER_SIZE = 8196
     OPENEPHYS_BUFFER_SIZE = 1024
-    FREQUENCY   = 12800
+    FREQUENCY   = 25000
 
     ttl_channel_key_mapping = {
         2: ("q", "a"),
@@ -35,21 +35,24 @@ if __name__ == "__main__":
 
     retVal_list = []
     OE_config = OpenEphys_Configuration()
-    if CONFIGURE_OPENEPHYS:
-        retVal_list.append(OE_config.get_GUI_status())
-        retVal_list.append(OE_config.get_GUI_recording_node())
-        retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
-        retVal_list.append(OE_config.get_ES_processor_id())
-        retVal_list.append(OE_config.get_ES_info())
-        retVal_list.append(OE_config.set_ES_scale(0.195))
-        retVal_list.append(OE_config.set_ES_offset(32768))
-        retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
-        retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
-        retVal_list.append(OE_config.get_ES_info())
-        if PRINT_OE_INFO:
-            for retVal in retVal_list:
-                print(retVal)
-
+    try:
+        if CONFIGURE_OPENEPHYS:
+            retVal_list.append(OE_config.get_GUI_status())
+            retVal_list.append(OE_config.get_GUI_recording_node())
+            retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+            retVal_list.append(OE_config.get_ES_processor_id())
+            retVal_list.append(OE_config.get_ES_info())
+            retVal_list.append(OE_config.set_ES_scale(0.195))
+            retVal_list.append(OE_config.set_ES_offset(32768))
+            retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
+            retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
+            retVal_list.append(OE_config.get_ES_info())
+            if PRINT_OE_INFO:
+                for retVal in retVal_list:
+                    print(retVal)
+    except Exception as e:
+        print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
+        exit()
     #CONSTRUCTORS
     QUEUE_RAW_DATA   = Queue()
     QUEUE_CSV_DATA   = Queue()

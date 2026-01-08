@@ -64,96 +64,107 @@ class DataConverterV2:
             return
 
     def convertData(self):
-        OpenEphysFactor = round(32768*0.195)-1 #16 bits for 5mV to -5mV, so 10mV to 10000uV
-        value_per_uV = 1 / (0.005 / OpenEphysFactor)
-        maxOpenEphysValue = 0.005 #5mV is the max value for the Intan chip
-        TEMP_STACK  = []
-        sync_counter = 0
+        import numpy as np
 
-        converted_array_mV = np.zeros((self.num_channels, self.openephys_buffer_size), dtype=np.int16)
-        converted_array_Ephys = np.zeros((self.num_channels, self.openephys_buffer_size), dtype=np.int16)
+        # ============================
+        # CONSTANTS
+        # ============================
         OpenEphysOffset = 32768
-
-        formating_list = np.zeros((self.num_channels * self.openephys_buffer_size * 2), dtype=np.int16)
-        tcp_sending_stack_size = self.openephys_buffer_size * self.num_channels * 2
-        data_index = 0
-        sin_counter = 0
-        SIN_WAVE_DATA = np.sin(np.linspace(np.pi, -np.pi, int(self.openephys_buffer_size / 4)))
-        for i in range(5):
-            SIN_WAVE_DATA = np.concatenate(
-                (SIN_WAVE_DATA, SIN_WAVE_DATA, SIN_WAVE_DATA, SIN_WAVE_DATA, SIN_WAVE_DATA, SIN_WAVE_DATA), axis=None)
+        maxOpenEphysValue = 0.005
+        scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
         START_CAPS = b'\xAA\x55'
-        BYTES_PER_SAMPLE = self.num_channels * 2  # 16-bit per channel
         FRAME_SIZE = 8196
         PAYLOAD_SIZE = 8192
         CAPS_SIZE = 2
-        data_buffer = b''
-        chunk_ready = False
-        payload = []
-        self.connect_TCP()
-        print("---STARTING SEND_OPENEPHYS THREAD HERE ---")
 
+        # ============================
+        # DC SQUARE WAVE CONFIG
+        # ============================
+        dc_enabled = True
+        dc_channel = 6
+
+        dc_high_uV = 5000.0
+        dc_low_uV = -5000.0
+
+        fs = 25000
+        dc_period_sec = 1.0
+
+        samples_per_period = int(fs * dc_period_sec)
+        half_period = samples_per_period // 2
+
+        dc_high_raw = (dc_high_uV * 1e-6 / maxOpenEphysValue) * OpenEphysOffset
+        dc_low_raw = (dc_low_uV * 1e-6 / maxOpenEphysValue) * OpenEphysOffset
+
+        dc_high_val = np.int16(np.clip(OpenEphysOffset + dc_high_raw, 0, 65535))
+        dc_low_val = np.int16(np.clip(OpenEphysOffset + dc_low_raw, 0, 65535))
+
+        dc_sample_counter = 0  # phase accumulator
         counter = 0
+        # ============================
+        # BUFFERS
+        # ============================
+        converted_array_Ephys = np.empty(
+            (self.num_channels, self.openephys_buffer_size),
+            dtype=np.int16
+        )
 
-        while 1:
+        data_buffer = bytearray()
+
+        # ============================
+        # TCP
+        # ============================
+        self.connect_TCP()
+        print("--- STARTING SEND_OPENEPHYS THREAD ---")
+
+        # ============================
+        # MAIN LOOP
+        # ============================
+        while True:
             chunk = self.queue_raw_data.get()
-            # print(chunk)
-            data_buffer += chunk
-            if len(data_buffer) >= FRAME_SIZE:
-                start_idx = data_buffer.find(START_CAPS)
-                payload_index_start = start_idx + CAPS_SIZE
-                payload_index_end = payload_index_start + PAYLOAD_SIZE
-                payload = data_buffer[payload_index_start:payload_index_end]
-                # print(payload)
-                if len(payload) != 8192:
-                    print(f"FUCK lenght :{len(payload)}")
-                data_buffer_cut = start_idx+CAPS_SIZE+PAYLOAD_SIZE+CAPS_SIZE
-                if data_buffer_cut != 8196:
-                    print(f"FUCK cutter :{data_buffer_cut}")
-                data_buffer = data_buffer[data_buffer_cut:]
-                chunk_ready = True
+            data_buffer.extend(chunk)
 
-            if chunk_ready:
+            while len(data_buffer) >= FRAME_SIZE:
+                if data_buffer[:2] != START_CAPS:
+                    del data_buffer[0]
+                    continue
 
-                # print("chunk ready")
-                chunk_ready = False
-                for i in range(0, len(payload), 2):
-                    converted_data = int.from_bytes([payload[i+1], payload[i]], byteorder='big', signed=True)
-                    # LSB_FLAG = int(hex(converted_data), 16) & 0x01
+                payload = data_buffer[CAPS_SIZE:CAPS_SIZE + PAYLOAD_SIZE]
+                del data_buffer[:FRAME_SIZE]
 
-                    dataNumber = (i // 2) // self.num_channels
-                    channelNumber = (i // 2) % self.num_channels
+                raw = np.frombuffer(payload, dtype='>i2')
+                raw_reshape = raw.reshape(-1, self.num_channels).T
+                raw_clipped = np.clip(raw_reshape, 0, 65535)
 
-                    if channelNumber is None:
-                        converted_value = OpenEphysOffset + ((SIN_WAVE_DATA[sin_counter] * 10 / 1000) * value_per_uV)
-                        converted_value = np.clip(converted_value, 0, 65535)  # Ensure within int16 range
-                        converted_array_Ephys[channelNumber][dataNumber] = converted_value
-                    else:
-                        # mV_value = OpenEphysOffset + (converted_data * converting_value)
-                        # maxOpenEphysValue = 0.005V to have the 5mV, which is the max input voltage for the Intan chip
-                        # OpenEphysOffset = 32768 to have the 0V in the middle of the 32bits encoding
-                        # convertedData = the actual 16 bits data returned by the Intan chip
-                        mV_value = OpenEphysOffset + (converted_data * ((0.000000195/maxOpenEphysValue) * OpenEphysOffset))
+                converted_array_Ephys[:] = (raw_clipped * scale) + OpenEphysOffset
+                converted_array_Ephys = converted_array_Ephys.astype(np.uint16)
 
-                        mV_value = np.clip(mV_value, 0, 65535)  # Ensure within int16 range
-                        if dataNumber < self.openephys_buffer_size:
-                            converted_array_Ephys[channelNumber][dataNumber] = mV_value
-                            # converted_array_mV[channelNumber][dataNumber] = converted_data
-                        else:
-                            pass
-                            # print("Appending list, it actually happened")
-                            # converted_array_Ephys[channelNumber].append(mV_value)
-                            # converted_array_mV[channelNumber].append(converted_data)
+                # DC wave injection
+                if dc_enabled:
+                    n = self.openephys_buffer_size
+                    idx = (dc_sample_counter + np.arange(n)) % samples_per_period
+                    dc_wave = np.where(idx < half_period, dc_high_val, dc_low_val)
+                    converted_array_Ephys[dc_channel, :] = dc_wave
+                    dc_sample_counter = (dc_sample_counter + n) % samples_per_period
 
-                np_conv = np.array(converted_array_Ephys, np.int16).flatten().tobytes()
-                if counter % 100 == 0:
-                    counter = 1
-                    # print(f"Sending {np_conv}")
-                counter += 1
-                rc = self.tcpClient.sendall(self.header + np_conv)
-                if rc != None:
-                    print("Bobo TCP Send !!")
-                # print("Pushing ", len(np_conv), " bytes")
-                sin_counter = 0
+                np_conv = converted_array_Ephys.ravel().tobytes()
 
+                # ===========================
+                # TCP SEND WITH RECONNECT
+                # ===========================
+                while True:
+                    try:
+                        if not self.tcp_connected or self.tcpClient is None:
+                            self.connect_TCP()
+                        self.tcpClient.sendall(self.header + np_conv)
+                        break  # success
+                    except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                        print("\nClient reconnected. Resetting TCP connection...")
+                        self.tcp_connected = False
+                        if self.tcpClient:
+                            try:
+                                self.tcpClient.close()
+                            except:
+                                pass
+                        self.tcpClient = None
+                        time.sleep(0.5)  # wait a bit before reconnect
