@@ -9,7 +9,7 @@ from queue import Queue
 
 from BioMLServer.Headstage_Driver import HeadstageDriver
 
-class WiFiHeadstageReceiver(BaseException):
+class WiFiHeadstageReceiverV1(BaseException):
     def __init__(self, p_queue, p_channels, p_buffer_size, p_buffer_factor, p_port, p_host_addr=""):
         BaseException.__init__(self)
         self.channels = p_channels

@@ -9,7 +9,7 @@ from threading import Thread
 from socket import *
 
 
-class DataConverter:
+class DataConverterV1:
     def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_frequency, p_buffer_size, p_port, p_host_addr=""):
         self.openEphys_Socket = None
         self.tcpClient = None

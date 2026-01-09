@@ -1,10 +1,9 @@
 import sys
 import time
 from queue import Queue
-from OpenEphys.WiFiHeadstageReceiver import WiFiHeadstageReceiver
-from OpenEphys.DataConverter import DataConverter
+from OpenEphys.WiFiHeadstageReceiverV1 import WiFiHeadstageReceiverV1
+from OpenEphys.DataConverterV1 import DataConverterV1
 from OpenEphys.CSVWriter import CSVWriter
-from OpenEphys.OpenEphysSender import OpenEphysSender
 from OpenEphys.TTL_Controller import TTL_Controller
 from OpenEphys.OpenEphys_Configuration import OpenEphys_Configuration
 
@@ -87,8 +86,8 @@ if __name__ == "__main__":
     QUEUE_RAW_DATA   = Queue()
     QUEUE_CSV_DATA   = Queue()
 
-    TASK_WiFiServer    = WiFiHeadstageReceiver(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
-    TASK_DataConverter = DataConverter(QUEUE_RAW_DATA, QUEUE_CSV_DATA, CHANNELS, FREQUENCY, BUFFER_SIZE, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
+    TASK_WiFiServer    = WiFiHeadstageReceiverV1(QUEUE_RAW_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR, p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
+    TASK_DataConverter = DataConverterV1(QUEUE_RAW_DATA, QUEUE_CSV_DATA, CHANNELS, FREQUENCY, BUFFER_SIZE, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
     TASK_Manual_TTL    = TTL_Controller(OE_config, ttl_channel_key_mapping, port=TTL_EVENT_PORT, ip_addr=HOST_ADDR)
     TASK_CSVWriter     = CSVWriter(QUEUE_CSV_DATA, CHANNELS, BUFFER_SIZE, BUFFER_SOCKET_FACTOR)
 
