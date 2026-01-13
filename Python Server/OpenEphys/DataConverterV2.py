@@ -134,10 +134,12 @@ class DataConverterV2:
 
                 raw = np.frombuffer(payload, dtype='>i2')
                 raw_reshape = raw.reshape(-1, self.num_channels).T
-                raw_clipped = np.clip(raw_reshape, 0, 65535)
+                raw_clipped = np.clip(raw_reshape, -32768, 32768)
 
                 converted_array_Ephys[:] = (raw_clipped * scale) + OpenEphysOffset
                 converted_array_Ephys = converted_array_Ephys.astype(np.uint16)
+
+                # print(f"Raw {raw_reshape[7][0]} -> {converted_array_Ephys[7][0]}")
 
                 # DC wave injection
                 if dc_enabled:

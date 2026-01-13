@@ -1,7 +1,7 @@
 import sys
 import time
 from queue import Queue
-from OpenEphys.WiFiHeadstageV2Recv import WiFiHeadstageReceiverV2
+from OpenEphys.WiFiHeadstageReceiverV2 import WiFiHeadstageReceiverV2
 from OpenEphys.DataConverterV2 import DataConverterV2
 from OpenEphys.TTL_Controller import TTL_Controller
 from OpenEphys.OpenEphys_Configuration import OpenEphys_Configuration
