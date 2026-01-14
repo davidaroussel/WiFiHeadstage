@@ -184,7 +184,8 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rhd_state    : integer := 0;
 	
 	signal alt_counter : integer range 0 to 3 := 0;
-		signal data_array_send_count : integer range 0 to 100 := 0;
+	
+	signal data_array_send_count : integer range 0 to 100 := 0;
 
 	type t_data_array is array (0 to 63) of std_logic_vector(15 downto 0);
 	
@@ -194,7 +195,7 @@ architecture RTL of Controller_RHD_Sampling is
 
 
 	signal data_array : t_data_array := (
-		-- Registers 40–63
+		-- Registers 40-63
 		0  => x"E800",  -- REG40
 		1  => x"E900",  -- REG41
 		2  => x"EA00",  -- REG42
@@ -204,7 +205,7 @@ architecture RTL of Controller_RHD_Sampling is
 		6  => x"FD00",  -- REG61
 		7  => x"FF00",  -- REG63
 
-		-- Registers 0–7
+		-- Registers 0-7
 		8  => x"80DE",
 		9  => x"8120",
 		10 => x"8228",
@@ -282,24 +283,15 @@ architecture RTL of Controller_RHD_Sampling is
 	type t_channel_array is array (0 to 63) of std_logic_vector(15 downto 0);
 
 	signal channel_array : t_channel_array := (
-				-- Registers 40–63
-		--0  => x"E800",  -- REG40
-		--1  => x"E900",  -- REG41
-		--2  => x"EA00",  -- REG42
-		--3  => x"EB00",  -- REG43
-		--4  => x"EC00",  -- REG44
-		--5  => x"FD00",  -- REG61
-		--6  => x"FE00",  -- REG62
-		--7  => x"FF00",  -- REG63
-		---- CH0–CH31 (first block)
+						-- Registers 40-63
 		0  => x"0000",  -- CH0
-		1  => x"0100",  -- CH1
-		2  => x"0200",  -- CH2
-		3  => x"0300",  -- CH3
-		4  => x"0400",  -- CH4
-		5  => x"0500",  -- CH5
-		6  => x"0600",  -- CH6
-		7  => x"0700",  -- CH7
+		1  => x"0100",  -- REG1
+		2  => x"0200",  -- REG2
+		3  => x"0300",  -- REG3
+		4  => x"0400",  -- REG4
+		5  => x"0500",  -- REG5
+		6  => x"0600",  -- REG6
+		7  => x"0700",  -- REG7
 		8  => x"0800",  -- CH8
 		9  => x"0900",  -- CH9
 		10 => x"0A00",  -- CH10
@@ -309,30 +301,30 @@ architecture RTL of Controller_RHD_Sampling is
 		14 => x"0E00",  -- CH14
 		15 => x"0F00",  -- CH15
 		16 => x"1000",  -- CH16
-		17 => x"1100",  -- CH17
+		17 => x"EC00",  -- CH17
 		18 => x"1200",  -- CH18
-		19 => x"1300",  -- CH19
+		19 => x"EC00",  -- CH19
 		20 => x"1400",  -- CH20
-		21 => x"1500",  -- CH21
+		21 => x"EC00",  -- CH21
 		22 => x"1600",  -- CH22
-		23 => x"1700",  -- CH23
+		23 => x"EC00",  -- CH23
 		24 => x"1800",  -- CH24
-		25 => x"1900",  -- CH25
+		25 => x"EC00",  -- CH25
 		26 => x"1A00",  -- CH26
-		27 => x"1B00",  -- CH27
+		27 => x"EC00",  -- CH27
 		28 => x"1C00",  -- CH28
-		29 => x"1D00",  -- CH29
+		29 => x"EC00",  -- CH29
 		30 => x"1E00",  -- CH30
-		31 => x"1F00",  -- CH31
+		31 => x"EC00",  -- CH31
 
-		-- CH0–CH31 repeated again for indices 32–63
-		32 => x"0000",  -- CH0 repeat
-		33 => x"0100",  -- CH1 repeat
-		34 => x"0200",  -- CH2 repeat
-		35 => x"0300",  -- CH3 repeat
-		36 => x"0400",  -- CH4 repeat
-		37 => x"0500",  -- CH5 repeat
-		38 => x"0600",  -- CH6 repeat
+		-- CH0?CH31 repeated again for indices 32?63
+		32 => x"FF00",  -- CH0 repeat
+		33 => x"FF00",  -- CH1 repeat
+		34 => x"FF00",  -- CH2 repeat
+		35 => x"FF00",  -- CH3 repeat
+		36 => x"FF00",  -- CH4 repeat
+		37 => x"FF00",  -- CH5 repeat
+		38 => x"FF00",  -- CH6 repeat
 		39 => x"0700",  -- CH7 repeat
 		40 => x"0800",  -- CH8 repeat
 		41 => x"0900",  -- CH9 repeat
@@ -343,22 +335,24 @@ architecture RTL of Controller_RHD_Sampling is
 		46 => x"0E00",  -- CH14 repeat
 		47 => x"0F00",  -- CH15 repeat
 		48 => x"1000",  -- CH16 repeat
-		49 => x"1100",  -- CH17 repeat
+		49 => x"EC00",  -- CH17 repeat
 		50 => x"1200",  -- CH18 repeat
-		51 => x"1300",  -- CH19 repeat
+		51 => x"EC00",  -- CH19 repeat
 		52 => x"1400",  -- CH20 repeat
-		53 => x"1500",  -- CH21 repeat
+		53 => x"EC00",  -- CH21 repeat
 		54 => x"1600",  -- CH22 repeat
-		55 => x"1700",  -- CH23 repeat
+		55 => x"EC00",  -- CH23 repeat
 		56 => x"1800",  -- CH24 repeat
-		57 => x"1900",  -- CH25 repeat
+		57 => x"EC00",  -- CH25 repeat
 		58 => x"1A00",  -- CH26 repeat
-		59 => x"1B00",  -- CH27 repeat
+		59 => x"EC00",  -- CH27 repeat
 		60 => x"1C00",  -- CH28 repeat
-		61 => x"1D00",  -- CH29 repeat
+		61 => x"EC00",  -- CH29 repeat
 		62 => x"1E00",  -- CH30 repeat
-		63 => x"1F00"   -- CH31 repeat
+		63 => x"EC00"   -- CH31 repeat
 	);
+
+
 	
 	signal rhd_done_config : std_logic := '0';
 	signal full_cycle_count  : integer := 0;
@@ -488,12 +482,12 @@ begin
 					if RHD_SPI_DDR_MODE = 1 then
 						temp_buffer((NUM_DATA - 1 - stm32_counter)*32 + 31 downto (NUM_DATA - 1 - stm32_counter)*32) <= int_FIFO_Q;
 					else
-						if stm32_counter = 7 then
-							temp_array(stm32_counter) := x"B1E0";
-						else
-							temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
-						end if;
-						--temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
+						--if stm32_counter = 7 then
+							--temp_array(stm32_counter) := x"7FFF";
+						--else
+							--temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
+						--end if;
+						temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
 					end if;
 					stm32_counter <= stm32_counter + 1;
 					stm32_state <= 5;
@@ -555,7 +549,7 @@ begin
 				rgd_info_sig_red <= '0';
 				rgd_info_sig_green <= '1';
 			elsif i_Controller_Mode = x"2" then
-				--rgd_info_sig_red <= '1';
+				rgd_info_sig_red <= '1';
 				case rhd_state is
 
 					----------------------------------------------------------------
@@ -637,7 +631,6 @@ begin
 										-- Apply the new CH0 value
 										case alt_counter is
 											when 0 => 
-												rgd_info_sig_red <= not rgd_info_sig_red;
 												channel_array(0) <= x"E800";
 												channel_array(32) <= x"E800";
 											when 1 => 

@@ -108,7 +108,7 @@ int main(void)
   sl_wfx_task_start();
   wifi_events_start();
   //wifi_cli_start();					/*NOT GOING TO USE THE CLI SINCE THERE WILL NOT BE ANY USART CONNECTION*/
-  lwip_start();
+//  lwip_start();
 #endif
 
 #ifdef spi_mode_only

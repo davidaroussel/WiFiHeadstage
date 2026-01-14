@@ -61,8 +61,8 @@ all: main-build
 main-build: NucleoF411RE_RHS_Driver.elf secondary-outputs
 
 # Tool invocations
-NucleoF411RE_RHS_Driver.elf NucleoF411RE_RHS_Driver.map: $(OBJS) $(USER_OBJS) C:\Users\david\STM32CubeIDE\workspace_1.14.1\NucleoF411RE_RHS_Driver\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "NucleoF411RE_RHS_Driver.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\STM32CubeIDE\workspace_1.14.1\NucleoF411RE_RHS_Driver\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_RHS_Driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+NucleoF411RE_RHS_Driver.elf NucleoF411RE_RHS_Driver.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFi\ Headstage\WiFiHeadstage\ V2\STM32\NucleoF411RE_RHS_Driver\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "NucleoF411RE_RHS_Driver.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\Desktop\WiFi Headstage\WiFiHeadstage V2\STM32\NucleoF411RE_RHS_Driver\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_RHS_Driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

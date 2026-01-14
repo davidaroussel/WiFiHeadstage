@@ -118,12 +118,11 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     HAL_GPIO_Init(RHS_SPI_MISO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN SPI3_MspInit 1 */
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin   = RHS_SPI_CS_Pin;
-	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull  = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(RHS_SPI_CS_Port, &GPIO_InitStruct);
+	  GPIO_InitStruct.Pin   = RHS_SPI_CS_Pin;
+	  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	  HAL_GPIO_Init(RHS_SPI_CS_Port, &GPIO_InitStruct);
   /* USER CODE END SPI3_MspInit 1 */
 
   }

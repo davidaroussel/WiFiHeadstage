@@ -31,6 +31,18 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+//#define RHS_SPI_MOSI_Port GPIOB
+//#define RHS_SPI_MOSI_Pin GPIO_PIN_5
+//
+//#define RHS_SPI_MISO_Port GPIOB
+//#define RHS_SPI_MISO_Pin GPIO_PIN_4
+//
+//#define RHS_SPI_CLK_Port GPIOC
+//#define RHS_SPI_CLK_Pin GPIO_PIN_10
+//
+//#define RHS_SPI_CS_Port GPIOC
+//#define RHS_SPI_CS_Pin GPIO_PIN_1
+
 #define RHS_SPI_MOSI_Port GPIOC
 #define RHS_SPI_MOSI_Pin GPIO_PIN_12
 
@@ -42,6 +54,8 @@ extern "C" {
 
 #define RHS_SPI_CS_Port GPIOD
 #define RHS_SPI_CS_Pin GPIO_PIN_2
+
+
 
 #define RHD_SPI_MOSI_Port GPIOA
 #define RHD_SPI_MOSI_Pin GPIO_PIN_1
