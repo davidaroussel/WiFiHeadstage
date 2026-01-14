@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 def tcp_receive_with_plot(
         host="192.168.2.196",
         port=5000,
-        buffer_size=8196,
+        buffer_size=8192,
         plot_after_seconds=5
     ):
     """

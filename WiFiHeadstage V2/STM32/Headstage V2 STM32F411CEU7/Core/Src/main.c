@@ -40,15 +40,15 @@ uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
 
-#define SPI_RX_nRF_BUFFER_SIZE 8196
+#define SPI_RX_nRF_BUFFER_SIZE 8192
 uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
 
-#define SPI_TX_nRF_BUFFER_SIZE 8196
+#define SPI_TX_nRF_BUFFER_SIZE 8192
 uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
 
 #define FPGA_CHUNK_SIZE 256
 #define FPGA_ACCUM_SIZE 8192
-#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE + 4) // 2B header + payload + 2B footer
+#define NRF_FRAME_SIZE 8192
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
 uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
@@ -127,8 +127,8 @@ int main(void)
 
    spi_tx_nrf_buffer[0] = 0xAA;
    spi_tx_nrf_buffer[1] = 0x55;
-   spi_tx_nrf_buffer[2] = 0x66;
-   spi_tx_nrf_buffer[3] = 0xAA;
+   spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE-2] = 0x55;
+   spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE-1] = 0xAA;
 
 //   uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
 
@@ -469,12 +469,13 @@ static void Prepare_nRF_Frame(void)
 {
 //	printf("PREPARE FRAME \r\n");
 
-    nrf_tx_buffer[0] = 0xAA;
-    nrf_tx_buffer[1] = 0x55;
 
-    memcpy(&nrf_tx_buffer[2],
+    memcpy(&nrf_tx_buffer[0],
            fpga_accum_buffer,
            FPGA_ACCUM_SIZE);
+
+    nrf_tx_buffer[0] = 0xAA;
+    nrf_tx_buffer[1] = 0x55;
 
     nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x55;
     nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xAA;
