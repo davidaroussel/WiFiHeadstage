@@ -252,10 +252,30 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLM = 16;
-    RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
     RCC_OscInitStruct.PLL.PLLQ = 4;
+
+//    RCC_OscInitStruct.PLL.PLLM = 25;
+//    RCC_OscInitStruct.PLL.PLLN = 320;    // SYSCLK = 80 MHz Not Working
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//    RCC_OscInitStruct.PLL.PLLM = 16;
+//    RCC_OscInitStruct.PLL.PLLN = 192;    // SYSCLK = 75 MHz Not Working
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+
+    RCC_OscInitStruct.PLL.PLLM = 25;
+    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz Not Working
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//    RCC_OscInitStruct.PLL.PLLM = 25;
+//    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+//
+//    RCC_OscInitStruct.PLL.PLLM = 16;
+//	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
+//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
     {
         Error_Handler();
@@ -328,7 +348,7 @@ static void SPI4_Master_Init(void)
 	  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 0
 	  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 0
 	  hspi4.Init.NSS = SPI_NSS_SOFT;
-	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
 	  hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
 	  hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
 	  hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

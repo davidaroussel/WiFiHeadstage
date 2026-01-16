@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliMessageLog>
-    <Task name="PAR">
+    <Task name="Map">
         <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB0_OUT</Dynamic>
+            <Dynamic>39</Dynamic>
         </Message>
         <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB1_OUT</Dynamic>
+            <Dynamic>40</Dynamic>
         </Message>
         <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+            <ID>52291017</ID>
+            <Severity>1</Severity>
+            <Dynamic>RGB2_OUT</Dynamic>
+            <Dynamic>41</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -37,58 +28,6 @@
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
     <Task name="Synthesis">
@@ -163,7 +102,7 @@
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/CLK_48MHz/rtl/CLK_48MHz.v(105): </Dynamic>
-            <Dynamic>CLK_48MHz_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
+            <Dynamic>CLK_48MHz_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;47&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/CLK_48MHz/rtl/CLK_48MHz.v</Navigation>
             <Navigation>105</Navigation>
         </Message>
@@ -171,7 +110,7 @@
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(428): </Dynamic>
-            <Dynamic>PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
+            <Dynamic>PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;47&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v</Navigation>
             <Navigation>428</Navigation>
         </Message>
@@ -514,7 +453,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(1): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -522,7 +461,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v(40): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/adder_subtractor/rtl/lscc_add_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v</Navigation>
@@ -530,7 +469,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(2): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -538,7 +477,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v(50): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/adder/rtl/lscc_adder.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v</Navigation>
@@ -546,7 +485,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(3): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -554,7 +493,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v(52): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/complex_mult/rtl/lscc_complex_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v</Navigation>
@@ -562,7 +501,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(4): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -570,7 +509,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v(39): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/counter/rtl/lscc_cntr.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v</Navigation>
@@ -578,7 +517,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(5): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -586,7 +525,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v(44): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo/rtl/lscc_fifo.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v</Navigation>
@@ -594,7 +533,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(6): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -602,7 +541,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v(47): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo_dc/rtl/lscc_fifo_dc.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v</Navigation>
@@ -610,7 +549,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(7): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -618,7 +557,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v(52): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_accumulate/rtl/lscc_mult_accumulate.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v</Navigation>
@@ -626,7 +565,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(8): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -634,7 +573,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v(53): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub_sum/rtl/lscc_mult_add_sub_sum.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v</Navigation>
@@ -642,7 +581,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(9): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -650,7 +589,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v(52): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub/rtl/lscc_mult_add_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v</Navigation>
@@ -658,7 +597,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(10): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -666,7 +605,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v(51): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/multiplier/rtl/lscc_multiplier.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v</Navigation>
@@ -674,7 +613,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(11): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -682,7 +621,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v(48): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v</Navigation>
@@ -690,7 +629,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(12): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -698,7 +637,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v(45): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v</Navigation>
@@ -706,7 +645,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(13): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -714,7 +653,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v(45): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/rom/rtl/lscc_rom.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v</Navigation>
@@ -722,7 +661,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(14): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -730,7 +669,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v(50): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../common/subtractor/rtl/lscc_subtractor.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v</Navigation>
@@ -738,7 +677,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(15): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -746,7 +685,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v(49): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v</Navigation>
@@ -754,7 +693,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(16): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -762,7 +701,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v(45): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v</Navigation>
@@ -770,7 +709,7 @@
         </Message>
         <Message>
             <ID>35901328</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(17): </Dynamic>
             <Dynamic>c:/lscc/radiant/2023.2/ip/pmi/pmi_dsp.v</Dynamic>
             <Navigation>c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v</Navigation>
@@ -859,10 +798,10 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(61): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(75): </Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>61</Navigation>
+            <Navigation>75</Navigation>
         </Message>
         <Message>
             <ID>35921012</ID>
@@ -891,10 +830,10 @@
         <Message>
             <ID>35921259</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(38): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(52): </Dynamic>
             <Dynamic>ctrl0_in</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>38</Navigation>
+            <Navigation>52</Navigation>
         </Message>
         <Message>
             <ID>35921012</ID>
@@ -914,7 +853,7 @@
         </Message>
         <Message>
             <ID>35921504</ID>
-            <Severity>1</Severity>
+            <Severity>8</Severity>
             <Dynamic></Dynamic>
             <Dynamic>C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1</Dynamic>
         </Message>
@@ -1120,11 +1059,11 @@
         </Message>
         <Message>
             <ID>35931038</ID>
-            <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(197): </Dynamic>
+            <Severity>4</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(196): </Dynamic>
             <Dynamic>data_array_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>197</Navigation>
+            <Navigation>196</Navigation>
         </Message>
         <Message>
             <ID>35935040</ID>
@@ -1149,7 +1088,7 @@
         </Message>
         <Message>
             <ID>35931002</ID>
-            <Severity>16</Severity>
+            <Severity>4</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v(139): </Dynamic>
             <Dynamic>\pll_inst/lscc_pll_inst/sclk_i</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v</Navigation>
@@ -1157,7 +1096,7 @@
         </Message>
         <Message>
             <ID>35931002</ID>
-            <Severity>16</Severity>
+            <Severity>4</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v(140): </Dynamic>
             <Dynamic>\pll_inst/lscc_pll_inst/sdi_i</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v</Navigation>
@@ -1199,177 +1138,21 @@
             <Dynamic>CTRL0_IN</Dynamic>
         </Message>
         <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i0</Dynamic>
-            <Dynamic>Zero</Dynamic>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/channel_array[0][15:0]</Dynamic>
+            <Dynamic>12, 10, 9, 7, 6, 5, 4, 3, 2, 1, 0</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001748</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving \Controller_inst/channel_array[0][15:0]</Dynamic>
+            <Dynamic>15, 14, 13, 11</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i0</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i1</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i2</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[32]_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i18</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i2</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/channel_array[0]_i0_i1</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i17</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i16</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i15</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i14</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i13</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i11</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i10</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i9</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i8</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i6</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i4</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1381,73 +1164,85 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i4</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i6</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i31</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i7</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i30</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i8</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i29</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i9</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i28</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i10</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i27</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i11</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i26</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i12</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i25</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i13</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i24</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i14</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i23</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i15</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i22</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i16</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i21</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i17</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i18</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i19</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1459,21 +1254,76 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i19</Dynamic>
+            <Dynamic>\Controller_inst/stm32_state_i0_i21</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i22</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i23</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i24</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i25</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i26</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i27</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i28</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i29</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i30</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i31</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
     <Task name="Export">
-        <Message>
-            <ID>1081100</ID>
-            <Severity>1</Severity>
-            <Dynamic>Bitstream authenticated.</Dynamic>
-        </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
@@ -1490,24 +1340,33 @@
             <Severity>1</Severity>
         </Message>
     </Task>
-    <Task name="Map">
+    <Task name="PAR">
         <Message>
-            <ID>52291017</ID>
-            <Severity>1</Severity>
-            <Dynamic>RGB0_OUT</Dynamic>
-            <Dynamic>39</Dynamic>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
-            <ID>52291017</ID>
-            <Severity>1</Severity>
-            <Dynamic>RGB1_OUT</Dynamic>
-            <Dynamic>40</Dynamic>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
-            <ID>52291017</ID>
-            <Severity>1</Severity>
-            <Dynamic>RGB2_OUT</Dynamic>
-            <Dynamic>41</Dynamic>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1518,6 +1377,58 @@
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>CTRL0_IN</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
 </BaliMessageLog>

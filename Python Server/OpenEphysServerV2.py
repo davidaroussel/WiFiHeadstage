@@ -33,26 +33,12 @@ if __name__ == "__main__":
         5: ("r", "f")
     }
 
-    retVal_list = []
     OE_config = OpenEphys_Configuration()
-    try:
-        if CONFIGURE_OPENEPHYS:
-            retVal_list.append(OE_config.get_GUI_status())
-            retVal_list.append(OE_config.get_GUI_recording_node())
-            retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
-            retVal_list.append(OE_config.get_ES_processor_id())
-            retVal_list.append(OE_config.get_ES_info())
-            retVal_list.append(OE_config.set_ES_scale(0.195))
-            retVal_list.append(OE_config.set_ES_offset(32768))
-            retVal_list.append(OE_config.set_ES_port(OPENEPHYS_PORT))
-            retVal_list.append(OE_config.set_ES_frequency(FREQUENCY))
-            retVal_list.append(OE_config.get_ES_info())
-            if PRINT_OE_INFO:
-                for retVal in retVal_list:
-                    print(retVal)
-    except Exception as e:
-        print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
-        exit()
+    if CONFIGURE_OPENEPHYS:
+        oe_info = OE_config.configure_Socket_Plugin(OPENEPHYS_PORT, FREQUENCY)
+        if PRINT_OE_INFO:
+            for val in oe_info:
+                print(val)
     #CONSTRUCTORS
     QUEUE_RAW_DATA   = Queue()
     QUEUE_CSV_DATA   = Queue()

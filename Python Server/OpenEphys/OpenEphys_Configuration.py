@@ -13,6 +13,24 @@ class OpenEphys_Configuration:
         self.EphysSocket_id = None
         self.socket = None
 
+    def configure_Socket_Plugin(self, OPENEPHYS_PORT, FREQUENCY):
+        retVal_list = []
+        try:
+            retVal_list.append(self.get_GUI_status())
+            retVal_list.append(self.get_GUI_recording_node())
+            retVal_list.append(self.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+            retVal_list.append(self.get_ES_processor_id())
+            retVal_list.append(self.get_ES_info())
+            retVal_list.append(self.set_ES_scale(0.195))
+            retVal_list.append(self.set_ES_offset(32768))
+            retVal_list.append(self.set_ES_port(OPENEPHYS_PORT))
+            retVal_list.append(self.set_ES_frequency(FREQUENCY))
+            retVal_list.append(self.get_ES_info())
+        except Exception as e:
+            print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
+            exit()
+        return retVal_list
+
     def Network_Events_Connect(self):
         context = zmq.Context()  # Store context in self to keep it alive
         self.socket = context.socket(zmq.REQ)  # Create REQ socket
