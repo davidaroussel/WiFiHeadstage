@@ -6,28 +6,35 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 2;
-        STM32_CS_INACTIVE_CLKS        : integer := 4;
+        STM32_CS_INACTIVE_CLKS        : integer := 32;
 			
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD_CS_INACTIVE_CLKS        : integer := 4
+        RHD_CS_INACTIVE_CLKS        : integer := 32
+				
+		---- MAIN_CLK : 42MHz
+		--   HALF_BIT : 1 
+		--   CS_CLK : 16
+		---  N/A packets / 12.6Mbps
 		
-		---- MAIN_CLK : 38MHz
+		---- MAIN_CLK : 36MHz
 		--   HALF_BIT : 2 
 		--   CS_CLK : 4
 		---  118.75 packets / 7.782Mbps
 		
-		---- MAIN_CLK : 38MHz
+		---- MAIN_CLK : 36MHz
 		--   HALF_BIT : 2 
 		--   CS_CLK : 8 
 		---  112.9 packets / 7.398Mbps
 		
-		---- MAIN_CLK : 38MHz
+		---- MAIN_CLK : 36MHz
 		--   HALF_BIT : 4 
 		--   CS_CLK : 8 
 		---  60 packets / 3.932Mbps
+		
+
 		
 		
     );
@@ -258,7 +265,7 @@ begin
 					when 50 =>
 						w_Controller_Mode <= x"1";
 						
-					when 36000000 =>
+					when 72000000 =>
 						w_Controller_Mode <= x"2";
 						stop_counting <= '1';
 

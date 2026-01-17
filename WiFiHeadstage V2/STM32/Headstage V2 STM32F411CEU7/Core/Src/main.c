@@ -125,10 +125,6 @@ int main(void)
        spi_tx_nrf_buffer[i] = i%255;
    }
 
-   spi_tx_nrf_buffer[0] = 0xAA;
-   spi_tx_nrf_buffer[1] = 0x55;
-   spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE-2] = 0x55;
-   spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE-1] = 0xAA;
 
 //   uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
 
@@ -263,13 +259,13 @@ void SystemClock_Config(void)
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 
-    RCC_OscInitStruct.PLL.PLLM = 25;
-    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz Not Working
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
 //    RCC_OscInitStruct.PLL.PLLM = 25;
-//    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+//    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+    RCC_OscInitStruct.PLL.PLLM = 25;
+    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 //
 //    RCC_OscInitStruct.PLL.PLLM = 16;
 //	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
@@ -348,7 +344,7 @@ static void SPI4_Master_Init(void)
 	  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 0
 	  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 0
 	  hspi4.Init.NSS = SPI_NSS_SOFT;
-	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
 	  hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
 	  hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
 	  hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -490,15 +486,13 @@ static void Prepare_nRF_Frame(void)
 //	printf("PREPARE FRAME \r\n");
 
 
-    memcpy(&nrf_tx_buffer[0],
-           fpga_accum_buffer,
-           FPGA_ACCUM_SIZE);
+    memcpy(&nrf_tx_buffer[0], fpga_accum_buffer, FPGA_ACCUM_SIZE);
 
     nrf_tx_buffer[0] = 0xAA;
     nrf_tx_buffer[1] = 0x55;
-
-    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x55;
-    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xAA;
+//
+//    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x33;
+//    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xBB;
 
 //    for(int i=0; i<NRF_FRAME_SIZE; i+=2)
 //		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);

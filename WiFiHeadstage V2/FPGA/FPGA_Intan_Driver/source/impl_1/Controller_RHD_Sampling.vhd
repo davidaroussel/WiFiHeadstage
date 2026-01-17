@@ -280,7 +280,81 @@ architecture RTL of Controller_RHD_Sampling is
 	
 	
 	type t_channel_array is array (0 to 63) of std_logic_vector(15 downto 0);
+	
+	-- 32 CHANNEL VERSION
+	--signal channel_array : t_channel_array := (
+		---- CH0–CH31 (first block)
+		--0  => x"0000",  -- CH0
+		--1  => x"0100",  -- CH1
+		--2  => x"0200",  -- CH2
+		--3  => x"0300",  -- CH3
+		--4  => x"0400",  -- CH4
+		--5  => x"0500",  -- CH5
+		--6  => x"0600",  -- CH6
+		--7  => x"0700",  -- CH7
+		--8  => x"0800",  -- CH8
+		--9  => x"0900",  -- CH9
+		--10 => x"0A00",  -- CH10
+		--11 => x"0B00",  -- CH11
+		--12 => x"0C00",  -- CH12
+		--13 => x"0D00",  -- CH13
+		--14 => x"0E00",  -- CH14
+		--15 => x"0F00",  -- CH15
+		
+		--16 => x"1000",  -- CH16
+		--17 => x"1100",  -- CH17
+		--18 => x"1200",  -- CH18
+		--19 => x"1300",  -- CH19
+		--20 => x"1400",  -- CH20
+		--21 => x"1500",  -- CH21
+		--22 => x"1600",  -- CH22
+		--23 => x"1700",  -- CH23
+		--24 => x"1800",  -- CH24
+		--25 => x"1900",  -- CH25
+		--26 => x"1A00",  -- CH26
+		--27 => x"1B00",  -- CH27
+		--28 => x"1C00",  -- CH28
+		--29 => x"1D00",  -- CH29
+		--30 => x"1E00",  -- CH30
+		--31 => x"1F00",  -- CH31
 
+		---- CH0–CH31 repeated again for indices 32–63
+		--32 => x"0000",  -- CH0 repeat
+		--33 => x"0100",  -- CH1 repeat
+		--34 => x"0200",  -- CH2 repeat
+		--35 => x"0300",  -- CH3 repeat
+		--36 => x"0400",  -- CH4 repeat
+		--37 => x"0500",  -- CH5 repeat
+		--38 => x"0600",  -- CH6 repeat
+		--39 => x"0700",  -- CH7 repeat
+		--40 => x"0800",  -- CH8 repeat
+		--41 => x"0900",  -- CH9 repeat
+		--42 => x"0A00",  -- CH10 repeat
+		--43 => x"0B00",  -- CH11 repeat
+		--44 => x"0C00",  -- CH12 repeat
+		--45 => x"0D00",  -- CH13 repeat
+		--46 => x"0E00",  -- CH14 repeat
+		--47 => x"0F00",  -- CH15 repeat
+		
+		--48 => x"1000",  -- CH16 repeat
+		--49 => x"1100",  -- CH17 repeat
+		--50 => x"1200",  -- CH18 repeat
+		--51 => x"1300",  -- CH19 repeat
+		--52 => x"1400",  -- CH20 repeat
+		--53 => x"1500",  -- CH21 repeat
+		--54 => x"1600",  -- CH22 repeat
+		--55 => x"1700",  -- CH23 repeat
+		--56 => x"1800",  -- CH24 repeat
+		--57 => x"1900",  -- CH25 repeat
+		--58 => x"1A00",  -- CH26 repeat
+		--59 => x"1B00",  -- CH27 repeat
+		--60 => x"1C00",  -- CH28 repeat
+		--61 => x"1D00",  -- CH29 repeat
+		--62 => x"1E00",  -- CH30 repeat
+		--63 => x"1F00"   -- CH31 repeat
+	--);
+	
+	-- 16 CHANNEL VERSION
 	signal channel_array : t_channel_array := (
 		-- CH0–CH31 (first block)
 		0  => x"0000",  -- CH0
@@ -299,22 +373,23 @@ architecture RTL of Controller_RHD_Sampling is
 		13 => x"0D00",  -- CH13
 		14 => x"0E00",  -- CH14
 		15 => x"0F00",  -- CH15
-		16 => x"1000",  -- CH16
-		17 => x"1100",  -- CH17
-		18 => x"1200",  -- CH18
-		19 => x"1300",  -- CH19
-		20 => x"1400",  -- CH20
-		21 => x"1500",  -- CH21
-		22 => x"1600",  -- CH22
-		23 => x"1700",  -- CH23
-		24 => x"1800",  -- CH24
-		25 => x"1900",  -- CH25
-		26 => x"1A00",  -- CH26
-		27 => x"1B00",  -- CH27
-		28 => x"1C00",  -- CH28
-		29 => x"1D00",  -- CH29
-		30 => x"1E00",  -- CH30
-		31 => x"1F00",  -- CH31
+		
+		16 => x"0000",  -- CH0
+		17 => x"0100",  -- CH1
+		18 => x"0200",  -- CH2
+		19 => x"0300",  -- CH3
+		20 => x"0400",  -- CH4
+		21 => x"0500",  -- CH5
+		22 => x"0600",  -- CH6
+		23 => x"0700",  -- CH7
+		24 => x"0800",  -- CH8
+		25 => x"0900",  -- CH9
+		26 => x"0A00",  -- CH10
+		27 => x"0B00",  -- CH11
+		28 => x"0C00",  -- CH12
+		29 => x"0D00",  -- CH13
+		30 => x"0E00",  -- CH14
+		31 => x"0F00",  -- CH15
 
 		-- CH0–CH31 repeated again for indices 32–63
 		32 => x"0000",  -- CH0 repeat
@@ -333,23 +408,25 @@ architecture RTL of Controller_RHD_Sampling is
 		45 => x"0D00",  -- CH13 repeat
 		46 => x"0E00",  -- CH14 repeat
 		47 => x"0F00",  -- CH15 repeat
-		48 => x"1000",  -- CH16 repeat
-		49 => x"1100",  -- CH17 repeat
-		50 => x"1200",  -- CH18 repeat
-		51 => x"1300",  -- CH19 repeat
-		52 => x"1400",  -- CH20 repeat
-		53 => x"1500",  -- CH21 repeat
-		54 => x"1600",  -- CH22 repeat
-		55 => x"1700",  -- CH23 repeat
-		56 => x"1800",  -- CH24 repeat
-		57 => x"1900",  -- CH25 repeat
-		58 => x"1A00",  -- CH26 repeat
-		59 => x"1B00",  -- CH27 repeat
-		60 => x"1C00",  -- CH28 repeat
-		61 => x"1D00",  -- CH29 repeat
-		62 => x"1E00",  -- CH30 repeat
-		63 => x"1F00"   -- CH31 repeat
+		
+		48 => x"0000",  -- CH0 repeat
+		49 => x"0100",  -- CH1 repeat
+		50 => x"0200",  -- CH2 repeat
+		51 => x"0300",  -- CH3 repeat
+		52 => x"0400",  -- CH4 repeat
+		53 => x"0500",  -- CH5 repeat
+		54 => x"0600",  -- CH6 repeat
+		55 => x"0700",  -- CH7 repeat
+		56 => x"0800",  -- CH8 repeat
+		57 => x"0900",  -- CH9 repeat
+		58 => x"0A00",  -- CH10 repeat
+		59 => x"0B00",  -- CH11 repeat
+		60 => x"0C00",  -- CH12 repeat
+		61 => x"0D00",  -- CH13 repeat
+		62 => x"0E00",  -- CH14 repeat
+		63 => x"0F00"   -- CH15 repeat
 	);
+
 
 
 	
@@ -552,7 +629,7 @@ begin
 					when 0 =>
 						if rhd_done_config = '0' then
 							-- Configuration phase
-							int_RHD_TX_Byte <= data_array(rhd_index);
+							int_RHD_TX_Byte <= channel_array(rhd_index);
 						else
 							-- Acquisition phase: dynamically alternate CH0
 							case alt_counter is
