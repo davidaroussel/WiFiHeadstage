@@ -22,7 +22,7 @@ class DataConverterV2:
         self.num_channels = len(p_channels)
         self.frequency = p_frequency
         self.headstage_buffer_size = p_buffer_size
-        self.openephys_buffer_size = 128
+        self.openephys_buffer_size = int(p_buffer_size / (self.num_channels * 2))
 
         self.m_dataConversionTread = Thread(target=self.convertData)
 
@@ -74,9 +74,9 @@ class DataConverterV2:
         scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
         START_CAPS = b'\xAA\x55'
-        FRAME_SIZE = 8196
+        FRAME_SIZE = 8192
         PAYLOAD_SIZE = 8192
-        CAPS_SIZE = 2
+
 
         # ============================
         # DC SQUARE WAVE CONFIG
@@ -116,7 +116,7 @@ class DataConverterV2:
         # ============================
         self.connect_TCP()
         print("--- STARTING SEND_OPENEPHYS THREAD ---")
-
+        caps_error = 0
         # ============================
         # MAIN LOOP
         # ============================
@@ -127,11 +127,16 @@ class DataConverterV2:
             while len(data_buffer) >= FRAME_SIZE:
                 if data_buffer[:2] != START_CAPS:
                     del data_buffer[0]
+                    caps_error += 1
+                    if caps_error % 81920 == 0:
+                        print(f"[HEADSTAGE] OFFSET START CAPS {caps_error}")
                     continue
 
-                payload = data_buffer[CAPS_SIZE:CAPS_SIZE + PAYLOAD_SIZE]
+                payload = data_buffer[:PAYLOAD_SIZE]
                 del data_buffer[:FRAME_SIZE]
-
+                # print(payload)
+                # if payload[8191] != 170:
+                #     print(f"{payload[0]}, {payload[1]} ... {payload[8190]}, {payload[8191]} ")
                 raw = np.frombuffer(payload, dtype='>i2')
                 raw_reshape = raw.reshape(-1, self.num_channels).T
                 raw_clipped = np.clip(raw_reshape, -32768, 32768)
