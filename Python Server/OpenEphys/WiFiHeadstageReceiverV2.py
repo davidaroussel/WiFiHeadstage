@@ -2,6 +2,7 @@ import socket
 import struct
 import threading
 import time
+from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
@@ -46,12 +47,14 @@ class WiFiHeadstageReceiverV2(BaseException):
 
     def handleSocket(self):
         print("---STARTING CONNECTION THREAD---")
+
+        host = self.m_host_addr
+        port = self.m_port
+
         while True:  # Server lifetime loop
             server_socket = None
             conn = None
-            host = self.m_host_addr
-            port = self.m_port
-            counter = 0
+
             try:
                 # Create server socket
                 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,21 +65,31 @@ class WiFiHeadstageReceiverV2(BaseException):
 
                 print("[HEADSTAGE] Waiting for a client to connect...")
                 conn, addr = server_socket.accept()
-                print(f"[HEADSTAGE] Client connected from: {addr}")
+
+                conn.settimeout(2.0)  # Seconds
+                reconnect_time = datetime.now().strftime("%H:%M:%S")
+
+                print(f"[HEADSTAGE] Client connected from {addr} at {reconnect_time}")
                 self.m_connected = True
 
                 # Client receive loop
                 while True:
-                    chunk = conn.recv(self.buffer_size)
-                    if not chunk:
-                        print("\n[HEADSTAGE] Client disconnected")
-                        break
+                    try:
+                        chunk = conn.recv(self.buffer_size)
 
-                    if counter % 100 == 0:
-                        # print(f"[RECEIVED] {chunk}")
-                        counter = 1
-                    counter += 1
-                    self.queue_raw_data.put(chunk)
+                        if not chunk:
+                            print("[HEADSTAGE] Client disconnected cleanly")
+                            break
+
+                        self.queue_raw_data.put(chunk)
+
+                    except socket.timeout:
+                        # No data but socket still alive → continue checking
+                        continue
+
+                    except (ConnectionResetError, BrokenPipeError):
+                        print("[HEADSTAGE] Client crashed or connection reset")
+                        break
 
             except KeyboardInterrupt:
                 print("\n[HEADSTAGE] Server stopped manually")
@@ -84,15 +97,18 @@ class WiFiHeadstageReceiverV2(BaseException):
 
             except Exception as e:
                 print(f"[ERROR HEADSTAGE] Socket error: {e}")
-                time.sleep(1)  # Prevent tight crash loop
+                time.sleep(1)
 
             finally:
+                self.m_connected = False
+
                 if conn:
                     conn.close()
                     print("[HEADSTAGE] Client socket closed")
+
                 if server_socket:
                     server_socket.close()
-                    print("[HEADSTAGE] Server socket closed. Restarting...\n")
+                    print("[HEADSTAGE] Server socket closed. Waiting for reconnection...\n")
 
     #TODO
     def getHeadstageID(self):

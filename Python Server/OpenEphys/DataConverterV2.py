@@ -7,6 +7,7 @@ import csv
 import numpy as np
 from threading import Thread
 from socket import *
+from datetime import datetime
 
 
 class DataConverterV2:
@@ -54,13 +55,13 @@ class DataConverterV2:
             self.openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
             self.openEphys_Socket.bind(openEphys_AddrPort)
             self.openEphys_Socket.listen(3)
-            print("Waiting for OpenEphys TCP connection...")
+            print("[OPENEPHYS] Waiting for OpenEphys TCP connection...")
             (self.tcpClient, self.address) = self.openEphys_Socket.accept()
-            print("OpenEphys Socket Plugin Connected !!!")
+            print("[OPENEPHYS] OpenEphys Socket Plugin Connected !!!")
             self.tcp_connected = True
 
         except Exception as e:
-            print("Error connecting to OpenEphys:", e)
+            print("[OPENEPHYS] Error connecting to OpenEphys:", e)
             return
 
     def convertData(self):
@@ -74,6 +75,7 @@ class DataConverterV2:
         scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
         START_CAPS = b'\xAA\x55'
+        END_CAPS = b'\x55\xAA'
         FRAME_SIZE = 8192
         PAYLOAD_SIZE = 8192
 
@@ -81,7 +83,7 @@ class DataConverterV2:
         # ============================
         # DC SQUARE WAVE CONFIG
         # ============================
-        dc_enabled = True
+        dc_enabled = False
         dc_channel = 6
 
         dc_high_uV = 5000.0
@@ -117,6 +119,10 @@ class DataConverterV2:
         self.connect_TCP()
         print("--- STARTING SEND_OPENEPHYS THREAD ---")
         caps_error = 0
+        temp_buffer = bytearray()
+        slip_mode = False
+        slip_buffer = bytearray()
+        awaiting_confirm = False
         # ============================
         # MAIN LOOP
         # ============================
@@ -126,52 +132,68 @@ class DataConverterV2:
 
             while len(data_buffer) >= FRAME_SIZE:
                 if data_buffer[:2] != START_CAPS:
-                    del data_buffer[0]
+                   # ADD LOGIC IN HERE !!
                     caps_error += 1
+
+                    # if temp_buffer is None:
+                    #     idx_start_cap = data_buffer.find(START_CAPS)
+                    #     garbage = data_buffer[:idx_start_cap]
+                    #     temp_buffer = data_buffer[idx_start_cap:]
+                    # else:
+                    #     idx_start_cap = data_buffer.find(START_CAPS)
+                    #     temp_buffer.extend(data_buffer[:])
+
+
+                    del data_buffer[0]
+
                     if caps_error % 81920 == 0:
                         print(f"[HEADSTAGE] OFFSET START CAPS {caps_error}")
-                    continue
+                        continue
+                    # if len(temp_buffer) >= FRAME_SIZE:
+                # WHEN NOT SLIPPING
+                else:
+                    payload = data_buffer[:PAYLOAD_SIZE]
+                    del data_buffer[:FRAME_SIZE]
+                    # print(payload)
+                    # if payload[8191] != 170:
+                    #     print(f"{payload[0]}, {payload[1]} ... {payload[8190]}, {payload[8191]} ")
+                    raw = np.frombuffer(payload, dtype='>i2')
+                    raw_reshape = raw.reshape(-1, self.num_channels).T
+                    raw_clipped = np.clip(raw_reshape, -32768, 32768)
 
-                payload = data_buffer[:PAYLOAD_SIZE]
-                del data_buffer[:FRAME_SIZE]
-                # print(payload)
-                # if payload[8191] != 170:
-                #     print(f"{payload[0]}, {payload[1]} ... {payload[8190]}, {payload[8191]} ")
-                raw = np.frombuffer(payload, dtype='>i2')
-                raw_reshape = raw.reshape(-1, self.num_channels).T
-                raw_clipped = np.clip(raw_reshape, -32768, 32768)
+                    converted_array_Ephys[:] = (raw_clipped * scale) + OpenEphysOffset
+                    converted_array_Ephys = converted_array_Ephys.astype(np.uint16)
 
-                converted_array_Ephys[:] = (raw_clipped * scale) + OpenEphysOffset
-                converted_array_Ephys = converted_array_Ephys.astype(np.uint16)
+                    # print(f"Raw {raw_reshape[7][0]} -> {converted_array_Ephys[7][0]}")
 
-                # print(f"Raw {raw_reshape[7][0]} -> {converted_array_Ephys[7][0]}")
+                    # DC wave injection
+                    if dc_enabled:
+                        n = self.openephys_buffer_size
+                        idx = (dc_sample_counter + np.arange(n)) % samples_per_period
+                        dc_wave = np.where(idx < half_period, dc_high_val, dc_low_val)
+                        converted_array_Ephys[dc_channel, :] = dc_wave
+                        dc_sample_counter = (dc_sample_counter + n) % samples_per_period
 
-                # DC wave injection
-                if dc_enabled:
-                    n = self.openephys_buffer_size
-                    idx = (dc_sample_counter + np.arange(n)) % samples_per_period
-                    dc_wave = np.where(idx < half_period, dc_high_val, dc_low_val)
-                    converted_array_Ephys[dc_channel, :] = dc_wave
-                    dc_sample_counter = (dc_sample_counter + n) % samples_per_period
+                    np_conv = converted_array_Ephys.ravel().tobytes()
 
-                np_conv = converted_array_Ephys.ravel().tobytes()
-
-                # ===========================
-                # TCP SEND WITH RECONNECT
-                # ===========================
-                while True:
-                    try:
-                        if not self.tcp_connected or self.tcpClient is None:
-                            self.connect_TCP()
-                        self.tcpClient.sendall(self.header + np_conv)
-                        break  # success
-                    except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                        print("\nClient reconnected. Resetting TCP connection...")
-                        self.tcp_connected = False
-                        if self.tcpClient:
-                            try:
-                                self.tcpClient.close()
-                            except:
-                                pass
-                        self.tcpClient = None
-                        time.sleep(0.5)  # wait a bit before reconnect
+                    # ===========================
+                    # TCP SEND WITH RECONNECT
+                    # ===========================
+                    while True:
+                        try:
+                            if not self.tcp_connected or self.tcpClient is None:
+                                self.connect_TCP()
+                            self.tcpClient.sendall(self.header + np_conv)
+                            break  # success
+                        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                            time_now = time.strftime("%H:%M:%S", time.localtime())
+                            print(f"\n--------{time_now}--------")
+                            print("Client reconnected. Resetting TCP connection...")
+                            self.tcp_connected = False
+                            if self.tcpClient:
+                                try:
+                                    self.tcpClient.close()
+                                except:
+                                    pass
+                            self.tcpClient = None
+                            time.sleep(0.5)  # wait a bit before reconnect
