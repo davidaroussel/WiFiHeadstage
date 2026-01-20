@@ -24,7 +24,7 @@
 #include "../Intan/Intan_utils.h"
 #include "../Intan/RHS_Driver.h"
 #include "../Intan/RHD_Driver.h"
-/* USER CODE END Includes */
+
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -81,6 +81,8 @@ static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
+static void Reset_All_SPI_Links(void);
+static void Init_Intan(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -91,6 +93,7 @@ volatile uint8_t spi_fpga_ready = 0;
 volatile uint8_t spi_nrf_ready = 0;
 volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
+volatile uint8_t reset_spi_flag = 0;
 /* USER CODE END 0 */
 
 /**
@@ -142,47 +145,8 @@ int main(void)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
 
-//    Start SPI4 as MASTER
-  SPI4_Master_Init();
-//  HAL_Delay(1000);
+  Init_Intan();
 
-  SPI_HandleTypeDef *hspi = &hspi4;
-  int rhd_status = INIT_RHD(hspi);
-
-
-
-   //Poll for RHD detection
-  while (rhd_status == 0) {
-	  rhd_status = INIT_RHD(hspi);
-	  HAL_Delay(1);
-  }
-
-//  HAL_Delay(500);
-
-  // De-init SPI before changing mode
-  HAL_SPI_DeInit(&hspi4);
-//  HAL_Delay(3000);
-
-  // Re-init as SLAVE
-  SPI4_Slave_Init();
-
-  // Start SPI DMA transmission/reception
-  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
-	  Error_Handler();
-  }
-
-//  HAL_Delay(500);
-  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
-
-
-  //nRF SECTION
-//   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spi_tx_nrf_buffer, spi_rx_nrf_buffer, SPI_TX_nRF_BUFFER_SIZE) != HAL_OK)
-//   {
-// 	  Error_Handler();
-//   }
-//    HAL_Delay(10);
-//    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -190,7 +154,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(reset_spi_flag){
+		  NVIC_SystemReset();
+		  reset_spi_flag = 0;
 
+	  }
 /* USER CODE END WHILE */
 	  if (spi_fpga_ready)
 	  {
@@ -416,6 +384,14 @@ static void MX_DMA_Init(void)
 
 }
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == Reboot_SPI_Pin)
+    {
+    	reset_spi_flag = 1;
+    }
+}
+
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -452,6 +428,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(debug_Port, &GPIO_InitStruct);
 
+
+
+//  GPIO_InitStruct.Pin = Reboot_SPI_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  HAL_GPIO_Init(Reboot_SPI_Port, &GPIO_InitStruct);
+//
+//  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+//  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
   /* USER CODE END MX_GPIO_Init_2 */
@@ -480,6 +466,76 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
         }
     }
 }
+
+static void Init_Intan(void){
+	  HAL_SPI_DeInit(&hspi4);
+
+	//    Start SPI4 as MASTER
+	  SPI4_Master_Init();
+	//  HAL_Delay(1000);
+
+	  HAL_Delay(1000);
+
+	  SPI_HandleTypeDef *hspi = &hspi4;
+	  int rhd_status = INIT_RHD(hspi);
+
+
+
+	   //Poll for RHD detection
+	  while (rhd_status == 0) {
+		  rhd_status = INIT_RHD(hspi);
+		  HAL_Delay(1);
+	  }
+
+	//  HAL_Delay(500);
+
+	  // De-init SPI before changing mode
+	  HAL_SPI_DeInit(&hspi4);
+	//  HAL_Delay(3000);
+
+	  // Re-init as SLAVE
+	  SPI4_Slave_Init();
+
+	  // Start SPI DMA transmission/reception
+	  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+		  Error_Handler();
+	  }
+
+	//  HAL_Delay(500);
+	  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
+}
+
+
+static void Reset_All_SPI_Links(void)
+{
+
+
+    HAL_SPI_DMAStop(&hspi4);
+    HAL_SPI_Abort(&hspi4);
+    HAL_SPI_DeInit(&hspi4);
+
+    // Optional but STRONGLY recommended
+    __HAL_RCC_SPI4_FORCE_RESET();
+    __HAL_RCC_SPI4_RELEASE_RESET();
+
+    memset(spi_rx_fpga_buffer, 0, SPI_RX_FPGA_BUFFER_SIZE);
+    memset(spi_tx_fpga_buffer, 0, SPI_TX_FPGA_BUFFER_SIZE);
+    memset(fpga_accum_buffer,  0, FPGA_ACCUM_SIZE);
+
+    fpga_accum_index = 0;
+    spi_counter = 0;
+    spi_fpga_ready = 0;
+    fpga_frame_ready = 0;
+
+    SPI4_Slave_Init();
+
+    HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+
+    reset_spi_flag = 0;
+}
+
+
 
 static void Prepare_nRF_Frame(void)
 {

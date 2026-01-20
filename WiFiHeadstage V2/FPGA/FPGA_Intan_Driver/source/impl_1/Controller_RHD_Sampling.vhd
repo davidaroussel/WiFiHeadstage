@@ -507,7 +507,6 @@ begin
     stm32_state <= 0;    -- Reset state
 	int_STM32_TX_Byte <= (others => '0');
 	int_STM32_TX_DV <= '0';
-	rgd_info_sig_blue <= '1';
 	init_FIFO_Read <= '0';
 	init_FIFO_State <= '0';
 	
@@ -610,39 +609,31 @@ begin
 			rhd_index           <= 0;
 			rhd_done_config     <= '0';
 			data_array_send_count <= 0;
-			rgd_info_sig_red      <= '1';
-			rgd_info_sig_green    <= '1';
+			rgd_info_sig_blue   <= '1';
+			rgd_info_sig_green  <= '1';
+			rgd_info_sig_red    <= '1';
 			rhd_state           <= 0;
 			alt_counter         <= 0;  
 			full_cycle_count     <= 0;  -- reset new counter
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
-				rgd_info_sig_green <= '0';
-				rgd_info_sig_red <= '1';
-			elsif i_Controller_Mode = x"2" then
+				rgd_info_sig_blue <= '0';
 				rgd_info_sig_green <= '1';
+			elsif i_Controller_Mode = x"2" then
+				rgd_info_sig_blue <= '1';
 				case rhd_state is
 
 					----------------------------------------------------------------
 					-- STATE 0 : PREPARE NEXT BYTE
 					----------------------------------------------------------------
 					when 0 =>
-						if rhd_done_config = '0' then
-							-- Configuration phase
-							int_RHD_TX_Byte <= channel_array(rhd_index);
-						else
-							-- Acquisition phase: dynamically alternate CH0
-							case alt_counter is
-								when 0 => channel_array(0) <= x"E800";
-								when 1 => channel_array(0) <= x"E900";
-								when 2 => channel_array(0) <= x"E800";
-								when 3 => channel_array(0) <= x"E900";
-								when others => channel_array(0) <= x"E800";
-							end case;
-
-							int_RHD_TX_Byte <= channel_array(rhd_index);
-						end if;
-
+						--if rhd_done_config = '0' then
+							---- Configuration phase
+							--int_RHD_TX_Byte <= data_array(rhd_index);
+						--else
+							--int_RHD_TX_Byte <= channel_array(rhd_index);
+						--end if;
+						int_RHD_TX_Byte <= channel_array(rhd_index);
 						-- Wait until SPI/FIFO ready before sending
 						if int_RHD_TX_Ready = '1' then
 							int_RHD_TX_DV <= '1';   -- pulse DV for one cycle
@@ -678,7 +669,7 @@ begin
 								-- Finished one full loop of data_array or channel_array
 								if rhd_done_config = '0' then
 									-- Send data_array 100 times before switching
-									if data_array_send_count < 99 then
+									if data_array_send_count < 9 then
 										data_array_send_count <= data_array_send_count + 1;
 									else
 										rhd_done_config <= '1';  -- switch to channel_array
@@ -689,23 +680,16 @@ begin
 										full_cycle_count <= full_cycle_count + 1;
 									else
 										full_cycle_count <= 0;
-										rgd_info_sig_red <= not rgd_info_sig_red;
+										
 
 										-- Only change CH0 after 10,000 full loops
 										if alt_counter < 3 then
 											alt_counter <= alt_counter + 1;
+											rgd_info_sig_green <= '1';
 										else
+											rgd_info_sig_green <= '0';
 											alt_counter <= 0;
 										end if;
-
-										-- Apply the new CH0 value
-										case alt_counter is
-											when 0 => channel_array(0) <= x"E800";
-											when 1 => channel_array(0) <= x"E900";
-											when 2 => channel_array(0) <= x"E800";
-											when 3 => channel_array(0) <= x"E900";
-											when others => channel_array(0) <= x"E800";
-										end case;
 									end if;
 								end if;
 							end if;

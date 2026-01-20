@@ -14,6 +14,18 @@ entity top_level is
         RHD_CLKS_PER_HALF_BIT       : integer := 2;
         RHD_CS_INACTIVE_CLKS        : integer := 32
 				
+				
+		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
+		--   HALF_BIT : 8 
+		--   CS_CLK : 256
+		---  11.20 packets / xxxx Mbps
+				
+		---- MAIN_CLK : 42MHz -- Stable Neuro 25.74KHz
+		--   HALF_BIT : 2 
+		--   CS_CLK : 32
+		---  xxx packets / 6.06Mbps		
+		
+		
 		---- MAIN_CLK : 42MHz
 		--   HALF_BIT : 1 
 		--   CS_CLK : 16

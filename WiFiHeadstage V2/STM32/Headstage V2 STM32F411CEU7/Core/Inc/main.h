@@ -73,6 +73,9 @@ void Error_Handler(void);
 #define debug_Pin GPIO_PIN_9
 #define debug_Port GPIOB
 
+#define Reboot_SPI_Pin GPIO_PIN_5
+#define Reboot_SPI_Port GPIOB
+
 
 //Nordic nRF SPI PIN (SPI 1)
 #define nRF_SPI_MOSI_Port GPIOA
