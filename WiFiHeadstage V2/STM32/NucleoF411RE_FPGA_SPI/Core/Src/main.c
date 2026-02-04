@@ -33,15 +33,15 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_FPGA_BUFFER_SIZE 256
+#define SPI_RX_FPGA_BUFFER_SIZE 4096
 uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 
-#define SPI_TX_FPGA_BUFFER_SIZE 256
+#define SPI_TX_FPGA_BUFFER_SIZE 4096
 uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
-#define FPGA_CHUNK_SIZE 256
+#define FPGA_CHUNK_SIZE 4096
 #define FPGA_ACCUM_SIZE 8192
-#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE + 4) // 2B header + payload + 2B footer
+#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE) // 2B header + payload + 2B footer
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
 uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
@@ -496,20 +496,30 @@ static void Prepare_nRF_Frame(void)
 {
 //	printf("PREPARE FRAME \r\n");
 
-    nrf_tx_buffer[0] = 0xAA;
-    nrf_tx_buffer[1] = 0x55;
 
-    memcpy(&nrf_tx_buffer[2],
+    memcpy(&nrf_tx_buffer[0],
            fpga_accum_buffer,
            FPGA_ACCUM_SIZE);
 
-    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x55;
-    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xAA;
 
-//    for(int i=0; i<NRF_FRAME_SIZE; i+=2)
-//		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
-//	printf("\r\n\r\n");
+    nrf_tx_buffer[0] = 0xAA;
+    nrf_tx_buffer[1] = 0x55;
 
+
+    for(int i=0; i<FPGA_ACCUM_SIZE; i+=2)
+		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+    printf("\r\n");
+    printf("\r\n");
+
+//    printf("%02X%02X %02X%02X %02X%02X %02X%02X", nrf_tx_buffer[0], nrf_tx_buffer[1], nrf_tx_buffer[64], nrf_tx_buffer[65], nrf_tx_buffer[128], nrf_tx_buffer[129], nrf_tx_buffer[192], nrf_tx_buffer[193]);
+//    printf("\r\n");
+
+//    for (int i = 0; i<NRF_FRAME_SIZE; i+=64){
+//    	printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+//    }
+//    printf("--------------------------------------------------------------------------");
+//    printf("\r\n");
+//    printf("\r\n");
 }
 
 /**

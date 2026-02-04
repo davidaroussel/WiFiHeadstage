@@ -119,6 +119,8 @@ architecture RTL of Controller_RHD_FIFO is
 	signal init_FIFO_Read : std_logic;
 	
 	signal init_FIFO_Count : integer := 0;
+	signal debug_counter   : integer := 0;
+	signal signal_lag      : integer := 0;
   
 begin
 	int_FIFO_RE <= i_FIFO_RE;
@@ -171,38 +173,60 @@ begin
       int_FIFO_WE   <= '0';   	
 	  init_FIFO_Read <= '0';  	
 	  init_FIFO_State <= '0';
+	  debug_counter <= 0;
     elsif rising_edge(i_Clk) then
 		if i_Controller_Mode = x"0" then
-			if init_FIFO_State = '0' then
-				if init_FIFO_Count < 2 then
-					--int_FIFO_WE <= '1';
-					--int_FIFO_DATA(31 downto 0) <= x"BBBBBBBB";
-					--init_FIFO_Count <= init_FIFO_Count + 1;
-				else
-					init_FIFO_State <= '1';
-				end if;
-			else
-				int_FIFO_WE <= '0';
-			end if;
+			int_FIFO_WE <= '0';
+			--if init_FIFO_State = '0' then
+				--if init_FIFO_Count < 2 then
+					----int_FIFO_WE <= '1';
+					----int_FIFO_DATA(15 downto 0) <= x"AAAA";
+					----int_FIFO_DATA(15 downto 0) <= x"BBBB";
+					----init_FIFO_Count <= init_FIFO_Count + 1;
+				--else
+					--init_FIFO_State <= '1';
+				--end if;
+			--else
+				--int_FIFO_WE <= '0';
+			--end if;
+			
 			
 		elsif i_Controller_Mode = x"2" then
 		  if int_RX_DV = '1' then
 			int_FIFO_WE <= '1';
 			int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
 			int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
+		
+			--case debug_counter is
+				--when 0 => 
+					--int_FIFO_DATA(15 downto 0) <= x"00BB";
+				--when 61 => 
+					--int_FIFO_DATA(15 downto 0) <= x"99AA";
+				--when 62 => 
+					--int_FIFO_DATA(15 downto 0) <= x"BBCC";
+				--when 63 => 
+					--int_FIFO_DATA(15 downto 0) <= x"DDEE";
+				--when others =>
+			--end case;
+			
+			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter * 512, 16));
+			--if signal_lag < 128 then
+				--if debug_counter < 64 then 
+					--debug_counter <= debug_counter + 1;
+				--else
+					--debug_counter <= 0;
+				--end if;
+				--signal_lag <= 0;
+			--else 
+				--signal_lag <= signal_lag + 1;
+			--end if;
+
 		  else
 			int_FIFO_WE <= '0';
 		  end if;
 		end if;
 		
-		  --if int_RX_DV = '1' then
-			 -- --Push MISO data into the FIFO
-			--int_FIFO_WE <= '1';
-			--int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
-			--int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
-		  --else
-			--int_FIFO_WE <= '0';
-		  --end if;
+
 		
 	end if;
   end process;

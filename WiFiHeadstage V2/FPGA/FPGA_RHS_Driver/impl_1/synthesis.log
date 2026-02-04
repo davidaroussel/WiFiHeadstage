@@ -1,0 +1,754 @@
+synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+Wed Jan 28 09:08:47 2026
+
+
+Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml 
+
+Synthesis options:
+The -a option is iCE40UP.
+The -t option is SG48.
+The -sp option is High-Performance_1.2V.
+The -p option is iCE40UP5K.
+                                                          
+
+
+##########################################################
+
+
+### Lattice Family     : iCE40UP
+
+
+### Device             : iCE40UP5K
+
+
+### Package            : SG48
+
+
+### Performance Grade  : High-Performance_1.2V
+
+
+                                                         
+
+
+INFO <35001786> - synthesis: User-Selected Strategy Settings
+Optimization goal = Area
+Top-level module name = top_level.
+Target frequency = 200.000000 MHz.
+Maximum fanout = 1000.
+Timing path count = 3 (default)
+RWCheckOnRam = 0
+
+BRAM utilization = 100.000000 %
+DSP usage = true
+DSP utilization = 100.000000 %
+fsm_encoding_style = auto
+resolve_mixed_drivers = 0
+fix_gated_clocks = 1
+
+
+Mux style = auto (Default)
+Use Carry Chain = true
+carry_chain_length = 0
+Loop Limit = 1950.
+Use IO Insertion = TRUE
+Use IO Reg = AUTO
+
+Resource Sharing = TRUE
+Propagate Constants = TRUE
+Remove Duplicate Registers = TRUE
+Output HDL file name = FPGA_Intan_Driver_impl_1.vm.
+ROM style = auto
+RAM style = auto
+The -comp option is FALSE.
+The -syn option is FALSE.
+-sdc option: SDC file input is FPGA_Intan_Driver_impl_1_cpe.ldc.
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/CLK_48MHz (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/FIFO_MEM (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/STM32_FIFO (searchpath added)
+-path C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1 (searchpath added)
+-path C:/lscc/radiant/2023.2/ispfpga/ice40tp/data (searchpath added)
+Mixed language design
+Verilog design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.v
+Verilog design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/CLK_48MHz/rtl/CLK_48MHz.v
+Verilog design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/STM32_FIFO/rtl/STM32_FIFO.v
+Verilog design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/FIFO_MEM/rtl/FIFO_MEM.v
+VHDL library = pmi
+VHDL design file = C:/lscc/radiant/2023.2/ip/pmi/pmi_iCE40UP.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/top_level_tb.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/top_level.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/Controller_RHD_Sampling.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/Controller_RHD_FIFO.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/SPI_Master_CS.vhd
+VHDL library = work
+VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/source/impl_1/SPI_Master.vhd
+The -r option is OFF. [ Remove LOC Properties is OFF. ]
+WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM8 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM7 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM6 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM5 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM4 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM3 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM2 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM1 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM0 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port I is not connected on this instance. VDB-5050
+Compile design.
+Compile Design Begin
+Analyzing Verilog file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v. VERI-1482
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(1): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v(40): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/adder_subtractor/rtl/lscc_add_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(2): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v(50): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/adder/rtl/lscc_adder.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(3): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v(52): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/complex_mult/rtl/lscc_complex_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(4): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v(39): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/counter/rtl/lscc_cntr.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(5): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v(44): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo/rtl/lscc_fifo.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(6): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v(47): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/fifo_dc/rtl/lscc_fifo_dc.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(7): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v(52): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/mult_accumulate/rtl/lscc_mult_accumulate.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(8): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v(53): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub_sum/rtl/lscc_mult_add_sub_sum.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(9): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v(52): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/mult_add_sub/rtl/lscc_mult_add_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(10): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v(51): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/multiplier/rtl/lscc_multiplier.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(11): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v(48): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(12): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v(45): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(13): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v(45): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/rom/rtl/lscc_rom.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(14): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v(50): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../common/subtractor/rtl/lscc_subtractor.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(15): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v(49): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dp/rtl/lscc_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(16): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v(45): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/../avant/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2023.2/ip/pmi/pmi_dsp.v. VERI-1328
+Analyzing Verilog file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v. VERI-1482
+Analyzing Verilog file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/stm32_fifo/rtl/stm32_fifo.v. VERI-1482
+Analyzing Verilog file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/fifo_mem/rtl/fifo_mem.v. VERI-1482
+Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
+Analyzing VHDL file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd
+
+INFO <35921014> - synthesis: c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_fifo.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_fifo.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_fifo.vhd(6): analyzing entity controller_rhd_fifo. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_fifo.vhd(50): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master.vhd(6): analyzing entity spi_master. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master.vhd(34): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master_cs.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master_cs.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master_cs.vhd(44): analyzing entity spi_master_cs. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/spi_master_cs.vhd(75): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(5): analyzing entity controller_rhd_sampling. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(75): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(5): analyzing entity top_level. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(102): analyzing architecture rtl. VHDL-1010
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level_tb.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level_tb.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level_tb.vhd(5): analyzing entity top_level_tb. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level_tb.vhd(8): analyzing architecture sim. VHDL-1010
+INFO <35929000> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level_tb.vhd(79): input pin ctrl0_in has no actual or default value. VHDL-9000
+INFO <35921259> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(79): ctrl0_in is declared here. VHDL-1259
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd. VHDL-1481
+Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd
+
+INFO <35921012> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(5): analyzing entity controller_rhd_sampling_tb. VHDL-1012
+INFO <35921010> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(8): analyzing architecture testbench. VHDL-1010
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1". VHDL-1504
+Top module language type = VHDL.
+WARNING <35935049> - synthesis: input port i_TX_Byte[15] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[14] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[13] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[12] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[11] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[10] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[9] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[8] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[7] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[6] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[5] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[4] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[3] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[2] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[1] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[0] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port sclk_i remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port sdi_i remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[15] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[14] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[13] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[12] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[11] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[10] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[9] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[8] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[7] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[6] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[5] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[4] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[3] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[2] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[1] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[0] remains unconnected for this instance. VDB-5049
+WARNING <35935050> - synthesis: input port CTRL0_IN is not connected on this instance. VDB-5050
+WARNING <35935049> - synthesis: input port i_TX_Byte[15] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[14] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[13] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[12] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[11] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[10] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[9] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[8] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[7] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[6] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[5] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[4] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[3] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[2] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[1] remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port i_TX_Byte[0] remains unconnected for this instance. VDB-5049
+Top module name (VHDL, mixed language): top_level
+                                                         
+
+
+### Number of Logic Cells: 5280
+
+
+### Number of RAM Blocks: 30
+
+
+### Number of DSP Blocks: 8
+
+
+### Number of PLLs: 1
+
+
+### Number of IO Pins: 56
+
+
+##########################################################
+
+
+                                                         
+
+
+WARNING <35001771> - synthesis: Initial value found on net rgb_sig_red will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb_sig_green will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net rgb_sig_blue will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[31] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[30] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[29] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[28] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[27] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[26] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[25] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[24] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[23] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[22] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[21] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[20] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[19] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[18] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[17] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[16] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[15] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[14] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[13] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[12] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[11] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[10] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[9] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[8] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[7] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[6] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[5] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[4] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[3] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[2] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[1] will be ignored due to unrecognized driver type
+WARNING <35001771> - synthesis: Initial value found on net NUM_DATA[0] will be ignored due to unrecognized driver type
+WARNING <35931038> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(285): ram channel_array_original_ramnet has no write-port on it. VDB-1038
+WARNING <35935040> - synthesis: Register int_BOOST_ENABLE clock is stuck at One. VDB-5040
+WARNING <35935049> - synthesis: input port sclk_i remains unconnected for this instance. VDB-5049
+WARNING <35935049> - synthesis: input port sdi_i remains unconnected for this instance. VDB-5049
+######## Converting I/O port i_STM32_SPI4_MISO to output.
+CRITICAL <35002028> - synthesis: I/O Port CTRL0_IN 's net has no driver and is unused.
+WARNING <35931002> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(139): net \pll_inst/lscc_pll_inst/sclk_i does not have a driver. VDB-1002
+WARNING <35931002> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(140): net \pll_inst/lscc_pll_inst/sdi_i does not have a driver. VDB-1002
+######## Missing driver on net \pll_inst/lscc_pll_inst/sclk_i. Patching with GND.
+######## Missing driver on net \pll_inst/lscc_pll_inst/sdi_i. Patching with GND.
+INFO <35001774> - synthesis: Extracted state machine for register '\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS' with one-hot encoding
+State machine has 3 reachable states with original encodings of:
+
+ 00 
+
+ 01 
+
+ 10 
+
+original encoding -> new encoding (one-hot encoding)
+
+ 00 -> 001
+
+ 01 -> 010
+
+ 10 -> 100
+
+INFO <35001774> - synthesis: Extracted state machine for register '\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS' with one-hot encoding
+State machine has 3 reachable states with original encodings of:
+
+ 00 
+
+ 01 
+
+ 10 
+
+original encoding -> new encoding (one-hot encoding)
+
+ 00 -> 001
+
+ 01 -> 010
+
+ 10 -> 100
+
+
+
+
+CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM stuck at '0': 3
+CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM stuck at '0': 3
+CRITICAL <35001747> - synthesis: Bit(s) of register driving \Controller_inst/temp_buffer[511:0] stuck at '0': 511, 510, 509, 508, 507, 506, 505, 503, 502, 500, 499, 498, 495, 493, 492, 491, 489, 487, 484, 483, 478, 477, 476, 474, 473, 470, 468, 466, 461, 460, 457, 452, 447, 446, 445, 444, 443, 442, 441, 440, 439, 438, 437, 436, 435, 434, 433, 432, 431, 430, 429, 428, 427, 426, 425, 424, 423, 422, 421, 420, 419, 418, 417, 416, 415,    ....   3, 92, 90, 89, 86, 84, 82, 77, 76, 73, 68, 63, 62, 59, 58, 55, 54, 51, 50, 47, 46, 43, 42, 39, 38, 35, 34, 31, 30, 27, 26, 23, 22, 19, 18, 15, 14, 11, 10, 7, 6, 3, 2
+CRITICAL <35001747> - synthesis: Bit(s) of register driving w_Controller_Mode[3:0] stuck at '0': 3, 2, 1
+CRITICAL <35001747> - synthesis: Bit(s) of register driving \Controller_inst/int_STM32_TX_Byte[511:0] stuck at '0': 511, 510, 509, 508, 507, 506, 505, 503, 502, 500, 499, 498, 495, 493, 492, 491, 489, 487, 484, 483, 478, 477, 476, 474, 473, 470, 468, 466, 461, 460, 457, 452, 447, 446, 445, 444, 443, 442, 441, 440, 439, 438, 437, 436, 435, 434, 433, 432, 431, 430, 429, 428, 427, 426, 425, 424, 423, 422, 421, 420, 419, 418, 417, 416, 415,    ....   3, 92, 90, 89, 86, 84, 82, 77, 76, 73, 68, 63, 62, 59, 58, 55, 54, 51, 50, 47, 46, 43, 42, 39, 38, 35, 34, 31, 30, 27, 26, 23, 22, 19, 18, 15, 14, 11, 10, 7, 6, 3, 2
+CRITICAL <35001747> - synthesis: Bit(s) of register driving \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte[511:0] stuck at '0': 511, 510, 509, 508, 507, 506, 505, 503, 502, 500, 499, 498, 495, 493, 492, 491, 489, 487, 484, 483, 478, 477, 476, 474, 473, 470, 468, 466, 461, 460, 457, 452, 447, 446, 445, 444, 443, 442, 441, 440, 439, 438, 437, 436, 435, 434, 433, 432, 431, 430, 429, 428, 427, 426, 425, 424, 423, 422, 421, 420, 419, 418, 417, 416, 415,    ....   3, 92, 90, 89, 86, 84, 82, 77, 76, 73, 68, 63, 62, 59, 58, 55, 54, 51, 50, 47, 46, 43, 42, 39, 38, 35, 34, 31, 30, 27, 26, 23, 22, 19, 18, 15, 14, 11, 10, 7, 6, 3, 2
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/int_FIFO_WE clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_done_config clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_STM32_TX_DV clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rgd_info_sig_green clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_DV clock is stuck at Zero. VDB-5040
+CRITICAL <35002028> - synthesis: I/O Port CTRL0_IN 's net has no driver and is unused.
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM_i1 clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHD_TX_Byte__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i31 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i29 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i28 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i23 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i22 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i21 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i20 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i19 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i18 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i17 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i15 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i14 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i13 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i12 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i11 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i10 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_counter_1067__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i31 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i29 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i28 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i23 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i22 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i21 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i20 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i19 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i18 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i17 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i15 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i14 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i13 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i12 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i11 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i10 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_i0_i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i31 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i29 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i28 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i23 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i22 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i21 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i20 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i19 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i18 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i17 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i15 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i14 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i13 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i12 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i11 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i10 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_n clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_TX_Count_1076__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i5 clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/r_CS_Inactive_Count_i1 clock is stuck at Zero. VDB-5040
+Combinational loop found : 1
+
+ Net \Controller_inst/NUM_DATA[31] 
+
+ Instance \Controller_inst/NUM_DATA_31__I_0 
+
+Combinational loop found : 2
+
+ Net \Controller_inst/NUM_DATA[30] 
+
+ Instance \Controller_inst/NUM_DATA_30__I_0 
+
+Combinational loop found : 3
+
+ Net \Controller_inst/NUM_DATA[29] 
+
+ Instance \Controller_inst/NUM_DATA_29__I_0 
+
+Combinational loop found : 4
+
+ Net \Controller_inst/NUM_DATA[28] 
+
+ Instance \Controller_inst/NUM_DATA_28__I_0 
+
+Combinational loop found : 5
+
+ Net \Controller_inst/NUM_DATA[27] 
+
+ Instance \Controller_inst/NUM_DATA_27__I_0 
+
+Combinational loop found : 6
+
+ Net \Controller_inst/NUM_DATA[26] 
+
+ Instance \Controller_inst/NUM_DATA_26__I_0 
+
+Combinational loop found : 7
+
+ Net \Controller_inst/NUM_DATA[25] 
+
+ Instance \Controller_inst/NUM_DATA_25__I_0 
+
+Combinational loop found : 8
+
+ Net \Controller_inst/NUM_DATA[24] 
+
+ Instance \Controller_inst/NUM_DATA_24__I_0 
+
+Combinational loop found : 9
+
+ Net \Controller_inst/NUM_DATA[23] 
+
+ Instance \Controller_inst/NUM_DATA_23__I_0 
+
+Combinational loop found : 10
+
+ Net \Controller_inst/NUM_DATA[22] 
+
+ Instance \Controller_inst/NUM_DATA_22__I_0 
+
+Combinational loop found : 11
+
+ Net \Controller_inst/NUM_DATA[21] 
+
+ Instance \Controller_inst/NUM_DATA_21__I_0 
+
+Combinational loop found : 12
+
+ Net \Controller_inst/NUM_DATA[20] 
+
+ Instance \Controller_inst/NUM_DATA_20__I_0 
+
+Combinational loop found : 13
+
+ Net \Controller_inst/NUM_DATA[19] 
+
+ Instance \Controller_inst/NUM_DATA_19__I_0 
+
+Combinational loop found : 14
+
+ Net \Controller_inst/NUM_DATA[18] 
+
+ Instance \Controller_inst/NUM_DATA_18__I_0 
+
+Combinational loop found : 15
+
+ Net \Controller_inst/NUM_DATA[17] 
+
+ Instance \Controller_inst/NUM_DATA_17__I_0 
+
+Combinational loop found : 16
+
+ Net \Controller_inst/NUM_DATA[16] 
+
+ Instance \Controller_inst/NUM_DATA_16__I_0 
+
+Combinational loop found : 17
+
+ Net \Controller_inst/NUM_DATA[15] 
+
+ Instance \Controller_inst/NUM_DATA_15__I_0 
+
+Combinational loop found : 18
+
+ Net \Controller_inst/NUM_DATA[14] 
+
+ Instance \Controller_inst/NUM_DATA_14__I_0 
+
+Combinational loop found : 19
+
+ Net \Controller_inst/NUM_DATA[13] 
+
+ Instance \Controller_inst/NUM_DATA_13__I_0 
+
+Combinational loop found : 20
+
+ Net \Controller_inst/NUM_DATA[12] 
+
+ Instance \Controller_inst/NUM_DATA_12__I_0 
+
+Combinational loop found : 21
+
+ Net \Controller_inst/NUM_DATA[11] 
+
+ Instance \Controller_inst/NUM_DATA_11__I_0 
+
+Combinational loop found : 22
+
+ Net \Controller_inst/NUM_DATA[10] 
+
+ Instance \Controller_inst/NUM_DATA_10__I_0 
+
+Combinational loop found : 23
+
+ Net \Controller_inst/NUM_DATA[9] 
+
+ Instance \Controller_inst/NUM_DATA_9__I_0 
+
+Combinational loop found : 24
+
+ Net \Controller_inst/NUM_DATA[8] 
+
+ Instance \Controller_inst/NUM_DATA_8__I_0 
+
+Combinational loop found : 25
+
+ Net \Controller_inst/NUM_DATA[7] 
+
+ Instance \Controller_inst/NUM_DATA_7__I_0 
+
+Combinational loop found : 26
+
+ Net \Controller_inst/NUM_DATA[6] 
+
+ Instance \Controller_inst/NUM_DATA_6__I_0 
+
+Combinational loop found : 27
+
+ Net \Controller_inst/NUM_DATA[5] 
+
+ Instance \Controller_inst/NUM_DATA_5__I_0 
+
+Combinational loop found : 28
+
+ Net \Controller_inst/NUM_DATA[4] 
+
+ Instance \Controller_inst/NUM_DATA_4__I_0 
+
+Combinational loop found : 29
+
+ Net \Controller_inst/NUM_DATA[3] 
+
+ Instance \Controller_inst/NUM_DATA_3__I_0 
+
+Combinational loop found : 30
+
+ Net \Controller_inst/NUM_DATA[2] 
+
+ Instance \Controller_inst/NUM_DATA_2__I_0 
+
+Combinational loop found : 31
+
+ Net \Controller_inst/NUM_DATA[1] 
+
+ Instance \Controller_inst/NUM_DATA_1__I_0 
+
+Combinational loop found : 32
+
+ Net \Controller_inst/NUM_DATA[0] 
+
+ Instance \Controller_inst/NUM_DATA_0__I_0 
+
+Combinational loop found : 33
+
+ Net i_STM32_SPI4_MISO_c 
+
+ Instance i_STM32_SPI4_MISO_c_I_0 
+
+WARNING <35935040> - synthesis: Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_SPI_MOSI clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_SPI_MOSI clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_1078__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i1 clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_n clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i1 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i5 clock is stuck at One. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i0 clock is stuck at Zero. VDB-5040
+
+################### Begin Area Report (top_level)######################
+Number of register bits => 55 of 5280 (1 % )
+BB_B => 3
+CCU2 => 25
+FD1P3XZ => 55
+IB => 2
+LUT4 => 31
+OB => 17
+PLL_B => 1
+################### End Area Report ##################
+Number of odd-length carry chains : 2
+Number of even-length carry chains : 1
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 2
+  Net : pll_inst/lscc_pll_inst/pll_clk_int, loads : 0
+  Net : i_clk_c, loads : 1
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : o_reset_c, loads : 26
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/n1789, loads : 11
+  Net : o_Controller_Mode_0_0, loads : 7
+  Net : Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/n1817, loads : 7
+  Net : reset_counter[5], loads : 3
+  Net : reset_counter[4], loads : 3
+  Net : reset_counter[3], loads : 3
+  Net : reset_counter[2], loads : 3
+  Net : n1102, loads : 3
+  Net : n8680, loads : 3
+################### End Clock Report ##################
+
+Peak Memory Usage: 171 MB
+
+--------------------------------------------------------------
+Total CPU Time: 10 secs 
+Total REAL Time: 11 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: 2700f858af18b33eaa1b1daccce81c025caf5193

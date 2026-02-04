@@ -621,8 +621,8 @@ void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi){
 }
 
 
-void INIT_RHS(SPI_HandleTypeDef *hspi){
-
+int INIT_RHS(SPI_HandleTypeDef *hspi){
+	int intan_connected = 1;
 	//SET CS_PIN
 	RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
 
@@ -777,6 +777,10 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	// Should Return Chip ID
 	uint8_t chip_id = RHS2116_Read_Chip_ID(hspi, REGISTER_255);
 	printf("Extracted CHIP ID: %d \r\n", chip_id);
+	if (chip_id != 32){
+		intan_connected = 0;
+		return intan_connected;
+	}
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
@@ -856,5 +860,7 @@ void INIT_RHS(SPI_HandleTypeDef *hspi){
 	printf("------------------------------------------------  \r\n");
 
 	RHS2116_Convert_Register(hspi);
+
+	return intan_connected;
 
 }

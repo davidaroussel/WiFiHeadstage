@@ -82,6 +82,7 @@ Analyzing Verilog file fifo_mem.v. VERI-1482
 Top module language type = VHDL.
 INFO <35901018> - fifo_mem.v(63): compiling module FIFO_MEM. VERI-1018
 INFO <35901018> - clk_48mhz.v(63): compiling module CLK_48MHz. VERI-1018
+WARNING <35935050> - input port i_RHD2216_SPI_MISO is not connected on this instance. VDB-5050
 WARNING <35935050> - input port CTRL0_IN is not connected on this instance. VDB-5050
 Top module name (VHDL, mixed language): top_level
 Source compile complete.
@@ -104,7 +105,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Mon Jan 19 17:24:26 2026
+Tue Feb  3 14:34:54 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml 
@@ -269,19 +270,21 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(5): analyzing entity controller_rhd_sampling. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(76): analyzing architecture rtl. VHDL-1010
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(75): analyzing architecture rtl. VHDL-1010
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd. VHDL-1481
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(5): analyzing entity top_level. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(94): analyzing architecture rtl. VHDL-1010
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(113): analyzing architecture rtl. VHDL-1010
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd. VHDL-1481
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(5): analyzing entity top_level_tb. VHDL-1012
 INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(8): analyzing architecture sim. VHDL-1010
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(79): input pin i_rhd2216_spi_miso has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(69): i_rhd2216_spi_miso is declared here. VHDL-1259
 INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level_tb.vhd(79): input pin ctrl0_in has no actual or default value. VHDL-9000
-INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(71): ctrl0_in is declared here. VHDL-1259
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(90): ctrl0_in is declared here. VHDL-1259
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd. VHDL-1481
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling_tb.vhd
 
@@ -291,6 +294,7 @@ INFO <35921504> - The default VHDL library search path is now "C:/Users/david/De
 Top module language type = VHDL.
 WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
+WARNING <35935050> - input port i_RHD2216_SPI_MISO is not connected on this instance. VDB-5050
 WARNING <35935050> - input port CTRL0_IN is not connected on this instance. VDB-5050
 Top module name (VHDL, mixed language): top_level
                                                          
@@ -352,14 +356,21 @@ WARNING <35001771> - Initial value found on net NUM_DATA[3] will be ignored due 
 WARNING <35001771> - Initial value found on net NUM_DATA[2] will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[1] will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[0] will be ignored due to unrecognized driver type
-WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(358): ram channel_array_original_ramnet has no write-port on it. VDB-1038
+WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(366): ram channel_array_original_ramnet has no write-port on it. VDB-1038
 WARNING <35935040> - Register int_BOOST_ENABLE clock is stuck at One. VDB-5040
 WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
-######## Converting I/O port i_STM32_SPI_MISO to output.
+######## Converting I/O port i_STM32_SPI4_MISO to output.
+CRITICAL <35002028> - I/O Port o_RHD2216_SPI_MOSI 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port i_RHD2216_SPI_MISO 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHD2216_SPI_Clk 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHD2216_SPI_CS_n 's net has no driver and is unused.
 CRITICAL <35002028> - I/O Port CTRL0_IN 's net has no driver and is unused.
 WARNING <35931002> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v(139): net \pll_inst/lscc_pll_inst/sclk_i does not have a driver. VDB-1002
 WARNING <35931002> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_intan_driver/clk_48mhz/rtl/clk_48mhz.v(140): net \pll_inst/lscc_pll_inst/sdi_i does not have a driver. VDB-1002
+######## Missing driver on net o_RHD2216_SPI_MOSI. Patching with GND.
+######## Missing driver on net o_RHD2216_SPI_Clk. Patching with GND.
+######## Missing driver on net o_RHD2216_SPI_CS_n. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sclk_i. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sdi_i. Patching with GND.
 INFO <35001774> - Extracted state machine for register '\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS' with one-hot encoding
@@ -405,305 +416,242 @@ CRITICAL <35001747> - Bit(s) of register \Controller_inst/SPI_Master_CS_STM32_1/
 ######## Mapping RTL RAM \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/mem_EBR.mem to 2 EBR blocks in PSEUDO_DUAL_PORT Mode
 
 CRITICAL <35001747> - Bit(s) of register driving w_Controller_Mode[3:0] stuck at '0': 3, 2
+CRITICAL <35002028> - I/O Port i_RHD2216_SPI_MISO 's net has no driver and is unused.
 CRITICAL <35002028> - I/O Port CTRL0_IN 's net has no driver and is unused.
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i31 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i30 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i29 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i28 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i27 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i26 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i25 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i24 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i23 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i22 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i21 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i20 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i19 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i18 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i17 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i16 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i15 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i14 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i13 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i12 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i11 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i10 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i9 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i8 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i7 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i6 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i10 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i11 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i12 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i13 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i14 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i15 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i17 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i18 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i19 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i20 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i21 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i22 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i23 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i28 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i29 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i31 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/int_RHD_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 Combinational loop found : 1
-
- Net \Controller_inst/NUM_DATA[30] 
-
- Instance \Controller_inst/NUM_DATA_30__I_0 
-
-Combinational loop found : 2
-
- Net \Controller_inst/NUM_DATA[29] 
-
- Instance \Controller_inst/NUM_DATA_29__I_0 
-
-Combinational loop found : 3
-
- Net \Controller_inst/NUM_DATA[28] 
-
- Instance \Controller_inst/NUM_DATA_28__I_0 
-
-Combinational loop found : 4
-
- Net \Controller_inst/NUM_DATA[27] 
-
- Instance \Controller_inst/NUM_DATA_27__I_0 
-
-Combinational loop found : 5
-
- Net \Controller_inst/NUM_DATA[26] 
-
- Instance \Controller_inst/NUM_DATA_26__I_0 
-
-Combinational loop found : 6
-
- Net \Controller_inst/NUM_DATA[25] 
-
- Instance \Controller_inst/NUM_DATA_25__I_0 
-
-Combinational loop found : 7
-
- Net \Controller_inst/NUM_DATA[24] 
-
- Instance \Controller_inst/NUM_DATA_24__I_0 
-
-Combinational loop found : 8
-
- Net \Controller_inst/NUM_DATA[23] 
-
- Instance \Controller_inst/NUM_DATA_23__I_0 
-
-Combinational loop found : 9
-
- Net \Controller_inst/NUM_DATA[22] 
-
- Instance \Controller_inst/NUM_DATA_22__I_0 
-
-Combinational loop found : 10
-
- Net \Controller_inst/NUM_DATA[21] 
-
- Instance \Controller_inst/NUM_DATA_21__I_0 
-
-Combinational loop found : 11
-
- Net \Controller_inst/NUM_DATA[20] 
-
- Instance \Controller_inst/NUM_DATA_20__I_0 
-
-Combinational loop found : 12
-
- Net \Controller_inst/NUM_DATA[19] 
-
- Instance \Controller_inst/NUM_DATA_19__I_0 
-
-Combinational loop found : 13
-
- Net \Controller_inst/NUM_DATA[18] 
-
- Instance \Controller_inst/NUM_DATA_18__I_0 
-
-Combinational loop found : 14
-
- Net \Controller_inst/NUM_DATA[17] 
-
- Instance \Controller_inst/NUM_DATA_17__I_0 
-
-Combinational loop found : 15
-
- Net \Controller_inst/NUM_DATA[16] 
-
- Instance \Controller_inst/NUM_DATA_16__I_0 
-
-Combinational loop found : 16
-
- Net \Controller_inst/NUM_DATA[15] 
-
- Instance \Controller_inst/NUM_DATA_15__I_0 
-
-Combinational loop found : 17
-
- Net \Controller_inst/NUM_DATA[14] 
-
- Instance \Controller_inst/NUM_DATA_14__I_0 
-
-Combinational loop found : 18
-
- Net \Controller_inst/NUM_DATA[13] 
-
- Instance \Controller_inst/NUM_DATA_13__I_0 
-
-Combinational loop found : 19
-
- Net \Controller_inst/NUM_DATA[12] 
-
- Instance \Controller_inst/NUM_DATA_12__I_0 
-
-Combinational loop found : 20
-
- Net \Controller_inst/NUM_DATA[11] 
-
- Instance \Controller_inst/NUM_DATA_11__I_0 
-
-Combinational loop found : 21
-
- Net \Controller_inst/NUM_DATA[10] 
-
- Instance \Controller_inst/NUM_DATA_10__I_0 
-
-Combinational loop found : 22
-
- Net \Controller_inst/NUM_DATA[9] 
-
- Instance \Controller_inst/NUM_DATA_9__I_0 
-
-Combinational loop found : 23
-
- Net \Controller_inst/NUM_DATA[8] 
-
- Instance \Controller_inst/NUM_DATA_8__I_0 
-
-Combinational loop found : 24
-
- Net \Controller_inst/NUM_DATA[7] 
-
- Instance \Controller_inst/NUM_DATA_7__I_0 
-
-Combinational loop found : 25
-
- Net \Controller_inst/NUM_DATA[6] 
-
- Instance \Controller_inst/NUM_DATA_6__I_0 
-
-Combinational loop found : 26
-
- Net \Controller_inst/NUM_DATA[5] 
-
- Instance \Controller_inst/NUM_DATA_5__I_0 
-
-Combinational loop found : 27
-
- Net \Controller_inst/NUM_DATA[4] 
-
- Instance \Controller_inst/NUM_DATA_4__I_0 
-
-Combinational loop found : 28
-
- Net \Controller_inst/NUM_DATA[3] 
-
- Instance \Controller_inst/NUM_DATA_3__I_0 
-
-Combinational loop found : 29
-
- Net \Controller_inst/NUM_DATA[2] 
-
- Instance \Controller_inst/NUM_DATA_2__I_0 
-
-Combinational loop found : 30
-
- Net \Controller_inst/NUM_DATA[1] 
-
- Instance \Controller_inst/NUM_DATA_1__I_0 
-
-Combinational loop found : 31
 
  Net \Controller_inst/NUM_DATA[0] 
 
  Instance \Controller_inst/NUM_DATA_0__I_0 
 
-Combinational loop found : 32
+Combinational loop found : 2
 
  Net \Controller_inst/NUM_DATA[31] 
 
  Instance \Controller_inst/NUM_DATA_31__I_0 
 
+Combinational loop found : 3
+
+ Net \Controller_inst/NUM_DATA[30] 
+
+ Instance \Controller_inst/NUM_DATA_30__I_0 
+
+Combinational loop found : 4
+
+ Net \Controller_inst/NUM_DATA[29] 
+
+ Instance \Controller_inst/NUM_DATA_29__I_0 
+
+Combinational loop found : 5
+
+ Net \Controller_inst/NUM_DATA[28] 
+
+ Instance \Controller_inst/NUM_DATA_28__I_0 
+
+Combinational loop found : 6
+
+ Net \Controller_inst/NUM_DATA[27] 
+
+ Instance \Controller_inst/NUM_DATA_27__I_0 
+
+Combinational loop found : 7
+
+ Net \Controller_inst/NUM_DATA[26] 
+
+ Instance \Controller_inst/NUM_DATA_26__I_0 
+
+Combinational loop found : 8
+
+ Net \Controller_inst/NUM_DATA[25] 
+
+ Instance \Controller_inst/NUM_DATA_25__I_0 
+
+Combinational loop found : 9
+
+ Net \Controller_inst/NUM_DATA[24] 
+
+ Instance \Controller_inst/NUM_DATA_24__I_0 
+
+Combinational loop found : 10
+
+ Net \Controller_inst/NUM_DATA[23] 
+
+ Instance \Controller_inst/NUM_DATA_23__I_0 
+
+Combinational loop found : 11
+
+ Net \Controller_inst/NUM_DATA[22] 
+
+ Instance \Controller_inst/NUM_DATA_22__I_0 
+
+Combinational loop found : 12
+
+ Net \Controller_inst/NUM_DATA[21] 
+
+ Instance \Controller_inst/NUM_DATA_21__I_0 
+
+Combinational loop found : 13
+
+ Net \Controller_inst/NUM_DATA[20] 
+
+ Instance \Controller_inst/NUM_DATA_20__I_0 
+
+Combinational loop found : 14
+
+ Net \Controller_inst/NUM_DATA[19] 
+
+ Instance \Controller_inst/NUM_DATA_19__I_0 
+
+Combinational loop found : 15
+
+ Net \Controller_inst/NUM_DATA[18] 
+
+ Instance \Controller_inst/NUM_DATA_18__I_0 
+
+Combinational loop found : 16
+
+ Net \Controller_inst/NUM_DATA[17] 
+
+ Instance \Controller_inst/NUM_DATA_17__I_0 
+
+Combinational loop found : 17
+
+ Net \Controller_inst/NUM_DATA[16] 
+
+ Instance \Controller_inst/NUM_DATA_16__I_0 
+
+Combinational loop found : 18
+
+ Net \Controller_inst/NUM_DATA[15] 
+
+ Instance \Controller_inst/NUM_DATA_15__I_0 
+
+Combinational loop found : 19
+
+ Net \Controller_inst/NUM_DATA[14] 
+
+ Instance \Controller_inst/NUM_DATA_14__I_0 
+
+Combinational loop found : 20
+
+ Net \Controller_inst/NUM_DATA[13] 
+
+ Instance \Controller_inst/NUM_DATA_13__I_0 
+
+Combinational loop found : 21
+
+ Net \Controller_inst/NUM_DATA[12] 
+
+ Instance \Controller_inst/NUM_DATA_12__I_0 
+
+Combinational loop found : 22
+
+ Net \Controller_inst/NUM_DATA[11] 
+
+ Instance \Controller_inst/NUM_DATA_11__I_0 
+
+Combinational loop found : 23
+
+ Net \Controller_inst/NUM_DATA[10] 
+
+ Instance \Controller_inst/NUM_DATA_10__I_0 
+
+Combinational loop found : 24
+
+ Net \Controller_inst/NUM_DATA[9] 
+
+ Instance \Controller_inst/NUM_DATA_9__I_0 
+
+Combinational loop found : 25
+
+ Net \Controller_inst/NUM_DATA[8] 
+
+ Instance \Controller_inst/NUM_DATA_8__I_0 
+
+Combinational loop found : 26
+
+ Net \Controller_inst/NUM_DATA[7] 
+
+ Instance \Controller_inst/NUM_DATA_7__I_0 
+
+Combinational loop found : 27
+
+ Net \Controller_inst/NUM_DATA[6] 
+
+ Instance \Controller_inst/NUM_DATA_6__I_0 
+
+Combinational loop found : 28
+
+ Net \Controller_inst/NUM_DATA[5] 
+
+ Instance \Controller_inst/NUM_DATA_5__I_0 
+
+Combinational loop found : 29
+
+ Net \Controller_inst/NUM_DATA[4] 
+
+ Instance \Controller_inst/NUM_DATA_4__I_0 
+
+Combinational loop found : 30
+
+ Net \Controller_inst/NUM_DATA[3] 
+
+ Instance \Controller_inst/NUM_DATA_3__I_0 
+
+Combinational loop found : 31
+
+ Net \Controller_inst/NUM_DATA[2] 
+
+ Instance \Controller_inst/NUM_DATA_2__I_0 
+
+Combinational loop found : 32
+
+ Net \Controller_inst/NUM_DATA[1] 
+
+ Instance \Controller_inst/NUM_DATA_1__I_0 
+
 Combinational loop found : 33
 
- Net int_RHD_SPI_MISO 
+ Net int_RHD2132_SPI_MISO 
 
- Instance i_RHD_SPI_MISO_c_I_0 
+ Instance i_RHD2132_SPI_MISO_c_I_0 
 
 Combinational loop found : 34
 
- Net i_STM32_SPI_MISO_c 
+ Net i_STM32_SPI4_MISO_c 
 
- Instance i_STM32_SPI_MISO_c_I_0 
+ Instance i_STM32_SPI4_MISO_c_I_0 
 
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.full_flag_r.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_mem_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.empty_flag_r.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_mem_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_r.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1cmp_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i7.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i0.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_p1_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i7 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1cmp_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i7 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_p1_r_i7.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1cmp_r_i7 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_addr_p1_r_i7.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.rd_flag_addr_r_i6.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i1.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i2.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i3.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i4 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i4.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i5 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i5.
-Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i6.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.full_flag_r.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_mem_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.empty_flag_r.
@@ -1922,18 +1870,18 @@ Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i6.
 
 ################### Begin Area Report (top_level)######################
-Number of register bits => 2464 of 5280 (46 % )
+Number of register bits => 1958 of 5280 (37 % )
 BB_B => 3
 EBR_B => 1
-CCU2 => 126
-FD1P3XZ => 2464
+CCU2 => 129
+FD1P3XZ => 1958
 IB => 2
-LUT4 => 905
-OB => 17
+LUT4 => 890
+OB => 20
 PLL_B => 1
 ################### End Area Report ##################
-Number of odd-length carry chains : 2
-Number of even-length carry chains : 13
+Number of odd-length carry chains : 3
+Number of even-length carry chains : 12
 
 ################### Begin Clock Report ######################
 Clock Nets
@@ -1945,24 +1893,24 @@ Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : o_reset_c, loads : 1000
-  Net : maxfan_replicated_net_999, loads : 1000
-  Net : Controller_inst/int_STM32_TX_DV, loads : 536
-  Net : Controller_inst/n7611, loads : 512
-  Net : Controller_inst/n7585, loads : 512
-  Net : maxfan_replicated_net_1462, loads : 463
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 245
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 138
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[3], loads : 58
-  Net : Controller_inst/stm32_state[0], loads : 49
+  Net : maxfan_replicated_net_957, loads : 958
+  Net : Controller_inst/int_STM32_TX_DV, loads : 533
+  Net : Controller_inst/n5369, loads : 512
+  Net : Controller_inst/n8503, loads : 512
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 209
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 162
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[2], loads : 65
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[3], loads : 44
+  Net : Controller_inst/n1228, loads : 34
 ################### End Clock Report ##################
 
-Peak Memory Usage: 183 MB
+Peak Memory Usage: 173 MB
 
 --------------------------------------------------------------
 Total CPU Time: 13 secs 
-Total REAL Time: 14 secs 
+Total REAL Time: 15 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: f1735cf33217817f7488c3df44527a5c50954460
+Checksum -- synthesis -- netlist: 5aa5faaaee1fe8c32828fb43162b9bf1ab508e4
 
 
 
@@ -1974,10 +1922,10 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
-CPU Time to convert: 0.515625
-REAL Time to convert: 0
-convert PEAK Memory Usage: 64 MB
-convert CURRENT Memory Usage: 62 MB
+CPU Time to convert: 0.453125
+REAL Time to convert: 1
+convert PEAK Memory Usage: 60 MB
+convert CURRENT Memory Usage: 57 MB
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
 Removing unused logic ...
 Starting design annotation....
@@ -1991,9 +1939,9 @@ Constraint Summary:
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 1 secs 
-Total REAL Time: 0 secs 
-Peak Memory Usage: 64 MB
-Checksum -- postsyn: 1b824d48e60149b19bcc5cc55c9aa31a472379d
+Total REAL Time: 2 secs 
+Peak Memory Usage: 60 MB
+Checksum -- postsyn: 4d22e47f471ae6f0d2a27ba32d4de0b5dee1f883
 
 
 
@@ -2013,6 +1961,10 @@ Package Status:                     Preliminary    Version 1.5.
 
 
 
+WARNING <1026001> - C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc (9) : No port matched &apos;i_LED_SYNC&apos;.
+WARNING <1027013> - No port matched 'i_LED_SYNC'.
+WARNING <1014301> - Can't resolve object 'i_LED_SYNC' in constraint 'ldc_set_location -site {6} [get_ports i_LED_SYNC]'.
+WARNING <1011001> - Remove invalid constraint 'ldc_set_location -site {6} [get_ports i_LED_SYNC]'.
 Design:  top_level
 Family:  iCE40UP
 Device:  iCE40UP5K
@@ -2024,27 +1976,28 @@ INFO <52291017> - Port 'RGB1_OUT' is located on BB_OD pad '40'. Its IO buffer is
 INFO <52291017> - Port 'RGB2_OUT' is located on BB_OD pad '41'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
 Running general design DRC...
 
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
 
 
 
 Design Summary:
-   Number of slice registers: 2464 out of  5280 (47%)
+   Number of slice registers: 1958 out of  5280 (37%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           3370 out of  5280 (64%)
-      Number of logic LUT4s:             907
-      Number of inserted feedthru LUT4s: 2160
-      Number of replicated LUT4s:         51
-      Number of ripple logic:            126 (252 LUT4s)
-   Number of IO sites used:   22 out of 39 (56%)
-      Number of IO sites used for general PIO: 19
+   Number of LUT4s:           2848 out of  5280 (54%)
+      Number of logic LUT4s:             892
+      Number of inserted feedthru LUT4s: 1648
+      Number of replicated LUT4s:         50
+      Number of ripple logic:            129 (258 LUT4s)
+   Number of IO sites used:   25 out of 39 (64%)
+      Number of IO sites used for general PIO: 22
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 19 out of 36 (53%)
+      Number of IO sites used for PIO+I3C: 22 out of 36 (61%)
       Number of IO sites used for OD+RGB IO buffers: 3 out of 3 (100%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 22 out of 39 (56%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 25 out of 39 (64%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  0 out of 1 (0%)
@@ -2059,120 +2012,89 @@ Design Summary:
    Number of PLLs:             1 out of 1 (100%)
    Number of Clocks:  2
       Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
-      Net pll_clk_int: 2449 loads, 2449 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
-   Number of Clock Enables:  71
+      Net pll_clk_int: 1943 loads, 1943 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
+   Number of Clock Enables:  38
       Net VCC_net: 2 loads, 0 SLICEs
-      Net n11413: 1 loads, 1 SLICEs
-      Net Controller_inst.n7601: 16 loads, 16 SLICEs
+      Net n12307: 1 loads, 1 SLICEs
+      Net n1844: 2 loads, 2 SLICEs
+      Net n8533: 4 loads, 4 SLICEs
+      Net n12099: 1 loads, 1 SLICEs
+      Net n1849: 16 loads, 16 SLICEs
+      Net Controller_inst.n5369: 512 loads, 512 SLICEs
+      Net Controller_inst.n8503: 512 loads, 512 SLICEs
+      Net Controller_inst.n16073: 1 loads, 1 SLICEs
+      Net Controller_inst.n5_adj_2051: 32 loads, 32 SLICEs
+      Net Controller_inst.n5375: 32 loads, 32 SLICEs
+      Net Controller_inst.int_RHD_TX_DV: 5 loads, 5 SLICEs
       Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
-      Net Controller_inst.n7665: 16 loads, 16 SLICEs
-      Net Controller_inst.n7609: 16 loads, 16 SLICEs
-      Net Controller_inst.n7621: 16 loads, 16 SLICEs
-      Net Controller_inst.n7637: 16 loads, 16 SLICEs
-      Net Controller_inst.n7653: 16 loads, 16 SLICEs
-      Net Controller_inst.n7541: 16 loads, 16 SLICEs
-      Net Controller_inst.n7589: 16 loads, 16 SLICEs
-      Net Controller_inst.n7595: 16 loads, 16 SLICEs
-      Net Controller_inst.n7597: 16 loads, 16 SLICEs
-      Net Controller_inst.n7603: 16 loads, 16 SLICEs
-      Net Controller_inst.n7605: 16 loads, 16 SLICEs
-      Net Controller_inst.n7613: 16 loads, 16 SLICEs
-      Net Controller_inst.n7615: 16 loads, 16 SLICEs
-      Net Controller_inst.n7625: 16 loads, 16 SLICEs
-      Net Controller_inst.n7631: 16 loads, 16 SLICEs
-      Net Controller_inst.n7639: 16 loads, 16 SLICEs
-      Net Controller_inst.n7647: 16 loads, 16 SLICEs
-      Net Controller_inst.n7655: 16 loads, 16 SLICEs
-      Net Controller_inst.n7663: 16 loads, 16 SLICEs
-      Net Controller_inst.n7667: 16 loads, 16 SLICEs
-      Net Controller_inst.n7669: 16 loads, 16 SLICEs
-      Net Controller_inst.n7671: 16 loads, 16 SLICEs
-      Net Controller_inst.n7673: 16 loads, 16 SLICEs
-      Net Controller_inst.n7547: 16 loads, 16 SLICEs
-      Net Controller_inst.n7555: 16 loads, 16 SLICEs
-      Net Controller_inst.n7561: 16 loads, 16 SLICEs
-      Net Controller_inst.n7567: 16 loads, 16 SLICEs
-      Net Controller_inst.n7571: 16 loads, 16 SLICEs
-      Net Controller_inst.n7575: 16 loads, 16 SLICEs
-      Net Controller_inst.n7579: 16 loads, 16 SLICEs
-      Net Controller_inst.n7611: 512 loads, 512 SLICEs
-      Net Controller_inst.n10688: 4 loads, 4 SLICEs
-      Net Controller_inst.n7599: 3 loads, 3 SLICEs
-      Net Controller_inst.n7585: 512 loads, 512 SLICEs
-      Net Controller_inst.n1949: 3 loads, 3 SLICEs
-      Net Controller_inst.n18312: 1 loads, 1 SLICEs
-      Net Controller_inst.n17805: 1 loads, 1 SLICEs
-      Net Controller_inst.n7607: 4 loads, 4 SLICEs
-      Net Controller_inst.n4_adj_2556: 32 loads, 32 SLICEs
-      Net Controller_inst.n11: 1 loads, 1 SLICEs
-      Net Controller_inst.n7593: 16 loads, 16 SLICEs
-      Net Controller_inst.n5_adj_2563: 2 loads, 2 SLICEs
-      Net Controller_inst.n5_adj_2564: 32 loads, 32 SLICEs
-      Net Controller_inst.n4_adj_2565: 32 loads, 32 SLICEs
-      Net Controller_inst.n11382: 1 loads, 1 SLICEs
-      Net Controller_inst.int_RHD_TX_DV: 4 loads, 4 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n10736: 10 loads, 10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n9491: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n10730: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n10715: 6 loads, 6 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n12228: 11 loads, 11 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n17822: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n10735: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n10757: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.n1954: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10737: 5 loads, 5 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10701: 6 loads, 6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n18464: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n10742: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n11390: 6 loads, 6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n2019: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n10788: 3 loads, 3 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n10784: 4 loads, 4 SLICEs
+      Net Controller_inst.n8518: 1 loads, 1 SLICEs
+      Net Controller_inst.n9505: 1 loads, 1 SLICEs
+      Net Controller_inst.n5377: 5 loads, 5 SLICEs
+      Net Controller_inst.n5373: 4 loads, 4 SLICEs
+      Net Controller_inst.n4_adj_2130: 32 loads, 32 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n16932: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.int_STM32_TX_Ready_N_2007: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n8537: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n8572: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n9202: 11 loads, 11 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n16275: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n8527: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n8590: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n8525: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n8536: 5 loads, 5 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n8556: 10 loads, 10 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.int_RHD_TX_Ready_N_2004: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n9189: 6 loads, 6 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n8529: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n8611: 4 loads, 4 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n8619: 3 loads, 3 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_addr_nxt_w_0__N_2358: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_addr_nxt_w_0__N_2366: 8 loads, 8 SLICEs
-   Number of LSRs:  4
-      Net n14063: 1 loads, 1 SLICEs
-      Net maxfan_replicated_net_1462: 459 loads, 459 SLICEs
-      Net o_reset_c: 1000 loads, 1000 SLICEs
-      Net maxfan_replicated_net_999: 967 loads, 967 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_addr_nxt_w_0__N_1845: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_addr_nxt_w_0__N_1853: 8 loads, 8 SLICEs
+   Number of LSRs:  3
+      Net n12275: 1 loads, 1 SLICEs
+      Net maxfan_replicated_net_957: 936 loads, 936 SLICEs
+      Net o_reset_c: 985 loads, 985 SLICEs
    Top 10 highest fanout non-clock nets:
       Net o_reset_c: 1000 loads
-      Net maxfan_replicated_net_999: 999 loads
-      Net Controller_inst.int_STM32_TX_DV: 536 loads
-      Net Controller_inst.n7585: 512 loads
-      Net Controller_inst.n7611: 512 loads
-      Net maxfan_replicated_net_1462: 460 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 245 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 138 loads
-      Net VCC_net: 94 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[3]: 58 loads
+      Net maxfan_replicated_net_957: 954 loads
+      Net Controller_inst.int_STM32_TX_DV: 533 loads
+      Net Controller_inst.n5369: 512 loads
+      Net Controller_inst.n8503: 512 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 209 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 162 loads
+      Net VCC_net: 72 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 65 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[3]: 44 loads
 Running physical design DRC...
 
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
  
 
 
-   Number of warnings:  2
+   Number of warnings:  8
    Number of errors:    0
 
 Constraint Summary:
-   Total number of constraints: 14
-   Total number of constraints dropped: 0
+   Total number of constraints: 15
+   Total number of constraints dropped: 1
+   Dropped constraint is:
+     ldc_set_location -site {6} [get_ports i_LED_SYNC]
 
 
 Total CPU Time: 1 secs  
 Total REAL Time: 2 secs  
-Peak Memory Usage: 115 MB
+Peak Memory Usage: 108 MB
 
-Checksum -- map: e14b4c36c690015c911aa3d851fa867ad0ea9bac
+Checksum -- map: 29d2c719c568251e589de30145232b203736effb
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-Mon Jan 19 17:24:53 2026
+Tue Feb  3 14:35:26 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -2198,19 +2120,23 @@ WARNING <77001032> - Unable to find the instance/port 'CTRL0_IN' in the constrai
 WARNING <77001031> - In the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]', the locate object is not specified
 
 WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 7 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHD2216_SPI_MISO' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
-Number of Signals: 6074
-Number of Connections: 15879
+Number of Signals: 5053
+Number of Connections: 13245
 Device utilization summary:
 
-   SLICE (est.)    1779/2640         67% used
-     LUT           3370/5280         64% used
-     REG           2464/5280         47% used
-   PIO               19/56           34% used
-                     19/36           52% bonded
+   SLICE (est.)    1483/2640         56% used
+     LUT           2848/5280         54% used
+     REG           1958/5280         37% used
+   PIO               22/56           39% used
+                     22/36           61% bonded
    IOLOGIC            0/56            0% used
    DSP                0/8             0% used
    I2C                0/2             0% used
@@ -2229,78 +2155,77 @@ Device utilization summary:
    OPENDRAIN          3/3           100% used
 
 Pin Constraint Summary:
-   9 out of 19 pins locked (47% locked).
+   9 out of 22 pins locked (40% locked).
 .
-............
-Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 3 secs 
+.............
+Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 4 secs 
 
 
 .................
-Finished Placer Phase 0 (AP).  CPU time: 5 secs , REAL time: 5 secs 
+Finished Placer Phase 0 (AP).  CPU time: 5 secs , REAL time: 6 secs 
 
-Starting Placer Phase 1. CPU time: 5 secs , REAL time: 5 secs 
+Starting Placer Phase 1. CPU time: 5 secs , REAL time: 6 secs 
 ..  ..
 ....................
 
-Placer score = 599167.
+Placer score = 883684.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1763/2640         66% used
+   SLICE           1479/2640         56% used
 
 WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 WARNING <77001032> - Unable to find the instance/port 'CTRL0_IN' in the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]', the locate object is not specified
-Finished Placer Phase 1. CPU time: 23 secs , REAL time: 23 secs 
+Finished Placer Phase 1. CPU time: 20 secs , REAL time: 23 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  633314
-Finished Placer Phase 2.  CPU time: 24 secs , REAL time: 24 secs 
+Placer score =  539750
+Finished Placer Phase 2.  CPU time: 21 secs , REAL time: 23 secs 
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
-  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1305, ce load = 0, sr load = 0
-  PRIMARY "o_reset_c" from Q1 on comp "SLICE_3117" on site "R14C28A", clk load = 0, ce load = 0, sr load = 527
-  PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_129" on site "R8C2A", clk load = 0, ce load = 0, sr load = 505
-  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_3119" on site "R12C7A", clk load = 0, ce load = 256, sr load = 0
-  PRIMARY "Controller_inst.n7611" from F1 on comp "Controller_inst.SLICE_3014" on site "R13C27B", clk load = 0, ce load = 258, sr load = 0
-  PRIMARY "Controller_inst.n7585" from F1 on comp "Controller_inst.SLICE_2977" on site "R8C24A", clk load = 0, ce load = 269, sr load = 0
-  PRIMARY "maxfan_replicated_net_1462" from Q0 on comp "SLICE_129" on site "R8C2A", clk load = 0, ce load = 0, sr load = 251
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1022, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q1 on comp "SLICE_132" on site "R14C7C", clk load = 0, ce load = 0, sr load = 507
+  PRIMARY "maxfan_replicated_net_957" from Q0 on comp "SLICE_132" on site "R14C7C", clk load = 0, ce load = 0, sr load = 494
+  PRIMARY "Controller_inst.n5369" from F1 on comp "Controller_inst.SLICE_2409" on site "R6C11B", clk load = 0, ce load = 260, sr load = 0
+  PRIMARY "Controller_inst.n8503" from F1 on comp "Controller_inst.SLICE_2500" on site "R17C27A", clk load = 0, ce load = 260, sr load = 0
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2516" on site "R8C19B", clk load = 0, ce load = 257, sr load = 0
 
-  PRIMARY  : 7 out of 8 (87%)
+  PRIMARY  : 6 out of 8 (75%)
 
 --------------- End of Clock Report ---------------
 
 
 I/O Usage Summary (final):
-   19 out of 56 (33.9%) I/O sites used.
-   19 out of 36 (52.8%) bonded I/O sites used.
-   Number of I/O components: 19; differential: 0
+   22 out of 56 (39.3%) I/O sites used.
+   22 out of 36 (61.1%) bonded I/O sites used.
+   Number of I/O components: 22; differential: 0
    Number of Vref pins used: 0
 
 I/O Bank Usage Summary:
 +----------+----------------+------------+------------+------------+
 | I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+----------------+------------+------------+------------+
-| 0        | 11 / 14 ( 78%) | 3.3V       |            |            |
-| 1        | 7 / 14 ( 50%)  | 3.3V       |            |            |
-| 2        | 1 / 8 ( 12%)   | 3.3V       |            |            |
+| 0        | 8 / 14 ( 57%)  | 3.3V       |            |            |
+| 1        | 10 / 14 ( 71%) | 3.3V       |            |            |
+| 2        | 4 / 8 ( 50%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 24 secs , REAL time: 24 secs 
+Total Placer CPU time: 21 secs , REAL time: 23 secs 
 
 
-Checksum -- place: 7d77f88cd8ce1bea644ef8e3bdb15c4f8cdae79d
+Checksum -- place: 828cb70a382275cfcedde3da846a450af6d59f0
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 WARNING <77001032> - Unable to find the instance/port 'CTRL0_IN' in the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]', the locate object is not specified
 
-Start NBR router at 17:25:18 01/19/26
+Start NBR router at 14:35:50 02/03/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -2318,29 +2243,27 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-2679 connections routed with dedicated routing resources
-7 global clock signals routed
-6050 connections routed (of 12512 total) (48.35%)
+2178 connections routed with dedicated routing resources
+6 global clock signals routed
+4978 connections routed (of 10547 total) (47.20%)
 ---------------------------------------------------------
 Clock routing summary:
-Primary clocks (7 used out of 8 available):
-#0  Signal "maxfan_replicated_net_1462"
-       Control loads: 251   out of   251 routed (100.00%)
-       Data    loads: 0     out of     1 routed (  0.00%)
-#1  Signal "Controller_inst.n7611"
-       Control loads: 258   out of   258 routed (100.00%)
-#3  Signal "Controller_inst.n7585"
-       Control loads: 269   out of   269 routed (100.00%)
-#4  Signal "o_reset_c"
-       Control loads: 527   out of   527 routed (100.00%)
-#5  Signal "Controller_inst.int_STM32_TX_DV"
-       Control loads: 256   out of   256 routed (100.00%)
-       Data    loads: 0     out of    24 routed (  0.00%)
-#6  Signal "maxfan_replicated_net_999"
-       Control loads: 505   out of   505 routed (100.00%)
-       Data    loads: 0     out of    32 routed (  0.00%)
+Primary clocks (6 used out of 8 available):
+#0  Signal "o_reset_c"
+       Control loads: 507   out of   507 routed (100.00%)
+       Data    loads: 0     out of    15 routed (  0.00%)
+#1  Signal "Controller_inst.n8503"
+       Control loads: 260   out of   260 routed (100.00%)
+#3  Signal "Controller_inst.int_STM32_TX_DV"
+       Control loads: 257   out of   257 routed (100.00%)
+       Data    loads: 0     out of    21 routed (  0.00%)
+#5  Signal "Controller_inst.n5369"
+       Control loads: 260   out of   260 routed (100.00%)
+#6  Signal "maxfan_replicated_net_957"
+       Control loads: 494   out of   494 routed (100.00%)
+       Data    loads: 0     out of    18 routed (  0.00%)
 #7  Signal "pll_clk_int"
-       Clock   loads: 1305  out of  1305 routed (100.00%)
+       Clock   loads: 1022  out of  1022 routed (100.00%)
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -2353,33 +2276,25 @@ WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
     TimerIf::skewscore 0
 
-Start NBR section for initial routing at 17:25:19 01/19/26
+Start NBR section for initial routing at 14:35:52 02/03/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-145(0.06%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+79(0.03%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 17:25:28 01/19/26
+Start NBR section for normal routing at 14:35:59 02/03/26
 Level 4, iteration 1
-9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+5(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 Level 4, iteration 2
-8(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 Level 4, iteration 3
-2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 4
-2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 5
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 6
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 7
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 
-Start NBR section for post-routing at 17:25:28 01/19/26
+Start NBR section for post-routing at 14:36:00 02/03/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - No source clock for
@@ -2388,12 +2303,12 @@ Requested speed is the same as database speed
 Changing speed to m;   changing temperature to -40
 Changing speed to 6;   changing temperature to 100
 
-Checksum -- route: b43f303f616d6aecd57d6d1b9bc6af08cd5e406b
+Checksum -- route: b98fa05c40c31db6302db647246a1f78a34a908
 
-Total CPU time 13 secs 
+Total CPU time 11 secs 
 Total REAL time: 13 secs 
 Completely routed.
-End of route.  12512 routed (100.00%); 0 unrouted.
+End of route.  10547 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -2408,9 +2323,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-Total CPU  Time: 38 secs 
+Total CPU  Time: 33 secs 
 Total REAL Time: 38 secs 
-Peak Memory Usage: 190.56 MB
+Peak Memory Usage: 179.29 MB
 
 
 par done!
@@ -2447,15 +2362,15 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  1305  counted  11067  covered  0
+Connections ignored  1022  counted  9406  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
-Total CPU Time: 5 secs 
-Total REAL Time: 5 secs 
-Peak Memory Usage: 140 MB
+Total CPU Time: 3 secs 
+Total REAL Time: 4 secs 
+Peak Memory Usage: 134 MB
 
- 5.038140s wall, 4.859375s user + 0.156250s system = 5.015625s CPU (99.6%)
+ 4.271763s wall, 3.734375s user + 0.156250s system = 3.890625s CPU (91.1%)
 
 
 tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
@@ -2502,18 +2417,19 @@ Preference Summary:
 
 Creating bit map...
 Saving bit stream in "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.bin".
+INFO <1081100> - Bitstream authenticated.
 Bitstream generation complete!
 
 Total CPU Time: 1 secs 
 Total REAL Time: 2 secs 
-Peak Memory Usage: 152 MB
+Peak Memory Usage: 146 MB
 
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Mon Jan 19 17:25:43 2026
+Tue Feb  3 14:36:16 2026
 
 Loading FPGA_Intan_Driver_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
@@ -2564,6 +2480,6 @@ Writing a verilog netlist based on the FPGA_Intan_Driver_impl_1 design file.
 Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
 Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
 Backanno finished with 0 posted error messages.
-Total CPU Time: 6 secs 
-Total REAL Time: 7 secs 
-Peak Memory Usage: 210 MB
+Total CPU Time: 5 secs 
+Total REAL Time: 6 secs 
+Peak Memory Usage: 190 MB

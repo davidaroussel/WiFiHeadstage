@@ -53,7 +53,7 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register);
 
 void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi);
 
-void INIT_RHS(SPI_HandleTypeDef *hspi);
+int INIT_RHS(SPI_HandleTypeDef *hspi);
 
 #define CONVERT_CMD  0b000000
 #define WRITE_CMD    0b10000000

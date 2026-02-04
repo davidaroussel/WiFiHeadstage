@@ -104,19 +104,18 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  //SET CS_PIN
 
   SPI_HandleTypeDef *hspi;
   printf("Init RHS \r\n");
   hspi = &hspi3;
   SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
   hspi->Instance->CR1 |= SPI_CR1_DFF;
+
   INIT_RHS(hspi);
+  for (int i = 0; i<1000; i++){
 	INIT_RHS(hspi);
-	for (int i = 0; i<1000; i++){
-		INIT_RHS(hspi);
-		HAL_Delay(500);
-	}
+	HAL_Delay(500);
+  }
 
   /* USER CODE END 2 */
 

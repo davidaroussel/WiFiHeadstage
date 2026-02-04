@@ -5,14 +5,14 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 2;
-        STM32_CS_INACTIVE_CLKS        : integer := 32;
+        STM32_CLKS_PER_HALF_BIT       : integer := 1;
+        STM32_CS_INACTIVE_CLKS        : integer := 512;
 			
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD_CS_INACTIVE_CLKS        : integer := 32
+        RHD_CLKS_PER_HALF_BIT       : integer := 1;
+        RHD_CS_INACTIVE_CLKS        : integer := 512
 				
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -46,9 +46,6 @@ entity top_level is
 		--   CS_CLK : 8 
 		---  60 packets / 3.932Mbps
 		
-
-		
-		
     );
     port (
         -- Clock and Reset
@@ -57,16 +54,38 @@ entity top_level is
         i_clk     : in  STD_LOGIC;
 
         -- STM32 SPI Interface
-        o_STM32_SPI_MOSI : inout STD_LOGIC; 
-        i_STM32_SPI_MISO : inout STD_LOGIC; 
-        o_STM32_SPI_Clk  : inout STD_LOGIC; 
-        o_STM32_SPI_CS_n : inout STD_LOGIC; 
+        o_STM32_SPI4_MOSI : inout STD_LOGIC; 
+        i_STM32_SPI4_MISO : inout STD_LOGIC; 
+        o_STM32_SPI4_Clk  : inout STD_LOGIC; 
+        o_STM32_SPI4_CS_n : inout STD_LOGIC; 
 
         -- RHD SPI Interface 
-        o_RHD_SPI_MOSI : out STD_LOGIC; 
-		i_RHD_SPI_MISO : in  STD_LOGIC; 
-        o_RHD_SPI_Clk  : out STD_LOGIC; 
-        o_RHD_SPI_CS_n : out STD_LOGIC; 
+        o_RHD2132_SPI_MOSI : out STD_LOGIC; 
+		i_RHD2132_SPI_MISO : in  STD_LOGIC; 
+        o_RHD2132_SPI_Clk  : out STD_LOGIC; 
+        o_RHD2132_SPI_CS_n : out STD_LOGIC; 
+		
+		o_RHD2216_SPI_MOSI : out STD_LOGIC; 
+		i_RHD2216_SPI_MISO : in  STD_LOGIC; 
+        o_RHD2216_SPI_Clk  : out STD_LOGIC; 
+        o_RHD2216_SPI_CS_n : out STD_LOGIC; 
+		
+		-- RHS SPIs Interface
+		--o_RHS_SPI_MOSI : out STD_LOGIC; 
+        --o_RHS_SPI_Clk  : out STD_LOGIC; 
+		--i_RHS_SPI_MISO_1 : in  STD_LOGIC; 
+		--o_RHS_SPI_CS_n_1 : out STD_LOGIC;
+		
+		--i_RHS_SPI_MISO_2 : in  STD_LOGIC;
+		--o_RHS_SPI_CS_n_2 : out STD_LOGIC;
+		
+		--i_RHS_SPI_MISO_3 : in  STD_LOGIC;
+		--o_RHS_SPI_CS_n_3 : out STD_LOGIC;		
+		
+		--i_RHS_SPI_MISO_4 : in  STD_LOGIC; 		
+		--o_RHS_SPI_CS_n_4 : out STD_LOGIC; 
+		
+		
 		
 		CTRL0_IN     : in STD_LOGIC;
 		
@@ -134,10 +153,15 @@ architecture RTL of top_level is
     signal stop_counting : std_logic := '0';
 	
 	signal pll_clk_int : std_logic;
-	signal int_RHD_SPI_MOSI : std_logic;
-	signal int_RHD_SPI_MISO : std_logic;
-	signal int_RHD_SPI_CS_n : std_logic;
-	signal int_RHD_SPI_Clk  : std_logic;
+	signal int_RHD2132_SPI_MOSI : std_logic;
+	signal int_RHD2132_SPI_MISO : std_logic;
+	signal int_RHD2132_SPI_CS_n : std_logic;
+	signal int_RHD2132_SPI_Clk  : std_logic;
+	
+	signal int_RHD2216_SPI_MOSI : std_logic;
+	signal int_RHD2216_SPI_MISO : std_logic;
+	signal int_RHD2216_SPI_CS_n : std_logic;
+	signal int_RHD2216_SPI_Clk  : std_logic;
 
     signal int_STM32_SPI_MOSI : std_logic;
 	signal int_STM32_SPI_MISO : std_logic;
@@ -201,10 +225,10 @@ begin
             o_FIFO_WE           => w_FIFO_WE,
 
             -- RHD SPI
-            o_RHD_SPI_Clk     => int_RHD_SPI_Clk,
-            i_RHD_SPI_MISO    => int_RHD_SPI_MISO,
-            o_RHD_SPI_MOSI    => int_RHD_SPI_MOSI,
-            o_RHD_SPI_CS_n    => int_RHD_SPI_CS_n
+            o_RHD_SPI_Clk     => int_RHD2132_SPI_Clk,
+            i_RHD_SPI_MISO    => int_RHD2132_SPI_MISO,
+            o_RHD_SPI_MOSI    => int_RHD2132_SPI_MOSI,
+            o_RHD_SPI_CS_n    => int_RHD2132_SPI_CS_n
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
@@ -214,26 +238,25 @@ begin
 	begin
 		if w_Controller_Mode = x"1" then
 			-- Passthrough: STM32 directly drives RHD
-			o_RHD_SPI_Clk  <= o_STM32_SPI_Clk;
-			o_RHD_SPI_MOSI <= o_STM32_SPI_MOSI;
-			o_RHD_SPI_CS_n <= o_STM32_SPI_CS_n;
-			i_STM32_SPI_MISO <= i_RHD_SPI_MISO;  -- MISO passthrough
-			o_STM32_SPI_Clk  <= 'Z';
-			o_STM32_SPI_MOSI <= 'Z';
-			o_STM32_SPI_CS_n <= 'Z';
+			o_RHD2132_SPI_Clk  <= o_STM32_SPI4_Clk;
+			o_RHD2132_SPI_MOSI <= o_STM32_SPI4_MOSI;
+			o_RHD2132_SPI_CS_n <= o_STM32_SPI4_CS_n;
+			i_STM32_SPI4_MISO <= i_RHD2132_SPI_MISO;  -- MISO passthrough
+			o_STM32_SPI4_Clk  <= 'Z';
+			o_STM32_SPI4_MOSI <= 'Z';
+			o_STM32_SPI4_CS_n <= 'Z';
 
 		else
 			-- Normal mode: controller handles communication
-			o_STM32_SPI_Clk    <= int_STM32_SPI_Clk;
-			o_STM32_SPI_MOSI   <= int_STM32_SPI_MOSI;
-			o_STM32_SPI_CS_n   <= int_STM32_SPI_CS_n;
-			int_STM32_SPI_MISO <= i_STM32_SPI_MISO;
+			o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
+			o_STM32_SPI4_MOSI   <= int_STM32_SPI_MOSI;
+			o_STM32_SPI4_CS_n   <= int_STM32_SPI_CS_n;
+			int_STM32_SPI_MISO <= i_STM32_SPI4_MISO;
 
-
-			o_RHD_SPI_Clk    <= int_RHD_SPI_Clk;
-			o_RHD_SPI_MOSI   <= int_RHD_SPI_MOSI;
-			o_RHD_SPI_CS_n   <= int_RHD_SPI_CS_n;
-			int_RHD_SPI_MISO <= i_RHD_SPI_MISO; -- ? drive MISO back to STM32
+			o_RHD2132_SPI_Clk    <= int_RHD2132_SPI_Clk;
+			o_RHD2132_SPI_MOSI   <= int_RHD2132_SPI_MOSI;
+			o_RHD2132_SPI_CS_n   <= int_RHD2132_SPI_CS_n;
+			int_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO; -- ? drive MISO back to STM32
 		end if;
 
 	end process;

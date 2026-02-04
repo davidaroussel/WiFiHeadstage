@@ -33,10 +33,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_FPGA_BUFFER_SIZE 256
+#define SPI_RX_FPGA_BUFFER_SIZE 512
 uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 
-#define SPI_TX_FPGA_BUFFER_SIZE 256
+#define SPI_TX_FPGA_BUFFER_SIZE 512
 uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
 
@@ -46,7 +46,7 @@ uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
 #define SPI_TX_nRF_BUFFER_SIZE 8192
 uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
 
-#define FPGA_CHUNK_SIZE 256
+#define FPGA_CHUNK_SIZE 512
 #define FPGA_ACCUM_SIZE 8192
 #define NRF_FRAME_SIZE 8192
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
@@ -231,10 +231,17 @@ void SystemClock_Config(void)
 //    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
+
+
     RCC_OscInitStruct.PLL.PLLM = 25;
     RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-//
+
+
+//    RCC_OscInitStruct.PLL.PLLM = 25;
+//    RCC_OscInitStruct.PLL.PLLN = 168;    // SYSCLK = 42 MHz
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
 //    RCC_OscInitStruct.PLL.PLLM = 16;
 //	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
 //	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
@@ -478,10 +485,6 @@ static void Init_Intan(void){
 
 	  SPI_HandleTypeDef *hspi = &hspi4;
 	  int rhd_status = INIT_RHD(hspi);
-
-
-
-	   //Poll for RHD detection
 	  while (rhd_status == 0) {
 		  rhd_status = INIT_RHD(hspi);
 		  HAL_Delay(1);
@@ -547,8 +550,8 @@ static void Prepare_nRF_Frame(void)
     nrf_tx_buffer[0] = 0xAA;
     nrf_tx_buffer[1] = 0x55;
 //
-//    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0x33;
-//    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0xBB;
+//    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0xAA;
+//    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0x55;
 
 //    for(int i=0; i<NRF_FRAME_SIZE; i+=2)
 //		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);

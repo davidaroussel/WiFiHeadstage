@@ -8,7 +8,6 @@ entity Controller_RHD_Sampling is
       STM32_SPI_NUM_BITS_PER_PACKET : integer := 64;
 	  STM32_CS_INACTIVE_CLKS		: integer := 4;
 	  
-	  
 	  RHD_SPI_DDR_MODE 				: integer := 1;
       RHD_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
       RHD_CLKS_PER_HALF_BIT 		: integer := 8;
@@ -165,14 +164,20 @@ architecture RTL of Controller_RHD_Sampling is
 	signal int_STM32_RX_DV        : std_logic;
 	signal int_STM32_RX_Byte_Rising  : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 
+
+	signal fpga_counter : integer := 0; -- Counter to keep track of bits stored in temporary buffer
 	signal stm32_counter : integer := 0; -- Counter to keep track of bits stored in temporary buffer
 	signal counter      : integer := 0; -- Counter to control SendDataToRHDSPI
 
 	signal stm32_state : integer := 0;
 
 	signal NUM_DATA : integer := 0;
-	 
-	signal temp_buffer : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+	constant WORD_WIDTH : integer := 16;
+	constant NUM_WORDS : integer := STM32_SPI_NUM_BITS_PER_PACKET / WORD_WIDTH;
+	constant TOTAL_BITS : integer := STM32_SPI_NUM_BITS_PER_PACKET;
+	signal temp_buffer : std_logic_vector(TOTAL_BITS-1 downto 0);
+	signal word_count  : integer range 0 to NUM_WORDS := 0;
+	--signal temp_buffer : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 	
 	signal init_FIFO_State : std_logic;
 	signal init_FIFO_Read : std_logic;
@@ -183,10 +188,12 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rhd_index    : integer := 0;
 	signal rhd_state    : integer := 0;
 	
-	signal alt_counter : integer range 0 to 3 := 0;
+	signal alt_counter : integer := 0;
 		signal data_array_send_count : integer range 0 to 100 := 0;
 
 	type t_data_array is array (0 to 63) of std_logic_vector(15 downto 0);
+	
+	signal temp_array : word_array_t := (others => (others => '0'));
 	
 	signal rgd_info_sig_red   : std_logic;
 	signal rgd_info_sig_green : std_logic;
@@ -354,9 +361,9 @@ architecture RTL of Controller_RHD_Sampling is
 		--63 => x"1F00"   -- CH31 repeat
 	--);
 	
+	
 	-- 16 CHANNEL VERSION
 	signal channel_array : t_channel_array := (
-		-- CH0–CH31 (first block)
 		0  => x"0000",  -- CH0
 		1  => x"0100",  -- CH1
 		2  => x"0200",  -- CH2
@@ -371,7 +378,7 @@ architecture RTL of Controller_RHD_Sampling is
 		11 => x"0B00",  -- CH11
 		12 => x"0C00",  -- CH12
 		13 => x"0D00",  -- CH13
-		14 => x"0E00",  -- CH14
+		14 => x"E800",  -- CH14
 		15 => x"0F00",  -- CH15
 		
 		16 => x"0000",  -- CH0
@@ -388,7 +395,7 @@ architecture RTL of Controller_RHD_Sampling is
 		27 => x"0B00",  -- CH11
 		28 => x"0C00",  -- CH12
 		29 => x"0D00",  -- CH13
-		30 => x"0E00",  -- CH14
+		30 => x"E800",  -- CH14
 		31 => x"0F00",  -- CH15
 
 		-- CH0–CH31 repeated again for indices 32–63
@@ -406,7 +413,7 @@ architecture RTL of Controller_RHD_Sampling is
 		43 => x"0B00",  -- CH11 repeat
 		44 => x"0C00",  -- CH12 repeat
 		45 => x"0D00",  -- CH13 repeat
-		46 => x"0E00",  -- CH14 repeat
+		46 => x"E800",  -- CH14 repeat
 		47 => x"0F00",  -- CH15 repeat
 		
 		48 => x"0000",  -- CH0 repeat
@@ -423,13 +430,91 @@ architecture RTL of Controller_RHD_Sampling is
 		59 => x"0B00",  -- CH11 repeat
 		60 => x"0C00",  -- CH12 repeat
 		61 => x"0D00",  -- CH13 repeat
-		62 => x"0E00",  -- CH14 repeat
+		62 => x"E800",  -- CH14 repeat
 		63 => x"0F00"   -- CH15 repeat
 	);
-
-
-
 	
+	-- RHS
+	--signal channel_array : t_channel_array := (
+		---- CH0–CH31 (first block)
+		----0  => x"00000000",  -- CH0
+		----1  => x"00010000",  -- CH1
+		----2  => x"00020000",  -- CH2
+		----3  => x"00030000",  -- CH3
+		----4  => x"00040000",  -- CH4
+		----5  => x"00050000",  -- CH5
+		----6  => x"00060000",  -- CH6
+		----7  => x"00070000",  -- CH7
+		--0  => x"E800",  -- REG40
+		--1  => x"E900",  -- REG41
+		--2  => x"EA00",  -- REG42
+		--3  => x"EB00",  -- REG43
+		--4  => x"EC00",  -- REG44
+		--5  => x"FC00",  -- REG60
+		--6  => x"FD00",  -- REG61
+		--7  => x"FF00",  -- REG63
+		--8  => x"0800",  -- CH8
+		--9  => x"0900",  -- CH9
+		--10 => x"0A00",  -- CH10
+		--11 => x"0B00",  -- CH11
+		--12 => x"0C00",  -- CH12
+		--13 => x"0D00",  -- CH13
+		--14 => x"0E00",  -- CH14
+		--15 => x"0F00",  -- CH15
+		
+		--16 => x"0000",  -- CH0
+		--17 => x"0100",  -- CH1
+		--18 => x"0200",  -- CH2
+		--19 => x"0300",  -- CH3
+		--20 => x"0400",  -- CH4
+		--21 => x"0500",  -- CH5
+		--22 => x"0600",  -- CH6
+		--23 => x"0700",  -- CH7
+		--24 => x"0800",  -- CH8
+		--25 => x"0900",  -- CH9
+		--26 => x"0A00",  -- CH10
+		--27 => x"0B00",  -- CH11
+		--28 => x"0C00",  -- CH12
+		--29 => x"0D00",  -- CH13
+		--30 => x"0E00",  -- CH14
+		--31 => x"0F00",  -- CH15
+
+		---- CH0–CH31 repeated again for indices 32–63
+		--32 => x"0000",  -- CH0 repeat
+		--33 => x"0100",  -- CH1 repeat
+		--34 => x"0200",  -- CH2 repeat
+		--35 => x"0300",  -- CH3 repeat
+		--36 => x"0400",  -- CH4 repeat
+		--37 => x"0500",  -- CH5 repeat
+		--38 => x"0600",  -- CH6 repeat
+		--39 => x"0700",  -- CH7 repeat
+		--40 => x"0800",  -- CH8 repeat
+		--41 => x"0900",  -- CH9 repeat
+		--42 => x"0A00",  -- CH10 repeat
+		--43 => x"0B00",  -- CH11 repeat
+		--44 => x"0C00",  -- CH12 repeat
+		--45 => x"0D00",  -- CH13 repeat
+		--46 => x"0E00",  -- CH14 repeat
+		--47 => x"0F00",  -- CH15 repeat
+		
+		--48 => x"0000",  -- CH0 repeat
+		--49 => x"0100",  -- CH1 repeat
+		--50 => x"0200",  -- CH2 repeat
+		--51 => x"0300",  -- CH3 repeat
+		--52 => x"0400",  -- CH4 repeat
+		--53 => x"0500",  -- CH5 repeat
+		--54 => x"0600",  -- CH6 repeat
+		--55 => x"0700",  -- CH7 repeat
+		--56 => x"0800",  -- CH8 repeat
+		--57 => x"0900",  -- CH9 repeat
+		--58 => x"0A00",  -- CH10 repeat
+		--59 => x"0B00",  -- CH11 repeat
+		--60 => x"0C00",  -- CH12 repeat
+		--61 => x"0D00",  -- CH13 repeat
+		--62 => x"0E00",  -- CH14 repeat
+		--63 => x"0F00"   -- CH15 repeat
+	--);
+
 	signal rhd_done_config : std_logic := '0';
 	signal full_cycle_count  : integer := 0;
 
@@ -496,11 +581,10 @@ begin
 
  --STM32 PROCESS, GETTING DATA FROM THE FIFO OF THE CONTROLER_RHD MODULE
 process (i_Clk)
-	variable temp_array : word_array_t;
 begin
   if i_Rst_L = '1' then
 	temp_buffer <= (others => '0');
-	temp_array := (others => (others => '0'));
+	temp_array <= (others => (others => '0'));
 	
     int_FIFO_RE <= '0';  -- Toggle back to '0'
     stm32_counter <= 0;  -- Reset counter on reset
@@ -509,8 +593,9 @@ begin
 	int_STM32_TX_DV <= '0';
 	init_FIFO_Read <= '0';
 	init_FIFO_State <= '0';
-	
+	alt_counter   <= 0;  
 	first_packet <= '0';
+	fpga_counter <= 0;
 	
 	if RHD_SPI_DDR_MODE = 1 then
 		NUM_DATA <= (STM32_SPI_NUM_BITS_PER_PACKET / (2*RHD_SPI_NUM_BITS_PER_PACKET));
@@ -531,19 +616,24 @@ begin
 	elsif i_Controller_Mode = x"2" then
 		case stm32_state is
 			when 0 =>
-				if (NUM_DATA-1) < to_integer(unsigned(int_FIFO_COUNT)) then
-					stm32_state <= 1; -- Move to next state
-					int_FIFO_RE <= '1'; -- Enable FIFO data
+				if first_packet = '0' then 
+					if to_integer(unsigned(int_FIFO_COUNT)) >= (NUM_DATA + 2) then
+						stm32_state <= 1; -- Move to next state
+						int_FIFO_RE <= '1'; -- Enable FIFO data
+						first_packet <= '1';
+					else
+						stm32_state <= 0;
+					end if;
 				else
-					stm32_state <= 0;
-				end if;
+					if to_integer(unsigned(int_FIFO_COUNT)) >= NUM_DATA then
+						stm32_state <= 3; -- Move to next state
+						int_FIFO_RE <= '1'; -- Enable FIFO data
+					else
+						stm32_state <= 0;
+					end if;
+				end if; 
+				
 			when 1 =>
-				if first_packet = '0' then
-					stm32_state <= 2;
-					first_packet <= '1';
-				else
-					stm32_state <= 4;
-				end if;
 				stm32_state <= 2;
 			when 2 =>
 				stm32_state <= 3;
@@ -551,47 +641,49 @@ begin
 				stm32_state <= 4;
 			when 4 =>
 				stm32_state <= 5;
-				
+				 
 			when 5 =>
-				if NUM_DATA > stm32_counter then
-					if RHD_SPI_DDR_MODE = 1 then
-						temp_buffer((NUM_DATA - 1 - stm32_counter)*32 + 31 downto (NUM_DATA - 1 - stm32_counter)*32) <= int_FIFO_Q;
-					else
-						temp_array(stm32_counter) := int_FIFO_Q(15 downto 0);
-					end if;
+				if stm32_counter < NUM_WORDS then
+					--if stm32_counter = 62 then
+						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"00AA";
+					--else
+						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_Q(15 downto 0);
+					--end if;
+					temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_Q(15 downto 0);
+
 					stm32_counter <= stm32_counter + 1;
-					stm32_state <= 5;
+					int_FIFO_RE <= '1';
+
 				else
 					int_FIFO_RE <= '0';
-
-					temp_buffer <= temp_array(0)  & temp_array(1)  & temp_array(2)  & temp_array(3)  & temp_array(4)  & temp_array(5)  & temp_array(6)  & temp_array(7)  & 
-							       temp_array(8)  & temp_array(9)  & temp_array(10) & temp_array(11) & temp_array(12) & temp_array(13) & temp_array(14) & temp_array(15) &
-								   temp_array(16) & temp_array(17) & temp_array(18) & temp_array(19) & temp_array(20) & temp_array(21) & temp_array(22) & temp_array(23) & 
-							       temp_array(24) & temp_array(25) & temp_array(26) & temp_array(27) & temp_array(28) & temp_array(29) & temp_array(30) & temp_array(31);
-					--temp_buffer <= x"0123456789ABCDEF00000000000000000123456789ABCDEF11111111111111110123456789ABCDEF22222222222222220123456789ABCDEF3333333333333333";
+					stm32_counter <= 0;
 					stm32_state <= 6;
 				end if;
-			
+
+
 			when 6 => 	 
-				stm32_state <= 7;
-				
-			when 7 =>
+				stm32_state <= 8;
+
+			--when 7 => 	 
+				--stm32_state <= 8;
+		
+			when 8 =>
 				int_STM32_TX_Byte <= temp_buffer;
 				int_STM32_TX_DV <= '1';
-				stm32_state <= 8;
-				
-			when 8 =>
-				stm32_counter <= 0;
-				int_STM32_TX_DV <= '0';
 				stm32_state <= 9;
-			
+				
 			when 9 =>
+
+				int_STM32_TX_DV <= '0';
+				stm32_state <= 10;
+			
+			when 10 =>
 				if int_STM32_TX_Ready = '1' then
-					stm32_state <= 10;
+					stm32_state <= 11;
 				else
-					stm32_state <= 9;
+					stm32_state <= 10;
 				end if;
-			when 10 => 
+			when 11 => 
 				stm32_state <= 0;
 			when others =>
 				null;
@@ -613,7 +705,7 @@ begin
 			rgd_info_sig_green  <= '1';
 			rgd_info_sig_red    <= '1';
 			rhd_state           <= 0;
-			alt_counter         <= 0;  
+			
 			full_cycle_count     <= 0;  -- reset new counter
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
@@ -633,7 +725,16 @@ begin
 						--else
 							--int_RHD_TX_Byte <= channel_array(rhd_index);
 						--end if;
+						
+						--if rhd_index = 0 then
+							---- Only change CH0 after 10,000 full loops
+							--int_RHD_TX_Byte <= x"E800";
+						--else
+							--int_RHD_TX_Byte <= channel_array(rhd_index);
+						--end if;
+						
 						int_RHD_TX_Byte <= channel_array(rhd_index);
+						
 						-- Wait until SPI/FIFO ready before sending
 						if int_RHD_TX_Ready = '1' then
 							int_RHD_TX_DV <= '1';   -- pulse DV for one cycle
@@ -665,6 +766,7 @@ begin
 								rhd_index <= rhd_index + 1;
 							else
 								rhd_index <= 0;
+								---- Only change CH0 after 10,000 full loop
 
 								-- Finished one full loop of data_array or channel_array
 								if rhd_done_config = '0' then
@@ -678,18 +780,10 @@ begin
 									-- Acquisition phase: count full channel_array loops
 									if full_cycle_count < 9999 then
 										full_cycle_count <= full_cycle_count + 1;
+										rgd_info_sig_green <= '1';
 									else
 										full_cycle_count <= 0;
-										
-
-										-- Only change CH0 after 10,000 full loops
-										if alt_counter < 3 then
-											alt_counter <= alt_counter + 1;
-											rgd_info_sig_green <= '1';
-										else
-											rgd_info_sig_green <= '0';
-											alt_counter <= 0;
-										end if;
+										rgd_info_sig_green <= '0';								
 									end if;
 								end if;
 							end if;

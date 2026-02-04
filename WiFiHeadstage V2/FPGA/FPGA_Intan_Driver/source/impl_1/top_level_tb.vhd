@@ -55,15 +55,15 @@ begin
         port map (
             i_clk     => i_clk_tb,
 
-            o_STM32_SPI_MOSI => o_STM32_SPI_MOSI_tb,
-            i_STM32_SPI_MISO => i_STM32_SPI_MISO_tb,
-            o_STM32_SPI_Clk  => o_STM32_SPI_Clk_tb,
-            o_STM32_SPI_CS_n => o_STM32_SPI_CS_n_tb,
+            o_STM32_SPI4_MOSI => o_STM32_SPI_MOSI_tb,
+            i_STM32_SPI4_MISO => i_STM32_SPI_MISO_tb,
+            o_STM32_SPI4_Clk  => o_STM32_SPI_Clk_tb,
+            o_STM32_SPI4_CS_n => o_STM32_SPI_CS_n_tb,
 
-            o_RHD_SPI_MOSI   => o_RHD_SPI_MOSI_tb,
-            i_RHD_SPI_MISO   => i_RHD_SPI_MISO_tb,
-            o_RHD_SPI_Clk    => o_RHD_SPI_Clk_tb,
-            o_RHD_SPI_CS_n   => o_RHD_SPI_CS_n_tb,
+            o_RHD2132_SPI_MOSI   => o_RHD_SPI_MOSI_tb,
+            i_RHD2132_SPI_MISO   => i_RHD_SPI_MISO_tb,
+            o_RHD2132_SPI_Clk    => o_RHD_SPI_Clk_tb,
+            o_RHD2132_SPI_CS_n   => o_RHD_SPI_CS_n_tb,
 
             RGB0_OUT => RGB0_OUT_tb,
             RGB1_OUT => RGB1_OUT_tb,

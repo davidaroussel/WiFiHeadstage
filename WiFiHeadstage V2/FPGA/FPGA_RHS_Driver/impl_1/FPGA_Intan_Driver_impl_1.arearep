@@ -1,0 +1,106 @@
+----------------------------------------------------------------------
+Report for cell top_level.TECH
+Register bits:  55 of 5280 (1.042%)
+I/O cells:      22
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               BB_B         3          100.0
+                               CCU2        25          100.0
+                            FD1P3XZ        55          100.0
+                                 IB         2          100.0
+                               LUT4        31          100.0
+                                 OB        17          100.0
+                              PLL_B         1          100.0
+SUB MODULES
+                          CLK_48MHz         1
+CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="55",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+Controller_RHD_FIFO(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32)         1
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhd_spi_ddr_mode=0,rhd_spi_num_bits_per_packet=32,rhd_clks_per_half_bit=2,rhd_cs_inactive_clks=32)         1
+SPI_Master(num_of_bits_per_packet=32)         1
+SPI_Master(num_of_bits_per_packet=512)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=32)         1
+                              TOTAL       142
+----------------------------------------------------------------------
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhd_spi_ddr_mode=0,rhd_spi_num_bits_per_packet=32,rhd_clks_per_half_bit=2,rhd_cs_inactive_clks=32).v1
+Instance Path : Controller_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        10           40.0
+                            FD1P3XZ        25           45.5
+                               LUT4        12           38.7
+SUB MODULES
+Controller_RHD_FIFO(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32)         1
+SPI_Master(num_of_bits_per_packet=32)         1
+SPI_Master(num_of_bits_per_packet=512)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=32)         1
+                              TOTAL        52
+----------------------------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=32).v1
+Instance Path : Controller_inst.SPI_Master_CS_STM32_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         6           24.0
+                            FD1P3XZ        14           25.5
+                               LUT4         7           22.6
+SUB MODULES
+SPI_Master(num_of_bits_per_packet=512)         1
+                              TOTAL        28
+----------------------------------------------------------------------
+Report for cell SPI_Master(num_of_bits_per_packet=512).v1
+Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         6           24.0
+                            FD1P3XZ        14           25.5
+                               LUT4         7           22.6
+                              TOTAL        27
+----------------------------------------------------------------------
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4           16.0
+                            FD1P3XZ        10           18.2
+                               LUT4         5           16.1
+SUB MODULES
+SPI_Master(num_of_bits_per_packet=32)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32)         1
+                              TOTAL        21
+----------------------------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=32).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4           16.0
+                            FD1P3XZ        10           18.2
+                               LUT4         5           16.1
+SUB MODULES
+SPI_Master(num_of_bits_per_packet=32)         1
+                              TOTAL        20
+----------------------------------------------------------------------
+Report for cell SPI_Master(num_of_bits_per_packet=32).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4           16.0
+                            FD1P3XZ        10           18.2
+                               LUT4         5           16.1
+                              TOTAL        19
+----------------------------------------------------------------------
+Report for cell CLK_48MHz.v1
+Instance Path : pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+SUB MODULES
+CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="55",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="55",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000").v1
+Instance Path : pll_inst.lscc_pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+                              TOTAL         1

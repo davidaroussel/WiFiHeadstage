@@ -57,6 +57,7 @@ extern "C" {
 
 
 
+
 #define RHD_SPI_MOSI_Port GPIOA
 #define RHD_SPI_MOSI_Pin GPIO_PIN_1
 
