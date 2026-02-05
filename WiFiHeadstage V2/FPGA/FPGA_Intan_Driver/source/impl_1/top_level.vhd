@@ -5,14 +5,14 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 1;
-        STM32_CS_INACTIVE_CLKS        : integer := 512;
+        STM32_CLKS_PER_HALF_BIT       : integer := 2;
+        STM32_CS_INACTIVE_CLKS        : integer := 64;
 			
 		RHD_SPI_DDR_MODE            : integer := 0;
 		
         RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 1;
-        RHD_CS_INACTIVE_CLKS        : integer := 512
+        RHD_CLKS_PER_HALF_BIT       : integer := 2;
+        RHD_CS_INACTIVE_CLKS        : integer := 64
 				
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -236,7 +236,18 @@ begin
 	
 	Mode_Process : process(pll_clk_int)
 	begin
-		if w_Controller_Mode = x"1" then
+		if w_Controller_Mode = x"0" then
+			-- Passthrough: STM32 directly drives RHD
+			o_RHD2216_SPI_Clk  <= o_STM32_SPI4_Clk;
+			o_RHD2216_SPI_MOSI <= o_STM32_SPI4_MOSI;
+			o_RHD2216_SPI_CS_n <= o_STM32_SPI4_CS_n;
+			i_STM32_SPI4_MISO <= i_RHD2216_SPI_MISO;  -- MISO passthrough
+			o_STM32_SPI4_Clk  <= 'Z';
+			o_STM32_SPI4_MOSI <= 'Z';
+			o_STM32_SPI4_CS_n <= 'Z';
+
+	
+		elsif w_Controller_Mode = x"1" then
 			-- Passthrough: STM32 directly drives RHD
 			o_RHD2132_SPI_Clk  <= o_STM32_SPI4_Clk;
 			o_RHD2132_SPI_MOSI <= o_STM32_SPI4_MOSI;
@@ -295,19 +306,29 @@ begin
 				--end case;
 				--stop_counting <= '1';
 				
+
+				if CTRL0_IN = '0' then
+					w_Controller_Mode <= x"1";
+					
+				elsif CTRL0_IN = '1' then
+					w_Controller_Mode <= x"2";
+				end if;
+					
+				stop_counting <= '1';
+				
 				--Controller mode sequencing
-				case reset_counter is
-					when 50 =>
-						w_Controller_Mode <= x"1";
+				--case reset_counter is
+					--when 36000000 =>
+						--w_Controller_Mode <= x"1";
 						
-					when 72000000 =>
-						w_Controller_Mode <= x"2";
-						stop_counting <= '1';
+					--when 72000000 =>
+						--w_Controller_Mode <= x"2";
+						--stop_counting <= '1';
 
 						
-					when others =>
-						null;
-				end case;
+					--when others =>
+						--null;
+				--end case;
 				
 			end if;
 			

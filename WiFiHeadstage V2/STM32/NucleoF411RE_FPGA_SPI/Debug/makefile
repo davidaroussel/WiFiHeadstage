@@ -61,8 +61,8 @@ all: main-build
 main-build: NucleoF411RE_FPGA_SPI.elf secondary-outputs
 
 # Tool invocations
-NucleoF411RE_FPGA_SPI.elf NucleoF411RE_FPGA_SPI.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFi\ Headstage\WiFiHeadstage\ V2\STM32\NucleoF411RE_FPGA_SPI\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "NucleoF411RE_FPGA_SPI.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\Desktop\WiFi Headstage\WiFiHeadstage V2\STM32\NucleoF411RE_FPGA_SPI\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_FPGA_SPI.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+NucleoF411RE_FPGA_SPI.elf NucleoF411RE_FPGA_SPI.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFiHeadstage\WiFiHeadstage\ V2\STM32\NucleoF411RE_FPGA_SPI\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "NucleoF411RE_FPGA_SPI.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\Desktop\WiFiHeadstage\WiFiHeadstage V2\STM32\NucleoF411RE_FPGA_SPI\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NucleoF411RE_FPGA_SPI.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

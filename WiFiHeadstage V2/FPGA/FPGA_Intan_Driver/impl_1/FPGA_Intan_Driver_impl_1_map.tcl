@@ -4,10 +4,10 @@
 set ret 0
 if {[catch {
 
-sys_set_attribute -gui on -msg {C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml}
-msg_load {C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml}
+sys_set_attribute -gui on -msg {C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml}
+msg_load {C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml}
 des_set_project_udb -in {FPGA_Intan_Driver_impl_1_syn.udb} -out {FPGA_Intan_Driver_impl_1_map.udb} -milestone map -pm ice40tp
-map_set_option {pdc_file "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc"}
+map_set_option {pdc_file "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc"}
 # map option
 map_set_option { report_symbol_cross_reference false report_signal_cross_reference false   ignore_constraint_errors false}
 map_run

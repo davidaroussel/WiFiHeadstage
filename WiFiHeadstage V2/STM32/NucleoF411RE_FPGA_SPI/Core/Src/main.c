@@ -164,7 +164,7 @@ int main(void)
   // De-init SPI before changing mode
   HAL_SPI_DeInit(&hspi4);
   printf("[INFO] SPI deinitialized.\r\n");
-//  HAL_Delay(1000);
+  HAL_Delay(1000);
 
   // Re-init as SLAVE
   SPI4_Slave_Init();

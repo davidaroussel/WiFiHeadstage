@@ -644,12 +644,12 @@ begin
 				 
 			when 5 =>
 				if stm32_counter < NUM_WORDS then
-					--if stm32_counter = 62 then
-						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"00AA";
-					--else
-						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_Q(15 downto 0);
-					--end if;
-					temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_Q(15 downto 0);
+					if (stm32_counter mod 16) = 0 then
+						temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_Q(15 downto 0) OR x"0001");
+					else
+						temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_Q(15 downto 0) AND x"FFFE");
+					end if;
+					--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_Q(15 downto 0);
 
 					stm32_counter <= stm32_counter + 1;
 					int_FIFO_RE <= '1';
