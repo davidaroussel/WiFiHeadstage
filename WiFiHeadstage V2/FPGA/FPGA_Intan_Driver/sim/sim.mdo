@@ -1,25 +1,23 @@
-if {![file exists "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/sim.mpf"]} { 
-	project new "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim" sim
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/STM32_FIFO/rtl/STM32_FIFO.v" verilog
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" verilog
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_FIFO.vhd" vhdl
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd" vhdl
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd" vhdl
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling.vhd" vhdl
-	project addfile "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd" vhdl
+if {![file exists "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/sim.mpf"]} { 
+	project new "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim" sim
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" verilog
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_FIFO.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd" vhdl
+	project addfile "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd" vhdl
 	vlib  work
 	vdel -lib work -all 
 	vlib work
 
-	vlog  "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/STM32_FIFO/rtl" -work work  "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/STM32_FIFO/rtl/STM32_FIFO.v" -suppress 2388
-	vlog  "+incdir+C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl" -work work  "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" -suppress 2388
-    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_FIFO.vhd"
-    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd"
-    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd"
-    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling.vhd"
-    vcom -work work "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd"
+	vlog  "+incdir+C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl" -work work  "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/FIFO_MEM/rtl/FIFO_MEM.v" -suppress 2388
+    vcom -work work "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_FIFO.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/Controller_RHD_Sampling_tb.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd"
+    vcom -work work "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master_CS.vhd"
 } else {
-	project open "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/sim"
+	project open "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/sim/sim"
 	project compileoutofdate
 }
 vsim -L work -L pmi_work -L ovi_ice40up  -suppress vsim-7033,vsim-8630,3009,3389 Controller_RHD_Sampling_tb 

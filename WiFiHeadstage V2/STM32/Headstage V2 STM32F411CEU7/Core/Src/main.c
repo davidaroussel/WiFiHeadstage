@@ -33,22 +33,23 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_FPGA_BUFFER_SIZE 512
+#define STM32_CHUNK_SIZE 4096
+#define NRF_FRAME_SIZE   8192
+#define FPGA_ACCUM_SIZE  NRF_FRAME_SIZE
+
+#define SPI_RX_FPGA_BUFFER_SIZE STM32_CHUNK_SIZE
 uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
 
-#define SPI_TX_FPGA_BUFFER_SIZE 512
+#define SPI_TX_FPGA_BUFFER_SIZE STM32_CHUNK_SIZE
 uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 
 
-#define SPI_RX_nRF_BUFFER_SIZE 8192
+#define SPI_RX_nRF_BUFFER_SIZE NRF_FRAME_SIZE
 uint8_t spi_rx_nrf_buffer[SPI_RX_nRF_BUFFER_SIZE];
 
-#define SPI_TX_nRF_BUFFER_SIZE 8192
+#define SPI_TX_nRF_BUFFER_SIZE NRF_FRAME_SIZE
 uint8_t spi_tx_nrf_buffer[SPI_TX_nRF_BUFFER_SIZE];
 
-#define FPGA_CHUNK_SIZE 512
-#define FPGA_ACCUM_SIZE 8192
-#define NRF_FRAME_SIZE 8192
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
 uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
@@ -489,6 +490,12 @@ static void Init_Intan(void){
 		  rhd_status = INIT_RHD(hspi);
 		  HAL_Delay(1);
 	  }
+	  HAL_Delay(500);
+
+	  while (rhd_status == 0) {
+		  rhd_status = INIT_RHD(hspi);
+		  HAL_Delay(1);
+	  }
 
 	//  HAL_Delay(500);
 
@@ -504,7 +511,7 @@ static void Init_Intan(void){
 		  Error_Handler();
 	  }
 
-	//  HAL_Delay(500);
+	  HAL_Delay(500);
 	  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
 }

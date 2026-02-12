@@ -61,8 +61,8 @@ all: main-build
 main-build: Headstage\ V2\ STM32F411CEU7.elf secondary-outputs
 
 # Tool invocations
-Headstage\ V2\ STM32F411CEU7.elf Headstage\ V2\ STM32F411CEU7.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFi\ Headstage\WiFiHeadstage\ V2\STM32\Headstage\ V2\ STM32F411CEU7\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Headstage V2 STM32F411CEU7.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\Desktop\WiFi Headstage\WiFiHeadstage V2\STM32\Headstage V2 STM32F411CEU7\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Headstage V2 STM32F411CEU7.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Headstage\ V2\ STM32F411CEU7.elf Headstage\ V2\ STM32F411CEU7.map: $(OBJS) $(USER_OBJS) C:\Users\david\Desktop\WiFiHeadstage\WiFiHeadstage\ V2\STM32\Headstage\ V2\ STM32F411CEU7\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Headstage V2 STM32F411CEU7.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\david\Desktop\WiFiHeadstage\WiFiHeadstage V2\STM32\Headstage V2 STM32F411CEU7\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Headstage V2 STM32F411CEU7.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

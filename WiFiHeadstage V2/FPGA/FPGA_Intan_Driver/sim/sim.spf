@@ -1,14 +1,13 @@
-<RadiantSimulationProject name="sim" path="." stage="0" simType="ModelSim" language="1" version="2.0">
-    <Source path="STM32_FIFO/rtl/STM32_FIFO.v" type="VERILOG" include="none" worklib="work" langstandard="Verilog 2001"/>
-    <Source path="FIFO_MEM/rtl/FIFO_MEM.v" type="VERILOG" include="none" worklib="work" langstandard="Verilog 2001"/>
-    <Source path="source/impl_1/Controller_RHD_FIFO.vhd" type="VHDL" include="none" worklib="work" langstandard=""/>
-    <Source path="source/impl_1/SPI_Master.vhd" type="VHDL" include="none" worklib="work" langstandard=""/>
-    <Source path="source/impl_1/SPI_Master_CS.vhd" type="VHDL" include="none" worklib="work" langstandard=""/>
-    <Source path="source/impl_1/Controller_RHD_Sampling.vhd" type="VHDL" include="none" worklib="work" langstandard=""/>
-    <Source path="source/impl_1/Controller_RHD_Sampling_tb.vhd" type="VHDL" include="none" worklib="work" langstandard=""/>
+<RadiantSimulationProject simType="ModelSim" language="1" name="sim" stage="0" path="." version="2.0">
+    <Source langstandard="Verilog 2001" worklib="work" include="none" path="FIFO_MEM/rtl/FIFO_MEM.v" type="VERILOG"/>
+    <Source langstandard="" worklib="work" include="none" path="source/impl_1/Controller_RHD_FIFO.vhd" type="VHDL"/>
+    <Source langstandard="" worklib="work" include="none" path="source/impl_1/Controller_RHD_Sampling.vhd" type="VHDL"/>
+    <Source langstandard="" worklib="work" include="none" path="source/impl_1/Controller_RHD_Sampling_tb.vhd" type="VHDL"/>
+    <Source langstandard="" worklib="work" include="none" path="source/impl_1/SPI_Master.vhd" type="VHDL"/>
+    <Source langstandard="" worklib="work" include="none" path="source/impl_1/SPI_Master_CS.vhd" type="VHDL"/>
     <SimLib value="pmi_work ovi_ice40up"/>
     <GlbInc value=""/>
     <Macro value=""/>
     <Udo value=""/>
-    <TopModule name="Controller_RHD_Sampling_tb" instance="" language="VHDL"/>
+    <TopModule language="VHDL" name="Controller_RHD_Sampling_tb" instance=""/>
 </RadiantSimulationProject>

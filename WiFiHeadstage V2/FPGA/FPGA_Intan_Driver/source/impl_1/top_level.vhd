@@ -6,14 +6,25 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 2;
-        STM32_CS_INACTIVE_CLKS        : integer := 64;
+        STM32_CS_INACTIVE_CLKS        : integer := 16;
 			
-		RHD_SPI_DDR_MODE            : integer := 0;
+		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
-        RHD_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD_CS_INACTIVE_CLKS        : integer := 64
+        RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 16;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 2;
+        RHD2132_CS_INACTIVE_CLKS        : integer := 64;
+
+        RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
+        RHD2216_CLKS_PER_HALF_BIT       : integer := 32;
+        RHD2216_CS_INACTIVE_CLKS        : integer := 128;
 				
+		-- 0: Neuro Only 
+		-- 1: EMG Only 
+		-- 2: EMG + Neuro
+		RHD_SAMPLING_MODE : integer := 1
+		
+		
+
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
 		--   HALF_BIT : 8 
@@ -129,9 +140,14 @@ architecture RTL of top_level is
     signal w_STM32_RX_Byte_Rising: std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_RX_DV         : std_logic;
 
-    signal w_FIFO_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_COUNT          : std_logic_vector(7 downto 0);
-    signal w_FIFO_WE             : std_logic;
+    signal w_FIFO_RHD2132_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHD2132_COUNT          : std_logic_vector(7 downto 0);
+    signal w_FIFO_RHD2132_WE             : std_logic;
+	
+    signal w_FIFO_RHD2216_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHD2216_COUNT          : std_logic_vector(7 downto 0);
+    signal w_FIFO_RHD2216_WE             : std_logic;
+	
 	
     signal pll_clk_internal : std_logic;
     signal pll_locked       : std_logic;
@@ -153,6 +169,7 @@ architecture RTL of top_level is
     signal stop_counting : std_logic := '0';
 	
 	signal pll_clk_int : std_logic;
+	
 	signal int_RHD2132_SPI_MOSI : std_logic;
 	signal int_RHD2132_SPI_MISO : std_logic;
 	signal int_RHD2132_SPI_CS_n : std_logic;
@@ -193,10 +210,16 @@ begin
             STM32_CLKS_PER_HALF_BIT       => STM32_CLKS_PER_HALF_BIT,
             STM32_CS_INACTIVE_CLKS        => STM32_CS_INACTIVE_CLKS,
 			
-			RHD_SPI_DDR_MODE            => RHD_SPI_DDR_MODE,
-            RHD_SPI_NUM_BITS_PER_PACKET => RHD_SPI_NUM_BITS_PER_PACKET,
-            RHD_CLKS_PER_HALF_BIT       => RHD_CLKS_PER_HALF_BIT,
-            RHD_CS_INACTIVE_CLKS        => RHD_CS_INACTIVE_CLKS
+			RHD2132_SPI_DDR_MODE            => RHD2132_SPI_DDR_MODE,
+            RHD2132_SPI_NUM_BITS_PER_PACKET => RHD2132_SPI_NUM_BITS_PER_PACKET,
+            RHD2132_CLKS_PER_HALF_BIT       => RHD2132_CLKS_PER_HALF_BIT,
+            RHD2132_CS_INACTIVE_CLKS        => RHD2132_CS_INACTIVE_CLKS,
+		
+            RHD2216_SPI_NUM_BITS_PER_PACKET => RHD2216_SPI_NUM_BITS_PER_PACKET,
+            RHD2216_CLKS_PER_HALF_BIT       => RHD2216_CLKS_PER_HALF_BIT,
+            RHD2216_CS_INACTIVE_CLKS        => RHD2216_CS_INACTIVE_CLKS,
+			
+			RHD_SAMPLING_MODE               => RHD_SAMPLING_MODE
         )
         port map (
             -- Global
@@ -220,15 +243,26 @@ begin
             o_STM32_RX_Byte_Rising => w_STM32_RX_Byte_Rising,
 
             -- FIFO
-            o_FIFO_Data         => w_FIFO_Data,
-            o_FIFO_COUNT        => w_FIFO_COUNT,
-            o_FIFO_WE           => w_FIFO_WE,
-
+            o_FIFO_RHD2132_Data    => w_FIFO_RHD2132_Data,
+            o_FIFO_RHD2132_COUNT   => w_FIFO_RHD2132_COUNT,
+            o_FIFO_RHD2132_WE      => w_FIFO_RHD2132_WE,
+				
             -- RHD SPI
-            o_RHD_SPI_Clk     => int_RHD2132_SPI_Clk,
-            i_RHD_SPI_MISO    => int_RHD2132_SPI_MISO,
-            o_RHD_SPI_MOSI    => int_RHD2132_SPI_MOSI,
-            o_RHD_SPI_CS_n    => int_RHD2132_SPI_CS_n
+            o_RHD2132_SPI_Clk     => int_RHD2132_SPI_Clk,
+            i_RHD2132_SPI_MISO    => int_RHD2132_SPI_MISO,
+            o_RHD2132_SPI_MOSI    => int_RHD2132_SPI_MOSI,
+            o_RHD2132_SPI_CS_n    => int_RHD2132_SPI_CS_n,
+			
+		
+		    o_FIFO_RHD2216_Data   => w_FIFO_RHD2216_Data,
+            o_FIFO_RHD2216_COUNT  => w_FIFO_RHD2216_COUNT,
+            o_FIFO_RHD2216_WE     => w_FIFO_RHD2216_WE,
+		
+            -- RHD SPI
+            o_RHD2216_SPI_Clk     => int_RHD2216_SPI_Clk,
+            i_RHD2216_SPI_MISO    => int_RHD2216_SPI_MISO,
+            o_RHD2216_SPI_MOSI    => int_RHD2216_SPI_MOSI,
+            o_RHD2216_SPI_CS_n    => int_RHD2216_SPI_CS_n
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
@@ -268,6 +302,11 @@ begin
 			o_RHD2132_SPI_MOSI   <= int_RHD2132_SPI_MOSI;
 			o_RHD2132_SPI_CS_n   <= int_RHD2132_SPI_CS_n;
 			int_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO; -- ? drive MISO back to STM32
+			
+			o_RHD2216_SPI_Clk    <= int_RHD2216_SPI_Clk;
+			o_RHD2216_SPI_MOSI   <= int_RHD2216_SPI_MOSI;
+			o_RHD2216_SPI_CS_n   <= int_RHD2216_SPI_CS_n;
+			int_RHD2216_SPI_MISO <= i_RHD2216_SPI_MISO; -- ? drive MISO back to STM32
 		end if;
 
 	end process;
@@ -283,52 +322,30 @@ begin
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
             else
-                w_reset <= '0';  
+                w_reset <= '0';  				
 
-				--case int_MODE_STATUS is 
-					--when 0 => 
-						--if CTRL0_IN = '1' then
-							--w_Controller_Mode <= x"2";
-							--int_MODE_STATUS <= 0;
-						--elsif CTRL0_IN = '0' then
-							--int_MODE_STATUS <= 1;
-						--end if;
-					--when 1 =>
-						--if CTRL0_IN = '1' then
-							--int_MODE_STATUS <= 0;
-						--elsif CTRL0_IN = '0' then
-							--w_Controller_Mode <= x"1";
-							--int_MODE_STATUS <= 1;
-						--end if;
-
-					--when others =>
-						--null;
-				--end case;
+				--if CTRL0_IN = '0' then
+					--w_Controller_Mode <= x"1";
+					
+				--elsif CTRL0_IN = '1' then
+					--w_Controller_Mode <= x"2";
+				--end if;
+					
 				--stop_counting <= '1';
 				
-
-				if CTRL0_IN = '0' then
-					w_Controller_Mode <= x"1";
-					
-				elsif CTRL0_IN = '1' then
-					w_Controller_Mode <= x"2";
-				end if;
-					
-				stop_counting <= '1';
-				
 				--Controller mode sequencing
-				--case reset_counter is
-					--when 36000000 =>
-						--w_Controller_Mode <= x"1";
+				case reset_counter is
+					when 36000000 =>
+						w_Controller_Mode <= x"1";
 						
-					--when 72000000 =>
-						--w_Controller_Mode <= x"2";
-						--stop_counting <= '1';
+					when 72000000 =>
+						w_Controller_Mode <= x"2";
+						stop_counting <= '1';
 
 						
-					--when others =>
-						--null;
-				--end case;
+					when others =>
+						null;
+				end case;
 				
 			end if;
 			
