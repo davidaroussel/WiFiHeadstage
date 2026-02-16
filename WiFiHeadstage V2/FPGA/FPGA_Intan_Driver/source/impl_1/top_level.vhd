@@ -15,15 +15,13 @@ entity top_level is
         RHD2132_CS_INACTIVE_CLKS        : integer := 64;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2216_CLKS_PER_HALF_BIT       : integer := 32;
-        RHD2216_CS_INACTIVE_CLKS        : integer := 128;
+        RHD2216_CLKS_PER_HALF_BIT       : integer := 2;
+        RHD2216_CS_INACTIVE_CLKS        : integer := 64;
 				
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 1
-		
-		
+		RHD_SAMPLING_MODE : integer := 2		
 
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -148,15 +146,6 @@ architecture RTL of top_level is
     signal w_FIFO_RHD2216_COUNT          : std_logic_vector(7 downto 0);
     signal w_FIFO_RHD2216_WE             : std_logic;
 	
-	
-    signal pll_clk_internal : std_logic;
-    signal pll_locked       : std_logic;
-	
-	constant CLOCK_FREQ   : integer := 12000000;
-    constant TOGGLE_COUNT : integer := CLOCK_FREQ / 1;
-	signal counter : integer := 0;
-    signal step    : integer range 0 to 4 := 0;
-	
 	signal led1_sig : std_logic := '1';
     signal led2_sig : std_logic := '1';
     signal led3_sig : std_logic := '1';
@@ -187,13 +176,7 @@ architecture RTL of top_level is
 	
 	signal int_BOOST_ENABLE    : std_logic;
 	signal int_LED_SYNC 	   : std_logic;
-	
-	signal ctrl_sync0, ctrl_sync1 : std_logic := '0';
-	signal ctrl_counter : integer := 0;
-	signal ctrl_stable  : std_logic := '0';
-	constant DEBOUNCE_CYCLES : integer := 1000;
-	
-	signal int_MODE_STATUS : integer := 0;
+
 	
 	
 begin

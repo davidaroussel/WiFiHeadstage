@@ -240,8 +240,11 @@ architecture RTL of Controller_RHD_Sampling is
 	
 	signal first_rhd2132_packet : std_logic;
 	signal first_rhd2216_packet : std_logic;
+	
 	signal rhd_index    : integer := 0;
 	signal rhd_state    : integer := 0;
+	signal rhd2216_index    : integer := 0;
+	signal rhd2216_state    : integer := 0;
 	
 	signal alt_counter : integer := 0;
 	
@@ -416,77 +419,6 @@ architecture RTL of Controller_RHD_Sampling is
 		63 => x"0F00"   -- CH15 repeat
 	);
 	
-	signal channel_array_rhd2216 : t_channel_array := (
-		0  => x"E800",  -- CH0
-		1  => x"E900",  -- CH1
-		2  => x"EA00",  -- CH2
-		3  => x"EB00",  -- CH3
-		4  => x"EC00",  -- CH4
-		5  => x"FC00",  -- CH5
-		6  => x"FD00",  -- CH6
-		7  => x"FF00",  -- CH7
-		8  => x"E800",  -- CH8
-		9  => x"E900",  -- CH9
-		10 => x"EA00",  -- CH10
-		11 => x"EB00",  -- CH11
-		12 => x"EC00",  -- CH12
-		13 => x"FC00",  -- CH13
-		14 => x"FD00",  -- CH14
-		15 => x"FF00",  -- CH15
-		
-		16 => x"0000",  -- CH0
-		17 => x"0100",  -- CH1
-		18 => x"0200",  -- CH2
-		19 => x"0300",  -- CH3
-		20 => x"0400",  -- CH4
-		21 => x"0500",  -- CH5
-		22 => x"0600",  -- CH6
-		23 => x"0700",  -- CH7
-		24 => x"0800",  -- CH8
-		25 => x"0900",  -- CH9
-		26 => x"0A00",  -- CH10
-		27 => x"0B00",  -- CH11
-		28 => x"0C00",  -- CH12
-		29 => x"0D00",  -- CH13
-		30 => x"E800",  -- CH14
-		31 => x"0F00",  -- CH15
-
-		-- CH0–CH31 repeated again for indices 32–63
-		32 => x"0000",  -- CH0 repeat
-		33 => x"0100",  -- CH1 repeat
-		34 => x"0200",  -- CH2 repeat
-		35 => x"0300",  -- CH3 repeat
-		36 => x"0400",  -- CH4 repeat
-		37 => x"0500",  -- CH5 repeat
-		38 => x"0600",  -- CH6 repeat
-		39 => x"0700",  -- CH7 repeat
-		40 => x"0800",  -- CH8 repeat
-		41 => x"0900",  -- CH9 repeat
-		42 => x"0A00",  -- CH10 repeat
-		43 => x"0B00",  -- CH11 repeat
-		44 => x"0C00",  -- CH12 repeat
-		45 => x"0D00",  -- CH13 repeat
-		46 => x"E800",  -- CH14 repeat
-		47 => x"0F00",  -- CH15 repeat
-		
-		48 => x"E800",  -- CH0 repeat
-		49 => x"E900",  -- CH1 repeat
-		50 => x"EA00",  -- CH2 repeat
-		51 => x"EB00",  -- CH3 repeat
-		52 => x"EC00",  -- CH4 repeat
-		53 => x"FC00",  -- CH5 repeat
-		54 => x"FD00",  -- CH6 repeat
-		55 => x"FF00",  -- CH7 repeat
-		56 => x"E800",  -- CH8 repeat
-		57 => x"E900",  -- CH9 repeat
-		58 => x"EA00",  -- CH10 repeat
-		59 => x"EB00",  -- CH11 repeat
-		60 => x"EC00",  -- CH12 repeat
-		61 => x"FC00",  -- CH13 repeat
-		62 => x"FD00",  -- CH14 repeat
-		63 => x"FF00"   -- CH15 repeat
-	);
-
 	signal rhd_done_config : std_logic := '0';
 	signal full_cycle_count  : integer := 0;
 
@@ -615,16 +547,31 @@ architecture RTL of Controller_RHD_Sampling is
 		
 		if i_Controller_Mode = x"0" then
 			-- INIT RHD2132s FIFO
-			if (SAMPLING_MODE = "00") or (SAMPLING_MODE = "10") then
+			if SAMPLING_MODE = "00" then
 				if init_FIFO_RHD2132_Read = '0' then
 					int_FIFO_RHD2132_RE <= '1';
 					init_FIFO_RHD2132_Read <= '1';
 				else
 					int_FIFO_RHD2132_RE <= '0';
 				end if;
-			end if;
+
 			-- INIT RHD2216s FIFO
-			if (SAMPLING_MODE = "01") or (SAMPLING_MODE = "10") then
+			elsif SAMPLING_MODE = "01" then
+				if init_FIFO_RHD2216_Read = '0' then
+					int_FIFO_RHD2216_RE <= '1';
+					init_FIFO_RHD2216_Read <= '1';
+				else
+					int_FIFO_RHD2216_RE <= '0';
+				end if;
+			
+			elsif SAMPLING_MODE = "10" then
+				if init_FIFO_RHD2132_Read = '0' then
+					int_FIFO_RHD2132_RE <= '1';
+					init_FIFO_RHD2132_Read <= '1';
+				else
+					int_FIFO_RHD2132_RE <= '0';
+				end if;
+			
 				if init_FIFO_RHD2216_Read = '0' then
 					int_FIFO_RHD2216_RE <= '1';
 					init_FIFO_RHD2216_Read <= '1';
@@ -636,41 +583,66 @@ architecture RTL of Controller_RHD_Sampling is
 		elsif i_Controller_Mode = x"2" then
 			case stm32_state is
 				when 0 =>
-					if (SAMPLING_MODE = "00") or (SAMPLING_MODE = "10") then	
-						if first_rhd2132_packet = '0' then
-							if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
-								stm32_state <= 1; -- Move to next state
-								int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
-								first_rhd2132_packet <= '1';
-							else
-								stm32_state <= 0;
-							end if;
+					if SAMPLING_MODE = "00" then	
+						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
+							stm32_state <= 1; -- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+							first_rhd2132_packet <= '1';
 						else
-							if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
-								stm32_state <= 3; -- Move to next state
-								int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
-							else
-								stm32_state <= 0;
-							end if;
+							stm32_state <= 0;
 						end if;
 					
-					elsif (SAMPLING_MODE = "01") or (SAMPLING_MODE = "10") then
-						if first_rhd2216_packet = '0' then
-							if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2) then
-								stm32_state <= 14; -- Move to next state
-								int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
-								first_rhd2216_packet <= '1';
-							else
-								stm32_state <= 0;
-							end if;
+					elsif SAMPLING_MODE = "01" then
+						if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2) then
+							stm32_state <= 14; -- Move to next state
+							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+							first_rhd2216_packet <= '1';
 						else
-							if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA then
-								stm32_state <= 16;           -- Move to next state
-								int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
-							else
-								stm32_state <= 0;
-							end if;
-						end if; 
+							stm32_state <= 0;
+						end if;
+					elsif SAMPLING_MODE = "10" then
+						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
+							stm32_state <= 1;  			-- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+							first_rhd2132_packet <= '1';
+						elsif to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2) then
+							stm32_state <= 14;          -- Move to next state
+							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+							first_rhd2216_packet <= '1';
+						else
+							stm32_state <= 0;
+						end if;
+					end if;
+					
+				when 99 =>
+					if SAMPLING_MODE = "00" then	
+						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
+							stm32_state <= 3; -- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+						else
+							stm32_state <= 99;
+						end if;
+
+					
+					elsif SAMPLING_MODE = "01" then
+						if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA then
+							stm32_state <= 16;           -- Move to next state
+							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+						else
+							stm32_state <= 99;
+						end if;
+
+					elsif SAMPLING_MODE = "10" then
+						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
+							stm32_state <= 3; -- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+							
+						elsif to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA then
+							stm32_state <= 16;           -- Move to next state
+							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+						else
+							stm32_state <= 99;
+						end if;
 					end if;
 					
 				when 1 =>
@@ -747,7 +719,7 @@ architecture RTL of Controller_RHD_Sampling is
 						stm32_state <= 10;
 					end if;
 				when 11 => 
-					stm32_state <= 0;
+					stm32_state <= 99;
 				when others =>
 					null;
 				end case;
@@ -761,43 +733,36 @@ architecture RTL of Controller_RHD_Sampling is
 		if i_Rst_L = '1' then
 			int_RHD2132_TX_Byte     <= (others => '0');
 			int_RHD2132_TX_DV       <= '0';
-			int_RHD2216_TX_Byte     <= (others => '0');
-			int_RHD2216_TX_DV       <= '0';
 			rhd_index           <= 0;
-			rhd_done_config     <= '0';
-			data_array_send_count <= 0;
-			rgd_info_sig_blue   <= '1';
-			rgd_info_sig_green  <= '1';
-			rgd_info_sig_red    <= '1';
 			rhd_state           <= 0;
+			rgd_info_sig_blue   <= '1';
+
 			
-			full_cycle_count     <= 0;  -- reset new counter
 		elsif rising_edge(i_Clk) then
-			if i_Controller_Mode = x"1" then
+			if i_Controller_Mode = x"0" then
 				rgd_info_sig_blue <= '0';
-				rgd_info_sig_green <= '1';
+				
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_blue <= '1';
-				case rhd_state is
-
-					----------------------------------------------------------------
-					-- STATE 0 : PREPARE NEXT BYTE
-					----------------------------------------------------------------
-					when 0 =>
-						--if rhd_done_config = '0' then
-							---- Configuration phase
-							--int_RHD_TX_Byte <= data_array(rhd_index);
-						--else
-							--int_RHD_TX_Byte <= channel_array(rhd_index);
-						--end if;
-						
-						--if rhd_index = 0 then
-							---- Only change CH0 after 10,000 full loops
-							--int_RHD_TX_Byte <= x"E800";
-						--else
-							--int_RHD_TX_Byte <= channel_array(rhd_index);
-						--end if;
-						if SAMPLING_MODE = "00" then
+				if SAMPLING_MODE = "00" or SAMPLING_MODE = "10" then
+					case rhd_state is
+						----------------------------------------------------------------
+						-- STATE 0 : PREPARE NEXT BYTE
+						----------------------------------------------------------------
+						when 0 =>
+							----if rhd_done_config = '0' then
+								------ Configuration phase
+								----int_RHD_TX_Byte <= data_array(rhd_index);
+							----else
+								----int_RHD_TX_Byte <= channel_array(rhd_index);
+							----end if;
+							
+							----if rhd_index = 0 then
+								------ Only change CH0 after 10,000 full loops
+								----int_RHD_TX_Byte <= x"E800";
+							----else
+								----int_RHD_TX_Byte <= channel_array(rhd_index);
+							----end if;
 							int_RHD2132_TX_Byte <= channel_array(rhd_index);
 							-- Wait until SPI/FIFO ready before sending
 							if int_RHD2132_TX_Ready = '1' then
@@ -806,25 +771,11 @@ architecture RTL of Controller_RHD_Sampling is
 							else
 								int_RHD2132_TX_DV <= '0';
 							end if;
-							
-						elsif SAMPLING_MODE = "01" then
-							int_RHD2216_TX_Byte <= channel_array(rhd_index);
-							-- Wait until SPI/FIFO ready before sending
-							if int_RHD2216_TX_Ready = '1' then
-								int_RHD2216_TX_DV <= '1';   -- pulse DV for one cycle
-								rhd_state <= 1;
-							else
-								int_RHD2216_TX_DV <= '0';
-							end if;
-						end if;
-						
-						
-					
-					----------------------------------------------------------------
-					-- STATE 1 : PULSE DV (ONE CYCLE)
-					----------------------------------------------------------------
-					when 1 =>
-						if SAMPLING_MODE = "00" then
+
+						----------------------------------------------------------------
+						-- STATE 1 : PULSE DV (ONE CYCLE)
+						----------------------------------------------------------------
+						when 1 =>
 							int_RHD2132_TX_DV <= '0';
 							-- Wait for Ready to drop (indicating transfer start)
 							if int_RHD2132_TX_Ready = '0' then
@@ -832,66 +783,126 @@ architecture RTL of Controller_RHD_Sampling is
 							else
 								rhd_state <= 1;
 							end if;
-						elsif SAMPLING_MODE = "01" then	
-							int_RHD2216_TX_DV <= '0';
-							-- Wait for Ready to drop (indicating transfer start)
-							if int_RHD2216_TX_Ready = '0' then
-								rhd_state <= 2;
-							else
-								rhd_state <= 1;
-							end if;
-						end if;
-					----------------------------------------------------------------
-					-- STATE 2 : WAIT FOR TRANSFER COMPLETE
-					----------------------------------------------------------------
-					when 2 =>
-						-- Wait for Ready to return high (transfer complete)
-						if (int_RHD2216_TX_Ready = '1') or (int_RHD2132_TX_Ready = '1')then
-							if rhd_index < 63 then
-								rhd_index <= rhd_index + 1;
-							else
-								rhd_index <= 0;
-								-- USELESS FOR NOW BUT KEEPING IT JUST IN CASE
-								if rhd_done_config = '0' then
-									if data_array_send_count < 9 then
-										data_array_send_count <= data_array_send_count + 1;
-									else
-										rhd_done_config <= '1'; 
-									end if;
+
+						----------------------------------------------------------------
+						-- STATE 2 : WAIT FOR TRANSFER COMPLETE
+						----------------------------------------------------------------
+						when 2 =>
+							-- Wait for Ready to return high (transfer complete)
+							if int_RHD2132_TX_Ready = '1' then
+								if rhd_index < 63 then
+									rhd_index <= rhd_index + 1;
 								else
-									-- LOOP FOR LED BLINK STATUS
-									if full_cycle_count < 9999 then
-										full_cycle_count <= full_cycle_count + 1;
-										rgd_info_sig_green <= '1';
-									else
-										full_cycle_count <= 0;
-										rgd_info_sig_green <= '0';								
-									end if;
+									rhd_index <= 0;
+									---- USELESS FOR NOW BUT KEEPING IT JUST IN CASE
+									--if rhd_done_config = '0' then
+										--if data_array_send_count < 9 then
+											--data_array_send_count <= data_array_send_count + 1;
+										--else
+											--rhd_done_config <= '1'; 
+										--end if;
+									--else
+										---- LOOP FOR LED BLINK STATUS
+										--if full_cycle_count < 9999 then
+											--full_cycle_count <= full_cycle_count + 1;
+											--rgd_info_sig_green <= '1';
+										--else
+											--full_cycle_count <= 0;
+											--rgd_info_sig_green <= '0';								
+										--end if;
+									--end if;
 								end if;
+
+								rhd_state <= 0;  -- Prepare next byte
+							else
+								rhd_state <= 2;  -- still busy
 							end if;
 
-							rhd_state <= 0;  -- Prepare next byte
-						else
-							rhd_state <= 2;  -- still busy
-						end if;
-					----------------------------------------------------------------
-					-- DEFAULT
-					----------------------------------------------------------------
-					when others =>
-						rhd_state <= 0;
-
-				end case;
-
+						when others =>
+							rhd_state <= 0;
+					end case;
+				end if;
 			else
 				-- Inactive controller mode: keep DV low
-				if SAMPLING_MODE = "00" then
-					int_RHD2132_TX_DV <= '0';
-				elsif SAMPLING_MODE = "01" then
-					int_RHD2216_TX_DV <= '0';
-				end if;
+				int_RHD2132_TX_DV <= '0';
+
 			end if;
 		end if;
 	end process;
+	
+	
+	process (i_Clk)
+	begin
+		if i_Rst_L = '1' then
+			int_RHD2216_TX_Byte     <= (others => '0');
+			int_RHD2216_TX_DV       <= '0';
+			rhd2216_index           <= 0;
+			rhd2216_state           <= 0;
+			rgd_info_sig_red   <= '1';
+			rgd_info_sig_green   <= '1';
+			
+		elsif rising_edge(i_Clk) then
+			if i_Controller_Mode = x"1" then
+				rgd_info_sig_red <= '0';
+				
+			elsif i_Controller_Mode = x"2" then
+				rgd_info_sig_red <= '1';
+				if SAMPLING_MODE = "01" or SAMPLING_MODE = "10" then
+					case rhd2216_state is
+						----------------------------------------------------------------
+						-- STATE 0 : PREPARE NEXT BYTE
+						----------------------------------------------------------------
+						when 0 =>
+							int_RHD2216_TX_Byte <= channel_array(rhd2216_index);
+							-- Wait until SPI/FIFO ready before sending
+							if int_RHD2216_TX_Ready = '1' then
+								int_RHD2216_TX_DV <= '1';   -- pulse DV for one cycle
+								rhd2216_state <= 1;
+							else
+								int_RHD2216_TX_DV <= '0';
+							end if;
+
+						----------------------------------------------------------------
+						-- STATE 1 : PULSE DV (ONE CYCLE)
+						----------------------------------------------------------------
+						when 1 =>
+							int_RHD2216_TX_DV <= '0';
+							-- Wait for Ready to drop (indicating transfer start)
+							if int_RHD2216_TX_Ready = '0' then
+								rhd2216_state <= 2;
+							else
+								rhd2216_state <= 1;
+							end if;
+
+						----------------------------------------------------------------
+						-- STATE 2 : WAIT FOR TRANSFER COMPLETE
+						----------------------------------------------------------------
+						when 2 =>
+							-- Wait for Ready to return high (transfer complete)
+							if int_RHD2216_TX_Ready = '1' then
+								if rhd2216_index < 63 then
+									rhd2216_index <= rhd2216_index + 1;
+								else
+									rhd2216_index <= 0;
+								end if;
+
+								rhd2216_state <= 0;  -- Prepare next byte
+							else
+								rhd2216_state <= 2;  -- still busy
+							end if;
+
+						when others =>
+							rhd2216_state <= 0;
+					end case;
+				end if;
+			else
+				-- Inactive controller mode: keep DV low
+				int_RHD2216_TX_DV <= '0';
+
+			end if;
+		end if;
+	end process;
+	
 
 	rgb_info_red   <= rgd_info_sig_red;
 	rgb_info_green <= rgd_info_sig_green;

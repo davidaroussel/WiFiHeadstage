@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
-Mapped on: Thu Feb 12 12:13:02 2026
+Mapped on: Mon Feb 16 10:56:38 2026
 
 Design Information
 ------------------
@@ -23,13 +23,13 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
 Design Summary
 --------------
 
-   Number of slice registers: 2106 out of  5280 (40%)
+   Number of slice registers: 2174 out of  5280 (41%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           3110 out of  5280 (59%)
-      Number of logic LUT4s:             1020
-      Number of inserted feedthru LUT4s: 1727
-      Number of replicated LUT4s:         81
-      Number of ripple logic:            141 (282 LUT4s)
+   Number of LUT4s:           3276 out of  5280 (62%)
+      Number of logic LUT4s:             1158
+      Number of inserted feedthru LUT4s: 1735
+      Number of replicated LUT4s:         99
+      Number of ripple logic:            142 (284 LUT4s)
    Number of IO sites used:   26 out of 39 (67%)
       Number of IO sites used for general PIO: 23
       Number of IO sites used for I3C: 0 out of 2 (0%)
@@ -52,14 +52,14 @@ Design Summary
    Number of EBRs:             2 out of 30 (7%)
    Number of PLLs:             1 out of 1 (100%)
    Number of Clocks:  2
-      Net pll_clk_int: 2096 loads, 2096 rising, 0 falling (Driver: Pin
+      Net pll_clk_int: 2159 loads, 2159 rising, 0 falling (Driver: Pin
      pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
       Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
-   Number of Clock Enables:  44
+   Number of Clock Enables:  52
       Net VCC_net: 4 loads, 0 SLICEs
-      Net n12538: 1 loads, 1 SLICEs
-      Net n6891: 3 loads, 3 SLICEs
-      Net n4_adj_2347: 32 loads, 32 SLICEs
+      Net n13743: 1 loads, 1 SLICEs
+      Net Controller_inst.n7130: 512 loads, 512 SLICEs
+      Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
 
                                     Page 1
 
@@ -69,63 +69,63 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net n4: 32 loads, 32 SLICEs
-      Net n2154: 7 loads, 7 SLICEs
-      Net n5: 32 loads, 32 SLICEs
-      Net n6889: 512 loads, 512 SLICEs
-      Net n6893: 5 loads, 5 SLICEs
-      Net n11664: 512 loads, 512 SLICEs
-      Net Controller_inst.n12469: 1 loads, 1 SLICEs
+      Net Controller_inst.n7160: 2 loads, 2 SLICEs
+      Net Controller_inst.n2106: 11 loads, 11 SLICEs
+      Net Controller_inst.n22640: 1 loads, 1 SLICEs
+      Net Controller_inst.n25: 1 loads, 1 SLICEs
+      Net Controller_inst.n12700: 512 loads, 512 SLICEs
+      Net Controller_inst.int_RHD2132_TX_DV: 5 loads, 5 SLICEs
       Net Controller_inst.int_RHD2216_TX_DV: 5 loads, 5 SLICEs
-      Net Controller_inst.n20891: 1 loads, 1 SLICEs
-      Net Controller_inst.n17111: 6 loads, 6 SLICEs
-      Net Controller_inst.n11648: 1 loads, 1 SLICEs
-      Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n21809: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n11678: 10 loads, 10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n11681: 5 loads, 5 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n9421: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n21151: 1 loads, 1
+      Net Controller_inst.n13662: 1 loads, 1 SLICEs
+      Net Controller_inst.n7134: 5 loads, 5 SLICEs
+      Net Controller_inst.n4_adj_2481: 32 loads, 32 SLICEs
+      Net Controller_inst.n4_adj_2483: 32 loads, 32 SLICEs
+      Net Controller_inst.n4_adj_2485: 32 loads, 32 SLICEs
+      Net Controller_inst.n7132: 5 loads, 5 SLICEs
+      Net Controller_inst.n5_adj_2518: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n23821: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n12725: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n9855: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n12732: 5 loads, 5 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n23084: 1 loads, 1
      SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11643: 1 loads, 1
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n12681: 1 loads, 1
      SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n13595: 11 loads,
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n14972: 11 loads,
      11 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11701: 8 loads, 8
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n12742: 8 loads, 8
      SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.n2163: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n11661: 8 loads,
-     8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n11677: 5 loads,
+      Net Controller_inst.Controller_RHD_FIFO_2.n2120: 16 loads, 16 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n12750: 7 loads,
+     7 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n12724: 5 loads,
      5 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n11641: 1 loads,
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n23819: 1 loads,
      1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n11637:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n12671:
      1 loads, 1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n9714: 1
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n9843: 1
      loads, 1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n11738:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n13695:
+     6 loads, 6 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n12795:
      4 loads, 4 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n11744:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n12801:
      3 loads, 3 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
-     RIC.u_fifo.wr_addr_nxt_w_0__N_1899: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
-     RIC.u_fifo.rd_addr_nxt_w_0__N_1907: 8 loads, 8 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
      RIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
      RIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
-      Net Controller_inst.n6922: 2 loads, 2 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.n2168: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n3:
-     1 loads, 1 SLICEs
-      Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n11769:
+      Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
+     RIC.u_fifo.wr_addr_nxt_w_0__N_1946: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FAB
+     RIC.u_fifo.rd_addr_nxt_w_0__N_1954: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.n2125: 16 loads, 16 SLICEs
 
                                     Page 2
 
@@ -135,34 +135,54 @@ Design Summary (cont)
 
 Design Summary (cont)
 ---------------------
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n12762: 7 loads,
+     7 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n12723: 5 loads,
+     5 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n23817: 1 loads,
+     1 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12668:
+     1 loads, 1 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n9829: 1
+     loads, 1 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n13699:
+     6 loads, 6 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12826:
      4 loads, 4 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
-     RIC.u_fifo.rd_addr_nxt_w_0__N_2051: 8 loads, 8 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12832:
+     3 loads, 3 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
      RIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
      RIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
-     RIC.u_fifo.wr_addr_nxt_w_0__N_2043: 8 loads, 8 SLICEs
+     RIC.u_fifo.wr_addr_nxt_w_0__N_2090: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
+     RIC.u_fifo.rd_addr_nxt_w_0__N_2098: 8 loads, 8 SLICEs
    Number of LSRs:  4
-      Net o_reset_c_N_2069: 1 loads, 1 SLICEs
-      Net o_reset_c: 983 loads, 983 SLICEs
-      Net maxfan_replicated_net_1104: 89 loads, 89 SLICEs
-      Net maxfan_replicated_net_999: 999 loads, 999 SLICEs
+      Net n17709: 1 loads, 1 SLICEs
+      Net o_reset_c: 977 loads, 977 SLICEs
+      Net maxfan_replicated_net_1172: 172 loads, 172 SLICEs
+      Net maxfan_replicated_net_999: 985 loads, 985 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net maxfan_replicated_net_999: 1000 loads
-      Net o_reset_c: 999 loads
-      Net Controller_inst.int_STM32_TX_DV: 536 loads
-      Net n11664: 512 loads
-      Net n6889: 512 loads
+      Net o_reset_c: 1000 loads
+      Net maxfan_replicated_net_999: 994 loads
+      Net Controller_inst.int_STM32_TX_DV: 535 loads
+      Net Controller_inst.n12700: 512 loads
+      Net Controller_inst.n7130: 512 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]:
-     251 loads
+     218 loads
+      Net maxfan_replicated_net_1172: 173 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]:
-     134 loads
-      Net maxfan_replicated_net_1104: 105 loads
-      Net VCC_net: 64 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[3]:
-     58 loads
+     156 loads
+      Net VCC_net: 77 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]:
+     62 loads
 
 
 
@@ -170,6 +190,15 @@ Design Summary (cont)
 
    Number of warnings:  2
    Number of errors:    0
+
+
+
+
+                                    Page 3
+
+
+
+
 
 Design Errors/Warnings
 ----------------------
@@ -193,15 +222,6 @@ IO (PIO) Attributes
 
 +---------------------+-----------+-----------+-------+-------+-----------+
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
-
-                                    Page 3
-
-
-
-
-
-IO (PIO) Attributes (cont)
---------------------------
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | o_STM32_SPI4_CS_n   | BIDIR     |           |       |       |           |
@@ -239,6 +259,15 @@ IO (PIO) Attributes (cont)
 | o_RHD2216_SPI_CS_n  | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | o_RHD2216_SPI_Clk   | OUTPUT    |           |       |       |           |
+
+                                    Page 4
+
+
+
+
+
+IO (PIO) Attributes (cont)
+--------------------------
 +---------------------+-----------+-----------+-------+-------+-----------+
 | o_RHD2216_SPI_MOSI  | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -252,19 +281,10 @@ IO (PIO) Attributes (cont)
 +---------------------+-----------+-----------+-------+-------+-----------+
 | RGB1_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
-+---------------------+-----------+-----------+-------+-------+-----------+
 | RGB2_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
-
-
-
-
-                                    Page 4
-
-
-
-
+| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
++---------------------+-----------+-----------+-------+-------+-----------+
 
 PLL/DLL Summary
 ---------------
@@ -304,14 +324,23 @@ PLL 1:                                 Pin/Node Value
 ASIC Components
 ---------------
 
-Instance Name: pll_inst/lscc_pll_inst/u_PLL_B
-         Type: PLL
 Instance Name: Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0
+
+                                    Page 5
+
+
+
+
+
+ASIC Components (cont)
+----------------------
      /_FABRIC.u_fifo/waddr_r_0__I_0
          Type: EBR
 Instance Name: Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0
      /_FABRIC.u_fifo/waddr_r_0__I_0
          Type: EBR
+Instance Name: pll_inst/lscc_pll_inst/u_PLL_B
+         Type: PLL
 
 Constraint Summary
 ------------------
@@ -324,37 +353,8 @@ Run Time and Memory Usage
 
    Total CPU Time: 2 secs
    Total REAL Time: 3 secs
-   Peak Memory Usage: 112 MB
-
-                                    Page 5
-
-
-
-
-
-Run Time and Memory Usage (cont)
---------------------------------
-Checksum -- map: 5cf0fe395fcf6aabd6763518ffeafc429d5c8fd
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   Peak Memory Usage: 115 MB
+Checksum -- map: 98e994aab1eaf699c018092751ca94509af16ad9
 
 
 
