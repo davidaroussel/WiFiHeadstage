@@ -33,14 +33,17 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPI_RX_FPGA_BUFFER_SIZE 4096
-uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
-
-#define SPI_TX_FPGA_BUFFER_SIZE 4096
-uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
-
 #define FPGA_CHUNK_SIZE 4096
 #define FPGA_ACCUM_SIZE 8192
+#define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
+
+#define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
+
+#define SPI_TX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
+
+
 #define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE) // 2B header + payload + 2B footer
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
@@ -484,7 +487,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 //        printf("SPI_COUNTER %i \r\n", spi_counter);
         // Restart DMA immediately
         HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
-        if (spi_counter == 32){
+        if (spi_counter == 2){
         	spi_nrf_ready = 1;
         	spi_counter = 0;
         }

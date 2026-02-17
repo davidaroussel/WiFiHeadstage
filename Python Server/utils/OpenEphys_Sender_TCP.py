@@ -11,11 +11,11 @@ import matplotlib.patches as mpatches
 
 # ---- SPECIFY THE SIGNAL PROPERTIES ---- #
 totalDuration = 600 # the total duration of the signal
-numChannels = 4  # number of channels to send
+numChannels = 16  # number of channels to send
 numSamples = 500  # size of the data buffer
-Freq = 15000  # sample rate of the signal
-testingValue1 = 1000  # high value
-testingValue2 = -1000  # low value
+Freq = 25000  # sample rate of the signal
+testingValue1 = 4000  # high value
+testingValue2 = -2000  # low value
 
 # ---- DEFINE HEADER VALUES ---- #
 headerSize = 22  # Specifies that there are 22 bytes in the header
@@ -37,14 +37,16 @@ bufferInterval = 1 / buffersPerSecond
 OpenEphysOffset = 32768
 convertedValue1 = OpenEphysOffset + (testingValue1)
 convertedValue2 = OpenEphysOffset + (testingValue2)
-intList_1 = (np.ones((int(Freq / 2),)) * convertedValue1).astype('uint16')  # if dataType == 2, use astype('uint16')
-intList_2 = (np.ones((int(Freq / 2),)) * convertedValue2).astype('uint16')
-oneCycle = np.concatenate((intList_1, intList_2))
+intList_1 = (np.ones((int(Freq / 4),)) * convertedValue1).astype('uint16')  # if dataType == 2, use astype('uint16')
+intList_2 = (np.ones((int(Freq / 4),)) * convertedValue2).astype('uint16')
+intList_3 = (np.ones((int(Freq / 4),)) * convertedValue1).astype('uint16')  # if dataType == 2, use astype('uint16')
+intList_4 = (np.ones((int(Freq / 4),)) * convertedValue2).astype('uint16')
+oneCycle = np.concatenate((intList_1, intList_2, intList_3, intList_4))
 allData = np.tile(oneCycle, (numChannels, totalDuration)).T
 
 # ---- CREATE THE SOCKET SERVER ---- #
 tcpServer = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
-tcpServer.bind(('localhost', 10001))
+tcpServer.bind(('localhost', 10005))
 tcpServer.listen(5)
 
 print("Waiting for external connection to start...")

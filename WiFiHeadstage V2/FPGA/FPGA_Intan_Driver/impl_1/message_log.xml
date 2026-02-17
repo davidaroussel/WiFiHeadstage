@@ -5,12 +5,12 @@
             <ID>77001032</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>1191031</ID>
@@ -89,7 +89,7 @@
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/CLK_48MHz/rtl/CLK_48MHz.v(105): </Dynamic>
-            <Dynamic>CLK_48MHz_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;55&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
+            <Dynamic>CLK_48MHz_ipgen_lscc_pll(DIVR=&quot;0&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/CLK_48MHz/rtl/CLK_48MHz.v</Navigation>
             <Navigation>105</Navigation>
         </Message>
@@ -97,7 +97,7 @@
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(428): </Dynamic>
-            <Dynamic>PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;55&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
+            <Dynamic>PLL_B(PLLOUT_SELECT_PORTA=&quot;GENCLK&quot;,PLLOUT_SELECT_PORTB=&quot;GENCLK&quot;,DIVF=&quot;63&quot;,DIVQ=&quot;4&quot;,FILTER_RANGE=&quot;1&quot;,FREQUENCY_PIN_REFERENCECLK=&quot;12.000000&quot;)</Dynamic>
             <Navigation>C:/lscc/radiant/2023.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v</Navigation>
             <Navigation>428</Navigation>
         </Message>
@@ -925,10 +925,10 @@
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(351): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd(353): </Dynamic>
             <Dynamic>channel_array_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>351</Navigation>
+            <Navigation>353</Navigation>
         </Message>
         <Message>
             <ID>35935040</ID>
@@ -1010,6 +1010,18 @@
             <Dynamic>3, 2</Dynamic>
         </Message>
         <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHD2216_TX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_DV</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
             <ID>35002028</ID>
             <Severity>256</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
@@ -1017,7 +1029,13 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHD2216_TX_Byte__i5</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM_i1</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i0</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1029,7 +1047,7 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM_i2</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1039,9 +1057,195 @@
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i1</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i7</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i8</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i9</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i10</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i11</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i12</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i13</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i14</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i15</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_n</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM_i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i1</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i7</Dynamic>
+            <Dynamic>One</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_TX_Count_1362__i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_TX_Count_1362__i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_TX_Count_1362__i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_TX_Count_1362__i1</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_CS_Inactive_Count_i0</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_TX_Count_1362__i0</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/o_SPI_MOSI</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
     <Task name="PAR">
@@ -1049,28 +1253,28 @@
             <ID>77001032</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -1095,47 +1299,73 @@
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
             <Dynamic>CTRL0_IN</Dynamic>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {12} [get_ports CTRL0_IN]</Dynamic>
+            <Dynamic>ldc_set_location -site {13} [get_ports CTRL0_IN]</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
     <Task name="Map">
+        <Message>
+            <ID>1026001</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc</Dynamic>
+            <Dynamic>9</Dynamic>
+            <Dynamic>No port matched 'i_LED_SYNC'.</Dynamic>
+            <Navigation>C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc</Navigation>
+            <Navigation>9</Navigation>
+        </Message>
+        <Message>
+            <ID>1027013</ID>
+            <Severity>16</Severity>
+            <Dynamic>port</Dynamic>
+            <Dynamic>i_LED_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>1014301</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_LED_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {6} [get_ports i_LED_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1011001</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {6} [get_ports i_LED_SYNC]</Dynamic>
+        </Message>
         <Message>
             <ID>52291017</ID>
             <Severity>1</Severity>

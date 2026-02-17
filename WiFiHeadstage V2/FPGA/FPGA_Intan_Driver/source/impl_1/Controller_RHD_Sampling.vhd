@@ -246,9 +246,11 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rhd2216_index    : integer := 0;
 	signal rhd2216_state    : integer := 0;
 	
+	signal dual_fifo_prep : integer := 0;
+	
 	signal alt_counter : integer := 0;
 	
-	signal RHD_Interval  : integer :=0;
+	signal RHD_Interval_Counter  : integer :=0;
 		signal data_array_send_count : integer range 0 to 100 := 0;
 
 	type t_data_array is array (0 to 63) of std_logic_vector(15 downto 0);
@@ -535,7 +537,9 @@ architecture RTL of Controller_RHD_Sampling is
 		first_rhd2132_packet <= '0';
 		first_rhd2216_packet <= '0';
 		
-		RHD_Interval <= 0;
+		RHD_Interval_Counter <= 0;
+		
+		rgd_info_sig_green   <= '1';
 		
 		if RHD2132_SPI_DDR_MODE = 1 then
 			NUM_DATA <= (STM32_SPI_NUM_BITS_PER_PACKET / (2*RHD2132_SPI_NUM_BITS_PER_PACKET));
@@ -565,24 +569,24 @@ architecture RTL of Controller_RHD_Sampling is
 				end if;
 			
 			elsif SAMPLING_MODE = "10" then
-				if init_FIFO_RHD2132_Read = '0' then
+				if (init_FIFO_RHD2132_Read = '0') AND (init_FIFO_RHD2216_Read = '0') then
 					int_FIFO_RHD2132_RE <= '1';
-					init_FIFO_RHD2132_Read <= '1';
-				else
-					int_FIFO_RHD2132_RE <= '0';
-				end if;
-			
-				if init_FIFO_RHD2216_Read = '0' then
 					int_FIFO_RHD2216_RE <= '1';
+					
+					init_FIFO_RHD2132_Read <= '1';
 					init_FIFO_RHD2216_Read <= '1';
 				else
+					int_FIFO_RHD2132_RE <= '0';
 					int_FIFO_RHD2216_RE <= '0';
+					
 				end if;
+			
 			end if;
 
 		elsif i_Controller_Mode = x"2" then
 			case stm32_state is
 				when 0 =>
+					rgd_info_sig_green   <= '0';
 					if SAMPLING_MODE = "00" then	
 						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
 							stm32_state <= 1; -- Move to next state
@@ -600,12 +604,14 @@ architecture RTL of Controller_RHD_Sampling is
 						else
 							stm32_state <= 0;
 						end if;
+						
 					elsif SAMPLING_MODE = "10" then
-						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
+						if (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2132_packet = '0') then
 							stm32_state <= 1;  			-- Move to next state
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
 							first_rhd2132_packet <= '1';
-						elsif to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2) then
+							
+						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2216_packet = '0') then
 							stm32_state <= 14;          -- Move to next state
 							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
 							first_rhd2216_packet <= '1';
@@ -615,6 +621,7 @@ architecture RTL of Controller_RHD_Sampling is
 					end if;
 					
 				when 99 =>
+					rgd_info_sig_green   <= '1';
 					if SAMPLING_MODE = "00" then	
 						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
 							stm32_state <= 3; -- Move to next state
@@ -633,13 +640,13 @@ architecture RTL of Controller_RHD_Sampling is
 						end if;
 
 					elsif SAMPLING_MODE = "10" then
-						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
-							stm32_state <= 3; -- Move to next state
-							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
 							
-						elsif to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA then
+						if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA then
 							stm32_state <= 16;           -- Move to next state
 							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+						elsif to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA then
+							stm32_state <= 3; -- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
 						else
 							stm32_state <= 99;
 						end if;
@@ -719,7 +726,16 @@ architecture RTL of Controller_RHD_Sampling is
 						stm32_state <= 10;
 					end if;
 				when 11 => 
-					stm32_state <= 99;
+					if SAMPLING_MODE = "10" then
+						if (first_rhd2132_packet = '1') AND (first_rhd2216_packet = '1') then					
+							stm32_state <= 99;
+						else
+							stm32_state <= 0;
+						end if;
+					else 
+						stm32_state <= 99;
+					end if;
+					
 				when others =>
 					null;
 				end case;
@@ -764,6 +780,7 @@ architecture RTL of Controller_RHD_Sampling is
 								----int_RHD_TX_Byte <= channel_array(rhd_index);
 							----end if;
 							int_RHD2132_TX_Byte <= channel_array(rhd_index);
+							--int_RHD2132_TX_Byte <= x"E900";
 							-- Wait until SPI/FIFO ready before sending
 							if int_RHD2132_TX_Ready = '1' then
 								int_RHD2132_TX_DV <= '1';   -- pulse DV for one cycle
@@ -839,7 +856,6 @@ architecture RTL of Controller_RHD_Sampling is
 			rhd2216_index           <= 0;
 			rhd2216_state           <= 0;
 			rgd_info_sig_red   <= '1';
-			rgd_info_sig_green   <= '1';
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
@@ -854,6 +870,7 @@ architecture RTL of Controller_RHD_Sampling is
 						----------------------------------------------------------------
 						when 0 =>
 							int_RHD2216_TX_Byte <= channel_array(rhd2216_index);
+							--int_RHD2216_TX_Byte <= x"E800";
 							-- Wait until SPI/FIFO ready before sending
 							if int_RHD2216_TX_Ready = '1' then
 								int_RHD2216_TX_DV <= '1';   -- pulse DV for one cycle
