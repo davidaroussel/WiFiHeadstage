@@ -188,7 +188,7 @@ class DataConverterV2:
                         except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
                             time_now = time.strftime("%H:%M:%S", time.localtime())
                             print(f"\n--------{time_now}--------")
-                            print("Client reconnected. Resetting TCP connection...")
+                            print("[OpenEphys] Client reconnected. Resetting TCP connection...")
                             self.tcp_connected = False
                             if self.tcpClient:
                                 try:
