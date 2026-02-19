@@ -692,7 +692,7 @@ architecture RTL of Controller_RHD_Sampling is
 					if stm32_counter < NUM_WORDS then
 						if (stm32_counter mod 16) = 0 then
 							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0001";
+							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0010";
 						else
 							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) AND x"FFFE");
 						end if;
@@ -915,7 +915,6 @@ architecture RTL of Controller_RHD_Sampling is
 			else
 				-- Inactive controller mode: keep DV low
 				int_RHD2216_TX_DV <= '0';
-
 			end if;
 		end if;
 	end process;

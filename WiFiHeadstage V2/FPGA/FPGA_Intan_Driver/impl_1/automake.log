@@ -81,7 +81,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Mon Feb 16 20:17:42 2026
+Thu Feb 19 12:48:50 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml 
@@ -253,7 +253,7 @@ Analyzing VHDL file c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/f
 Analyzing VHDL file c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(5): analyzing entity top_level. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(122): analyzing architecture rtl. VHDL-1010
+INFO <35921010> - c:/users/david/desktop/wifiheadstage/wifiheadstage v2/fpga/fpga_intan_driver/source/impl_1/top_level.vhd(105): analyzing architecture rtl. VHDL-1010
 INFO <35921504> - The default VHDL library search path is now "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1". VHDL-1504
 Top module language type = VHDL.
 WARNING <35935049> - input port i_STM32_SPI_MISO remains unconnected for this instance. VDB-5049
@@ -397,8 +397,8 @@ WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_
 CRITICAL <35002028> - I/O Port CTRL0_IN 's net has no driver and is unused.
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM_i1 clock is stuck at One. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i0 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/int_RHD2132_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM_i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_RHD2132_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i1 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i2 clock is stuck at Zero. VDB-5040
@@ -700,7 +700,103 @@ Combinational loop found : 41
 
  Instance i12 
 
+WARNING <35935040> - Register \Controller_inst/temp_buffer_const__i1 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/o_SPI_MOSI clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i32 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i48 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i64 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i0 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i80 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i80 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i64 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i48 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i32 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i96 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i112 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i128 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i144 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i96 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i112 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i128 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i160 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i144 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i160 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i176 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i192 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i208 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i224 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i240 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i256 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i272 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i288 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i304 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i320 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i336 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i352 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i368 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i384 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i400 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i416 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i432 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i448 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i464 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i480 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/temp_buffer__i496 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i32 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i48 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i64 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i80 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i96 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i112 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i128 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i144 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i160 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i224 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i240 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i448 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i464 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i464 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i448 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i240 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i224 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i368 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i432 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i208 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i352 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i192 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i336 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i176 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i416 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i320 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i304 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i400 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i288 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i272 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i384 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i256 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i496 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_STM32_TX_Byte_i0_i480 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i176 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i192 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i208 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i256 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i272 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i288 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i304 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i320 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i336 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i352 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i368 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i384 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i400 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i416 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i432 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i480 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Byte_i0_i496 clock is stuck at Zero. VDB-5040
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_mem_r.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/empty_mem_r.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_addr_p1_r_i0 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/wr_cmpaddr_p1_r_i0.
@@ -2431,18 +2527,18 @@ Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/raddr_r_i6 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/rd_cmpaddr_r_i6.
 
 ################### Begin Area Report (top_level)######################
-Number of register bits => 2070 of 5280 (39 % )
+Number of register bits => 1973 of 5280 (37 % )
 BB_B => 3
 EBR_B => 2
-CCU2 => 121
-FD1P3XZ => 2070
+CCU2 => 120
+FD1P3XZ => 1973
 IB => 3
-LUT4 => 1005
+LUT4 => 988
 OB => 20
 PLL_B => 1
 ################### End Area Report ##################
-Number of odd-length carry chains : 4
-Number of even-length carry chains : 12
+Number of odd-length carry chains : 3
+Number of even-length carry chains : 13
 
 ################### Begin Clock Report ######################
 Clock Nets
@@ -2454,24 +2550,24 @@ Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : o_reset_c, loads : 1000
-  Net : maxfan_replicated_net_999, loads : 1000
-  Net : Controller_inst/int_STM32_TX_DV, loads : 535
-  Net : Controller_inst/n6926, loads : 512
-  Net : Controller_inst/n11889, loads : 512
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 209
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 162
-  Net : maxfan_replicated_net_1068, loads : 69
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[2], loads : 65
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[3], loads : 45
+  Net : maxfan_replicated_net_972, loads : 973
+  Net : Controller_inst/int_STM32_TX_DV, loads : 503
+  Net : Controller_inst/n11919, loads : 480
+  Net : Controller_inst/n6922, loads : 480
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 206
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 173
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[3], loads : 60
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[2], loads : 47
+  Net : Controller_inst/n1366, loads : 39
 ################### End Clock Report ##################
 
-Peak Memory Usage: 172 MB
+Peak Memory Usage: 174 MB
 
 --------------------------------------------------------------
-Total CPU Time: 17 secs 
-Total REAL Time: 18 secs 
+Total CPU Time: 18 secs 
+Total REAL Time: 20 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: beb3c36e39d7dd25db3260bdd9921456270276fa
+Checksum -- synthesis -- netlist: 8fa0669a74350a33dbb364a1ecc1dd555418ddf1
 
 
 
@@ -2483,7 +2579,7 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
-CPU Time to convert: 0.515625
+CPU Time to convert: 0.546875
 REAL Time to convert: 0
 convert PEAK Memory Usage: 62 MB
 convert CURRENT Memory Usage: 60 MB
@@ -2502,7 +2598,7 @@ POSTSYN finished successfully.
 Total CPU Time: 1 secs 
 Total REAL Time: 0 secs 
 Peak Memory Usage: 62 MB
-Checksum -- postsyn: 5dcf4b63a0b65c7f835b5d215584c4e98344f249
+Checksum -- postsyn: 88d6c3dbafb0d47c6a44ab8aca813173e095105
 
 
 
@@ -2522,10 +2618,6 @@ Package Status:                     Preliminary    Version 1.5.
 
 
 
-WARNING <1026001> - C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc (9) : No port matched &apos;i_LED_SYNC&apos;.
-WARNING <1027013> - No port matched 'i_LED_SYNC'.
-WARNING <1014301> - Can't resolve object 'i_LED_SYNC' in constraint 'ldc_set_location -site {6} [get_ports i_LED_SYNC]'.
-WARNING <1011001> - Remove invalid constraint 'ldc_set_location -site {6} [get_ports i_LED_SYNC]'.
 Design:  top_level
 Family:  iCE40UP
 Device:  iCE40UP5K
@@ -2542,13 +2634,13 @@ WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
 
 
 Design Summary:
-   Number of slice registers: 2070 out of  5280 (39%)
+   Number of slice registers: 1973 out of  5280 (37%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           3051 out of  5280 (58%)
-      Number of logic LUT4s:             1007
-      Number of inserted feedthru LUT4s: 1721
-      Number of replicated LUT4s:         81
-      Number of ripple logic:            121 (242 LUT4s)
+   Number of LUT4s:           2926 out of  5280 (55%)
+      Number of logic LUT4s:             990
+      Number of inserted feedthru LUT4s: 1616
+      Number of replicated LUT4s:         80
+      Number of ripple logic:            120 (240 LUT4s)
    Number of IO sites used:   26 out of 39 (67%)
       Number of IO sites used for general PIO: 23
       Number of IO sites used for I3C: 0 out of 2 (0%)
@@ -2571,93 +2663,90 @@ Design Summary:
    Number of EBRs:             2 out of 30 (7%)
    Number of PLLs:             1 out of 1 (100%)
    Number of Clocks:  2
-      Net pll_clk_int: 2059 loads, 2059 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
+      Net pll_clk_int: 1958 loads, 1958 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
       Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
    Number of Clock Enables:  41
       Net VCC_net: 4 loads, 0 SLICEs
-      Net n12798: 1 loads, 1 SLICEs
-      Net n3: 2 loads, 2 SLICEs
-      Net Controller_inst.n11889: 512 loads, 512 SLICEs
-      Net Controller_inst.n6926: 512 loads, 512 SLICEs
-      Net Controller_inst.n6928: 5 loads, 5 SLICEs
-      Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
+      Net n12831: 1 loads, 1 SLICEs
+      Net n6924: 5 loads, 5 SLICEs
+      Net Controller_inst.int_STM32_TX_DV: 480 loads, 480 SLICEs
+      Net Controller_inst.n11919: 480 loads, 480 SLICEs
+      Net Controller_inst.n6922: 480 loads, 480 SLICEs
       Net Controller_inst.int_RHD2132_TX_DV: 5 loads, 5 SLICEs
-      Net Controller_inst.n4_adj_2124: 32 loads, 32 SLICEs
-      Net Controller_inst.n4_adj_2127: 32 loads, 32 SLICEs
+      Net Controller_inst.n4: 32 loads, 32 SLICEs
+      Net Controller_inst.n4_adj_2134: 32 loads, 32 SLICEs
       Net Controller_inst.n11: 1 loads, 1 SLICEs
-      Net Controller_inst.n20713: 1 loads, 1 SLICEs
-      Net Controller_inst.n2194: 9 loads, 9 SLICEs
-      Net Controller_inst.n19102: 11 loads, 11 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n11896: 10 loads, 10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n21775: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n11927: 5 loads, 5 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n2218: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n21245: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11913: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11956: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.n2205: 16 loads, 16 SLICEs
+      Net Controller_inst.n19942: 1 loads, 1 SLICEs
+      Net Controller_inst.n2190: 9 loads, 9 SLICEs
+      Net Controller_inst.n18008: 6 loads, 6 SLICEs
+      Net Controller_inst.n9826: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n11926: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n21169: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n11964: 5 loads, 5 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n2214: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n18236: 11 loads, 11 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20460: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11944: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n11984: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.n2201: 16 loads, 16 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n3: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n11987: 4 loads, 4 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n12019: 4 loads, 4 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_addr_nxt_w_0__N_1883: 8 loads, 8 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_addr_nxt_w_0__N_1875: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.n2210: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n11966: 7 loads, 7 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n21777: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n11920: 5 loads, 5 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n9828: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n11922: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12731: 6 loads, 6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12016: 4 loads, 4 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12020: 3 loads, 3 SLICEs
+      Net Controller_inst.n6950: 2 loads, 2 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.n2206: 16 loads, 16 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n11937: 5 loads, 5 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n11994: 6 loads, 6 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n11948: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n11952: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12044: 4 loads, 4 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12048: 3 loads, 3 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_addr_nxt_w_0__N_1891: 8 loads, 8 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_addr_nxt_w_0__N_1899: 8 loads, 8 SLICEs
-   Number of LSRs:  4
-      Net n13568: 1 loads, 1 SLICEs
+   Number of LSRs:  3
+      Net n15863: 1 loads, 1 SLICEs
       Net o_reset_c: 986 loads, 986 SLICEs
-      Net maxfan_replicated_net_1068: 69 loads, 69 SLICEs
-      Net maxfan_replicated_net_999: 979 loads, 979 SLICEs
+      Net maxfan_replicated_net_972: 948 loads, 948 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net maxfan_replicated_net_999: 1000 loads
       Net o_reset_c: 998 loads
-      Net Controller_inst.int_STM32_TX_DV: 536 loads
-      Net Controller_inst.n11889: 512 loads
-      Net Controller_inst.n6926: 512 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 209 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 162 loads
-      Net maxfan_replicated_net_1068: 69 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 65 loads
-      Net VCC_net: 61 loads
+      Net maxfan_replicated_net_972: 969 loads
+      Net Controller_inst.int_STM32_TX_DV: 504 loads
+      Net Controller_inst.n11919: 480 loads
+      Net Controller_inst.n6922: 480 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 206 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 173 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[3]: 60 loads
+      Net VCC_net: 60 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 47 loads
 Running physical design DRC...
 
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
  
 
 
-   Number of warnings:  6
+   Number of warnings:  2
    Number of errors:    0
 
 Constraint Summary:
-   Total number of constraints: 19
-   Total number of constraints dropped: 1
-   Dropped constraint is:
-     ldc_set_location -site {6} [get_ports i_LED_SYNC]
+   Total number of constraints: 18
+   Total number of constraints dropped: 0
 
 
-Total CPU Time: 2 secs  
+Total CPU Time: 1 secs  
 Total REAL Time: 2 secs  
-Peak Memory Usage: 111 MB
+Peak Memory Usage: 110 MB
 
-Checksum -- map: b3d3f5b2bcd282a55d3c18e06b70732360fa67
+Checksum -- map: 9a4cddbe222049a3c03a5ab6d22739fbaa163307
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-Mon Feb 16 20:18:15 2026
+Thu Feb 19 12:49:25 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -2687,13 +2776,13 @@ WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
 WARNING <71003020> - Top module port 'CTRL0_IN' does not connect to anything.
-Number of Signals: 5361
-Number of Connections: 14232
+Number of Signals: 5138
+Number of Connections: 13662
 Device utilization summary:
 
-   SLICE (est.)    1628/2640         62% used
-     LUT           3051/5280         58% used
-     REG           2070/5280         39% used
+   SLICE (est.)    1569/2640         59% used
+     LUT           2926/5280         55% used
+     REG           1973/5280         37% used
    PIO               23/56           41% used
                      23/36           63% bonded
    IOLOGIC            0/56            0% used
@@ -2717,43 +2806,43 @@ Pin Constraint Summary:
    13 out of 23 pins locked (56% locked).
 .
 ............
-Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 4 secs 
+Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 5 secs 
 
 
-.................
+................
 Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 7 secs 
 
 Starting Placer Phase 1. CPU time: 6 secs , REAL time: 7 secs 
 ..  ..
 ....................
 
-Placer score = 486995.
+Placer score = 907446.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1606/2640         60% used
+   SLICE           1551/2640         58% used
 
 WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 WARNING <77001032> - Unable to find the instance/port 'CTRL0_IN' in the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]', the locate object is not specified
-Finished Placer Phase 1. CPU time: 22 secs , REAL time: 23 secs 
+Finished Placer Phase 1. CPU time: 22 secs , REAL time: 24 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  515339
-Finished Placer Phase 2.  CPU time: 23 secs , REAL time: 23 secs 
+Placer score =  493304
+Finished Placer Phase 2.  CPU time: 23 secs , REAL time: 25 secs 
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
-  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1122, ce load = 0, sr load = 0
-  PRIMARY "o_reset_c" from Q1 on comp "SLICE_2690" on site "R19C30B", clk load = 0, ce load = 0, sr load = 536
-  PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_125" on site "R18C18B", clk load = 0, ce load = 0, sr load = 521
-  PRIMARY "Controller_inst.n11889" from F0 on comp "Controller_inst.SLICE_2568" on site "R13C3B", clk load = 0, ce load = 265, sr load = 0
-  PRIMARY "Controller_inst.n6926" from F1 on comp "Controller_inst.SLICE_2522" on site "R17C28D", clk load = 0, ce load = 266, sr load = 0
-  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2569" on site "R17C23A", clk load = 0, ce load = 267, sr load = 0
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1076, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q0 on comp "SLICE_122" on site "R13C31D", clk load = 0, ce load = 0, sr load = 530
+  PRIMARY "maxfan_replicated_net_972" from Q1 on comp "SLICE_122" on site "R13C31D", clk load = 0, ce load = 0, sr load = 523
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q0 on comp "Controller_inst.SLICE_1161" on site "R13C2C", clk load = 0, ce load = 254, sr load = 0
+  PRIMARY "Controller_inst.n11919" from F0 on comp "Controller_inst.SLICE_2478" on site "R14C31C", clk load = 0, ce load = 250, sr load = 0
+  PRIMARY "Controller_inst.n6922" from F0 on comp "Controller_inst.SLICE_2608" on site "R8C31C", clk load = 0, ce load = 254, sr load = 0
 
   PRIMARY  : 6 out of 8 (75%)
 
@@ -2770,21 +2859,21 @@ I/O Bank Usage Summary:
 +----------+----------------+------------+------------+------------+
 | I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+----------------+------------+------------+------------+
-| 0        | 11 / 14 ( 78%) | 3.3V       |            |            |
-| 1        | 7 / 14 ( 50%)  | 3.3V       |            |            |
-| 2        | 5 / 8 ( 62%)   | 3.3V       |            |            |
+| 0        | 13 / 14 ( 92%) | 3.3V       |            |            |
+| 1        | 6 / 14 ( 42%)  | 3.3V       |            |            |
+| 2        | 4 / 8 ( 50%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 23 secs , REAL time: 23 secs 
+Total Placer CPU time: 23 secs , REAL time: 25 secs 
 
 
-Checksum -- place: 3c49c4675c60e226d3795262be837cbdaf29c88
+Checksum -- place: 6f3ca33b81cfdd87bfb76a2f4a0b092f478aefca
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 WARNING <77001032> - Unable to find the instance/port 'CTRL0_IN' in the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {13} [get_ports CTRL0_IN]', the locate object is not specified
 
-Start NBR router at 20:18:39 02/16/26
+Start NBR router at 12:49:51 02/19/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -2802,27 +2891,27 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-2277 connections routed with dedicated routing resources
+2178 connections routed with dedicated routing resources
 6 global clock signals routed
-5254 connections routed (of 11527 total) (45.58%)
+5065 connections routed (of 11124 total) (45.53%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (6 used out of 8 available):
-#1  Signal "Controller_inst.n6926"
-       Control loads: 266   out of   266 routed (100.00%)
-#2  Signal "o_reset_c"
-       Control loads: 536   out of   536 routed (100.00%)
-       Data    loads: 0     out of    12 routed (  0.00%)
-#3  Signal "Controller_inst.int_STM32_TX_DV"
-       Control loads: 267   out of   267 routed (100.00%)
-       Data    loads: 0     out of    24 routed (  0.00%)
-#4  Signal "maxfan_replicated_net_999"
-       Control loads: 521   out of   521 routed (100.00%)
+#1  Signal "Controller_inst.n11919"
+       Control loads: 250   out of   250 routed (100.00%)
+#2  Signal "maxfan_replicated_net_972"
+       Control loads: 523   out of   523 routed (100.00%)
        Data    loads: 0     out of    21 routed (  0.00%)
-#5  Signal "Controller_inst.n11889"
-       Control loads: 265   out of   265 routed (100.00%)
+#3  Signal "Controller_inst.n6922"
+       Control loads: 254   out of   254 routed (100.00%)
+#4  Signal "o_reset_c"
+       Control loads: 530   out of   530 routed (100.00%)
+       Data    loads: 0     out of    12 routed (  0.00%)
+#5  Signal "Controller_inst.int_STM32_TX_DV"
+       Control loads: 254   out of   254 routed (100.00%)
+       Data    loads: 0     out of    24 routed (  0.00%)
 #7  Signal "pll_clk_int"
-       Clock   loads: 1122  out of  1122 routed (100.00%)
+       Clock   loads: 1076  out of  1076 routed (100.00%)
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -2835,25 +2924,25 @@ WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
     TimerIf::skewscore 0
 
-Start NBR section for initial routing at 20:18:40 02/16/26
+Start NBR section for initial routing at 12:49:52 02/19/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-178(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+161(0.06%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 20:18:48 02/16/26
+Start NBR section for normal routing at 12:50:00 02/19/26
 Level 4, iteration 1
-10(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+11(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 Level 4, iteration 2
-6(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 Level 4, iteration 3
-0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 
-Start NBR section for post-routing at 20:18:49 02/16/26
+Start NBR section for post-routing at 12:50:00 02/19/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - No source clock for
@@ -2862,12 +2951,12 @@ Requested speed is the same as database speed
 Changing speed to m;   changing temperature to -40
 Changing speed to 6;   changing temperature to 100
 
-Checksum -- route: 2702b3e42550fc01e92147305d0a075378bb8b90
+Checksum -- route: dd31ce35a672584e902f193c11d14cb740d68281
 
-Total CPU time 12 secs 
+Total CPU time 11 secs 
 Total REAL time: 12 secs 
 Completely routed.
-End of route.  11527 routed (100.00%); 0 unrouted.
+End of route.  11124 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -2882,9 +2971,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-Total CPU  Time: 36 secs 
-Total REAL Time: 36 secs 
-Peak Memory Usage: 183.73 MB
+Total CPU  Time: 35 secs 
+Total REAL Time: 38 secs 
+Peak Memory Usage: 183.33 MB
 
 
 par done!
@@ -2894,7 +2983,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /37 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /38 secs 
 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "FPGA_Intan_Driver_impl_1.twr" "FPGA_Intan_Driver_impl_1.udb" 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml
@@ -2911,7 +3000,7 @@ Performance Grade:   High-Performance_1.2V
 
 
 
-Successfully loading udb, 0.19 seconds
+Successfully loading udb, 0.22 seconds
 
 Initializing timer
 Starting design annotation....
@@ -2921,15 +3010,15 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  1122  counted  10293  covered  0
+Connections ignored  1076  counted  9939  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
 Total CPU Time: 4 secs 
-Total REAL Time: 4 secs 
-Peak Memory Usage: 137 MB
+Total REAL Time: 5 secs 
+Peak Memory Usage: 135 MB
 
- 4.481478s wall, 4.171875s user + 0.187500s system = 4.359375s CPU (97.3%)
+ 4.570794s wall, 4.218750s user + 0.203125s system = 4.421875s CPU (96.7%)
 
 
 tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
@@ -2979,15 +3068,15 @@ Saving bit stream in "C:/Users/david/Desktop/WiFiHeadstage/WiFiHeadstage V2/FPGA
 Bitstream generation complete!
 
 Total CPU Time: 1 secs 
-Total REAL Time: 0 secs 
-Peak Memory Usage: 149 MB
+Total REAL Time: 2 secs 
+Peak Memory Usage: 148 MB
 
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Mon Feb 16 20:19:04 2026
+Thu Feb 19 12:50:16 2026
 
 Loading FPGA_Intan_Driver_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
@@ -3039,5 +3128,5 @@ Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
 Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
 Backanno finished with 0 posted error messages.
 Total CPU Time: 5 secs 
-Total REAL Time: 6 secs 
-Peak Memory Usage: 199 MB
+Total REAL Time: 5 secs 
+Peak Memory Usage: 195 MB

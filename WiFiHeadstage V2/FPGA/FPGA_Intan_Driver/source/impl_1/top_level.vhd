@@ -11,8 +11,8 @@ entity top_level is
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD2132_CS_INACTIVE_CLKS        : integer := 64;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 4;
+        RHD2132_CS_INACTIVE_CLKS        : integer := 32;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2216_CLKS_PER_HALF_BIT       : integer := 32;
@@ -21,7 +21,7 @@ entity top_level is
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 0		
+		RHD_SAMPLING_MODE : integer := 0
 
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -78,23 +78,6 @@ entity top_level is
 		i_RHD2216_SPI_MISO : in  STD_LOGIC; 
         o_RHD2216_SPI_Clk  : out STD_LOGIC; 
         o_RHD2216_SPI_CS_n : out STD_LOGIC; 
-		
-		-- RHS SPIs Interface
-		--o_RHS_SPI_MOSI : out STD_LOGIC; 
-        --o_RHS_SPI_Clk  : out STD_LOGIC; 
-		--i_RHS_SPI_MISO_1 : in  STD_LOGIC; 
-		--o_RHS_SPI_CS_n_1 : out STD_LOGIC;
-		
-		--i_RHS_SPI_MISO_2 : in  STD_LOGIC;
-		--o_RHS_SPI_CS_n_2 : out STD_LOGIC;
-		
-		--i_RHS_SPI_MISO_3 : in  STD_LOGIC;
-		--o_RHS_SPI_CS_n_3 : out STD_LOGIC;		
-		
-		--i_RHS_SPI_MISO_4 : in  STD_LOGIC; 		
-		--o_RHS_SPI_CS_n_4 : out STD_LOGIC; 
-		
-		
 		
 		CTRL0_IN     : in STD_LOGIC;
 		
@@ -284,12 +267,12 @@ begin
 			o_RHD2132_SPI_Clk    <= int_RHD2132_SPI_Clk;
 			o_RHD2132_SPI_MOSI   <= int_RHD2132_SPI_MOSI;
 			o_RHD2132_SPI_CS_n   <= int_RHD2132_SPI_CS_n;
-			int_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO; -- ? drive MISO back to STM32
+			int_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO;
 			
 			o_RHD2216_SPI_Clk    <= int_RHD2216_SPI_Clk;
 			o_RHD2216_SPI_MOSI   <= int_RHD2216_SPI_MOSI;
 			o_RHD2216_SPI_CS_n   <= int_RHD2216_SPI_CS_n;
-			int_RHD2216_SPI_MISO <= i_RHD2216_SPI_MISO; -- ? drive MISO back to STM32
+			int_RHD2216_SPI_MISO <= i_RHD2216_SPI_MISO; 
 		end if;
 
 	end process;
@@ -306,15 +289,6 @@ begin
 				int_BOOST_ENABLE    <= '1';
             else
                 w_reset <= '0';  				
-
-				--if CTRL0_IN = '0' then
-					--w_Controller_Mode <= x"1";
-					
-				--elsif CTRL0_IN = '1' then
-					--w_Controller_Mode <= x"2";
-				--end if;
-					
-				--stop_counting <= '1';
 				
 				--Controller mode sequencing
 				case reset_counter is
@@ -323,8 +297,12 @@ begin
 						
 					when 72000000 =>
 						w_Controller_Mode <= x"2";
+						--if CTRL0_IN = '0' then
+							--w_Controller_Mode <= x"1";
+						--elsif CTRL0_IN = '1' then
+							--w_Controller_Mode <= x"2";
+						--end if;
 						stop_counting <= '1';
-
 						
 					when others =>
 						null;

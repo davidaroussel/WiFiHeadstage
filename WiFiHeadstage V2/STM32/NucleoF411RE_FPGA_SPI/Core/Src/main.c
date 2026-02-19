@@ -90,6 +90,7 @@ static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
+static void Init_Intan(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -145,33 +146,7 @@ int main(void)
    HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
    HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
 
-  // Start SPI4 as MASTER
-  SPI4_Master_Init();
-//  printf("[INFO] SPI MASTER mode initialized.\r\n");
-//  HAL_Delay(1000);
-
-  SPI_HandleTypeDef *hspi = &hspi4;
-  int rhd_status = INIT_RHD(hspi);
-
-  // Poll for RHD detection
-  while (rhd_status == 0) {
-      printf("[WARN] RHD not detected. Retrying...\r\n");
-      rhd_status = INIT_RHD(hspi);
-//      HAL_Delay(1000);
-  }
-  printf("[INFO] RHD detected via FPGA.\r\n");
-
-//  HAL_Delay(500);
-  printf("[INFO] Initializing RHD in passthrough mode...\r\n");
-
-  // De-init SPI before changing mode
-  HAL_SPI_DeInit(&hspi4);
-  printf("[INFO] SPI deinitialized.\r\n");
-  HAL_Delay(1000);
-
-  // Re-init as SLAVE
-  SPI4_Slave_Init();
-  printf("[INFO] SPI SLAVE mode initialized.\r\n");
+   Init_Intan();
 
   // Start SPI DMA transmission/reception
   if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
@@ -523,6 +498,96 @@ static void Prepare_nRF_Frame(void)
 //    printf("--------------------------------------------------------------------------");
 //    printf("\r\n");
 //    printf("\r\n");
+}
+
+
+static void Init_Intan(void){
+	uint16_t RHD2132_ID = 0x0004;
+	uint16_t RHD2216_ID = 0x0002;
+	uint8_t rhd2132_detected = 0;
+	uint8_t rhd2132_doubled = 0;
+	uint8_t rhd2216_detected = 0;
+	uint8_t rhd2216_doubled = 0;
+	uint32_t retry_counter = 0;
+	uint8_t DUAL_INTAN = 1;
+	HAL_SPI_DeInit(&hspi4);
+	uint16_t rhd_chip = 0;
+
+	//    Start SPI4 as MASTER
+	SPI4_Master_Init();
+	//  HAL_Delay(1000);
+	if (DUAL_INTAN)
+	{
+	printf("[INFO] Initializing RHD in passthrough mode...\r\n");
+	while (!(rhd2132_detected && rhd2216_detected))
+	{
+		rhd_chip = INIT_RHD(&hspi4);
+
+		if (rhd_chip == 0xFFFF)
+		{
+			if ((retry_counter % 100) == 0){
+				printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
+			}
+		}
+		else
+		{
+			if (rhd_chip == RHD2132_ID && !rhd2132_detected)
+			{
+				if (!rhd2132_doubled){
+					rhd2132_doubled = 1;
+					printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+					printf("[OK] RHD2132 Initialized Once\r\n");
+				}
+				else{
+					rhd2132_detected = 1;
+					printf("[OK] RHD2132 Initialized Twice\r\n");
+				}
+
+			}
+			else if (rhd_chip == RHD2216_ID && !rhd2216_detected)
+			{
+				if (!rhd2216_doubled){
+					rhd2216_doubled = 1;
+					printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+					printf("[OK] RHD2132 Initialized Once\r\n");
+				}
+				else{
+					rhd2216_detected = 1;
+					printf("[OK] RHD2132 Initialized Twice\r\n");
+				}
+			}
+		}
+		HAL_Delay(10);
+	  }
+
+	  if (rhd2132_detected && rhd2216_detected)
+	  {
+		  printf("[SUCCESS] Both RHD2132 and RHD2216 detected.\r\n");
+	  }
+	  else
+	  {
+		  printf("[WARNING] One or more RHD chips missing.\r\n");
+	  }
+  }
+  else
+	  {
+	  while (rhd_chip == 0xFFFF) {
+		  printf("[WARN] RHD not detected. Retrying...\r\n");
+		  rhd_chip = INIT_RHD(&hspi4);
+		  //  HAL_Delay(1000);
+	  }
+	  printf("RHD CHIP IS: 0x%04X \r\n", rhd_chip);
+	  }
+	  HAL_Delay(1);
+
+	  // De-init SPI before changing mode
+	  HAL_SPI_DeInit(&hspi4);
+	  printf("[INFO] SPI deinitialized.\r\n");
+	  //  HAL_Delay(1000);
+
+	  // Re-init as SLAVE
+	  SPI4_Slave_Init();
+	  printf("[INFO] SPI SLAVE mode initialized.\r\n");
 }
 
 /**

@@ -7,7 +7,8 @@
 
 #include "Intan_utils.h"
 
-int INIT_RHD(SPI_HandleTypeDef *hspi){
+uint16_t INIT_RHD(SPI_HandleTypeDef *hspi){
+	uint8_t LOG_INFO = 0;
 	uint16_t tx_vector;
 	uint16_t rx_vector[1];
 	uint8_t data_size = 1; //Number of Bytes to send
@@ -62,8 +63,8 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	}
 	else
 	{
-		intan_connected = 0;
-		return intan_connected;
+		formated_value = -1;
+		return formated_value;
 	}
 
 
@@ -237,13 +238,17 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - MISO MARKER :   %c - 0x%04X \r\n", (int)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
+	if (LOG_INFO){
+		printf("Char Receiving Data - MISO MARKER :   %c - 0x%04X \r\n", (int)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 
 	if (formated_value == 0x00){
 		bit_shifting = 0;
-		printf("Shifting Bit to 0 \r\n");
-		printf("------------------------------------------------  \r\n");
+		if (LOG_INFO){
+			printf("Shifting Bit to 0 \r\n");
+			printf("------------------------------------------------  \r\n");
+		}
 	}
 
 	//Read Register 40
@@ -264,8 +269,10 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - Should be I :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
+	if (LOG_INFO){
+		printf("Char Receiving Data - Should be I :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 
 	//Read Register 43
 	reg_address = 0b11101011;
@@ -273,18 +280,20 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
-
+	if (LOG_INFO){
+		printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 	//Read Register 44
 	reg_address = 0b11101100;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - Should be T :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
-
+	if (LOG_INFO){
+		printf("Char Receiving Data - Should be T :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 
 	//Read Register 63
 	reg_address = 0b11111111;
@@ -292,18 +301,20 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - Should be A :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
-
+	if (LOG_INFO){
+		printf("Char Receiving Data - Should be A :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 	//Send dummy CMD to RECV N-2 MISO
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 	formated_value = rx_vector[0] << bit_shifting;
-	printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
-	printf("------------------------------------------------  \r\n");
-
+	if (LOG_INFO){
+		printf("Char Receiving Data - Should be N :   %c - 0x%04X \r\n", (char)formated_value, formated_value);
+		printf("------------------------------------------------  \r\n");
+	}
 	//Read Register 63
 	reg_address = 0b11111111;
 	reg_value = 0b00000000;
@@ -338,15 +349,15 @@ int INIT_RHD(SPI_HandleTypeDef *hspi){
 	}
 	else
 	{
-		intan_connected = 0;
-		return intan_connected;
+		formated_value = -1;
+		return formated_value;
+	}
+	if (LOG_INFO){
+		printf("Char Receiving Data - CHIP ID : %s - 0x%04X \r\n", rhd_detected, formated_value);
+		printf("------------------------------------------------  \r\n");
 	}
 
-	printf("Char Receiving Data - CHIP ID : %s - 0x%04X \r\n", rhd_detected, formated_value);
-	printf("------------------------------------------------  \r\n");
-
-
-	return intan_connected;
+	return formated_value;
 
  }
 
