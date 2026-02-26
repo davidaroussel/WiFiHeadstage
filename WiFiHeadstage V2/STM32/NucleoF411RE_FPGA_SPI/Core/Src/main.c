@@ -528,6 +528,7 @@ static void Init_Intan(void){
 			if ((retry_counter % 100) == 0){
 				printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
 			}
+			retry_counter += 1;
 		}
 		else
 		{

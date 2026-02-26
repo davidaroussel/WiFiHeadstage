@@ -36,7 +36,7 @@ entity Controller_RHD_FIFO is
 
     o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_WE     : out std_logic;
-	o_FIFO_COUNT  : out std_logic_vector(7 downto 0);
+	o_FIFO_COUNT  : out std_logic_vector(8 downto 0);
     i_FIFO_RE     : in std_logic;
 	o_FIFO_Q 	  : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_EMPTY  : out std_logic;
@@ -91,7 +91,7 @@ architecture RTL of Controller_RHD_FIFO is
         empty_o: out std_logic;
         almost_full_o: out std_logic;
         almost_empty_o: out std_logic;
-		data_cnt_o: out std_logic_vector(7 downto 0);
+		data_cnt_o: out std_logic_vector(8 downto 0);
         rd_data_o: out std_logic_vector(31 downto 0)
     );
   end component;
@@ -113,7 +113,7 @@ architecture RTL of Controller_RHD_FIFO is
   signal int_FIFO_EMPTY : std_logic;
   signal int_FIFO_AEMPTY: std_logic;
   signal int_FIFO_AFULL : std_logic;
-  signal int_FIFO_COUNT : std_logic_vector(7 downto 0);
+  signal int_FIFO_COUNT : std_logic_vector(8 downto 0);
   
   	signal init_FIFO_State : std_logic;
 	signal init_FIFO_Read : std_logic;
@@ -121,6 +121,7 @@ architecture RTL of Controller_RHD_FIFO is
 	signal init_FIFO_Count : integer := 0;
 	signal debug_counter   : integer := 0;
 	signal signal_lag      : integer := 0;
+	signal first_loop 	   : integer := 0;
   
 begin
 	int_FIFO_RE <= i_FIFO_RE;
@@ -209,8 +210,28 @@ begin
 				--when others =>
 			--end case;
 			
-			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter * 512, 16));
-			--if signal_lag < 128 then
+			--if first_loop < 2 then
+				--int_FIFO_DATA(15 downto 0)  <= x"0000";
+				--first_loop <= first_loop + 1;
+				
+			--else 
+				--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned((debug_counter) * 512, 16));
+				--if debug_counter < 31 then 
+					--debug_counter <= debug_counter + 1;
+				--else
+					--debug_counter <= 0;
+				--end if;			
+			--end if;
+			
+			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned((debug_counter) * 512, 16));
+			--if debug_counter < 31 then 
+				--debug_counter <= debug_counter + 1;
+			--else
+				--debug_counter <= 0;
+			--end if;			
+			
+			
+			--if signal_lag < 32 then
 				--if debug_counter < 64 then 
 					--debug_counter <= debug_counter + 1;
 				--else

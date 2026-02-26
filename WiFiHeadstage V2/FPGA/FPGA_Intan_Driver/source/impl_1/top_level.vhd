@@ -16,12 +16,12 @@ entity top_level is
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2216_CLKS_PER_HALF_BIT       : integer := 32;
-        RHD2216_CS_INACTIVE_CLKS        : integer := 128;
+        RHD2216_CS_INACTIVE_CLKS        : integer := 32;
 				
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 0
+		RHD_SAMPLING_MODE : integer := 2
 
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -122,11 +122,11 @@ architecture RTL of top_level is
     signal w_STM32_RX_DV         : std_logic;
 
     signal w_FIFO_RHD2132_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_RHD2132_COUNT          : std_logic_vector(7 downto 0);
+    signal w_FIFO_RHD2132_COUNT          : std_logic_vector(8 downto 0);
     signal w_FIFO_RHD2132_WE             : std_logic;
 	
     signal w_FIFO_RHD2216_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_RHD2216_COUNT          : std_logic_vector(7 downto 0);
+    signal w_FIFO_RHD2216_COUNT          : std_logic_vector(8 downto 0);
     signal w_FIFO_RHD2216_WE             : std_logic;
 	
 	signal led1_sig : std_logic := '1';
@@ -297,11 +297,11 @@ begin
 						
 					when 72000000 =>
 						w_Controller_Mode <= x"2";
-						--if CTRL0_IN = '0' then
-							--w_Controller_Mode <= x"1";
-						--elsif CTRL0_IN = '1' then
-							--w_Controller_Mode <= x"2";
-						--end if;
+						if CTRL0_IN = '0' then
+							w_Controller_Mode <= x"1";
+						elsif CTRL0_IN = '1' then
+							w_Controller_Mode <= x"2";
+						end if;
 						stop_counting <= '1';
 						
 					when others =>

@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 class DataConverterV2:
-    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_frequency, p_buffer_size, p_port, p_host_addr=""):
+    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_frequency, p_buffer_size, p_dual_chip_mode, p_port, p_host_addr=""):
         self.openEphys_Socket = None
         self.tcpClient = None
         self.port = p_port
@@ -27,14 +27,14 @@ class DataConverterV2:
 
         self.m_dataConversionTread = Thread(target=self.convertData)
 
-
+        self.dual_chip_mode = p_dual_chip_mode
     def startThread(self):
         self.m_dataConversionTread.start()
 
     def stopThread(self):
         self.m_dataConversionTread.join()
 
-    def connect_TCP(self):
+    def connect_TCP(self, socket):
         numChannels = self.num_channels  # number of channels to send
         numSamples = self.openephys_buffer_size  # size of the data buffer
         Freq = self.frequency  # sample rate of the signal
@@ -50,7 +50,7 @@ class DataConverterV2:
         buffersPerSecond = Freq / numSamples
         bufferInterval = 1 / buffersPerSecond
 
-        openEphys_AddrPort = ("localhost", self.port)
+        openEphys_AddrPort = ("localhost", socket)
         try:
             self.openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
             self.openEphys_Socket.bind(openEphys_AddrPort)
@@ -116,7 +116,11 @@ class DataConverterV2:
         # ============================
         # TCP
         # ============================
-        self.connect_TCP()
+        if self.dual_chip_mode:
+            self.connect_TCP(self.port)
+            self.connect_TCP(self.port + 1) #TODO: CONNECT TO MAIN
+        else:
+            self.connect_TCP(self.port)
         print("--- STARTING SEND_OPENEPHYS THREAD ---")
         caps_error = 0
         temp_buffer = bytearray()

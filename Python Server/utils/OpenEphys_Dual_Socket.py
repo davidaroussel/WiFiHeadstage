@@ -109,12 +109,12 @@ if __name__ == "__main__":
 
     neuro_thread = threading.Thread(
         target=stream_data,
-        args=(10003, Freq_Neuro, "NEURO")
+        args=(10002, Freq_Neuro, "NEURO")
     )
 
     emg_thread = threading.Thread(
         target=stream_data,
-        args=(10005, Freq_EMG, "EMG")
+        args=(10004, Freq_EMG, "EMG")
     )
 
     neuro_thread.start()
