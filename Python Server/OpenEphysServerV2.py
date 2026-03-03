@@ -53,7 +53,7 @@ def create_data_array():
 
 
 if __name__ == "__main__":
-    create_data_array()
+    # create_data_array()
 
 
     #MODES
@@ -126,8 +126,10 @@ if __name__ == "__main__":
     if TTL_GENERATOR:
         TASK_Manual_TTL.startThread()
     TASK_DataConverter.startThread()
+    TASK_DataConverter.startEMGThread()
+    TASK_DataConverter.startNeuroThread()
 
-    while not TASK_DataConverter.tcp_connected:
+    while not (TASK_DataConverter.tcp_connected_neuro & TASK_DataConverter.tcp_connected_emg):
         pass
 
     time.sleep(0.1)

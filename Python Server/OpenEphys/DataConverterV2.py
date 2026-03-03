@@ -8,6 +8,7 @@ import numpy as np
 from threading import Thread
 from socket import *
 from datetime import datetime
+from queue import Queue
 
 
 class DataConverterV2:
@@ -18,6 +19,14 @@ class DataConverterV2:
         self.ip_address = p_host_addr
         self.tcp_connected = False
 
+        self.tcpClient_neuro = None
+        self.tcpClient_emg = None
+        self.tcp_connected_neuro = False
+        self.tcp_connected_emg = False
+
+        self.port_neuro = self.port
+        self.port_emg = self.port + 1  # second socket
+
         self.queue_raw_data = queue_raw_data
         self.queue_csv_data = queue_csv_data
         self.num_channels = len(p_channels)
@@ -26,178 +35,185 @@ class DataConverterV2:
         self.openephys_buffer_size = int(p_buffer_size / (self.num_channels * 2))
 
         self.m_dataConversionTread = Thread(target=self.convertData)
+        self.thread_neuro_sender = Thread(target=self.neuroSender)
+        self.thread_emg_sender = Thread(target=self.emgSender)
+        self.queue_neuro_out = Queue()
+        self.queue_emg_out = Queue()
 
         self.dual_chip_mode = p_dual_chip_mode
     def startThread(self):
         self.m_dataConversionTread.start()
+    def startEMGThread(self):
+        self.thread_emg_sender.start()
+    def startNeuroThread(self):
+        self.thread_neuro_sender.start()
 
     def stopThread(self):
         self.m_dataConversionTread.join()
 
-    def connect_TCP(self, socket):
-        numChannels = self.num_channels  # number of channels to send
-        numSamples = self.openephys_buffer_size  # size of the data buffer
-        Freq = self.frequency  # sample rate of the signal
-        offset = 0  # Offset of bytes in this packet; only used for buffers > ~64 kB
-        dataType = 2  # Enumeration value based on OpenCV.Mat data types
-        elementSize = 2  # Number of bytes per element. elementSize = 2 for U16
-
+    def connect_TCP(self, port, stream_type="neuro"):
+        numChannels = self.num_channels
+        numSamples = self.openephys_buffer_size
+        offset = 0
+        dataType = 2
+        elementSize = 2  # uint16
         bytesPerBuffer = numChannels * numSamples * elementSize
-        self.header = np.array([offset, bytesPerBuffer], dtype='i4').tobytes() + \
-                 np.array([dataType], dtype='i2').tobytes() + \
-                 np.array([elementSize, numChannels, numSamples], dtype='i4').tobytes()
+        self.header = (
+                np.array([offset, bytesPerBuffer], dtype='i4').tobytes() +
+                np.array([dataType], dtype='i2').tobytes() +
+                np.array([elementSize, numChannels, numSamples], dtype='i4').tobytes()
+        )
+        openEphys_AddrPort = ("localhost", port)
 
-        buffersPerSecond = Freq / numSamples
-        bufferInterval = 1 / buffersPerSecond
-
-        openEphys_AddrPort = ("localhost", socket)
         try:
-            self.openEphys_Socket = socket(family=AF_INET, type=SOCK_STREAM)
-            self.openEphys_Socket.bind(openEphys_AddrPort)
-            self.openEphys_Socket.listen(3)
-            print("[OPENEPHYS] Waiting for OpenEphys TCP connection...")
-            (self.tcpClient, self.address) = self.openEphys_Socket.accept()
-            print("[OPENEPHYS] OpenEphys Socket Plugin Connected !!!")
-            self.tcp_connected = True
+            server_socket = socket(family=AF_INET, type=SOCK_STREAM)
+            server_socket.bind(openEphys_AddrPort)
+            server_socket.listen(1)
+
+            print(f"[OPENEPHYS-{stream_type.upper()}] Waiting for connection on port {port}...")
+            client, addr = server_socket.accept()
+            print(f"[OPENEPHYS-{stream_type.upper()}] Connected!")
+
+            if stream_type == "neuro":
+                self.tcpClient_neuro = client
+                self.tcp_connected_neuro = True
+            else:
+                self.tcpClient_emg = client
+                self.tcp_connected_emg = True
 
         except Exception as e:
-            print("[OPENEPHYS] Error connecting to OpenEphys:", e)
-            return
+            print(f"[OPENEPHYS-{stream_type.upper()}] Connection error:", e)
 
     def convertData(self):
-        import numpy as np
 
-        # ============================
-        # CONSTANTS
-        # ============================
         OpenEphysOffset = 32768
         maxOpenEphysValue = 0.005
         scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
-        START_CAPS = b'\xAA\x55'
-        END_CAPS = b'\x55\xAA'
+        START_CAPS = b'\xAA\x54'
         FRAME_SIZE = 8192
         PAYLOAD_SIZE = 8192
 
+        # ===== TARGET SIZES =====
+        TARGET_NEURO_SAMPLES = 4096  # 256 samples × 16 channels
+        TARGET_EMG_SAMPLES = 4096  # change as needed
 
-        # ============================
-        # DC SQUARE WAVE CONFIG
-        # ============================
-        dc_enabled = False
-        dc_channel = 6
-
-        dc_high_uV = 5000.0
-        dc_low_uV = -5000.0
-
-        fs = 25000
-        dc_period_sec = 1.0
-
-        samples_per_period = int(fs * dc_period_sec)
-        half_period = samples_per_period // 2
-
-        dc_high_raw = (dc_high_uV * 1e-6 / maxOpenEphysValue) * OpenEphysOffset
-        dc_low_raw = (dc_low_uV * 1e-6 / maxOpenEphysValue) * OpenEphysOffset
-
-        dc_high_val = np.int16(np.clip(OpenEphysOffset + dc_high_raw, 0, 65535))
-        dc_low_val = np.int16(np.clip(OpenEphysOffset + dc_low_raw, 0, 65535))
-
-        dc_sample_counter = 0  # phase accumulator
-        counter = 0
-        # ============================
-        # BUFFERS
-        # ============================
-        converted_array_Ephys = np.empty(
-            (self.num_channels, self.openephys_buffer_size),
-            dtype=np.int16
-        )
+        # ===== Accumulators =====
+        neuro_accumulator = np.empty(0, dtype='>i2')
+        emg_accumulator = np.empty(0, dtype='>i2')
 
         data_buffer = bytearray()
 
-        # ============================
-        # TCP
-        # ============================
-        if self.dual_chip_mode:
-            self.connect_TCP(self.port)
-            self.connect_TCP(self.port + 1) #TODO: CONNECT TO MAIN
-        else:
-            self.connect_TCP(self.port)
-        print("--- STARTING SEND_OPENEPHYS THREAD ---")
-        caps_error = 0
-        temp_buffer = bytearray()
-        slip_mode = False
-        slip_buffer = bytearray()
-        awaiting_confirm = False
-        # ============================
-        # MAIN LOOP
-        # ============================
+        # ===== Connect both sockets =====
+        self.connect_TCP(self.port_neuro, "neuro")
+        self.connect_TCP(self.port_emg, "emg")
+
+        print("--- STARTING DUAL STREAM THREAD ---")
+
         while True:
             chunk = self.queue_raw_data.get()
             data_buffer.extend(chunk)
 
             while len(data_buffer) >= FRAME_SIZE:
-                if data_buffer[:2] != START_CAPS:
-                   # ADD LOGIC IN HERE !!
-                    caps_error += 1
 
-                    # if temp_buffer is None:
-                    #     idx_start_cap = data_buffer.find(START_CAPS)
-                    #     garbage = data_buffer[:idx_start_cap]
-                    #     temp_buffer = data_buffer[idx_start_cap:]
-                    # else:
-                    #     idx_start_cap = data_buffer.find(START_CAPS)
-                    #     temp_buffer.extend(data_buffer[:])
+                # if data_buffer[:2] != START_CAPS:
+                #     del data_buffer[0]
+                #     continue
 
+                payload = data_buffer[:PAYLOAD_SIZE]
+                del data_buffer[:FRAME_SIZE]
 
-                    del data_buffer[0]
+                raw = np.frombuffer(payload, dtype='>i2')
+                block_size = 32
 
-                    if caps_error % 81920 == 0:
-                        print(f"[HEADSTAGE] OFFSET START CAPS {caps_error}")
-                        continue
-                    # if len(temp_buffer) >= FRAME_SIZE:
-                # WHEN NOT SLIPPING
-                else:
-                    payload = data_buffer[:PAYLOAD_SIZE]
-                    del data_buffer[:FRAME_SIZE]
-                    # print(payload)
-                    # if payload[8191] != 170:
-                    #     print(f"{payload[0]}, {payload[1]} ... {payload[8190]}, {payload[8191]} ")
-                    raw = np.frombuffer(payload, dtype='>i2')
-                    raw_reshape = raw.reshape(-1, self.num_channels).T
-                    raw_clipped = np.clip(raw_reshape, -32768, 32768)
+                # Only full blocks
+                num_blocks = raw.size // block_size
+                raw_blocks = raw[:num_blocks * block_size].reshape(num_blocks, block_size)
 
-                    converted_array_Ephys[:] = (raw_clipped * scale) + OpenEphysOffset
-                    converted_array_Ephys = converted_array_Ephys.astype(np.uint16)
+                # -----------------------------
+                # Determine valid rows
+                # -----------------------------
+                emg_mask = np.all((raw_blocks & 0x0001) == 1, axis=1)  # EMG valid rows
+                neuro_mask = np.all((raw_blocks & 0x0001) == 0, axis=1)  # Neuro valid rows
 
-                    # print(f"Raw {raw_reshape[7][0]} -> {converted_array_Ephys[7][0]}")
+                # Rows that are valid for either
+                valid_rows_mask = emg_mask | neuro_mask
+                deleted_rows = num_blocks - valid_rows_mask.sum()
 
-                    # DC wave injection
-                    if dc_enabled:
-                        n = self.openephys_buffer_size
-                        idx = (dc_sample_counter + np.arange(n)) % samples_per_period
-                        dc_wave = np.where(idx < half_period, dc_high_val, dc_low_val)
-                        converted_array_Ephys[dc_channel, :] = dc_wave
-                        dc_sample_counter = (dc_sample_counter + n) % samples_per_period
+                # -----------------------------
+                # Append only valid rows to accumulators
+                # -----------------------------
+                if emg_mask.any():
+                    emg_accumulator = np.concatenate((emg_accumulator, raw_blocks[emg_mask].ravel()))
+                if neuro_mask.any():
+                    neuro_accumulator = np.concatenate((neuro_accumulator, raw_blocks[neuro_mask].ravel()))
 
-                    np_conv = converted_array_Ephys.ravel().tobytes()
+                # -----------------------------
+                # Print alert
+                # -----------------------------
+                if deleted_rows > 0:
+                    print(f"[ALERT] {deleted_rows} invalid 32-value rows skipped in this 8192-sample buffer")
+                # =============================
+                # PROCESS ONLY WHEN READY
+                # =============================
+                # EMG
+                while emg_accumulator.size >= TARGET_EMG_SAMPLES:
+                    emg_chunk = emg_accumulator[:TARGET_EMG_SAMPLES]
+                    emg_accumulator = emg_accumulator[TARGET_EMG_SAMPLES:]
 
-                    # ===========================
-                    # TCP SEND WITH RECONNECT
-                    # ===========================
-                    while True:
+                    # Reshape, clip, convert
+                    emg_reshaped = emg_chunk.reshape(-1, self.num_channels).T
+                    emg_clipped = np.clip(emg_reshaped, -32768, 32768)
+                    emg_converted = (emg_clipped * scale + OpenEphysOffset).astype(np.uint16)
+
+                    self.queue_emg_out.put(emg_converted.ravel().tobytes())
+
+                # Neuro
+                while neuro_accumulator.size >= TARGET_NEURO_SAMPLES:
+                    neuro_chunk = neuro_accumulator[:TARGET_NEURO_SAMPLES]
+                    neuro_accumulator = neuro_accumulator[TARGET_NEURO_SAMPLES:]
+
+                    # Reshape, clip, convert
+                    neuro_reshaped = neuro_chunk.reshape(-1, self.num_channels).T
+                    neuro_clipped = np.clip(neuro_reshaped, -32768, 32768)
+                    neuro_converted = (neuro_clipped * scale + OpenEphysOffset).astype(np.uint16)
+
+                    self.queue_neuro_out.put(neuro_converted.ravel().tobytes())
+
+    def neuroSender(self):
+        while True:
+            packet = self.queue_neuro_out.get()
+            while True:
+                try:
+                    if not self.tcp_connected_neuro or self.tcpClient_neuro is None:
+                        self.connect_TCP(self.port_neuro, "neuro")
+                    self.tcpClient_neuro.sendall(self.header + packet)
+                    break
+                except:
+                    self.tcp_connected_neuro = False
+                    if self.tcpClient_neuro:
                         try:
-                            if not self.tcp_connected or self.tcpClient is None:
-                                self.connect_TCP()
-                            self.tcpClient.sendall(self.header + np_conv)
-                            break  # success
-                        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                            time_now = time.strftime("%H:%M:%S", time.localtime())
-                            print(f"\n--------{time_now}--------")
-                            print("[OpenEphys] Client reconnected. Resetting TCP connection...")
-                            self.tcp_connected = False
-                            if self.tcpClient:
-                                try:
-                                    self.tcpClient.close()
-                                except:
-                                    pass
-                            self.tcpClient = None
-                            time.sleep(0.5)  # wait a bit before reconnect
+                            self.tcpClient_neuro.close()
+                        except:
+                            pass
+                    self.tcpClient_neuro = None
+                    time.sleep(0.5)
+
+    def emgSender(self):
+        while True:
+            packet = self.queue_emg_out.get()
+            while True:
+                try:
+                    if not self.tcp_connected_emg or self.tcpClient_emg is None:
+                        self.connect_TCP(self.port_emg, "emg")
+                    self.tcpClient_emg.sendall(self.header + packet)
+                    break
+                except:
+                    self.tcp_connected_emg = False
+                    if self.tcpClient_emg:
+                        try:
+                            self.tcpClient_emg.close()
+                        except:
+                            pass
+                    self.tcpClient_emg = None
+                    time.sleep(0.5)
