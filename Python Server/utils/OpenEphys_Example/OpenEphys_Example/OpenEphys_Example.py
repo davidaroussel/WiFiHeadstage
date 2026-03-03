@@ -45,5 +45,7 @@ for experiment_directory in experiment_directories:
     num_samples, num_channels = data.shape
     fs = continuous.metadata['sample_rate']
     print(f"Signal Sampling Freq : {fs}Hz")
+    print(f"Signal Sample Number : {num_samples} Samples")
+    print(f"Calculated Record Time : {num_channels/fs} seconds")
 
 

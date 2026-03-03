@@ -8,7 +8,7 @@ ldc_set_location -site {41} [get_ports RGB2_OUT]
 ######(FOR Headstave V2 RHD64)#######
 #ldc_set_location -site {6}  [get_ports i_LED_SYNC]
 
-## TO RHD2216 (NEW)
+### TO RHD2216 (NEW)
 #ldc_set_location -site {25} [get_ports o_RHD2216_SPI_MOSI]
 #ldc_set_location -site {26} [get_ports i_RHD2216_SPI_MISO]
 #ldc_set_location -site {27} [get_ports o_RHD2216_SPI_Clk]
@@ -19,6 +19,20 @@ ldc_set_location -site {41} [get_ports RGB2_OUT]
 #ldc_set_location -site {48} [get_ports i_RHD2132_SPI_MISO]
 #ldc_set_location -site {45} [get_ports o_RHD2132_SPI_Clk]
 #ldc_set_location -site {47} [get_ports o_RHD2132_SPI_CS_n]
+
+#### TEMPORARY FOR THE OLD LAYOUT WITH RHD2132 ON THE TOP 
+## TO RHD2216 (NEW)
+#ldc_set_location -site {25} [get_ports o_RHD2132_SPI_MOSI]
+#ldc_set_location -site {26} [get_ports i_RHD2132_SPI_MISO]
+#ldc_set_location -site {27} [get_ports o_RHD2132_SPI_Clk]
+#ldc_set_location -site {28} [get_ports o_RHD2132_SPI_CS_n]
+
+## TO RHD2132
+#ldc_set_location -site {3}  [get_ports o_RHD2216_SPI_MOSI]
+#ldc_set_location -site {48} [get_ports i_RHD2216_SPI_MISO]
+#ldc_set_location -site {45} [get_ports o_RHD2216_SPI_Clk]
+#ldc_set_location -site {47} [get_ports o_RHD2216_SPI_CS_n]
+
 
 ## TO STM32_PORT_1 (SPI5)
 ##ldc_set_location -site {46} [get_ports o_STM32_SPI_MOSI]
