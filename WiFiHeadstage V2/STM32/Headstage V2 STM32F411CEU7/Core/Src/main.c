@@ -593,8 +593,8 @@ static void Prepare_nRF_Frame(void)
 
     memcpy(&nrf_tx_buffer[0], fpga_accum_buffer, FPGA_ACCUM_SIZE);
 
-    nrf_tx_buffer[0] = 0xAA;
-    nrf_tx_buffer[1] = 0x55;
+//    nrf_tx_buffer[0] = 0xAA;
+//    nrf_tx_buffer[1] = 0x54;
 //
 //    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0xAA;
 //    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0x55;

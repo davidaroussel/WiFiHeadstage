@@ -11,17 +11,17 @@ entity top_level is
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 4;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 16;
         RHD2132_CS_INACTIVE_CLKS        : integer := 32;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2216_CLKS_PER_HALF_BIT       : integer := 32;
+        RHD2216_CLKS_PER_HALF_BIT       : integer := 4;
         RHD2216_CS_INACTIVE_CLKS        : integer := 32;
 				
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 2
+		RHD_SAMPLING_MODE : integer := 0
 
 				
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
@@ -296,7 +296,7 @@ begin
 						w_Controller_Mode <= x"1";
 						
 					when 72000000 =>
-						w_Controller_Mode <= x"2";
+						--w_Controller_Mode <= x"2";
 						if CTRL0_IN = '0' then
 							w_Controller_Mode <= x"1";
 						elsif CTRL0_IN = '1' then

@@ -370,8 +370,7 @@ architecture RTL of Controller_RHD_Sampling is
 		12 => x"0C00",  -- CH12
 		13 => x"0D00",  -- CH13
 		14 => x"E800",  -- CH14
-		15 => x"0F00",  -- CH15
-		
+		15 => x"0F00",  -- CH15		
 		16 => x"0000",  -- CH0
 		17 => x"0100",  -- CH1
 		18 => x"0200",  -- CH2
@@ -388,7 +387,6 @@ architecture RTL of Controller_RHD_Sampling is
 		29 => x"0D00",  -- CH13
 		30 => x"E800",  -- CH14
 		31 => x"0F00",  -- CH15
-
 		-- CH0–CH31 repeated again for indices 32–63
 		32 => x"0000",  -- CH0 repeat
 		33 => x"0100",  -- CH1 repeat
@@ -405,8 +403,7 @@ architecture RTL of Controller_RHD_Sampling is
 		44 => x"0C00",  -- CH12 repeat
 		45 => x"0D00",  -- CH13 repeat
 		46 => x"E800",  -- CH14 repeat
-		47 => x"0F00",  -- CH15 repeat
-		
+		47 => x"0F00",  -- CH15 repeat	
 		48 => x"0000",  -- CH0 repeat
 		49 => x"0100",  -- CH1 repeat
 		50 => x"0200",  -- CH2 repeat
@@ -425,6 +422,73 @@ architecture RTL of Controller_RHD_Sampling is
 		63 => x"0F00"   -- CH15 repeat
 	);
 	
+	--signal channel_array : t_channel_array := (
+		--0  => x"E800",  -- CH0
+		--1  => x"E900",  -- CH1
+		--2  => x"EA00",  -- CH2
+		--3  => x"EB00",  -- CH3
+		--4  => x"EC00",  -- CH4
+		--5  => x"FC00",  -- CH5
+		--6  => x"FD00",  -- CH6
+		--7  => x"FF00",  -- CH7
+		--8  => x"E800",  -- CH8
+		--9  => x"E900",  -- CH9
+		--10 => x"EA00",  -- CH10
+		--11 => x"EB00",  -- CH11
+		--12 => x"EC00",  -- CH12
+		--13 => x"FC00",  -- CH13
+		--14 => x"FD00",  -- CH14
+		--15 => x"FF00",  -- CH15
+		--16 => x"E800",  -- CH0
+		--17 => x"E900",  -- CH1
+		--18 => x"EA00",  -- CH2
+		--19 => x"EB00",  -- CH3
+		--20 => x"EC00",  -- CH4
+		--21 => x"FC00",  -- CH5
+		--22 => x"FD00",  -- CH6
+		--23 => x"FF00",  -- CH7
+		--24 => x"E800",  -- CH8
+		--25 => x"E900",  -- CH9
+		--26 => x"EA00",  -- CH10
+		--27 => x"EB00",  -- CH11
+		--28 => x"EC00",  -- CH12
+		--29 => x"FC00",  -- CH13
+		--30 => x"FD00",  -- CH14
+		--31 => x"FF00",  -- CH15
+		---- CH0–CH31 repeated again for indices 32–63
+		--32 => x"E800",  -- CH0 repeat
+		--33 => x"E900",  -- CH1 repeat
+		--34 => x"EA00",  -- CH2 repeat
+		--35 => x"EB00",  -- CH3 repeat
+		--36 => x"EC00",  -- CH4 repeat
+		--37 => x"FC00",  -- CH5 repeat
+		--38 => x"FD00",  -- CH6 repeat
+		--39 => x"FF00",  -- CH7 repeat
+		--40 => x"E800",  -- CH8 repeat
+		--41 => x"E900",  -- CH9 repeat
+		--42 => x"EA00",  -- CH10 repeat
+		--43 => x"EB00",  -- CH11 repeat
+		--44 => x"EC00",  -- CH12 repeat
+		--45 => x"FC00",  -- CH13 repeat
+		--46 => x"FD00",  -- CH14 repeat
+		--47 => x"FF00",  -- CH15 repeat
+		--48 => x"E800",  -- CH0 repeat
+		--49 => x"E900",  -- CH1 repeat
+		--50 => x"EA00",  -- CH2 repeat
+		--51 => x"EB00",  -- CH3 repeat
+		--52 => x"EC00",  -- CH4 repeat
+		--53 => x"FC00",  -- CH5 repeat
+		--54 => x"FD00",  -- CH6 repeat
+		--55 => x"FF00",  -- CH7 repeat
+		--56 => x"E800",  -- CH8 repeat
+		--57 => x"E900",  -- CH9 repeat
+		--58 => x"EA00",  -- CH10 repeat
+		--59 => x"EB00",  -- CH11 repeat
+		--60 => x"EC00",  -- CH12 repeat
+		--61 => x"FC00",  -- CH13 repeat
+		--62 => x"FD00",  -- CH14 repeat
+		--63 => x"FF00"   -- CH15 repeat
+	--);
 	
 	--signal channel_array : t_channel_array := (
 		--0  => x"E800",  -- CH0
@@ -443,7 +507,6 @@ architecture RTL of Controller_RHD_Sampling is
 		--13 => x"EB00",  -- CH13
 		--14 => x"EA00",  -- CH14
 		--15 => x"EB00",  -- CH15
-		
 		--16 => x"EC00",  -- CH0
 		--17 => x"FC00",  -- CH1
 		--18 => x"EC00",  -- CH2
@@ -460,7 +523,6 @@ architecture RTL of Controller_RHD_Sampling is
 		--29 => x"FF00",  -- CH13
 		--30 => x"FD00",  -- CH14
 		--31 => x"FF00",  -- CH15
-
 		---- CH0–CH31 repeated again for indices 32–63
 		--32 => x"E900",  -- CH0 repeat
 		--33 => x"E800",  -- CH1 repeat
@@ -477,8 +539,7 @@ architecture RTL of Controller_RHD_Sampling is
 		--44 => x"EB00",  -- CH12 repeat
 		--45 => x"EA00",  -- CH13 repeat
 		--46 => x"EB00",  -- CH14 repeat
-		--47 => x"EA00",  -- CH15 repeat
-		
+		--47 => x"EA00",  -- CH15 repeat	
 		--48 => x"FC00",  -- CH0 repeat
 		--49 => x"EC00",  -- CH1 repeat
 		--50 => x"FC00",  -- CH2 repeat
@@ -497,76 +558,212 @@ architecture RTL of Controller_RHD_Sampling is
 		--63 => x"ED00"   -- CH15 repeat
 	--);
 	
+	
+	
+	--signal channel_array_2 : t_channel_array_2 := (
+		--0  => x"E800",  -- CH0
+		--1  => x"E900",  -- CH1
+		--2  => x"EA00",  -- CH2
+		--3  => x"EB00",  -- CH3
+		--4  => x"EC00",  -- CH4
+		--5  => x"FC00",  -- CH5
+		--6  => x"FD00",  -- CH6
+		--7  => x"FF00",  -- CH7
+		--8  => x"E800",  -- CH8
+		--9  => x"E900",  -- CH9
+		--10 => x"EA00",  -- CH10
+		--11 => x"EB00",  -- CH11
+		--12 => x"EC00",  -- CH12
+		--13 => x"FC00",  -- CH13
+		--14 => x"FD00",  -- CH14
+		--15 => x"FF00",  -- CH15
+		--16 => x"E800",  -- CH0
+		--17 => x"E900",  -- CH1
+		--18 => x"EA00",  -- CH2
+		--19 => x"EB00",  -- CH3
+		--20 => x"EC00",  -- CH4
+		--21 => x"FC00",  -- CH5
+		--22 => x"FD00",  -- CH6
+		--23 => x"FF00",  -- CH7
+		--24 => x"E800",  -- CH8
+		--25 => x"E900",  -- CH9
+		--26 => x"EA00",  -- CH10
+		--27 => x"EB00",  -- CH11
+		--28 => x"EC00",  -- CH12
+		--29 => x"FC00",  -- CH13
+		--30 => x"FD00",  -- CH14
+		--31 => x"FF00",  -- CH15
+		---- CH0–CH31 repeated again for indices 32–63
+		--32 => x"E800",  -- CH0 repeat
+		--33 => x"E900",  -- CH1 repeat
+		--34 => x"EA00",  -- CH2 repeat
+		--35 => x"EB00",  -- CH3 repeat
+		--36 => x"EC00",  -- CH4 repeat
+		--37 => x"FC00",  -- CH5 repeat
+		--38 => x"FD00",  -- CH6 repeat
+		--39 => x"FF00",  -- CH7 repeat
+		--40 => x"E800",  -- CH8 repeat
+		--41 => x"E900",  -- CH9 repeat
+		--42 => x"EA00",  -- CH10 repeat
+		--43 => x"EB00",  -- CH11 repeat
+		--44 => x"EC00",  -- CH12 repeat
+		--45 => x"FC00",  -- CH13 repeat
+		--46 => x"FD00",  -- CH14 repeat
+		--47 => x"FF00",  -- CH15 repeat
+		--48 => x"E800",  -- CH0 repeat
+		--49 => x"E900",  -- CH1 repeat
+		--50 => x"EA00",  -- CH2 repeat
+		--51 => x"EB00",  -- CH3 repeat
+		--52 => x"EC00",  -- CH4 repeat
+		--53 => x"FC00",  -- CH5 repeat
+		--54 => x"FD00",  -- CH6 repeat
+		--55 => x"FF00",  -- CH7 repeat
+		--56 => x"E800",  -- CH8 repeat
+		--57 => x"E900",  -- CH9 repeat
+		--58 => x"EA00",  -- CH10 repeat
+		--59 => x"EB00",  -- CH11 repeat
+		--60 => x"EC00",  -- CH12 repeat
+		--61 => x"FC00",  -- CH13 repeat
+		--62 => x"FD00",  -- CH14 repeat
+		--63 => x"FF00"   -- CH15 repeat
+	--);
+	
 	signal channel_array_2 : t_channel_array_2 := (
-		0  => x"E800",  -- CH0
-		1  => x"E900",  -- CH1
-		2  => x"EA00",  -- CH2
-		3  => x"EB00",  -- CH3
-		4  => x"EC00",  -- CH4
-		5  => x"FC00",  -- CH5
-		6  => x"FD00",  -- CH6
-		7  => x"FF00",  -- CH7
-		8  => x"E800",  -- CH8
-		9  => x"E900",  -- CH9
-		10 => x"EA00",  -- CH10
-		11 => x"EB00",  -- CH11
-		12 => x"EC00",  -- CH12
-		13 => x"FC00",  -- CH13
-		14 => x"FD00",  -- CH14
-		15 => x"FF00",  -- CH15
-		
-		16 => x"E800",  -- CH0
-		17 => x"E900",  -- CH1
-		18 => x"EA00",  -- CH2
-		19 => x"EB00",  -- CH3
-		20 => x"EC00",  -- CH4
-		21 => x"FC00",  -- CH5
-		22 => x"FD00",  -- CH6
-		23 => x"FF00",  -- CH7
-		24 => x"E800",  -- CH8
-		25 => x"E900",  -- CH9
-		26 => x"EA00",  -- CH10
-		27 => x"EB00",  -- CH11
-		28 => x"EC00",  -- CH12
-		29 => x"FC00",  -- CH13
-		30 => x"FD00",  -- CH14
-		31 => x"FF00",  -- CH15
-
+		0  => x"0000",  -- CH0
+		1  => x"0100",  -- CH1
+		2  => x"0200",  -- CH2
+		3  => x"0300",  -- CH3
+		4  => x"0400",  -- CH4
+		5  => x"E800",  -- CH5
+		6  => x"0600",  -- CH6
+		7  => x"0700",  -- CH7
+		8  => x"0800",  -- CH8
+		9  => x"0900",  -- CH9
+		10 => x"0A00",  -- CH10
+		11 => x"0B00",  -- CH11
+		12 => x"0C00",  -- CH12
+		13 => x"0D00",  -- CH13
+		14 => x"0E00",  -- CH14
+		15 => x"0F00",  -- CH15	
+		16 => x"0000",  -- CH0
+		17 => x"0100",  -- CH1
+		18 => x"0200",  -- CH2
+		19 => x"0300",  -- CH3
+		20 => x"0400",  -- CH4
+		21 => x"E800",  -- CH5
+		22 => x"0600",  -- CH6
+		23 => x"0700",  -- CH7
+		24 => x"0800",  -- CH8
+		25 => x"0900",  -- CH9
+		26 => x"0A00",  -- CH10
+		27 => x"0B00",  -- CH11
+		28 => x"0C00",  -- CH12
+		29 => x"0D00",  -- CH13
+		30 => x"0E00",  -- CH14
+		31 => x"0F00",  -- CH15
 		-- CH0–CH31 repeated again for indices 32–63
-		32 => x"E800",  -- CH0 repeat
-		33 => x"E900",  -- CH1 repeat
-		34 => x"EA00",  -- CH2 repeat
-		35 => x"EB00",  -- CH3 repeat
-		36 => x"EC00",  -- CH4 repeat
-		37 => x"FC00",  -- CH5 repeat
-		38 => x"FD00",  -- CH6 repeat
-		39 => x"FF00",  -- CH7 repeat
-		40 => x"E800",  -- CH8 repeat
-		41 => x"E900",  -- CH9 repeat
-		42 => x"EA00",  -- CH10 repeat
-		43 => x"EB00",  -- CH11 repeat
-		44 => x"EC00",  -- CH12 repeat
-		45 => x"FC00",  -- CH13 repeat
-		46 => x"FD00",  -- CH14 repeat
-		47 => x"FF00",  -- CH15 repeat
-		
-		48 => x"E800",  -- CH0 repeat
-		49 => x"E900",  -- CH1 repeat
-		50 => x"EA00",  -- CH2 repeat
-		51 => x"EB00",  -- CH3 repeat
-		52 => x"EC00",  -- CH4 repeat
-		53 => x"FC00",  -- CH5 repeat
-		54 => x"FD00",  -- CH6 repeat
-		55 => x"FF00",  -- CH7 repeat
-		56 => x"E800",  -- CH8 repeat
-		57 => x"E900",  -- CH9 repeat
-		58 => x"EA00",  -- CH10 repeat
-		59 => x"EB00",  -- CH11 repeat
-		60 => x"EC00",  -- CH12 repeat
-		61 => x"FC00",  -- CH13 repeat
-		62 => x"FD00",  -- CH14 repeat
-		63 => x"FF00"   -- CH15 repeat
+		32 => x"0000",  -- CH0 repeat
+		33 => x"0100",  -- CH1 repeat
+		34 => x"0200",  -- CH2 repeat
+		35 => x"0300",  -- CH3 repeat
+		36 => x"0400",  -- CH4 repeat
+		37 => x"E800",  -- CH5 repeat
+		38 => x"0600",  -- CH6 repeat
+		39 => x"0700",  -- CH7 repeat
+		40 => x"0800",  -- CH8 repeat
+		41 => x"0900",  -- CH9 repeat
+		42 => x"0A00",  -- CH10 repeat
+		43 => x"0B00",  -- CH11 repeat
+		44 => x"0C00",  -- CH12 repeat
+		45 => x"0D00",  -- CH13 repeat
+		46 => x"0E00",  -- CH14 repeat
+		47 => x"0F00",  -- CH15 repeat	
+		48 => x"0000",  -- CH0 repeat
+		49 => x"0100",  -- CH1 repeat
+		50 => x"0200",  -- CH2 repeat
+		51 => x"0300",  -- CH3 repeat
+		52 => x"0400",  -- CH4 repeat
+		53 => x"E800",  -- CH5 repeat
+		54 => x"0600",  -- CH6 repeat
+		55 => x"0700",  -- CH7 repeat
+		56 => x"0800",  -- CH8 repeat
+		57 => x"0900",  -- CH9 repeat
+		58 => x"0A00",  -- CH10 repeat
+		59 => x"0B00",  -- CH11 repeat
+		60 => x"0C00",  -- CH12 repeat
+		61 => x"0D00",  -- CH13 repeat
+		62 => x"0E00",  -- CH14 repeat
+		63 => x"0F00"   -- CH15 repeat
 	);
+	
+	--signal channel_array_2 : t_channel_array_2 := (
+		--0  => x"EB00",  -- CH0
+		--1  => x"EA00",  -- CH1
+		--2  => x"EA00",  -- CH2
+		--3  => x"EA00",  -- CH3
+		--4  => x"EA00",  -- CH4
+		--5  => x"EA00",  -- CH5
+		--6  => x"EA00",  -- CH6
+		--7  => x"EA00",  -- CH7
+		--8  => x"EA00",  -- CH8
+		--9  => x"EA00",  -- CH9
+		--10 => x"EA00",  -- CH10
+		--11 => x"EA00",  -- CH11
+		--12 => x"EA00",  -- CH12
+		--13 => x"EA00",  -- CH13
+		--14 => x"EA00",  -- CH14
+		--15 => x"EA00",  -- CH15
+		--16 => x"EB00",  -- CH0
+		--17 => x"EA00",  -- CH1
+		--18 => x"EA00",  -- CH2
+		--19 => x"EA00",  -- CH3
+		--20 => x"EA00",  -- CH4
+		--21 => x"EA00",  -- CH5
+		--22 => x"EA00",  -- CH6
+		--23 => x"EA00",  -- CH7
+		--24 => x"EA00",  -- CH8
+		--25 => x"EA00",  -- CH9
+		--26 => x"EA00",  -- CH10
+		--27 => x"EA00",  -- CH11
+		--28 => x"EA00",  -- CH12
+		--29 => x"EA00",  -- CH13
+		--30 => x"EA00",  -- CH14
+		--31 => x"EA00",  -- CH15
+		 --CH0–CH31 repeated again for indices 32–63
+		--32 => x"EB00",  -- CH0 repeat
+		--33 => x"EA00",  -- CH1 repeat
+		--34 => x"EA00",  -- CH2 repeat
+		--35 => x"EA00",  -- CH3 repeat
+		--36 => x"EA00",  -- CH4 repeat
+		--37 => x"EA00",  -- CH5 repeat
+		--38 => x"EA00",  -- CH6 repeat
+		--39 => x"EA00",  -- CH7 repeat
+		--40 => x"EA00",  -- CH8 repeat
+		--41 => x"EA00",  -- CH9 repeat
+		--42 => x"EA00",  -- CH10 repeat
+		--43 => x"EA00",  -- CH11 repeat
+		--44 => x"EA00",  -- CH12 repeat
+		--45 => x"EA00",  -- CH13 repeat
+		--46 => x"EA00",  -- CH14 repeat
+		--47 => x"EA00",  -- CH15 repeat
+		--48 => x"EB00",  -- CH0 repeat
+		--49 => x"EA00",  -- CH1 repeat
+		--50 => x"EA00",  -- CH2 repeat
+		--51 => x"EA00",  -- CH3 repeat
+		--52 => x"EA00",  -- CH4 repeat
+		--53 => x"EA00",  -- CH5 repeat
+		--54 => x"EA00",  -- CH6 repeat
+		--55 => x"EA00",  -- CH7 repeat
+		--56 => x"EA00",  -- CH8 repeat
+		--57 => x"EA00",  -- CH9 repeat
+		--58 => x"EA00",  -- CH10 repeat
+		--59 => x"EA00",  -- CH11 repeat
+		--60 => x"EA00",  -- CH12 repeat
+		--61 => x"EA00",  -- CH13 repeat
+		--62 => x"EA00",  -- CH14 repeat
+		--63 => x"EA00"   -- CH15 repeat
+	--);
+	
 	
 	signal rhd_done_config : std_logic := '0';
 	signal full_cycle_count  : integer := 0;
@@ -733,21 +930,35 @@ architecture RTL of Controller_RHD_Sampling is
 		elsif i_Controller_Mode = x"2" then
 			case stm32_state is
 				when 0 =>
-					rgd_info_sig_green   <= '0';
-					if SAMPLING_MODE = "00" then	
-						if to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2) then
-							stm32_state <= 1; -- Move to next state
+					rgd_info_sig_green   <= '1';
+					if SAMPLING_MODE = "00" then
+						if (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2132_packet = '0') then
+							stm32_state <= 1;  			-- Move to next state
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+							int_FIFO_RHD2216_RE <= '0';
 							first_rhd2132_packet <= '1';
+
+						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA)) AND (first_rhd2132_packet = '1') then
+							stm32_state <= 3;  			-- Move to next state
+							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
+							int_FIFO_RHD2216_RE <= '0';
+
 						else
 							stm32_state <= 0;
 						end if;
 					
 					elsif SAMPLING_MODE = "01" then
-						if to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2) then
-							stm32_state <= 14; -- Move to next state
+						if (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2216_packet = '0') then
+							stm32_state <= 14;          -- Move to next state
 							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
+							int_FIFO_RHD2132_RE <= '0'; -- Enable FIFO data
 							first_rhd2216_packet <= '1';
+											
+						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA)) AND (first_rhd2216_packet = '1') then
+							stm32_state <= 16;          -- Move to next state
+							int_FIFO_RHD2216_RE <= '1';
+							int_FIFO_RHD2132_RE <= '0';
+
 						else
 							stm32_state <= 0;
 						end if;
@@ -766,12 +977,12 @@ architecture RTL of Controller_RHD_Sampling is
 							int_FIFO_RHD2216_RE <= '0';
 							first_rhd2132_packet <= '1';
 
-						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA)) AND (first_rhd2216_packet = '1') then
+						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA) AND (first_rhd2216_packet = '1') then
 							stm32_state <= 16;          -- Move to next state
 							int_FIFO_RHD2216_RE <= '1';
 							int_FIFO_RHD2132_RE <= '0';
 
-						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA)) AND (first_rhd2132_packet = '1') then
+						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA) AND (first_rhd2132_packet = '1') then
 							stm32_state <= 3;  			-- Move to next state
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
 							int_FIFO_RHD2216_RE <= '0';
@@ -791,22 +1002,26 @@ architecture RTL of Controller_RHD_Sampling is
 					stm32_state <= 5;
 					 
 				when 5 =>
+
 					if stm32_counter = NUM_WORDS - 3 then 
 						int_FIFO_RHD2132_RE <= '0'; 
 					end if;
 				
 					if stm32_counter < NUM_WORDS then
-						if (stm32_counter mod 16) = 0 then
-							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) OR x"0001");
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0000";
-						else
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) AND x"FFFE");
-						end if;
+						--if (stm32_counter mod 16) = 0 then
+							----temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) OR x"0001");
+							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0000";
+						--else
+							----temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) AND x"FFFE");
+						--end if;
 						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_RHD2132_Q(15 downto 0);
+						temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) AND x"FFFE");
 
 						stm32_counter <= stm32_counter + 1;
 					else
-						--int_FIFO_RHD2132_RE <= '0';
+						if SAMPLING_MODE = "00" OR SAMPLING_MODE = "01" then 
+							int_FIFO_RHD2132_RE <= '0';
+						end if;
 						stm32_counter <= 0;
 						stm32_state <= 7;
 					end if;
@@ -826,17 +1041,18 @@ architecture RTL of Controller_RHD_Sampling is
 					end if;
 
 					if stm32_counter < NUM_WORDS then
-						if (stm32_counter mod 16) = 0 then
-							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0001";
-						else
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) AND x"FFFE");
-						end if;
+						--if (stm32_counter mod 16) = 0 then
+							----temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
+							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & x"0001";
+						--else
+							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) AND x"FFFE");
+						--end if;
 						--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & int_FIFO_RHD2132_Q(15 downto 0);
+						temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
 
 						stm32_counter <= stm32_counter + 1;
 					else
-						--int_FIFO_RHD2216_RE <= '0';
+					
 						stm32_counter <= 0;
 						stm32_state <= 7;
 					end if;
@@ -889,7 +1105,7 @@ architecture RTL of Controller_RHD_Sampling is
 				
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_blue <= '1';
-				
+				if SAMPLING_MODE = "00" or SAMPLING_MODE = "10" then
 					case rhd_state is
 						----------------------------------------------------------------
 						-- STATE 0 : PREPARE NEXT BYTE
@@ -967,7 +1183,7 @@ architecture RTL of Controller_RHD_Sampling is
 						when others =>
 							rhd_state <= 0;
 					end case;
-
+				end if;
 			else
 				-- Inactive controller mode: keep DV low
 				int_RHD2132_TX_DV <= '0';
@@ -992,7 +1208,7 @@ architecture RTL of Controller_RHD_Sampling is
 				
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_red <= '1';
-				
+				if SAMPLING_MODE = "01" or SAMPLING_MODE = "10" then
 					case rhd2216_state is
 						----------------------------------------------------------------
 						-- STATE 0 : PREPARE NEXT BYTE
@@ -1040,7 +1256,7 @@ architecture RTL of Controller_RHD_Sampling is
 						when others =>
 							rhd2216_state <= 0;
 					end case;
-
+				end if;
 			else
 				-- Inactive controller mode: keep DV low
 				int_RHD2216_TX_DV <= '0';

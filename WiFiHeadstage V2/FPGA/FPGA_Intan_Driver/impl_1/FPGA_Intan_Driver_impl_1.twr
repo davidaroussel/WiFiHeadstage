@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Thu Feb 26 13:18:29 2026
+Wed Mar  4 10:26:02 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -76,20 +76,20 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-reset_counter_1403__i10/D               |    No arrival or required
-reset_counter_1403__i9/D                |    No arrival or required
-reset_counter_1403__i8/D                |    No arrival or required
-reset_counter_1403__i7/D                |    No arrival or required
-reset_counter_1403__i6/D                |    No arrival or required
-reset_counter_1403__i5/D                |    No arrival or required
-reset_counter_1403__i27/D               |    No arrival or required
-reset_counter_1403__i4/D                |    No arrival or required
-reset_counter_1403__i3/D                |    No arrival or required
-reset_counter_1403__i26/D               |    No arrival or required
+reset_counter_1352__i24/D               |    No arrival or required
+reset_counter_1352__i23/D               |    No arrival or required
+reset_counter_1352__i22/D               |    No arrival or required
+reset_counter_1352__i21/D               |    No arrival or required
+reset_counter_1352__i8/D                |    No arrival or required
+reset_counter_1352__i7/D                |    No arrival or required
+reset_counter_1352__i6/D                |    No arrival or required
+reset_counter_1352__i5/D                |    No arrival or required
+reset_counter_1352__i20/D               |    No arrival or required
+reset_counter_1352__i19/D               |    No arrival or required
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
-ts                                      |                      4450
+ts                                      |                      4153
                                         |                          
 -------------------------------------------------------------------
 
@@ -121,7 +121,7 @@ o_Controller_Mode[0]                    |                    output
 o_Controller_Mode[1]                    |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                        20
+Number of I/O ports without constraint  |                        19
                                         |                          
 -------------------------------------------------------------------
 
@@ -137,127 +137,127 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-i14948_3_lut/C	->	i14948_3_lut/Z
+i25_3_lut_4_lut/A	->	i25_3_lut_4_lut/Z
 
 ++++ Loop2
-i10_3_lut_4_lut/A	->	i10_3_lut_4_lut/Z
+i16113_4_lut/B	->	i16113_4_lut/Z
 
 ++++ Loop3
-i14990_3_lut/C	->	i14990_3_lut/Z
+i15308_3_lut/C	->	i15308_3_lut/Z
 
 ++++ Loop4
-i6_3_lut_4_lut/A	->	i6_3_lut_4_lut/Z
+o_RHD2132_SPI_Clk_c_I_0_3_lut_4_lut/A	->	o_RHD2132_SPI_Clk_c_I_0_3_lut_4_lut/Z
 
 ++++ Loop5
-i14960_3_lut/C	->	i14960_3_lut/Z
+o_RHD2132_SPI_MOSI_c_I_0_3_lut_4_lut/A	->	o_RHD2132_SPI_MOSI_c_I_0_3_lut_4_lut/Z
 
 ++++ Loop6
-i11525_3_lut_4_lut/A	->	i11525_3_lut_4_lut/Z
+i16115_4_lut/A	->	i16115_4_lut/Z
 
 ++++ Loop7
 i21_3_lut/C	->	i21_3_lut/Z
 
 ++++ Loop8
-i3255_3_lut/A	->	i3255_3_lut/Z
+i3294_3_lut/A	->	i3294_3_lut/Z
 
 ++++ Loop9
-i3253_3_lut/A	->	i3253_3_lut/Z
+i3292_3_lut/A	->	i3292_3_lut/Z
 
 ++++ Loop10
-Controller_inst/i10256_2_lut/A	->	Controller_inst/i10256_2_lut/Z
+i1_2_lut/B	->	i1_2_lut/Z
 
 ++++ Loop11
-Controller_inst/i10266_2_lut/A	->	Controller_inst/i10266_2_lut/Z
+Controller_inst/i8380_2_lut/A	->	Controller_inst/i8380_2_lut/Z
 
 ++++ Loop12
-Controller_inst/i10265_2_lut/A	->	Controller_inst/i10265_2_lut/Z
+Controller_inst/i8346_2_lut/A	->	Controller_inst/i8346_2_lut/Z
 
 ++++ Loop13
-Controller_inst/i10264_2_lut/A	->	Controller_inst/i10264_2_lut/Z
+Controller_inst/i8381_2_lut/A	->	Controller_inst/i8381_2_lut/Z
 
 ++++ Loop14
-Controller_inst/i10263_2_lut/A	->	Controller_inst/i10263_2_lut/Z
+Controller_inst/i8379_2_lut/A	->	Controller_inst/i8379_2_lut/Z
 
 ++++ Loop15
-Controller_inst/i10261_2_lut/A	->	Controller_inst/i10261_2_lut/Z
+Controller_inst/i8378_2_lut/A	->	Controller_inst/i8378_2_lut/Z
 
 ++++ Loop16
-Controller_inst/i10262_2_lut/A	->	Controller_inst/i10262_2_lut/Z
+Controller_inst/i8377_2_lut/A	->	Controller_inst/i8377_2_lut/Z
 
 ++++ Loop17
-Controller_inst/i10255_2_lut/A	->	Controller_inst/i10255_2_lut/Z
+Controller_inst/i8370_2_lut/A	->	Controller_inst/i8370_2_lut/Z
 
 ++++ Loop18
-Controller_inst/i10260_2_lut/A	->	Controller_inst/i10260_2_lut/Z
+Controller_inst/i8348_2_lut/A	->	Controller_inst/i8348_2_lut/Z
 
 ++++ Loop19
-Controller_inst/i10258_2_lut/A	->	Controller_inst/i10258_2_lut/Z
+Controller_inst/i8366_2_lut/A	->	Controller_inst/i8366_2_lut/Z
 
 ++++ Loop20
-Controller_inst/i10259_2_lut/A	->	Controller_inst/i10259_2_lut/Z
+Controller_inst/i8350_2_lut/A	->	Controller_inst/i8350_2_lut/Z
 
 ++++ Loop21
-Controller_inst/i10268_2_lut/A	->	Controller_inst/i10268_2_lut/Z
+Controller_inst/i8357_2_lut/A	->	Controller_inst/i8357_2_lut/Z
 
 ++++ Loop22
-Controller_inst/i10267_2_lut/A	->	Controller_inst/i10267_2_lut/Z
+Controller_inst/i8349_2_lut/A	->	Controller_inst/i8349_2_lut/Z
 
 ++++ Loop23
-Controller_inst/i10243_2_lut/A	->	Controller_inst/i10243_2_lut/Z
+Controller_inst/i8358_2_lut/A	->	Controller_inst/i8358_2_lut/Z
 
 ++++ Loop24
-Controller_inst/i10230_2_lut/A	->	Controller_inst/i10230_2_lut/Z
+Controller_inst/i8168_2_lut/A	->	Controller_inst/i8168_2_lut/Z
 
 ++++ Loop25
-Controller_inst/i10248_2_lut/A	->	Controller_inst/i10248_2_lut/Z
+Controller_inst/i8360_2_lut/A	->	Controller_inst/i8360_2_lut/Z
 
 ++++ Loop26
-Controller_inst/i10247_2_lut/A	->	Controller_inst/i10247_2_lut/Z
+Controller_inst/i8363_2_lut/A	->	Controller_inst/i8363_2_lut/Z
 
 ++++ Loop27
-Controller_inst/i10086_2_lut/A	->	Controller_inst/i10086_2_lut/Z
+Controller_inst/i8364_2_lut/A	->	Controller_inst/i8364_2_lut/Z
 
 ++++ Loop28
-Controller_inst/i10245_2_lut/A	->	Controller_inst/i10245_2_lut/Z
+Controller_inst/i8359_2_lut/A	->	Controller_inst/i8359_2_lut/Z
 
 ++++ Loop29
-Controller_inst/i10244_2_lut/A	->	Controller_inst/i10244_2_lut/Z
+Controller_inst/i8361_2_lut/A	->	Controller_inst/i8361_2_lut/Z
 
 ++++ Loop30
-Controller_inst/i10252_2_lut/A	->	Controller_inst/i10252_2_lut/Z
+Controller_inst/i8365_2_lut/A	->	Controller_inst/i8365_2_lut/Z
 
 ++++ Loop31
-Controller_inst/i10246_2_lut/A	->	Controller_inst/i10246_2_lut/Z
+Controller_inst/i8368_2_lut/A	->	Controller_inst/i8368_2_lut/Z
 
 ++++ Loop32
-Controller_inst/i10254_2_lut/A	->	Controller_inst/i10254_2_lut/Z
+Controller_inst/i8353_2_lut/A	->	Controller_inst/i8353_2_lut/Z
 
 ++++ Loop33
-Controller_inst/i10270_2_lut/A	->	Controller_inst/i10270_2_lut/Z
+Controller_inst/i8354_2_lut/A	->	Controller_inst/i8354_2_lut/Z
 
 ++++ Loop34
-Controller_inst/i10269_2_lut/A	->	Controller_inst/i10269_2_lut/Z
+Controller_inst/i8367_2_lut/A	->	Controller_inst/i8367_2_lut/Z
 
 ++++ Loop35
-Controller_inst/i10228_2_lut/A	->	Controller_inst/i10228_2_lut/Z
+Controller_inst/i8345_2_lut/A	->	Controller_inst/i8345_2_lut/Z
 
 ++++ Loop36
-Controller_inst/i10257_2_lut/A	->	Controller_inst/i10257_2_lut/Z
+Controller_inst/i8369_2_lut/A	->	Controller_inst/i8369_2_lut/Z
 
 ++++ Loop37
-Controller_inst/i10229_2_lut/A	->	Controller_inst/i10229_2_lut/Z
+Controller_inst/i8351_2_lut/A	->	Controller_inst/i8351_2_lut/Z
 
 ++++ Loop38
-Controller_inst/i10253_2_lut/A	->	Controller_inst/i10253_2_lut/Z
+Controller_inst/i8347_2_lut/A	->	Controller_inst/i8347_2_lut/Z
 
 ++++ Loop39
-Controller_inst/i10251_2_lut/A	->	Controller_inst/i10251_2_lut/Z
+Controller_inst/i8362_2_lut/A	->	Controller_inst/i8362_2_lut/Z
 
 ++++ Loop40
-Controller_inst/i10249_2_lut/A	->	Controller_inst/i10249_2_lut/Z
+Controller_inst/i8356_2_lut/A	->	Controller_inst/i8356_2_lut/Z
 
 ++++ Loop41
-Controller_inst/i10250_2_lut/A	->	Controller_inst/i10250_2_lut/Z
+Controller_inst/i8355_2_lut/A	->	Controller_inst/i8355_2_lut/Z
 
 
 1.6  Error/Warning Messages

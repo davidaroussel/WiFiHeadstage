@@ -373,5 +373,5 @@ def analyze_full_buffer(file_path):
         print("[INFO] No anomalies detected.")
 
 if __name__ == "__main__":
-    tcp_receive(port=10001)
-    # analyze_full_buffer("raw_data.txt")
+    # tcp_receive(port=10001)
+    analyze_full_buffer("raw_data.txt")
