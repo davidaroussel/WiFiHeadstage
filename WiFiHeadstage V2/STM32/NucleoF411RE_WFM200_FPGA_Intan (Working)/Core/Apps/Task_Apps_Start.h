@@ -49,10 +49,10 @@
 void start_app_task(void);
 //#define DEFAULT_IP_ADDR 		"192.168.0.154"
 //#define DEFAULT_IP_ADDR 		"192.168.56.1"
-#define  DEFAULT_IP_ADDR      "192.168.1.147"
+#define  DEFAULT_IP_ADDR      "192.168.2.196"
 //#define  DEFAULT_IP_ADDR      "192.168.1.5"
 #define  UDP_SERVER_PORT_DEFAULT 10000
-#define  TCP_SERVER_PORT_DEFAULT 5001
+#define  TCP_SERVER_PORT_DEFAULT 10001
 
 
 
