@@ -33,8 +33,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define FPGA_CHUNK_SIZE 2048
-#define FPGA_ACCUM_SIZE 4096
+#define FPGA_CHUNK_SIZE 4096
+#define FPGA_ACCUM_SIZE 8192
 #define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
 #define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE

@@ -21,9 +21,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   8 .data         0000006c  20000000  080051fc  00007000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000053b4  2000006c  08005268  0000706c  2**2
+  9 .bss          0000a3b4  2000006c  08005268  0000706c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20005420  08005268  00007420  2**0
+ 10 ._user_heap_stack 00000600  2000a420  08005268  00007420  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0000706c  2**0
                   CONTENTS, READONLY
@@ -1732,7 +1732,7 @@ int main(void)
  800116c:	3301      	adds	r3, #1
  800116e:	607b      	str	r3, [r7, #4]
  8001170:	687b      	ldr	r3, [r7, #4]
- 8001172:	f5b3 6f00 	cmp.w	r3, #2048	@ 0x800
+ 8001172:	f5b3 5f80 	cmp.w	r3, #4096	@ 0x1000
  8001176:	dbf3      	blt.n	8001160 <main+0x14>
 //   uint8_t fpga_nrf_loops = SPI_RX_nRF_BUFFER_SIZE / SPI_RX_FPGA_BUFFER_SIZE;
 
@@ -1769,7 +1769,7 @@ int main(void)
 
   // Start SPI DMA transmission/reception
   if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
- 80011aa:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+ 80011aa:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
  80011ae:	4a42      	ldr	r2, [pc, #264]	@ (80012b8 <main+0x16c>)
  80011b0:	493f      	ldr	r1, [pc, #252]	@ (80012b0 <main+0x164>)
  80011b2:	4842      	ldr	r0, [pc, #264]	@ (80012bc <main+0x170>)
@@ -1830,7 +1830,7 @@ int main(void)
  8001200:	4a2d      	ldr	r2, [pc, #180]	@ (80012b8 <main+0x16c>)
  8001202:	4618      	mov	r0, r3
  8001204:	4611      	mov	r1, r2
- 8001206:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+ 8001206:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
  800120a:	461a      	mov	r2, r3
  800120c:	f003 f945 	bl	800449a <memcpy>
 				 spi_rx_fpga_buffer,
@@ -1839,14 +1839,14 @@ int main(void)
 		  fpga_accum_index += SPI_RX_FPGA_BUFFER_SIZE;
  8001210:	4b2d      	ldr	r3, [pc, #180]	@ (80012c8 <main+0x17c>)
  8001212:	681b      	ldr	r3, [r3, #0]
- 8001214:	f503 6300 	add.w	r3, r3, #2048	@ 0x800
+ 8001214:	f503 5380 	add.w	r3, r3, #4096	@ 0x1000
  8001218:	4a2b      	ldr	r2, [pc, #172]	@ (80012c8 <main+0x17c>)
  800121a:	6013      	str	r3, [r2, #0]
 
 		  if (fpga_accum_index >= FPGA_ACCUM_SIZE)
  800121c:	4b2a      	ldr	r3, [pc, #168]	@ (80012c8 <main+0x17c>)
  800121e:	681b      	ldr	r3, [r3, #0]
- 8001220:	f5b3 5f80 	cmp.w	r3, #4096	@ 0x1000
+ 8001220:	f5b3 5f00 	cmp.w	r3, #8192	@ 0x2000
  8001224:	d305      	bcc.n	8001232 <main+0xe6>
 		  {
 			  fpga_accum_index = 0;
@@ -1868,7 +1868,7 @@ int main(void)
  800123a:	d01b      	beq.n	8001274 <main+0x128>
 	  {
 		  HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
- 800123c:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+ 800123c:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
  8001240:	4a1d      	ldr	r2, [pc, #116]	@ (80012b8 <main+0x16c>)
  8001242:	491b      	ldr	r1, [pc, #108]	@ (80012b0 <main+0x164>)
  8001244:	481d      	ldr	r0, [pc, #116]	@ (80012bc <main+0x170>)
@@ -1925,10 +1925,10 @@ int main(void)
  800128c:	4b13      	ldr	r3, [pc, #76]	@ (80012dc <main+0x190>)
  800128e:	781b      	ldrb	r3, [r3, #0]
  8001290:	b2db      	uxtb	r3, r3
- 8001292:	031b      	lsls	r3, r3, #12
+ 8001292:	035b      	lsls	r3, r3, #13
  8001294:	4a12      	ldr	r2, [pc, #72]	@ (80012e0 <main+0x194>)
  8001296:	1899      	adds	r1, r3, r2
- 8001298:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
+ 8001298:	f44f 5300 	mov.w	r3, #8192	@ 0x2000
  800129c:	4a11      	ldr	r2, [pc, #68]	@ (80012e4 <main+0x198>)
  800129e:	4812      	ldr	r0, [pc, #72]	@ (80012e8 <main+0x19c>)
  80012a0:	f002 fb38 	bl	8003914 <HAL_SPI_TransmitReceive_DMA>
@@ -1940,21 +1940,21 @@ int main(void)
  80012aa:	f001 fe29 	bl	8002f00 <HAL_GPIO_WritePin>
 	  if(reset_spi_flag){
  80012ae:	e794      	b.n	80011da <main+0x8e>
- 80012b0:	20000888 	.word	0x20000888
+ 80012b0:	20001088 	.word	0x20001088
  80012b4:	40020000 	.word	0x40020000
  80012b8:	20000088 	.word	0x20000088
- 80012bc:	200050e8 	.word	0x200050e8
- 80012c0:	200052c9 	.word	0x200052c9
- 80012c4:	200052c0 	.word	0x200052c0
- 80012c8:	20002088 	.word	0x20002088
- 80012cc:	20001088 	.word	0x20001088
- 80012d0:	200052c8 	.word	0x200052c8
- 80012d4:	200052c4 	.word	0x200052c4
- 80012d8:	200052c1 	.word	0x200052c1
+ 80012bc:	2000a0e8 	.word	0x2000a0e8
+ 80012c0:	2000a2c9 	.word	0x2000a2c9
+ 80012c4:	2000a2c0 	.word	0x2000a2c0
+ 80012c8:	20004088 	.word	0x20004088
+ 80012cc:	20002088 	.word	0x20002088
+ 80012d0:	2000a2c8 	.word	0x2000a2c8
+ 80012d4:	2000a2c4 	.word	0x2000a2c4
+ 80012d8:	2000a2c1 	.word	0x2000a2c1
  80012dc:	20000000 	.word	0x20000000
- 80012e0:	2000208c 	.word	0x2000208c
- 80012e4:	20004090 	.word	0x20004090
- 80012e8:	20005090 	.word	0x20005090
+ 80012e0:	2000408c 	.word	0x2000408c
+ 80012e4:	20008090 	.word	0x20008090
+ 80012e8:	2000a090 	.word	0x2000a090
 
 080012ec <SystemClock_Config>:
 /**
@@ -2171,7 +2171,7 @@ static void MX_SPI1_Init(void)
  8001416:	bf00      	nop
  8001418:	bd80      	pop	{r7, pc}
  800141a:	bf00      	nop
- 800141c:	20005090 	.word	0x20005090
+ 800141c:	2000a090 	.word	0x2000a090
  8001420:	40013000 	.word	0x40013000
 
 08001424 <SPI4_Master_Init>:
@@ -2276,7 +2276,7 @@ static void SPI4_Master_Init(void)
  80014b6:	46bd      	mov	sp, r7
  80014b8:	bd80      	pop	{r7, pc}
  80014ba:	bf00      	nop
- 80014bc:	200050e8 	.word	0x200050e8
+ 80014bc:	2000a0e8 	.word	0x2000a0e8
  80014c0:	40013400 	.word	0x40013400
  80014c4:	40020400 	.word	0x40020400
 
@@ -2377,7 +2377,7 @@ static void SPI4_Slave_Init(void)
  8001552:	46bd      	mov	sp, r7
  8001554:	bd80      	pop	{r7, pc}
  8001556:	bf00      	nop
- 8001558:	200050e8 	.word	0x200050e8
+ 8001558:	2000a0e8 	.word	0x2000a0e8
  800155c:	40013400 	.word	0x40013400
  8001560:	40020400 	.word	0x40020400
 
@@ -2643,8 +2643,8 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
  80016fc:	40013000 	.word	0x40013000
  8001700:	40013400 	.word	0x40013400
  8001704:	40020400 	.word	0x40020400
- 8001708:	200052c4 	.word	0x200052c4
- 800170c:	200052c0 	.word	0x200052c0
+ 8001708:	2000a2c4 	.word	0x2000a2c4
+ 800170c:	2000a2c0 	.word	0x2000a2c0
 
 08001710 <Init_Intan>:
 
@@ -2864,7 +2864,7 @@ static void Init_Intan(void){
  8001842:	46bd      	mov	sp, r7
  8001844:	bd80      	pop	{r7, pc}
  8001846:	bf00      	nop
- 8001848:	200050e8 	.word	0x200050e8
+ 8001848:	2000a0e8 	.word	0x2000a0e8
  800184c:	51eb851f 	.word	0x51eb851f
  8001850:	08005090 	.word	0x08005090
  8001854:	080050bc 	.word	0x080050bc
@@ -2906,7 +2906,7 @@ static inline void Swap_nRF_Buffers(void)
  8001892:	f85d 7b04 	ldr.w	r7, [sp], #4
  8001896:	4770      	bx	lr
  8001898:	20000000 	.word	0x20000000
- 800189c:	2000408c 	.word	0x2000408c
+ 800189c:	2000808c 	.word	0x2000808c
 
 080018a0 <Prepare_nRF_Frame>:
 
@@ -2923,7 +2923,7 @@ static void Prepare_nRF_Frame(void)
  80018a6:	4b0a      	ldr	r3, [pc, #40]	@ (80018d0 <Prepare_nRF_Frame+0x30>)
  80018a8:	781b      	ldrb	r3, [r3, #0]
  80018aa:	b2db      	uxtb	r3, r3
- 80018ac:	031b      	lsls	r3, r3, #12
+ 80018ac:	035b      	lsls	r3, r3, #13
  80018ae:	4a09      	ldr	r2, [pc, #36]	@ (80018d4 <Prepare_nRF_Frame+0x34>)
  80018b0:	4413      	add	r3, r2
  80018b2:	607b      	str	r3, [r7, #4]
@@ -2933,7 +2933,7 @@ static void Prepare_nRF_Frame(void)
  80018b6:	4a08      	ldr	r2, [pc, #32]	@ (80018d8 <Prepare_nRF_Frame+0x38>)
  80018b8:	4618      	mov	r0, r3
  80018ba:	4611      	mov	r1, r2
- 80018bc:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
+ 80018bc:	f44f 5300 	mov.w	r3, #8192	@ 0x2000
  80018c0:	461a      	mov	r2, r3
  80018c2:	f002 fdea 	bl	800449a <memcpy>
 
@@ -2947,9 +2947,9 @@ static void Prepare_nRF_Frame(void)
  80018ca:	46bd      	mov	sp, r7
  80018cc:	bd80      	pop	{r7, pc}
  80018ce:	bf00      	nop
- 80018d0:	2000408c 	.word	0x2000408c
- 80018d4:	2000208c 	.word	0x2000208c
- 80018d8:	20001088 	.word	0x20001088
+ 80018d0:	2000808c 	.word	0x2000808c
+ 80018d4:	2000408c 	.word	0x2000408c
+ 80018d8:	20002088 	.word	0x20002088
 
 080018dc <Error_Handler>:
 /**
@@ -3245,9 +3245,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
  8001a74:	40013000 	.word	0x40013000
  8001a78:	40023800 	.word	0x40023800
  8001a7c:	40020000 	.word	0x40020000
- 8001a80:	20005140 	.word	0x20005140
+ 8001a80:	2000a140 	.word	0x2000a140
  8001a84:	40026440 	.word	0x40026440
- 8001a88:	200051a0 	.word	0x200051a0
+ 8001a88:	2000a1a0 	.word	0x2000a1a0
  8001a8c:	40026458 	.word	0x40026458
   else if(hspi->Instance==SPI4)
  8001a90:	687b      	ldr	r3, [r7, #4]
@@ -3386,9 +3386,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
  8001b82:	4b2a      	ldr	r3, [pc, #168]	@ (8001c2c <HAL_SPI_MspInit+0x2f4>)
  8001b84:	f44f 7280 	mov.w	r2, #256	@ 0x100
  8001b88:	61da      	str	r2, [r3, #28]
-    hdma_spi4_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
+    hdma_spi4_rx.Init.Priority = DMA_PRIORITY_HIGH;
  8001b8a:	4b28      	ldr	r3, [pc, #160]	@ (8001c2c <HAL_SPI_MspInit+0x2f4>)
- 8001b8c:	f44f 3280 	mov.w	r2, #65536	@ 0x10000
+ 8001b8c:	f44f 3200 	mov.w	r2, #131072	@ 0x20000
  8001b90:	621a      	str	r2, [r3, #32]
     hdma_spi4_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
  8001b92:	4b26      	ldr	r3, [pc, #152]	@ (8001c2c <HAL_SPI_MspInit+0x2f4>)
@@ -3474,9 +3474,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
  8001c20:	40023800 	.word	0x40023800
  8001c24:	40020000 	.word	0x40020000
  8001c28:	40020400 	.word	0x40020400
- 8001c2c:	20005200 	.word	0x20005200
+ 8001c2c:	2000a200 	.word	0x2000a200
  8001c30:	40026410 	.word	0x40026410
- 8001c34:	20005260 	.word	0x20005260
+ 8001c34:	2000a260 	.word	0x2000a260
  8001c38:	40026428 	.word	0x40026428
 
 08001c3c <HAL_SPI_MspDeInit>:
@@ -3647,7 +3647,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001d3e:	bf00      	nop
  8001d40:	bd80      	pop	{r7, pc}
  8001d42:	bf00      	nop
- 8001d44:	20005200 	.word	0x20005200
+ 8001d44:	2000a200 	.word	0x2000a200
 
 08001d48 <DMA2_Stream1_IRQHandler>:
  8001d48:	b580      	push	{r7, lr}
@@ -3657,7 +3657,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001d52:	bf00      	nop
  8001d54:	bd80      	pop	{r7, pc}
  8001d56:	bf00      	nop
- 8001d58:	20005260 	.word	0x20005260
+ 8001d58:	2000a260 	.word	0x2000a260
 
 08001d5c <DMA2_Stream2_IRQHandler>:
  8001d5c:	b580      	push	{r7, lr}
@@ -3667,7 +3667,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001d66:	bf00      	nop
  8001d68:	bd80      	pop	{r7, pc}
  8001d6a:	bf00      	nop
- 8001d6c:	20005140 	.word	0x20005140
+ 8001d6c:	2000a140 	.word	0x2000a140
 
 08001d70 <DMA2_Stream3_IRQHandler>:
  8001d70:	b580      	push	{r7, lr}
@@ -3677,7 +3677,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001d7a:	bf00      	nop
  8001d7c:	bd80      	pop	{r7, pc}
  8001d7e:	bf00      	nop
- 8001d80:	200051a0 	.word	0x200051a0
+ 8001d80:	2000a1a0 	.word	0x2000a1a0
 
 08001d84 <_read>:
  8001d84:	b580      	push	{r7, lr}
@@ -3840,8 +3840,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001eba:	bd80      	pop	{r7, pc}
  8001ebc:	20020000 	.word	0x20020000
  8001ec0:	00000400 	.word	0x00000400
- 8001ec4:	200052cc 	.word	0x200052cc
- 8001ec8:	20005420 	.word	0x20005420
+ 8001ec4:	2000a2cc 	.word	0x2000a2cc
+ 8001ec8:	2000a420 	.word	0x2000a420
 
 08001ecc <SystemInit>:
  8001ecc:	b480      	push	{r7}
@@ -3896,7 +3896,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8001f30:	2000006c 	.word	0x2000006c
  8001f34:	080051fc 	.word	0x080051fc
  8001f38:	2000006c 	.word	0x2000006c
- 8001f3c:	20005420 	.word	0x20005420
+ 8001f3c:	2000a420 	.word	0x2000a420
 
 08001f40 <ADC_IRQHandler>:
  8001f40:	e7fe      	b.n	8001f40 <ADC_IRQHandler>
@@ -3989,7 +3989,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8002004:	4770      	bx	lr
  8002006:	bf00      	nop
  8002008:	2000000c 	.word	0x2000000c
- 800200c:	200052d0 	.word	0x200052d0
+ 800200c:	2000a2d0 	.word	0x2000a2d0
 
 08002010 <HAL_GetTick>:
  8002010:	b480      	push	{r7}
@@ -4001,7 +4001,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  800201c:	f85d 7b04 	ldr.w	r7, [sp], #4
  8002020:	4770      	bx	lr
  8002022:	bf00      	nop
- 8002024:	200052d0 	.word	0x200052d0
+ 8002024:	2000a2d0 	.word	0x2000a2d0
 
 08002028 <HAL_Delay>:
  8002028:	b580      	push	{r7, lr}
@@ -7655,7 +7655,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8003fec:	08004217 	.word	0x08004217
  8003ff0:	0800424f 	.word	0x0800424f
  8003ff4:	08004273 	.word	0x08004273
- 8003ff8:	200052d4 	.word	0x200052d4
+ 8003ff8:	2000a2d4 	.word	0x2000a2d4
 
 08003ffc <stdio_exit_handler>:
  8003ffc:	4a02      	ldr	r2, [pc, #8]	@ (8004008 <stdio_exit_handler+0xc>)
@@ -7690,9 +7690,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004040:	f000 be84 	b.w	8004d4c <_fflush_r>
  8004044:	bd10      	pop	{r4, pc}
  8004046:	bf00      	nop
- 8004048:	200052d4 	.word	0x200052d4
- 800404c:	2000533c 	.word	0x2000533c
- 8004050:	200053a4 	.word	0x200053a4
+ 8004048:	2000a2d4 	.word	0x2000a2d4
+ 800404c:	2000a33c 	.word	0x2000a33c
+ 8004050:	2000a3a4 	.word	0x2000a3a4
 
 08004054 <global_stdio_init.part.0>:
  8004054:	b510      	push	{r4, lr}
@@ -7713,21 +7713,21 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  800407a:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
  800407e:	2112      	movs	r1, #18
  8004080:	f7ff bf86 	b.w	8003f90 <std>
- 8004084:	2000540c 	.word	0x2000540c
- 8004088:	200052d4 	.word	0x200052d4
+ 8004084:	2000a40c 	.word	0x2000a40c
+ 8004088:	2000a2d4 	.word	0x2000a2d4
  800408c:	08003ffd 	.word	0x08003ffd
 
 08004090 <__sfp_lock_acquire>:
  8004090:	4801      	ldr	r0, [pc, #4]	@ (8004098 <__sfp_lock_acquire+0x8>)
  8004092:	f000 ba00 	b.w	8004496 <__retarget_lock_acquire_recursive>
  8004096:	bf00      	nop
- 8004098:	20005415 	.word	0x20005415
+ 8004098:	2000a415 	.word	0x2000a415
 
 0800409c <__sfp_lock_release>:
  800409c:	4801      	ldr	r0, [pc, #4]	@ (80040a4 <__sfp_lock_release+0x8>)
  800409e:	f000 b9fb 	b.w	8004498 <__retarget_lock_release_recursive>
  80040a2:	bf00      	nop
- 80040a4:	20005415 	.word	0x20005415
+ 80040a4:	2000a415 	.word	0x2000a415
 
 080040a8 <__sinit>:
  80040a8:	b510      	push	{r4, lr}
@@ -7747,7 +7747,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  80040cc:	e7f2      	b.n	80040b4 <__sinit+0xc>
  80040ce:	bf00      	nop
  80040d0:	08004015 	.word	0x08004015
- 80040d4:	2000540c 	.word	0x2000540c
+ 80040d4:	2000a40c 	.word	0x2000a40c
 
 080040d8 <_fwalk_sglue>:
  80040d8:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -8095,7 +8095,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  80043ca:	b103      	cbz	r3, 80043ce <_close_r+0x1a>
  80043cc:	6023      	str	r3, [r4, #0]
  80043ce:	bd38      	pop	{r3, r4, r5, pc}
- 80043d0:	20005410 	.word	0x20005410
+ 80043d0:	2000a410 	.word	0x2000a410
 
 080043d4 <_lseek_r>:
  80043d4:	b538      	push	{r3, r4, r5, lr}
@@ -8113,7 +8113,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  80043ee:	b103      	cbz	r3, 80043f2 <_lseek_r+0x1e>
  80043f0:	6023      	str	r3, [r4, #0]
  80043f2:	bd38      	pop	{r3, r4, r5, pc}
- 80043f4:	20005410 	.word	0x20005410
+ 80043f4:	2000a410 	.word	0x2000a410
 
 080043f8 <_read_r>:
  80043f8:	b538      	push	{r3, r4, r5, lr}
@@ -8131,7 +8131,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004412:	b103      	cbz	r3, 8004416 <_read_r+0x1e>
  8004414:	6023      	str	r3, [r4, #0]
  8004416:	bd38      	pop	{r3, r4, r5, pc}
- 8004418:	20005410 	.word	0x20005410
+ 8004418:	2000a410 	.word	0x2000a410
 
 0800441c <_write_r>:
  800441c:	b538      	push	{r3, r4, r5, lr}
@@ -8149,7 +8149,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004436:	b103      	cbz	r3, 800443a <_write_r+0x1e>
  8004438:	6023      	str	r3, [r4, #0]
  800443a:	bd38      	pop	{r3, r4, r5, pc}
- 800443c:	20005410 	.word	0x20005410
+ 800443c:	2000a410 	.word	0x2000a410
 
 08004440 <__errno>:
  8004440:	4b01      	ldr	r3, [pc, #4]	@ (8004448 <__errno+0x8>)
@@ -8281,7 +8281,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004542:	e7ca      	b.n	80044da <_free_r+0x22>
  8004544:	bd38      	pop	{r3, r4, r5, pc}
  8004546:	bf00      	nop
- 8004548:	2000541c 	.word	0x2000541c
+ 8004548:	2000a41c 	.word	0x2000a41c
 
 0800454c <sbrk_aligned>:
  800454c:	b570      	push	{r4, r5, r6, lr}
@@ -8311,7 +8311,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004586:	d1f2      	bne.n	800456e <sbrk_aligned+0x22>
  8004588:	e7ef      	b.n	800456a <sbrk_aligned+0x1e>
  800458a:	bf00      	nop
- 800458c:	20005418 	.word	0x20005418
+ 800458c:	2000a418 	.word	0x2000a418
 
 08004590 <_malloc_r>:
  8004590:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -8421,19 +8421,19 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004686:	6005      	str	r5, [r0, #0]
  8004688:	e7d6      	b.n	8004638 <_malloc_r+0xa8>
  800468a:	bf00      	nop
- 800468c:	2000541c 	.word	0x2000541c
+ 800468c:	2000a41c 	.word	0x2000a41c
 
 08004690 <__malloc_lock>:
  8004690:	4801      	ldr	r0, [pc, #4]	@ (8004698 <__malloc_lock+0x8>)
  8004692:	f7ff bf00 	b.w	8004496 <__retarget_lock_acquire_recursive>
  8004696:	bf00      	nop
- 8004698:	20005414 	.word	0x20005414
+ 8004698:	2000a414 	.word	0x2000a414
 
 0800469c <__malloc_unlock>:
  800469c:	4801      	ldr	r0, [pc, #4]	@ (80046a4 <__malloc_unlock+0x8>)
  800469e:	f7ff befb 	b.w	8004498 <__retarget_lock_release_recursive>
  80046a2:	bf00      	nop
- 80046a4:	20005414 	.word	0x20005414
+ 80046a4:	2000a414 	.word	0x2000a414
 
 080046a8 <__sfputc_r>:
  80046a8:	6893      	ldr	r3, [r2, #8]
@@ -9290,7 +9290,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004e7a:	6023      	str	r3, [r4, #0]
  8004e7c:	bd38      	pop	{r3, r4, r5, pc}
  8004e7e:	bf00      	nop
- 8004e80:	20005410 	.word	0x20005410
+ 8004e80:	2000a410 	.word	0x2000a410
 
 08004e84 <_isatty_r>:
  8004e84:	b538      	push	{r3, r4, r5, lr}
@@ -9306,7 +9306,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004e9a:	b103      	cbz	r3, 8004e9e <_isatty_r+0x1a>
  8004e9c:	6023      	str	r3, [r4, #0]
  8004e9e:	bd38      	pop	{r3, r4, r5, pc}
- 8004ea0:	20005410 	.word	0x20005410
+ 8004ea0:	2000a410 	.word	0x2000a410
 
 08004ea4 <_sbrk_r>:
  8004ea4:	b538      	push	{r3, r4, r5, lr}
@@ -9322,7 +9322,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
  8004eba:	b103      	cbz	r3, 8004ebe <_sbrk_r+0x1a>
  8004ebc:	6023      	str	r3, [r4, #0]
  8004ebe:	bd38      	pop	{r3, r4, r5, pc}
- 8004ec0:	20005410 	.word	0x20005410
+ 8004ec0:	2000a410 	.word	0x2000a410
 
 08004ec4 <_init>:
  8004ec4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
