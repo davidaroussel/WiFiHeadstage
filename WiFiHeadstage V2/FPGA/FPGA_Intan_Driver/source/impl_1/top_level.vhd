@@ -16,12 +16,12 @@ entity top_level is
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2216_CLKS_PER_HALF_BIT       : integer := 32;    -- 32 for around 2.5KHz
-        RHD2216_CS_INACTIVE_CLKS        : integer := 32;
+        RHD2216_CS_INACTIVE_CLKS        : integer := 64;
 		
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 0
+		RHD_SAMPLING_MODE : integer := 2
 
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 

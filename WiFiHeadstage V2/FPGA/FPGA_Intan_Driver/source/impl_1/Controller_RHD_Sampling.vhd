@@ -250,8 +250,6 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rhd2216_index    : integer := 0;
 	signal rhd2216_state    : integer := 0;
 	
-	signal dual_fifo_prep : integer := 0;
-	
 	signal alt_counter : integer := 0;
 	
 	signal RHD_Interval_Counter  : integer :=0;
@@ -268,6 +266,8 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rgd_info_sig_blue  : std_logic;
 		
 	signal tx_buffer : std_logic_vector(TOTAL_BITS-1 downto 0);
+	
+	signal chip_toggle : std_logic := '0';
 
 	signal data_array : t_data_array := (
 		-- Registers 40–63
@@ -561,10 +561,7 @@ architecture RTL of Controller_RHD_Sampling is
 		62 => x"FF00",  -- CH14 repeat
 		63 => x"ED00"   -- CH15 repeat
 	);
-	
-	
-	signal rhd_done_config : std_logic := '0';
-	signal full_cycle_count  : integer := 0;
+
 
 
 	begin
@@ -681,6 +678,7 @@ architecture RTL of Controller_RHD_Sampling is
 		first_rhd2132_packet <= '0';
 		first_rhd2216_packet <= '0';
 		
+		chip_toggle <= '0';
 		RHD_Interval_Counter <= 0;
 		RHD2216_Interval_Counter <= 0;
 		alt_counter   <= 0;  
@@ -698,18 +696,12 @@ architecture RTL of Controller_RHD_Sampling is
 		if i_Controller_Mode = x"0" then
 			-- INIT RHD2132s FIFO
 			if SAMPLING_MODE = "00" then
-				if init_FIFO_RHD2132_Counter > 0 then
-					int_FIFO_RHD2132_RE <= '0';
-				else
-					init_FIFO_RHD2132_Counter <= init_FIFO_RHD2132_Counter + 1;
+				if init_FIFO_RHD2132_Read = '0' then
 					int_FIFO_RHD2132_RE <= '1';
+					init_FIFO_RHD2132_Read <= '1';
+				else
+					int_FIFO_RHD2132_RE <= '0';
 				end if;
-				--if init_FIFO_RHD2132_Read = '0' then
-					--int_FIFO_RHD2132_RE <= '1';
-					--init_FIFO_RHD2132_Read <= '1';
-				--else
-					--int_FIFO_RHD2132_RE <= '0';
-				--end if;
 
 			-- INIT RHD2216s FIFO
 			elsif SAMPLING_MODE = "01" then
@@ -762,7 +754,6 @@ architecture RTL of Controller_RHD_Sampling is
 						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA)) AND (first_rhd2216_packet = '1') then
 							stm32_state <= 16;          -- Move to next state
 							int_FIFO_RHD2216_RE <= '1';
-
 						else
 							stm32_state <= 0;
 						end if;
@@ -772,24 +763,33 @@ architecture RTL of Controller_RHD_Sampling is
 						if (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2216_packet = '0') then
 							stm32_state <= 14;          -- Move to next state
 							int_FIFO_RHD2216_RE <= '1'; -- Enable FIFO data
-							int_FIFO_RHD2132_RE <= '0'; -- Enable FIFO data
 							first_rhd2216_packet <= '1';
 											
 						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA + 2)) AND (first_rhd2132_packet = '0') then
 							stm32_state <= 1;  			-- Move to next state
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
-							int_FIFO_RHD2216_RE <= '0';
 							first_rhd2132_packet <= '1';
 
 						elsif (to_integer(unsigned(int_FIFO_RHD2216_COUNT)) >= NUM_DATA) AND (first_rhd2216_packet = '1') then
-							stm32_state <= 16;          -- Move to next state
+							if chip_toggle = '1' then
+								stm32_state <= 17;
+								chip_toggle <= '0';								
+							else 
+								stm32_state <= 16;
+								chip_toggle <= '1';									
+							end if;
+							
 							int_FIFO_RHD2216_RE <= '1';
-							int_FIFO_RHD2132_RE <= '0';
 
 						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA) AND (first_rhd2132_packet = '1') then
-							stm32_state <= 3;  			-- Move to next state
+							if chip_toggle = '1' then
+								stm32_state <= 4;
+								chip_toggle <= '0';							
+							else 
+								stm32_state <= 3;
+								chip_toggle <= '1';									
+							end if;  			-- Move to next state
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
-							int_FIFO_RHD2216_RE <= '0';
 
 						else
 							stm32_state <= 0;
@@ -799,18 +799,16 @@ architecture RTL of Controller_RHD_Sampling is
 				when 1 =>
 					stm32_state <= 2;
 					int_FIFO_RHD2132_RE <= '1'; -- START READ
-					
 				when 2 =>
 					stm32_state <= 3;
 					int_FIFO_RHD2132_RE <= '1'; -- START READ
-				
 				when 3 =>
 					stm32_state <= 4;
 					int_FIFO_RHD2132_RE <= '1'; -- START READ
-					
 				when 4 =>
 					stm32_state <= 5;
 					int_FIFO_RHD2132_RE <= '1';
+					
 				when 5 =>
 					if stm32_counter < (NUM_WORDS - 1) then
 						if SAMPLING_MODE = "00" then 
@@ -822,7 +820,7 @@ architecture RTL of Controller_RHD_Sampling is
 							end if;	
 
 						else
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2132_Q(15 downto 0) AND x"FFFE");
+							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2132_Q(15 downto 0) and x"FFFE";
 
 						end if;
 						alt_counter <= alt_counter + 1;
@@ -839,63 +837,52 @@ architecture RTL of Controller_RHD_Sampling is
 								RHD_Interval_Counter <= RHD_Interval_Counter + 1;
 							end if;	
 						end if;
-						
 						stm32_state <= 6;				
 					end if;
 					
-				when 6 =>
-					
-					stm32_state <= 7;
 					
 				when 14 =>
 					stm32_state <= 15;
+					int_FIFO_RHD2216_RE <= '1';
 				when 15 =>
 					stm32_state <= 16;
+					int_FIFO_RHD2216_RE <= '1';
 				when 16 =>
 					stm32_state <= 17;
 				when 17 =>
 					stm32_state <= 18;
 
 				when 18 => 	 
-					if stm32_counter = NUM_WORDS - 1 then 
-						int_FIFO_RHD2216_RE <= '0'; 
-					end if;
-
-					if stm32_counter < NUM_WORDS then
+					if stm32_counter < (NUM_WORDS - 1) then
 						if SAMPLING_MODE = "01" then 
 							if (stm32_counter mod 16) = 0 then
-								--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & ((std_logic_vector(to_unsigned(stm32_counter, 16)) OR x"0001"));
-								temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
+							--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
+								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) or x"0001"; -- set LSB
 							else
-								--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & ((std_logic_vector(to_unsigned(stm32_counter, 16)) AND x"FFFE"));
-								temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
-							end if;
+								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) and x"FFFE"; -- clear LSB
+							end if;	
+
 						else
-							temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (int_FIFO_RHD2216_Q(15 downto 0) OR x"0001");
-							--temp_buffer <= temp_buffer(TOTAL_BITS-WORD_WIDTH-1 downto 0) & (std_logic_vector(to_unsigned(RHD2216_Interval_Counter, 16)) OR x"0001");
+							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) or x"0001";
+
 						end if;
 						stm32_counter <= stm32_counter + 1;
 					else
-					
-						if RHD_Interval_Counter = 0 then
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= x"00AF"; -- set LSB
-						else
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter , 16)) OR x"0001"; -- clear LSB
-						end if;
+						temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) and x"FFFE";
+						int_FIFO_RHD2216_RE <= '0'; 
 						
-						if SAMPLING_MODE = "01" then 
-							int_FIFO_RHD2216_RE <= '0';
-						end if;
-						stm32_counter <= 0;
-						stm32_state <= 7;
-						
-						if RHD2216_Interval_Counter > 32 then
+						if RHD2216_Interval_Counter > 126 then
 							RHD2216_Interval_Counter <= 0;
 						else
 							RHD2216_Interval_Counter <= RHD2216_Interval_Counter + 1;
-						end if;
+						end if;	
+						stm32_state <= 6;				
 					end if;
 			
+				when 6 =>
+					stm32_state <= 7;
+					int_FIFO_RHD2132_RE <= '0';
+					int_FIFO_RHD2216_RE <= '0'; 					
 				when 7 =>
 					stm32_counter <= 0;				
 					stm32_state <= 8;
@@ -915,12 +902,7 @@ architecture RTL of Controller_RHD_Sampling is
 					else
 						stm32_state <= 10;
 					end if;
-				when 11 => 
-					if SAMPLING_MODE = "10" then
-						stm32_state <= 0;
-					else
-						stm32_state <= 99;
-					end if;
+				
 				when others =>
 					null;
 				end case;
@@ -952,7 +934,7 @@ architecture RTL of Controller_RHD_Sampling is
 						----------------------------------------------------------------
 						when 0 =>
 
-							int_RHD2132_TX_Byte <= channel_array(rhd_index);
+							int_RHD2132_TX_Byte <= channel_array_1(rhd_index);
 
 							if int_RHD2132_TX_Ready = '1' then
 								int_RHD2132_TX_DV <= '1';   -- pulse DV for one cycle
@@ -1025,7 +1007,7 @@ architecture RTL of Controller_RHD_Sampling is
 						-- STATE 0 : PREPARE NEXT BYTE
 						----------------------------------------------------------------
 						when 0 =>
-							int_RHD2216_TX_Byte <= channel_array_2(rhd2216_index);
+							int_RHD2216_TX_Byte <= channel_array_1(rhd2216_index);
 							--int_RHD2216_TX_Byte <= x"E800";
 							-- Wait until SPI/FIFO ready before sending
 							if int_RHD2216_TX_Ready = '1' then

@@ -1,6 +1,6 @@
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-Mon Mar 30 16:22:58 2026
+Wed Apr  1 11:18:31 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -22,13 +22,13 @@ WARNING <70001944> - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 4 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
-Number of Signals: 4296
-Number of Connections: 12081
+Number of Signals: 4143
+Number of Connections: 11500
 Device utilization summary:
 
-   SLICE (est.)    1335/2640         51% used
-     LUT           2564/5280         49% used
-     REG           1398/5280         26% used
+   SLICE (est.)    1270/2640         48% used
+     LUT           2408/5280         46% used
+     REG           1441/5280         27% used
    PIO               24/56           43% used
                      24/36           66% bonded
    IOLOGIC            0/56            0% used
@@ -52,40 +52,40 @@ Pin Constraint Summary:
    14 out of 24 pins locked (58% locked).
 .
 .............
-Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 3 secs 
+Finished Placer Phase 0 (HIER). CPU time: 2 secs , REAL time: 2 secs 
 
 
-.................
-Finished Placer Phase 0 (AP).  CPU time: 5 secs , REAL time: 5 secs 
+................
+Finished Placer Phase 0 (AP).  CPU time: 4 secs , REAL time: 4 secs 
 
-Starting Placer Phase 1. CPU time: 5 secs , REAL time: 5 secs 
+Starting Placer Phase 1. CPU time: 4 secs , REAL time: 4 secs 
 ..  ..
 ....................
 
-Placer score = 486755.
+Placer score = 866528.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1328/2640         50% used
+   SLICE           1264/2640         47% used
 
 WARNING <70001944> - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
-Finished Placer Phase 1. CPU time: 16 secs , REAL time: 16 secs 
+Finished Placer Phase 1. CPU time: 14 secs , REAL time: 15 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  544182
-Finished Placer Phase 2.  CPU time: 17 secs , REAL time: 17 secs 
+Placer score =  501267
+Finished Placer Phase 2.  CPU time: 15 secs , REAL time: 15 secs 
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
-  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 759, ce load = 0, sr load = 0
-  PRIMARY "o_reset_c" from Q0 on comp "SLICE_174" on site "R13C31C", clk load = 0, ce load = 0, sr load = 519
-  PRIMARY "maxfan_replicated_net_397" from Q1 on comp "SLICE_2366" on site "R12C5A", clk load = 0, ce load = 0, sr load = 216
-  PRIMARY "Controller_inst.n4989" from F0 on comp "Controller_inst.SLICE_1827" on site "R13C2A", clk load = 0, ce load = 128, sr load = 0
-  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2306" on site "R15C28A", clk load = 0, ce load = 129, sr load = 0
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 820, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q1 on comp "SLICE_155" on site "R15C4B", clk load = 0, ce load = 0, sr load = 537
+  PRIMARY "maxfan_replicated_net_440" from Q0 on comp "SLICE_155" on site "R15C4B", clk load = 0, ce load = 0, sr load = 261
+  PRIMARY "Controller_inst.n4594" from F0 on comp "Controller_inst.SLICE_1850" on site "R13C2D", clk load = 0, ce load = 131, sr load = 0
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q0 on comp "Controller_inst.SLICE_170" on site "R14C31D", clk load = 0, ce load = 130, sr load = 0
 
   PRIMARY  : 5 out of 8 (62%)
 
@@ -102,19 +102,19 @@ I/O Bank Usage Summary:
 +----------+----------------+------------+------------+------------+
 | I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+----------------+------------+------------+------------+
-| 0        | 10 / 14 ( 71%) | 3.3V       |            |            |
+| 0        | 12 / 14 ( 85%) | 3.3V       |            |            |
 | 1        | 7 / 14 ( 50%)  | 3.3V       |            |            |
-| 2        | 7 / 8 ( 87%)   | 3.3V       |            |            |
+| 2        | 5 / 8 ( 62%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 17 secs , REAL time: 17 secs 
+Total Placer CPU time: 15 secs , REAL time: 15 secs 
 
 
-Checksum -- place: 50049dc979435df1c2d721f53df58a1dda92136c
+Checksum -- place: 3c9fc44f5ef903f8b7467c4047f7aa9889bac4c5
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 
-Start NBR router at 16:23:16 03/30/26
+Start NBR router at 11:18:47 04/01/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -132,25 +132,25 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-1692 connections routed with dedicated routing resources
+1700 connections routed with dedicated routing resources
 5 global clock signals routed
-3443 connections routed (of 10371 total) (33.20%)
+3579 connections routed (of 9919 total) (36.08%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (5 used out of 8 available):
-#0  Signal "maxfan_replicated_net_397"
-       Control loads: 216   out of   216 routed (100.00%)
-       Data    loads: 0     out of    16 routed (  0.00%)
+#0  Signal "o_reset_c"
+       Control loads: 537   out of   537 routed (100.00%)
+       Data    loads: 0     out of    28 routed (  0.00%)
 #1  Signal "Controller_inst.int_STM32_TX_DV"
-       Control loads: 129   out of   129 routed (100.00%)
-       Data    loads: 0     out of    24 routed (  0.00%)
-#4  Signal "o_reset_c"
-       Control loads: 519   out of   519 routed (100.00%)
-       Data    loads: 0     out of    17 routed (  0.00%)
-#5  Signal "Controller_inst.n4989"
-       Control loads: 128   out of   128 routed (100.00%)
+       Control loads: 130   out of   130 routed (100.00%)
+       Data    loads: 0     out of    22 routed (  0.00%)
+#5  Signal "Controller_inst.n4594"
+       Control loads: 131   out of   131 routed (100.00%)
+#6  Signal "maxfan_replicated_net_440"
+       Control loads: 261   out of   261 routed (100.00%)
+       Data    loads: 0     out of     5 routed (  0.00%)
 #7  Signal "pll_clk_int"
-       Clock   loads: 759   out of   759 routed (100.00%)
+       Clock   loads: 820   out of   820 routed (100.00%)
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -162,40 +162,36 @@ Completed routing resource preassignment
 WARNING <70001944> - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
-Start NBR section for initial routing at 16:23:17 03/30/26
+Start NBR section for initial routing at 11:18:48 04/01/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-238(0.09%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+189(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 8 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 16:23:25 03/30/26
+Start NBR section for normal routing at 11:18:55 04/01/26
 Level 4, iteration 1
-24(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+14(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 8 secs 
 Level 4, iteration 2
-16(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+8(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 8 secs 
 Level 4, iteration 3
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
-Level 4, iteration 4
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
-Level 4, iteration 5
-0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 8 secs 
 
-Start NBR section for post-routing at 16:23:25 03/30/26
+Start NBR section for post-routing at 11:18:55 04/01/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
-Checksum -- route: 14cfdf52b98f264125b7a6f51cbed8e4b65515a0
+Checksum -- route: 13a55f0358ee2931bf5f076be91038a7d668f46c
 
-Total CPU time 11 secs 
-Total REAL time: 12 secs 
+Total CPU time 10 secs 
+Total REAL time: 10 secs 
 Completely routed.
-End of route.  10371 routed (100.00%); 0 unrouted.
+End of route.  9919 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -213,9 +209,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-Total CPU  Time: 29 secs 
-Total REAL Time: 30 secs 
-Peak Memory Usage: 174.93 MB
+Total CPU  Time: 26 secs 
+Total REAL Time: 27 secs 
+Peak Memory Usage: 174.80 MB
 
 
 par done!
