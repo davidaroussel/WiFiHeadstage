@@ -11,19 +11,6 @@ entity top_level is
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 16;
-<<<<<<< HEAD
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 32;
-        RHD2132_CS_INACTIVE_CLKS        : integer := 32;
-
-        RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2216_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD2216_CS_INACTIVE_CLKS        : integer := 32;
-				
-		-- 0: Neuro Only 
-		-- 1: EMG Only 
-		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 2
-=======
         RHD2132_CLKS_PER_HALF_BIT       : integer := 2;
         RHD2132_CS_INACTIVE_CLKS        : integer := 64;
 
@@ -35,7 +22,6 @@ entity top_level is
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
 		RHD_SAMPLING_MODE : integer := 1
->>>>>>> 9374a70b9015c0543349b4891ca242513bdd9053
 
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 
