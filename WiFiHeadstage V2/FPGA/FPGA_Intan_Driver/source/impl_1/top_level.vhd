@@ -6,7 +6,7 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
         STM32_CLKS_PER_HALF_BIT       : integer := 2;
-        STM32_CS_INACTIVE_CLKS        : integer := 64;
+        STM32_CS_INACTIVE_CLKS        : integer := 32;
 			
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
@@ -21,7 +21,7 @@ entity top_level is
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 2
+		RHD_SAMPLING_MODE : integer := 1
 
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 

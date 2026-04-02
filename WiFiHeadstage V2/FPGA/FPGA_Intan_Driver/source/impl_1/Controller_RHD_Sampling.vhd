@@ -778,17 +778,18 @@ architecture RTL of Controller_RHD_Sampling is
 								stm32_state <= 16;
 								chip_toggle <= '1';									
 							end if;
-							
+							stm32_state <= 16;
 							int_FIFO_RHD2216_RE <= '1';
 
 						elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= NUM_DATA) AND (first_rhd2132_packet = '1') then
-							if chip_toggle = '1' then
+							if chip_toggle = '0' then
 								stm32_state <= 4;
-								chip_toggle <= '0';							
+								chip_toggle <= '1';							
 							else 
 								stm32_state <= 3;
 								chip_toggle <= '1';									
 							end if;  			-- Move to next state
+							stm32_state <= 3;
 							int_FIFO_RHD2132_RE <= '1'; -- Enable FIFO data
 
 						else
@@ -810,6 +811,10 @@ architecture RTL of Controller_RHD_Sampling is
 					int_FIFO_RHD2132_RE <= '1';
 					
 				when 5 =>
+					if stm32_counter > (NUM_WORDS - 4) then 
+						int_FIFO_RHD2132_RE <= '0'; 
+					end if;
+				
 					if stm32_counter < (NUM_WORDS - 1) then
 						if SAMPLING_MODE = "00" then 
 							if (stm32_counter mod 16) = 0 then
@@ -827,7 +832,7 @@ architecture RTL of Controller_RHD_Sampling is
 						stm32_counter <= stm32_counter + 1;
 					else
 						temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2132_Q(15 downto 0) and x"FFFE";
-						int_FIFO_RHD2132_RE <= '0'; 
+						
 						
 						if alt_counter > 14 then
 							alt_counter <= 0;
@@ -852,7 +857,10 @@ architecture RTL of Controller_RHD_Sampling is
 				when 17 =>
 					stm32_state <= 18;
 
-				when 18 => 	 
+				when 18 =>
+					if stm32_counter > (NUM_WORDS -4) then 
+						int_FIFO_RHD2216_RE <= '0'; 
+					end if;
 					if stm32_counter < (NUM_WORDS - 1) then
 						if SAMPLING_MODE = "01" then 
 							if (stm32_counter mod 16) = 0 then
@@ -934,7 +942,7 @@ architecture RTL of Controller_RHD_Sampling is
 						----------------------------------------------------------------
 						when 0 =>
 
-							int_RHD2132_TX_Byte <= channel_array_1(rhd_index);
+							int_RHD2132_TX_Byte <= channel_array(rhd_index);
 
 							if int_RHD2132_TX_Ready = '1' then
 								int_RHD2132_TX_DV <= '1';   -- pulse DV for one cycle
@@ -1007,7 +1015,7 @@ architecture RTL of Controller_RHD_Sampling is
 						-- STATE 0 : PREPARE NEXT BYTE
 						----------------------------------------------------------------
 						when 0 =>
-							int_RHD2216_TX_Byte <= channel_array_1(rhd2216_index);
+							int_RHD2216_TX_Byte <= channel_array(rhd2216_index);
 							--int_RHD2216_TX_Byte <= x"E800";
 							-- Wait until SPI/FIFO ready before sending
 							if int_RHD2216_TX_Ready = '1' then
