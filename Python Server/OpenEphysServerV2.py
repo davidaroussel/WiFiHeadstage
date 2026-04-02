@@ -60,7 +60,7 @@ if __name__ == "__main__":
     TTL_GENERATOR       = False
     CONFIGURE_OPENEPHYS = False
     PRINT_OE_INFO       = False
-    DUAL_CHIP_MODE      = True
+    DUAL_CHIP_MODE      = False
 
     #GLOBAL VARIABLES
     HOST_ADDR      = ""#"192.168.2.196"
@@ -126,12 +126,13 @@ if __name__ == "__main__":
     if TTL_GENERATOR:
         TASK_Manual_TTL.startThread()
     TASK_DataConverter.startThread()
-    TASK_DataConverter.startEMGThread()
-    TASK_DataConverter.startNeuroThread()
 
-    while not (TASK_DataConverter.tcp_connected_neuro & TASK_DataConverter.tcp_connected_emg):
-        pass
-
+    if DUAL_CHIP_MODE:
+        while not (TASK_DataConverter.tcp_connected_neuro & TASK_DataConverter.tcp_connected_emg):
+            pass
+    else:
+        while not (TASK_DataConverter.tcp_connected_neuro):
+            pass
     time.sleep(0.1)
     print("Match Parameters with OpenEphys !!")
     print("Socket        : ", OPENEPHYS_PORT)

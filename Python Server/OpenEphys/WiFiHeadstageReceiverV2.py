@@ -53,7 +53,7 @@ class WiFiHeadstageReceiverV2(BaseException):
         host = self.m_host_addr
         port = self.m_port
         FIRST_PACKET_TIMEOUT = 10.0 # TIMEOUT FOR DISCONNECTION
-        STREAM_TIMEOUT = 4.0        # TIMEOUT WHILE STREAMING
+        STREAM_TIMEOUT = 10.0        # TIMEOUT WHILE STREAMING
         while True:
             server_socket = None
             conn = None

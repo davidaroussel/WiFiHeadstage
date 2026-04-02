@@ -47,10 +47,10 @@ begin
             STM32_SPI_NUM_BITS_PER_PACKET => 512,
             STM32_CLKS_PER_HALF_BIT       => 16,
             STM32_CS_INACTIVE_CLKS        => 16,
-            RHD_SPI_DDR_MODE              => 1,
-            RHD_SPI_NUM_BITS_PER_PACKET   => 16,
-            RHD_CLKS_PER_HALF_BIT         => 32,
-            RHD_CS_INACTIVE_CLKS          => 32
+            RHD2132_SPI_DDR_MODE          => 1,
+            RHD2132_SPI_NUM_BITS_PER_PACKET   => 16,
+            RHD2132_CLKS_PER_HALF_BIT         => 32,
+            RHD2132_CS_INACTIVE_CLKS          => 32
         )
         port map (
             i_clk     => i_clk_tb,
