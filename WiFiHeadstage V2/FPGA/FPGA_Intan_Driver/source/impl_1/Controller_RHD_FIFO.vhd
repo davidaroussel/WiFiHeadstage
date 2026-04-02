@@ -199,48 +199,26 @@ begin
 			int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
 		
 			--case debug_counter is
-				--when 0 => 
-					--int_FIFO_DATA(15 downto 0) <= x"00BB";
-				--when 61 => 
-					--int_FIFO_DATA(15 downto 0) <= x"99AA";
-				--when 62 => 
-					--int_FIFO_DATA(15 downto 0) <= x"BBCC";
-				--when 63 => 
-					--int_FIFO_DATA(15 downto 0) <= x"DDEE";
+				--when 1 => 
+					--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when 2 => 
+					--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when 3 => 
+					--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when 15 => 
+					--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
 				--when others =>
+					--int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
 			--end case;
 			
-			--if first_loop < 2 then
-				--int_FIFO_DATA(15 downto 0)  <= x"0000";
-				--first_loop <= first_loop + 1;
-				
-			--else 
-				--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned((debug_counter) * 512, 16));
-				--if debug_counter < 31 then 
-					--debug_counter <= debug_counter + 1;
-				--else
-					--debug_counter <= 0;
-				--end if;			
-			--end if;
 			
-			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned((debug_counter) * 512, 16));
-			--if debug_counter < 31 then 
-				--debug_counter <= debug_counter + 1;
-			--else
+			----int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned((debug_counter) * 512, 16));
+			--if debug_counter > 14 then 
 				--debug_counter <= 0;
+			--else
+				--debug_counter <= debug_counter + 1;
 			--end if;			
 			
-			
-			--if signal_lag < 32 then
-				--if debug_counter < 64 then 
-					--debug_counter <= debug_counter + 1;
-				--else
-					--debug_counter <= 0;
-				--end if;
-				--signal_lag <= 0;
-			--else 
-				--signal_lag <= signal_lag + 1;
-			--end if;
 
 		  else
 			int_FIFO_WE <= '0';

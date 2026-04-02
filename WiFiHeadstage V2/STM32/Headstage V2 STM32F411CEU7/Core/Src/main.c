@@ -47,7 +47,15 @@ uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 #define NRF_FRAME_SIZE FPGA_ACCUM_SIZE
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
-uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
+
+#define NRF_NUM_BUFFERS 2
+
+uint8_t nrf_tx_buffer[NRF_NUM_BUFFERS][NRF_FRAME_SIZE];
+
+volatile uint8_t nrf_write_idx = 0;
+volatile uint8_t nrf_read_idx  = 1;
+
+//uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
 uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
 
 /* USER CODE END PD */
@@ -79,6 +87,7 @@ static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
 static void Reset_All_SPI_Links(void);
 static void Init_Intan(void);
+static inline void Swap_nRF_Buffers(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -180,6 +189,12 @@ int main(void)
 
 	  if (fpga_frame_ready)
 	  {
+		  HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+		  if (spi_counter == STACK_SIZE){
+			  spi_nrf_ready = 1;
+			  spi_counter = 0;
+		  }
+
 		  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 		  fpga_frame_ready = 0;
 		  spi_nrf_ready = 1;
@@ -187,13 +202,15 @@ int main(void)
 
 	  if (spi_nrf_ready)
 	  {
-		  spi_nrf_ready = 0;
+	      spi_nrf_ready = 0;
 
-		  Prepare_nRF_Frame();
+	      Prepare_nRF_Frame();
 
-		  HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+	      Swap_nRF_Buffers();
 
-		  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+	      HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer[nrf_read_idx], nrf_rx_buffer, NRF_FRAME_SIZE);
+
+	      HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 	  }
     }
 }
@@ -218,33 +235,33 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLQ = 4;
 
-//    RCC_OscInitStruct.PLL.PLLM = 25;
-//    RCC_OscInitStruct.PLL.PLLN = 320;    // SYSCLK = 80 MHz Not Working
-//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
-//    RCC_OscInitStruct.PLL.PLLM = 16;
-//    RCC_OscInitStruct.PLL.PLLN = 192;    // SYSCLK = 75 MHz Not Working
-//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
 
 //    RCC_OscInitStruct.PLL.PLLM = 25;
 //    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-
-
     RCC_OscInitStruct.PLL.PLLM = 25;
-    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+    RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//    RCC_OscInitStruct.PLL.PLLM = 25;
+//    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+    //    RCC_OscInitStruct.PLL.PLLM = 16;
+    //	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
+    //	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//	RCC_OscInitStruct.PLL.PLLM = 25;
+//	RCC_OscInitStruct.PLL.PLLN = 192;    // SYSCLK = 48 MHz
+//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 
 //    RCC_OscInitStruct.PLL.PLLM = 25;
 //    RCC_OscInitStruct.PLL.PLLN = 168;    // SYSCLK = 42 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-//    RCC_OscInitStruct.PLL.PLLM = 16;
-//	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
-//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
 
 
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -466,11 +483,11 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
         spi_fpga_ready = 1;
 //        printf("SPI_COUNTER %i \r\n", spi_counter);
         // Restart DMA immediately
-        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
-        if (spi_counter == STACK_SIZE){
-        	spi_nrf_ready = 1;
-        	spi_counter = 0;
-        }
+//        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+//        if (spi_counter == STACK_SIZE){
+//        	spi_nrf_ready = 1;
+//        	spi_counter = 0;
+//        }
     }
 }
 
@@ -585,13 +602,36 @@ static void Reset_All_SPI_Links(void)
 }
 
 
+static inline void Swap_nRF_Buffers(void)
+{
+    uint8_t temp = nrf_read_idx;
+    nrf_read_idx = nrf_write_idx;
+    nrf_write_idx = temp;
+}
+
 
 static void Prepare_nRF_Frame(void)
 {
 //	printf("PREPARE FRAME \r\n");
 
 
-    memcpy(&nrf_tx_buffer[0], fpga_accum_buffer, FPGA_ACCUM_SIZE);
+	uint8_t *buf = nrf_tx_buffer[nrf_write_idx];
+
+	memcpy(buf, fpga_accum_buffer, FPGA_ACCUM_SIZE);
+
+//    memcpy(&nrf_tx_buffer[0], fpga_accum_buffer, FPGA_ACCUM_SIZE);
+
+//    uint32_t starting_row = 4096; // 64 * 64 bytes
+//    uint32_t idx = 0;
+//
+//    for (int i = 0; i < 32; i++)
+//    {
+//        idx = starting_row + i * 2;
+//
+//        // You were only writing 1 byte — this fills full 16-bit samples
+//        nrf_tx_buffer[idx]     = 0xCC;
+//        nrf_tx_buffer[idx + 1] = 0xCC;
+//    }
 
     nrf_tx_buffer[0] = 0xAA;
     nrf_tx_buffer[1] = 0x54;

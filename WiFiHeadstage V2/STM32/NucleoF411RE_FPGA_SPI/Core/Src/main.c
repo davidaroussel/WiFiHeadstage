@@ -194,7 +194,7 @@ int main(void)
 
           Prepare_nRF_Frame();
 
-          HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+//          HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
 
           HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
       }
@@ -509,7 +509,7 @@ static void Init_Intan(void){
 	uint8_t rhd2216_detected = 0;
 	uint8_t rhd2216_doubled = 0;
 	uint32_t retry_counter = 0;
-	uint8_t DUAL_INTAN = 1;
+	uint8_t DUAL_INTAN = 0;
 	HAL_SPI_DeInit(&hspi4);
 	uint16_t rhd_chip = 0;
 
@@ -518,47 +518,47 @@ static void Init_Intan(void){
 	//  HAL_Delay(1000);
 	if (DUAL_INTAN)
 	{
-	printf("[INFO] Initializing RHD in passthrough mode...\r\n");
-	while (!(rhd2132_detected && rhd2216_detected))
-	{
-		rhd_chip = INIT_RHD(&hspi4);
-
-		if (rhd_chip == 0xFFFF)
+		printf("[INFO] Initializing RHD in passthrough mode...\r\n");
+		while (!(rhd2132_detected && rhd2216_detected))
 		{
-			if ((retry_counter % 100) == 0){
-				printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
-			}
-			retry_counter += 1;
-		}
-		else
-		{
-			if (rhd_chip == RHD2132_ID && !rhd2132_detected)
-			{
-				if (!rhd2132_doubled){
-					rhd2132_doubled = 1;
-					printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
-					printf("[OK] RHD2132 Initialized Once\r\n");
-				}
-				else{
-					rhd2132_detected = 1;
-					printf("[OK] RHD2132 Initialized Twice\r\n");
-				}
+			rhd_chip = INIT_RHD(&hspi4);
 
-			}
-			else if (rhd_chip == RHD2216_ID && !rhd2216_detected)
+			if (rhd_chip == 0xFFFF)
 			{
-				if (!rhd2216_doubled){
-					rhd2216_doubled = 1;
-					printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
-					printf("[OK] RHD2132 Initialized Once\r\n");
+				if ((retry_counter % 100) == 0){
+					printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
 				}
-				else{
-					rhd2216_detected = 1;
-					printf("[OK] RHD2132 Initialized Twice\r\n");
+				retry_counter += 1;
+			}
+			else
+			{
+				if (rhd_chip == RHD2132_ID && !rhd2132_detected)
+				{
+					if (!rhd2132_doubled){
+						rhd2132_doubled = 1;
+						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+						printf("[OK] RHD2132 Initialized Once\r\n");
+					}
+					else{
+						rhd2132_detected = 1;
+						printf("[OK] RHD2132 Initialized Twice\r\n");
+					}
+
+				}
+				else if (rhd_chip == RHD2216_ID && !rhd2216_detected)
+				{
+					if (!rhd2216_doubled){
+						rhd2216_doubled = 1;
+						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+						printf("[OK] RHD2132 Initialized Once\r\n");
+					}
+					else{
+						rhd2216_detected = 1;
+						printf("[OK] RHD2132 Initialized Twice\r\n");
+					}
 				}
 			}
-		}
-		HAL_Delay(10);
+			HAL_Delay(10);
 	  }
 
 	  if (rhd2132_detected && rhd2216_detected)

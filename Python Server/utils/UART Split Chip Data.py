@@ -21,7 +21,18 @@ scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
 LOG_FILE = "raw_uart_capture.txt"
 
+def log_capture_raw(raw_blocks):
+    """
+    Logs rows exactly as 32-space-separated values per row.
+    """
+    with open(LOG_FILE, "a") as f:
+        f.write("\n================ NEW CAPTURE ================\n")
 
+        for row in raw_blocks:
+            line = " ".join(map(str, row))
+            f.write(f"{line}\n")
+
+    print(f"[INFO] Logged {len(raw_blocks)} rows to {LOG_FILE}")
 # ============================================================
 def log_capture_strict(raw_blocks, valid_mask):
     """
@@ -99,10 +110,36 @@ def uart_receive_strict():
                         capture_buffer.clear()
                         continue
 
-                    raw = np.frombuffer(capture_buffer[:usable_bytes], dtype='>i2')
+                    try:
+                        # ---- convert HEX text → integers ----
+                        raw_ints = [int(x, 16) for x in capture_buffer[:usable_bytes].split()]
+                    except:
+                        continue
+                    # find first value with LSB = 1
+                    start_idx = next((i for i, v in enumerate(raw_ints) if v & 1), None)
 
-                    num_rows = raw.size // BLOCK_SIZE
-                    raw_blocks = raw[:num_rows * BLOCK_SIZE].reshape(num_rows, BLOCK_SIZE)
+                    if start_idx is not None:
+                        raw_ints = raw_ints[start_idx:]
+                    else:
+                        print("[WARNING] No value with LSB=1 found")
+                    # ---- detect anomalies ----
+                    for i, v in enumerate(raw_ints):
+                        if v > 32:
+                            print(i)
+
+                    raw_ints = np.array(raw_ints, dtype=np.uint16)
+
+                    # ---- reshape into blocks ----
+                    num_rows = len(raw_ints) // BLOCK_SIZE
+                    raw_blocks = raw_ints[:num_rows * BLOCK_SIZE].reshape(num_rows, BLOCK_SIZE)
+                    raw_blocks = np.clip(raw_blocks, -32768, 32768)
+                    # ---- LOG DATA ----
+                    with open("capture_log.txt", "w") as f:
+                        for row in raw_blocks:
+                            f.write(" ".join(map(str, row)) + "\n")
+
+                    # ---- optional strict logging ----
+                    # log_capture_raw(raw_blocks)
 
                     # STRICT VALIDATION (identical to TCP)
                     row_lsb = raw_blocks & 0x0001
@@ -113,7 +150,7 @@ def uart_receive_strict():
                     print(f"[INFO] Deleted rows: {len(deleted_indices)}")
 
                     # ---- LOG STRICTLY ----
-                    log_capture_strict(raw_blocks, valid_mask)
+                    # log_capture_strict(raw_blocks, valid_mask)
 
                     # ---- SPLIT ----
                     emg_mask = valid_mask & (first_lsb.flatten() == 1)
