@@ -240,13 +240,13 @@ void SystemClock_Config(void)
 //    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-    RCC_OscInitStruct.PLL.PLLM = 25;
-    RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
 //    RCC_OscInitStruct.PLL.PLLM = 25;
-//    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+//    RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+    RCC_OscInitStruct.PLL.PLLM = 25;
+    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
     //    RCC_OscInitStruct.PLL.PLLM = 16;
     //	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
@@ -633,8 +633,8 @@ static void Prepare_nRF_Frame(void)
 //        nrf_tx_buffer[idx + 1] = 0xCC;
 //    }
 
-    nrf_tx_buffer[0] = 0xAA;
-    nrf_tx_buffer[1] = 0x54;
+//    nrf_tx_buffer[0] = 0xAA;
+//    nrf_tx_buffer[1] = 0x54;
 //
 //    nrf_tx_buffer[NRF_FRAME_SIZE - 2] = 0xAA;
 //    nrf_tx_buffer[NRF_FRAME_SIZE - 1] = 0x55;
