@@ -240,13 +240,13 @@ void SystemClock_Config(void)
 //    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 //    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-//    RCC_OscInitStruct.PLL.PLLM = 25;
-//    RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
-//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
     RCC_OscInitStruct.PLL.PLLM = 25;
-    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+    RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//    RCC_OscInitStruct.PLL.PLLM = 25;
+//    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
+//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
     //    RCC_OscInitStruct.PLL.PLLM = 16;
     //	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz

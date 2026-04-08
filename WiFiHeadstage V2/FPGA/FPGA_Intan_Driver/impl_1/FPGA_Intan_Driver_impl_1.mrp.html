@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
-Mapped on: Tue Apr  7 17:59:37 2026
+Mapped on: Wed Apr  8 16:05:22 2026
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -64,8 +64,8 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
 
    Number of slice registers: 1436 out of  5280 (27%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           2407 out of  5280 (46%)
-      Number of logic LUT4s:             1240
+   Number of LUT4s:           2406 out of  5280 (46%)
+      Number of logic LUT4s:             1239
       Number of inserted feedthru LUT4s: 754
       Number of replicated LUT4s:        111
       Number of ripple logic:            151 (302 LUT4s)
@@ -100,7 +100,7 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
       Net n11747: 1 loads, 1 SLICEs
       Net Controller_inst.n27: 1 loads, 1 SLICEs
       Net Controller_inst.n4_adj_1633: 32 loads, 32 SLICEs
-      Net Controller_inst.n20293: 1 loads, 1 SLICEs
+      Net Controller_inst.n20298: 1 loads, 1 SLICEs
       Net Controller_inst.n1612: 41 loads, 41 SLICEs
       Net Controller_inst.n4589: 256 loads, 256 SLICEs
       Net Controller_inst.n4591: 4 loads, 4 SLICEs
@@ -108,18 +108,18 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
       Net Controller_inst.n10540: 1 loads, 1 SLICEs
       Net Controller_inst.int_STM32_TX_DV: 256 loads, 256 SLICEs
       Net Controller_inst.int_RHD2216_TX_DV: 4 loads, 4 SLICEs
-      Net Controller_inst.n20594: 1 loads, 1 SLICEs
-      Net Controller_inst.n4_adj_1656: 32 loads, 32 SLICEs
+      Net Controller_inst.n20599: 1 loads, 1 SLICEs
+      Net Controller_inst.n4_adj_1654: 32 loads, 32 SLICEs
       Net Controller_inst.int_RHD2132_TX_DV: 4 loads, 4 SLICEs
       Net Controller_inst.n4593: 4 loads, 4 SLICEs
       Net Controller_inst.n7459: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n21370: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n21378: 1 loads, 1 SLICEs
       Net Controller_inst.SPI_Master_CS_STM32_1.n10893: 6 loads, 6 SLICEs
       Net Controller_inst.SPI_Master_CS_STM32_1.n7499: 1 loads, 1 SLICEs
       Net Controller_inst.SPI_Master_CS_STM32_1.n10961: 9 loads, 9 SLICEs
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n13104: 10 loads,
      10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20659: 1 loads, 1
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20664: 1 loads, 1
      SLICEs
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n10913: 1 loads, 1
      SLICEs
@@ -170,7 +170,7 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
      Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n10858:
      4 loads, 4 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n17522:
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n17523:
      6 loads, 6 SLICEs
       Net
      Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n10991:
@@ -191,7 +191,7 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
    Top 10 highest fanout non-clock nets:
       Net o_reset_c: 1000 loads
       Net maxfan_replicated_net_435: 431 loads
-      Net Controller_inst.int_STM32_TX_DV: 278 loads
+      Net Controller_inst.int_STM32_TX_DV: 279 loads
       Net Controller_inst.n4589: 256 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]:
      123 loads
@@ -199,7 +199,7 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]:
      70 loads
       Net Controller_inst.n8: 64 loads
-      Net Controller_inst.n8_adj_1638: 64 loads
+      Net Controller_inst.n8_adj_1637: 64 loads
       Net Controller_inst.stm32_state[0]: 54 loads
 
    Number of warnings:  0
@@ -272,11 +272,11 @@ INFO &lt;52291017&gt; - map: Port &apos;RGB2_OUT&apos; is located on BB_OD pad &
 +---------------------+-----------+-----------+-------+-------+-----------+
 | i_STM32_SPI4_MISO   | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| RGB1_OUT            | OUTPUT    |           |       |       | OD        |
+| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | RGB2_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
+| RGB1_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
 
 <A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
@@ -300,7 +300,7 @@ PLL 1:                                 Pin/Node Value
   Lock Signal:                                  NONE
   Input Clock Frequency (MHz):                  NA
   Reference Divider:                            0
-  Feedback Divider:                             63
+  Feedback Divider:                             71
   VCO Divider:                                  4
   ENABLE_ICEGATE_PORTA:                         0
   ENABLE_ICEGATE_PORTB:                         0
@@ -337,7 +337,7 @@ Instance Name: Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0
    Total CPU Time: 1 secs
    Total REAL Time: 2 secs
    Peak Memory Usage: 102 MB
-Checksum -- map: 848df3b939511d175255cc63384c3526c7946a96
+Checksum -- map: df6dcccb7c2da0c1eb77f44a35747f62a7b6cd5c
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

@@ -12,7 +12,7 @@ entity top_level is
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2132_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD2132_CS_INACTIVE_CLKS        : integer := 64;
+        RHD2132_CS_INACTIVE_CLKS        : integer := 96;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2216_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz

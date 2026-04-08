@@ -680,7 +680,7 @@ architecture RTL of Controller_RHD_Sampling is
 		
 		chip_toggle <= '0';
 		RHD_Interval_Counter <= 0;
-		RHD2216_Interval_Counter <= 0;
+		
 		alt_counter   <= 0;  
 		
 		rgd_info_sig_green   <= '1';
@@ -879,11 +879,6 @@ architecture RTL of Controller_RHD_Sampling is
 						temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) and x"FFFE";
 						int_FIFO_RHD2216_RE <= '0'; 
 						
-						if RHD2216_Interval_Counter > 126 then
-							RHD2216_Interval_Counter <= 0;
-						else
-							RHD2216_Interval_Counter <= RHD2216_Interval_Counter + 1;
-						end if;	
 						stm32_state <= 6;				
 					end if;
 			
@@ -1002,7 +997,7 @@ architecture RTL of Controller_RHD_Sampling is
 			rhd2216_index           <= 0;
 			rhd2216_state           <= 0;
 			rgd_info_sig_red   <= '1';
-			
+			RHD2216_Interval_Counter <= 0;
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
 				rgd_info_sig_red <= '0';
@@ -1015,6 +1010,7 @@ architecture RTL of Controller_RHD_Sampling is
 						-- STATE 0 : PREPARE NEXT BYTE
 						----------------------------------------------------------------
 						when 0 =>
+							
 							int_RHD2216_TX_Byte <= channel_array(rhd2216_index);
 							--int_RHD2216_TX_Byte <= x"E800";
 							-- Wait until SPI/FIFO ready before sending
