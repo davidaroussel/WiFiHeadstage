@@ -40,6 +40,25 @@ def log_raw_capture_with_headers(capture_buffer, file_path="raw_data.txt", point
     print(f"[INFO] Raw data saved to {file_path}, total {len(raw_ints)} integers, headers marked")
 
 
+def remove_repeated_rows_fast(blocks, min_repeats=4):
+    sorted_blocks = np.sort(blocks, axis=1)
+
+    # Compute run lengths
+    diff = np.diff(sorted_blocks, axis=1)
+    same = (diff == 0)
+
+    # Count consecutive equal values
+    counts = np.ones_like(sorted_blocks)
+    counts[:, 1:] += same
+
+    # Reset count when value changes
+    counts = np.where(same, counts[:, :-1] + 1, 1)
+    counts = np.concatenate([np.ones((blocks.shape[0], 1)), counts], axis=1)
+
+    max_counts = counts.max(axis=1)
+
+    mask = max_counts < min_repeats
+    return blocks[mask], mask
 
 def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
 
@@ -135,12 +154,17 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                         # Reshape into rows of 32 for easy LSB checking
                         raw_blocks = raw[:num_lines * block_size].reshape(num_lines, block_size)
 
+                        # Remove rows with repeated values (e.g., -1800 repeated 16 times)
+                        filtered_blocks, repeat_mask = remove_repeated_rows_fast(raw_blocks, min_repeats=4)
+
+                        print(f"[INFO] Rows removed due to repetition: {np.sum(~repeat_mask)}")
+
                         # LSB masks
                         emg_mask = np.all((raw_blocks & 0x0001) == 1, axis=1)  # True if all 32 LSB=1
                         neuro_mask = np.all((raw_blocks & 0x0001) == 0, axis=1)  # True if all 32 LSB=0
 
                         # Valid rows
-                        valid_rows_mask = emg_mask | neuro_mask
+                        valid_rows_mask = (emg_mask | neuro_mask) & repeat_mask
                         deleted_rows_indices = np.flatnonzero(~valid_rows_mask)
 
                         print(f"[INFO] Deleted rows in this buffer: {len(deleted_rows_indices)}")

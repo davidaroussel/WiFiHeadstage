@@ -50,12 +50,12 @@ class DataConverterV2:
     def connect_TCP(self, port, stream_type="neuro"):
         numChannels = self.num_channels
         numSamples = self.openephys_buffer_size
-        offset = 0
+        offset = 32768
         dataType = 2
         elementSize = 2  # uint16
         bytesPerBuffer = numChannels * numSamples * elementSize
         self.header = (
-                np.array([offset, bytesPerBuffer], dtype='i4').tobytes() +
+                np.array([0, bytesPerBuffer], dtype='i4').tobytes() +
                 np.array([dataType], dtype='i2').tobytes() +
                 np.array([elementSize, numChannels, numSamples], dtype='i4').tobytes()
         )
