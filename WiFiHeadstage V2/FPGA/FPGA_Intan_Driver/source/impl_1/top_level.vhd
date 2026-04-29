@@ -21,7 +21,7 @@ entity top_level is
 		-- 0: Neuro Only 
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 2
+		RHD_SAMPLING_MODE : integer := 0
 
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 
@@ -299,7 +299,7 @@ begin
 						if CTRL0_IN = '0' then
 							w_Controller_Mode <= x"1";
 						elsif CTRL0_IN = '1' then
-							w_Controller_Mode <= x"2";
+							--w_Controller_Mode <= x"2";
 						end if;
 						stop_counting <= '1';
 						

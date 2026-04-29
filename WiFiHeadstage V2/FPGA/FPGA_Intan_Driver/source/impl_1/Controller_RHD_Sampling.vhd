@@ -876,7 +876,11 @@ architecture RTL of Controller_RHD_Sampling is
 						end if;
 						stm32_counter <= stm32_counter + 1;
 					else
-						temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) and x"FFFE";
+						if SAMPLING_MODE = "01" then
+							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) and x"FFFE";
+						else
+							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2216_Q(15 downto 0) or x"0001";
+						end if;
 						int_FIFO_RHD2216_RE <= '0'; 
 						
 						stm32_state <= 6;				

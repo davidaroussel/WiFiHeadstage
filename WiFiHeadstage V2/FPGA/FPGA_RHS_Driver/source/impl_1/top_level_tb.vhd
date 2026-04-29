@@ -47,10 +47,10 @@ begin
             STM32_SPI_NUM_BITS_PER_PACKET => 512,
             STM32_CLKS_PER_HALF_BIT       => 16,
             STM32_CS_INACTIVE_CLKS        => 16,
-            RHD_SPI_DDR_MODE              => 1,
-            RHD_SPI_NUM_BITS_PER_PACKET   => 16,
-            RHD_CLKS_PER_HALF_BIT         => 32,
-            RHD_CS_INACTIVE_CLKS          => 32
+            RHD2132_SPI_DDR_MODE          => 1,
+            RHD2132_SPI_NUM_BITS_PER_PACKET   => 16,
+            RHD2132_CLKS_PER_HALF_BIT         => 32,
+            RHD2132_CS_INACTIVE_CLKS          => 32
         )
         port map (
             i_clk     => i_clk_tb,
@@ -60,10 +60,10 @@ begin
             o_STM32_SPI4_Clk  => o_STM32_SPI_Clk_tb,
             o_STM32_SPI4_CS_n => o_STM32_SPI_CS_n_tb,
 
-            o_RHS_SPI_MOSI    => o_RHD_SPI_MOSI_tb,
-            i_RHS_SPI_MISO_1  => i_RHD_SPI_MISO_tb,
-            o_RHS_SPI_Clk     => o_RHD_SPI_Clk_tb,
-            o_RHS_SPI_CS_n_1  => o_RHD_SPI_CS_n_tb,
+            o_RHD2132_SPI_MOSI   => o_RHD_SPI_MOSI_tb,
+            i_RHD2132_SPI_MISO   => i_RHD_SPI_MISO_tb,
+            o_RHD2132_SPI_Clk    => o_RHD_SPI_Clk_tb,
+            o_RHD2132_SPI_CS_n   => o_RHD_SPI_CS_n_tb,
 
             RGB0_OUT => RGB0_OUT_tb,
             RGB1_OUT => RGB1_OUT_tb,

@@ -3235,8 +3235,8 @@ static void Init_Intan(void){
 				}
 			}
 		}
-		HAL_Delay(10);
- 80017ea:	200a      	movs	r0, #10
+		HAL_Delay(1);
+ 80017ea:	2001      	movs	r0, #1
  80017ec:	f000 fc1c 	bl	8002028 <HAL_Delay>
 	while (!(rhd2132_detected && rhd2216_detected))
  80017f0:	7dfb      	ldrb	r3, [r7, #23]
