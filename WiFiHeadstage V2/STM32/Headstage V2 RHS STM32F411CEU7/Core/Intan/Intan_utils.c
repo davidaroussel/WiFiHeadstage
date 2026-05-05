@@ -41,7 +41,7 @@ void SPI_SEND_RECV(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_ptr, 
 	if (hspi->Instance == SPI3) {
 		RHS_SPI_CS_Port->BSRR = (uint32_t)RHS_SPI_CS_Pin << 16U;
 	} else if (hspi->Instance == SPI4) {
-		RHD_SPI_CS_Port->BSRR = (uint32_t)RHD_SPI_CS_Pin << 16U;
+		RHS_SPI_CS_Port->BSRR = (uint32_t)RHS_SPI_CS_Pin << 16U;
 	}
 
 	while ((hspi->TxXferCount > 0U) || (hspi->RxXferCount > 0U)) {
@@ -68,7 +68,7 @@ void SPI_SEND_RECV(SPI_HandleTypeDef *hspi, uint16_t *tx_ptr, uint16_t *rx_ptr, 
 	if (hspi->Instance == SPI3){
 		RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
 	} else if (hspi->Instance == SPI4) {
-		RHD_SPI_CS_Port->BSRR = RHD_SPI_CS_Pin;
+		RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
 	}
 }
 

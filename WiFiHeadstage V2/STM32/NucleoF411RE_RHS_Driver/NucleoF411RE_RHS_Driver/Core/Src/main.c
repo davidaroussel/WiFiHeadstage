@@ -33,7 +33,22 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define FPGA_CHUNK_SIZE 4096
+#define FPGA_ACCUM_SIZE 8192
+#define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
+#define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
+
+#define SPI_TX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
+
+
+#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE) // 2B header + payload + 2B footer
+uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
+uint32_t fpga_accum_index = 0;
+uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
+uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,30 +57,18 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi4;
 SPI_HandleTypeDef hspi3;
+SPI_HandleTypeDef hspi4;
+DMA_HandleTypeDef hdma_spi1_rx;
+DMA_HandleTypeDef hdma_spi1_tx;
+DMA_HandleTypeDef hdma_spi4_rx;
+DMA_HandleTypeDef hdma_spi4_tx;
 
 TIM_HandleTypeDef htim11;
 
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
-static void MX_SPI3_Init(void);
-static void SPI4_Master_Init(void);
-static void MX_TIM11_Init(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
 #ifdef __GNUC__
 /* With GCC, small printf (option LD Linker->Libraries->Small printf
    set to 'Yes') calls __io_putchar() */
@@ -73,6 +76,24 @@ static void MX_TIM11_Init(void);
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
+/* USER CODE END PV */
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi);
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_USART2_UART_Init(void);
+static void MX_SPI3_Init(void);
+static void SPI4_Master_Init(void);
+
+
+static void MX_TIM11_Init(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
 /* USER CODE END 0 */
 
 static boolean test_stim = 0;
@@ -109,7 +130,6 @@ int main(void)
   MX_GPIO_Init();
   HAL_GPIO_WritePin(RHS_SPI_CS_Port, RHS_SPI_CS_Pin, 1);
 
-
   MX_USART2_UART_Init();
 //  MX_SPI3_Init();   //NOT PASSTHROUGH
   SPI4_Master_Init(); //PASSTHROUGH
@@ -133,47 +153,47 @@ int main(void)
 
 
 
-//	if(test_stim)
-//	{  	//GABRIEL QUESTIONS: MIN-MAX TESTÉ
-//		//Test electrical stimulation
-//		HAL_TIM_Base_Start_IT(&htim11);
-//		uint16_t p_activated_channels = 0x0001;
-//		uint32_t p_period_us = 10000;
-//		uint32_t p_pulse_width_us = 100;
-//		uint32_t p_dead_zone_us = 100;
-//		CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
-//		uint8_t p_current_amplitude = 0b00000010;
-//		uint32_t p_callback_period_us = 1;
-//		RHS2116_setup_stim_pattern(hspi, p_activated_channels, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
-////		RHS2116_start_stim_pattern(hspi);
-//		while(1){
-//			RHS2116_start_stim_pattern_single_shot(hspi);
-//			HAL_Delay(10);
-//		}
-//	}
-//	else if (MEP_Mode){
-//		HAL_TIM_Base_Start_IT(&htim11);
-//		uint8_t nb_pulse = 13;
-//		uint16_t channel = 0x0001;
-//		while(1){
-//			RHS2116_Run_Stimulation_Pattern(hspi, nb_pulse, channel);
-//			HAL_Delay(1000);
-////			printf("Running %d Burst Loop \r\n", nb_pulse);
-//		}
-//
-//	}
-//	else
-//	{	printf("Impedance Measurement \r\n");
-//		HAL_TIM_Base_Start_IT(&htim11);
-//		uint8_t testing_channel = 0;
-//		uint8_t testing_time = 1;
-//	//Test electrode impedance measurement
-//		for (int i = 0; i<1000; i++)
-//		{
-//			uint16_t impedance = RHS2116_Electrode_Impedance_Test(hspi, testing_channel, testing_time);
-//			printf("Measured impredance: %d \r\n", impedance);
-//		}
-//	}
+	if(test_stim)
+	{  	//GABRIEL QUESTIONS: MIN-MAX TESTÉ
+		//Test electrical stimulation
+		HAL_TIM_Base_Start_IT(&htim11);
+		uint16_t p_activated_channels = 0x0001;
+		uint32_t p_period_us = 10000;
+		uint32_t p_pulse_width_us = 100;
+		uint32_t p_dead_zone_us = 100;
+		CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
+		uint8_t p_current_amplitude = 0b00000010;
+		uint32_t p_callback_period_us = 1;
+		RHS2116_setup_stim_pattern(hspi, p_activated_channels, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
+//		RHS2116_start_stim_pattern(hspi);
+		while(1){
+			RHS2116_start_stim_pattern_single_shot(hspi);
+			HAL_Delay(10);
+		}
+	}
+	else if (MEP_Mode){
+		HAL_TIM_Base_Start_IT(&htim11);
+		uint8_t nb_pulse = 13;
+		uint16_t channel = 0x0001;
+		while(1){
+			RHS2116_Run_Stimulation_Pattern(hspi, nb_pulse, channel);
+			HAL_Delay(1000);
+			printf("Running %d Burst Loop \r\n", nb_pulse);
+		}
+
+	}
+	else
+	{	printf("Impedance Measurement \r\n");
+		HAL_TIM_Base_Start_IT(&htim11);
+		uint8_t testing_channel = 0;
+		uint8_t testing_time = 1;
+	//Test electrode impedance measurement
+		for (int i = 0; i<1000; i++)
+		{
+			uint16_t impedance = RHS2116_Electrode_Impedance_Test(hspi, testing_channel, testing_time);
+			printf("Measured impredance: %d \r\n", impedance);
+		}
+	}
 
 	/* USER CODE END 2 */
 
@@ -269,7 +289,6 @@ static void MX_SPI3_Init(void)
   /* USER CODE BEGIN SPI3_Init 2 */
 
   /* USER CODE END SPI3_Init 2 */
-
 }
 
 static void SPI4_Master_Init(void)
@@ -297,6 +316,7 @@ static void SPI4_Master_Init(void)
 
 }
 
+
 /**
   * @brief USART2 Initialization Function
   * @param None
@@ -313,7 +333,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 921600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;

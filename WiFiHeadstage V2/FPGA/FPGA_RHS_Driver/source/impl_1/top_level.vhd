@@ -4,15 +4,15 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 2;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
+        STM32_CLKS_PER_HALF_BIT       : integer := 32;
         STM32_CS_INACTIVE_CLKS        : integer := 32;
 			
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD2132_CS_INACTIVE_CLKS        : integer := 96;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 16;
+        RHD2132_CS_INACTIVE_CLKS        : integer := 32;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHD2216_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz
@@ -73,8 +73,9 @@ entity top_level is
         i_RHS_TOP_SPI_MISO_1 : in  STD_LOGIC; 
 		o_RHS_TOP_SPI_CS_n_1 : out STD_LOGIC; 
 		
+		o_RHS_TOP_SPI_MOSI_2   : out STD_LOGIC; --FOR DK
 		i_RHS_TOP_SPI_MISO_2 : in  STD_LOGIC; 
-		o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; 
+		--o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
 		
 		--o_RHS_BOTTOM_SPI_MOSI : out STD_LOGIC; 
         --o_RHS_BOTTOM_SPI_Clk  : out STD_LOGIC; 
@@ -231,16 +232,24 @@ begin
 	
 	Mode_Process : process(pll_clk_int)
 		begin
-			if w_Controller_Mode = x"0" OR w_Controller_Mode = x"1" then
+			if w_Controller_Mode = x"0" then
 				-- Passthrough: STM32 directly drives RHD
 				o_RHS_TOP_SPI_Clk  <= o_STM32_SPI4_Clk;
-				o_RHS_TOP_SPI_MOSI <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
 				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO <= i_RHS_TOP_SPI_MISO_1;  
+				i_STM32_SPI4_MISO <= i_RHS_TOP_SPI_MISO_2;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
 				
+			elsif w_Controller_Mode = x"1" then
+				o_RHS_TOP_SPI_Clk  <= o_STM32_SPI4_Clk;
+				o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO <= i_RHS_TOP_SPI_MISO_2;  
+				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
+				o_STM32_SPI4_MOSI <= 'Z';
+				o_STM32_SPI4_CS_n <= 'Z';
 			else
 				-- Normal mode: controller handles communication
 				o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
@@ -277,7 +286,8 @@ begin
 						w_Controller_Mode <= x"1";
 						
 					when 72000000 =>
-						w_Controller_Mode <= x"2";
+						--w_Controller_Mode <= x"2";
+						--w_Controller_Mode <= x"2";
 						--if CTRL0_IN = '0' then
 							--w_Controller_Mode <= x"1";
 						--elsif CTRL0_IN = '1' then

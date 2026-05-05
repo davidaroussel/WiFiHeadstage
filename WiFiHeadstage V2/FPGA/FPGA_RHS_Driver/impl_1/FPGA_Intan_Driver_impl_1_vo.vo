@@ -2,1129 +2,219 @@
 // Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
 
 // backanno -o FPGA_Intan_Driver_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml FPGA_Intan_Driver_impl_1.udb 
-// Netlist created on Wed Apr 29 13:43:56 2026
-// Netlist written on Wed Apr 29 13:44:07 2026
+// Netlist created on Tue May  5 09:54:44 2026
+// Netlist written on Tue May  5 09:54:53 2026
 // Design is for device iCE40UP5K
 // Design is for package SG48
 // Design is for performance grade High-Performance_1.2V
 
 `timescale 1 ns / 1 ps
 
-module top_level ( o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI, 
-                   o_RHS_TOP_SPI_CS_n_1, o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_MOSI, 
-                   i_STM32_SPI4_MISO, i_RHS_TOP_SPI_MISO_1, i_clk, o_reset, 
+module top_level ( o_RHS_TOP_SPI_CS_n_1, o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_MOSI, 
+                   i_STM32_SPI4_MISO, i_RHS_TOP_SPI_MISO_1, o_STM32_SPI4_CS_n, 
+                   o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI, i_clk, o_reset, 
                    o_Controller_Mode, LED4_OUT, LED3_OUT, LED2_OUT, LED1_OUT, 
-                   o_BOOST_ENABLE, o_RHS_TOP_SPI_CS_n_2, RGB0_OUT, RGB1_OUT, 
-                   RGB2_OUT, i_RHS_TOP_SPI_MISO_2, CTRL0_IN );
-  input  i_RHS_TOP_SPI_MISO_1, i_clk, i_RHS_TOP_SPI_MISO_2, CTRL0_IN;
+                   o_BOOST_ENABLE, o_RHS_TOP_SPI_MOSI_2, RGB2_OUT, RGB1_OUT, 
+                   RGB0_OUT, i_RHS_TOP_SPI_MISO_2, CTRL0_IN );
+  input  i_RHS_TOP_SPI_MISO_1, o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, 
+         o_STM32_SPI4_MOSI, i_clk, i_RHS_TOP_SPI_MISO_2, CTRL0_IN;
   output o_RHS_TOP_SPI_CS_n_1, o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_MOSI, 
          i_STM32_SPI4_MISO, o_reset;
   output [3:0] o_Controller_Mode;
   output LED4_OUT, LED3_OUT, LED2_OUT, LED1_OUT, o_BOOST_ENABLE, 
-         o_RHS_TOP_SPI_CS_n_2, RGB0_OUT, RGB1_OUT, RGB2_OUT;
-  inout  o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI;
-  wire   
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[0] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6374 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[0] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 , o_reset_c, 
-         pll_clk_int, 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5273 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[6] 
-         , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[5] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6449 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[6] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5277 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[5] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5279 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[8] 
-         , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[7] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6452 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[8] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[7] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5281 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[10] 
-         , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[9] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6455 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[10] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[9] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[4] 
-         , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[3] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6446 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[4] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5275 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[3] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[2] 
-         , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[1] 
-         , \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6443 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[2] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6458 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[3] , 
-         VCC_net, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5267 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[3] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5269 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6461 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[5] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[4] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[4] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[5] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6398 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5326 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[6] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[7] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6395 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[5] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5324 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[4] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[5] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[6] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6392 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[3] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5322 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[2] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[3] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[4] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6371 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[0] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5185 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[0] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6362 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[1] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n13_c , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[0] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6389 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[6] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5318 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[5] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[5] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[6] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6386 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[4] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5316 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[3] 
-         , \Controller_inst.n42[3] , \Controller_inst.n42[4] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6383 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[2] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5314 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[1] 
-         , \Controller_inst.n42[1] , \Controller_inst.n42[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6380 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[0] 
-         , \Controller_inst.n42[0] , \reset_counter_27__N_1[26] , 
-         \reset_counter_27__N_1[25] , n6437, \reset_counter[26] , n5309, 
-         \reset_counter[25] , n5311, \reset_counter_27__N_1[8] , 
-         \reset_counter_27__N_1[7] , n6410, \reset_counter[8] , n5291, 
-         \reset_counter[7] , n5293, \reset_counter_27__N_1[6] , 
-         \reset_counter_27__N_1[5] , n6407, \reset_counter[6] , n5289, 
-         \reset_counter[5] , \reset_counter_27__N_1[24] , 
-         \reset_counter_27__N_1[23] , n6434, \reset_counter[24] , n5307, 
-         \reset_counter[23] , \reset_counter_27__N_1[4] , 
-         \reset_counter_27__N_1[3] , n6404, \reset_counter[4] , n5287, 
-         \reset_counter[3] , \reset_counter_27__N_1[22] , 
-         \reset_counter_27__N_1[21] , n6431, \reset_counter[22] , n5305, 
-         \reset_counter[21] , \reset_counter_27__N_1[20] , 
-         \reset_counter_27__N_1[19] , n6428, \reset_counter[20] , n5303, 
-         \reset_counter[19] , \reset_counter_27__N_1[18] , 
-         \reset_counter_27__N_1[17] , n6425, \reset_counter[18] , n5301, 
-         \reset_counter[17] , \reset_counter_27__N_1[2] , 
-         \reset_counter_27__N_1[1] , n6401, \reset_counter[2] , n5285, 
-         \reset_counter[1] , \reset_counter_27__N_1[16] , 
-         \reset_counter_27__N_1[15] , n6422, \reset_counter[16] , n5299, 
-         \reset_counter[15] , \reset_counter_27__N_1[14] , 
-         \reset_counter_27__N_1[13] , n6419, \reset_counter[14] , n5297, 
-         \reset_counter[13] , \reset_counter_27__N_1[0] , n6377, 
-         \reset_counter[0] , n1924, \reset_counter_27__N_1[12] , 
-         \reset_counter_27__N_1[11] , n6416, \reset_counter[12] , n5295, 
-         \reset_counter[11] , \reset_counter_27__N_1[10] , 
-         \reset_counter_27__N_1[9] , n6413, \reset_counter[10] , 
-         \reset_counter[9] , \reset_counter_27__N_1[27] , n6440, 
-         \reset_counter[27] , \Controller_inst.n7_adj_195 , 
-         \Controller_inst.n70 , \rhd_state[0] , \Controller_inst.n3 , 
-         \rhd_state[1] , \Controller_inst.int_RHD2132_TX_DV , 
-         \Controller_inst.n7 , \Controller_inst.n13 , \Controller_inst.n2611 , 
-         \Controller_inst.n5182 , n5915, o_Controller_Mode_c_0, n5914, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3233 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count[0] , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk.sig_000.FeedThruLUT 
-         , int_STM32_SPI_Clk, 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count_1__N_74[0] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[0] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2781 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[6] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[4] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[5] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[2] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[3] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[0] 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[1] 
-         , \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2537 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2535 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5798 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[0] , 
-         \Controller_inst.n72 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5756 , 
-         int_RHS_TOP_SPI_CS_n_1, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[4] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[5] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[2] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[3] , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5195 
-         , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk 
-         , \Controller_inst.r_SPI_Clk_Count[0] , \Controller_inst.n1623 , 
-         \Controller_inst.n2901 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n2899 
-         , \Controller_inst.n5184 , \Controller_inst.n2907 , 
-         \Controller_inst.n2893 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges_6__N_98[6] 
-         , \Controller_inst.n2903 , \Controller_inst.n7_adj_196 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12 , 
-         n69, o_Controller_Mode_c_1, 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n18 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20 , 
-         \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n16 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n12 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5758 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1606 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n16 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5796 , n5802, 
-         n16, n5778, n5762, n5806, n5776, n18, n24, n5792, n5642, n20, n5649, 
-         n2755, n4832, n19, n12, n4843, \n4843$n0 , n5646, n14_adj_197, n5800, 
-         n14, n5912, n30, n13, n13_adj_198, n1801, n2913, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2533 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5788 , 
-         \Controller_inst.n5620 , RGB1_OUT_c, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1500 , 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Count_1__N_96[0] 
-         , o_RHS_TOP_SPI_CS_n_1_c_N_152, o_RHS_TOP_SPI_MOSI_c_N_148, 
-         o_RHS_TOP_SPI_MOSI_c, o_RHS_TOP_SPI_CS_n_1_c, 
-         \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk.sig_001.FeedThruLUT 
-         , int_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_Clk_c_N_150, o_RHS_TOP_SPI_Clk_c, 
-         n2912, i_RHS_TOP_SPI_MISO_1_c, i_STM32_SPI4_MISO_c, 
-         \reset_counter[8].sig_002.FeedThruLUT , n5610, stop_counting, GND_net, 
-         i_clk_c, \pll_inst.lscc_pll_inst.feedback_w ;
+         o_RHS_TOP_SPI_MOSI_2, RGB2_OUT, RGB1_OUT, RGB0_OUT;
+  wire   \reset_counter_27__N_1[27] , n7680, n7175, \reset_counter[27] , 
+         pll_clk_int, \reset_counter_27__N_1[26] , \reset_counter_27__N_1[25] , 
+         n7677, \reset_counter[26] , n7173, \reset_counter[25] , 
+         \reset_counter_27__N_1[24] , \reset_counter_27__N_1[23] , n7674, 
+         \reset_counter[24] , n7171, \reset_counter[23] , 
+         \reset_counter_27__N_1[22] , \reset_counter_27__N_1[21] , n7671, 
+         \reset_counter[22] , n7169, \reset_counter[21] , 
+         \reset_counter_27__N_1[20] , \reset_counter_27__N_1[19] , n7668, 
+         \reset_counter[20] , n7167, \reset_counter[19] , 
+         \reset_counter_27__N_1[18] , \reset_counter_27__N_1[17] , n7665, 
+         \reset_counter[18] , n7165, \reset_counter[17] , 
+         \reset_counter_27__N_1[16] , \reset_counter_27__N_1[15] , n7662, 
+         \reset_counter[16] , n7163, \reset_counter[15] , 
+         \reset_counter_27__N_1[14] , \reset_counter_27__N_1[13] , n7659, 
+         \reset_counter[14] , n7161, \reset_counter[13] , 
+         \reset_counter_27__N_1[12] , \reset_counter_27__N_1[11] , n7656, 
+         \reset_counter[12] , n7159, \reset_counter[11] , 
+         \reset_counter_27__N_1[10] , \reset_counter_27__N_1[9] , n7653, 
+         \reset_counter[10] , n7157, \reset_counter[9] , 
+         \reset_counter_27__N_1[8] , \reset_counter_27__N_1[7] , n7650, 
+         \reset_counter[8] , n7155, \reset_counter[7] , 
+         \reset_counter_27__N_1[6] , \reset_counter_27__N_1[5] , n7647, 
+         \reset_counter[6] , n7153, \reset_counter[5] , 
+         \reset_counter_27__N_1[4] , \reset_counter_27__N_1[3] , n7644, 
+         \reset_counter[4] , n7151, \reset_counter[3] , 
+         \reset_counter_27__N_1[0] , n7638, \reset_counter[0] , n3673, n7149, 
+         \reset_counter_27__N_1[2] , \reset_counter_27__N_1[1] , n7641, 
+         \reset_counter[2] , \reset_counter[1] , \GND_net\000.BUF0 , 
+         o_RHS_TOP_SPI_CS_n_1_c_N_266, o_reset_c, RGB0_OUT_c, n7382, n6228, 
+         n7125, n6250, n7134, n6247, n7098, n6253, n7386, n7388, n12_adj_298, 
+         o_reset_c_N_267, n14, n15, n10, n5, n12, n7380, VCC_net, \n7125$n0 , 
+         o_Controller_Mode_0_0, n6858, stop_counting, GND_net, i_clk_c, 
+         \pll_inst.lscc_pll_inst.feedback_w , o_STM32_SPI4_CS_n_c, 
+         o_STM32_SPI4_Clk_c, o_STM32_SPI4_MOSI_c, i_RHS_TOP_SPI_MISO_1_c;
 
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_0 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_0 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[0] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6374 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[0] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6374 ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[0] ), 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[0] )
-    , .COUT1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5273 ), 
-    .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6374 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_1 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_1 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[6] )
-    , 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[5] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6449 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[6] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5277 ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[5] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5277 ), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6449 ), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[5] ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[6] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[5] )
-    , 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[6] )
-    , .COUT1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5279 ), 
-    .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6449 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_2 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_2 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[8] )
-    , 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[7] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6452 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[8] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5279 ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[7] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5279 ), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6452 ), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[7] ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[8] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[7] )
-    , 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[8] )
-    , .COUT1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5281 ), 
-    .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6452 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_3 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_3 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[10] )
-    , 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[9] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6455 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[10] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5281 ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[9] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5281 ), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6455 ), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[9] ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[10] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[9] )
-    , 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[10] )
-    , .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6455 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_4 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_4 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[4] )
-    , 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[3] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6446 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[4] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5275 ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[3] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5275 ), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6446 ), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[3] ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[4] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[3] )
-    , 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[4] )
-    , .COUT1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5277 ), 
-    .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6446 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_5 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_5 ( 
-    .DI1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[2] )
-    , 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[1] )
-    , .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6443 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[2] ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5273 ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[1] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .CIN0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5273 ), 
-    .CIN1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6443 ), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[1] ), 
-    .Q1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[2] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[1] )
-    , 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges_10__N_76[2] )
-    , .COUT1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n5275 ), 
-    .COUT0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n6443 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_6 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_6 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6458 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[3] ), 
-    .B1(VCC_net), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5267 ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[2] ), 
-    .B0(VCC_net), 
-    .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5267 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6458 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[2] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[3] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5269 ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6458 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_7 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_7 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6461 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[5] ), 
-    .B1(VCC_net), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5269 ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[4] ), 
-    .B0(VCC_net), 
-    .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5269 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6461 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[4] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[5] ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6461 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_8 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_8 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6398 ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5326 ), 
-    .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[6] )
-    , .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5326 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6398 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[7] ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6398 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_9 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_9 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6395 ), 
-    .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[5] )
-    , .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5324 ), 
-    .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[4] )
-    , .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5324 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6395 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[5] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[6] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5326 ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6395 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_10 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_10 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6392 ), 
-    .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[3] )
-    , .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5322 ), 
-    .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[2] )
-    , .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5322 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6392 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[3] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[4] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5324 ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6392 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_11 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_11 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6371 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[1] ), 
-    .B1(VCC_net), .D0(VCC_net), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[0] ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5185 ), 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6371 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[0] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[1] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5267 ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6371 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_12 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_12 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6362 ), 
-    .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[1] )
-    , .D0(VCC_net), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n13_c ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[0] )
-    , .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6362 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[1] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[2] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5322 ), 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n6362 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_13 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_13 
-    ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6389 )
-    , .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[6] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5318 )
-    , .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[5] )
-    , 
-    .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5318 )
-    , 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6389 )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[5] )
-    , 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[6] )
-    , 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6389 )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_14 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_14 
-    ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6386 )
-    , .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[4] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5316 )
-    , .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[3] )
-    , 
-    .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5316 )
-    , 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6386 )
-    , .F0(\Controller_inst.n42[3] ), .F1(\Controller_inst.n42[4] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5318 )
-    , 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6386 )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_15 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_15 
-    ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6383 )
-    , .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[2] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5314 )
-    , .C0(VCC_net), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[1] )
-    , 
-    .CIN0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5314 )
-    , 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6383 )
-    , .F0(\Controller_inst.n42[1] ), .F1(\Controller_inst.n42[2] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5316 )
-    , 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6383 )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_16 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_16 
-    ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6380 )
-    , .C1(VCC_net), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[0] )
-    , 
-    .CIN1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6380 )
-    , .F1(\Controller_inst.n42[0] ), 
-    .COUT1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5314 )
-    , 
-    .COUT0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n6380 )
-    );
-  SLICE_17 SLICE_17( .DI1(\reset_counter_27__N_1[26] ), 
-    .DI0(\reset_counter_27__N_1[25] ), .D1(n6437), .C1(\reset_counter[26] ), 
-    .D0(n5309), .C0(\reset_counter[25] ), .CLK(pll_clk_int), .CIN0(n5309), 
-    .CIN1(n6437), .Q0(\reset_counter[25] ), .Q1(\reset_counter[26] ), 
+  SLICE_0 SLICE_0( .DI0(\reset_counter_27__N_1[27] ), .D1(n7680), .D0(n7175), 
+    .C0(\reset_counter[27] ), .CLK(pll_clk_int), .CIN0(n7175), .CIN1(n7680), 
+    .Q0(\reset_counter[27] ), .F0(\reset_counter_27__N_1[27] ), .COUT0(n7680));
+  SLICE_1 SLICE_1( .DI1(\reset_counter_27__N_1[26] ), 
+    .DI0(\reset_counter_27__N_1[25] ), .D1(n7677), .C1(\reset_counter[26] ), 
+    .D0(n7173), .C0(\reset_counter[25] ), .CLK(pll_clk_int), .CIN0(n7173), 
+    .CIN1(n7677), .Q0(\reset_counter[25] ), .Q1(\reset_counter[26] ), 
     .F0(\reset_counter_27__N_1[25] ), .F1(\reset_counter_27__N_1[26] ), 
-    .COUT1(n5311), .COUT0(n6437));
-  SLICE_18 SLICE_18( .DI1(\reset_counter_27__N_1[8] ), 
-    .DI0(\reset_counter_27__N_1[7] ), .D1(n6410), .C1(\reset_counter[8] ), 
-    .D0(n5291), .C0(\reset_counter[7] ), .CLK(pll_clk_int), .CIN0(n5291), 
-    .CIN1(n6410), .Q0(\reset_counter[7] ), .Q1(\reset_counter[8] ), 
-    .F0(\reset_counter_27__N_1[7] ), .F1(\reset_counter_27__N_1[8] ), 
-    .COUT1(n5293), .COUT0(n6410));
-  SLICE_19 SLICE_19( .DI1(\reset_counter_27__N_1[6] ), 
-    .DI0(\reset_counter_27__N_1[5] ), .D1(n6407), .C1(\reset_counter[6] ), 
-    .D0(n5289), .C0(\reset_counter[5] ), .CLK(pll_clk_int), .CIN0(n5289), 
-    .CIN1(n6407), .Q0(\reset_counter[5] ), .Q1(\reset_counter[6] ), 
-    .F0(\reset_counter_27__N_1[5] ), .F1(\reset_counter_27__N_1[6] ), 
-    .COUT1(n5291), .COUT0(n6407));
-  SLICE_20 SLICE_20( .DI1(\reset_counter_27__N_1[24] ), 
-    .DI0(\reset_counter_27__N_1[23] ), .D1(n6434), .C1(\reset_counter[24] ), 
-    .D0(n5307), .C0(\reset_counter[23] ), .CLK(pll_clk_int), .CIN0(n5307), 
-    .CIN1(n6434), .Q0(\reset_counter[23] ), .Q1(\reset_counter[24] ), 
+    .COUT1(n7175), .COUT0(n7677));
+  SLICE_2 SLICE_2( .DI1(\reset_counter_27__N_1[24] ), 
+    .DI0(\reset_counter_27__N_1[23] ), .D1(n7674), .C1(\reset_counter[24] ), 
+    .D0(n7171), .C0(\reset_counter[23] ), .CLK(pll_clk_int), .CIN0(n7171), 
+    .CIN1(n7674), .Q0(\reset_counter[23] ), .Q1(\reset_counter[24] ), 
     .F0(\reset_counter_27__N_1[23] ), .F1(\reset_counter_27__N_1[24] ), 
-    .COUT1(n5309), .COUT0(n6434));
-  SLICE_21 SLICE_21( .DI1(\reset_counter_27__N_1[4] ), 
-    .DI0(\reset_counter_27__N_1[3] ), .D1(n6404), .C1(\reset_counter[4] ), 
-    .D0(n5287), .C0(\reset_counter[3] ), .CLK(pll_clk_int), .CIN0(n5287), 
-    .CIN1(n6404), .Q0(\reset_counter[3] ), .Q1(\reset_counter[4] ), 
-    .F0(\reset_counter_27__N_1[3] ), .F1(\reset_counter_27__N_1[4] ), 
-    .COUT1(n5289), .COUT0(n6404));
-  SLICE_22 SLICE_22( .DI1(\reset_counter_27__N_1[22] ), 
-    .DI0(\reset_counter_27__N_1[21] ), .D1(n6431), .C1(\reset_counter[22] ), 
-    .D0(n5305), .C0(\reset_counter[21] ), .CLK(pll_clk_int), .CIN0(n5305), 
-    .CIN1(n6431), .Q0(\reset_counter[21] ), .Q1(\reset_counter[22] ), 
+    .COUT1(n7173), .COUT0(n7674));
+  SLICE_3 SLICE_3( .DI1(\reset_counter_27__N_1[22] ), 
+    .DI0(\reset_counter_27__N_1[21] ), .D1(n7671), .C1(\reset_counter[22] ), 
+    .D0(n7169), .C0(\reset_counter[21] ), .CLK(pll_clk_int), .CIN0(n7169), 
+    .CIN1(n7671), .Q0(\reset_counter[21] ), .Q1(\reset_counter[22] ), 
     .F0(\reset_counter_27__N_1[21] ), .F1(\reset_counter_27__N_1[22] ), 
-    .COUT1(n5307), .COUT0(n6431));
-  SLICE_23 SLICE_23( .DI1(\reset_counter_27__N_1[20] ), 
-    .DI0(\reset_counter_27__N_1[19] ), .D1(n6428), .C1(\reset_counter[20] ), 
-    .D0(n5303), .C0(\reset_counter[19] ), .CLK(pll_clk_int), .CIN0(n5303), 
-    .CIN1(n6428), .Q0(\reset_counter[19] ), .Q1(\reset_counter[20] ), 
+    .COUT1(n7171), .COUT0(n7671));
+  SLICE_4 SLICE_4( .DI1(\reset_counter_27__N_1[20] ), 
+    .DI0(\reset_counter_27__N_1[19] ), .D1(n7668), .C1(\reset_counter[20] ), 
+    .D0(n7167), .C0(\reset_counter[19] ), .CLK(pll_clk_int), .CIN0(n7167), 
+    .CIN1(n7668), .Q0(\reset_counter[19] ), .Q1(\reset_counter[20] ), 
     .F0(\reset_counter_27__N_1[19] ), .F1(\reset_counter_27__N_1[20] ), 
-    .COUT1(n5305), .COUT0(n6428));
-  SLICE_24 SLICE_24( .DI1(\reset_counter_27__N_1[18] ), 
-    .DI0(\reset_counter_27__N_1[17] ), .D1(n6425), .C1(\reset_counter[18] ), 
-    .D0(n5301), .C0(\reset_counter[17] ), .CLK(pll_clk_int), .CIN0(n5301), 
-    .CIN1(n6425), .Q0(\reset_counter[17] ), .Q1(\reset_counter[18] ), 
+    .COUT1(n7169), .COUT0(n7668));
+  SLICE_5 SLICE_5( .DI1(\reset_counter_27__N_1[18] ), 
+    .DI0(\reset_counter_27__N_1[17] ), .D1(n7665), .C1(\reset_counter[18] ), 
+    .D0(n7165), .C0(\reset_counter[17] ), .CLK(pll_clk_int), .CIN0(n7165), 
+    .CIN1(n7665), .Q0(\reset_counter[17] ), .Q1(\reset_counter[18] ), 
     .F0(\reset_counter_27__N_1[17] ), .F1(\reset_counter_27__N_1[18] ), 
-    .COUT1(n5303), .COUT0(n6425));
-  SLICE_25 SLICE_25( .DI1(\reset_counter_27__N_1[2] ), 
-    .DI0(\reset_counter_27__N_1[1] ), .D1(n6401), .C1(\reset_counter[2] ), 
-    .D0(n5285), .C0(\reset_counter[1] ), .CLK(pll_clk_int), .CIN0(n5285), 
-    .CIN1(n6401), .Q0(\reset_counter[1] ), .Q1(\reset_counter[2] ), 
-    .F0(\reset_counter_27__N_1[1] ), .F1(\reset_counter_27__N_1[2] ), 
-    .COUT1(n5287), .COUT0(n6401));
-  SLICE_26 SLICE_26( .DI1(\reset_counter_27__N_1[16] ), 
-    .DI0(\reset_counter_27__N_1[15] ), .D1(n6422), .C1(\reset_counter[16] ), 
-    .D0(n5299), .C0(\reset_counter[15] ), .CLK(pll_clk_int), .CIN0(n5299), 
-    .CIN1(n6422), .Q0(\reset_counter[15] ), .Q1(\reset_counter[16] ), 
+    .COUT1(n7167), .COUT0(n7665));
+  SLICE_6 SLICE_6( .DI1(\reset_counter_27__N_1[16] ), 
+    .DI0(\reset_counter_27__N_1[15] ), .D1(n7662), .C1(\reset_counter[16] ), 
+    .D0(n7163), .C0(\reset_counter[15] ), .CLK(pll_clk_int), .CIN0(n7163), 
+    .CIN1(n7662), .Q0(\reset_counter[15] ), .Q1(\reset_counter[16] ), 
     .F0(\reset_counter_27__N_1[15] ), .F1(\reset_counter_27__N_1[16] ), 
-    .COUT1(n5301), .COUT0(n6422));
-  SLICE_27 SLICE_27( .DI1(\reset_counter_27__N_1[14] ), 
-    .DI0(\reset_counter_27__N_1[13] ), .D1(n6419), .C1(\reset_counter[14] ), 
-    .D0(n5297), .C0(\reset_counter[13] ), .CLK(pll_clk_int), .CIN0(n5297), 
-    .CIN1(n6419), .Q0(\reset_counter[13] ), .Q1(\reset_counter[14] ), 
+    .COUT1(n7165), .COUT0(n7662));
+  SLICE_7 SLICE_7( .DI1(\reset_counter_27__N_1[14] ), 
+    .DI0(\reset_counter_27__N_1[13] ), .D1(n7659), .C1(\reset_counter[14] ), 
+    .D0(n7161), .C0(\reset_counter[13] ), .CLK(pll_clk_int), .CIN0(n7161), 
+    .CIN1(n7659), .Q0(\reset_counter[13] ), .Q1(\reset_counter[14] ), 
     .F0(\reset_counter_27__N_1[13] ), .F1(\reset_counter_27__N_1[14] ), 
-    .COUT1(n5299), .COUT0(n6419));
-  SLICE_28 SLICE_28( .DI1(\reset_counter_27__N_1[0] ), .D1(n6377), 
-    .C1(\reset_counter[0] ), .B1(n1924), .CLK(pll_clk_int), .CIN1(n6377), 
-    .Q1(\reset_counter[0] ), .F1(\reset_counter_27__N_1[0] ), .COUT1(n5285), 
-    .COUT0(n6377));
-  SLICE_29 SLICE_29( .DI1(\reset_counter_27__N_1[12] ), 
-    .DI0(\reset_counter_27__N_1[11] ), .D1(n6416), .C1(\reset_counter[12] ), 
-    .D0(n5295), .C0(\reset_counter[11] ), .CLK(pll_clk_int), .CIN0(n5295), 
-    .CIN1(n6416), .Q0(\reset_counter[11] ), .Q1(\reset_counter[12] ), 
+    .COUT1(n7163), .COUT0(n7659));
+  SLICE_8 SLICE_8( .DI1(\reset_counter_27__N_1[12] ), 
+    .DI0(\reset_counter_27__N_1[11] ), .D1(n7656), .C1(\reset_counter[12] ), 
+    .D0(n7159), .C0(\reset_counter[11] ), .CLK(pll_clk_int), .CIN0(n7159), 
+    .CIN1(n7656), .Q0(\reset_counter[11] ), .Q1(\reset_counter[12] ), 
     .F0(\reset_counter_27__N_1[11] ), .F1(\reset_counter_27__N_1[12] ), 
-    .COUT1(n5297), .COUT0(n6416));
-  SLICE_30 SLICE_30( .DI1(\reset_counter_27__N_1[10] ), 
-    .DI0(\reset_counter_27__N_1[9] ), .D1(n6413), .C1(\reset_counter[10] ), 
-    .D0(n5293), .C0(\reset_counter[9] ), .CLK(pll_clk_int), .CIN0(n5293), 
-    .CIN1(n6413), .Q0(\reset_counter[9] ), .Q1(\reset_counter[10] ), 
+    .COUT1(n7161), .COUT0(n7656));
+  SLICE_9 SLICE_9( .DI1(\reset_counter_27__N_1[10] ), 
+    .DI0(\reset_counter_27__N_1[9] ), .D1(n7653), .C1(\reset_counter[10] ), 
+    .D0(n7157), .C0(\reset_counter[9] ), .CLK(pll_clk_int), .CIN0(n7157), 
+    .CIN1(n7653), .Q0(\reset_counter[9] ), .Q1(\reset_counter[10] ), 
     .F0(\reset_counter_27__N_1[9] ), .F1(\reset_counter_27__N_1[10] ), 
-    .COUT1(n5295), .COUT0(n6413));
-  SLICE_31 SLICE_31( .DI0(\reset_counter_27__N_1[27] ), .D1(n6440), .D0(n5311), 
-    .C0(\reset_counter[27] ), .CLK(pll_clk_int), .CIN0(n5311), .CIN1(n6440), 
-    .Q0(\reset_counter[27] ), .F0(\reset_counter_27__N_1[27] ), .COUT0(n6440));
-  Controller_inst_SLICE_32 \Controller_inst.SLICE_32 ( 
-    .DI1(\Controller_inst.n7_adj_195 ), .DI0(\Controller_inst.n70 ), 
-    .D1(\rhd_state[0] ), .C1(\Controller_inst.n3 ), .B1(\rhd_state[1] ), 
-    .A1(\Controller_inst.int_RHD2132_TX_DV ), .D0(\Controller_inst.n3 ), 
-    .C0(\rhd_state[1] ), .B0(\Controller_inst.int_RHD2132_TX_DV ), 
-    .CE(\Controller_inst.n7 ), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\rhd_state[0] ), .Q1(\rhd_state[1] ), .F0(\Controller_inst.n70 ), 
-    .F1(\Controller_inst.n7_adj_195 ));
-  Controller_inst_SLICE_33 \Controller_inst.SLICE_33 ( 
-    .DI1(\Controller_inst.n13 ), .DI0(\Controller_inst.n2611 ), 
-    .D1(\Controller_inst.n5182 ), .C1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.int_RHD2132_TX_DV ), .C0(n5915), 
-    .B0(o_Controller_Mode_c_0), .A0(n5914), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.int_RHD2132_TX_DV ), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .F0(\Controller_inst.n2611 ), .F1(\Controller_inst.n13 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_35 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_35 ( 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3233 ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count[0] ), 
-    .CE(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3233 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_36 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_36 ( 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk.sig_000.FeedThruLUT )
-    , .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), .Q0(int_STM32_SPI_Clk), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk.sig_000.FeedThruLUT )
-    );
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_37 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_37 ( 
-    .DI0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count_1__N_74[0] )
-    , 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count[0] ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count[0] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count_1__N_74[0] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_38 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_38 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[1] ), 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[0] ), 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[1] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[0] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2781 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[0] ), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[1] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[0] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[1] ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_40 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_40 ( 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[6] )
-    , .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[7] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[6] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[6] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_41 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_41 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[4] )
-    , 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[5] )
-    , .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[5] ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[6] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[5] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[4] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[5] )
-    , 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[4] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_43 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_43 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[2] )
-    , 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[3] )
-    , .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[3] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[4] ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[3] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[2] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[3] )
-    , 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[2] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_45 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_45 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[0] )
-    , 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[1] )
-    , .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[1] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n47[2] ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[1] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[0] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[1] )
-    , 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count_6__N_61[0] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_47 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_47 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2537 ), 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2535 ), 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5798 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[0] ), 
-    .B1(\Controller_inst.n72 ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5756 ), 
-    .C0(int_RHS_TOP_SPI_CS_n_1), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[0] ), 
-    .A0(\Controller_inst.int_RHD2132_TX_DV ), .LSR(o_reset_c), 
-    .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[0] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2535 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2537 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_48 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_48 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[4] ), 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[5] ), 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[4] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[5] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2781 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[5] ), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[4] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[5] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[4] ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_50 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_50 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[2] ), 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[3] ), 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[2] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n29[3] ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2781 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[3] ), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[2] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[3] ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n37_2[2] ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_54 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_54 
-    ( 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5195 )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk )
-    , .C0(\Controller_inst.r_SPI_Clk_Count[0] ), .CE(\Controller_inst.n1623 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n5195 )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_55 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_55 
-    ( .DI1(\Controller_inst.n2901 ), 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n2899 )
-    , .D1(\Controller_inst.n42[4] ), .C1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[5] )
-    , .B0(\Controller_inst.int_RHD2132_TX_DV ), .CE(\Controller_inst.n5184 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[5] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[4] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n2899 )
-    , .F1(\Controller_inst.n2901 ));
-  Controller_inst_SLICE_56 \Controller_inst.SLICE_56 ( 
-    .DI1(\Controller_inst.n2907 ), .DI0(\Controller_inst.n2893 ), 
-    .D1(\Controller_inst.n42[1] ), .C1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.n42[0] ), .B0(\Controller_inst.int_RHD2132_TX_DV ), 
-    .CE(\Controller_inst.n5184 ), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[0] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[1] )
-    , .F0(\Controller_inst.n2893 ), .F1(\Controller_inst.n2907 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_59 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_59 
-    ( 
-    .DI0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges_6__N_98[6] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n42[6] )
-    , .B0(\Controller_inst.int_RHD2132_TX_DV ), .CE(\Controller_inst.n5184 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[6] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges_6__N_98[6] )
-    );
-  Controller_inst_SLICE_61 \Controller_inst.SLICE_61 ( 
-    .DI1(\Controller_inst.n2903 ), .DI0(\Controller_inst.n7_adj_196 ), 
-    .D1(\Controller_inst.n42[3] ), .C1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.n42[2] ), .B0(\Controller_inst.int_RHD2132_TX_DV ), 
-    .CE(\Controller_inst.n5184 ), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[2] )
-    , 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[3] )
-    , .F0(\Controller_inst.n7_adj_196 ), .F1(\Controller_inst.n2903 ));
-  Controller_inst_SLICE_71 \Controller_inst.SLICE_71 ( 
-    .D1(\Controller_inst.n5182 ), .C1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.int_RHD2132_TX_DV ), .C0(\Controller_inst.n5182 ), 
-    .B0(\Controller_inst.r_SPI_Clk_Count[0] ), .F0(\Controller_inst.n5184 ), 
-    .F1(\Controller_inst.n1623 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_72 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.SLICE_72 
-    ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[2] )
-    , 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[5] )
-    , 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[0] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[3] )
-    , 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[4] )
-    , 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[6] )
-    , 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Edges[1] )
-    , 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n12 ), 
-    .F1(\Controller_inst.n5182 ));
-  Controller_inst_SLICE_73 \Controller_inst.SLICE_73 ( .D1(\rhd_state[1] ), 
-    .C1(\Controller_inst.n3 ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[0] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .F0(\Controller_inst.n3 ), .F1(n69));
-  SLICE_74 SLICE_74( .D0(\rhd_state[0] ), .C0(n69), .B0(o_Controller_Mode_c_0), 
-    .A0(o_Controller_Mode_c_1), .F0(n5914));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_75 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_75 ( 
-    .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[0] ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n18 ), 
-    .B1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[4] ), 
-    .A1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[6] ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[1] ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[3] ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[8] ), 
-    .A0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[7] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n18 ), 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_77 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_77 ( 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[10] ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[9] ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n16 ));
-  Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_78 
-    \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_78 ( 
-    .D1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3 ), 
-    .C1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Count[0] ), 
-    .D0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[5] ), 
-    .C0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n20 ), 
-    .B0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_SPI_Clk_Edges[2] ), 
-    .A0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n16 ), 
-    .F0(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n3 ), 
-    .F1(\Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n1614 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_79 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_79 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[6] )
-    , .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n12 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[2] )
-    , 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[1] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[5] )
-    , 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[4] )
-    , 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[0] )
-    , 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[3] )
-    , .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n12 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n13_c ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_81 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_81 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5756 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5758 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_82 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_82 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[4] ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10 ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[3] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[0] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[2] ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[1] ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[5] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_83 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_83 ( 
-    .D1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1606 ), 
-    .B1(int_RHS_TOP_SPI_CS_n_1), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[3] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n10 ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_TX_Count[4] ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1606 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n16 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_85 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_85 ( 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[6] )
-    , .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5796 ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[1] )
-    , 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[5] )
-    , 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[0] )
-    , 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[2] )
-    , 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[4] )
-    , 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.r_CS_Inactive_Count[3] )
-    , .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5796 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5798 ));
-  SLICE_87 SLICE_87( .D1(n5802), .C1(n16), .B1(n5778), .A1(n5762), 
-    .D0(\reset_counter[23] ), .C0(\reset_counter[5] ), .F0(n16), .F1(n5806));
-  SLICE_89 SLICE_89( .C0(\reset_counter[24] ), .B0(\reset_counter[7] ), 
-    .F0(n5778));
-  SLICE_90 SLICE_90( .D1(n5778), .C1(n5776), .B1(n16), .A1(n18), 
-    .D0(\reset_counter[18] ), .C0(\reset_counter[14] ), .F0(n5776), .F1(n24));
-  SLICE_92 SLICE_92( .D1(\reset_counter[13] ), .C1(n5792), .B1(n5776), 
-    .A1(\reset_counter[8] ), .D0(\reset_counter[21] ), 
-    .C0(\reset_counter[12] ), .B0(\reset_counter[16] ), 
-    .A0(\reset_counter[25] ), .F0(n5792), .F1(n5642));
-  SLICE_93 SLICE_93( .D1(\reset_counter[2] ), .C1(\reset_counter[3] ), 
-    .B1(\reset_counter[4] ), .A1(\reset_counter[27] ), 
-    .D0(\reset_counter[27] ), .C0(\reset_counter[12] ), 
-    .B0(\reset_counter[8] ), .F0(n20), .F1(n5802));
-  SLICE_94 SLICE_94( .D1(n5649), .C1(n2755), .B1(n4832), 
-    .A1(\reset_counter[22] ), .D0(n19), .C0(n24), .B0(n20), .A0(n12), 
-    .F0(n2755), .F1(n4843));
-  SLICE_95 SLICE_95( .DI1(\n4843$n0 ), .D1(n2755), .C1(n4832), .B1(n5649), 
-    .A1(\reset_counter[22] ), .D0(\reset_counter[2] ), .C0(\reset_counter[4] ), 
-    .B0(\reset_counter[3] ), .CLK(pll_clk_int), .Q1(o_reset_c), .F0(n4832), 
-    .F1(\n4843$n0 ));
-  SLICE_97 SLICE_97( .D1(\reset_counter[20] ), .C1(n5646), .B1(n5806), 
-    .A1(\reset_counter[11] ), .D0(\reset_counter[19] ), .C0(n5642), 
-    .B0(\reset_counter[17] ), .A0(\reset_counter[26] ), .F0(n5646), 
-    .F1(n14_adj_197));
-  SLICE_99 SLICE_99( .D1(n5800), .C1(n14), .B1(n5912), 
-    .A1(\reset_counter[22] ), .D0(\reset_counter[16] ), .C0(n5649), 
-    .B0(\reset_counter[25] ), .A0(\reset_counter[12] ), .F0(n14), .F1(n30));
-  SLICE_100 SLICE_100( .D1(\reset_counter[26] ), .C1(n13), 
-    .B1(\reset_counter[9] ), .D0(\reset_counter[19] ), 
-    .C0(\reset_counter[17] ), .B0(\reset_counter[13] ), 
-    .A0(\reset_counter[15] ), .F0(n13), .F1(n5649));
-  SLICE_101 SLICE_101( .D1(\reset_counter[6] ), .C1(\reset_counter[15] ), 
-    .B1(\reset_counter[9] ), .A1(\reset_counter[22] ), .D0(n5646), 
-    .C0(\reset_counter[9] ), .B0(\reset_counter[15] ), .F0(n5912), 
-    .F1(n13_adj_198));
-  SLICE_103 SLICE_103( .D0(n12), .C0(n30), .B0(n5806), .F0(n1801));
-  SLICE_104 SLICE_104( .D1(n4843), .C1(n12), .B1(n30), .A1(n5806), 
-    .D0(\reset_counter[20] ), .C0(\reset_counter[6] ), 
-    .B0(\reset_counter[11] ), .F0(n12), .F1(n2913));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_105 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_105 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2533 ), 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5788 ), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n13_c ), 
-    .B1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .A1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n119 ), 
-    .B0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .A0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2802 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2533 ));
-  SLICE_113 SLICE_113( .D1(\reset_counter[10] ), .C1(\reset_counter[16] ), 
-    .D0(\reset_counter[0] ), .C0(\reset_counter[10] ), .B0(\reset_counter[1] ), 
-    .F0(n5762), .F1(n19));
-  SLICE_115 SLICE_115( .D1(\reset_counter[18] ), .C1(\reset_counter[21] ), 
-    .B1(\reset_counter[14] ), .A1(\reset_counter[8] ), 
-    .D0(\reset_counter[21] ), .C0(\reset_counter[25] ), .F0(n18), .F1(n5800));
-  SLICE_117 SLICE_117( .F0(VCC_net));
-  Controller_inst_SLICE_118 \Controller_inst.SLICE_118 ( 
-    .DI1(\Controller_inst.n5620 ), .D1(o_Controller_Mode_c_0), 
-    .C1(o_Controller_Mode_c_1), .B1(RGB1_OUT_c), .D0(o_Controller_Mode_c_1), 
-    .C0(o_Controller_Mode_c_0), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q1(RGB1_OUT_c), .F0(\Controller_inst.n7 ), .F1(\Controller_inst.n5620 ));
-  Controller_inst_SLICE_119 \Controller_inst.SLICE_119 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1500 ), 
-    .D1(int_RHS_TOP_SPI_CS_n_1), 
-    .C1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .B1(\Controller_inst.int_RHD2132_TX_DV ), .C0(int_RHS_TOP_SPI_CS_n_1), 
-    .A0(\Controller_inst.int_RHD2132_TX_DV ), 
-    .CE(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5758 ), 
-    .LSR(o_reset_c), .CLK(pll_clk_int), .Q1(int_RHS_TOP_SPI_CS_n_1), 
-    .F0(\Controller_inst.n72 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1500 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_121 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_121 ( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Count_1__N_96[0] )
-    , .D1(\Controller_inst.n5182 ), .C1(\Controller_inst.r_SPI_Clk_Count[0] ), 
-    .A1(\Controller_inst.int_RHD2132_TX_DV ), 
-    .D0(\Controller_inst.int_RHD2132_TX_DV ), .LSR(o_reset_c), 
-    .CLK(pll_clk_int), .Q1(\Controller_inst.r_SPI_Clk_Count[0] ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5185 ), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk_Count_1__N_96[0] )
-    );
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_122 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_122 ( 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[2] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n16 ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n2781 ));
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_123 
-    \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SLICE_123 ( 
-    .D0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n1439[1] ), 
-    .C0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.w_Master_Ready ), 
-    .F0(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n5788 ));
-  SLICE_125 SLICE_125( .D1(o_RHS_TOP_SPI_CS_n_1_c_N_152), 
-    .C1(int_RHS_TOP_SPI_CS_n_1), .B1(o_Controller_Mode_c_1), 
-    .D0(o_RHS_TOP_SPI_MOSI_c_N_148), .C0(o_Controller_Mode_c_1), 
-    .F0(o_RHS_TOP_SPI_MOSI_c), .F1(o_RHS_TOP_SPI_CS_n_1_c));
-  SLICE_126 SLICE_126( 
-    .DI1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk.sig_001.FeedThruLUT )
-    , 
-    .D1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk )
-    , .D0(int_RHS_TOP_SPI_Clk), .C0(o_RHS_TOP_SPI_Clk_c_N_150), 
-    .B0(o_Controller_Mode_c_1), .LSR(o_reset_c), .CLK(pll_clk_int), 
-    .Q1(int_RHS_TOP_SPI_Clk), .F0(o_RHS_TOP_SPI_Clk_c), 
-    .F1(\Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.r_SPI_Clk.sig_001.FeedThruLUT )
-    );
-  SLICE_128 SLICE_128( .DI1(n2912), .D1(n1801), .C1(n4843), 
-    .B1(\reset_counter[8] ), .A1(o_Controller_Mode_c_1), 
-    .D0(i_RHS_TOP_SPI_MISO_1_c), .C0(i_STM32_SPI4_MISO_c), 
-    .B0(o_Controller_Mode_c_1), .CLK(pll_clk_int), .Q1(o_Controller_Mode_c_1), 
-    .F0(i_STM32_SPI4_MISO_c), .F1(n2912));
-  SLICE_129 SLICE_129( .DI1(\reset_counter[8].sig_002.FeedThruLUT ), 
-    .D1(\reset_counter[8] ), .D0(\rhd_state[1] ), .C0(o_Controller_Mode_c_0), 
-    .B0(o_Controller_Mode_c_1), .CE(n2913), .LSR(n4843), .CLK(pll_clk_int), 
-    .Q1(o_Controller_Mode_c_0), .F0(n5915), 
-    .F1(\reset_counter[8].sig_002.FeedThruLUT ));
-  SLICE_130 SLICE_130( .DI1(n5610), .D1(stop_counting), .C1(n13_adj_198), 
-    .B1(n14_adj_197), .C0(stop_counting), .CLK(pll_clk_int), 
-    .Q1(stop_counting), .F0(n1924), .F1(n5610));
-  SLICE_133 SLICE_133( .F0(GND_net));
-  o_STM32_SPI4_CS_n o_STM32_SPI4_CS_n_I( .PADDT(o_Controller_Mode_c_1), 
-    .PADDO(VCC_net), .PADDI(o_RHS_TOP_SPI_CS_n_1_c_N_152), 
-    .o_STM32_SPI4_CS_n(o_STM32_SPI4_CS_n));
-  o_STM32_SPI4_Clk o_STM32_SPI4_Clk_I( .PADDT(o_Controller_Mode_c_1), 
-    .PADDO(int_STM32_SPI_Clk), .PADDI(o_RHS_TOP_SPI_Clk_c_N_150), 
-    .o_STM32_SPI4_Clk(o_STM32_SPI4_Clk));
-  o_STM32_SPI4_MOSI o_STM32_SPI4_MOSI_I( .PADDT(o_Controller_Mode_c_1), 
-    .PADDO(GND_net), .PADDI(o_RHS_TOP_SPI_MOSI_c_N_148), 
-    .o_STM32_SPI4_MOSI(o_STM32_SPI4_MOSI));
+    .COUT1(n7159), .COUT0(n7653));
+  SLICE_10 SLICE_10( .DI1(\reset_counter_27__N_1[8] ), 
+    .DI0(\reset_counter_27__N_1[7] ), .D1(n7650), .C1(\reset_counter[8] ), 
+    .D0(n7155), .C0(\reset_counter[7] ), .CLK(pll_clk_int), .CIN0(n7155), 
+    .CIN1(n7650), .Q0(\reset_counter[7] ), .Q1(\reset_counter[8] ), 
+    .F0(\reset_counter_27__N_1[7] ), .F1(\reset_counter_27__N_1[8] ), 
+    .COUT1(n7157), .COUT0(n7650));
+  SLICE_11 SLICE_11( .DI1(\reset_counter_27__N_1[6] ), 
+    .DI0(\reset_counter_27__N_1[5] ), .D1(n7647), .C1(\reset_counter[6] ), 
+    .D0(n7153), .C0(\reset_counter[5] ), .CLK(pll_clk_int), .CIN0(n7153), 
+    .CIN1(n7647), .Q0(\reset_counter[5] ), .Q1(\reset_counter[6] ), 
+    .F0(\reset_counter_27__N_1[5] ), .F1(\reset_counter_27__N_1[6] ), 
+    .COUT1(n7155), .COUT0(n7647));
+  SLICE_12 SLICE_12( .DI1(\reset_counter_27__N_1[4] ), 
+    .DI0(\reset_counter_27__N_1[3] ), .D1(n7644), .C1(\reset_counter[4] ), 
+    .D0(n7151), .C0(\reset_counter[3] ), .CLK(pll_clk_int), .CIN0(n7151), 
+    .CIN1(n7644), .Q0(\reset_counter[3] ), .Q1(\reset_counter[4] ), 
+    .F0(\reset_counter_27__N_1[3] ), .F1(\reset_counter_27__N_1[4] ), 
+    .COUT1(n7153), .COUT0(n7644));
+  SLICE_13 SLICE_13( .DI1(\reset_counter_27__N_1[0] ), .D1(n7638), 
+    .C1(\reset_counter[0] ), .B1(n3673), .CLK(pll_clk_int), .CIN1(n7638), 
+    .Q1(\reset_counter[0] ), .F1(\reset_counter_27__N_1[0] ), .COUT1(n7149), 
+    .COUT0(n7638));
+  SLICE_14 SLICE_14( .DI1(\reset_counter_27__N_1[2] ), 
+    .DI0(\reset_counter_27__N_1[1] ), .D1(n7641), .C1(\reset_counter[2] ), 
+    .D0(n7149), .C0(\reset_counter[1] ), .CLK(pll_clk_int), .CIN0(n7149), 
+    .CIN1(n7641), .Q0(\reset_counter[1] ), .Q1(\reset_counter[2] ), 
+    .F0(\reset_counter_27__N_1[1] ), .F1(\reset_counter_27__N_1[2] ), 
+    .COUT1(n7151), .COUT0(n7641));
+  SLICE_15 SLICE_15( .DI0(\GND_net\000.BUF0 ), 
+    .CE(o_RHS_TOP_SPI_CS_n_1_c_N_266), .LSR(o_reset_c), .CLK(pll_clk_int), 
+    .Q0(RGB0_OUT_c), .F0(\GND_net\000.BUF0 ));
+  SLICE_19 SLICE_19( .D0(n7382), .C0(n6228), .B0(n7125), .A0(n6250), 
+    .F0(n7134));
+  SLICE_20 SLICE_20( .D1(n6247), .C1(n7098), .B1(n6253), .A1(n6250), 
+    .D0(\reset_counter[2] ), .C0(\reset_counter[4] ), .B0(\reset_counter[3] ), 
+    .F0(n7098), .F1(n7125));
+  SLICE_21 SLICE_21( .D1(\reset_counter[22] ), .C1(n7386), 
+    .B1(\reset_counter[26] ), .A1(\reset_counter[13] ), 
+    .D0(\reset_counter[17] ), .C0(\reset_counter[19] ), 
+    .B0(\reset_counter[15] ), .A0(\reset_counter[9] ), .F0(n7386), .F1(n7388));
+  SLICE_23 SLICE_23( .D1(\reset_counter[12] ), .C1(n12_adj_298), 
+    .B1(\reset_counter[21] ), .A1(\reset_counter[25] ), 
+    .D0(\reset_counter[14] ), .C0(\reset_counter[8] ), 
+    .B0(\reset_counter[18] ), .A0(\reset_counter[16] ), .F0(n12_adj_298), 
+    .F1(n6247));
+  SLICE_25 SLICE_25( .DI1(o_reset_c_N_267), .D1(n7098), .C1(n6247), .B1(n6253), 
+    .A1(n6250), .D0(\reset_counter[7] ), .C0(\reset_counter[5] ), 
+    .B0(\reset_counter[10] ), .CLK(pll_clk_int), .Q1(o_reset_c), .F0(n14), 
+    .F1(o_reset_c_N_267));
+  SLICE_26 SLICE_26( .D1(\reset_counter[11] ), .C1(n15), .B1(n14), 
+    .A1(\reset_counter[24] ), .D0(\reset_counter[6] ), 
+    .C0(\reset_counter[27] ), .B0(\reset_counter[20] ), 
+    .A0(\reset_counter[23] ), .F0(n15), .F1(n6253));
+  SLICE_27 SLICE_27( .D1(\reset_counter[4] ), .C1(n10), 
+    .B1(\reset_counter[3] ), .D0(\reset_counter[1] ), .C0(n6253), 
+    .B0(\reset_counter[2] ), .A0(\reset_counter[0] ), .F0(n10), .F1(n6228));
+  SLICE_28 SLICE_28( .D0(n10), .C0(n7125), .B0(\reset_counter[3] ), 
+    .A0(\reset_counter[4] ), .F0(n5));
+  SLICE_29 SLICE_29( .D1(\reset_counter[26] ), .C1(n12), 
+    .B1(\reset_counter[13] ), .A1(\reset_counter[15] ), 
+    .D0(\reset_counter[17] ), .C0(\reset_counter[22] ), 
+    .B0(\reset_counter[9] ), .A0(\reset_counter[19] ), .F0(n12), .F1(n6250));
+  SLICE_31 SLICE_31( .D1(\reset_counter[8] ), .C1(n7380), 
+    .B1(\reset_counter[12] ), .A1(\reset_counter[25] ), 
+    .D0(\reset_counter[14] ), .C0(\reset_counter[21] ), 
+    .B0(\reset_counter[18] ), .A0(\reset_counter[16] ), .F0(n7380), .F1(n7382));
+  SLICE_33 SLICE_33( .F0(VCC_net));
+  SLICE_34 SLICE_34( .DI1(\n7125$n0 ), .D1(n6253), .C1(n6250), .B1(n6247), 
+    .A1(n7098), .D0(o_Controller_Mode_0_0), .CE(n7134), .CLK(pll_clk_int), 
+    .Q1(o_Controller_Mode_0_0), .F0(o_RHS_TOP_SPI_CS_n_1_c_N_266), 
+    .F1(\n7125$n0 ));
+  SLICE_35 SLICE_35( .DI1(n6858), .D1(stop_counting), .C1(n5), .B1(n7388), 
+    .A1(n6247), .C0(stop_counting), .CLK(pll_clk_int), .Q1(stop_counting), 
+    .F0(n3673), .F1(n6858));
+  SLICE_39 SLICE_39( .F0(GND_net));
   pll_inst_lscc_pll_inst_u_PLL_B \pll_inst.lscc_pll_inst.u_PLL_B ( 
     .REFERENCECLK(i_clk_c), .FEEDBACK(\pll_inst.lscc_pll_inst.feedback_w ), 
     .RESET_N(VCC_net), .INTFBOUT(\pll_inst.lscc_pll_inst.feedback_w ), 
     .OUTGLOBAL(pll_clk_int));
-  o_RHS_TOP_SPI_CS_n_1 o_RHS_TOP_SPI_CS_n_1_I( .PADDO(o_RHS_TOP_SPI_CS_n_1_c), 
+  o_RHS_TOP_SPI_CS_n_1 o_RHS_TOP_SPI_CS_n_1_I( .PADDO(o_STM32_SPI4_CS_n_c), 
     .o_RHS_TOP_SPI_CS_n_1(o_RHS_TOP_SPI_CS_n_1));
-  o_RHS_TOP_SPI_Clk o_RHS_TOP_SPI_Clk_I( .PADDO(o_RHS_TOP_SPI_Clk_c), 
+  o_RHS_TOP_SPI_Clk o_RHS_TOP_SPI_Clk_I( .PADDO(o_STM32_SPI4_Clk_c), 
     .o_RHS_TOP_SPI_Clk(o_RHS_TOP_SPI_Clk));
-  o_RHS_TOP_SPI_MOSI o_RHS_TOP_SPI_MOSI_I( .PADDO(o_RHS_TOP_SPI_MOSI_c), 
+  o_RHS_TOP_SPI_MOSI o_RHS_TOP_SPI_MOSI_I( .PADDO(o_STM32_SPI4_MOSI_c), 
     .o_RHS_TOP_SPI_MOSI(o_RHS_TOP_SPI_MOSI));
-  i_STM32_SPI4_MISO i_STM32_SPI4_MISO_I( .PADDO(i_STM32_SPI4_MISO_c), 
+  i_STM32_SPI4_MISO i_STM32_SPI4_MISO_I( .PADDO(i_RHS_TOP_SPI_MISO_1_c), 
     .i_STM32_SPI4_MISO(i_STM32_SPI4_MISO));
   i_RHS_TOP_SPI_MISO_1 i_RHS_TOP_SPI_MISO_1_I( .PADDI(i_RHS_TOP_SPI_MISO_1_c), 
     .i_RHS_TOP_SPI_MISO_1(i_RHS_TOP_SPI_MISO_1));
+  o_STM32_SPI4_CS_n o_STM32_SPI4_CS_n_I( .PADDI(o_STM32_SPI4_CS_n_c), 
+    .o_STM32_SPI4_CS_n(o_STM32_SPI4_CS_n));
+  o_STM32_SPI4_Clk o_STM32_SPI4_Clk_I( .PADDI(o_STM32_SPI4_Clk_c), 
+    .o_STM32_SPI4_Clk(o_STM32_SPI4_Clk));
+  o_STM32_SPI4_MOSI o_STM32_SPI4_MOSI_I( .PADDI(o_STM32_SPI4_MOSI_c), 
+    .o_STM32_SPI4_MOSI(o_STM32_SPI4_MOSI));
   i_clk i_clk_I( .PADDI(i_clk_c), .i_clk(i_clk));
   o_reset o_reset_I( .PADDO(o_reset_c), .o_reset(o_reset));
-  o_Controller_Mode_0_ \o_Controller_Mode[0]_I ( .PADDO(o_Controller_Mode_c_0), 
+  o_Controller_Mode_0_ \o_Controller_Mode[0]_I ( .PADDO(o_Controller_Mode_0_0), 
     .oControllerMode0(o_Controller_Mode[0]));
-  o_Controller_Mode_1_ \o_Controller_Mode[1]_I ( .PADDO(o_Controller_Mode_c_1), 
+  o_Controller_Mode_1_ \o_Controller_Mode[1]_I ( .PADDO(GND_net), 
     .oControllerMode1(o_Controller_Mode[1]));
   o_Controller_Mode_2_ \o_Controller_Mode[2]_I ( .PADDO(GND_net), 
     .oControllerMode2(o_Controller_Mode[2]));
@@ -1136,38 +226,31 @@ module top_level ( o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI,
   LED1_OUT LED1_OUT_I( .PADDO(VCC_net), .LED1_OUT(LED1_OUT));
   o_BOOST_ENABLE o_BOOST_ENABLE_I( .PADDO(VCC_net), 
     .o_BOOST_ENABLE(o_BOOST_ENABLE));
-  o_RHS_TOP_SPI_CS_n_2 o_RHS_TOP_SPI_CS_n_2_I( .PADDO(GND_net), 
-    .o_RHS_TOP_SPI_CS_n_2(o_RHS_TOP_SPI_CS_n_2));
-  RGB0_OUT RGB0_OUT_I( .PADDO(VCC_net), .RGB0_OUT(RGB0_OUT));
-  RGB1_OUT RGB1_OUT_I( .PADDO(RGB1_OUT_c), .RGB1_OUT(RGB1_OUT));
+  o_RHS_TOP_SPI_MOSI_2 o_RHS_TOP_SPI_MOSI_2_I( .PADDO(GND_net), 
+    .o_RHS_TOP_SPI_MOSI_2(o_RHS_TOP_SPI_MOSI_2));
   RGB2_OUT RGB2_OUT_I( .PADDO(VCC_net), .RGB2_OUT(RGB2_OUT));
+  RGB1_OUT RGB1_OUT_I( .PADDO(VCC_net), .RGB1_OUT(RGB1_OUT));
+  RGB0_OUT RGB0_OUT_I( .PADDO(RGB0_OUT_c), .RGB0_OUT(RGB0_OUT));
 endmodule
 
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_0 ( input DI1, 
-    D1, C1, B1, LSR, CLK, CIN1, output Q1, F1, COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, LSR_dly;
+module SLICE_0 ( input DI0, D1, D0, C0, CLK, CIN0, CIN1, output Q0, F0, COUT0 );
+  wire   GNDI, VCCI, DI0_dly, CLK_dly;
 
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_1 
-    ( .A0(GNDI), .B0(GNDI), .C0(GNDI), .D0(VCCI), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(VCCI), .CI1(CIN1), .S0(), .S1(F1), .CO0(COUT0), .CO1(COUT1));
+  fa2 reset_counter_1053_add_4_29( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+    .A1(GNDI), .B1(GNDI), .C1(GNDI), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
+    .S1(), .CO0(COUT0), .CO1());
   gnd DRIVEGND( .PWR0(GNDI));
+  ffsre2 reset_counter_1053__i27( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i0 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
 
   specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (C0 => COUT0) = (0:0:0,0:0:0);
+    (CLK => Q0) = (0:0:0,0:0:0);
+    (CIN0 => COUT0) = (0:0:0,0:0:0);
+    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
   endspecify
 
 endmodule
@@ -1186,563 +269,30 @@ module gnd ( output PWR0 );
   VLO INST1( .Z(PWR0));
 endmodule
 
-module vcc ( output PWR1 );
-
-  VHI INST1( .Z(PWR1));
-endmodule
-
 module ffsre2 ( input D0, SP, CK, LSR, output Q );
-
-  FD1P3XZ INST01( .D(D0), .SP(SP), .CK(CK), .SR(LSR), .Q(Q));
-  defparam INST01.REGSET = "RESET";
-  defparam INST01.SRMODE = "ASYNC";
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_1 ( input DI1, 
-    DI0, D1, C1, B1, D0, C0, B0, LSR, CLK, CIN0, CIN1, output Q0, Q1, F0, F1, 
-    COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_7 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i5 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i6 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_2 ( input DI1, 
-    DI0, D1, C1, B1, D0, C0, B0, LSR, CLK, CIN0, CIN1, output Q0, Q1, F0, F1, 
-    COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_9 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i7 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i8 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_3 ( input DI1, 
-    DI0, D1, C1, B1, D0, C0, B0, LSR, CLK, CIN0, CIN1, output Q0, Q1, F0, F1, 
-    COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_11 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1());
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i9 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i10 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_4 ( input DI1, 
-    DI0, D1, C1, B1, D0, C0, B0, LSR, CLK, CIN0, CIN1, output Q0, Q1, F0, F1, 
-    COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_5 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i3 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i4 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_5 ( input DI1, 
-    DI0, D1, C1, B1, D0, C0, B0, LSR, CLK, CIN0, CIN1, output Q0, Q1, F0, F1, 
-    COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  fa2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528_add_4_3 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i1 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_528__i2 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_6 ( input 
-    D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524_add_4_4 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_7 ( input 
-    D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT0 );
-  wire   GNDI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524_add_4_6 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1());
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_8 ( input 
-    D1, D0, C0, B0, CIN0, CIN1, output F0, COUT0 );
-  wire   GNDI;
-
-  fa2 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/add_718_8 ( 
-    .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(GNDI), .C1(GNDI), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(), .CO0(COUT0), .CO1());
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_9 ( input 
-    D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI;
-
-  fa2 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/add_718_6 ( 
-    .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), .D1(D1), 
-    .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_10 ( input 
-    D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI;
-
-  fa2 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/add_718_4 ( 
-    .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), .D1(D1), 
-    .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_11 ( input 
-    D1, C1, B1, D0, C0, B0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI, VCCI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524_add_4_2 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(VCCI), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_12 ( input 
-    D1, C1, B1, D0, C0, B0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI, VCCI;
-
-  fa2 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/add_718_2 ( 
-    .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), .D1(D1), 
-    .CI0(VCCI), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_13
-   ( input D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT0 );
-  wire   GNDI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/sub_163_add_2_add_5_7 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), .CO1());
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_14
-   ( input D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/sub_163_add_2_add_5_5 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_15
-   ( input D1, C1, B1, D0, C0, B0, CIN0, CIN1, output F0, F1, COUT1, COUT0 );
-  wire   GNDI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/sub_163_add_2_add_5_3 
-    ( .A0(GNDI), .B0(B0), .C0(C0), .D0(D0), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), .S1(F1), .CO0(COUT0), 
-    .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (B0 => COUT0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_16
-   ( input D1, C1, B1, CIN1, output F1, COUT1, COUT0 );
-  wire   GNDI, VCCI;
-
-  fa2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/sub_163_add_2_add_5_1 
-    ( .A0(GNDI), .B0(GNDI), .C0(GNDI), .D0(VCCI), .A1(GNDI), .B1(B1), .C1(C1), 
-    .D1(D1), .CI0(VCCI), .CI1(CIN1), .S0(), .S1(F1), .CO0(COUT0), .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (B1 => COUT1) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module SLICE_17 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
-    Q1, F0, F1, COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
-
-  fa2 reset_counter_521_add_4_27( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
-    .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
-    .S1(F1), .CO0(COUT0), .CO1(COUT1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i25( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i26( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-  endspecify
-
-endmodule
-
-module ffsre20001 ( input D0, SP, CK, LSR, output Q );
 
   FD1P3XZ INST01( .D(D0), .SP(SP), .CK(CK), .SR(LSR), .Q(Q));
   defparam INST01.REGSET = "RESET";
   defparam INST01.SRMODE = "CE_OVER_LSR";
 endmodule
 
-module SLICE_18 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module vcc ( output PWR1 );
+
+  VHI INST1( .Z(PWR1));
+endmodule
+
+module SLICE_1 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_9( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_27( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i7( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i25( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i8( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i26( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1762,18 +312,18 @@ module SLICE_18 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_19 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_2 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_7( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_25( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i5( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i23( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i6( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i24( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1793,18 +343,18 @@ module SLICE_19 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_20 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_3 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_25( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_23( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i23( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i21( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i24( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i22( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1824,18 +374,18 @@ module SLICE_20 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_21 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_4 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_5( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_21( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i3( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i19( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i4( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i20( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1855,18 +405,18 @@ module SLICE_21 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_22 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_5 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_23( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_19( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i21( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i17( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i22( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i18( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1886,18 +436,18 @@ module SLICE_22 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_23 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_6 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_21( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_17( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i19( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i15( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i20( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i16( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1917,18 +467,18 @@ module SLICE_23 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_24 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_7 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_19( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_15( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i17( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i13( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i18( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i14( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1948,18 +498,18 @@ module SLICE_24 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_25 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_8 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_3( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_13( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i1( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i11( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i2( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i12( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -1979,18 +529,18 @@ module SLICE_25 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_26 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_9 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_17( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_11( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i15( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i9( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i16( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i10( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -2010,18 +560,18 @@ module SLICE_26 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_27 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_10 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_15( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_9( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i13( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i7( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i14( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i8( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -2041,16 +591,78 @@ module SLICE_27 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_28 ( input DI1, D1, C1, B1, CLK, CIN1, output Q1, F1, COUT1, 
+module SLICE_11 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+    Q1, F0, F1, COUT1, COUT0 );
+  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
+
+  fa2 reset_counter_1053_add_4_7( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+    .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
+    .S1(F1), .CO0(COUT0), .CO1(COUT1));
+  gnd DRIVEGND( .PWR0(GNDI));
+  ffsre2 reset_counter_1053__i5( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q0));
+  vcc DRIVEVCC( .PWR1(VCCI));
+  ffsre2 reset_counter_1053__i6( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q1));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (C1 => COUT1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (C0 => COUT0) = (0:0:0,0:0:0);
+    (CLK => Q0) = (0:0:0,0:0:0);
+    (CLK => Q1) = (0:0:0,0:0:0);
+    (CIN0 => COUT0) = (0:0:0,0:0:0);
+    (CIN1 => COUT1) = (0:0:0,0:0:0);
+    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
+    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
+  endspecify
+
+endmodule
+
+module SLICE_12 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+    Q1, F0, F1, COUT1, COUT0 );
+  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
+
+  fa2 reset_counter_1053_add_4_5( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+    .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
+    .S1(F1), .CO0(COUT0), .CO1(COUT1));
+  gnd DRIVEGND( .PWR0(GNDI));
+  ffsre2 reset_counter_1053__i3( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q0));
+  vcc DRIVEVCC( .PWR1(VCCI));
+  ffsre2 reset_counter_1053__i4( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q1));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (C1 => COUT1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (C0 => COUT0) = (0:0:0,0:0:0);
+    (CLK => Q0) = (0:0:0,0:0:0);
+    (CLK => Q1) = (0:0:0,0:0:0);
+    (CIN0 => COUT0) = (0:0:0,0:0:0);
+    (CIN1 => COUT1) = (0:0:0,0:0:0);
+    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
+    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
+  endspecify
+
+endmodule
+
+module SLICE_13 ( input DI1, D1, C1, B1, CLK, CIN1, output Q1, F1, COUT1, 
     COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly;
 
-  fa2 reset_counter_521_add_4_1( .A0(GNDI), .B0(GNDI), .C0(GNDI), .D0(VCCI), 
+  fa2 reset_counter_1053_add_4_1( .A0(GNDI), .B0(GNDI), .C0(GNDI), .D0(VCCI), 
     .A1(GNDI), .B1(B1), .C1(C1), .D1(D1), .CI0(VCCI), .CI1(CIN1), .S0(), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i0( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i0( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -2066,18 +678,18 @@ module SLICE_28 ( input DI1, D1, C1, B1, CLK, CIN1, output Q1, F1, COUT1,
 
 endmodule
 
-module SLICE_29 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
+module SLICE_14 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
     Q1, F0, F1, COUT1, COUT0 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
 
-  fa2 reset_counter_521_add_4_13( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
+  fa2 reset_counter_1053_add_4_3( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
     .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
     .S1(F1), .CO0(COUT0), .CO1(COUT1));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i11( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i1( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q0));
   vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i12( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
+  ffsre2 reset_counter_1053__i2( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
     .LSR(GNDI), .Q(Q1));
 
   specify
@@ -2097,86 +709,17 @@ module SLICE_29 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0,
 
 endmodule
 
-module SLICE_30 ( input DI1, DI0, D1, C1, D0, C0, CLK, CIN0, CIN1, output Q0, 
-    Q1, F0, F1, COUT1, COUT0 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly;
+module SLICE_15 ( input DI0, CE, LSR, CLK, output Q0, F0 );
+  wire   GNDI, DI0_dly, CLK_dly, CE_dly, LSR_dly;
 
-  fa2 reset_counter_521_add_4_11( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
-    .A1(GNDI), .B1(GNDI), .C1(C1), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
-    .S1(F1), .CO0(COUT0), .CO1(COUT1));
+  lut4 \GND_net\000.BUF0.BUF0 ( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i9( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre20001 reset_counter_521__i10( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (C1 => COUT1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    (CIN1 => COUT1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-  endspecify
-
-endmodule
-
-module SLICE_31 ( input DI0, D1, D0, C0, CLK, CIN0, CIN1, output Q0, F0, COUT0 );
-  wire   GNDI, VCCI, DI0_dly, CLK_dly;
-
-  fa2 reset_counter_521_add_4_29( .A0(GNDI), .B0(GNDI), .C0(C0), .D0(D0), 
-    .A1(GNDI), .B1(GNDI), .C1(GNDI), .D1(D1), .CI0(CIN0), .CI1(CIN1), .S0(F0), 
-    .S1(), .CO0(COUT0), .CO1());
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 reset_counter_521__i27( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (C0 => COUT0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CIN0 => COUT0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SLICE_32 ( input DI1, DI0, D1, C1, B1, A1, D0, C0, B0, 
-    CE, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut4 \Controller_inst/i4271_4_lut_4_lut ( .A(A1), .B(B1), .C(C1), .D(D1), 
-    .Z(F1));
-  lut40002 \Controller_inst/i1_2_lut_3_lut ( .A(GNDI), .B(B0), .C(C0), .D(D0), 
-    .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 \Controller_inst/rhd_state_i0_i1 ( .D0(DI1_dly), .SP(CE_dly), 
-    .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 \Controller_inst/rhd_state_i0_i0 ( .D0(DI0_dly), .SP(CE_dly), 
+  ffsre20001 \Controller_inst/rgd_info_sig_green ( .D0(DI0_dly), .SP(CE_dly), 
     .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
 
   specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
     (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
     (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
     $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
     $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
     $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
@@ -2186,395 +729,232 @@ endmodule
 
 module lut4 ( input A, B, C, D, output Z );
 
-  LUT4 #("0x238C") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0x0000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module lut40002 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0300") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_33 ( input DI1, DI0, D1, C1, D0, C0, B0, A0, LSR, 
-    CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  lut40003 \Controller_inst/i4254_2_lut ( .A(GNDI), .B(GNDI), .C(C1), .D(D1), 
-    .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40004 \Controller_inst/i1092_4_lut ( .A(A0), .B(B0), .C(C0), .D(D0), 
-    .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_TX_Ready 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 \Controller_inst/int_RHD2132_TX_DV_c ( .D0(DI0_dly), .SP(VCCI), 
-    .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40003 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x000F") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40004 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x3022") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_35 ( input DI0, 
-    D0, C0, CE, LSR, CLK, output Q0, F0 );
-  wire   GNDI, DI0_dly, CLK_dly, CE_dly, LSR_dly;
-
-  lut40005 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i5_2_lut ( 
-    .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_c ( 
-    .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40005 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0FF0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_36 ( input DI0, 
-    D0, LSR, CLK, output Q0, F0 );
-  wire   GNDI, VCCI, DI0_dly, CLK_dly, LSR_dly;
-
-  lut40006 \Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.SLICE_36_K0 ( 
-    .A(GNDI), .B(GNDI), .C(GNDI), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/o_SPI_Clk ( 
-    .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40006 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_37 ( input DI0, 
-    D0, C0, LSR, CLK, output Q0, F0 );
-  wire   GNDI, VCCI, DI0_dly, CLK_dly, LSR_dly;
-
-  lut40005 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i3696_2_lut ( 
-    .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Count_525__i0 
-    ( .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_38 ( input 
-    DI1, DI0, D1, C1, B1, A1, D0, C0, B0, A0, CE, LSR, CLK, output Q0, Q1, F0, 
-    F1 );
-  wire   DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40007 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3264_2_lut_3_lut_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40008 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3195_2_lut_3_lut_4_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i1 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i0 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40007 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40008 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_40 ( input 
-    DI0, D0, C0, CE, LSR, CLK, output Q0, F0 );
-  wire   GNDI, DI0_dly, CLK_dly, CE_dly, LSR_dly;
-
-  lut40009 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3248_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20010 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i6 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40009 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF0F") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module ffsre20010 ( input D0, SP, CK, LSR, output Q );
+module ffsre20001 ( input D0, SP, CK, LSR, output Q );
 
   FD1P3XZ INST01( .D(D0), .SP(SP), .CK(CK), .SR(LSR), .Q(Q));
   defparam INST01.REGSET = "SET";
   defparam INST01.SRMODE = "ASYNC";
 endmodule
 
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_41 ( input 
-    DI1, DI0, D1, B1, D0, C0, CE, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
+module SLICE_19 ( input D0, C0, B0, A0, output F0 );
 
-  lut40011 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3250_2_lut 
-    ( .A(GNDI), .B(B1), .C(GNDI), .D(D1), .Z(F1));
+  lut40002 i3910_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module lut40002 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x3733") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_20 ( input D1, C1, B1, A1, D0, C0, B0, output F0, F1 );
+  wire   GNDI;
+
+  lut40003 i3_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40004 i3632_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
-  lut40009 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3249_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i4 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre20010 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i5 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
 
   specify
     (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
     (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
     (D0 => F0) = (0:0:0,0:0:0);
     (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module lut40003 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module lut40004 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xF0C0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_21 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
+
+  lut40005 i3842_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40006 i3840_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module lut40005 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module lut40006 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_23 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
+
+  lut40007 i6_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40008 i5_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module lut40007 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module lut40008 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_25 ( input DI1, D1, C1, B1, A1, D0, C0, B0, CLK, output Q1, F0, 
+    F1 );
+  wire   GNDI, VCCI, DI1_dly, CLK_dly;
+
+  lut40009 i3660_1_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40010 i5_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
+  gnd DRIVEGND( .PWR0(GNDI));
+  ffsre2 w_reset( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(GNDI), .Q(Q1));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
     (CLK => Q1) = (0:0:0,0:0:0);
     $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
+  endspecify
+
+endmodule
+
+module lut40009 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x0001") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module lut40010 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_26 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
+
+  lut40011 i8_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40012 i6_4_lut_adj_5( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
 
 module lut40011 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xCC00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_43 ( input 
-    DI1, DI0, D1, C1, D0, B0, CE, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40012 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3252_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40013 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3251_2_lut 
-    ( .A(GNDI), .B(B0), .C(GNDI), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i2 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i3 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module lut40012 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xF000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_27 ( input D1, C1, B1, D0, C0, B0, A0, output F0, F1 );
+  wire   GNDI;
+
+  lut40013 i5_3_lut_adj_6( .A(GNDI), .B(B1), .C(C1), .D(D1), .Z(F1));
+  gnd DRIVEGND( .PWR0(GNDI));
+  lut40014 i4_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
 endmodule
 
 module lut40013 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xCC00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_45 ( input 
-    DI1, DI0, D1, C1, D0, B0, CE, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40012 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3269_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40013 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3253_2_lut 
-    ( .A(GNDI), .B(B0), .C(GNDI), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i0 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_Inactive_Count_i1 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_47 ( input 
-    DI1, DI0, D1, C1, B1, A1, D0, C0, B0, A0, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   VCCI, DI1_dly, CLK_dly, DI0_dly, LSR_dly;
-
-  lut40014 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1020_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40015 \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.i1018_3_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre20010 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i1 ( 
-    .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i2 ( 
-    .D0(DI0_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
+  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module lut40014 ( input A, B, C, D, output Z );
 
-  LUT4 #("0x30BA") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_28 ( input D0, C0, B0, A0, output F0 );
+
+  lut40015 i1_2_lut_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
+
+  specify
+    (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
+    (B0 => F0) = (0:0:0,0:0:0);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
 endmodule
 
 module lut40015 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xFF80") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFEF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_48 ( input 
-    DI1, DI0, D1, C1, B1, A1, D0, C0, B0, A0, CE, LSR, CLK, output Q0, Q1, F0, 
-    F1 );
-  wire   DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
+module SLICE_29 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
 
-  lut40007 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3261_2_lut_3_lut_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40008 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3260_2_lut_3_lut_4_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i4 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i5 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
+  lut40016 i6_4_lut_adj_8( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40014 i5_4_lut_adj_7( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
 
   specify
     (D1 => F1) = (0:0:0,0:0:0);
@@ -2585,717 +965,93 @@ module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_48 ( input
     (C0 => F0) = (0:0:0,0:0:0);
     (B0 => F0) = (0:0:0,0:0:0);
     (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_50 ( input 
-    DI1, DI0, D1, C1, B1, A1, D0, C0, B0, A0, CE, LSR, CLK, output Q0, Q1, F0, 
-    F1 );
-  wire   DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40007 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3263_2_lut_3_lut_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40008 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i3262_2_lut_3_lut_4_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i2 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_TX_Count_524__i3 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_54
-   ( input DI0, D0, C0, CE, LSR, CLK, output Q0, F0 );
-  wire   GNDI, DI0_dly, CLK_dly, CE_dly, LSR_dly;
-
-  lut40005 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i7_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_c 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_55
-   ( input DI1, DI0, D1, C1, D0, B0, CE, LSR, CLK, output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40016 \Controller_inst/i1_2_lut_2_lut_adj_11 ( .A(GNDI), .B(GNDI), .C(C1), 
-    .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40017 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i3254_2_lut 
-    ( .A(GNDI), .B(B0), .C(GNDI), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i4 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i5 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
   endspecify
 
 endmodule
 
 module lut40016 ( input A, B, C, D, output Z );
 
-  LUT4 #("0x0F00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module lut40017 ( input A, B, C, D, output Z );
+module SLICE_31 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
 
-  LUT4 #("0x3300") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_56 ( input DI1, DI0, D1, C1, D0, B0, CE, LSR, CLK, 
-    output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40016 \Controller_inst/i1_2_lut_2_lut ( .A(GNDI), .B(GNDI), .C(C1), 
-    .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40018 \Controller_inst/i1_2_lut ( .A(GNDI), .B(B0), .C(GNDI), .D(D0), 
-    .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i1 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i0 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
+  lut40005 i3836_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40017 i3834_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
 
   specify
     (D1 => F1) = (0:0:0,0:0:0);
     (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
     (D0 => F0) = (0:0:0,0:0:0);
+    (C0 => F0) = (0:0:0,0:0:0);
     (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
+    (A0 => F0) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module lut40017 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module SLICE_33 ( output F0 );
+  wire   GNDI;
+
+  lut40018 i2( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
   endspecify
 
 endmodule
 
 module lut40018 ( input A, B, C, D, output Z );
 
-  LUT4 #("0x3300") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0xFFFF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_59
-   ( input DI0, D0, B0, CE, LSR, CLK, output Q0, F0 );
-  wire   GNDI, DI0_dly, CLK_dly, CE_dly, LSR_dly;
+module SLICE_34 ( input DI1, D1, C1, B1, A1, D0, CE, CLK, output Q1, F0, F1 );
+  wire   GNDI, DI1_dly, CLK_dly, CE_dly;
 
-  lut40019 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i3259_2_lut 
-    ( .A(GNDI), .B(B0), .C(GNDI), .D(D0), .Z(F0));
+  lut40019 SLICE_34_K1( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40020 equal_3_i8_1_lut( .A(GNDI), .B(GNDI), .C(GNDI), .D(D0), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i6 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
+  ffsre2 w_Controller_Mode__i1( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), 
+    .LSR(GNDI), .Q(Q1));
 
   specify
+    (D1 => F1) = (0:0:0,0:0:0);
+    (C1 => F1) = (0:0:0,0:0:0);
+    (B1 => F1) = (0:0:0,0:0:0);
+    (A1 => F1) = (0:0:0,0:0:0);
     (D0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
+    (CLK => Q1) = (0:0:0,0:0:0);
+    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
     $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
   endspecify
 
 endmodule
 
 module lut40019 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xFFCC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_61 ( input DI1, DI0, D1, C1, D0, B0, CE, LSR, CLK, 
-    output Q0, Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, DI0_dly, CE_dly, LSR_dly;
-
-  lut40016 \Controller_inst/i1_2_lut_2_lut_adj_13 ( .A(GNDI), .B(GNDI), .C(C1), 
-    .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40018 \Controller_inst/i1_2_lut_2_lut_adj_10 ( .A(GNDI), .B(B0), .C(GNDI), 
-    .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i3 
-    ( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Edges_i2 
-    ( .D0(DI0_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, DI0, 0:0:0, 0:0:0,,,, CLK_dly, DI0_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module Controller_inst_SLICE_71 ( input D1, C1, D0, C0, B0, output F0, F1 );
-  wire   GNDI;
-
-  lut40016 \Controller_inst/i1_2_lut_adj_8 ( .A(GNDI), .B(GNDI), .C(C1), 
-    .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40020 \Controller_inst/i1_3_lut ( .A(GNDI), .B(B0), .C(C0), .D(D0), 
-    .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
+  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
 module lut40020 ( input A, B, C, D, output Z );
 
-  LUT4 #("0xFFC0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+  LUT4 #("0x00FF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module 
-  Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SPI_Master_1_SLICE_72
-   ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40021 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i6_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40022 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i5_4_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40021 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40022 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_73 ( input D1, C1, D0, C0, B0, A0, output F0, F1 );
-  wire   GNDI;
-
-  lut40023 \Controller_inst/i1_2_lut_adj_9 ( .A(GNDI), .B(GNDI), .C(C1), 
-    .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40024 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1_3_lut_4_lut ( 
-    .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40023 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x00F0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40024 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF80") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_74 ( input D0, C0, B0, A0, output F0 );
-
-  lut40025 i4178_3_lut_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40025 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x00E0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_75 ( input D1, 
-    C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40026 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i9_4_lut ( 
-    .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40027 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i7_4_lut ( 
-    .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40026 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40027 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_77 ( input D0, 
-    C0, output F0 );
-  wire   GNDI;
-
-  lut40028 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i5_2_lut_adj_7 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40028 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFF0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SPI_Master_CS_STM32_1_SPI_Master_1_SLICE_78 ( input D1, 
-    C1, D0, C0, B0, A0, output F0, F1 );
-  wire   GNDI;
-
-  lut40012 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i1_2_lut ( 
-    .A(GNDI), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40029 \Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/i10_4_lut ( 
-    .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40029 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_79 ( input 
-    D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40030 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4263_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40031 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i5_4_lut ( 
-    .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40030 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0001") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40031 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_81 ( input 
-    D1, C1, B1, A1, D0, C0, A0, output F0, F1 );
-  wire   GNDI;
-
-  lut40032 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4259_2_lut_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40033 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4050_3_lut 
-    ( .A(A0), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40032 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x050D") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40033 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF500") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_82 ( input 
-    D1, C1, A1, D0, C0, B0, A0, output F0, F1 );
-  wire   GNDI;
-
-  lut40034 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i5_3_lut ( 
-    .A(A1), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40022 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4_4_lut ( 
-    .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40034 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFA") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_83 ( input 
-    D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40035 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1492_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40036 \Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.i245_2_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40035 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xE4A0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40036 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xAAA8") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_85 ( input 
-    D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40026 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4092_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40037 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4090_4_lut 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40037 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_87 ( input D1, C1, B1, A1, D0, C0, output F0, F1 );
-  wire   GNDI;
-
-  lut40038 i4100_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40028 i3_2_lut( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40038 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_89 ( input C0, B0, output F0 );
-  wire   GNDI;
-
-  lut40039 i4072_2_lut( .A(GNDI), .B(B0), .C(C0), .D(GNDI), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40039 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFCFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_90 ( input D1, C1, B1, A1, D0, C0, output F0, F1 );
-  wire   GNDI;
-
-  lut40040 i11_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40041 i4070_2_lut( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40040 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40041 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFF0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_92 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40042 i7_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40043 i4086_3_lut_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40042 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0100") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40043 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_93 ( input D1, C1, B1, A1, D0, C0, B0, output F0, F1 );
-  wire   GNDI;
-
-  lut40021 i4096_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40044 i7_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40044 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_94 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40045 i4269_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40046 i1_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40045 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0001") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40046 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_95 ( input DI1, D1, C1, B1, A1, D0, C0, B0, CLK, output Q1, F0, 
-    F1 );
+module SLICE_35 ( input DI1, D1, C1, B1, A1, C0, CLK, output Q1, F0, F1 );
   wire   GNDI, VCCI, DI1_dly, CLK_dly;
 
-  lut40047 SLICE_95_K1( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40048 i3293_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
+  lut40021 i3663_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
+  lut40022 i1045_1_lut( .A(GNDI), .B(GNDI), .C(C0), .D(GNDI), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 w_reset( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(GNDI), 
+  ffsre2 stop_counting_c( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(GNDI), 
     .Q(Q1));
   vcc DRIVEVCC( .PWR1(VCCI));
 
@@ -3304,659 +1060,30 @@ module SLICE_95 ( input DI1, D1, C1, B1, A1, D0, C0, B0, CLK, output Q1, F0,
     (C1 => F1) = (0:0:0,0:0:0);
     (B1 => F1) = (0:0:0,0:0:0);
     (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
     (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
     (CLK => Q1) = (0:0:0,0:0:0);
     $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
   endspecify
 
 endmodule
 
-module lut40047 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0001") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40048 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF0C0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_97 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40049 i6_4_lut_adj_18( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40050 i1_4_lut_adj_16( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40049 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0010") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40050 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_99 ( input D1, C1, B1, A1, D0, C0, B0, A0, output F0, F1 );
-
-  lut40051 i3604_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40052 i6_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40051 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x8D88") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40052 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF7FF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_100 ( input D1, C1, B1, D0, C0, B0, A0, output F0, F1 );
-  wire   GNDI;
-
-  lut40053 i1_3_lut_adj_17( .A(GNDI), .B(B1), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40054 i3_4_lut( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40053 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40054 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFE") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_101 ( input D1, C1, B1, A1, D0, C0, B0, output F0, F1 );
-  wire   GNDI;
-
-  lut40055 i5_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40056 i4181_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40055 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0080") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40056 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xC000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_103 ( input D0, C0, B0, output F0 );
-  wire   GNDI;
-
-  lut40057 i1_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40057 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0030") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_104 ( input D1, C1, B1, A1, D0, C0, B0, output F0, F1 );
-  wire   GNDI;
-
-  lut40058 i1372_2_lut_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40059 i2_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40058 ( input A, B, C, D, output Z );
+module lut40021 ( input A, B, C, D, output Z );
 
   LUT4 #("0xFF04") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module lut40059 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_105 ( 
-    input DI1, D1, C1, B1, A1, D0, C0, B0, A0, LSR, CLK, output Q1, F0, F1 );
-  wire   VCCI, DI1_dly, CLK_dly, LSR_dly;
-
-  lut40060 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1016_4_lut 
-    ( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40061 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1_3_lut_4_lut_adj_6 
-    ( .A(A0), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM_i3 ( 
-    .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40060 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x3B0A") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40061 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF08") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_113 ( input D1, C1, D0, C0, B0, output F0, F1 );
-  wire   GNDI;
-
-  lut40062 i6_2_lut( .A(GNDI), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40063 i4056_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40062 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFF0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40063 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFC") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_115 ( input D1, C1, B1, A1, D0, C0, output F0, F1 );
-  wire   GNDI;
-
-  lut40064 i4094_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40028 i5_2_lut( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40064 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x8000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_117 ( output F0 );
-  wire   GNDI;
-
-  lut40065 i2( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-  endspecify
-
-endmodule
-
-module lut40065 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFFF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_118 ( input DI1, D1, C1, B1, D0, C0, LSR, CLK, 
-    output Q1, F0, F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, LSR_dly;
-
-  lut40066 \Controller_inst/i11_3_lut ( .A(GNDI), .B(B1), .C(C1), .D(D1), 
-    .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40067 \Controller_inst/i4265_2_lut ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), 
-    .Z(F0));
-  ffsre20010 \Controller_inst/rgd_info_sig_blue ( .D0(DI1_dly), .SP(VCCI), 
-    .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40066 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xCCF0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40067 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0F00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_SLICE_119 ( input DI1, D1, C1, B1, C0, A0, CE, LSR, CLK, 
-    output Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, CE_dly, LSR_dly;
-
-  lut40068 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i1_3_lut ( 
-    .A(GNDI), .B(B1), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40069 \Controller_inst/i1_2_lut_adj_12 ( .A(A0), .B(GNDI), .C(C0), 
-    .D(GNDI), .Z(F0));
-  ffsre20010 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_CS_n ( 
-    .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (A0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40068 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF3F0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40069 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xA0A0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_121 ( 
-    input DI1, D1, C1, A1, D0, LSR, CLK, output Q1, F0, F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, LSR_dly;
-
-  lut40070 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/i3710_2_lut_3_lut 
-    ( .A(A1), .B(GNDI), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40071 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i37_1_lut ( 
-    .A(GNDI), .B(GNDI), .C(GNDI), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_SPI_Clk_Count_526__i0 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40070 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xA5F0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40071 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x00FF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_122 ( 
-    input D0, C0, output F0 );
-  wire   GNDI;
-
-  lut40072 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4256_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40072 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x00F0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module Controller_inst_Controller_RHD_FIFO_1_SPI_Master_CS_1_SLICE_123 ( 
-    input D0, C0, output F0 );
-  wire   GNDI;
-
-  lut40073 \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/i4082_2_lut 
-    ( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-
-  specify
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40073 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_125 ( input D1, C1, B1, D0, C0, output F0, F1 );
-  wire   GNDI;
-
-  lut40074 i11_3_lut_adj_14( .A(GNDI), .B(B1), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40075 i1_2_lut( .A(GNDI), .B(GNDI), .C(C0), .D(D0), .Z(F0));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module lut40074 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF3C0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40075 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0F00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_126 ( input DI1, D1, D0, C0, B0, LSR, CLK, output Q1, F0, F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly, LSR_dly;
-
-  lut40076 SLICE_126_K1( .A(GNDI), .B(GNDI), .C(GNDI), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40077 i11_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre2 
-    \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_SPI_Clk 
-    ( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), .LSR(LSR_dly), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (LSR => Q1) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40076 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF00") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40077 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFC30") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_128 ( input DI1, D1, C1, B1, A1, D0, C0, B0, CLK, output Q1, F0, 
-    F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly;
-
-  lut40078 i1371_4_lut( .A(A1), .B(B1), .C(C1), .D(D1), .Z(F1));
-  lut40079 i11_3_lut_adj_15( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  gnd DRIVEGND( .PWR0(GNDI));
-  ffsre20001 w_Controller_Mode__i2( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (A1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-  endspecify
-
-endmodule
-
-module lut40078 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x030A") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40079 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xF3C0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_129 ( input DI1, D1, D0, C0, B0, CE, LSR, CLK, output Q1, F0, F1 );
-  wire   GNDI, DI1_dly, CLK_dly, CE_dly, LSR_dly;
-
-  lut40076 SLICE_129_K1( .A(GNDI), .B(GNDI), .C(GNDI), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40080 i4180_2_lut_3_lut( .A(GNDI), .B(B0), .C(C0), .D(D0), .Z(F0));
-  ffsre20001 w_Controller_Mode__i1( .D0(DI1_dly), .SP(CE_dly), .CK(CLK_dly), 
-    .LSR(LSR_dly), .Q(Q1));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (D0 => F0) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (B0 => F0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-    $setuphold (posedge CLK, CE, 0:0:0, 0:0:0,,,, CLK_dly, CE_dly);
-    $setuphold (posedge CLK, LSR, 0:0:0, 0:0:0,,,, CLK_dly, LSR_dly);
-  endspecify
-
-endmodule
-
-module lut40080 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFF03") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module SLICE_130 ( input DI1, D1, C1, B1, C0, CLK, output Q1, F0, F1 );
-  wire   GNDI, VCCI, DI1_dly, CLK_dly;
-
-  lut40081 i1_3_lut_adj_19( .A(GNDI), .B(B1), .C(C1), .D(D1), .Z(F1));
-  gnd DRIVEGND( .PWR0(GNDI));
-  lut40082 i520_1_lut( .A(GNDI), .B(GNDI), .C(C0), .D(GNDI), .Z(F0));
-  ffsre20001 stop_counting_c( .D0(DI1_dly), .SP(VCCI), .CK(CLK_dly), 
-    .LSR(GNDI), .Q(Q1));
-  vcc DRIVEVCC( .PWR1(VCCI));
-
-  specify
-    (D1 => F1) = (0:0:0,0:0:0);
-    (C1 => F1) = (0:0:0,0:0:0);
-    (B1 => F1) = (0:0:0,0:0:0);
-    (C0 => F0) = (0:0:0,0:0:0);
-    (CLK => Q1) = (0:0:0,0:0:0);
-    $setuphold (posedge CLK, DI1, 0:0:0, 0:0:0,,,, CLK_dly, DI1_dly);
-  endspecify
-
-endmodule
-
-module lut40081 ( input A, B, C, D, output Z );
-
-  LUT4 #("0xFFC0") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module lut40082 ( input A, B, C, D, output Z );
+module lut40022 ( input A, B, C, D, output Z );
 
   LUT4 #("0x0F0F") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
 endmodule
 
-module SLICE_133 ( output F0 );
+module SLICE_39 ( output F0 );
   wire   GNDI;
 
-  lut40083 i1( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
+  lut4 i1( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
   gnd DRIVEGND( .PWR0(GNDI));
 
   specify
-  endspecify
-
-endmodule
-
-module lut40083 ( input A, B, C, D, output Z );
-
-  LUT4 #("0x0000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
-endmodule
-
-module o_STM32_SPI4_CS_n ( input PADDT, PADDO, output PADDI, inout 
-    o_STM32_SPI4_CS_n );
-
-  BB_B_B o_STM32_SPI4_CS_n_pad( .T_N(PADDT), .I(PADDO), .O(PADDI), 
-    .B(o_STM32_SPI4_CS_n));
-
-  specify
-    (PADDT => o_STM32_SPI4_CS_n) = (0:0:0,0:0:0);
-    (PADDO => o_STM32_SPI4_CS_n) = (0:0:0,0:0:0);
-    (o_STM32_SPI4_CS_n => PADDI) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module BB_B_B ( input T_N, I, output O, inout B );
-
-  BB_B INST10( .T_N(T_N), .I(I), .O(O), .B(B));
-endmodule
-
-module o_STM32_SPI4_Clk ( input PADDT, PADDO, output PADDI, inout 
-    o_STM32_SPI4_Clk );
-
-  BB_B_B o_STM32_SPI4_Clk_pad( .T_N(PADDT), .I(PADDO), .O(PADDI), 
-    .B(o_STM32_SPI4_Clk));
-
-  specify
-    (PADDT => o_STM32_SPI4_Clk) = (0:0:0,0:0:0);
-    (PADDO => o_STM32_SPI4_Clk) = (0:0:0,0:0:0);
-    (o_STM32_SPI4_Clk => PADDI) = (0:0:0,0:0:0);
-  endspecify
-
-endmodule
-
-module o_STM32_SPI4_MOSI ( input PADDT, PADDO, output PADDI, inout 
-    o_STM32_SPI4_MOSI );
-
-  BB_B_B o_STM32_SPI4_MOSI_pad( .T_N(PADDT), .I(PADDO), .O(PADDI), 
-    .B(o_STM32_SPI4_MOSI));
-
-  specify
-    (PADDT => o_STM32_SPI4_MOSI) = (0:0:0,0:0:0);
-    (PADDO => o_STM32_SPI4_MOSI) = (0:0:0,0:0:0);
-    (o_STM32_SPI4_MOSI => PADDI) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
@@ -4002,7 +1129,7 @@ module PLL_B_B ( input REFERENCECLK, FEEDBACK, DYNAMICDELAY7, DYNAMICDELAY6,
   defparam INST10.PLLOUT_SELECT_PORTA = "GENCLK";
   defparam INST10.PLLOUT_SELECT_PORTB = "GENCLK";
   defparam INST10.DIVR = "0";
-  defparam INST10.DIVF = "71";
+  defparam INST10.DIVF = "63";
   defparam INST10.DIVQ = "4";
   defparam INST10.FILTER_RANGE = "1";
   defparam INST10.ENABLE_ICEGATE_PORTA = "0";
@@ -4023,6 +1150,11 @@ module o_RHS_TOP_SPI_CS_n_1 ( input PADDO, output o_RHS_TOP_SPI_CS_n_1 );
     (PADDO => o_RHS_TOP_SPI_CS_n_1) = (0:0:0,0:0:0);
   endspecify
 
+endmodule
+
+module BB_B_B ( input T_N, I, output O, inout B );
+
+  BB_B INST10( .T_N(T_N), .I(I), .O(O), .B(B));
 endmodule
 
 module o_RHS_TOP_SPI_Clk ( input PADDO, output o_RHS_TOP_SPI_Clk );
@@ -4073,6 +1205,45 @@ module i_RHS_TOP_SPI_MISO_1 ( output PADDI, input i_RHS_TOP_SPI_MISO_1 );
 
   specify
     (i_RHS_TOP_SPI_MISO_1 => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_CS_n ( output PADDI, input o_STM32_SPI4_CS_n );
+  wire   GNDI;
+
+  BB_B_B \o_STM32_SPI4_CS_n_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_CS_n));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_CS_n => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_Clk ( output PADDI, input o_STM32_SPI4_Clk );
+  wire   GNDI;
+
+  BB_B_B \o_STM32_SPI4_Clk_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_Clk));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_Clk => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_MOSI ( output PADDI, input o_STM32_SPI4_MOSI );
+  wire   GNDI;
+
+  BB_B_B \o_STM32_SPI4_MOSI_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_MOSI));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_MOSI => PADDI) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
@@ -4214,27 +1385,27 @@ module o_BOOST_ENABLE ( input PADDO, output o_BOOST_ENABLE );
 
 endmodule
 
-module o_RHS_TOP_SPI_CS_n_2 ( input PADDO, output o_RHS_TOP_SPI_CS_n_2 );
+module o_RHS_TOP_SPI_MOSI_2 ( input PADDO, output o_RHS_TOP_SPI_MOSI_2 );
   wire   VCCI;
 
-  BB_B_B \o_RHS_TOP_SPI_CS_n_2_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
-    .B(o_RHS_TOP_SPI_CS_n_2));
+  BB_B_B \o_RHS_TOP_SPI_MOSI_2_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(o_RHS_TOP_SPI_MOSI_2));
   vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (PADDO => o_RHS_TOP_SPI_CS_n_2) = (0:0:0,0:0:0);
+    (PADDO => o_RHS_TOP_SPI_MOSI_2) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
 
-module RGB0_OUT ( input PADDO, output RGB0_OUT );
+module RGB2_OUT ( input PADDO, output RGB2_OUT );
   wire   VCCI;
 
-  BB_OD_B \RGB0_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB0_OUT));
+  BB_OD_B \RGB2_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB2_OUT));
   vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (PADDO => RGB0_OUT) = (0:0:0,0:0:0);
+    (PADDO => RGB2_OUT) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
@@ -4256,14 +1427,14 @@ module RGB1_OUT ( input PADDO, output RGB1_OUT );
 
 endmodule
 
-module RGB2_OUT ( input PADDO, output RGB2_OUT );
+module RGB0_OUT ( input PADDO, output RGB0_OUT );
   wire   VCCI;
 
-  BB_OD_B \RGB2_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB2_OUT));
+  BB_OD_B \RGB0_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB0_OUT));
   vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (PADDO => RGB2_OUT) = (0:0:0,0:0:0);
+    (PADDO => RGB0_OUT) = (0:0:0,0:0:0);
   endspecify
 
 endmodule

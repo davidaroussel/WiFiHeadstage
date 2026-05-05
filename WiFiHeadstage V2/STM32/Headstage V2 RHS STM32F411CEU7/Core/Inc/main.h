@@ -53,7 +53,16 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+#define USART_TX_Pin GPIO_PIN_2
+#define USART_TX_GPIO_Port GPIOA
+#define USART_RX_Pin GPIO_PIN_3
+#define USART_RX_GPIO_Port GPIOA
+#define TMS_Pin GPIO_PIN_13
+#define TMS_GPIO_Port GPIOA
+#define TCK_Pin GPIO_PIN_14
+#define TCK_GPIO_Port GPIOA
+#define SWO_Pin GPIO_PIN_3
+#define SWO_GPIO_Port GPIOB
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -70,11 +79,11 @@ void Error_Handler(void);
 #define FPGA_MUX_4_Pin GPIO_PIN_9
 #define FPGA_MUX_4_GPIO_Port GPIOA
 
-#define debug_Pin GPIO_PIN_9
-#define debug_Port GPIOB
-
 #define Reboot_SPI_Pin GPIO_PIN_5
 #define Reboot_SPI_Port GPIOB
+
+#define RHS_Chip_SEL_Pin  GPIO_PIN_11
+#define RHS_Chip_SEL_Port GPIOC
 
 
 //Nordic nRF SPI PIN (SPI 1)
@@ -90,32 +99,35 @@ void Error_Handler(void);
 #define nRF_SPI_CS_Port GPIOA
 #define nRF_SPI_CS_Pin GPIO_PIN_4
 
-//INTAN RHD SPI PIN (SPI 4)
-#define RHD_SPI_MOSI_Port GPIOA
-#define RHD_SPI_MOSI_Pin GPIO_PIN_1
+//INTAN RHS SPI PIN (SPI)
+#define RHS_SPI_MOSI_Port GPIOA
+#define RHS_SPI_MOSI_Pin GPIO_PIN_1
 
-#define RHD_SPI_MISO_Port GPIOA
-#define RHD_SPI_MISO_Pin GPIO_PIN_11
-
-#define RHD_SPI_CLK_Port GPIOB
-#define RHD_SPI_CLK_Pin GPIO_PIN_13
-
-#define RHD_SPI_CS_Port GPIOB
-#define RHD_SPI_CS_Pin GPIO_PIN_12
-
-
-//INTAN RHS SPI PIN (SPI3) NOT USED !!
-#define RHS_SPI_MOSI_Port GPIOC
-#define RHS_SPI_MOSI_Pin GPIO_PIN_12
-
-#define RHS_SPI_MISO_Port GPIOC
+#define RHS_SPI_MISO_Port GPIOA
 #define RHS_SPI_MISO_Pin GPIO_PIN_11
 
-#define RHS_SPI_CLK_Port GPIOC
-#define RHS_SPI_CLK_Pin GPIO_PIN_10
+#define RHS_SPI_CLK_Port GPIOB
+#define RHS_SPI_CLK_Pin GPIO_PIN_13
 
-#define RHS_SPI_CS_Port GPIOD
-#define RHS_SPI_CS_Pin GPIO_PIN_2
+#define RHS_SPI_CS_Port GPIOB
+#define RHS_SPI_CS_Pin GPIO_PIN_12
+
+
+//INTAN RHD SPI PIN (SPI 4) NOT USED IN THIS DRIVER
+#define RHD_SPI_MOSI_Port GPIOC
+#define RHD_SPI_MOSI_Pin GPIO_PIN_8
+
+#define RHD_SPI_MISO_Port GPIOB
+#define RHD_SPI_MISO_Pin GPIO_PIN_7
+
+#define RHD_SPI_CLK_Port GPIOC
+#define RHD_SPI_CLK_Pin GPIO_PIN_10
+
+#define RHD_SPI_CS_Port GPIOD
+#define RHD_SPI_CS_Pin GPIO_PIN_2
+
+
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

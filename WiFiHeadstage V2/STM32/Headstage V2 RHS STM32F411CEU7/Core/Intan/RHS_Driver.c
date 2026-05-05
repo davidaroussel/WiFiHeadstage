@@ -415,46 +415,68 @@ void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uin
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 64-79 are triggered registers.)
 	// Register 64
 	//IN EXEMPLE : 0x8000 --> 0b1000000000000000
-	uint16_t register_addresses[] = {
-		REGISTER_64, REGISTER_65, REGISTER_66, REGISTER_67, REGISTER_68, REGISTER_69,
-		REGISTER_70, REGISTER_71, REGISTER_72, REGISTER_73, REGISTER_74, REGISTER_75,
-		REGISTER_76, REGISTER_77, REGISTER_78, REGISTER_79
-	};
 
-	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
-	    reg_address = register_addresses[i];
-	    cmd_selector = WRITE_CMD;
-	    lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
-	    tx_vector[0] = (cmd_selector << 8) | reg_address;
-	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-	    tx_vector[1] = lsb_value;
-	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	    print_debug_binary(rx_vector);
-	    print_configuration(tx_vector[0], reg_address, lsb_value);
-	}
+//	uint16_t register_addresses[] = {
+//		REGISTER_64, REGISTER_65, REGISTER_66, REGISTER_67, REGISTER_68, REGISTER_69,
+//		REGISTER_70, REGISTER_71, REGISTER_72, REGISTER_73, REGISTER_74, REGISTER_75,
+//		REGISTER_76, REGISTER_77, REGISTER_78, REGISTER_79
+//	};
+//
+//	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
+//	    reg_address = register_addresses[i];
+//	    cmd_selector = WRITE_CMD;
+//	    lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
+//	    tx_vector[0] = (cmd_selector << 8) | reg_address;
+//	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+//	    tx_vector[1] = lsb_value;
+//	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+//	    print_debug_binary(rx_vector);
+//	    print_configuration(tx_vector[0], reg_address, lsb_value);
+//	}
+
+	reg_address = REGISTER_64;
+	cmd_selector = WRITE_CMD;
+	lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
+	tx_vector[0] = (cmd_selector << 8) | reg_address;
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
+
 }
 
 void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude){
 	// Write to registers 96-111, setting the positive stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 96-111 are triggered registers.)
 	//IN EXEMPLE : 0x8000 --> 0b1000000000000000
-	uint16_t register_addresses[] = {
-		REGISTER_96,  REGISTER_97,  REGISTER_98,  REGISTER_99,  REGISTER_100, REGISTER_101,
-		REGISTER_102, REGISTER_103, REGISTER_104, REGISTER_105, REGISTER_106, REGISTER_107,
-		REGISTER_108, REGISTER_109, REGISTER_110, REGISTER_111
-	};
+//	uint16_t register_addresses[] = {
+//		REGISTER_96,  REGISTER_97,  REGISTER_98,  REGISTER_99,  REGISTER_100, REGISTER_101,
+//		REGISTER_102, REGISTER_103, REGISTER_104, REGISTER_105, REGISTER_106, REGISTER_107,
+//		REGISTER_108, REGISTER_109, REGISTER_110, REGISTER_111
+//	};
+//
+//	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
+//	    reg_address = register_addresses[i];
+//	    cmd_selector = WRITE_CMD;
+//	    lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
+//	    tx_vector[0] = (cmd_selector << 8) | reg_address;
+//	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+//	    tx_vector[1] = lsb_value;
+//	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+//	    print_debug_binary(rx_vector);
+//	    print_configuration(tx_vector[0], reg_address, lsb_value);
+//	}
 
-	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
-	    reg_address = register_addresses[i];
-	    cmd_selector = WRITE_CMD;
-	    lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
-	    tx_vector[0] = (cmd_selector << 8) | reg_address;
-	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-	    tx_vector[1] = lsb_value;
-	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	    print_debug_binary(rx_vector);
-	    print_configuration(tx_vector[0], reg_address, lsb_value);
-	}
+	reg_address = REGISTER_96;
+	cmd_selector = WRITE_CMD;
+	lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
+	tx_vector[0] = (cmd_selector << 8) | reg_address;
+	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+	tx_vector[1] = lsb_value;
+	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+	print_debug_binary(rx_vector);
+	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
 void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
@@ -956,21 +978,14 @@ void RHS2116_setup_stim_pattern(SPI_HandleTypeDef *hspi, uint16_t p_activated_ch
 }
 
 void RHS2116_Run_Stimulation_Pattern(SPI_HandleTypeDef *hspi, uint8_t nb_pulse, uint16_t channel){
-	uint32_t p_period_us = 400;
-	uint32_t p_pulse_width_us = 200;
-	uint32_t p_dead_zone_us = 0;
-	CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
-	uint8_t p_current_amplitude = 0b00000001;
-	uint32_t p_callback_period_us = 10;
-	uint16_t delay_counter = 0;
-	RHS2116_setup_stim_pattern(hspi, channel, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
+	uint32_t delay_counter = 0;
 	for (int pulse = 0; pulse <nb_pulse; pulse ++){
 		RHS2116_start_stim_pattern_single_shot(hspi);
-		HAL_Delay(3); //NEED 2.6 ISH...
-//		for (uint16_t delay = 0; delay < 3600; delay ++){ //DONT TELL MOM PLEASE
-//			delay_counter += 1;
-//		}
-//		delay_counter = 0;
+		HAL_Delay(2); //NEED 2.6 ISH...
+		for (uint16_t delay = 0; delay < 3000; delay ++){ //DONT TELL MOM PLEASE
+			delay_counter += 1;
+		}
+		delay_counter = 0;
 	}
 
 }
@@ -1003,10 +1018,10 @@ void RHS2116_update_stim_output_periodic_call(void)
 		RHS2116_Enable_Stim(stim_parameters.hspi);
 		RHS2116_Stimulator_Polarity(stim_parameters.hspi, REGISTER_44, stim_pol);
 		RHS2116_Stimulation_Turn_ON_OFF(stim_parameters.hspi, REGISTER_42, stim_parameters.activated_channels);
-//		RHS2116_PowerUp_DCCouple_LowGain_Amp(stim_parameters.hspi, REGISTER_38);
+		RHS2116_PowerUp_DCCouple_LowGain_Amp(stim_parameters.hspi, REGISTER_38);
 
 	}
-	else if ((stim_parameters.current_time_us == stim_parameters.pulse_width_us))
+	else if ((stim_parameters.current_time_us == stim_parameters.pulse_width_us-10))
 	{
 		//  POSITIVE POLARITY
 		uint8_t positive_current_trim = 0b10000000;
@@ -1017,16 +1032,17 @@ void RHS2116_update_stim_output_periodic_call(void)
 		RHS2116_Stimulation_Turn_ON_OFF(stim_parameters.hspi, REGISTER_42, stim_parameters.activated_channels);
 	}
 
-	else if((stim_parameters.current_time_us == (2*stim_parameters.pulse_width_us)))
-	{	printf("HERE 1 \r\n");
-		//  BACK TO 0 A
-		uint8_t positive_current_trim = 0b10000000;
-		uint8_t positive_current_magnitude = 0b00000000;
-		RHS2116_Positive_Stimulation_Current_Magnitude(stim_parameters.hspi, positive_current_trim, positive_current_magnitude);
-		uint16_t stim_pol = 0xFFFF;
-		RHS2116_Stimulator_Polarity(stim_parameters.hspi, REGISTER_44, stim_pol);
-		RHS2116_Stimulation_Turn_ON_OFF(stim_parameters.hspi, REGISTER_42, 0x0000);
-	}
+//	//NOT USED SINCE AFTER HIGH POLARITY, SHUTOFF
+//	else if((stim_parameters.current_time_us == (2*stim_parameters.pulse_width_us)))
+//	{
+//		//  BACK TO 0 A
+//		uint8_t positive_current_trim = 0b10000000;
+//		uint8_t positive_current_magnitude = 0b00000000;
+//		RHS2116_Positive_Stimulation_Current_Magnitude(stim_parameters.hspi, positive_current_trim, positive_current_magnitude);
+//		uint16_t stim_pol = 0xFFFF;
+//		RHS2116_Stimulator_Polarity(stim_parameters.hspi, REGISTER_44, stim_pol);
+//		RHS2116_Stimulation_Turn_ON_OFF(stim_parameters.hspi, REGISTER_42, 0x0000);
+//	}
 
 	stim_parameters.current_time_us += stim_parameters.callback_period_us;
 
@@ -1034,7 +1050,6 @@ void RHS2116_update_stim_output_periodic_call(void)
 
 	{
 		stim_parameters.current_time_us = 0;
-//		printf("HERE 2\r\n");
 		if(stim_parameters.single_shot || stim_parameters.request_stop)
 		{
 			uint16_t stim_status = 0x0000;
@@ -1057,83 +1072,11 @@ void RHS2116_start_stim_pattern_single_shot(SPI_HandleTypeDef *hspi)
 
 
 
-/*
-uint16_t READ(SPI_HandleTypeDef *hspi, uint16_t p_register)
-{
-	uint16_t tx[2];
-	uint16_t rx[2];
-
-	uint16_t cmd_selector = READ_CMD;
-	tx[0] = (cmd_selector << 8) | (p_register);
-	tx[1] = 0xFFFF;
-
-	SPI_SEND_RECV(hspi, tx, rx, 2);
-	return rx[1];
-}
-
-void WRITE(SPI_HandleTypeDef *hspi, uint16_t p_register, uint16_t p_data)
-{
-	uint16_t tx[2];
-	uint16_t rx[2];
-
-	uint16_t cmd_selector = WRITE_CMD;
-	tx[0] = (cmd_selector << 8) | (p_register);
-	tx[1] = p_data;
-
-	SPI_SEND_RECV(hspi, tx, rx, 2);
-}
-
-void WRITE_with_U(SPI_HandleTypeDef *hspi, uint16_t p_register, uint16_t p_data)
-{
-	uint16_t tx[2];
-	uint16_t rx[2];
-
-	uint16_t cmd_selector = WRITE_CMD;
-	tx[0] = (cmd_selector << 8) | (1 << U_FLAG) | (p_register);
-	tx[1] = p_data;
-
-	SPI_SEND_RECV(hspi, tx, rx, 2);
-}
-
-void rhs2116_program_channel(SPI_HandleTypeDef *hspi, uint8_t ch, uint8_t mag_neg, uint8_t mag_pos)
-{
-    WRITE(hspi, 64 + ch, (128 << 8) | mag_neg);
-    WRITE_with_U(hspi, 96 + ch, (128 << 8) | mag_pos);
-}
-*/
 void RHS2116_start_stim_pattern(SPI_HandleTypeDef *hspi)
 {
 	stim_parameters.stim_activated = TRUE;
 	stim_parameters.single_shot = FALSE;
 	stim_parameters.current_time_us = 0;
-
-	/*WRITE(hspi, 32, 0x0000);
-	WRITE(hspi, 33, 0x0000);
-
-	WRITE(hspi, 38, 0xFFFF);
-
-	RHS2116_Clear_Command(hspi);
-
-	WRITE(hspi, 34, 0x000F);   // 10 uA/LSB
-	WRITE(hspi, 35, 0x00FF);   // biases for 10 uA/LSB
-	WRITE(hspi, 36, 0x0080);   // recovery target = 0 V
-	WRITE(hspi, 37, 0x4F00);   // recovery current limit
-
-	WRITE(hspi, 42, 0x0000);
-	WRITE(hspi, 44, 0x0000);
-	WRITE(hspi, 46, 0x0000);
-	WRITE_with_U(hspi, 48, 0x0000);
-
-	WRITE(hspi, 32, 0xAAAA);
-	WRITE(hspi, 33, 0x00FF);   // plus stim_en pin = high
-
-	for(int i = 0; i < 16; i++)
-		rhs2116_program_channel(hspi, i, 0b00000000, 0b00000001);
-
-	WRITE(hspi, 44, 0xFFFF);     // ch positive
-	WRITE_with_U(hspi, 42, 0xFFFF);
-
-	WRITE(hspi, 38, 0xFFFF);*/
 
 }
 
@@ -1151,8 +1094,9 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 	RHS2116_Read_Chip_ID(hspi, REGISTER_255);
 	RHS2116_Read_Chip_ID(hspi, REGISTER_255);
 	uint8_t pre_chip_id = RHS2116_Read_Chip_ID(hspi, REGISTER_255);
-	if (pre_chip_id != 32){
-		printf("INTAN NOT DETECTED \r\n");
+
+	if (pre_chip_id != 0x20){
+		printf("INTAN NOT DETECTED [%d]\r\n", pre_chip_id);
 		return 0xFFFF;
 	}
 
@@ -1165,11 +1109,11 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 1 - Set all auxiliary digital outputs to a high-impedance state. Set DSP high-pass filter to 4.665 Hz.
 	// IN EXEMPLE : 0x051A --> 0bxxx 0 0 1 0 1 0 0 0 1 1010
-	uint8_t DSPcutoffFreq = 0b1010;
+	uint8_t DSPcutoffFreq = 0b0110;
 	uint8_t DSPenable = 0b1;
 	uint8_t ABSmode = 0b0;
-	uint8_t TWOScomp = 0b0;
-	uint8_t weakMISO = 0b0;
+	uint8_t TWOScomp = 0b1;
+	uint8_t weakMISO = 0b1;
 	uint8_t digout1_HiZ = 0b1;
 	uint8_t digout1 = 0b0;
 	uint8_t digout2_HiZ = 0b1;
@@ -1324,7 +1268,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
+	reg_address = REGISTER_1;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
 	tx_vector[0] |= (1 << D_FLAG);
@@ -1338,7 +1282,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
+	reg_address = REGISTER_2;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
 	tx_vector[1] = lsb_value;
@@ -1350,7 +1294,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
+	reg_address = REGISTER_3;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
 	tx_vector[0] |= (1 << D_FLAG);
@@ -1363,7 +1307,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
+	reg_address = REGISTER_4;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
 	tx_vector[1] = lsb_value;
@@ -1375,7 +1319,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	// Register 0
 	cmd_selector = CONVERT_CMD;
-	reg_address = REGISTER_63;
+	reg_address = REGISTER_5;
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = (cmd_selector << 12) | (reg_address);
 	tx_vector[0] |= (1 << D_FLAG);
