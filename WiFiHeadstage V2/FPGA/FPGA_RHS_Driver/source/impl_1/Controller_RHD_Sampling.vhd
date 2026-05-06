@@ -615,12 +615,14 @@ architecture RTL of Controller_RHD_Sampling is
 			else
 				int_FIFO_RHD2132_RE <= '0';
 			end if;
-
-
+			rgd_info_sig_red   <= '0';
+			rgd_info_sig_blue   <= '1';
+						
 		elsif i_Controller_Mode = x"2" then 
 			case stm32_state is
 				when 0 =>
-					rgd_info_sig_red   <= '0';
+					rgd_info_sig_red   <= '1';
+					rgd_info_sig_blue   <= '0';
 					int_FIFO_RHD2132_RE <= '0';
 				
 					if (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= ((NUM_DATA*2) + 2)) and (first_rhd2132_packet = '0') then
@@ -719,6 +721,8 @@ architecture RTL of Controller_RHD_Sampling is
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"0" then
+				rgd_info_sig_green <= '1';
+			elsif i_Controller_Mode = x"1" then
 				rgd_info_sig_green <= '0';
 				
 			elsif i_Controller_Mode = x"2" then
@@ -730,7 +734,7 @@ architecture RTL of Controller_RHD_Sampling is
 						----------------------------------------------------------------
 						when 0 =>
 
-							int_RHD2132_TX_Byte <= channel_array_3(rhd_index);
+							int_RHD2132_TX_Byte <= channel_array(rhd_index);
 
 							if int_RHD2132_TX_Ready = '1' then
 								int_RHD2132_TX_DV <= '1';   -- pulse DV for one cycle

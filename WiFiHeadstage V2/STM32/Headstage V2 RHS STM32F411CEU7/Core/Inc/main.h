@@ -46,7 +46,9 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define DUAL_CHIP 1
+#define DEVKIT    0
+#define NUM_CHANNELS 32
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -82,8 +84,14 @@ void Error_Handler(void);
 #define Reboot_SPI_Pin GPIO_PIN_5
 #define Reboot_SPI_Port GPIOB
 
-#define RHS_Chip_SEL_Pin  GPIO_PIN_11
-#define RHS_Chip_SEL_Port GPIOC
+
+//FOR DEV KIT
+//#define RHS_Chip_SEL_Pin  GPIO_PIN_11
+//#define RHS_Chip_SEL_Port GPIOC
+
+//FOR HEADSTAGE
+#define RHS_Chip_SEL_Pin  GPIO_PIN_10
+#define RHS_Chip_SEL_Port GPIOA
 
 
 //Nordic nRF SPI PIN (SPI 1)
@@ -99,7 +107,7 @@ void Error_Handler(void);
 #define nRF_SPI_CS_Port GPIOA
 #define nRF_SPI_CS_Pin GPIO_PIN_4
 
-//INTAN RHS SPI PIN (SPI)
+//INTAN RHS SPI PIN (SPI 4)
 #define RHS_SPI_MOSI_Port GPIOA
 #define RHS_SPI_MOSI_Pin GPIO_PIN_1
 

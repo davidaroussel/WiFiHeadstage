@@ -23,7 +23,7 @@ extern TIM_HandleTypeDef htim11;
 static uint32_t ticks_tim_11 = 0;
 
 static STIMULATION_PARAMETERS stim_parameters = {100000, 5000, 1000, 1000, 0, Curr_Invalid, 0b11111111, FALSE, FALSE, 0x0000, 0};
-
+static USERS_STIM_PARAMETERS CHANNEL_LIST[NUM_CHANNELS];
 
 char* binary_string(uint32_t value) {
     static char buffer[40];  // 32 bits + 7 spaces + null terminator
@@ -410,73 +410,94 @@ void RHS2116_Current_Limited_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Re
 	print_configuration(tx_vector[0], reg_address, lsb_value);
 }
 
-void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude){
+void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude, uint8_t first_time){
 	// Write to registers 64-79, setting the negative stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 64-79 are triggered registers.)
 	// Register 64
 	//IN EXEMPLE : 0x8000 --> 0b1000000000000000
 
-//	uint16_t register_addresses[] = {
-//		REGISTER_64, REGISTER_65, REGISTER_66, REGISTER_67, REGISTER_68, REGISTER_69,
-//		REGISTER_70, REGISTER_71, REGISTER_72, REGISTER_73, REGISTER_74, REGISTER_75,
-//		REGISTER_76, REGISTER_77, REGISTER_78, REGISTER_79
-//	};
-//
-//	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
-//	    reg_address = register_addresses[i];
-//	    cmd_selector = WRITE_CMD;
-//	    lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
-//	    tx_vector[0] = (cmd_selector << 8) | reg_address;
-//	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-//	    tx_vector[1] = lsb_value;
-//	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-//	    print_debug_binary(rx_vector);
-//	    print_configuration(tx_vector[0], reg_address, lsb_value);
-//	}
+	uint16_t register_addresses[] = {
+		REGISTER_64, REGISTER_65, REGISTER_66, REGISTER_67, REGISTER_68, REGISTER_69,
+		REGISTER_70, REGISTER_71, REGISTER_72, REGISTER_73, REGISTER_74, REGISTER_75,
+		REGISTER_76, REGISTER_77, REGISTER_78, REGISTER_79
+	};
+	if (first_time){
+		for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
+			reg_address = register_addresses[i];
+			cmd_selector = WRITE_CMD;
+			lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
+			tx_vector[0] = (cmd_selector << 8) | reg_address;
+			tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+			tx_vector[1] = lsb_value;
+			SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+			print_debug_binary(rx_vector);
+			print_configuration(tx_vector[0], reg_address, lsb_value);
+		}
+	}
+	else{
 
-	reg_address = REGISTER_64;
-	cmd_selector = WRITE_CMD;
-	lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
-	tx_vector[0] = (cmd_selector << 8) | reg_address;
-	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(tx_vector[0], reg_address, lsb_value);
+		uint8_t channel_index = 0;
+		for (uint8_t i = 0; i < 16; i++) {
+		    if (stim_parameters.activated_channels & (1 << i)) {
+		        channel_index = i;
+		        break;
+		    }
+		}
 
+		reg_address = register_addresses[channel_index];
+		cmd_selector = WRITE_CMD;
+		lsb_value = (negative_current_trim << 8) | negative_current_magnitude;
+		tx_vector[0] = (cmd_selector << 8) | reg_address;
+		tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+		tx_vector[1] = lsb_value;
+		SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+		print_debug_binary(rx_vector);
+		print_configuration(tx_vector[0], reg_address, lsb_value);
+	}
 }
 
-void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude){
+void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude, uint8_t first_time){
 	// Write to registers 96-111, setting the positive stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 96-111 are triggered registers.)
 	//IN EXEMPLE : 0x8000 --> 0b1000000000000000
-//	uint16_t register_addresses[] = {
-//		REGISTER_96,  REGISTER_97,  REGISTER_98,  REGISTER_99,  REGISTER_100, REGISTER_101,
-//		REGISTER_102, REGISTER_103, REGISTER_104, REGISTER_105, REGISTER_106, REGISTER_107,
-//		REGISTER_108, REGISTER_109, REGISTER_110, REGISTER_111
-//	};
-//
-//	for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
-//	    reg_address = register_addresses[i];
-//	    cmd_selector = WRITE_CMD;
-//	    lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
-//	    tx_vector[0] = (cmd_selector << 8) | reg_address;
-//	    tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-//	    tx_vector[1] = lsb_value;
-//	    SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-//	    print_debug_binary(rx_vector);
-//	    print_configuration(tx_vector[0], reg_address, lsb_value);
-//	}
+	uint16_t register_addresses[] = {
+		REGISTER_96,  REGISTER_97,  REGISTER_98,  REGISTER_99,  REGISTER_100, REGISTER_101,
+		REGISTER_102, REGISTER_103, REGISTER_104, REGISTER_105, REGISTER_106, REGISTER_107,
+		REGISTER_108, REGISTER_109, REGISTER_110, REGISTER_111
+	};
+	if (first_time){
+		for (int i = 0; i < sizeof(register_addresses) / sizeof(register_addresses[0]); i++) {
+			reg_address = register_addresses[i];
+			cmd_selector = WRITE_CMD;
+			lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
+			tx_vector[0] = (cmd_selector << 8) | reg_address;
+			tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+			tx_vector[1] = lsb_value;
+			SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+			print_debug_binary(rx_vector);
+			print_configuration(tx_vector[0], reg_address, lsb_value);
+		}
+	}
+	else{
+		uint8_t channel_index = 0;
+		for (uint8_t i = 0; i < 16; i++) {
+		    if (stim_parameters.activated_channels & (1 << i)) {
+		        channel_index = i;
+		        break;
+		    }
+		}
 
-	reg_address = REGISTER_96;
-	cmd_selector = WRITE_CMD;
-	lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
-	tx_vector[0] = (cmd_selector << 8) | reg_address;
-	tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
-	tx_vector[1] = lsb_value;
-	SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
-	print_debug_binary(rx_vector);
-	print_configuration(tx_vector[0], reg_address, lsb_value);
+		reg_address = register_addresses[channel_index];
+		cmd_selector = WRITE_CMD;
+		lsb_value = (positive_current_trim << 8) | positive_current_magnitude;
+		tx_vector[0] = (cmd_selector << 8) | reg_address;
+		tx_vector[0] |= (1 << U_FLAG); // TRIGGERING U_FLAG
+		tx_vector[1] = lsb_value;
+		SPI_SEND_RECV(hspi, tx_vector, rx_vector, data_size);
+		print_debug_binary(rx_vector);
+		print_configuration(tx_vector[0], reg_address, lsb_value);
+	}
+
 }
 
 void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi){
@@ -946,14 +967,15 @@ void _RHS2116_setup_stimulation(SPI_HandleTypeDef *hspi, CURRENT_STEP_SIZE p_nA_
 	// Define the common values for negative current trim and magnitude
 	uint8_t negative_current_trim = 0b10000000;
 	uint8_t negative_current_magnitude = 0b11111111;
-	RHS2116_Negative_Stimulation_Current_Magnitude(hspi, negative_current_trim, negative_current_magnitude);
+
+	RHS2116_Negative_Stimulation_Current_Magnitude(hspi, negative_current_trim, negative_current_magnitude, 0);
 
 	// Write to registers 96-111, setting the negative stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 96-111 are triggered registers.)
 	// Define the common values for negative current trim and magnitude
 	uint8_t positive_current_trim = 0b10000000;
 	uint8_t positive_current_magnitude = 0b11111111;
-	RHS2116_Positive_Stimulation_Current_Magnitude(hspi, positive_current_trim, positive_current_magnitude);
+	RHS2116_Positive_Stimulation_Current_Magnitude(hspi, positive_current_trim, positive_current_magnitude, 0);
 
 	RHS2116_Enable_Stim(hspi);
 
@@ -982,7 +1004,7 @@ void RHS2116_Run_Stimulation_Pattern(SPI_HandleTypeDef *hspi, uint8_t nb_pulse, 
 	for (int pulse = 0; pulse <nb_pulse; pulse ++){
 		RHS2116_start_stim_pattern_single_shot(hspi);
 		HAL_Delay(2); //NEED 2.6 ISH...
-		for (uint16_t delay = 0; delay < 3000; delay ++){ //DONT TELL MOM PLEASE
+		for (uint16_t delay = 0; delay < 3200; delay ++){ //DONT TELL MOM PLEASE
 			delay_counter += 1;
 		}
 		delay_counter = 0;
@@ -1013,7 +1035,7 @@ void RHS2116_update_stim_output_periodic_call(void)
 		//  NEGATIVE POLARITY
 		uint8_t negative_current_trim = 0b10000000;
 		uint8_t negative_current_magnitude = stim_parameters.current_amplitude;
-		RHS2116_Negative_Stimulation_Current_Magnitude(stim_parameters.hspi, negative_current_trim, negative_current_magnitude);
+		RHS2116_Negative_Stimulation_Current_Magnitude(stim_parameters.hspi, negative_current_trim, negative_current_magnitude, 0);
 		uint16_t stim_pol = 0x0000;
 		RHS2116_Enable_Stim(stim_parameters.hspi);
 		RHS2116_Stimulator_Polarity(stim_parameters.hspi, REGISTER_44, stim_pol);
@@ -1026,7 +1048,7 @@ void RHS2116_update_stim_output_periodic_call(void)
 		//  POSITIVE POLARITY
 		uint8_t positive_current_trim = 0b10000000;
 		uint8_t positive_current_magnitude = stim_parameters.current_amplitude;
-		RHS2116_Positive_Stimulation_Current_Magnitude(stim_parameters.hspi, positive_current_trim, positive_current_magnitude);
+		RHS2116_Positive_Stimulation_Current_Magnitude(stim_parameters.hspi, positive_current_trim, positive_current_magnitude, 0);
 		uint16_t stim_pol = 0xFFFF;
 		RHS2116_Stimulator_Polarity(stim_parameters.hspi, REGISTER_44, stim_pol);
 		RHS2116_Stimulation_Turn_ON_OFF(stim_parameters.hspi, REGISTER_42, stim_parameters.activated_channels);
@@ -1086,6 +1108,97 @@ void RHS2116_stop_stim_pattern(SPI_HandleTypeDef *hspi)
 }
 
 /*********** End stimulation interface***********/
+
+void RHS2116_Toggle_LED_Warning(uint8_t flash_speed){
+	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
+	HAL_Delay(flash_speed);
+	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
+	HAL_Delay(flash_speed);
+	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
+	HAL_Delay(flash_speed);
+	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
+	HAL_Delay(flash_speed);
+}
+
+void RHS2116_MEP_Config_Params(){
+	  for (int i = 0; i < NUM_CHANNELS; i++)
+	  {
+		  CHANNEL_LIST[i].periodP_us  = 240;   // TIME FOR POS + NEG PHASE
+		  CHANNEL_LIST[i].num_pulse   = 13;    // NUMBER OF PULSE IN EACH TRAIN
+		  CHANNEL_LIST[i].AmpA_uA     = 40;    // AMP OF STIMULATION
+		  CHANNEL_LIST[i].DurA_ms     = 3;	   // TIME BETWEEN PULSE
+		  CHANNEL_LIST[i].DelayA_ms   = 0;     // DELAY BEFORE STARTING STIM SEQUENCE (NOT WORKING YET)
+		  CHANNEL_LIST[i].num_train   = 10;    // NUMBER OF TRAIN BEFORE STOPPING
+		  CHANNEL_LIST[i].periodT_ms  = 998;   // TIME BETWEEN TRAIN
+	  }  /* USER CODE END SysInit */
+}
+
+void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA)
+{
+    if (channel >= 32)
+    {
+        while(1){
+        	RHS2116_Toggle_LED_Warning(100);
+        }
+        Error_Handler();
+    }
+
+    USERS_STIM_PARAMETERS *CHANNEL_CONFIGS = &CHANNEL_LIST[channel];
+    CHANNEL_LIST[channel].AmpA_uA = stim_current_uA;
+    // Validate amplitude
+    uint8_t p_current_amplitude;
+    if (CHANNEL_CONFIGS->AmpA_uA >= 10 && CHANNEL_CONFIGS->AmpA_uA <= 300)
+    {
+        p_current_amplitude = CHANNEL_CONFIGS->AmpA_uA / 10;
+    }
+    else
+    {
+        printf("Fatal error: invalid amplitude %lu uA (channel %u)\r\n", CHANNEL_CONFIGS->AmpA_uA, channel);
+        Error_Handler();
+    }
+
+    // Select chip
+    if (channel < 16)
+        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);
+    else
+        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);
+
+    uint8_t  num_pulse            = CHANNEL_CONFIGS->num_pulse;
+    uint16_t channel_mask         = (1 << channel);
+    uint32_t p_period_us          = CHANNEL_CONFIGS->periodP_us;
+    uint32_t p_pulse_width_us     = CHANNEL_CONFIGS->periodP_us / 2;
+    uint32_t p_dead_zone_us       = 0;
+    uint32_t p_callback_period_us = 10;
+    uint32_t p_period_train_ms    = CHANNEL_CONFIGS->periodT_ms;
+    uint32_t p_num_train          = CHANNEL_CONFIGS->num_train;
+
+    CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
+
+    HAL_Delay(500);
+
+    RHS2116_setup_stim_pattern(hspi, channel_mask, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
+
+    // KEEP ONLY THIS PART IN THIS FUNCTION
+
+    uint32_t train_counter = 0;
+    while ((train_counter < p_num_train) || p_num_train == 0)
+    {
+        RHS2116_Run_Stimulation_Pattern(hspi, num_pulse, channel_mask);
+        HAL_Delay(p_period_train_ms);
+
+        if (DEVKIT)
+            printf("Running %d Burst Loop \r\n", num_pulse);
+
+        train_counter++;
+    }
+
+    RHS2116_Toggle_LED_Warning(300);
+    RHS2116_Toggle_LED_Warning(300);
+    RHS2116_Toggle_LED_Warning(300);
+    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+}
+
+
 
 uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
@@ -1229,7 +1342,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 	// Define the common values for negative current trim and magnitude
 	uint8_t negative_current_trim = 0b10000000;
 	uint8_t negative_current_magnitude = 0b00000000;
-	RHS2116_Negative_Stimulation_Current_Magnitude(hspi, negative_current_trim, negative_current_magnitude);
+	RHS2116_Negative_Stimulation_Current_Magnitude(hspi, negative_current_trim, negative_current_magnitude, 1);
 
 	// Write to registers 96-111, setting the negative stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 96-111 are triggered registers.)
@@ -1237,7 +1350,7 @@ uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 	// Define the common values for negative current trim and magnitude
 	uint8_t positive_current_trim = 0b10000000;
 	uint8_t positive_current_magnitude = 0b00000000;
-	RHS2116_Positive_Stimulation_Current_Magnitude(hspi, positive_current_trim, positive_current_magnitude);
+	RHS2116_Positive_Stimulation_Current_Magnitude(hspi, positive_current_trim, positive_current_magnitude, 1);
 
 	// Should Return ascii character INTAN
 	RHS2116_Read_INTAN(hspi);

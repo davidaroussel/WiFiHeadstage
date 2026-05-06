@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "main.h"
 
+
 char* binary_string(uint32_t value);
 
 void print_debug_binary(uint16_t *rx_vector);
@@ -48,8 +49,8 @@ void RHS2116_Stimulation_Turn_ON_OFF(SPI_HandleTypeDef *hspi, uint8_t Register, 
 void RHS2116_Stimulator_Polarity(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t stim_pol);
 void RHS2116_Charge_Recovery_Switches(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t charge_recovery_switch);
 void RHS2116_Current_Limited_Charge_Recovery(SPI_HandleTypeDef *hspi, uint8_t Register, uint16_t CL_charge_recovery_enable);
-void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude);
-void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude);
+void RHS2116_Negative_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t negative_current_trim, uint8_t negative_current_magnitude, uint8_t first_time);
+void RHS2116_Positive_Stimulation_Current_Magnitude(SPI_HandleTypeDef *hspi, uint8_t positive_current_trim, uint8_t positive_current_magnitude, uint8_t first_time);
 
 void RHS2116_Read_INTAN(SPI_HandleTypeDef *hspi);
 uint16_t RHS2116_Read_NumChannel_DieRevision(SPI_HandleTypeDef *hspi, uint8_t Register);
@@ -59,6 +60,11 @@ void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi);
 
 /*Impedance*/
 int16_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, float p_measurement_time_s);
+
+/* Stimulation */
+void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA);
+void RHS2116_MEP_Config_Params();
+void RHS2116_Toggle_LED_Warning(uint8_t flash_speed);
 
 /***********Stimulation interface***********/
 typedef enum {
@@ -96,6 +102,17 @@ typedef struct
 	uint16_t activated_channels;
 	SPI_HandleTypeDef *hspi;
 }STIMULATION_PARAMETERS;
+
+typedef struct
+{
+	uint32_t periodP_us;  // TIME BETWEEN EACH PULSE
+	uint32_t num_pulse;	  // NUMBER OF PULSE IN EACH TRAIN
+	uint32_t AmpA_uA;	  // AMP OF STIMULATION
+	uint32_t DurA_ms;     // DURATION OF NEGATIVE + POSITIVE PULSE
+	uint32_t DelayA_ms;	  // DELAY BEFORE STARTING THE PULSE (NOT WOKRING YET)
+	uint32_t num_train;   // NUMBER OF num_pulse TRAIN TO RUN BEFORE STOPPING, IF ZERO, continuous
+	uint32_t periodT_ms;  // TIME BETWEEN EACH TRAIN
+}USERS_STIM_PARAMETERS;
 
 void RHS2116_setup_stim_pattern(SPI_HandleTypeDef *hspi, uint16_t p_activated_channels, uint32_t p_period_us, uint32_t p_pulse_width_us, uint32_t p_dead_zone_us,
 								CURRENT_STEP_SIZE p_nA_stepsize, uint8_t p_current_amplitude, uint32_t p_callback_period_us);

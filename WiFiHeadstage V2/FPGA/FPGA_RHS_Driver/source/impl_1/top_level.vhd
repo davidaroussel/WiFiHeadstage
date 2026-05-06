@@ -75,7 +75,7 @@ entity top_level is
 		
 		o_RHS_TOP_SPI_MOSI_2   : out STD_LOGIC; --FOR DK
 		i_RHS_TOP_SPI_MISO_2 : in  STD_LOGIC; 
-		--o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
+		o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
 		
 		--o_RHS_BOTTOM_SPI_MOSI : out STD_LOGIC; 
         --o_RHS_BOTTOM_SPI_Clk  : out STD_LOGIC; 
@@ -86,6 +86,7 @@ entity top_level is
 		--o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
 		CTRL0_IN     : in STD_LOGIC;
+		RHS_SEL     : in STD_LOGIC;
 		
 		-- IR SYNCHRONIZATION INPUT 
 		--i_LED_SYNC   : in STD_LOGIC;
@@ -195,9 +196,9 @@ begin
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
-			rgb_info_red     => rgb_sig_red,
-			rgb_info_green   => rgb_sig_green,
-			rgb_info_blue    => rgb_sig_blue,
+
+			rgb_info_red   => rgb_sig_red,
+			rgb_info_blue   => rgb_sig_blue,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -234,19 +235,22 @@ begin
 		begin
 			if w_Controller_Mode = x"0" then
 				-- Passthrough: STM32 directly drives RHD
-				o_RHS_TOP_SPI_Clk  <= o_STM32_SPI4_Clk;
-				o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
 				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO <= i_RHS_TOP_SPI_MISO_2;  
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_1;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
 				
 			elsif w_Controller_Mode = x"1" then
-				o_RHS_TOP_SPI_Clk  <= o_STM32_SPI4_Clk;
-				o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
-				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO <= i_RHS_TOP_SPI_MISO_2;  
+				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				--IF DEVKIT
+				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;				
+				--IF HEADSTAGE
+				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_2 ;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
@@ -270,6 +274,7 @@ begin
 
 
 	Reset_Process : process(pll_clk_int)
+
     begin
         if rising_edge(pll_clk_int) then
             -- Reset logic
@@ -277,28 +282,34 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
+				rgb_sig_green <= '1';
             else
-                w_reset <= '0';  				
 				
-				--Controller mode sequencing
-				case reset_counter is
-					when 36000000 =>
+                w_reset <= '0';
+				if CTRL0_IN = '0' then
+					if RHS_SEL = '0' then
+						w_Controller_Mode <= x"0";
+						rgb_sig_green <= '1';
+					elsif RHS_SEL = '1' then
 						w_Controller_Mode <= x"1";
-						
-					when 72000000 =>
+						rgb_sig_green <= '0';
+					end if;
+				elsif CTRL0_IN = '1' thenp
+					w_Controller_Mode <= x"2";
+				end if;
+
+
+				----Controller mode sequencing
+				--case reset_counter is
+					--when 36000000 =>
+
+					--when 72000000 =>
 						--w_Controller_Mode <= x"2";
-						--w_Controller_Mode <= x"2";
-						--if CTRL0_IN = '0' then
-							--w_Controller_Mode <= x"1";
-						--elsif CTRL0_IN = '1' then
-							--w_Controller_Mode <= x"2";
-						--end if;
+						--stop_counting <= '1';
 						
-						stop_counting <= '1';
-						
-					when others =>
-						null;
-				end case;
+					--when others =>
+						--null;
+				--end case;
 				
 			end if;
 			
