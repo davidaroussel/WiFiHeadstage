@@ -99,6 +99,7 @@ volatile uint8_t spi_nrf_ready = 0;
 volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
 volatile uint8_t reset_spi_flag = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -547,7 +548,7 @@ static void Init_Intan(void){
 				}
 			}
 		}
-		HAL_Delay(10);
+		HAL_Delay(1);
 	  }
 
   }

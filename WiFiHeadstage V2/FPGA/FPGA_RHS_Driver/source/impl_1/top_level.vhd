@@ -4,18 +4,26 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 2;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
+        STM32_CLKS_PER_HALF_BIT       : integer := 32;
         STM32_CS_INACTIVE_CLKS        : integer := 32;
 			
-		RHD_SPI_DDR_MODE            : integer := 0;
+		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
-        RHD_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHD_CLKS_PER_HALF_BIT       : integer := 2;
-        RHD_CS_INACTIVE_CLKS        : integer := 32
-				
-				
-		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz
+        RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 16;
+        RHD2132_CS_INACTIVE_CLKS        : integer := 32;
+
+        RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
+        RHD2216_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz
+        RHD2216_CS_INACTIVE_CLKS        : integer := 64;
+		
+		-- 0: Neuro Only 
+		-- 1: EMG Only 
+		-- 2: EMG + Neuro
+		RHD_SAMPLING_MODE : integer := 0
+
+		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 
 		--   CS_CLK : 256
 		---  11.20 packets / xxxx Mbps
@@ -58,25 +66,27 @@ entity top_level is
         i_STM32_SPI4_MISO : inout STD_LOGIC; 
         o_STM32_SPI4_Clk  : inout STD_LOGIC; 
         o_STM32_SPI4_CS_n : inout STD_LOGIC; 
- 		
-		-- RHS SPIs Interface
-		o_RHS_SPI_MOSI : out STD_LOGIC; 
-        o_RHS_SPI_Clk  : out STD_LOGIC; 
-		i_RHS_SPI_MISO_1 : in  STD_LOGIC; 
-		o_RHS_SPI_CS_n_1 : out STD_LOGIC;
+
+        -- RHD SPI Interface 
+        o_RHS_TOP_SPI_MOSI   : out STD_LOGIC; 
+        o_RHS_TOP_SPI_Clk    : out STD_LOGIC; 
+        i_RHS_TOP_SPI_MISO_1 : in  STD_LOGIC; 
+		o_RHS_TOP_SPI_CS_n_1 : out STD_LOGIC; 
 		
-		--i_RHS_SPI_MISO_2 : in  STD_LOGIC;
-		--o_RHS_SPI_CS_n_2 : out STD_LOGIC;
+		o_RHS_TOP_SPI_MOSI_2   : out STD_LOGIC; --FOR DK
+		i_RHS_TOP_SPI_MISO_2 : in  STD_LOGIC; 
+		o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
 		
-		--i_RHS_SPI_MISO_3 : in  STD_LOGIC;
-		--o_RHS_SPI_CS_n_3 : out STD_LOGIC;		
+		--o_RHS_BOTTOM_SPI_MOSI : out STD_LOGIC; 
+        --o_RHS_BOTTOM_SPI_Clk  : out STD_LOGIC; 
+        --i_RHS_BOTTOM_SPI_MISO_1 : in  STD_LOGIC; 
+		--o_RHS_BOTTOM_SPI_CS_n_1 : out STD_LOGIC; 
 		
-		--i_RHS_SPI_MISO_4 : in  STD_LOGIC; 		
-		--o_RHS_SPI_CS_n_4 : out STD_LOGIC; 
-		
-		
+		--i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
+		--o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
 		CTRL0_IN     : in STD_LOGIC;
+		RHS_SEL     : in STD_LOGIC;
 		
 		-- IR SYNCHRONIZATION INPUT 
 		--i_LED_SYNC   : in STD_LOGIC;
@@ -118,17 +128,13 @@ architecture RTL of top_level is
     signal w_STM32_RX_Byte_Rising: std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_RX_DV         : std_logic;
 
-    signal w_FIFO_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_COUNT          : std_logic_vector(7 downto 0);
-    signal w_FIFO_WE             : std_logic;
+    signal w_FIFO_RHD2132_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHD2132_COUNT          : std_logic_vector(8 downto 0);
+    signal w_FIFO_RHD2132_WE             : std_logic;
 	
-    signal pll_clk_internal : std_logic;
-    signal pll_locked       : std_logic;
-	
-	constant CLOCK_FREQ   : integer := 12000000;
-    constant TOGGLE_COUNT : integer := CLOCK_FREQ / 1;
-	signal counter : integer := 0;
-    signal step    : integer range 0 to 4 := 0;
+    signal w_FIFO_RHD2216_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHD2216_COUNT          : std_logic_vector(8 downto 0);
+    signal w_FIFO_RHD2216_WE             : std_logic;
 	
 	signal led1_sig : std_logic := '1';
     signal led2_sig : std_logic := '1';
@@ -142,15 +148,13 @@ architecture RTL of top_level is
     signal stop_counting : std_logic := '0';
 	
 	signal pll_clk_int : std_logic;
-	signal int_RHD2132_SPI_MOSI : std_logic;
-	signal int_RHD2132_SPI_MISO : std_logic;
-	signal int_RHD2132_SPI_CS_n : std_logic;
-	signal int_RHD2132_SPI_Clk  : std_logic;
 	
-	signal int_RHD2216_SPI_MOSI : std_logic;
-	signal int_RHD2216_SPI_MISO : std_logic;
-	signal int_RHD2216_SPI_CS_n : std_logic;
-	signal int_RHD2216_SPI_Clk  : std_logic;
+	signal int_RHS_TOP_SPI_MOSI : std_logic;
+	signal int_RHS_TOP_SPI_Clk  : std_logic;
+	signal int_RHS_TOP_SPI_MISO_1 : std_logic;
+	signal int_RHS_TOP_SPI_CS_n_1 : std_logic;
+	signal int_RHS_TOP_SPI_MISO_2 : std_logic;
+	signal int_RHS_TOP_SPI_CS_n_2 : std_logic;
 
     signal int_STM32_SPI_MOSI : std_logic;
 	signal int_STM32_SPI_MISO : std_logic;
@@ -159,13 +163,7 @@ architecture RTL of top_level is
 	
 	signal int_BOOST_ENABLE    : std_logic;
 	signal int_LED_SYNC 	   : std_logic;
-	
-	signal ctrl_sync0, ctrl_sync1 : std_logic := '0';
-	signal ctrl_counter : integer := 0;
-	signal ctrl_stable  : std_logic := '0';
-	constant DEBOUNCE_CYCLES : integer := 1000;
-	
-	signal int_MODE_STATUS : integer := 0;
+
 	
 	
 begin
@@ -182,19 +180,25 @@ begin
             STM32_CLKS_PER_HALF_BIT       => STM32_CLKS_PER_HALF_BIT,
             STM32_CS_INACTIVE_CLKS        => STM32_CS_INACTIVE_CLKS,
 			
-			RHD_SPI_DDR_MODE            => RHD_SPI_DDR_MODE,
-            RHD_SPI_NUM_BITS_PER_PACKET => RHD_SPI_NUM_BITS_PER_PACKET,
-            RHD_CLKS_PER_HALF_BIT       => RHD_CLKS_PER_HALF_BIT,
-            RHD_CS_INACTIVE_CLKS        => RHD_CS_INACTIVE_CLKS
+			RHD2132_SPI_DDR_MODE            => RHD2132_SPI_DDR_MODE,
+            RHD2132_SPI_NUM_BITS_PER_PACKET => RHD2132_SPI_NUM_BITS_PER_PACKET,
+            RHD2132_CLKS_PER_HALF_BIT       => RHD2132_CLKS_PER_HALF_BIT,
+            RHD2132_CS_INACTIVE_CLKS        => RHD2132_CS_INACTIVE_CLKS,
+		
+            RHD2216_SPI_NUM_BITS_PER_PACKET => RHD2216_SPI_NUM_BITS_PER_PACKET,
+            RHD2216_CLKS_PER_HALF_BIT       => RHD2216_CLKS_PER_HALF_BIT,
+            RHD2216_CS_INACTIVE_CLKS        => RHD2216_CS_INACTIVE_CLKS,
+			
+			RHD_SAMPLING_MODE               => RHD_SAMPLING_MODE
         )
         port map (
             -- Global
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
+
 			rgb_info_red   => rgb_sig_red,
-			rgb_info_green => rgb_sig_green,
-			rgb_info_blue  => rgb_sig_blue,
+			rgb_info_blue   => rgb_sig_blue,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -209,50 +213,68 @@ begin
             o_STM32_RX_Byte_Rising => w_STM32_RX_Byte_Rising,
 
             -- FIFO
-            o_FIFO_Data         => w_FIFO_Data,
-            o_FIFO_COUNT        => w_FIFO_COUNT,
-            o_FIFO_WE           => w_FIFO_WE,
-
+            o_FIFO_RHD2132_Data    => w_FIFO_RHD2132_Data,
+            o_FIFO_RHD2132_COUNT   => w_FIFO_RHD2132_COUNT,
+            o_FIFO_RHD2132_WE      => w_FIFO_RHD2132_WE,
+				
             -- RHD SPI
-            o_RHD_SPI_Clk     => int_RHD2132_SPI_Clk,
-            i_RHD_SPI_MISO    => int_RHD2132_SPI_MISO,
-            o_RHD_SPI_MOSI    => int_RHD2132_SPI_MOSI,
-            o_RHD_SPI_CS_n    => int_RHD2132_SPI_CS_n
+            o_RHD2132_SPI_Clk     => int_RHS_TOP_SPI_Clk,
+            i_RHD2132_SPI_MISO    => int_RHS_TOP_SPI_MISO_1,
+            o_RHD2132_SPI_MOSI    => int_RHS_TOP_SPI_MOSI,
+            o_RHD2132_SPI_CS_n    => int_RHS_TOP_SPI_CS_n_1,
+		
+            -- RHD SPI
+            i_RHD2216_SPI_MISO    => int_RHS_TOP_SPI_MISO_2,
+            o_RHD2216_SPI_CS_n    => int_RHS_TOP_SPI_CS_n_2
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
-	
+
 	
 	Mode_Process : process(pll_clk_int)
-	begin
-		if w_Controller_Mode = x"1" then
-			-- Passthrough: STM32 directly drives RHD
-			o_RHS_SPI_Clk  <= o_STM32_SPI4_Clk;
-			o_RHS_SPI_MOSI <= o_STM32_SPI4_MOSI;
-			o_RHS_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
-			i_STM32_SPI4_MISO <= i_RHS_SPI_MISO_1;  -- MISO passthrough
-			o_STM32_SPI4_Clk  <= 'Z';
-			o_STM32_SPI4_MOSI <= 'Z';
-			o_STM32_SPI4_CS_n <= 'Z';
+		begin
+			if w_Controller_Mode = x"0" then
+				-- Passthrough: STM32 directly drives RHD
+				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_1;  
+				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
+				o_STM32_SPI4_MOSI <= 'Z';
+				o_STM32_SPI4_CS_n <= 'Z';
+				
+			elsif w_Controller_Mode = x"1" then
+				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				--IF DEVKIT
+				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;				
+				--IF HEADSTAGE
+				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_2 ;  
+				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
+				o_STM32_SPI4_MOSI <= 'Z';
+				o_STM32_SPI4_CS_n <= 'Z';
+			else
+				-- Normal mode: controller handles communication
+				o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
+				o_STM32_SPI4_MOSI   <= int_STM32_SPI_MOSI;
+				o_STM32_SPI4_CS_n   <= int_STM32_SPI_CS_n;
+				int_STM32_SPI_MISO <= i_STM32_SPI4_MISO;
 
-		else
-			-- Normal mode: controller handles communication
-			o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
-			o_STM32_SPI4_MOSI   <= int_STM32_SPI_MOSI;
-			o_STM32_SPI4_CS_n   <= int_STM32_SPI_CS_n;
-			int_STM32_SPI_MISO <= i_STM32_SPI4_MISO;
+				o_RHS_TOP_SPI_Clk    <= int_RHS_TOP_SPI_Clk;
+				o_RHS_TOP_SPI_MOSI   <= int_RHS_TOP_SPI_MOSI;
+				o_RHS_TOP_SPI_CS_n_1 <= int_RHS_TOP_SPI_CS_n_1;
+				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1; 
+			end if;
 
-			o_RHS_SPI_Clk    <= int_RHD2132_SPI_Clk;
-			o_RHS_SPI_MOSI   <= int_RHD2132_SPI_MOSI;
-			o_RHS_SPI_CS_n_1   <= int_RHD2132_SPI_CS_n;
-			int_RHD2132_SPI_MISO <= i_RHS_SPI_MISO_1; -- ? drive MISO back to STM32
-		end if;
-
-	end process;
+		end process;
+	
+	
 	
 
 
 	Reset_Process : process(pll_clk_int)
+
     begin
         if rising_edge(pll_clk_int) then
             -- Reset logic
@@ -260,43 +282,34 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
+				rgb_sig_green <= '1';
             else
-                w_reset <= '0';  
-
-				--case int_MODE_STATUS is 
-					--when 0 => 
-						--if CTRL0_IN = '1' then
-							--w_Controller_Mode <= x"2";
-							--int_MODE_STATUS <= 0;
-						--elsif CTRL0_IN = '0' then
-							--int_MODE_STATUS <= 1;
-						--end if;
-					--when 1 =>
-						--if CTRL0_IN = '1' then
-							--int_MODE_STATUS <= 0;
-						--elsif CTRL0_IN = '0' then
-							--w_Controller_Mode <= x"1";
-							--int_MODE_STATUS <= 1;
-						--end if;
-
-					--when others =>
-						--null;
-				--end case;
-				--stop_counting <= '1';
 				
-				--Controller mode sequencing
-				case reset_counter is
-					when 50 =>
+                w_reset <= '0';
+				if CTRL0_IN = '0' then
+					if RHS_SEL = '0' then
+						w_Controller_Mode <= x"0";
+						rgb_sig_green <= '1';
+					elsif RHS_SEL = '1' then
 						w_Controller_Mode <= x"1";
-						
+						rgb_sig_green <= '0';
+					end if;
+				elsif CTRL0_IN = '1' thenp
+					w_Controller_Mode <= x"2";
+				end if;
+
+
+				----Controller mode sequencing
+				--case reset_counter is
+					--when 36000000 =>
+
 					--when 72000000 =>
 						--w_Controller_Mode <= x"2";
 						--stop_counting <= '1';
-
 						
-					when others =>
-						null;
-				end case;
+					--when others =>
+						--null;
+				--end case;
 				
 			end if;
 			

@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 "C:/lscc/radiant/2023.2/tcltk/windows/bin/tclsh" "FPGA_Intan_Driver_impl_1_synthesize.tcl"
 
 cpe -f FPGA_Intan_Driver_impl_1.cprj CLK_48MHz.cprj FIFO_MEM.cprj -a iCE40UP -o FPGA_Intan_Driver_impl_1_cpe.ldc
@@ -77,12 +78,17 @@ CPE Completed. FPGA_Intan_Driver_impl_1_cpe.ldc and CPEReport.txt produced.
 
 synthesis -f FPGA_Intan_Driver_impl_1_lattice.synproj
 synthesis:  version Radiant Software (64-bit) 2023.2.1.288.0
+=======
+pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_map.tcl"
+map:  version Radiant Software (64-bit) 2023.2.1.288.0
+>>>>>>> 1489607d1f3aa71b23c0d5182c916b10648c6e6c
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+<<<<<<< HEAD
 Fri Apr 10 13:08:12 2026
 
 
@@ -171,3 +177,442 @@ VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/F
 VHDL library = work
 VHDL design file = C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/source/impl_1/SPI_Master.vhd
 The -r option is OFF. [ Remove LOC Properties is OFF. ]
+=======
+
+Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/Constrain.pdc -o FPGA_Intan_Driver_impl_1_map.udb -mp FPGA_Intan_Driver_impl_1.mrp -hierrpt -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml 
+
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+
+
+
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:  High-Performance_1.2V
+
+INFO <52291017> - Port 'RGB0_OUT' is located on BB_OD pad '39'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
+INFO <52291017> - Port 'RGB1_OUT' is located on BB_OD pad '40'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
+INFO <52291017> - Port 'RGB2_OUT' is located on BB_OD pad '41'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
+Running general design DRC...
+
+
+
+
+Design Summary:
+   Number of slice registers:  33 out of  5280 (1%)
+   Number of I/O registers:      0 out of   117 (0%)
+   Number of LUT4s:            71 out of  5280 (1%)
+      Number of logic LUT4s:              40
+      Number of replicated LUT4s:          1
+      Number of ripple logic:             15 (30 LUT4s)
+   Number of IO sites used:   27 out of 39 (69%)
+      Number of IO sites used for general PIO: 24
+      Number of IO sites used for I3C: 0 out of 2 (0%)
+      (note: If I3C is not used, its site can be used as general PIO)
+      Number of IO sites used for PIO+I3C: 24 out of 36 (67%)
+      Number of IO sites used for OD+RGB IO buffers: 3 out of 3 (100%)
+      (note: If RGB LED drivers are not used, sites can be used as OD outputs,
+       see TN1288 iCE40 LED Driver Usage Guide)
+      Number of IO sites used for PIO+I3C+OD+RGB: 27 out of 39 (69%)
+   Number of DSPs:             0 out of 8 (0%)
+   Number of I2Cs:             0 out of 2 (0%)
+   Number of High Speed OSCs:  0 out of 1 (0%)
+   Number of Low Speed OSCs:   0 out of 1 (0%)
+   Number of RGB PWM:          0 out of 1 (0%)
+   Number of RGB Drivers:      0 out of 1 (0%)
+   Number of SCL FILTERs:      0 out of 2 (0%)
+   Number of SRAMs:            0 out of 4 (0%)
+   Number of WARMBOOTs:        0 out of 1 (0%)
+   Number of SPIs:             0 out of 2 (0%)
+   Number of EBRs:             0 out of 30 (0%)
+   Number of PLLs:             1 out of 1 (100%)
+   Number of Clocks:  2
+      Net pll_clk_int: 20 loads, 20 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
+      Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
+   Number of Clock Enables:  3
+      Net Controller_inst.o_RHD2216_SPI_CS_n_c_N_299: 1 loads, 1 SLICEs
+      Net o_Controller_Mode_0_0: 1 loads, 1 SLICEs
+      Net n8908: 1 loads, 1 SLICEs
+   Number of LSRs:  1
+      Net o_reset_c: 2 loads, 2 SLICEs
+   Top 10 highest fanout non-clock nets:
+      Net o_Controller_Mode_0_0: 10 loads
+      Net VCC_net: 7 loads
+      Net reset_counter[9]: 6 loads
+      Net reset_counter[8]: 5 loads
+      Net n7875: 4 loads
+      Net reset_counter[12]: 4 loads
+      Net reset_counter[14]: 4 loads
+      Net reset_counter[16]: 4 loads
+      Net reset_counter[17]: 4 loads
+      Net reset_counter[18]: 4 loads
+Running physical design DRC...
+
+ 
+
+
+   Number of warnings:  0
+   Number of errors:    0
+
+Constraint Summary:
+   Total number of constraints: 14
+   Total number of constraints dropped: 0
+
+
+Total CPU Time: 0 secs  
+Total REAL Time: 0 secs  
+Peak Memory Usage: 64 MB
+
+Checksum -- map: fdda12f8a80f6a57b46f80721a91fed8d342db0
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
+
+pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
+
+Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
+Wed Apr 29 12:26:54 2026
+
+PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
+Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
+	FPGA_Intan_Driver_impl_1_map.udb FPGA_Intan_Driver_impl_1_par.dir/5_1.udb 
+
+Loading FPGA_Intan_Driver_impl_1_map.udb ...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+
+WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 9 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
+Number of Signals: 140
+Number of Connections: 289
+Device utilization summary:
+
+   SLICE (est.)      41/2640          2% used
+     LUT             71/5280          1% used
+     REG             33/5280          1% used
+   PIO               24/56           43% used
+                     24/36           66% bonded
+   IOLOGIC            0/56            0% used
+   DSP                0/8             0% used
+   I2C                0/2             0% used
+   HFOSC              0/1             0% used
+   LFOSC              0/1             0% used
+   LEDDA_IP           0/1             0% used
+   RGBA_DRV           0/1             0% used
+   FILTER             0/2             0% used
+   SRAM               0/4             0% used
+   WARMBOOT           0/1             0% used
+   SPI                0/2             0% used
+   EBR                0/30            0% used
+   PLL                1/1           100% used
+   RGBOUTBUF          0/3             0% used
+   I3C                0/2             0% used
+   OPENDRAIN          3/3           100% used
+
+Pin Constraint Summary:
+   10 out of 24 pins locked (41% locked).
+.
+.............
+Finished Placer Phase 0 (HIER). CPU time: 0 secs , REAL time: 0 secs 
+
+
+................
+Finished Placer Phase 0 (AP).  CPU time: 0 secs , REAL time: 0 secs 
+
+Starting Placer Phase 1. CPU time: 0 secs , REAL time: 0 secs 
+..  ..
+....................
+
+Placer score = 16282.
+
+Device SLICE utilization summary after final SLICE packing:
+   SLICE             39/2640          1% used
+
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+Finished Placer Phase 1. CPU time: 7 secs , REAL time: 8 secs 
+
+Starting Placer Phase 2.
+.
+
+Placer score =  22837
+Finished Placer Phase 2.  CPU time: 7 secs , REAL time: 8 secs 
+
+
+------------------ Clock Report ------------------
+
+Global Clocks :
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 20, ce load = 0, sr load = 0
+
+  PRIMARY  : 1 out of 8 (12%)
+
+--------------- End of Clock Report ---------------
+
+
+I/O Usage Summary (final):
+   24 out of 56 (42.9%) I/O sites used.
+   24 out of 36 (66.7%) bonded I/O sites used.
+   Number of I/O components: 24; differential: 0
+   Number of Vref pins used: 0
+
+I/O Bank Usage Summary:
++----------+----------------+------------+------------+------------+
+| I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
++----------+----------------+------------+------------+------------+
+| 0        | 11 / 14 ( 78%) | 3.3V       |            |            |
+| 1        | 7 / 14 ( 50%)  | 3.3V       |            |            |
+| 2        | 6 / 8 ( 75%)   | 3.3V       |            |            |
++----------+----------------+------------+------------+------------+
+
+Total Placer CPU time: 7 secs , REAL time: 8 secs 
+
+
+Checksum -- place: 772ff7d1452ece5757d8126dd05d485a1d88a1ac
+Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
+
+
+Start NBR router at 12:27:02 04/29/26
+
+*****************************************************************
+Info: NBR allows conflicts(one node used by more than one signal)
+      in the earlier iterations. In each iteration, it tries to  
+      solve the conflicts while keeping the critical connections 
+      routed as short as possible. The routing process is said to
+      be completed when no conflicts exist and all connections   
+      are routed.                                                
+Note: NBR uses a different method to calculate timing slacks. The
+      worst slack and total negative slack may not be the same as
+      that in timing report. You should always run the timing    
+      tool to verify your design.                                
+*****************************************************************
+
+Starting routing resource preassignment
+Preassignment Summary:
+--------------------------------------------------------------------------------
+61 connections routed with dedicated routing resources
+1 global clock signals routed
+81 connections routed (of 289 total) (28.03%)
+---------------------------------------------------------
+Clock routing summary:
+Primary clocks (1 used out of 8 available):
+#7  Signal "pll_clk_int"
+       Clock   loads: 20    out of    20 routed (100.00%)
+Other clocks:
+    Signal "i_clk_c"
+       Clock   loads: 1     out of     1 routed (100.00%)
+    Signal "pll_inst.lscc_pll_inst.feedback_w"
+       Clock   loads: 1     out of     1 routed (100.00%)
+---------------------------------------------------------
+--------------------------------------------------------------------------------
+Completed routing resource preassignment
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+    TimerIf::skewscore 0
+
+Start NBR section for initial routing at 12:27:02 04/29/26
+Level 4, iteration 1
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Routing in Serial Mode ......
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 0 secs 
+
+Info: Initial congestion level at 75.00% usage is 0
+Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
+
+Start NBR section for normal routing at 12:27:03 04/29/26
+Level 4, iteration 1
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 0 secs 
+
+Start NBR section for post-routing at 12:27:03 04/29/26
+
+End NBR router with 0 unrouted connection
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+Requested speed is the same as database speed
+Changing speed to m;   changing temperature to -40
+Changing speed to 6;   changing temperature to 100
+
+Checksum -- route: bbc9f29cbfc3424b7d152db7b998ff934778971
+
+Total CPU time 1 secs 
+Total REAL time: 0 secs 
+Completely routed.
+End of route.  289 routed (100.00%); 0 unrouted.
+
+Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
+
+
+PAR_SUMMARY::Run status = Completed
+PAR_SUMMARY::Number of unrouted conns = 0
+PAR_SUMMARY::Estimated worst slack<setup/<ns>> = <n/a>
+PAR_SUMMARY::Timing score<setup/<ns>> = <n/a>
+PAR_SUMMARY::Estimated worst slack<hold/<ns>> = <n/a>
+PAR_SUMMARY::Timing score<hold/<ns>> = <n/a>
+PAR_SUMMARY::Number of errors = 0
+
+Note: user must run 'timing' for timing closure signoff.
+
+Total CPU  Time: 8 secs 
+Total REAL Time: 9 secs 
+Peak Memory Usage: 112.64 MB
+
+
+par done!
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /9 secs 
+
+timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "FPGA_Intan_Driver_impl_1.twr" "FPGA_Intan_Driver_impl_1.udb" 
+timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/promote.xml
+Starting design reading...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Performance Hardware Data Status:   Advanced       Version 1.0.
+Loading udb::Database ...
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+
+
+
+Successfully loading udb, 0.06 seconds
+
+Initializing timer
+Starting design annotation....
+WARNING <70001944> - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+High-Performance_1.2V
+
+Starting full timing analysis...
+Performance Hardware Data Status:   Advanced       Version 1.0.
+Connections ignored  20  counted  262  covered  0
+Changing speed to m;   changing temperature to -40
+
+STA Runtime and Peak Memory Usage :
+Total CPU Time: 1 secs 
+Total REAL Time: 2 secs 
+Peak Memory Usage: 99 MB
+
+ 1.366814s wall, 0.984375s user + 0.187500s system = 1.171875s CPU (85.7%)
+
+
+tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
+
+pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_bit.tcl"
+Loading FPGA_Intan_Driver_impl_1.udb ...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+Successfully loading design udb and device data from disks and to up-layer in CPU time: 0 secs , REAL time: 0 secs 
+
+
+
+BITGEN: Bitstream Generator Radiant Software (64-bit) 2023.2.1.288.0
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+
+
+Running DRC.
+DRC detected 0 errors and 0 warnings.
+
+Preference Summary:
++---------------------------------+---------------------------------+
+|  Preference                     |  Current Setting                |
++---------------------------------+---------------------------------+
+ *  Default setting.
+ ** The specified setting matches the default setting.
+
+
+Creating bit map...
+Saving bit stream in "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_Intan_Driver/impl_1/FPGA_Intan_Driver_impl_1.bin".
+Bitstream generation complete!
+
+Total CPU Time: 0 secs 
+Total REAL Time: 0 secs 
+Peak Memory Usage: 113 MB
+
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
+
+ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
+IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
+
+Wed Apr 29 12:27:13 2026
+
+Loading FPGA_Intan_Driver_impl_1.udb ...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+Successfully loading design udb and device data from disks and to up-layer in CPU time: 0 secs , REAL time: 0 secs 
+
+Created design models.
+
+
+Generating: C:\Users\david\Desktop\WiFi Headstage\WiFiHeadstage V2\FPGA\FPGA_Intan_Driver\impl_1\IBIS\FPGA_Intan_Driver_impl_1.ibs
+
+
+INFO <1191031> - Design IBIS models are generated for board level analysis.
+
+backanno "FPGA_Intan_Driver_impl_1.udb"  -o "FPGA_Intan_Driver_impl_1_vo.vo"      -sp "High-Performance_1.2V"  -w -neg
+backanno: version Radiant Software (64-bit) 2023.2.1.288.0
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Loading udb::Database ...
+Design:  top_level
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Writing a verilog netlist based on the FPGA_Intan_Driver_impl_1 design file.
+
+Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
+Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
+Backanno finished with 0 posted error messages.
+Total CPU Time: 0 secs 
+Total REAL Time: 0 secs 
+Peak Memory Usage: 89 MB
+>>>>>>> 1489607d1f3aa71b23c0d5182c916b10648c6e6c

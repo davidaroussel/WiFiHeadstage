@@ -309,6 +309,7 @@ static void SPI4_Master_Init(void)
 	    Error_Handler();
 	  }
 
+	RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	GPIO_InitStruct.Pin   = RHD_SPI_CS_Pin;
 	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;

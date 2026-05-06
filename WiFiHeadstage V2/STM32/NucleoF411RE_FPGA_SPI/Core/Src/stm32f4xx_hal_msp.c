@@ -196,7 +196,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     HAL_GPIO_Init(RHD_SPI_CLK_Port, &GPIO_InitStruct);
 
 
-
     /* SPI4 DMA Init */
     /* SPI4_RX Init */
     hdma_spi4_rx.Instance = DMA2_Stream0;

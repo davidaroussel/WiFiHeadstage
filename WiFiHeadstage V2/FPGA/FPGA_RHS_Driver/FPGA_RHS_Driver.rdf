@@ -3,7 +3,7 @@
     <Options/>
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
         <Options hdl_sort="off" top="top_level"/>
-        <Source name="source/impl_1/top_level_tb.vhd" type="VHDL" type_short="VHDL">
+        <Source name="source/impl_1/top_level_tb.vhd" type="VHDL" type_short="VHDL" excluded="TRUE">
             <Options/>
         </Source>
         <Source name="source/impl_1/Controller_RHD_Sampling_tb.vhd" type="VHDL" type_short="VHDL">
@@ -22,12 +22,9 @@
             <Options/>
         </Source>
         <Source name="source/impl_1/top_level.vhd" type="VHDL" type_short="VHDL">
-            <Options top_module="top_level"/>
-        </Source>
-        <Source name="CLK_48MHz/CLK_48MHz.ipx" type="IPX_Module" type_short="IPX">
             <Options/>
         </Source>
-        <Source name="STM32_FIFO/STM32_FIFO.ipx" type="IPX_Module" type_short="IPX">
+        <Source name="CLK_48MHz/CLK_48MHz.ipx" type="IPX_Module" type_short="IPX">
             <Options/>
         </Source>
         <Source name="source/impl_1/Controller_RHD_Sampling.vhd" type="VHDL" type_short="VHDL">

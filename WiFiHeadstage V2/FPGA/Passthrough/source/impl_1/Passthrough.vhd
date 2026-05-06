@@ -6,22 +6,16 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity Controller_RHD64_Config is
     Port (
         -- SPI Master Interface FROM STM32 
-        MOSI_master : in  STD_LOGIC; -- IO 20A --> PIN 11
-        MISO_master : out STD_LOGIC; -- IO 18A --> PIN 10
-        SCLK_master : in  STD_LOGIC; -- IO 16A --> PIN 9
-        SS_master   : in  STD_LOGIC; -- IO 13B --> PIN 6
-
-        -- SPI Slave Interface TO RHD BOARD (FOR PoC STM-WFM200-FPGA)
-        --MOSI_slave  : out STD_LOGIC; -- IO 36B --> PIN 25
-        --MISO_slave  : in  STD_LOGIC; -- IO 39A --> PIN 26
-        --SCLK_slave  : out STD_LOGIC; -- IO 38B --> PIN 27
-        --SS_slave    : out STD_LOGIC; -- IO 43A --> PIN 32
+        o_STM32_SPI4_MOSI : in  STD_LOGIC;
+        i_STM32_SPI4_MISO : out STD_LOGIC;
+        o_STM32_SPI4_Clk  : in  STD_LOGIC; 
+        o_STM32_SPI4_CS_n : in  STD_LOGIC; 
 		
-		-- SPI Slave Interface TO LVDS BOARD - RHD (FOR FPGA PoC Programmer)
-		MOSI_slave  : out STD_LOGIC; -- IO 9B --> PIN 3
-        MISO_slave  : in  STD_LOGIC; -- IO 4A --> PIN 48
-        SCLK_slave  : out STD_LOGIC; -- IO 5B --> PIN 45
-        SS_slave    : out STD_LOGIC; -- IO 2A --> PIN 47
+
+		o_RHS_TOP_SPI_MOSI   : out STD_LOGIC; 
+        i_RHS_TOP_SPI_MISO_1 : in  STD_LOGIC;
+        o_RHS_TOP_SPI_Clk    : out STD_LOGIC; 
+        o_RHS_TOP_SPI_CS_n_1 : out STD_LOGIC;
 
         LED_CTL     : in  STD_LOGIC;		--> PIN 23
 		
@@ -87,35 +81,35 @@ begin
         rgb2_sig <= '0';
         rgb3_sig <= '0';
 
-        case step is
-            when 0 => 
-				rgb1_sig <= '0';
-				rgb2_sig <= '0';
-				rgb3_sig <= '0';
-            when 1 => 
-				rgb1_sig <= '0';
-				rgb2_sig <= '1';
-				rgb3_sig <= '1';
-            when 2 => 
+        --case step is
+            --when 0 => 
+				--rgb1_sig <= '0';
+				--rgb2_sig <= '0';
+				--rgb3_sig <= '0';
+            --when 1 => 
+				--rgb1_sig <= '0';
+				--rgb2_sig <= '1';
+				--rgb3_sig <= '1';
+            --when 2 => 
 
-				rgb1_sig <= '1';
-				rgb2_sig <= '0';
-				rgb3_sig <= '1';
-            when 3 => 
-				rgb1_sig <= '1';
-				rgb2_sig <= '1';
-				rgb3_sig <= '0';
-            when others => 
-				null;
-        end case;
+				--rgb1_sig <= '1';
+				--rgb2_sig <= '0';
+				--rgb3_sig <= '1';
+            --when 3 => 
+				--rgb1_sig <= '1';
+				--rgb2_sig <= '1';
+				--rgb3_sig <= '0';
+            --when others => 
+				--null;
+        --end case;
     end process;
-	
+
 
     -- Connect SPI master signals to SPI slave signals
-    SCLK_slave  <= SCLK_master;
-    MOSI_slave  <= MOSI_master;
-    MISO_master <= MISO_slave;
-    SS_slave    <= SS_master;
+    o_RHS_TOP_SPI_Clk     <= o_STM32_SPI4_Clk;
+    o_RHS_TOP_SPI_MOSI    <= o_STM32_SPI4_MOSI;
+    i_STM32_SPI4_MISO     <= i_RHS_TOP_SPI_MISO_1;
+    o_RHS_TOP_SPI_CS_n_1  <= o_STM32_SPI4_CS_n;
 
 	--LED_OUT <= LED_CTL;
 

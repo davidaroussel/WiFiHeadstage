@@ -36,7 +36,7 @@ entity Controller_RHD_FIFO is
 
     o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
     o_FIFO_WE     : out std_logic;
-	o_FIFO_COUNT  : out std_logic_vector(7 downto 0);
+	o_FIFO_COUNT  : out std_logic_vector(8 downto 0);
     i_FIFO_RE     : in std_logic;
 	o_FIFO_Q 	  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
     o_FIFO_EMPTY  : out std_logic;
@@ -91,18 +91,18 @@ architecture RTL of Controller_RHD_FIFO is
         empty_o: out std_logic;
         almost_full_o: out std_logic;
         almost_empty_o: out std_logic;
-		data_cnt_o: out std_logic_vector(7 downto 0);
+		data_cnt_o: out std_logic_vector(8 downto 0);
         rd_data_o: out std_logic_vector(31 downto 0)
     );
   end component;
 
 
   -- Signals for SPI_Master_CS
-  signal int_RX_Byte_Rising  : std_logic_vector(31 downto 0);
-  signal int_RX_Byte_Falling : std_logic_vector(31 downto 0);
+  signal int_RX_Byte_Rising  : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
+  signal int_RX_Byte_Falling : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
   signal int_RX_DV           : std_logic;
   
-  signal int_TX_Byte         : std_logic_vector(15 downto 0);
+  signal int_TX_Byte         : std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
   signal int_TX_Ready        : std_logic;
 
   signal int_FIFO_DATA : std_logic_vector(31 downto 0);
@@ -113,12 +113,15 @@ architecture RTL of Controller_RHD_FIFO is
   signal int_FIFO_EMPTY : std_logic;
   signal int_FIFO_AEMPTY: std_logic;
   signal int_FIFO_AFULL : std_logic;
-  signal int_FIFO_COUNT : std_logic_vector(7 downto 0);
+  signal int_FIFO_COUNT : std_logic_vector(8 downto 0);
   
   	signal init_FIFO_State : std_logic;
 	signal init_FIFO_Read : std_logic;
 	
 	signal init_FIFO_Count : integer := 0;
+	signal debug_counter   : integer := 0;
+	signal signal_lag      : integer := 0;
+	signal first_loop 	   : integer := 0;
   
 begin
 	int_FIFO_RE <= i_FIFO_RE;
@@ -171,28 +174,21 @@ begin
       int_FIFO_WE   <= '0';   	
 	  init_FIFO_Read <= '0';  	
 	  init_FIFO_State <= '0';
+	  debug_counter <= 0;
     elsif rising_edge(i_Clk) then
 		if i_Controller_Mode = x"0" then
-			if init_FIFO_State = '0' then
-				if init_FIFO_Count < 2 then
-					--int_FIFO_WE <= '1';
-					--int_FIFO_DATA(31 downto 0) <= x"BBBBBBBB";
-					--init_FIFO_Count <= init_FIFO_Count + 1;
-				else
-					init_FIFO_State <= '1';
-				end if;
-			else
-				int_FIFO_WE <= '0';
-			end if;
+			int_FIFO_WE <= '0';
 			
 		elsif i_Controller_Mode = x"2" then
 		  if int_RX_DV = '1' then
 			int_FIFO_WE <= '1';
-			int_FIFO_DATA(31 downto 0)  <= int_RX_Byte_Falling;
+			--int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
+			int_FIFO_DATA  <= int_RX_Byte_Falling;
 		  else
 			int_FIFO_WE <= '0';
 		  end if;
 		end if;
+		
 
 		
 	end if;

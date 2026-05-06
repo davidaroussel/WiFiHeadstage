@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Wed Jan 28 09:09:22 2026
+Tue May  5 15:24:36 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -49,7 +49,7 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 7 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 4 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -76,30 +76,20 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i10/D                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i9/D                           
-                                        |    No arrival or required
-{Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i9/SR   Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i10/SR}                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i8/D                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i7/D                           
-                                        |    No arrival or required
-{Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i7/SR   Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i8/SR}                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i6/D                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i5/D                           
-                                        |    No arrival or required
-{Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i5/SR   Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i6/SR}                           
-                                        |    No arrival or required
-Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_SPI_Clk_Edges_1436__i4/D                           
-                                        |    No arrival or required
+reset_counter_1080__i28/D               |    No arrival or required
+reset_counter_1080__i27/D               |    No arrival or required
+reset_counter_1080__i26/D               |    No arrival or required
+reset_counter_1080__i25/D               |    No arrival or required
+reset_counter_1080__i24/D               |    No arrival or required
+reset_counter_1080__i23/D               |    No arrival or required
+reset_counter_1080__i22/D               |    No arrival or required
+reset_counter_1080__i21/D               |    No arrival or required
+reset_counter_1080__i20/D               |    No arrival or required
+reset_counter_1080__i19/D               |    No arrival or required
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
-ts                                      |                        79
+ts                                      |                      2304
                                         |                          
 -------------------------------------------------------------------
 
@@ -122,16 +112,16 @@ create_generated_clock,
 o_STM32_SPI4_CS_n                       |                     input
 o_STM32_SPI4_Clk                        |                     input
 o_STM32_SPI4_MOSI                       |                     input
-i_RHS_SPI_MISO_1                        |                     input
-i_clk                                   |                     input
+RHS_SEL                                 |                     input
 CTRL0_IN                                |                     input
+i_RHS_TOP_SPI_MISO_2                    |                     input
+i_RHS_TOP_SPI_MISO_1                    |                     input
+i_clk                                   |                     input
 o_reset                                 |                    output
 o_Controller_Mode[0]                    |                    output
-o_RHS_SPI_CS_n_1                        |                    output
-o_RHS_SPI_Clk                           |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                        13
+Number of I/O ports without constraint  |                        19
                                         |                          
 -------------------------------------------------------------------
 
@@ -147,13 +137,115 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-i_STM32_SPI4_MISO_c_I_0_3_lut/A	->	i_STM32_SPI4_MISO_c_I_0_3_lut/Z
+i22_3_lut/B	->	i22_3_lut/Z
+
+++++ Loop2
+i2542_4_lut/B	->	i2542_4_lut/Z
+
+++++ Loop3
+i21_3_lut_adj_90/B	->	i21_3_lut_adj_90/Z
+
+++++ Loop4
+i2546_3_lut/A	->	i2546_3_lut/Z
+
+++++ Loop5
+Controller_inst/i8258_2_lut/A	->	Controller_inst/i8258_2_lut/Z
+
+++++ Loop6
+Controller_inst/i8274_2_lut/A	->	Controller_inst/i8274_2_lut/Z
+
+++++ Loop7
+Controller_inst/i8253_2_lut/A	->	Controller_inst/i8253_2_lut/Z
+
+++++ Loop8
+Controller_inst/i8259_2_lut/A	->	Controller_inst/i8259_2_lut/Z
+
+++++ Loop9
+Controller_inst/i8255_2_lut/A	->	Controller_inst/i8255_2_lut/Z
+
+++++ Loop10
+Controller_inst/i8271_2_lut/A	->	Controller_inst/i8271_2_lut/Z
+
+++++ Loop11
+Controller_inst/i8277_2_lut/A	->	Controller_inst/i8277_2_lut/Z
+
+++++ Loop12
+Controller_inst/i8276_2_lut/A	->	Controller_inst/i8276_2_lut/Z
+
+++++ Loop13
+Controller_inst/i8262_2_lut/A	->	Controller_inst/i8262_2_lut/Z
+
+++++ Loop14
+Controller_inst/i8273_2_lut/A	->	Controller_inst/i8273_2_lut/Z
+
+++++ Loop15
+Controller_inst/i8263_2_lut/A	->	Controller_inst/i8263_2_lut/Z
+
+++++ Loop16
+Controller_inst/i8257_2_lut/A	->	Controller_inst/i8257_2_lut/Z
+
+++++ Loop17
+Controller_inst/i8281_2_lut/A	->	Controller_inst/i8281_2_lut/Z
+
+++++ Loop18
+Controller_inst/i8275_2_lut/A	->	Controller_inst/i8275_2_lut/Z
+
+++++ Loop19
+Controller_inst/i8270_2_lut/A	->	Controller_inst/i8270_2_lut/Z
+
+++++ Loop20
+Controller_inst/i8282_2_lut/A	->	Controller_inst/i8282_2_lut/Z
+
+++++ Loop21
+Controller_inst/i8280_2_lut/A	->	Controller_inst/i8280_2_lut/Z
+
+++++ Loop22
+Controller_inst/i8279_2_lut/A	->	Controller_inst/i8279_2_lut/Z
+
+++++ Loop23
+Controller_inst/i8278_2_lut/A	->	Controller_inst/i8278_2_lut/Z
+
+++++ Loop24
+Controller_inst/i8261_2_lut/A	->	Controller_inst/i8261_2_lut/Z
+
+++++ Loop25
+Controller_inst/i8264_2_lut/A	->	Controller_inst/i8264_2_lut/Z
+
+++++ Loop26
+Controller_inst/i8254_2_lut/A	->	Controller_inst/i8254_2_lut/Z
+
+++++ Loop27
+Controller_inst/i8265_2_lut/A	->	Controller_inst/i8265_2_lut/Z
+
+++++ Loop28
+Controller_inst/i8269_2_lut/A	->	Controller_inst/i8269_2_lut/Z
+
+++++ Loop29
+Controller_inst/i8267_2_lut/A	->	Controller_inst/i8267_2_lut/Z
+
+++++ Loop30
+Controller_inst/i8266_2_lut/A	->	Controller_inst/i8266_2_lut/Z
+
+++++ Loop31
+Controller_inst/i8268_2_lut/A	->	Controller_inst/i8268_2_lut/Z
+
+++++ Loop32
+Controller_inst/i8260_2_lut/A	->	Controller_inst/i8260_2_lut/Z
+
+++++ Loop33
+Controller_inst/i8272_2_lut/A	->	Controller_inst/i8272_2_lut/Z
+
+++++ Loop34
+Controller_inst/i8256_2_lut/A	->	Controller_inst/i8256_2_lut/Z
+
+++++ Loop35
+Controller_inst/i8142_2_lut/A	->	Controller_inst/i8142_2_lut/Z
 
 
 1.6  Error/Warning Messages
 ============================
 WARNING "70001944" - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -164,14 +256,16 @@ WARNING "70001944" - No source clock for
 
 2.1.1 Clock "pll_clk_int"
 =======================
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 7 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
 
 Single Clock Domain
 -------------------------------------------------------------------------------------------------------
            Clock pll_clk_int            |                    |       Period       |     Frequency      
 -------------------------------------------------------------------------------------------------------
  From pll_clk_int                       |             Target |               +INF |          0.000 MHz 
-                                        | Actual (all paths) |               ---- |               ---- 
+                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
+                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
 -------------------------------------------------------------------------------------------------------
 
 Clock Domain Crossing

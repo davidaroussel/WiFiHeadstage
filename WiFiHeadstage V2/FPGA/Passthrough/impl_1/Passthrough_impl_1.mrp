@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
-Mapped on: Fri Oct 10 12:10:42 2025
+Mapped on: Tue Apr 28 16:10:12 2026
 
 Design Information
 ------------------
@@ -22,20 +22,20 @@ Command line:   map -i Passthrough_impl_1_syn.udb -pdc
 Design Summary
 --------------
 
-   Number of slice registers:  35 out of  5280 (1%)
+   Number of slice registers:   0 out of  5280 (0%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:            52 out of  5280 (1%)
-      Number of logic LUT4s:              18
-      Number of ripple logic:             17 (34 LUT4s)
-   Number of IO sites used:   15 out of 39 (38%)
-      Number of IO sites used for general PIO: 12
+   Number of LUT4s:             2 out of  5280 (<1%)
+      Number of logic LUT4s:               2
+      Number of ripple logic:              0 (0 LUT4s)
+   Number of IO sites used:   14 out of 39 (36%)
+      Number of IO sites used for general PIO: 11
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 12 out of 36 (33%)
+      Number of IO sites used for PIO+I3C: 11 out of 36 (31%)
       Number of IO sites used for OD+RGB IO buffers: 3 out of 3 (100%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 15 out of 39 (38%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 14 out of 39 (36%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  0 out of 1 (0%)
@@ -48,18 +48,18 @@ Design Summary
    Number of SPIs:             0 out of 2 (0%)
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
-   Number of Clocks:  1
-      Net ext_clk_c: 20 loads, 20 rising, 0 falling (Driver: Port ext_clk)
-   Number of Clock Enables:  1
-      Net n366: 3 loads, 3 SLICEs
-   Number of LSRs:  1
-      Net n366: 17 loads, 17 SLICEs
+   Number of Clocks:  0
+   Number of Clock Enables:  0
+   Number of LSRs:  0
    Top 10 highest fanout non-clock nets:
-      Net n366: 20 loads
-      Net step[2]: 6 loads
-      Net step[0]: 5 loads
-      Net step[1]: 5 loads
-      Net VCC_net: 4 loads
+      Net VCC_net: 3 loads
+      Net i_STM32_SPI4_MISO_c_c: 1 loads
+      Net o_RHS_TOP_SPI_Clk_c_c: 1 loads
+      Net o_RHS_TOP_SPI_CS_n_1_c_c: 1 loads
+      Net o_RHS_TOP_SPI_MOSI_c_c: 1 loads
+
+
+
 
                                     Page 1
 
@@ -67,42 +67,207 @@ Design Summary
 
 
 
-Design Summary (cont)
----------------------
-      Net counter[24]: 2 loads
-      Net counter[27]: 2 loads
-      Net counter[28]: 2 loads
-      Net counter[30]: 2 loads
-      Net counter[31]: 2 loads
 
 
 
 
-
-   Number of warnings:  10
+   Number of warnings:  92
    Number of errors:    0
 
 Design Errors/Warnings
 ----------------------
 
 WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
-     V2/FPGA/Passthrough/Constrain.pdc (21) : No port matched 'LED_OUT'.
+     V2/FPGA/Passthrough/Constrain.pdc (3) : No port matched 'MOSI_slave'.
 WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
-     V2/FPGA/Passthrough/Constrain.pdc (25) : No port matched 'pll_clk'.
+     V2/FPGA/Passthrough/Constrain.pdc (4) : No port matched 'MISO_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (5) : No port matched 'SCLK_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (6) : No port matched 'SS_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (8) : No port matched 'MOSI_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (9) : No port matched 'MISO_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (10) : No port matched 'SCLK_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (11) : No port matched 'SS_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (15) : No port matched 'o_BOOST_ENABLE'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (25) : No port matched
+     'i_RHS_TOP_SPI_MISO_2'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (26) : No port matched
+     'o_RHS_TOP_SPI_CS_n_2'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (51) : No port matched 'CTRL0_IN'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (56) : No port matched 'MISO_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (57) : No port matched 'MOSI_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (58) : No port matched 'SCLK_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (59) : No port matched 'SS_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (60) : No port matched 'SS_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (61) : No port matched 'SCLK_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (62) : No port matched 'MOSI_slave'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (63) : No port matched 'LED_OUT'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (64) : No port matched 'MISO_master'.
+WARNING <1026001> - map: C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage
+     V2/FPGA/Passthrough/Constrain.pdc (67) : No port matched 'pll_clk'.
+WARNING <1027013> - map: No port matched 'MOSI_slave'.
+WARNING <1014301> - map: Can't resolve object 'MOSI_slave' in constraint
+     'ldc_set_location -site {3} [get_ports MOSI_slave]'.
+WARNING <1027013> - map: No port matched 'MISO_slave'.
+
+                                    Page 2
+
+
+
+
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING <1014301> - map: Can't resolve object 'MISO_slave' in constraint
+     'ldc_set_location -site {48} [get_ports MISO_slave]'.
+WARNING <1027013> - map: No port matched 'SCLK_slave'.
+WARNING <1014301> - map: Can't resolve object 'SCLK_slave' in constraint
+     'ldc_set_location -site {45} [get_ports SCLK_slave]'.
+WARNING <1027013> - map: No port matched 'SS_slave'.
+WARNING <1014301> - map: Can't resolve object 'SS_slave' in constraint
+     'ldc_set_location -site {47} [get_ports SS_slave]'.
+WARNING <1027013> - map: No port matched 'MOSI_master'.
+WARNING <1014301> - map: Can't resolve object 'MOSI_master' in constraint
+     'ldc_set_location -site {11} [get_ports MOSI_master]'.
+WARNING <1027013> - map: No port matched 'MISO_master'.
+WARNING <1014301> - map: Can't resolve object 'MISO_master' in constraint
+     'ldc_set_location -site {10} [get_ports MISO_master]'.
+WARNING <1027013> - map: No port matched 'SCLK_master'.
+WARNING <1014301> - map: Can't resolve object 'SCLK_master' in constraint
+     'ldc_set_location -site {9} [get_ports SCLK_master]'.
+WARNING <1027013> - map: No port matched 'SS_master'.
+WARNING <1014301> - map: Can't resolve object 'SS_master' in constraint
+     'ldc_set_location -site {6} [get_ports SS_master]'.
+WARNING <1027013> - map: No port matched 'o_BOOST_ENABLE'.
+WARNING <1014301> - map: Can't resolve object 'o_BOOST_ENABLE' in constraint
+     'ldc_set_location -site {37} [get_ports o_BOOST_ENABLE]'.
+WARNING <1027013> - map: No port matched 'i_RHS_TOP_SPI_MISO_2'.
+WARNING <1014301> - map: Can't resolve object 'i_RHS_TOP_SPI_MISO_2' in
+     constraint 'ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]'.
+WARNING <1027013> - map: No port matched 'o_RHS_TOP_SPI_CS_n_2'.
+WARNING <1014301> - map: Can't resolve object 'o_RHS_TOP_SPI_CS_n_2' in
+     constraint 'ldc_set_location -site {32} [get_ports o_RHS_TOP_SPI_CS_n_2]'.
+WARNING <1027013> - map: No port matched 'CTRL0_IN'.
+WARNING <1014301> - map: Can't resolve object 'CTRL0_IN' in constraint
+     'ldc_set_location -site {13} [get_ports CTRL0_IN]'.
+WARNING <1027013> - map: No port matched 'MISO_slave'.
+WARNING <1014301> - map: Can't resolve object 'MISO_slave' in constraint
+     'ldc_set_port -iobuf {DRIVE=NA PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports
+     MISO_slave]'.
+WARNING <1027013> - map: No port matched 'MOSI_master'.
+WARNING <1014301> - map: Can't resolve object 'MOSI_master' in constraint
+     'ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports
+     MOSI_master]'.
+WARNING <1027013> - map: No port matched 'SCLK_master'.
+WARNING <1014301> - map: Can't resolve object 'SCLK_master' in constraint
+     'ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports
+     SCLK_master]'.
+WARNING <1027013> - map: No port matched 'SS_master'.
+WARNING <1014301> - map: Can't resolve object 'SS_master' in constraint
+     'ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports SS_master]'.
+WARNING <1027013> - map: No port matched 'SS_slave'.
+WARNING <1014301> - map: Can't resolve object 'SS_slave' in constraint
+     'ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports SS_slave]'.
+WARNING <1027013> - map: No port matched 'SCLK_slave'.
+WARNING <1014301> - map: Can't resolve object 'SCLK_slave' in constraint
+     'ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports SCLK_slave]'.
+WARNING <1027013> - map: No port matched 'MOSI_slave'.
+WARNING <1014301> - map: Can't resolve object 'MOSI_slave' in constraint
+     'ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports MOSI_slave]'.
 WARNING <1027013> - map: No port matched 'LED_OUT'.
+
+                                    Page 3
+
+
+
+
+
+Design Errors/Warnings (cont)
+-----------------------------
 WARNING <1014301> - map: Can't resolve object 'LED_OUT' in constraint
      'ldc_set_port -iobuf {DRIVE=4 IO_TYPE=LVCMOS18} [get_ports LED_OUT]'.
+WARNING <1027013> - map: No port matched 'MISO_master'.
+WARNING <1014301> - map: Can't resolve object 'MISO_master' in constraint
+     'ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33 DRIVE=8} [get_ports
+     MISO_master]'.
 WARNING <1027013> - map: No port matched 'pll_clk'.
 WARNING <1014301> - map: Can't resolve object 'pll_clk' in constraint
      'ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports pll_clk]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {3}
+     [get_ports MOSI_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {48}
+     [get_ports MISO_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {45}
+     [get_ports SCLK_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {47}
+     [get_ports SS_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {11}
+     [get_ports MOSI_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {10}
+     [get_ports MISO_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {9}
+     [get_ports SCLK_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {6}
+     [get_ports SS_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {37}
+     [get_ports o_BOOST_ENABLE]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {2}
+     [get_ports i_RHS_TOP_SPI_MISO_2]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {32}
+     [get_ports o_RHS_TOP_SPI_CS_n_2]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {13}
+     [get_ports CTRL0_IN]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {DRIVE=NA PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports MISO_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports MOSI_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports SCLK_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports SS_master]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {IO_TYPE=LVCMOS33} [get_ports SS_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {IO_TYPE=LVCMOS33} [get_ports SCLK_slave]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {IO_TYPE=LVCMOS33} [get_ports MOSI_slave]'.
 WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf {DRIVE=4
      IO_TYPE=LVCMOS18} [get_ports LED_OUT]'.
+WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
+     {PULLMODE=NA IO_TYPE=LVCMOS33 DRIVE=8} [get_ports MISO_master]'.
 WARNING <1011001> - map: Remove invalid constraint 'ldc_set_port -iobuf
      {IO_TYPE=LVCMOS33} [get_ports pll_clk]'.
 INFO <52291017> - map: Port 'RGB0_OUT' is located on BB_OD pad '39'. Its IO
      buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not
      applicable to BB_OD.
 INFO <52291017> - map: Port 'RGB1_OUT' is located on BB_OD pad '40'. Its IO
+
+                                    Page 4
+
+
+
+
+
+Design Errors/Warnings (cont)
+-----------------------------
      buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not
      applicable to BB_OD.
 INFO <52291017> - map: Port 'RGB2_OUT' is located on BB_OD pad '41'. Its IO
@@ -110,7 +275,11 @@ INFO <52291017> - map: Port 'RGB2_OUT' is located on BB_OD pad '41'. Its IO
      applicable to BB_OD.
 WARNING <71003020> - map: Top module port 'LED_CTL' does not connect to
      anything.
+WARNING <71003020> - map: Top module port 'ext_clk' does not connect to
+     anything.
 WARNING <71003020> - map: Top module port 'LED_CTL' does not connect to
+     anything.
+WARNING <71003020> - map: Top module port 'ext_clk' does not connect to
      anything.
 
 IO (PIO) Attributes
@@ -120,22 +289,13 @@ IO (PIO) Attributes
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MISO_master         | OUTPUT    | LVCMOS33  |       |       |           |
+| o_RHS_TOP_SPI_MOSI  | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MOSI_slave          | OUTPUT    | LVCMOS33  |       |       |           |
+| i_STM32_SPI4_MISO   | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SCLK_slave          | OUTPUT    | LVCMOS33  |       |       |           |
+| o_RHS_TOP_SPI_Clk   | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SS_slave            | OUTPUT    | LVCMOS33  |       |       |           |
-
-                                    Page 2
-
-
-
-
-
-IO (PIO) Attributes (cont)
---------------------------
+| o_RHS_TOP_SPI_CS_n_1| OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | LED1_OUT            | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -143,35 +303,59 @@ IO (PIO) Attributes (cont)
 +---------------------+-----------+-----------+-------+-------+-----------+
 | LED3_OUT            | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MOSI_master         | INPUT     | LVCMOS33  |       |       |           |
+| o_STM32_SPI4_MOSI   | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SCLK_master         | INPUT     | LVCMOS33  |       |       |           |
+| o_STM32_SPI4_Clk    | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| SS_master           | INPUT     | LVCMOS33  |       |       |           |
+| o_STM32_SPI4_CS_n   | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| MISO_slave          | INPUT     | LVCMOS33  |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| ext_clk             | INPUT     | LVCMOS33  |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| RGB2_OUT            | OUTPUT    |           |       |       | OD        |
+| i_RHS_TOP_SPI_MISO_1| INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | RGB1_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
-
-Removed logic
--------------
-
-Block i1 was optimized away.
+| RGB2_OUT            | OUTPUT    |           |       |       | OD        |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
++---------------------+-----------+-----------+-------+-------+-----------+
 
 Constraint Summary
 ------------------
 
-   Total number of constraints: 28
-   Total number of constraints dropped: 2
+   Total number of constraints: 39
+   Total number of constraints dropped: 22
    Dropped constraints are:
+     ldc_set_location -site {3} [get_ports MOSI_slave]
+
+                                    Page 5
+
+
+
+
+
+Constraint Summary (cont)
+-------------------------
+     ldc_set_location -site {48} [get_ports MISO_slave]
+     ldc_set_location -site {45} [get_ports SCLK_slave]
+     ldc_set_location -site {47} [get_ports SS_slave]
+     ldc_set_location -site {11} [get_ports MOSI_master]
+     ldc_set_location -site {10} [get_ports MISO_master]
+     ldc_set_location -site {9} [get_ports SCLK_master]
+     ldc_set_location -site {6} [get_ports SS_master]
+     ldc_set_location -site {37} [get_ports o_BOOST_ENABLE]
+     ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]
+     ldc_set_location -site {32} [get_ports o_RHS_TOP_SPI_CS_n_2]
+     ldc_set_location -site {13} [get_ports CTRL0_IN]
+     ldc_set_port -iobuf {DRIVE=NA PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports
+     MISO_slave]
+     ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports MOSI_master]
+     ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports SCLK_master]
+     ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33} [get_ports SS_master]
+     ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports SS_slave]
+     ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports SCLK_slave]
+     ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports MOSI_slave]
      ldc_set_port -iobuf {DRIVE=4 IO_TYPE=LVCMOS18} [get_ports LED_OUT]
+     ldc_set_port -iobuf {PULLMODE=NA IO_TYPE=LVCMOS33 DRIVE=8} [get_ports
+     MISO_master]
      ldc_set_port -iobuf {IO_TYPE=LVCMOS33} [get_ports pll_clk]
 
 Run Time and Memory Usage
@@ -179,8 +363,8 @@ Run Time and Memory Usage
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
-   Peak Memory Usage: 64 MB
-Checksum -- map: be3266843e2b4abe8e6e4c2f39528fc3b6a59ea0
+   Peak Memory Usage: 63 MB
+Checksum -- map: 16012fbe9daea2555fa6c41daede276a25507f4c
 
 
 
@@ -194,7 +378,21 @@ Checksum -- map: be3266843e2b4abe8e6e4c2f39528fc3b6a59ea0
 
 
 
-                                    Page 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    Page 6
 
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
