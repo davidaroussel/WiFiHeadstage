@@ -811,7 +811,7 @@ architecture RTL of Controller_RHD_Sampling is
 					int_FIFO_RHD2132_RE <= '1';
 					
 				when 5 =>
-					if stm32_counter > (NUM_WORDS - 4) then 
+					if stm32_counter > (NUM_WORDS - 3) then 
 						int_FIFO_RHD2132_RE <= '0'; 
 					end if;
 				
@@ -858,7 +858,7 @@ architecture RTL of Controller_RHD_Sampling is
 					stm32_state <= 18;
 
 				when 18 =>
-					if stm32_counter > (NUM_WORDS -4) then 
+					if stm32_counter > (NUM_WORDS -) then 
 						int_FIFO_RHD2216_RE <= '0'; 
 					end if;
 					if stm32_counter < (NUM_WORDS - 1) then

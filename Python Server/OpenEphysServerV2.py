@@ -60,7 +60,7 @@ if __name__ == "__main__":
     TTL_GENERATOR       = False
     CONFIGURE_OPENEPHYS = False
     PRINT_OE_INFO       = False
-    DUAL_CHIP_MODE      = True
+    DUAL_CHIP_MODE      = False
 
     #GLOBAL VARIABLES
     HOST_ADDR      = ""#"192.168.2.196"
