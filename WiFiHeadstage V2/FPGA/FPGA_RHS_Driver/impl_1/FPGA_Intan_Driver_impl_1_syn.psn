@@ -9,7 +9,7 @@ Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/
 Removing unused logic ...
 Starting design annotation....
 WARNING <70001944> - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
  
 Constraint Summary:
    Total number of constraints: 1
@@ -18,6 +18,6 @@ Constraint Summary:
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 1 secs 
-Total REAL Time: 0 secs 
-Peak Memory Usage: 53 MB
-Checksum -- postsyn: df1e2b54f3b132a4b99bb1e055bcc90ffca4e7f
+Total REAL Time: 2 secs 
+Peak Memory Usage: 64 MB
+Checksum -- postsyn: 45431aa3ccf308ebd5f35c982d5557b92ee5bae0

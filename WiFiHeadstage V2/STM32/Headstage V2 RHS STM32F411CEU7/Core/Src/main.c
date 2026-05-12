@@ -36,8 +36,8 @@
 #define ID_PATATO  0xF5
 #define ID_POTATO  0x3B
 
-#define FPGA_CHUNK_SIZE 4096
-#define FPGA_ACCUM_SIZE 8192
+#define FPGA_CHUNK_SIZE 2048
+#define FPGA_ACCUM_SIZE 4096
 #define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
 #define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
@@ -51,14 +51,9 @@ uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
 
-#define NRF_NUM_BUFFERS 2
-
-uint8_t nrf_tx_buffer[NRF_NUM_BUFFERS][NRF_FRAME_SIZE];
-
-volatile uint8_t nrf_write_idx = 0;
-volatile uint8_t nrf_read_idx  = 1;
-
+uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
 uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
+
 
 
 /* USER CODE END PD */
@@ -101,7 +96,6 @@ static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
-static inline void Swap_nRF_Buffers(void);
 static void Check_nRF_Message(void);
 static void Init_Intan_RHS(void);
 /* USER CODE BEGIN PFP */
@@ -118,7 +112,7 @@ volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
 
 static boolean test_stim = 0;
-static boolean MEP_Mode  = 1;
+static boolean MEP_Mode  = 0;
 static boolean Z_Mode    = 0;
 
 
@@ -152,7 +146,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   for (int i=0; i<NRF_FRAME_SIZE; i++){
-	  nrf_tx_buffer[nrf_read_idx][i] = i%255;
+	  nrf_tx_buffer[i] = i%255;
   }
 
 
@@ -160,12 +154,14 @@ int main(void)
   MX_GPIO_Init();
 
   MX_DMA_Init();
-  MX_USART2_UART_Init();
+  if(DEVKIT){
+	 MX_USART2_UART_Init();
+  }
   MX_SPI1_Init();
 
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
@@ -194,10 +190,10 @@ int main(void)
 	}
 	else if (MEP_Mode){
 		HAL_TIM_Base_Start_IT(&htim11);
-		uint8_t channel = 1;
-		uint32_t stim_current_uA = 30;
+		uint8_t CHANNEL = 1;
+		uint32_t STIM_CURRENT_uA = 30;
 		RHS2116_MEP_Config_Params();
-		RHS2116_MEP_Run_Stimulation(hspi, channel, stim_current_uA);
+		RHS2116_MEP_Run_Stimulation(hspi, CHANNEL, STIM_CURRENT_uA);
 
 	}
 	else if (Z_Mode)
@@ -249,6 +245,7 @@ int main(void)
 		  {
 			  fpga_accum_index = 0;
 			  fpga_frame_ready = 1;   // mark frame complete
+			  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 		  }
 	  }
 
@@ -271,9 +268,7 @@ int main(void)
 
 	      Prepare_nRF_Frame();
 
-	      Swap_nRF_Buffers();
-
-	      HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer[nrf_read_idx], nrf_rx_buffer, NRF_FRAME_SIZE);
+	      HAL_SPI_TransmitReceive_DMA( &hspi1,nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
 
 	      HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 	  }
@@ -341,33 +336,25 @@ void SystemClock_Config(void)
 		RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 		RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 		RCC_OscInitStruct.PLL.PLLQ = 4;
-
+		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 	//    RCC_OscInitStruct.PLL.PLLM = 25;
 	//    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
-	//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-//		RCC_OscInitStruct.PLL.PLLM = 25;
-//		RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
-//		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+			RCC_OscInitStruct.PLL.PLLM = 25;
+			RCC_OscInitStruct.PLL.PLLN = 264;  // SYSCLK = 66 MHz
 
+//	    RCC_OscInitStruct.PLL.PLLM = 25;
+//	    RCC_OscInitStruct.PLL.PLLN = 240;      // SYSCLK = 60 MHz
 
-	    RCC_OscInitStruct.PLL.PLLM = 25;
-	    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
-	    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
-		//    RCC_OscInitStruct.PLL.PLLM = 16;
-		//	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
-		//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+	//    RCC_OscInitStruct.PLL.PLLM = 16;
+	//	RCC_OscInitStruct.PLL.PLLN = 128;      // SYSCLK = 50 MHz
 
 	//	RCC_OscInitStruct.PLL.PLLM = 25;
-	//	RCC_OscInitStruct.PLL.PLLN = 192;    // SYSCLK = 48 MHz
-	//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-
+	//	RCC_OscInitStruct.PLL.PLLN = 192;      // SYSCLK = 48 MHz
 
 	//    RCC_OscInitStruct.PLL.PLLM = 25;
 	//    RCC_OscInitStruct.PLL.PLLN = 168;    // SYSCLK = 42 MHz
-	//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 		if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 		{
@@ -564,7 +551,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //IS USED AS CTRL_IN FOR THIS CASE
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
@@ -592,7 +579,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
     if (hspi->Instance == SPI1)
     {
-    	uint8_t tessting = 0;
+    	uint8_t testing = 0;
 
     }
 
@@ -605,29 +592,18 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
     }
 }
 
-static inline void Swap_nRF_Buffers(void)
-{
-    uint8_t temp = nrf_read_idx;
-    nrf_read_idx = nrf_write_idx;
-    nrf_write_idx = temp;
-}
 
 static void Prepare_nRF_Frame(void)
 {
 //	printf("PREPARE FRAME \r\n");
 
+	memcpy(nrf_tx_buffer, fpga_accum_buffer, FPGA_ACCUM_SIZE);
 
 
-	uint8_t *buf = nrf_tx_buffer[nrf_write_idx];
-
-	memcpy(buf, fpga_accum_buffer, FPGA_ACCUM_SIZE);
-
-	if(DEVKIT){
-		for(int i=0; i<FPGA_ACCUM_SIZE; i+=2)
-			printf("%02X%02X ", nrf_tx_buffer[nrf_write_idx][i], nrf_tx_buffer[nrf_write_idx][i+1]);
-		printf("\r\n");
-		printf("\r\n");
-	}
+//	for(int i=0; i<FPGA_ACCUM_SIZE; i+=2)
+//		printf("%02X%02X ", nrf_tx_buffer[nrf_write_idx][i], nrf_tx_buffer[nrf_write_idx][i+1]);
+//	printf("\r\n");
+//	printf("\r\n");
 //    printf("%02X%02X %02X%02X %02X%02X %02X%02X", nrf_tx_buffer[0], nrf_tx_buffer[1], nrf_tx_buffer[64], nrf_tx_buffer[65], nrf_tx_buffer[128], nrf_tx_buffer[129], nrf_tx_buffer[192], nrf_tx_buffer[193]);
 //    printf("\r\n");
 
@@ -653,7 +629,6 @@ static void Init_Intan_RHS(void){
 		HAL_SPI_DeInit(hspi);
 
 		SPI4_Master_Init(); //PASSTHROUGH
-		HAL_GPIO_WritePin(RHS_SPI_CS_Port, RHS_SPI_CS_Pin, GPIO_PIN_SET);
 		MX_TIM11_Init();
 
 		SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
@@ -700,14 +675,14 @@ static void Init_Intan_RHS(void){
 
 		SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
 		hspi->Instance->CR1 |= SPI_CR1_DFF;
-
+		HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);
 		while (init_check == 0xFFFF) {
 		init_check = INIT_RHS(hspi);
 		}
 
 		HAL_Delay(1);
 
-		if (!MEP_Mode || !Z_Mode || !test_stim){
+		if (!MEP_Mode && !Z_Mode && !test_stim){
 			// De-init SPI before changing mode
 			HAL_SPI_DeInit(&hspi4);
 			printf("[INFO] SPI deinitialized.\r\n");

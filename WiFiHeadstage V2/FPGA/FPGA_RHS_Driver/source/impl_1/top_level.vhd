@@ -4,14 +4,14 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
-        STM32_CLKS_PER_HALF_BIT       : integer := 32;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
+        STM32_CLKS_PER_HALF_BIT       : integer := 8;
         STM32_CS_INACTIVE_CLKS        : integer := 32;
 			
 		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
         RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 16;
+        RHD2132_CLKS_PER_HALF_BIT       : integer := 8;
         RHD2132_CS_INACTIVE_CLKS        : integer := 32;
 
         RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
@@ -199,6 +199,7 @@ begin
 
 			rgb_info_red   => rgb_sig_red,
 			rgb_info_blue   => rgb_sig_blue,
+			--rgb_info_green   => rgb_sig_green,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -246,7 +247,8 @@ begin
 			elsif w_Controller_Mode = x"1" then
 				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
 				--IF DEVKIT
-				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;				
+				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
+				--o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;				
 				--IF HEADSTAGE
 				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
 				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
@@ -282,10 +284,10 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
-				rgb_sig_green <= '1';
+				--rgb_sig_green <= '1';
             else
-				
                 w_reset <= '0';
+				
 				if CTRL0_IN = '0' then
 					if RHS_SEL = '0' then
 						w_Controller_Mode <= x"0";
@@ -294,18 +296,24 @@ begin
 						w_Controller_Mode <= x"1";
 						rgb_sig_green <= '0';
 					end if;
-				elsif CTRL0_IN = '1' thenp
+				elsif CTRL0_IN = '1' then
 					w_Controller_Mode <= x"2";
 				end if;
 
 
-				----Controller mode sequencing
+				--Controller mode sequencing
 				--case reset_counter is
 					--when 36000000 =>
-
+						--w_Controller_Mode <= x"1";
 					--when 72000000 =>
-						--w_Controller_Mode <= x"2";
 						--stop_counting <= '1';
+						
+						--if CTRL0_IN = '1' then
+							--w_Controller_Mode <= x"1";
+						--elsif CTRL0_IN = '0' then
+							--w_Controller_Mode <= x"2";
+						--end if;
+						
 						
 					--when others =>
 						--null;
