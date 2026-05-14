@@ -1109,7 +1109,7 @@ void RHS2116_stop_stim_pattern(SPI_HandleTypeDef *hspi)
 
 /*********** End stimulation interface***********/
 
-void RHS2116_Toggle_LED_Warning(uint8_t flash_speed){
+void RHS2116_Toggle_LED_Warning(int flash_speed){
 	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
 	HAL_Delay(flash_speed);
 	HAL_GPIO_TogglePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin);
@@ -1128,14 +1128,14 @@ void RHS2116_MEP_Config_Params(){
 		  CHANNEL_LIST[i].AmpA_uA     = 40;    // AMP OF STIMULATION
 		  CHANNEL_LIST[i].DurA_ms     = 3;	   // TIME BETWEEN PULSE
 		  CHANNEL_LIST[i].DelayA_ms   = 0;     // DELAY BEFORE STARTING STIM SEQUENCE (NOT WORKING YET)
-		  CHANNEL_LIST[i].num_train   = 10;    // NUMBER OF TRAIN BEFORE STOPPING
+		  CHANNEL_LIST[i].num_train   = 1;    // NUMBER OF TRAIN BEFORE STOPPING
 		  CHANNEL_LIST[i].periodT_ms  = 998;   // TIME BETWEEN TRAIN
 	  }  /* USER CODE END SysInit */
 }
 
 void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA)
 {
-    if (channel >= 32)
+    if (channel >= 33)
     {
         while(1){
         	RHS2116_Toggle_LED_Warning(100);
@@ -1159,9 +1159,11 @@ void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint3
 
     // Select chip
     if (channel < 16)
-        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);
-    else
-        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+    else{
+    	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+        channel = channel % 16;
+    }
 
     uint8_t  num_pulse            = CHANNEL_CONFIGS->num_pulse;
     uint16_t channel_mask         = (1 << channel);
@@ -1174,7 +1176,7 @@ void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint3
 
     CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
 
-    HAL_Delay(500);
+//    HAL_Delay(500);
 
     RHS2116_setup_stim_pattern(hspi, channel_mask, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
 
@@ -1192,10 +1194,7 @@ void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint3
         train_counter++;
     }
 
-    RHS2116_Toggle_LED_Warning(300);
-    RHS2116_Toggle_LED_Warning(300);
-    RHS2116_Toggle_LED_Warning(300);
-    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+
 }
 
 

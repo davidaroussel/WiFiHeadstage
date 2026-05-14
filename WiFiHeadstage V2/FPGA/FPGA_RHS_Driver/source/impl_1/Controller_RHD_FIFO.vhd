@@ -184,6 +184,34 @@ begin
 			int_FIFO_WE <= '1';
 			--int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
 			int_FIFO_DATA  <= int_RX_Byte_Falling;
+			
+			
+			
+			--case debug_counter is
+				--when 0 => 
+					--int_FIFO_DATA  <= x"AABBCCDD";
+				--when 2 => 
+					--int_FIFO_DATA(31 downto 16)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+					--int_FIFO_DATA(15 downto 0)   <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when 4 => 
+					--int_FIFO_DATA(31 downto 16)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+					--int_FIFO_DATA(15 downto 0)   <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when 15 => 
+					--int_FIFO_DATA(31 downto 16)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+					--int_FIFO_DATA(15 downto 0)   <= std_logic_vector(to_unsigned(debug_counter, 16));
+				--when others =>
+					--int_FIFO_DATA  <= int_RX_Byte_Falling;
+			--end case;
+			
+			
+			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+			if debug_counter > 126 then 
+				debug_counter <= 0;
+			else
+				debug_counter <= debug_counter + 1;
+			end if;	
+			
+			
 		  else
 			int_FIFO_WE <= '0';
 		  end if;

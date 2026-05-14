@@ -93,8 +93,14 @@ uint16_t INIT_RHD(SPI_HandleTypeDef *hspi){
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 
 	// Register 4 - ADC output format & DSP offset removal
+	uint8_t weakMISO = 0b1;
+	uint8_t TWOScomp = 0b1;
+	uint8_t ABSmode = 0b0;
+	uint8_t DSPenable = 0b1;
+	uint8_t DSPcutoffFreq = 0b0110;
 	reg_address = 0b10000100;
 	reg_value = 0b11010110;
+	reg_value = (weakMISO << 7) | (TWOScomp << 6) | (ABSmode << 5) | (DSPenable << 4) | DSPcutoffFreq;
 	tx_vector = (reg_address << 8) | reg_value;
 	SPI_SEND_RECV(hspi, &tx_vector, rx_vector, data_size);
 

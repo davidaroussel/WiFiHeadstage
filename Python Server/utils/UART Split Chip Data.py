@@ -4,212 +4,157 @@ import numpy as np
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+import serial.tools.list_ports
 
-# =============================
+# ============================================================
 # CONFIG
-# =============================
-SERIAL_PORT = "COM3"
+# ============================================================
+SERIAL_PORT = "COM12"      # CHANGE THIS
 SERIAL_BAUD = 921600
 
 NUM_CHANNELS = 16
-BLOCK_SIZE = 32
-capture_duration = 2
+SAMPLE_SIZE_BYTES = 2
+BUFFER_SIZE = 8192
+CAPTURE_DURATION = 2
 
-OpenEphysOffset = 32768
-maxOpenEphysValue = 0.005
-scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
-
-LOG_FILE = "raw_uart_capture.txt"
-
-def log_capture_raw(raw_blocks):
-    """
-    Logs rows exactly as 32-space-separated values per row.
-    """
-    with open(LOG_FILE, "a") as f:
-        f.write("\n================ NEW CAPTURE ================\n")
-
-        for row in raw_blocks:
-            line = " ".join(map(str, row))
-            f.write(f"{line}\n")
-
-    print(f"[INFO] Logged {len(raw_blocks)} rows to {LOG_FILE}")
-# ============================================================
-def log_capture_strict(raw_blocks, valid_mask):
-    """
-    Logs rows exactly as received.
-    Marks anomalies explicitly.
-    """
-
-    with open(LOG_FILE, "a") as f:
-        f.write("\n================ NEW CAPTURE ================\n")
-
-        for i, row in enumerate(raw_blocks):
-            row_lsb = row & 0x0001
-            first_lsb = row_lsb[0]
-            expected_type = "EMG" if first_lsb == 1 else "NEURO"
-
-            if valid_mask[i]:
-                status = f"VALID {expected_type}"
-            else:
-                mismatches = np.where(row_lsb != first_lsb)[0].tolist()
-                status = f"ANOMALY mismatches at {mismatches}"
-
-            line = " ".join(map(str, row))
-            f.write(f"{line}    <-- {status}\n")
-
-    print(f"[INFO] Logged {len(raw_blocks)} rows to {LOG_FILE}")
-
+RAW_LOG_FILE = "raw_uart_log.txt"
 
 # ============================================================
-def uart_receive_strict():
+# LIST PORTS
+# ============================================================
+def list_ports():
+
+    print("Available COM ports:")
+
+    ports = serial.tools.list_ports.comports()
+
+    for p in ports:
+        print(f"{p.device} - {p.description}")
+
+# ============================================================
+# RAW LOG
+# ============================================================
+def save_raw_log(raw_uint16):
+
+    with open(RAW_LOG_FILE, "w") as f:
+
+        for value in raw_uint16:
+
+            # HEX formatting like:
+            # F8FF F6FF ...
+            f.write(f"{value:04X} ")
+
+    print(f"[INFO] Raw log saved to: {RAW_LOG_FILE}")
+
+# ============================================================
+# UART RECEIVE + PLOT
+# ============================================================
+def uart_receive_and_plot():
 
     ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=0.01)
-    print(f"[INFO] UART opened on {SERIAL_PORT}")
 
-    byte_buffer = bytearray()
+    print(f"[INFO] UART opened on {SERIAL_PORT}")
+    print(f"[INFO] Capturing for {CAPTURE_DURATION} seconds...")
+
     capture_buffer = bytearray()
 
-    capture_active = False
-    start_time = None
+    start_time = time.time()
 
     try:
-        while True:
 
-            # =============================
-            # READ SERIAL
-            # =============================
+        # ====================================================
+        # CAPTURE LOOP
+        # ====================================================
+        while time.time() - start_time < CAPTURE_DURATION:
+
             data = ser.read(ser.in_waiting or 1)
+
             if data:
-                byte_buffer.extend(data)
+                capture_buffer.extend(data)
 
-            # =============================
-            # Start capture immediately
-            # =============================
-            if not capture_active and len(byte_buffer) > 0:
-                capture_active = True
-                start_time = time.time()
-                capture_buffer.clear()
-                print("[INFO] Capture started")
-
-            # =============================
-            # Collect for duration
-            # =============================
-            if capture_active:
-                capture_buffer.extend(byte_buffer)
-                byte_buffer.clear()
-
-                if time.time() - start_time >= capture_duration:
-
-                    print("[INFO] Processing capture...")
-
-                    usable_bytes = (len(capture_buffer) // 2) * 2
-
-                    if usable_bytes == 0:
-                        print("[WARNING] No complete samples")
-                        capture_active = False
-                        capture_buffer.clear()
-                        continue
-
-                    try:
-                        # ---- convert HEX text → integers ----
-                        raw_ints = [int(x, 16) for x in capture_buffer[:usable_bytes].split()]
-                    except:
-                        continue
-                    # find first value with LSB = 1
-                    start_idx = next((i for i, v in enumerate(raw_ints) if v & 1), None)
-
-                    if start_idx is not None:
-                        raw_ints = raw_ints[start_idx:]
-                    else:
-                        print("[WARNING] No value with LSB=1 found")
-                    # ---- detect anomalies ----
-                    for i, v in enumerate(raw_ints):
-                        if v > 32:
-                            print(i)
-
-                    raw_ints = np.array(raw_ints, dtype=np.uint16)
-
-                    # ---- reshape into blocks ----
-                    num_rows = len(raw_ints) // BLOCK_SIZE
-                    raw_blocks = raw_ints[:num_rows * BLOCK_SIZE].reshape(num_rows, BLOCK_SIZE)
-                    raw_blocks = np.clip(raw_blocks, -32768, 32768)
-                    # ---- LOG DATA ----
-                    with open("capture_log.txt", "w") as f:
-                        for row in raw_blocks:
-                            f.write(" ".join(map(str, row)) + "\n")
-
-                    # ---- optional strict logging ----
-                    # log_capture_raw(raw_blocks)
-
-                    # STRICT VALIDATION (identical to TCP)
-                    row_lsb = raw_blocks & 0x0001
-                    first_lsb = row_lsb[:, 0][:, None]
-                    valid_mask = np.all(row_lsb == first_lsb, axis=1)
-
-                    deleted_indices = np.where(~valid_mask)[0]
-                    print(f"[INFO] Deleted rows: {len(deleted_indices)}")
-
-                    # ---- LOG STRICTLY ----
-                    # log_capture_strict(raw_blocks, valid_mask)
-
-                    # ---- SPLIT ----
-                    emg_mask = valid_mask & (first_lsb.flatten() == 1)
-                    neuro_mask = valid_mask & (first_lsb.flatten() == 0)
-
-                    raw_emg_data = raw_blocks[emg_mask].flatten()
-                    raw_neuro_data = raw_blocks[neuro_mask].flatten()
-
-                    # =============================
-                    # PROCESS CHIP
-                    # =============================
-                    def process_chip(data):
-                        usable = (data.size // NUM_CHANNELS) * NUM_CHANNELS
-                        data = data[:usable]
-                        reshaped = data.reshape(-1, NUM_CHANNELS).T
-                        clipped = np.clip(reshaped, -32768, 32768)
-                        converted = (clipped * scale + OpenEphysOffset).astype(np.uint16)
-                        return converted
-
-                    raw_emg_processed = process_chip(raw_emg_data)
-                    raw_neuro_processed = process_chip(raw_neuro_data)
-
-                    # =============================
-                    # PLOT (IDENTICAL)
-                    # =============================
-                    fig, axes = plt.subplots(16, 2, figsize=(18, 20), sharex=False)
-                    fig.suptitle("UART STRICT: Raw vs Valid (LSB rule)", fontsize=16)
-
-                    for ch in range(16):
-
-                        re = raw_emg_processed[ch][len(raw_emg_processed[ch]) // 2:]
-                        rn = raw_neuro_processed[ch][len(raw_neuro_processed[ch]) // 2:]
-
-                        axes[ch, 0].plot(re, color='tab:blue', alpha=0.7)
-                        axes[ch, 0].set_ylabel(f"E Ch {ch}")
-                        axes[ch, 0].set_yticks([])
-
-                        axes[ch, 1].plot(rn, color='tab:blue', alpha=0.7)
-                        axes[ch, 1].set_ylabel(f"N Ch {ch}")
-                        axes[ch, 1].set_yticks([])
-
-                    axes[-1, 0].set_xlabel("Sample Index")
-                    axes[-1, 1].set_xlabel("Sample Index")
-
-                    plt.tight_layout()
-                    plt.show()
-
-                    capture_active = False
-                    capture_buffer.clear()
-                    print("[INFO] Capture reset")
-
-    except KeyboardInterrupt:
-        print("Stopped")
+        print("[INFO] Capture complete")
+        print(f"[INFO] Received {len(capture_buffer)} bytes")
 
     finally:
-        ser.close()
-        print("Serial closed")
 
+        ser.close()
+        print("[INFO] Serial closed")
+
+    # ========================================================
+    # KEEP COMPLETE BLOCKS
+    # ========================================================
+    usable_bytes = (len(capture_buffer) // BUFFER_SIZE) * BUFFER_SIZE
+
+    if usable_bytes == 0:
+        print("[ERROR] No complete 8192-byte blocks received")
+        return
+
+    capture_buffer = capture_buffer[:usable_bytes]
+
+    print(f"[INFO] Using {usable_bytes} bytes")
+
+    # ========================================================
+    # CONVERT RAW BYTES -> UINT16
+    # ========================================================
+    raw_data = np.frombuffer(capture_buffer, dtype=np.uint16)
+
+    print(f"[INFO] Total uint16 samples: {len(raw_data)}")
+
+    # ========================================================
+    # SAVE RAW LOG
+    # ========================================================
+    save_raw_log(raw_data)
+
+    # ========================================================
+    # RESHAPE INTO CHANNELS
+    # ========================================================
+    usable_samples = (len(raw_data) // NUM_CHANNELS) * NUM_CHANNELS
+
+    raw_data = raw_data[:usable_samples]
+
+    frames = raw_data.reshape(-1, NUM_CHANNELS)
+
+    # channels first
+    channel_data = frames.T
+
+    print(f"[INFO] Samples per channel: {channel_data.shape[1]}")
+
+    # ========================================================
+    # CONVERT TO SIGNED
+    # ========================================================
+    channel_data = channel_data.astype(np.int16)
+
+    # ========================================================
+    # PLOT
+    # ========================================================
+    fig, axes = plt.subplots(
+        NUM_CHANNELS,
+        1,
+        figsize=(18, 24),
+        sharex=True
+    )
+
+    fig.suptitle("UART Capture - 16 Channels", fontsize=18)
+
+    for ch in range(NUM_CHANNELS):
+
+        axes[ch].plot(channel_data[ch])
+
+        axes[ch].set_ylabel(f"CH {ch}")
+
+        axes[ch].grid(True)
+
+    axes[-1].set_xlabel("Sample Index")
+
+    plt.tight_layout()
+
+    plt.show()
 
 # ============================================================
+# MAIN
+# ============================================================
 if __name__ == "__main__":
-    uart_receive_strict()
+
+    list_ports()
+
+    uart_receive_and_plot()

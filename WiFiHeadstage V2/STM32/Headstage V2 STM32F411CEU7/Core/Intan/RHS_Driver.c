@@ -621,7 +621,7 @@ void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi){
 }
 
 
-int INIT_RHS(SPI_HandleTypeDef *hspi){
+uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 	int intan_connected = 1;
 	//SET CS_PIN
 	RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;

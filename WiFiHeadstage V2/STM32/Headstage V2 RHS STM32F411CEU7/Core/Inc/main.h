@@ -84,14 +84,17 @@ void Error_Handler(void);
 #define Reboot_SPI_Pin GPIO_PIN_5
 #define Reboot_SPI_Port GPIOB
 
+#if DEVKIT == 1
+    // FOR DEV KIT
+    #define RHS_Chip_SEL_Pin  GPIO_PIN_11
+    #define RHS_Chip_SEL_Port GPIOC
+#else
 
-//FOR DEV KIT
-//#define RHS_Chip_SEL_Pin  GPIO_PIN_11
-//#define RHS_Chip_SEL_Port GPIOC
+    // FOR HEADSTAGE
+    #define RHS_Chip_SEL_Pin  GPIO_PIN_10
+    #define RHS_Chip_SEL_Port GPIOA
 
-//FOR HEADSTAGE
-#define RHS_Chip_SEL_Pin  GPIO_PIN_10
-#define RHS_Chip_SEL_Port GPIOA
+#endif
 
 
 //Nordic nRF SPI PIN (SPI 1)

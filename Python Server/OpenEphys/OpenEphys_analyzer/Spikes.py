@@ -323,8 +323,17 @@ def plot_all_data(data, num_channels, events, fs, directory_name, save_directory
     ttl_states = events['state']  # Rising (1) and falling (0) edges
     ttl_events = events
     ttl_data = []
+    recording_start_sample = ttl_events.values[0][1]
+
     for ttl_signal in ttl_events.values:
-        ttl_data.append([ttl_signal[0], ttl_signal[1], ttl_signal[6]])
+        ttl_id = ttl_signal[0]
+
+        # Convert absolute sample index -> local plotted index
+        sample_index = int(ttl_signal[1] - recording_start_sample)
+
+        state = ttl_signal[6]
+
+        ttl_data.append([ttl_id, sample_index, state])
 
     ttl_dict = {}
     active_ttl = {}
@@ -352,13 +361,25 @@ def plot_all_data(data, num_channels, events, fs, directory_name, save_directory
     fig.suptitle(f'Raw Data for All Channels - Directory: {directory_name}')
 
     for channel_index in range(num_channels):
-        axs[channel_index].plot(np.arange(data.shape[0]), data[:, channel_index], color='black',
-                                label=f'Ch {channel_index + 1}')
-
-        # Overlay TTL events with different colors
         for ttl_id, ranges in ttl_dict.items():
             for start, end in ranges:
-                axs[channel_index].axvspan(start, end, color=ttl_colors[ttl_id], alpha=0.3, label=f'TTL {ttl_id}')
+                axs[channel_index].axvspan(
+                    start,
+                    end,
+                    color=ttl_colors[ttl_id],
+                    alpha=0.3,
+                    zorder=0
+                )
+
+        # Draw data ON TOP
+        axs[channel_index].plot(
+            np.arange(data.shape[0]),
+            data[:, channel_index],
+            color='black',
+            linewidth=0.8,
+            label=f'Ch {channel_index + 1}',
+            zorder=10
+        )
 
         axs[channel_index].set_ylabel(f'Ch {channel_index + 1}')
         axs[channel_index].grid(True, linestyle='--', alpha=0.6)

@@ -8,7 +8,12 @@
 #ifndef APPS_RHS_DRIVER_H_
 #define APPS_RHS_DRIVER_H_
 
-#include "Intan_utils.h"
+#include <string.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include "main.h"
+
 
 char* binary_string(uint32_t value);
 
@@ -53,7 +58,73 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register);
 
 void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi);
 
-int INIT_RHS(SPI_HandleTypeDef *hspi);
+/*Impedance*/
+int16_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, float p_measurement_time_s);
+
+/* Stimulation */
+void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA);
+void RHS2116_MEP_Config_Params();
+void RHS2116_Toggle_LED_Warning(uint8_t flash_speed);
+
+/***********Stimulation interface***********/
+typedef enum {
+    FALSE = 0,
+    TRUE = 1
+}boolean;
+
+typedef enum
+{
+	Curr_10nA,
+	Curr_20nA,
+	Curr_50nA,
+	Curr_100nA,
+	Curr_200nA,
+	Curr_500nA,
+	Curr_1000nA,
+	Curr_2000nA,
+	Curr_5000nA,
+	Curr_10000nA,
+	Curr_Invalid
+}CURRENT_STEP_SIZE;
+
+typedef struct
+{
+	uint32_t period_us;
+	uint32_t pulse_width_us;
+	uint32_t dead_zone_us;
+	uint32_t callback_period_us;
+	uint32_t current_time_us;
+	CURRENT_STEP_SIZE current_step_size;
+	uint8_t current_amplitude;
+	boolean stim_activated;
+	boolean single_shot;
+	boolean request_stop;
+	uint16_t activated_channels;
+	SPI_HandleTypeDef *hspi;
+}STIMULATION_PARAMETERS;
+
+typedef struct
+{
+	uint32_t periodP_us;  // TIME BETWEEN EACH PULSE
+	uint32_t num_pulse;	  // NUMBER OF PULSE IN EACH TRAIN
+	uint32_t AmpA_uA;	  // AMP OF STIMULATION
+	uint32_t DurA_ms;     // DURATION OF NEGATIVE + POSITIVE PULSE
+	uint32_t DelayA_ms;	  // DELAY BEFORE STARTING THE PULSE (NOT WOKRING YET)
+	uint32_t num_train;   // NUMBER OF num_pulse TRAIN TO RUN BEFORE STOPPING, IF ZERO, continuous
+	uint32_t periodT_ms;  // TIME BETWEEN EACH TRAIN
+}USERS_STIM_PARAMETERS;
+
+void RHS2116_setup_stim_pattern(SPI_HandleTypeDef *hspi, uint16_t p_activated_channels, uint32_t p_period_us, uint32_t p_pulse_width_us, uint32_t p_dead_zone_us,
+								CURRENT_STEP_SIZE p_nA_stepsize, uint8_t p_current_amplitude, uint32_t p_callback_period_us);
+void RHS2116_update_stim_output_periodic_call(void);
+void RHS2116_start_stim_pattern_single_shot(SPI_HandleTypeDef *hspi);
+void RHS2116_start_stim_pattern(SPI_HandleTypeDef *hspi);
+void RHS2116_stop_stim_pattern(SPI_HandleTypeDef *hspi);
+void _RHS2116_setup_stimulation(SPI_HandleTypeDef *hspi, CURRENT_STEP_SIZE p_nA_stepsize);
+
+/*********** End stimulation interface***********/
+
+uint16_t INIT_RHS(SPI_HandleTypeDef *hspi);
 
 #define CONVERT_CMD  0b000000
 #define WRITE_CMD    0b10000000

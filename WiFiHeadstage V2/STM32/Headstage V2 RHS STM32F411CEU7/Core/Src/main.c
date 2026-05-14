@@ -51,12 +51,7 @@ uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
 uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
 uint32_t fpga_accum_index = 0;
 
-#define NRF_NUM_BUFFERS 2
-
-uint8_t nrf_tx_buffer[NRF_NUM_BUFFERS][NRF_FRAME_SIZE];
-
-volatile uint8_t nrf_write_idx = 0;
-volatile uint8_t nrf_read_idx  = 1;
+uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
 
 uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
 
@@ -101,7 +96,6 @@ static void SPI4_Master_Init(void);
 static void SPI4_Slave_Init(void);
 static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
-static inline void Swap_nRF_Buffers(void);
 static void Check_nRF_Message(void);
 static void Init_Intan_RHS(void);
 /* USER CODE BEGIN PFP */
@@ -152,7 +146,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   for (int i=0; i<NRF_FRAME_SIZE; i++){
-	  nrf_tx_buffer[nrf_read_idx][i] = i%255;
+	  nrf_tx_buffer[i] = i%255;
   }
 
 
@@ -160,7 +154,10 @@ int main(void)
   MX_GPIO_Init();
 
   MX_DMA_Init();
-  MX_USART2_UART_Init();
+  if (DEVKIT){
+	  MX_USART2_UART_Init();
+  }
+
   MX_SPI1_Init();
 
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
@@ -194,10 +191,19 @@ int main(void)
 	}
 	else if (MEP_Mode){
 		HAL_TIM_Base_Start_IT(&htim11);
-		uint8_t channel = 1;
-		uint32_t stim_current_uA = 30;
-		RHS2116_MEP_Config_Params();
-		RHS2116_MEP_Run_Stimulation(hspi, channel, stim_current_uA);
+		uint32_t stim_current_uA = 20;
+		for (uint8_t i =0 ; i<32; i++){
+			RHS2116_MEP_Config_Params();
+			RHS2116_MEP_Run_Stimulation(hspi, i, stim_current_uA);
+		}
+	    RHS2116_Toggle_LED_Warning(300);
+	    RHS2116_Toggle_LED_Warning(300);
+	    RHS2116_Toggle_LED_Warning(300);
+	    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+//		uint8_t channel = 1;
+//		uint32_t stim_current_uA = 30;
+//		RHS2116_MEP_Config_Params();
+//		RHS2116_MEP_Run_Stimulation(hspi, channel, stim_current_uA);
 
 	}
 	else if (Z_Mode)
@@ -249,6 +255,7 @@ int main(void)
 		  {
 			  fpga_accum_index = 0;
 			  fpga_frame_ready = 1;   // mark frame complete
+			  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 		  }
 	  }
 
@@ -259,8 +266,6 @@ int main(void)
 			  spi_nrf_ready = 1;
 			  spi_counter = 0;
 		  }
-
-		  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 		  fpga_frame_ready = 0;
 		  spi_nrf_ready = 1;
 	  }
@@ -271,9 +276,7 @@ int main(void)
 
 	      Prepare_nRF_Frame();
 
-	      Swap_nRF_Buffers();
-
-	      HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer[nrf_read_idx], nrf_rx_buffer, NRF_FRAME_SIZE);
+	      HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
 
 	      HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 	  }
@@ -605,26 +608,16 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
     }
 }
 
-static inline void Swap_nRF_Buffers(void)
-{
-    uint8_t temp = nrf_read_idx;
-    nrf_read_idx = nrf_write_idx;
-    nrf_write_idx = temp;
-}
 
 static void Prepare_nRF_Frame(void)
 {
 //	printf("PREPARE FRAME \r\n");
 
-
-
-	uint8_t *buf = nrf_tx_buffer[nrf_write_idx];
-
-	memcpy(buf, fpga_accum_buffer, FPGA_ACCUM_SIZE);
+	memcpy(nrf_tx_buffer, fpga_accum_buffer, FPGA_ACCUM_SIZE);
 
 	if(DEVKIT){
 		for(int i=0; i<FPGA_ACCUM_SIZE; i+=2)
-			printf("%02X%02X ", nrf_tx_buffer[nrf_write_idx][i], nrf_tx_buffer[nrf_write_idx][i+1]);
+			printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
 		printf("\r\n");
 		printf("\r\n");
 	}
@@ -707,7 +700,7 @@ static void Init_Intan_RHS(void){
 
 		HAL_Delay(1);
 
-		if (!MEP_Mode || !Z_Mode || !test_stim){
+		if (!MEP_Mode && !Z_Mode && !test_stim){
 			// De-init SPI before changing mode
 			HAL_SPI_DeInit(&hspi4);
 			printf("[INFO] SPI deinitialized.\r\n");
