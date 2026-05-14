@@ -204,7 +204,7 @@ begin
 			--end case;
 			
 			
-			int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
+			--int_FIFO_DATA(15 downto 0)  <= std_logic_vector(to_unsigned(debug_counter, 16));
 			if debug_counter > 126 then 
 				debug_counter <= 0;
 			else

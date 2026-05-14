@@ -252,7 +252,7 @@ begin
 				--IF HEADSTAGE
 				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
 				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_2 ;  
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_2;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
@@ -265,8 +265,12 @@ begin
 
 				o_RHS_TOP_SPI_Clk    <= int_RHS_TOP_SPI_Clk;
 				o_RHS_TOP_SPI_MOSI   <= int_RHS_TOP_SPI_MOSI;
+
 				o_RHS_TOP_SPI_CS_n_1 <= int_RHS_TOP_SPI_CS_n_1;
-				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1; 
+				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1;
+
+				o_RHS_TOP_SPI_CS_n_2 <= int_RHS_TOP_SPI_CS_n_2;
+				int_RHS_TOP_SPI_MISO_2 <= i_RHS_TOP_SPI_MISO_2;
 			end if;
 
 		end process;
@@ -284,20 +288,21 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
-				--rgb_sig_green <= '1';
+				rgb_sig_green <= '0';
             else
                 w_reset <= '0';
 				
 				if CTRL0_IN = '0' then
 					if RHS_SEL = '0' then
 						w_Controller_Mode <= x"0";
-						rgb_sig_green <= '1';
+						rgb_sig_green <= '0';
 					elsif RHS_SEL = '1' then
 						w_Controller_Mode <= x"1";
-						rgb_sig_green <= '0';
+						rgb_sig_green <= '1';
 					end if;
 				elsif CTRL0_IN = '1' then
 					w_Controller_Mode <= x"2";
+					rgb_sig_green <= '1';
 				end if;
 
 

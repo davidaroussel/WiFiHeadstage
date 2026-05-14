@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Tue May 12 16:59:05 2026
+Thu May 14 17:55:08 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -49,7 +49,7 @@ Package Status:                     Preliminary    Version 1.5
 
 1.1  SDC Constraints
 =====================
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 2 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 4 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 1.2  Constraint Coverage
 ---------------------------
@@ -76,20 +76,20 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-reset_counter_1057__i28/D               |    No arrival or required
-reset_counter_1057__i27/D               |    No arrival or required
-reset_counter_1057__i26/D               |    No arrival or required
-reset_counter_1057__i25/D               |    No arrival or required
-reset_counter_1057__i24/D               |    No arrival or required
-reset_counter_1057__i23/D               |    No arrival or required
-reset_counter_1057__i22/D               |    No arrival or required
-reset_counter_1057__i21/D               |    No arrival or required
-reset_counter_1057__i20/D               |    No arrival or required
-reset_counter_1057__i19/D               |    No arrival or required
+reset_counter_1052__i28/D               |    No arrival or required
+reset_counter_1052__i27/D               |    No arrival or required
+reset_counter_1052__i26/D               |    No arrival or required
+reset_counter_1052__i25/D               |    No arrival or required
+reset_counter_1052__i24/D               |    No arrival or required
+reset_counter_1052__i23/D               |    No arrival or required
+reset_counter_1052__i22/D               |    No arrival or required
+reset_counter_1052__i21/D               |    No arrival or required
+reset_counter_1052__i20/D               |    No arrival or required
+reset_counter_1052__i19/D               |    No arrival or required
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
-ts                                      |                      3734
+ts                                      |                      3748
                                         |                          
 -------------------------------------------------------------------
 
@@ -137,118 +137,121 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-i22_3_lut/B	->	i22_3_lut/Z
+i20_3_lut_4_lut/B	->	i20_3_lut_4_lut/Z
 
 ++++ Loop2
-i2583_4_lut/A	->	i2583_4_lut/Z
+o_RHS_TOP_SPI_CS_n_2_c_I_0_3_lut_4_lut/A	->	o_RHS_TOP_SPI_CS_n_2_c_I_0_3_lut_4_lut/Z
 
 ++++ Loop3
-i21_3_lut_adj_99/B	->	i21_3_lut_adj_99/Z
+i22_4_lut/B	->	i22_4_lut/Z
 
 ++++ Loop4
-i2585_3_lut/B	->	i2585_3_lut/Z
+i2399_3_lut/A	->	i2399_3_lut/Z
 
 ++++ Loop5
-Controller_inst/i9500_2_lut/A	->	Controller_inst/i9500_2_lut/Z
+i2397_3_lut/A	->	i2397_3_lut/Z
 
 ++++ Loop6
-Controller_inst/i9475_2_lut/A	->	Controller_inst/i9475_2_lut/Z
+Controller_inst/i9667_2_lut/A	->	Controller_inst/i9667_2_lut/Z
 
 ++++ Loop7
-Controller_inst/i9472_2_lut/A	->	Controller_inst/i9472_2_lut/Z
+Controller_inst/i9666_2_lut/A	->	Controller_inst/i9666_2_lut/Z
 
 ++++ Loop8
-Controller_inst/i9474_2_lut/A	->	Controller_inst/i9474_2_lut/Z
+Controller_inst/i9661_2_lut/A	->	Controller_inst/i9661_2_lut/Z
 
 ++++ Loop9
-Controller_inst/i9473_2_lut/A	->	Controller_inst/i9473_2_lut/Z
+Controller_inst/i9672_2_lut/A	->	Controller_inst/i9672_2_lut/Z
 
 ++++ Loop10
-Controller_inst/i9492_2_lut/A	->	Controller_inst/i9492_2_lut/Z
+Controller_inst/i9665_2_lut/A	->	Controller_inst/i9665_2_lut/Z
 
 ++++ Loop11
-Controller_inst/i9480_2_lut/A	->	Controller_inst/i9480_2_lut/Z
+Controller_inst/i9663_2_lut/A	->	Controller_inst/i9663_2_lut/Z
 
 ++++ Loop12
-Controller_inst/i9483_2_lut/A	->	Controller_inst/i9483_2_lut/Z
+Controller_inst/i9679_2_lut/A	->	Controller_inst/i9679_2_lut/Z
 
 ++++ Loop13
-Controller_inst/i9470_2_lut/A	->	Controller_inst/i9470_2_lut/Z
+Controller_inst/i9658_2_lut/A	->	Controller_inst/i9658_2_lut/Z
 
 ++++ Loop14
-Controller_inst/i9490_2_lut/A	->	Controller_inst/i9490_2_lut/Z
+Controller_inst/i9662_2_lut/A	->	Controller_inst/i9662_2_lut/Z
 
 ++++ Loop15
-Controller_inst/i9471_2_lut/A	->	Controller_inst/i9471_2_lut/Z
+Controller_inst/i9686_2_lut/A	->	Controller_inst/i9686_2_lut/Z
 
 ++++ Loop16
-Controller_inst/i9494_2_lut/A	->	Controller_inst/i9494_2_lut/Z
+Controller_inst/i9685_2_lut/A	->	Controller_inst/i9685_2_lut/Z
 
 ++++ Loop17
-Controller_inst/i9482_2_lut/A	->	Controller_inst/i9482_2_lut/Z
+Controller_inst/i9684_2_lut/A	->	Controller_inst/i9684_2_lut/Z
 
 ++++ Loop18
-Controller_inst/i9363_2_lut/A	->	Controller_inst/i9363_2_lut/Z
+Controller_inst/i9579_2_lut/A	->	Controller_inst/i9579_2_lut/Z
 
 ++++ Loop19
-Controller_inst/i9498_2_lut/A	->	Controller_inst/i9498_2_lut/Z
+Controller_inst/i9660_2_lut/A	->	Controller_inst/i9660_2_lut/Z
 
 ++++ Loop20
-Controller_inst/i9481_2_lut/A	->	Controller_inst/i9481_2_lut/Z
+Controller_inst/i9683_2_lut/A	->	Controller_inst/i9683_2_lut/Z
 
 ++++ Loop21
-Controller_inst/i9499_2_lut/A	->	Controller_inst/i9499_2_lut/Z
+Controller_inst/i9659_2_lut/A	->	Controller_inst/i9659_2_lut/Z
 
 ++++ Loop22
-Controller_inst/i9497_2_lut/A	->	Controller_inst/i9497_2_lut/Z
+Controller_inst/i9682_2_lut/A	->	Controller_inst/i9682_2_lut/Z
 
 ++++ Loop23
-Controller_inst/i9496_2_lut/A	->	Controller_inst/i9496_2_lut/Z
+Controller_inst/i9681_2_lut/A	->	Controller_inst/i9681_2_lut/Z
 
 ++++ Loop24
-Controller_inst/i9495_2_lut/A	->	Controller_inst/i9495_2_lut/Z
+Controller_inst/i9670_2_lut/A	->	Controller_inst/i9670_2_lut/Z
 
 ++++ Loop25
-Controller_inst/i9487_2_lut/A	->	Controller_inst/i9487_2_lut/Z
+Controller_inst/i9674_2_lut/A	->	Controller_inst/i9674_2_lut/Z
 
 ++++ Loop26
-Controller_inst/i9491_2_lut/A	->	Controller_inst/i9491_2_lut/Z
+Controller_inst/i9668_2_lut/A	->	Controller_inst/i9668_2_lut/Z
 
 ++++ Loop27
-Controller_inst/i9488_2_lut/A	->	Controller_inst/i9488_2_lut/Z
+Controller_inst/i9664_2_lut/A	->	Controller_inst/i9664_2_lut/Z
 
 ++++ Loop28
-Controller_inst/i9484_2_lut/A	->	Controller_inst/i9484_2_lut/Z
+Controller_inst/i9669_2_lut/A	->	Controller_inst/i9669_2_lut/Z
 
 ++++ Loop29
-Controller_inst/i9476_2_lut/A	->	Controller_inst/i9476_2_lut/Z
+Controller_inst/i9673_2_lut/A	->	Controller_inst/i9673_2_lut/Z
 
 ++++ Loop30
-Controller_inst/i9486_2_lut/A	->	Controller_inst/i9486_2_lut/Z
+Controller_inst/i9657_2_lut/A	->	Controller_inst/i9657_2_lut/Z
 
 ++++ Loop31
-Controller_inst/i9477_2_lut/A	->	Controller_inst/i9477_2_lut/Z
+Controller_inst/i9680_2_lut/A	->	Controller_inst/i9680_2_lut/Z
 
 ++++ Loop32
-Controller_inst/i9493_2_lut/A	->	Controller_inst/i9493_2_lut/Z
+Controller_inst/i9675_2_lut/A	->	Controller_inst/i9675_2_lut/Z
 
 ++++ Loop33
-Controller_inst/i9478_2_lut/A	->	Controller_inst/i9478_2_lut/Z
+Controller_inst/i9676_2_lut/A	->	Controller_inst/i9676_2_lut/Z
 
 ++++ Loop34
-Controller_inst/i9489_2_lut/A	->	Controller_inst/i9489_2_lut/Z
+Controller_inst/i9678_2_lut/A	->	Controller_inst/i9678_2_lut/Z
 
 ++++ Loop35
-Controller_inst/i9479_2_lut/A	->	Controller_inst/i9479_2_lut/Z
+Controller_inst/i9677_2_lut/A	->	Controller_inst/i9677_2_lut/Z
 
 ++++ Loop36
-Controller_inst/i9485_2_lut/A	->	Controller_inst/i9485_2_lut/Z
+Controller_inst/i9687_2_lut/A	->	Controller_inst/i9687_2_lut/Z
+
+++++ Loop37
+Controller_inst/i9671_2_lut/A	->	Controller_inst/i9671_2_lut/Z
 
 
 1.6  Error/Warning Messages
 ============================
 WARNING "70001944" - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -259,7 +262,7 @@ WARNING "70001944" - No source clock for
 
 2.1.1 Clock "pll_clk_int"
 =======================
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
 
 Single Clock Domain
 -------------------------------------------------------------------------------------------------------

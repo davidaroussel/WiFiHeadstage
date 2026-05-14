@@ -64,7 +64,7 @@ int16_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_chan
 /* Stimulation */
 void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA);
 void RHS2116_MEP_Config_Params();
-void RHS2116_Toggle_LED_Warning(uint8_t flash_speed);
+void RHS2116_Toggle_LED_Warning(int flash_speed);
 
 /***********Stimulation interface***********/
 typedef enum {

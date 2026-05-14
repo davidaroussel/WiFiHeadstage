@@ -480,6 +480,10 @@ architecture RTL of Controller_RHD_Sampling is
 		63 => x"000F0000"   -- CH15
 	);
 
+	
+	signal mux_RHD2132_SPI_MISO : STD_LOGIC;
+	signal mux_RHD2132_SPI_CS_n : STD_LOGIC;
+	signal use_rhd2132 : std_logic;
 
 	begin
 	  Controller_RHD_FIFO_1 : entity work.Controller_RHD_FIFO
@@ -493,10 +497,12 @@ architecture RTL of Controller_RHD_Sampling is
 		  i_Rst_L        	=> i_Rst_L,
 		  i_Clk          	=> i_Clk,
 		  i_Controller_Mode => i_Controller_Mode,
+		  
 		  o_SPI_Clk      	=> o_RHD2132_SPI_Clk,
-		  i_SPI_MISO     	=> i_RHD2132_SPI_MISO,
+		  i_SPI_MISO     	=> mux_RHD2132_SPI_MISO,
 		  o_SPI_MOSI     	=> o_RHD2132_SPI_MOSI,
-		  o_SPI_CS_n     	=> o_RHD2132_SPI_CS_n,
+		  o_SPI_CS_n     	=> mux_RHD2132_SPI_CS_n,
+
 		  i_TX_Byte      	=> int_RHD2132_TX_Byte,
 		  i_TX_DV        	=> int_RHD2132_TX_DV,
 		  o_TX_Ready     	=> int_RHD2132_TX_Ready,
@@ -514,38 +520,6 @@ architecture RTL of Controller_RHD_Sampling is
 		  o_FIFO_AFULL   => int_FIFO_RHD2132_AFULL
 		);
 		
-		
-		Controller_RHD_FIFO_2 : entity work.Controller_RHD_FIFO
-		generic map (
-		  SPI_MODE               => 0,
-		  CLKS_PER_HALF_BIT      => RHD2216_CLKS_PER_HALF_BIT,
-		  NUM_OF_BITS_PER_PACKET => RHD2216_SPI_NUM_BITS_PER_PACKET,
-		  CS_INACTIVE_CLKS       => RHD2216_CS_INACTIVE_CLKS
-		)
-		port map (
-		  i_Rst_L        	=> i_Rst_L,
-		  i_Clk          	=> i_Clk,
-		  i_Controller_Mode => i_Controller_Mode,
-		  o_SPI_Clk      	=> o_RHD2216_SPI_Clk,
-		  i_SPI_MISO     	=> i_RHD2216_SPI_MISO,
-		  o_SPI_MOSI     	=> o_RHD2216_SPI_MOSI,
-		  o_SPI_CS_n     	=> o_RHD2216_SPI_CS_n,
-		  i_TX_Byte      	=> int_RHD2216_TX_Byte,
-		  i_TX_DV        	=> int_RHD2216_TX_DV,
-		  o_TX_Ready     	=> int_RHD2216_TX_Ready,
-		  o_RX_DV        	=> o_RHD2216_RX_DV,
-		  o_RX_Byte_Rising  => o_RHD2216_RX_Byte_Rising,
-		  o_RX_Byte_Falling => o_RHD2216_RX_Byte_Falling,
-		  o_FIFO_Data    => o_FIFO_RHD2216_Data,
-		  o_FIFO_COUNT   => int_FIFO_RHD2216_COUNT,
-		  o_FIFO_WE      => o_FIFO_RHD2216_WE,
-		  i_FIFO_RE      => int_FIFO_RHD2216_RE,
-		  o_FIFO_Q       => int_FIFO_RHD2216_Q,
-		  o_FIFO_EMPTY   => int_FIFO_RHD2216_EMPTY,
-		  o_FIFO_FULL    => int_FIFO_RHD2216_FULL,
-		  o_FIFO_AEMPTY  => int_FIFO_RHD2216_AEMPTY,
-		  o_FIFO_AFULL   => int_FIFO_RHD2216_AFULL
-		);
 
 	  -- SPI_Master_CS instantiation
 	  SPI_Master_CS_STM32_1 : entity work.SPI_Master_CS
@@ -710,12 +684,13 @@ architecture RTL of Controller_RHD_Sampling is
 			int_RHD2132_TX_DV       <= '0';
 			rhd_index           <= 0;
 			rhd_state           <= 0;
-			rgd_info_sig_red   <= '0';
+			rgd_info_sig_red   <= '1';
 			rgd_info_sig_green   <= '1';
+			use_rhd2132 <= '1';
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
-				rgd_info_sig_red   <= '1';
+				rgd_info_sig_red   <= '0';
 				rgd_info_sig_green   <= '0';
 				
 			elsif i_Controller_Mode = x"2" then
@@ -753,18 +728,22 @@ architecture RTL of Controller_RHD_Sampling is
 						-- STATE 2 : WAIT FOR TRANSFER COMPLETE
 						----------------------------------------------------------------
 						when 2 =>
-							-- Wait for Ready to return high (transfer complete)
 							if int_RHD2132_TX_Ready = '1' then
+
 								if rhd_index < 63 then
 									rhd_index <= rhd_index + 1;
 								else
 									rhd_index <= 0;
-
 								end if;
 
-								rhd_state <= 0;  -- Prepare next byte
-							else
-								rhd_state <= 2;  -- still busy
+								---- CHIP SELECTION LOGIC
+								if (rhd_index < 16) or ((rhd_index >= 32) and (rhd_index < 48)) then
+									use_rhd2132 <= '1';
+								else
+									use_rhd2132 <= '0';
+								end if;
+
+								rhd_state <= 0;
 							end if;
 
 						when others =>
@@ -780,8 +759,12 @@ architecture RTL of Controller_RHD_Sampling is
 	end process;
 	
 	
+	mux_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO when use_rhd2132 = '1'
+                       else i_RHD2216_SPI_MISO;
 	
-	
+	o_RHD2132_SPI_CS_n <= mux_RHD2132_SPI_CS_n when use_rhd2132 = '1' else '1';
+
+	o_RHD2216_SPI_CS_n <= mux_RHD2132_SPI_CS_n when use_rhd2132 = '0' else '1';
 
 	rgb_info_red   <= rgd_info_sig_red;
 	rgb_info_green <= rgd_info_sig_green;

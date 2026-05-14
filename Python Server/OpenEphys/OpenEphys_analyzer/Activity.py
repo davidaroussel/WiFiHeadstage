@@ -101,13 +101,8 @@ def plot_neural_activity_with_raw(data, num_channels, fs, time_period=1, thresho
     for channel_index in range(num_channels):
         # Create a new figure with two subplots
         fig, axs = plt.subplots(2, 1, figsize=(15, 10))
-        fig.suptitle(f'Channel {channel_index + 1} Neural Activity and Raw Signal\n'
-<<<<<<< HEAD:WiFiHeadstage V1/Python/OpenEphys/OpenEphys analyzer/Activity.py
-                     f'(Start: {start_point}s, Window Length: {window_length}s, Time Period: {time_period}, Threshold: {threshold_factor})')
-=======
-                     f'(Sequence Length: {window_length}s, Time Period: {time_period})',
-                     fontsize=18, fontweight='bold')
->>>>>>> 84418e0d4bc2f894c7f7ec520b18aa74e4cf84ab:Python Server/OpenEphys/OpenEphys analyzer/Activity.py
+        fig.suptitle(f'Channel {channel_index + 1} Neural Activity and Raw Signal\n')
+
 
         # Get the data for the current channel within the specified window
         data_channel = data_window[:, channel_index]
