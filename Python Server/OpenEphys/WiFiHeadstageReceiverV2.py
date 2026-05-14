@@ -122,7 +122,7 @@ class WiFiHeadstageReceiverV2(BaseException):
                         streaming_started = True
 
                     last_data_time = time.time()
-                    print(chunk)
+                    # print(chunk)
                     self.queue_raw_data.put(chunk)
 
             except Exception as e:

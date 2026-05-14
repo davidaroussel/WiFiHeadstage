@@ -71,7 +71,7 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
 
     TARGET_NEURO_SAMPLES = 4096
     TARGET_EMG_SAMPLES = 4096
-    NUM_CHANNELS = 16
+    NUM_CHANNELS = 32
 
     OpenEphysOffset = 32768
     maxOpenEphysValue = 0.005

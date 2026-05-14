@@ -35,7 +35,7 @@ class DataConverterV2:
         self.openephys_buffer_size = int(p_buffer_size / (self.num_channels * 2))
 
         self.m_dataConversionTread = Thread(target=self.convertData)
-
+        self.diff_mode = 1
         self.dual_chip_mode = p_dual_chip_mode
     def startThread(self):
         self.m_dataConversionTread.start()
@@ -179,7 +179,10 @@ class DataConverterV2:
         PAYLOAD_SIZE = 8192
 
         # ===== TARGET SIZES =====
-        TARGET_NEURO_SAMPLES = 4096  # 256 samples × 16 channels
+        if self.diff_mode:
+            TARGET_NEURO_SAMPLES = 8192  # 256 samples × 16 channels
+        else:
+            TARGET_NEURO_SAMPLES = 4096
         TARGET_EMG_SAMPLES = 4096  # change as needed
 
         # ===== Connect both sockets =====
@@ -278,29 +281,13 @@ class DataConverterV2:
                         neuro_write += n
 
                 else:
-
-                    # =============================
-
-                    # 🔥 SINGLE MODE (ALIGN + MASK FILTER)
-
-                    # =============================
-
-                    # Use first 16 channels only
-
                     raw_16ch = raw_blocks[:, :]
 
-                    # Create a mask for rows: first channel LSB == 1, all others LSB == 0
-
                     first_ch_lsb = raw_16ch[:, 0] & 1
-
                     other_ch_lsb = raw_16ch[:, 1:] & 1
-
                     valid_rows = (first_ch_lsb == 1) & (other_ch_lsb.sum(axis=1) == 0)
-
                     if not valid_rows.any():
                         continue  # no row matches, skip
-
-                    # Keep only valid rows
 
                     filtered_blocks = raw_16ch[valid_rows]
 
@@ -344,9 +331,14 @@ class DataConverterV2:
                 if neuro_write >= TARGET_NEURO_SAMPLES:
                     chunk = neuro_buffer[:TARGET_NEURO_SAMPLES]
 
-                    reshaped = chunk.reshape(-1, self.num_channels).T
-                    converted = ((np.clip(reshaped, -32768, 32768) * scale)
-                                 + OpenEphysOffset).astype(np.uint16)
+                    if self.diff_mode:
+                        reshaped = chunk.reshape(-1, 2*self.num_channels).T  # (16 differential, samples)
+                        reshaped = reshaped[0::2] - reshaped[1::2]
+                    else:
+                        reshaped = chunk.reshape(-1, self.num_channels).T  # (32, samples)
+
+
+                    converted = (np.clip(reshaped, -32768, 32768) * scale + OpenEphysOffset).astype(np.uint16)
 
                     self.send_packet(
                         "tcpClient_neuro",

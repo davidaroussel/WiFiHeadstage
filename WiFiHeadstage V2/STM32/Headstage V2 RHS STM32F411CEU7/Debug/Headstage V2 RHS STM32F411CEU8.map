@@ -4350,9 +4350,7 @@ LOAD C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.exte
  .data.nrf_read_idx
                 0x20000024        0x1 ./Core/Src/main.o
                 0x20000024                nrf_read_idx
- .data.MEP_Mode
-                0x20000025        0x1 ./Core/Src/main.o
- *fill*         0x20000026        0x2 
+ *fill*         0x20000025        0x3 
  .data.SystemCoreClock
                 0x20000028        0x4 ./Core/Src/system_stm32f4xx.o
                 0x20000028                SystemCoreClock
@@ -4380,7 +4378,7 @@ LOAD C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.exte
  .igot.plt      0x20000090        0x0 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x20000090                        . = ALIGN (0x4)
 
-.bss            0x20000090     0xa7fc load address 0x0800a308
+.bss            0x20000090     0x57fc load address 0x0800a308
                 0x20000090                        _sbss = .
                 0x20000090                        __bss_start__ = _sbss
  *(.bss)
@@ -4407,104 +4405,104 @@ LOAD C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.exte
                 0x200000bc      0x380 ./Core/Intan/RHS_Driver.o
  .bss.buffer.0  0x2000043c       0x28 ./Core/Intan/RHS_Driver.o
  .bss.spi_rx_fpga_buffer
-                0x20000464     0x1000 ./Core/Src/main.o
+                0x20000464      0x800 ./Core/Src/main.o
                 0x20000464                spi_rx_fpga_buffer
  .bss.spi_tx_fpga_buffer
-                0x20001464     0x1000 ./Core/Src/main.o
-                0x20001464                spi_tx_fpga_buffer
+                0x20000c64      0x800 ./Core/Src/main.o
+                0x20000c64                spi_tx_fpga_buffer
  .bss.fpga_accum_buffer
-                0x20002464     0x2000 ./Core/Src/main.o
-                0x20002464                fpga_accum_buffer
+                0x20001464     0x1000 ./Core/Src/main.o
+                0x20001464                fpga_accum_buffer
  .bss.fpga_accum_index
-                0x20004464        0x4 ./Core/Src/main.o
-                0x20004464                fpga_accum_index
+                0x20002464        0x4 ./Core/Src/main.o
+                0x20002464                fpga_accum_index
  .bss.nrf_tx_buffer
-                0x20004468     0x4000 ./Core/Src/main.o
-                0x20004468                nrf_tx_buffer
+                0x20002468     0x2000 ./Core/Src/main.o
+                0x20002468                nrf_tx_buffer
  .bss.nrf_write_idx
-                0x20008468        0x1 ./Core/Src/main.o
-                0x20008468                nrf_write_idx
- *fill*         0x20008469        0x3 
+                0x20004468        0x1 ./Core/Src/main.o
+                0x20004468                nrf_write_idx
+ *fill*         0x20004469        0x3 
  .bss.nrf_rx_buffer
-                0x2000846c     0x2000 ./Core/Src/main.o
-                0x2000846c                nrf_rx_buffer
- .bss.hspi1     0x2000a46c       0x58 ./Core/Src/main.o
-                0x2000a46c                hspi1
- .bss.hspi4     0x2000a4c4       0x58 ./Core/Src/main.o
-                0x2000a4c4                hspi4
+                0x2000446c     0x1000 ./Core/Src/main.o
+                0x2000446c                nrf_rx_buffer
+ .bss.hspi1     0x2000546c       0x58 ./Core/Src/main.o
+                0x2000546c                hspi1
+ .bss.hspi4     0x200054c4       0x58 ./Core/Src/main.o
+                0x200054c4                hspi4
  .bss.hdma_spi1_rx
-                0x2000a51c       0x60 ./Core/Src/main.o
-                0x2000a51c                hdma_spi1_rx
+                0x2000551c       0x60 ./Core/Src/main.o
+                0x2000551c                hdma_spi1_rx
  .bss.hdma_spi1_tx
-                0x2000a57c       0x60 ./Core/Src/main.o
-                0x2000a57c                hdma_spi1_tx
+                0x2000557c       0x60 ./Core/Src/main.o
+                0x2000557c                hdma_spi1_tx
  .bss.hdma_spi4_rx
-                0x2000a5dc       0x60 ./Core/Src/main.o
-                0x2000a5dc                hdma_spi4_rx
+                0x200055dc       0x60 ./Core/Src/main.o
+                0x200055dc                hdma_spi4_rx
  .bss.hdma_spi4_tx
-                0x2000a63c       0x60 ./Core/Src/main.o
-                0x2000a63c                hdma_spi4_tx
- .bss.huart2    0x2000a69c       0x48 ./Core/Src/main.o
-                0x2000a69c                huart2
- .bss.htim11    0x2000a6e4       0x48 ./Core/Src/main.o
-                0x2000a6e4                htim11
+                0x2000563c       0x60 ./Core/Src/main.o
+                0x2000563c                hdma_spi4_tx
+ .bss.huart2    0x2000569c       0x48 ./Core/Src/main.o
+                0x2000569c                huart2
+ .bss.htim11    0x200056e4       0x48 ./Core/Src/main.o
+                0x200056e4                htim11
  .bss.spi_fpga_ready
-                0x2000a72c        0x1 ./Core/Src/main.o
-                0x2000a72c                spi_fpga_ready
+                0x2000572c        0x1 ./Core/Src/main.o
+                0x2000572c                spi_fpga_ready
  .bss.spi_nrf_ready
-                0x2000a72d        0x1 ./Core/Src/main.o
-                0x2000a72d                spi_nrf_ready
- *fill*         0x2000a72e        0x2 
+                0x2000572d        0x1 ./Core/Src/main.o
+                0x2000572d                spi_nrf_ready
+ *fill*         0x2000572e        0x2 
  .bss.spi_counter
-                0x2000a730        0x4 ./Core/Src/main.o
-                0x2000a730                spi_counter
+                0x20005730        0x4 ./Core/Src/main.o
+                0x20005730                spi_counter
  .bss.fpga_frame_ready
-                0x2000a734        0x1 ./Core/Src/main.o
-                0x2000a734                fpga_frame_ready
+                0x20005734        0x1 ./Core/Src/main.o
+                0x20005734                fpga_frame_ready
  .bss.test_stim
-                0x2000a735        0x1 ./Core/Src/main.o
- .bss.Z_Mode    0x2000a736        0x1 ./Core/Src/main.o
- *fill*         0x2000a737        0x1 
+                0x20005735        0x1 ./Core/Src/main.o
+ .bss.MEP_Mode  0x20005736        0x1 ./Core/Src/main.o
+ .bss.Z_Mode    0x20005737        0x1 ./Core/Src/main.o
  .bss.__sbrk_heap_end
-                0x2000a738        0x4 ./Core/Src/sysmem.o
- .bss.uwTick    0x2000a73c        0x4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
-                0x2000a73c                uwTick
- .bss.__sf      0x2000a740      0x138 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
-                0x2000a740                __sf
+                0x20005738        0x4 ./Core/Src/sysmem.o
+ .bss.uwTick    0x2000573c        0x4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x2000573c                uwTick
+ .bss.__sf      0x20005740      0x138 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
+                0x20005740                __sf
  .bss.__stdio_exit_handler
-                0x2000a878        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
-                0x2000a878                __stdio_exit_handler
- .bss.errno     0x2000a87c        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-reent.o)
-                0x2000a87c                errno
+                0x20005878        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
+                0x20005878                __stdio_exit_handler
+ .bss.errno     0x2000587c        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-reent.o)
+                0x2000587c                errno
  .bss.__lock___malloc_recursive_mutex
-                0x2000a880        0x1 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-lock.o)
-                0x2000a880                __lock___malloc_recursive_mutex
+                0x20005880        0x1 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-lock.o)
+                0x20005880                __lock___malloc_recursive_mutex
  .bss.__lock___sfp_recursive_mutex
-                0x2000a881        0x1 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-lock.o)
-                0x2000a881                __lock___sfp_recursive_mutex
- *fill*         0x2000a882        0x2 
+                0x20005881        0x1 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-lock.o)
+                0x20005881                __lock___sfp_recursive_mutex
+ *fill*         0x20005882        0x2 
  .bss.__malloc_sbrk_start
-                0x2000a884        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-mallocr.o)
-                0x2000a884                __malloc_sbrk_start
+                0x20005884        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-mallocr.o)
+                0x20005884                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x2000a888        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-mallocr.o)
-                0x2000a888                __malloc_free_list
+                0x20005888        0x4 C:/ST/STM32CubeIDE_2.0.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-mallocr.o)
+                0x20005888                __malloc_free_list
  *(COMMON)
-                0x2000a88c                        . = ALIGN (0x4)
-                0x2000a88c                        _ebss = .
-                0x2000a88c                        __bss_end__ = _ebss
+                0x2000588c                        . = ALIGN (0x4)
+                0x2000588c                        _ebss = .
+                0x2000588c                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000a88c      0x604 load address 0x0800a308
-                0x2000a890                        . = ALIGN (0x8)
- *fill*         0x2000a88c        0x4 
+                0x2000588c      0x604 load address 0x0800a308
+                0x20005890                        . = ALIGN (0x8)
+ *fill*         0x2000588c        0x4 
                 [!provide]                        PROVIDE (end = .)
-                0x2000a890                        PROVIDE (_end = .)
-                0x2000aa90                        . = (. + _Min_Heap_Size)
- *fill*         0x2000a890      0x200 
-                0x2000ae90                        . = (. + _Min_Stack_Size)
- *fill*         0x2000aa90      0x400 
-                0x2000ae90                        . = ALIGN (0x8)
+                0x20005890                        PROVIDE (_end = .)
+                0x20005a90                        . = (. + _Min_Heap_Size)
+ *fill*         0x20005890      0x200 
+                0x20005e90                        . = (. + _Min_Stack_Size)
+ *fill*         0x20005a90      0x400 
+                0x20005e90                        . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)

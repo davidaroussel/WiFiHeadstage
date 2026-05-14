@@ -36,8 +36,8 @@
 #define ID_PATATO  0xF5
 #define ID_POTATO  0x3B
 
-#define FPGA_CHUNK_SIZE 4096
-#define FPGA_ACCUM_SIZE 8192
+#define FPGA_CHUNK_SIZE 2048
+#define FPGA_ACCUM_SIZE 4096
 #define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
 #define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
@@ -118,7 +118,7 @@ volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
 
 static boolean test_stim = 0;
-static boolean MEP_Mode  = 1;
+static boolean MEP_Mode  = 0;
 static boolean Z_Mode    = 0;
 
 
