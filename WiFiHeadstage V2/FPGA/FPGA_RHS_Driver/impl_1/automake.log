@@ -58,21 +58,14 @@ WARNING <35935050> - input port I is not connected on this instance. VDB-5050
 Analyzing Verilog file c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v. VERI-1482
 Analyzing Verilog file clk_48mhz.v. VERI-1482
 Analyzing Verilog file fifo_mem.v. VERI-1482
-<<<<<<< HEAD
-WARNING <35921261> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(297): syntax error near thenp. VHDL-1261
-WARNING <35921261> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(320): syntax error near if. VHDL-1261
-ERROR <35001210> - Top module top_level does not exist in the design.
-ERROR <35001230> - Unknown top module language type.
-Top module name (Verilog, mixed language): top_level
-ERROR <35001232> - Failed to elaborate the design top_level.
-CRITICAL <35831027> - Source compilation failed.
-CRITICAL <35831014> - Error processing input files.
-ERROR <35831010> - Processing input files had at least one error. Exiting.
-=======
 Top module language type = VHDL.
 INFO <35901018> - fifo_mem.v(63): compiling module FIFO_MEM. VERI-1018
 WARNING <35935049> - input port i_STM32_SPI_MISO remains unconnected for this instance. VDB-5049
+WARNING <35935049> - input port i_RHS_READ_SPI_MISO_2 remains unconnected for this instance. VDB-5049
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 INFO <35901018> - clk_48mhz.v(63): compiling module CLK_48MHz. VERI-1018
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 Top module name (VHDL, mixed language): top_level
 Source compile complete.
 Starting IP constraint check for CLK_48MHz.
@@ -91,7 +84,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Thu May 14 17:53:58 2026
+Fri May 15 13:16:54 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml 
@@ -251,24 +244,36 @@ Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(5): analyzing entity controller_rhd_sampling. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(109): analyzing architecture rtl. VHDL-1010
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(111): analyzing architecture rtl. VHDL-1010
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd. VHDL-1481
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(5): analyzing entity controller_rhd_sampling_tb. VHDL-1012
 INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(8): analyzing architecture testbench. VHDL-1010
-INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(156): input pin i_stm32_spi_miso has no actual or default value. VHDL-9000
-INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(40): i_stm32_spi_miso is declared here. VHDL-1259
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(159): input pin i_stm32_spi_miso has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(38): i_stm32_spi_miso is declared here. VHDL-1259
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(159): input pin i_rhs_read_spi_miso_2 has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(66): i_rhs_read_spi_miso_2 is declared here. VHDL-1259
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(159): input pin i_rhs_stim_spi_miso_2 has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(94): i_rhs_stim_spi_miso_2 is declared here. VHDL-1259
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd. VHDL-1481
 Analyzing VHDL file c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd
 
 INFO <35921012> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(5): analyzing entity top_level. VHDL-1012
-INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(112): analyzing architecture rtl. VHDL-1010
+INFO <35921010> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(79): analyzing architecture rtl. VHDL-1010
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(192): input pin i_rhs_stim_spi_miso_1 has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(93): i_rhs_stim_spi_miso_1 is declared here. VHDL-1259
+INFO <35929000> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(192): input pin i_rhs_stim_spi_miso_2 has no actual or default value. VHDL-9000
+INFO <35921259> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(94): i_rhs_stim_spi_miso_2 is declared here. VHDL-1259
 INFO <35921504> - The default VHDL library search path is now "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1". VHDL-1504
 Top module language type = VHDL.
 WARNING <35935049> - input port i_STM32_SPI_MISO remains unconnected for this instance. VDB-5049
+WARNING <35935049> - input port i_RHS_READ_SPI_MISO_2 remains unconnected for this instance. VDB-5049
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 Top module name (VHDL, mixed language): top_level
                                                          
 
@@ -328,15 +333,29 @@ WARNING <35001771> - Initial value found on net NUM_DATA[3] will be ignored due 
 WARNING <35001771> - Initial value found on net NUM_DATA[2] will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[1] will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[0] will be ignored due to unrecognized driver type
-WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(343): ram channel_array_original_ramnet has no write-port on it. VDB-1038
+WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(337): ram channel_array_original_ramnet has no write-port on it. VDB-1038
 WARNING <35935040> - Register int_BOOST_ENABLE clock is stuck at One. VDB-5040
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_1 is not connected on this instance. VDB-5050
+WARNING <35935050> - input port i_RHS_STIM_SPI_MISO_2 is not connected on this instance. VDB-5050
 ######## Converting I/O port i_STM32_SPI4_MISO to output.
 CRITICAL <35002028> - I/O Port o_RHS_TOP_SPI_MOSI_2 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHS_BOTTOM_SPI_MOSI 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHS_BOTTOM_SPI_Clk 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port i_RHS_BOTTOM_SPI_MISO_1 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHS_BOTTOM_SPI_CS_n_1 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port i_RHS_BOTTOM_SPI_MISO_2 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port o_RHS_BOTTOM_SPI_CS_n_2 's net has no driver and is unused.
 WARNING <35931002> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(139): net \pll_inst/lscc_pll_inst/sclk_i does not have a driver. VDB-1002
 WARNING <35931002> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(140): net \pll_inst/lscc_pll_inst/sdi_i does not have a driver. VDB-1002
 ######## Missing driver on net o_RHS_TOP_SPI_MOSI_2. Patching with GND.
+######## Missing driver on net o_RHS_BOTTOM_SPI_MOSI. Patching with GND.
+######## Missing driver on net o_RHS_BOTTOM_SPI_Clk. Patching with GND.
+######## Missing driver on net o_RHS_BOTTOM_SPI_CS_n_1. Patching with GND.
+######## Missing driver on net o_RHS_BOTTOM_SPI_CS_n_2. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sclk_i. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sdi_i. Patching with GND.
 INFO <35001774> - Extracted state machine for register '\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS' with one-hot encoding
@@ -382,6 +401,8 @@ CRITICAL <35001747> - Bit(s) of register \Controller_inst/SPI_Master_CS_STM32_1/
 ######## Found 1 RTL RAMs in the design.
 ######## Mapping RTL RAM \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/mem_EBR.mem to 2 EBR blocks in PSEUDO_DUAL_PORT Mode
 
+CRITICAL <35002028> - I/O Port i_RHS_BOTTOM_SPI_MISO_1 's net has no driver and is unused.
+CRITICAL <35002028> - I/O Port i_RHS_BOTTOM_SPI_MISO_2 's net has no driver and is unused.
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i4 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i6 clock is stuck at Zero. VDB-5040
@@ -410,7 +431,7 @@ WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i28 clock is stuck
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i29 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i30 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/stm32_state_i0_i31 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - Register \Controller_inst/int_RHD2132_TX_Byte__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - Register \Controller_inst/int_RHS_READ_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 Combinational loop found : 1
 
@@ -1694,7 +1715,7 @@ CCU2 => 147
 FD1P3XZ => 2000
 IB => 5
 LUT4 => 1483
-OB => 19
+OB => 23
 PLL_B => 1
 ################### End Area Report ##################
 Number of odd-length carry chains : 7
@@ -1721,14 +1742,13 @@ Top 10 highest fanout non-clock nets:
   Net : Controller_inst/stm32_state[1], loads : 50
 ################### End Clock Report ##################
 
-Peak Memory Usage: 165 MB
+Peak Memory Usage: 166 MB
 
 --------------------------------------------------------------
 Total CPU Time: 14 secs 
 Total REAL Time: 15 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 3591a74db0c1e41a569eee58ec024ecbdfa15173
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Checksum -- synthesis -- netlist: 816fd4cb8e04e852a4fefe5cc23b307f7998f2
 
 
 
@@ -1740,17 +1760,10 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
-<<<<<<< HEAD
-CPU Time to convert: 0.21875
-REAL Time to convert: 1
-convert PEAK Memory Usage: 56 MB
-convert CURRENT Memory Usage: 54 MB
-=======
-CPU Time to convert: 0.515625
+CPU Time to convert: 0.53125
 REAL Time to convert: 1
 convert PEAK Memory Usage: 64 MB
-convert CURRENT Memory Usage: 62 MB
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+convert CURRENT Memory Usage: 61 MB
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
 Removing unused logic ...
 Starting design annotation....
@@ -1763,15 +1776,10 @@ Constraint Summary:
  
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
-Total CPU Time: 0 secs 
+Total CPU Time: 1 secs 
 Total REAL Time: 0 secs 
-<<<<<<< HEAD
-Peak Memory Usage: 56 MB
-Checksum -- postsyn: df1e2b54f3b132a4b99bb1e055bcc90ffca4e7f
-=======
 Peak Memory Usage: 64 MB
-Checksum -- postsyn: 2b1b9c6b7cdfcb58ebb925cf7ada171fad2fed97
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Checksum -- postsyn: 85ed5109a89372f037a355b6be8a857125b5c421
 
 
 
@@ -1802,6 +1810,8 @@ INFO <52291017> - Port 'RGB1_OUT' is located on BB_OD pad '40'. Its IO buffer is
 INFO <52291017> - Port 'RGB2_OUT' is located on BB_OD pad '41'. Its IO buffer is mapped to BB_OD accordingly. Please notice PULLMODE is not applicable to BB_OD.
 Running general design DRC...
 
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 
 
 
@@ -1813,15 +1823,15 @@ Design Summary:
       Number of inserted feedthru LUT4s: 1150
       Number of replicated LUT4s:         57
       Number of ripple logic:            147 (294 LUT4s)
-   Number of IO sites used:   27 out of 39 (69%)
-      Number of IO sites used for general PIO: 24
+   Number of IO sites used:   31 out of 39 (79%)
+      Number of IO sites used for general PIO: 28
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 24 out of 36 (67%)
+      Number of IO sites used for PIO+I3C: 28 out of 36 (78%)
       Number of IO sites used for OD+RGB IO buffers: 3 out of 3 (100%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 27 out of 39 (69%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 31 out of 39 (79%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  0 out of 1 (0%)
@@ -1850,7 +1860,7 @@ Design Summary:
       Net Controller_inst.n2_adj_2214: 32 loads, 32 SLICEs
       Net Controller_inst.n2_adj_2215: 32 loads, 32 SLICEs
       Net Controller_inst.n5323: 512 loads, 512 SLICEs
-      Net Controller_inst.int_RHD2132_TX_DV: 4 loads, 4 SLICEs
+      Net Controller_inst.int_RHS_READ_TX_DV: 4 loads, 4 SLICEs
       Net Controller_inst.n13932: 7 loads, 7 SLICEs
       Net Controller_inst.n13511: 11 loads, 11 SLICEs
       Net Controller_inst.n1: 1 loads, 1 SLICEs
@@ -1893,39 +1903,30 @@ Design Summary:
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 69 loads
 Running physical design DRC...
 
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
  
 
 
-   Number of warnings:  0
+   Number of warnings:  4
    Number of errors:    0
 
 Constraint Summary:
-   Total number of constraints: 18
+   Total number of constraints: 24
    Total number of constraints dropped: 0
 
 
-Total CPU Time: 0 secs  
-Total REAL Time: 0 secs  
-<<<<<<< HEAD
-Peak Memory Usage: 98 MB
-
-Checksum -- map: 8e955e434ba676ac4e8fa215563e5da4172b2a93
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
-=======
+Total CPU Time: 1 secs  
+Total REAL Time: 2 secs  
 Peak Memory Usage: 112 MB
 
-Checksum -- map: e320d696c618851e537b83bfb9cd7f4a68bb197c
+Checksum -- map: 3c096c0c115da8c9c69d7b1d41d3f6d5c20850e6
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
 
 pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-<<<<<<< HEAD
-Thu May 14 17:15:31 2026
-=======
-Thu May 14 17:54:27 2026
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Fri May 15 13:17:23 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -1943,19 +1944,35 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 
 WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 4 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_1' does not connect to anything.
+WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 Number of Signals: 5269
-Number of Connections: 14763
+Number of Connections: 14767
 Device utilization summary:
 
    SLICE (est.)    1558/2640         59% used
      LUT           2986/5280         57% used
      REG           2000/5280         38% used
-   PIO               24/56           43% used
-                     24/36           66% bonded
+   PIO               28/56           50% used
+                     28/36           77% bonded
    IOLOGIC            0/56            0% used
    DSP                0/8             0% used
    I2C                0/2             0% used
@@ -1974,18 +1991,9 @@ Device utilization summary:
    OPENDRAIN          3/3           100% used
 
 Pin Constraint Summary:
-   14 out of 24 pins locked (58% locked).
+   18 out of 28 pins locked (64% locked).
 .
 .............
-<<<<<<< HEAD
-Finished Placer Phase 0 (HIER). CPU time: 1 secs , REAL time: 2 secs 
-
-
-................
-Finished Placer Phase 0 (AP).  CPU time: 2 secs , REAL time: 3 secs 
-
-Starting Placer Phase 1. CPU time: 2 secs , REAL time: 3 secs 
-=======
 Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 3 secs 
 
 
@@ -1993,43 +2001,37 @@ Finished Placer Phase 0 (HIER). CPU time: 3 secs , REAL time: 3 secs
 Finished Placer Phase 0 (AP).  CPU time: 5 secs , REAL time: 5 secs 
 
 Starting Placer Phase 1. CPU time: 5 secs , REAL time: 5 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
 ..  ..
 ....................
 
-Placer score = 951649.
+Placer score = 958247.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1554/2640         58% used
+   SLICE           1551/2640         58% used
 
 WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
-<<<<<<< HEAD
-Finished Placer Phase 1. CPU time: 9 secs , REAL time: 10 secs 
-=======
-Finished Placer Phase 1. CPU time: 22 secs , REAL time: 22 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+Finished Placer Phase 1. CPU time: 18 secs , REAL time: 18 secs 
 
 Starting Placer Phase 2.
 .
 
-<<<<<<< HEAD
-Placer score =  395473
-Finished Placer Phase 2.  CPU time: 9 secs , REAL time: 10 secs 
-=======
-Placer score =  902009
-Finished Placer Phase 2.  CPU time: 23 secs , REAL time: 23 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Placer score =  714502
+Finished Placer Phase 2.  CPU time: 19 secs , REAL time: 19 secs 
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
-  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1060, ce load = 0, sr load = 0
-  PRIMARY "o_reset_c" from Q1 on comp "SLICE_150" on site "R14C12B", clk load = 0, ce load = 0, sr load = 523
-  PRIMARY "maxfan_replicated_net_999" from Q0 on comp "SLICE_150" on site "R14C12B", clk load = 0, ce load = 0, sr load = 516
-  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q0 on comp "Controller_inst.SLICE_158" on site "R13C2D", clk load = 0, ce load = 266, sr load = 0
-  PRIMARY "Controller_inst.n5323" from F1 on comp "Controller_inst.SLICE_2499" on site "R9C24D", clk load = 0, ce load = 258, sr load = 0
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1059, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q1 on comp "SLICE_150" on site "R13C7D", clk load = 0, ce load = 0, sr load = 522
+  PRIMARY "maxfan_replicated_net_999" from Q0 on comp "SLICE_150" on site "R13C7D", clk load = 0, ce load = 0, sr load = 516
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q0 on comp "Controller_inst.SLICE_158" on site "R13C2D", clk load = 0, ce load = 265, sr load = 0
+  PRIMARY "Controller_inst.n5323" from F1 on comp "Controller_inst.SLICE_2499" on site "R13C23B", clk load = 0, ce load = 258, sr load = 0
 
   PRIMARY  : 5 out of 8 (62%)
 
@@ -2037,39 +2039,32 @@ Global Clocks :
 
 
 I/O Usage Summary (final):
-   24 out of 56 (42.9%) I/O sites used.
-   24 out of 36 (66.7%) bonded I/O sites used.
-   Number of I/O components: 24; differential: 0
+   28 out of 56 (50.0%) I/O sites used.
+   28 out of 36 (77.8%) bonded I/O sites used.
+   Number of I/O components: 28; differential: 0
    Number of Vref pins used: 0
 
 I/O Bank Usage Summary:
 +----------+----------------+------------+------------+------------+
 | I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+----------------+------------+------------+------------+
-| 0        | 10 / 14 ( 71%) | 3.3V       |            |            |
-| 1        | 11 / 14 ( 78%) | 3.3V       |            |            |
-| 2        | 3 / 8 ( 37%)   | 3.3V       |            |            |
+| 0        | 12 / 14 ( 85%) | 3.3V       |            |            |
+| 1        | 8 / 14 ( 57%)  | 3.3V       |            |            |
+| 2        | 8 / 8 (100%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-<<<<<<< HEAD
-Total Placer CPU time: 9 secs , REAL time: 10 secs 
+Total Placer CPU time: 19 secs , REAL time: 19 secs 
 
 
-Checksum -- place: bd42d5faf6bc99bff12c763698c2124381ee2669
+Checksum -- place: a7b4dc217d857a8ad2e5fb565163097c6b76fe1
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 
-Start NBR router at 17:15:42 05/14/26
-=======
-Total Placer CPU time: 23 secs , REAL time: 23 secs 
-
-
-Checksum -- place: 9bc4cfe0199f5dd847969efb889fcbe1a96929e7
-Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
-
-
-Start NBR router at 17:54:51 05/14/26
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Start NBR router at 13:17:43 05/15/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -2089,23 +2084,23 @@ Preassignment Summary:
 --------------------------------------------------------------------------------
 2251 connections routed with dedicated routing resources
 5 global clock signals routed
-4874 connections routed (of 12342 total) (39.49%)
+4871 connections routed (of 12343 total) (39.46%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (5 used out of 8 available):
 #0  Signal "o_reset_c"
-       Control loads: 523   out of   523 routed (100.00%)
+       Control loads: 522   out of   522 routed (100.00%)
        Data    loads: 0     out of     2 routed (  0.00%)
-#3  Signal "Controller_inst.n5323"
+#1  Signal "Controller_inst.n5323"
        Control loads: 258   out of   258 routed (100.00%)
 #5  Signal "Controller_inst.int_STM32_TX_DV"
-       Control loads: 266   out of   266 routed (100.00%)
+       Control loads: 265   out of   265 routed (100.00%)
        Data    loads: 0     out of    25 routed (  0.00%)
 #6  Signal "maxfan_replicated_net_999"
        Control loads: 516   out of   516 routed (100.00%)
        Data    loads: 0     out of    31 routed (  0.00%)
 #7  Signal "pll_clk_int"
-       Clock   loads: 1060  out of  1060 routed (100.00%)
+       Clock   loads: 1059  out of  1059 routed (100.00%)
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -2118,53 +2113,29 @@ WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
     TimerIf::skewscore 0
 
-<<<<<<< HEAD
-Start NBR section for initial routing at 17:15:43 05/14/26
-=======
-Start NBR section for initial routing at 17:54:52 05/14/26
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Start NBR section for initial routing at 13:17:44 05/15/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD
-151(0.06%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 6 secs 
-=======
-365(0.14%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+376(0.14%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-<<<<<<< HEAD
-Start NBR section for normal routing at 17:15:48 05/14/26
+Start NBR section for normal routing at 13:17:52 05/15/26
 Level 4, iteration 1
-5(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 6 secs 
+16(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 Level 4, iteration 2
-4(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 7 secs 
+9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 Level 4, iteration 3
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 7 secs 
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 Level 4, iteration 4
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 7 secs 
-Level 4, iteration 5
-0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 7 secs 
-
-Start NBR section for post-routing at 17:15:49 05/14/26
-=======
-Start NBR section for normal routing at 17:55:00 05/14/26
-Level 4, iteration 1
-20(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 2
-10(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 3
-2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
-Level 4, iteration 4
-1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 Level 4, iteration 5
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 
-Start NBR section for post-routing at 17:55:01 05/14/26
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Start NBR section for post-routing at 13:17:53 05/15/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - No source clock for
@@ -2173,19 +2144,12 @@ Requested speed is the same as database speed
 Changing speed to m;   changing temperature to -40
 Changing speed to 6;   changing temperature to 100
 
-<<<<<<< HEAD
-Checksum -- route: 403ca600a8367368335bdd184624a545345fce53
-
-Total CPU time 8 secs 
-Total REAL time: 8 secs 
-=======
-Checksum -- route: 336b88b96ee1459db17ec9df44cb1d15a5a805f3
+Checksum -- route: c2b12366e42569233832fcf9c0fdcab41486e884
 
 Total CPU time 12 secs 
 Total REAL time: 12 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
 Completely routed.
-End of route.  12342 routed (100.00%); 0 unrouted.
+End of route.  12343 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -2200,15 +2164,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-<<<<<<< HEAD
-Total CPU  Time: 18 secs 
-Total REAL Time: 20 secs 
-Peak Memory Usage: 165.28 MB
-=======
-Total CPU  Time: 36 secs 
-Total REAL Time: 37 secs 
-Peak Memory Usage: 187.39 MB
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Total CPU  Time: 33 secs 
+Total REAL Time: 33 secs 
+Peak Memory Usage: 188.09 MB
 
 
 par done!
@@ -2218,11 +2176,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-<<<<<<< HEAD
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /20 secs 
-=======
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /38 secs 
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /33 secs 
 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "FPGA_Intan_Driver_impl_1.twr" "FPGA_Intan_Driver_impl_1.udb" 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml
@@ -2239,11 +2193,7 @@ Performance Grade:   High-Performance_1.2V
 
 
 
-<<<<<<< HEAD
-Successfully loading udb, 0.08 seconds
-=======
 Successfully loading udb, 0.17 seconds
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
 
 Initializing timer
 Starting design annotation....
@@ -2253,23 +2203,15 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  1060  counted  11161  covered  0
+Connections ignored  1059  counted  11159  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
-<<<<<<< HEAD
-Total CPU Time: 2 secs 
-Total REAL Time: 2 secs 
-Peak Memory Usage: 127 MB
-
- 2.475001s wall, 2.343750s user + 0.109375s system = 2.453125s CPU (99.1%)
-=======
 Total CPU Time: 4 secs 
 Total REAL Time: 4 secs 
 Peak Memory Usage: 138 MB
 
- 4.508260s wall, 4.328125s user + 0.140625s system = 4.468750s CPU (99.1%)
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+ 4.547724s wall, 4.406250s user + 0.125000s system = 4.531250s CPU (99.6%)
 
 
 tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
@@ -2287,6 +2229,14 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
+WARNING <77001032> - bitgen: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+
+WARNING <77001031> - bitgen: In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+
+WARNING <77001032> - bitgen: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+
+WARNING <77001031> - bitgen: In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+
 Successfully loading design udb and device data from disks and to up-layer in CPU time: 0 secs , REAL time: 0 secs 
 
 
@@ -2314,26 +2264,16 @@ Creating bit map...
 Saving bit stream in "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1/FPGA_Intan_Driver_impl_1.bin".
 Bitstream generation complete!
 
-<<<<<<< HEAD
-Total CPU Time: 0 secs 
-Total REAL Time: 0 secs 
-Peak Memory Usage: 141 MB
-=======
 Total CPU Time: 1 secs 
 Total REAL Time: 2 secs 
-Peak Memory Usage: 150 MB
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Peak Memory Usage: 151 MB
 
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-<<<<<<< HEAD
-Thu May 14 17:15:57 2026
-=======
-Thu May 14 17:55:15 2026
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198
+Fri May 15 13:18:07 2026
 
 Loading FPGA_Intan_Driver_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
@@ -2347,6 +2287,10 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_1' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_BOTTOM_SPI_MISO_1]', the locate object is not specified
+WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+WARNING <77001031> - In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 Successfully loading design udb and device data from disks and to up-layer in CPU time: 0 secs , REAL time: 0 secs 
 
 Created design models.
@@ -2382,12 +2326,6 @@ Writing a verilog netlist based on the FPGA_Intan_Driver_impl_1 design file.
 Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
 Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
 Backanno finished with 0 posted error messages.
-<<<<<<< HEAD
-Total CPU Time: 2 secs 
-Total REAL Time: 3 secs 
-Peak Memory Usage: 164 MB
-=======
-Total CPU Time: 6 secs 
+Total CPU Time: 5 secs 
 Total REAL Time: 6 secs 
 Peak Memory Usage: 199 MB
->>>>>>> 62fb3e4ae81d81144bacd777413ea50399ab9198

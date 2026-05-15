@@ -6,13 +6,13 @@ Report for cell top_level
                                   LUT4	       2986        100.0
                                LUTGATE	       2692        100.0
                                 LUTCCU	        294        100.0
-                                 IOBUF	         27        100.0
+                                 IOBUF	         31        100.0
                                 PFUREG	       2000        100.0
                                    EBR	          1        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
                              CLK_48MHz	          1         0.0
-Controller_RHD_Sampling(stm32_clks_per_half_bit=8,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_spi_num_bits_per_packet=32,rhd2132_clks_per_half_bit=8,rhd2132_cs_inactive_clks=32,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64)	          1        57.0
+Controller_RHD_Sampling(stm32_clks_per_half_bit=8,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhs_read_spi_num_bits_per_packet=32,rhs_read_clks_per_half_bit=8,rhs_read_cs_inactive_clks=32,rhs_stim_clks_per_half_bit=64,rhs_stim_cs_inactive_clks=64)	          1        57.0
 ---------------------------------------------------
 Report for cell CLK_48MHz
    Instance path: top_level/pll_inst
@@ -27,7 +27,7 @@ Report for cell CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANG
                      Cell usage:
                                   cell	      count    Res Usage(%)
 ---------------------------------------------------
-Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=8,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_spi_num_bits_per_packet=32,rhd2132_clks_per_half_bit=8,rhd2132_cs_inactive_clks=32,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64)
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=8,stm32_spi_num_bits_per_packet=512,stm32_cs_inactive_clks=32,rhs_read_spi_num_bits_per_packet=32,rhs_read_clks_per_half_bit=8,rhs_read_cs_inactive_clks=32,rhs_stim_clks_per_half_bit=64,rhs_stim_cs_inactive_clks=64)
    Instance path: top_level/Controller_inst
                      Cell usage:
                                   cell	      count    Res Usage(%)

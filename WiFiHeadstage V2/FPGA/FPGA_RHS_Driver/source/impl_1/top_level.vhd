@@ -7,52 +7,19 @@ entity top_level is
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 8;
         STM32_CS_INACTIVE_CLKS        : integer := 32;
-			
-		RHD2132_SPI_DDR_MODE            : integer := 0;
 		
-        RHD2132_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHD2132_CLKS_PER_HALF_BIT       : integer := 8;
-        RHD2132_CS_INACTIVE_CLKS        : integer := 32;
+        RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 8;
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 32;
 
-        RHD2216_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHD2216_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz
-        RHD2216_CS_INACTIVE_CLKS        : integer := 64;
+        RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 16;
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz
+        RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
 		
-		-- 0: Neuro Only 
-		-- 1: EMG Only 
-		-- 2: EMG + Neuro
-		RHD_SAMPLING_MODE : integer := 0
-
-		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
-		--   HALF_BIT : 8 
-		--   CS_CLK : 256
-		---  11.20 packets / xxxx Mbps
-				
-		---- MAIN_CLK : 42MHz -- Stable Neuro 25.74KHz
-		--   HALF_BIT : 2 
-		--   CS_CLK : 32
-		---  xxx packets / 6.06Mbps		
-		
-		
-		---- MAIN_CLK : 42MHz
-		--   HALF_BIT : 1 
-		--   CS_CLK : 16
-		---  N/A packets / 12.6Mbps
-		
-		---- MAIN_CLK : 36MHz
-		--   HALF_BIT : 2 
-		--   CS_CLK : 4
-		---  118.75 packets / 7.782Mbps
-		
-		---- MAIN_CLK : 36MHz
-		--   HALF_BIT : 2 
-		--   CS_CLK : 8 
-		---  112.9 packets / 7.398Mbps
-		
-		---- MAIN_CLK : 36MHz
-		--   HALF_BIT : 4 
-		--   CS_CLK : 8 
-		---  60 packets / 3.932Mbps
+		-- 0: N/A 
+		-- 1: N/A
+		-- 2: N/A
+		RHS_SAMPLING_MODE : integer := 0
 		
     );
     port (
@@ -77,13 +44,13 @@ entity top_level is
 		i_RHS_TOP_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
 		
-		--o_RHS_BOTTOM_SPI_MOSI : out STD_LOGIC; 
-        --o_RHS_BOTTOM_SPI_Clk  : out STD_LOGIC; 
-        --i_RHS_BOTTOM_SPI_MISO_1 : in  STD_LOGIC; 
-		--o_RHS_BOTTOM_SPI_CS_n_1 : out STD_LOGIC; 
+		o_RHS_BOTTOM_SPI_MOSI : out STD_LOGIC; 
+        o_RHS_BOTTOM_SPI_Clk  : out STD_LOGIC; 
+        i_RHS_BOTTOM_SPI_MISO_1 : in  STD_LOGIC; 
+		o_RHS_BOTTOM_SPI_CS_n_1 : out STD_LOGIC; 
 		
-		--i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
-		--o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
+		i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
+		o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
 		CTRL0_IN     : in STD_LOGIC;
 		RHS_SEL     : in STD_LOGIC;
@@ -128,9 +95,9 @@ architecture RTL of top_level is
     signal w_STM32_RX_Byte_Rising: std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_RX_DV         : std_logic;
 
-    signal w_FIFO_RHD2132_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_RHD2132_COUNT          : std_logic_vector(8 downto 0);
-    signal w_FIFO_RHD2132_WE             : std_logic;
+    signal w_FIFO_RHS_READ_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHS_READ_COUNT          : std_logic_vector(8 downto 0);
+    signal w_FIFO_RHS_READ_WE             : std_logic;
 	
     signal w_FIFO_RHD2216_Data           : std_logic_vector(31 downto 0);
     signal w_FIFO_RHD2216_COUNT          : std_logic_vector(8 downto 0);
@@ -179,17 +146,14 @@ begin
             STM32_SPI_NUM_BITS_PER_PACKET => STM32_SPI_NUM_BITS_PER_PACKET,
             STM32_CLKS_PER_HALF_BIT       => STM32_CLKS_PER_HALF_BIT,
             STM32_CS_INACTIVE_CLKS        => STM32_CS_INACTIVE_CLKS,
-			
-			RHD2132_SPI_DDR_MODE            => RHD2132_SPI_DDR_MODE,
-            RHD2132_SPI_NUM_BITS_PER_PACKET => RHD2132_SPI_NUM_BITS_PER_PACKET,
-            RHD2132_CLKS_PER_HALF_BIT       => RHD2132_CLKS_PER_HALF_BIT,
-            RHD2132_CS_INACTIVE_CLKS        => RHD2132_CS_INACTIVE_CLKS,
+
+            RHS_READ_SPI_NUM_BITS_PER_PACKET => RHS_READ_SPI_NUM_BITS_PER_PACKET,
+            RHS_READ_CLKS_PER_HALF_BIT       => RHS_READ_CLKS_PER_HALF_BIT,
+            RHS_READ_CS_INACTIVE_CLKS        => RHS_READ_CS_INACTIVE_CLKS,
 		
-            RHD2216_SPI_NUM_BITS_PER_PACKET => RHD2216_SPI_NUM_BITS_PER_PACKET,
-            RHD2216_CLKS_PER_HALF_BIT       => RHD2216_CLKS_PER_HALF_BIT,
-            RHD2216_CS_INACTIVE_CLKS        => RHD2216_CS_INACTIVE_CLKS,
-			
-			RHD_SAMPLING_MODE               => RHD_SAMPLING_MODE
+            RHS_STIM_SPI_NUM_BITS_PER_PACKET => RHS_STIM_SPI_NUM_BITS_PER_PACKET,
+            RHS_STIM_CLKS_PER_HALF_BIT       => RHS_STIM_CLKS_PER_HALF_BIT,
+            RHS_STIM_CS_INACTIVE_CLKS        => RHS_STIM_CS_INACTIVE_CLKS
         )
         port map (
             -- Global
@@ -214,19 +178,17 @@ begin
             o_STM32_RX_Byte_Rising => w_STM32_RX_Byte_Rising,
 
             -- FIFO
-            o_FIFO_RHD2132_Data    => w_FIFO_RHD2132_Data,
-            o_FIFO_RHD2132_COUNT   => w_FIFO_RHD2132_COUNT,
-            o_FIFO_RHD2132_WE      => w_FIFO_RHD2132_WE,
+            o_FIFO_RHS_READ_Data    => w_FIFO_RHS_READ_Data,
+            o_FIFO_RHS_READ_COUNT   => w_FIFO_RHS_READ_COUNT,
+            o_FIFO_RHS_READ_WE      => w_FIFO_RHS_READ_WE,
 				
             -- RHD SPI
-            o_RHD2132_SPI_Clk     => int_RHS_TOP_SPI_Clk,
-            i_RHD2132_SPI_MISO    => int_RHS_TOP_SPI_MISO_1,
-            o_RHD2132_SPI_MOSI    => int_RHS_TOP_SPI_MOSI,
-            o_RHD2132_SPI_CS_n    => int_RHS_TOP_SPI_CS_n_1,
-		
-            -- RHD SPI
-            i_RHD2216_SPI_MISO    => int_RHS_TOP_SPI_MISO_2,
-            o_RHD2216_SPI_CS_n    => int_RHS_TOP_SPI_CS_n_2
+            o_RHS_READ_SPI_MOSI     => int_RHS_TOP_SPI_MOSI,
+            i_RHS_READ_SPI_MISO_1   => int_RHS_TOP_SPI_MISO_1,
+            i_RHS_READ_SPI_MISO_2   => int_RHS_TOP_SPI_MISO_2,
+			o_RHS_READ_SPI_Clk      => int_RHS_TOP_SPI_Clk,
+            o_RHS_READ_SPI_CS_n_1   => int_RHS_TOP_SPI_CS_n_1,
+            o_RHS_READ_SPI_CS_n_2   => int_RHS_TOP_SPI_CS_n_2
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
@@ -261,15 +223,15 @@ begin
 				o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
 				o_STM32_SPI4_MOSI   <= int_STM32_SPI_MOSI;
 				o_STM32_SPI4_CS_n   <= int_STM32_SPI_CS_n;
-				int_STM32_SPI_MISO <= i_STM32_SPI4_MISO;
+				int_STM32_SPI_MISO  <= i_STM32_SPI4_MISO;
 
 				o_RHS_TOP_SPI_Clk    <= int_RHS_TOP_SPI_Clk;
 				o_RHS_TOP_SPI_MOSI   <= int_RHS_TOP_SPI_MOSI;
 
-				o_RHS_TOP_SPI_CS_n_1 <= int_RHS_TOP_SPI_CS_n_1;
+				o_RHS_TOP_SPI_CS_n_1   <= int_RHS_TOP_SPI_CS_n_1;
 				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1;
 
-				o_RHS_TOP_SPI_CS_n_2 <= int_RHS_TOP_SPI_CS_n_2;
+				o_RHS_TOP_SPI_CS_n_2   <= int_RHS_TOP_SPI_CS_n_2;
 				int_RHS_TOP_SPI_MISO_2 <= i_RHS_TOP_SPI_MISO_2;
 			end if;
 

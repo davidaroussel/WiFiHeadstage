@@ -8,15 +8,13 @@ entity Controller_RHD_Sampling is
       STM32_SPI_NUM_BITS_PER_PACKET : integer := 1;
 	  STM32_CS_INACTIVE_CLKS		: integer := 4;
 	  
-	  RHD2132_SPI_DDR_MODE 				: integer := 1;
+      RHS_READ_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
+      RHS_READ_CLKS_PER_HALF_BIT 		: integer := 1;
+	  RHS_READ_CS_INACTIVE_CLKS			: integer := 4;
 	  
-      RHD2132_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
-      RHD2132_CLKS_PER_HALF_BIT 		: integer := 1;
-	  RHD2132_CS_INACTIVE_CLKS			: integer := 4;
-	  
-	  RHD2216_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
-      RHD2216_CLKS_PER_HALF_BIT 		: integer := 8;
-	  RHD2216_CS_INACTIVE_CLKS			: integer := 4;
+	  RHS_STIM_SPI_NUM_BITS_PER_PACKET 	: integer := 16;
+      RHS_STIM_CLKS_PER_HALF_BIT 		: integer := 8;
+	  RHS_STIM_CS_INACTIVE_CLKS			: integer := 4;
 	  
 	  RHD_SAMPLING_MODE 		: integer := 0
     );
@@ -52,57 +50,61 @@ entity Controller_RHD_Sampling is
 
 
     -- FIFO Signals
-    o_FIFO_RHD2132_Data    : out std_logic_vector(31 downto 0);
-	o_FIFO_RHD2132_COUNT   : out std_logic_vector(8 downto 0);
-    o_FIFO_RHD2132_WE      : out std_logic;
-    o_FIFO_RHD2132_RE      : out std_logic;
-    o_FIFO_RHD2132_Q       : out std_logic_vector(31 downto 0);
-    o_FIFO_RHD2132_EMPTY   : out std_logic;
-    o_FIFO_RHD2132_FULL    : out std_logic;
-    o_FIFO_RHD2132_AEMPTY  : out std_logic;
-    o_FIFO_RHD2132_AFULL   : out std_logic;
+    o_FIFO_RHS_READ_Data    : out std_logic_vector(31 downto 0);
+	o_FIFO_RHS_READ_COUNT   : out std_logic_vector(8 downto 0);
+    o_FIFO_RHS_READ_WE      : out std_logic;
+    o_FIFO_RHS_READ_RE      : out std_logic;
+    o_FIFO_RHS_READ_Q       : out std_logic_vector(31 downto 0);
+    o_FIFO_RHS_READ_EMPTY   : out std_logic;
+    o_FIFO_RHS_READ_FULL    : out std_logic;
+    o_FIFO_RHS_READ_AEMPTY  : out std_logic;
+    o_FIFO_RHS_READ_AFULL   : out std_logic;
 
     -- RHD SPI Interface
-    o_RHD2132_SPI_Clk      : out std_logic;
-    i_RHD2132_SPI_MISO     : in  std_logic;
-    o_RHD2132_SPI_MOSI     : out std_logic;
-    o_RHD2132_SPI_CS_n     : out std_logic;
+    o_RHS_READ_SPI_Clk      : out std_logic;
+    i_RHS_READ_SPI_MISO_1   : in  std_logic;
+	i_RHS_READ_SPI_MISO_2   : in  std_logic;
+    o_RHS_READ_SPI_MOSI     : out std_logic;
+    o_RHS_READ_SPI_CS_n_1   : out std_logic;
+	o_RHS_READ_SPI_CS_n_2   : out std_logic;
 
     -- TX (MOSI) Signals
-    o_RHD2132_TX_Byte      : out  std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-    o_RHD2132_TX_DV        : out  std_logic;
-    o_RHD2132_TX_Ready     : out  std_logic;
+    o_RHS_READ_TX_Byte      : out  std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+    o_RHS_READ_TX_DV        : out  std_logic;
+    o_RHS_READ_TX_Ready     : out  std_logic;
 
     -- RX (MISO) Signals
-    o_RHD2132_RX_DV        : out std_logic;
-    o_RHD2132_RX_Byte_Rising  : out std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-    o_RHD2132_RX_Byte_Falling : out std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+    o_RHS_READ_RX_DV        : out std_logic;
+    o_RHS_READ_RX_Byte_Rising  : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+    o_RHS_READ_RX_Byte_Falling : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 	
-	o_FIFO_RHD2216_Data    : out std_logic_vector(31 downto 0);
-	o_FIFO_RHD2216_COUNT   : out std_logic_vector(8 downto 0);
-    o_FIFO_RHD2216_WE      : out std_logic;
-    o_FIFO_RHD2216_RE      : out std_logic;
-    o_FIFO_RHD2216_Q       : out std_logic_vector(31 downto 0);
-    o_FIFO_RHD2216_EMPTY   : out std_logic;
-    o_FIFO_RHD2216_FULL    : out std_logic;
-    o_FIFO_RHD2216_AEMPTY  : out std_logic;
-    o_FIFO_RHD2216_AFULL   : out std_logic;
+	o_FIFO_RHS_STIM_Data    : out std_logic_vector(31 downto 0);
+	o_FIFO_RHS_STIM_COUNT   : out std_logic_vector(8 downto 0);
+    o_FIFO_RHS_STIM_WE      : out std_logic;
+    o_FIFO_RHS_STIM_RE      : out std_logic;
+    o_FIFO_RHS_STIM_Q       : out std_logic_vector(31 downto 0);
+    o_FIFO_RHS_STIM_EMPTY   : out std_logic;
+    o_FIFO_RHS_STIM_FULL    : out std_logic;
+    o_FIFO_RHS_STIM_AEMPTY  : out std_logic;
+    o_FIFO_RHS_STIM_AFULL   : out std_logic;
 
     -- RHD SPI Interface
-    o_RHD2216_SPI_Clk      : out std_logic;
-    i_RHD2216_SPI_MISO     : in  std_logic;
-    o_RHD2216_SPI_MOSI     : out std_logic;
-    o_RHD2216_SPI_CS_n     : out std_logic;
+    o_RHS_STIM_SPI_Clk      : out std_logic;
+    i_RHS_STIM_SPI_MISO_1   : in  std_logic;
+	i_RHS_STIM_SPI_MISO_2   : in  std_logic;
+    o_RHS_STIM_SPI_MOSI     : out std_logic;
+    o_RHS_STIM_SPI_CS_n_1   : out std_logic;
+    o_RHS_STIM_SPI_CS_n_2   : out std_logic;
 
     -- TX (MOSI) Signals
-    o_RHD2216_TX_Byte      : out  std_logic_vector(15 downto 0);
-    o_RHD2216_TX_DV        : out  std_logic;
-    o_RHD2216_TX_Ready     : out  std_logic;
+    o_RHS_STIM_TX_Byte      : out  std_logic_vector(15 downto 0);
+    o_RHS_STIM_TX_DV        : out  std_logic;
+    o_RHS_STIM_TX_Ready     : out  std_logic;
 
     -- RX (MISO) Signals
-    o_RHD2216_RX_DV        : out std_logic;
-    o_RHD2216_RX_Byte_Rising  : out std_logic_vector(15 downto 0);
-    o_RHD2216_RX_Byte_Falling : out std_logic_vector(15 downto 0)
+    o_RHS_STIM_RX_DV        : out std_logic;
+    o_RHS_STIM_RX_Byte_Rising  : out std_logic_vector(15 downto 0);
+    o_RHS_STIM_RX_Byte_Falling : out std_logic_vector(15 downto 0)
   );
 end entity Controller_RHD_Sampling;
 
@@ -111,9 +113,9 @@ architecture RTL of Controller_RHD_Sampling is
   component Controller_RHD_FIFO is
     generic (
       SPI_MODE               : integer := 0;
-      CLKS_PER_HALF_BIT      : integer := RHD2132_CLKS_PER_HALF_BIT;
-      NUM_OF_BITS_PER_PACKET : integer := RHD2132_SPI_NUM_BITS_PER_PACKET;
-      CS_INACTIVE_CLKS       : integer := RHD2132_CS_INACTIVE_CLKS
+      CLKS_PER_HALF_BIT      : integer := RHS_READ_CLKS_PER_HALF_BIT;
+      NUM_OF_BITS_PER_PACKET : integer := RHS_READ_SPI_NUM_BITS_PER_PACKET;
+      CS_INACTIVE_CLKS       : integer := RHS_READ_CS_INACTIVE_CLKS
     );
     port (
       i_Rst_L            : in std_logic;
@@ -122,21 +124,21 @@ architecture RTL of Controller_RHD_Sampling is
       i_SPI_MISO         : in  std_logic;
       o_SPI_MOSI         : out std_logic;
       o_SPI_CS_n         : out std_logic;
-      i_TX_Byte          : in  std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+      i_TX_Byte          : in  std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
       i_TX_DV            : in  std_logic;
       o_TX_Ready         : out std_logic;
       o_RX_DV            : out std_logic;
-      o_RX_Byte_Rising   : out std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-      o_RX_Byte_Falling  : out std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-      o_FIFO_RHD2132_Data        : out std_logic_vector(31 downto 0);
-      o_FIFO_RHD2132_COUNT       : out std_logic_vector(8 downto 0);
-	  o_FIFO_RHD2132_WE          : out std_logic;
-      i_FIFO_RHD2132_RE          : in std_logic;
-      o_FIFO_RHD2132_Q           : out std_logic_vector(31 downto 0);
-      o_FIFO_RHD2132_EMPTY       : out std_logic;
-      o_FIFO_RHD2132_FULL        : out std_logic;
-      o_FIFO_RHD2132_AEMPTY      : out std_logic;
-      o_FIFO_RHD2132_AFULL       : out std_logic
+      o_RX_Byte_Rising   : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+      o_RX_Byte_Falling  : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+      o_FIFO_RHS_READ_Data        : out std_logic_vector(31 downto 0);
+      o_FIFO_RHS_READ_COUNT       : out std_logic_vector(8 downto 0);
+	  o_FIFO_RHS_READ_WE          : out std_logic;
+      i_FIFO_RHS_READ_RE          : in std_logic;
+      o_FIFO_RHS_READ_Q           : out std_logic_vector(31 downto 0);
+      o_FIFO_RHS_READ_EMPTY       : out std_logic;
+      o_FIFO_RHS_READ_FULL        : out std_logic;
+      o_FIFO_RHS_READ_AEMPTY      : out std_logic;
+      o_FIFO_RHS_READ_AFULL       : out std_logic
     );
   end component;
 
@@ -166,26 +168,26 @@ architecture RTL of Controller_RHD_Sampling is
       o_SPI_CS_n : out std_logic
     );
   end component; 
-	signal int_FIFO_RHD2132_Data    : std_logic_vector(31 downto 0);
-	signal int_FIFO_RHD2132_COUNT   : std_logic_vector(8 downto 0);
-	signal int_FIFO_RHD2132_WE      : std_logic;
-	signal int_FIFO_RHD2132_RE      : std_logic;
-	signal int_FIFO_RHD2132_Q       : std_logic_vector(31 downto 0);
-	signal int_FIFO_RHD2132_EMPTY   : std_logic;
-	signal int_FIFO_RHD2132_FULL    : std_logic;
-	signal int_FIFO_RHD2132_AEMPTY  : std_logic;
-	signal int_FIFO_RHD2132_AFULL   : std_logic;
+	signal int_FIFO_RHS_READ_Data    : std_logic_vector(31 downto 0);
+	signal int_FIFO_RHS_READ_COUNT   : std_logic_vector(8 downto 0);
+	signal int_FIFO_RHS_READ_WE      : std_logic;
+	signal int_FIFO_RHS_READ_RE      : std_logic;
+	signal int_FIFO_RHS_READ_Q       : std_logic_vector(31 downto 0);
+	signal int_FIFO_RHS_READ_EMPTY   : std_logic;
+	signal int_FIFO_RHS_READ_FULL    : std_logic;
+	signal int_FIFO_RHS_READ_AEMPTY  : std_logic;
+	signal int_FIFO_RHS_READ_AFULL   : std_logic;
 
-	signal int_RHD2132_SPI_Clk      : std_logic;
-	signal int_RHD2132_SPI_MISO     : std_logic;
-	signal int_RHD2132_SPI_MOSI     : std_logic;
-	signal int_RHD2132_SPI_CS_n     : std_logic;
-	signal int_RHD2132_TX_Byte      : std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-	signal int_RHD2132_TX_DV        : std_logic;
-	signal int_RHD2132_TX_Ready     : std_logic;
-	signal int_RHD2132_RX_DV        : std_logic;
-	signal int_RHD2132_RX_Byte_Rising  : std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-	signal int_RHD2132_RX_Byte_Falling : std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+	signal int_RHS_READ_SPI_Clk      : std_logic;
+	signal int_RHS_READ_SPI_MISO     : std_logic;
+	signal int_RHS_READ_SPI_MOSI     : std_logic;
+	signal int_RHS_READ_SPI_CS_n     : std_logic;
+	signal int_RHS_READ_TX_Byte      : std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+	signal int_RHS_READ_TX_DV        : std_logic;
+	signal int_RHS_READ_TX_Ready     : std_logic;
+	signal int_RHS_READ_RX_DV        : std_logic;
+	signal int_RHS_READ_RX_Byte_Rising  : std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+	signal int_RHS_READ_RX_Byte_Falling : std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 
 	signal int_STM32_SPI_Clk      : std_logic;
 	signal int_STM32_SPI_MISO     : std_logic;
@@ -197,34 +199,31 @@ architecture RTL of Controller_RHD_Sampling is
 	signal int_STM32_RX_DV        : std_logic;
 	signal int_STM32_RX_Byte_Rising  : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 
-	signal int_FIFO_RHD2216_Data    : std_logic_vector(31 downto 0);
-	signal int_FIFO_RHD2216_COUNT   : std_logic_vector(8 downto 0);
-	signal int_FIFO_RHD2216_WE      : std_logic;
-	signal int_FIFO_RHD2216_RE      : std_logic;
-	signal int_FIFO_RHD2216_Q       : std_logic_vector(31 downto 0);
-	signal int_FIFO_RHD2216_EMPTY   : std_logic;
-	signal int_FIFO_RHD2216_FULL    : std_logic;
-	signal int_FIFO_RHD2216_AEMPTY  : std_logic;
-	signal int_FIFO_RHD2216_AFULL   : std_logic;
+	signal int_FIFO_RHS_STIM_Data    : std_logic_vector(31 downto 0);
+	signal int_FIFO_RHS_STIM_COUNT   : std_logic_vector(8 downto 0);
+	signal int_FIFO_RHS_STIM_WE      : std_logic;
+	signal int_FIFO_RHS_STIM_RE      : std_logic;
+	signal int_FIFO_RHS_STIM_Q       : std_logic_vector(31 downto 0);
+	signal int_FIFO_RHS_STIM_EMPTY   : std_logic;
+	signal int_FIFO_RHS_STIM_FULL    : std_logic;
+	signal int_FIFO_RHS_STIM_AEMPTY  : std_logic;
+	signal int_FIFO_RHS_STIM_AFULL   : std_logic;
 
-	signal int_RHD2216_SPI_Clk      : std_logic;
-	signal int_RHD2216_SPI_MISO     : std_logic;
-	signal int_RHD2216_SPI_MOSI     : std_logic;
-	signal int_RHD2216_SPI_CS_n     : std_logic;
-	signal int_RHD2216_TX_Byte      : std_logic_vector(15 downto 0);
-	signal int_RHD2216_TX_DV        : std_logic;
-	signal int_RHD2216_TX_Ready     : std_logic;
-	signal int_RHD2216_RX_DV        : std_logic;
-	signal int_RHD2216_RX_Byte_Rising  : std_logic_vector(15 downto 0);
-	signal int_RHD2216_RX_Byte_Falling : std_logic_vector(15 downto 0);
+	signal int_RHS_STIM_SPI_Clk      : std_logic;
+	signal int_RHS_STIM_SPI_MISO     : std_logic;
+	signal int_RHS_STIM_SPI_MOSI     : std_logic;
+	signal int_RHS_STIM_SPI_CS_n     : std_logic;
+	signal int_RHS_STIM_TX_Byte      : std_logic_vector(15 downto 0);
+	signal int_RHS_STIM_TX_DV        : std_logic;
+	signal int_RHS_STIM_TX_Ready     : std_logic;
+	signal int_RHS_STIM_RX_DV        : std_logic;
+	signal int_RHS_STIM_RX_Byte_Rising  : std_logic_vector(15 downto 0);
+	signal int_RHS_STIM_RX_Byte_Falling : std_logic_vector(15 downto 0);
 
 	signal stm32_counter : integer := 0; -- Counter to keep track of bits stored in temporary buffer
 	signal counter      : integer := 0; -- Counter to control SendDataToRHDSPI
 
 	signal stm32_state : integer := 0;
-	signal Sampling_Mode_State_1 : integer := RHD_SAMPLING_MODE;
-	signal Sampling_Mode_State_2 : integer := RHD_SAMPLING_MODE;
-	signal Sampling_Mode_State_3 : integer := RHD_SAMPLING_MODE;
 
 	signal SAMPLING_MODE : std_logic_vector(1 downto 0) := std_logic_vector(to_unsigned(RHD_SAMPLING_MODE, 2)); -- 0: Neuro Only - 1: EMG Only - 2: EMG + Neuro
 
@@ -234,19 +233,18 @@ architecture RTL of Controller_RHD_Sampling is
 	constant TOTAL_BITS : integer := STM32_SPI_NUM_BITS_PER_PACKET;
 	signal temp_buffer : std_logic_vector(TOTAL_BITS-1 downto 0);
 	signal word_count  : integer range 0 to NUM_WORDS := 0;
-	--signal temp_buffer : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 	
-	signal init_FIFO_RHD2132_Counter : integer := 0;
-	signal init_FIFO_RHD2132_Read : std_logic;
-	signal init_FIFO_RHD2216_Read : std_logic;
+	signal init_FIFO_RHS_READ_Counter : integer := 0;
+	signal init_FIFO_RHS_READ_Read : std_logic;
+	signal init_FIFO_RHS_STIM_Read : std_logic;
 	
-	signal first_rhd2132_packet : std_logic;
-	signal first_rhd2216_packet : std_logic;
+	signal first_rhs_READ_packet : std_logic;
+	signal first_rhs_STIM_packet : std_logic;
 	
 	signal rhd_index    : integer := 0;
 	signal rhd_state    : integer := 0;
-	signal rhd2216_index    : integer := 0;
-	signal rhd2216_state    : integer := 0;
+	signal rhs_STIM_index    : integer := 0;
+	signal rhs_STIM_state    : integer := 0;
 	
 	signal alt_counter : integer := 0;
 	
@@ -256,13 +254,9 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rgd_info_sig_green : std_logic;
 	signal rgd_info_sig_blue  : std_logic;
 		
-	signal tx_buffer : std_logic_vector(TOTAL_BITS-1 downto 0);
+	signal tx_buffer : std_logic_vector(TOTAL_BITS-1 downto 0);	
 	
-	signal chip_toggle : std_logic := '0';
-
-	
-	
-	type t_channel_array is array (0 to 63) of std_logic_vector(RHD2132_SPI_NUM_BITS_PER_PACKET-1 downto 0);
+	type t_channel_array is array (0 to 63) of std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 	
 	-- READ INTAN ASCII
 	signal channel_array_intan : t_channel_array := (
@@ -481,43 +475,43 @@ architecture RTL of Controller_RHD_Sampling is
 	);
 
 	
-	signal mux_RHD2132_SPI_MISO : STD_LOGIC;
-	signal mux_RHD2132_SPI_CS_n : STD_LOGIC;
-	signal use_rhd2132 : std_logic;
+	signal mux_RHS_READ_SPI_MISO : STD_LOGIC;
+	signal mux_RHS_READ_SPI_CS_n : STD_LOGIC;
+	signal chip_select_RHS_READ : std_logic;
 
 	begin
 	  Controller_RHD_FIFO_1 : entity work.Controller_RHD_FIFO
 		generic map (
 		  SPI_MODE               => 0,
-		  CLKS_PER_HALF_BIT      => RHD2132_CLKS_PER_HALF_BIT,
-		  NUM_OF_BITS_PER_PACKET => RHD2132_SPI_NUM_BITS_PER_PACKET,
-		  CS_INACTIVE_CLKS       => RHD2132_CS_INACTIVE_CLKS
+		  CLKS_PER_HALF_BIT      => RHS_READ_CLKS_PER_HALF_BIT,
+		  NUM_OF_BITS_PER_PACKET => RHS_READ_SPI_NUM_BITS_PER_PACKET,
+		  CS_INACTIVE_CLKS       => RHS_READ_CS_INACTIVE_CLKS
 		)
 		port map (
 		  i_Rst_L        	=> i_Rst_L,
 		  i_Clk          	=> i_Clk,
 		  i_Controller_Mode => i_Controller_Mode,
 		  
-		  o_SPI_Clk      	=> o_RHD2132_SPI_Clk,
-		  i_SPI_MISO     	=> mux_RHD2132_SPI_MISO,
-		  o_SPI_MOSI     	=> o_RHD2132_SPI_MOSI,
-		  o_SPI_CS_n     	=> mux_RHD2132_SPI_CS_n,
+		  o_SPI_Clk      	=> o_RHS_READ_SPI_Clk,
+		  i_SPI_MISO     	=> mux_RHS_READ_SPI_MISO,
+		  o_SPI_MOSI     	=> o_RHS_READ_SPI_MOSI,
+		  o_SPI_CS_n     	=> mux_RHS_READ_SPI_CS_n,
 
-		  i_TX_Byte      	=> int_RHD2132_TX_Byte,
-		  i_TX_DV        	=> int_RHD2132_TX_DV,
-		  o_TX_Ready     	=> int_RHD2132_TX_Ready,
-		  o_RX_DV        	=> o_RHD2132_RX_DV,
-		  o_RX_Byte_Rising  => o_RHD2132_RX_Byte_Rising,
-		  o_RX_Byte_Falling => o_RHD2132_RX_Byte_Falling,
-		  o_FIFO_Data    => o_FIFO_RHD2132_Data,
-		  o_FIFO_COUNT   => int_FIFO_RHD2132_COUNT,
-		  o_FIFO_WE      => o_FIFO_RHD2132_WE,
-		  i_FIFO_RE      => int_FIFO_RHD2132_RE,
-		  o_FIFO_Q       => int_FIFO_RHD2132_Q,
-		  o_FIFO_EMPTY   => int_FIFO_RHD2132_EMPTY,
-		  o_FIFO_FULL    => int_FIFO_RHD2132_FULL,
-		  o_FIFO_AEMPTY  => int_FIFO_RHD2132_AEMPTY,
-		  o_FIFO_AFULL   => int_FIFO_RHD2132_AFULL
+		  i_TX_Byte      	=> int_RHS_READ_TX_Byte,
+		  i_TX_DV        	=> int_RHS_READ_TX_DV,
+		  o_TX_Ready     	=> int_RHS_READ_TX_Ready,
+		  o_RX_DV        	=> o_RHS_READ_RX_DV,
+		  o_RX_Byte_Rising  => o_RHS_READ_RX_Byte_Rising,
+		  o_RX_Byte_Falling => o_RHS_READ_RX_Byte_Falling,
+		  o_FIFO_Data    => o_FIFO_RHS_READ_Data,
+		  o_FIFO_COUNT   => int_FIFO_RHS_READ_COUNT,
+		  o_FIFO_WE      => o_FIFO_RHS_READ_WE,
+		  i_FIFO_RE      => int_FIFO_RHS_READ_RE,
+		  o_FIFO_Q       => int_FIFO_RHS_READ_Q,
+		  o_FIFO_EMPTY   => int_FIFO_RHS_READ_EMPTY,
+		  o_FIFO_FULL    => int_FIFO_RHS_READ_FULL,
+		  o_FIFO_AEMPTY  => int_FIFO_RHS_READ_AEMPTY,
+		  o_FIFO_AFULL   => int_FIFO_RHS_READ_AFULL
 		);
 		
 
@@ -555,19 +549,18 @@ architecture RTL of Controller_RHD_Sampling is
 	  if i_Rst_L = '1' then
 		temp_buffer <= (others => '0');
 		
-		int_FIFO_RHD2132_RE <= '0';  -- Toggle back to '0'
-		int_FIFO_RHD2216_RE <= '0';  -- Toggle back to '0'
+		int_FIFO_RHS_READ_RE <= '0';  -- Toggle back to '0'
+		int_FIFO_RHS_STIM_RE <= '0';  -- Toggle back to '0'
 		stm32_counter <= 0;  -- Reset counter on reset
 		stm32_state <= 0;    -- Reset state
 		int_STM32_TX_Byte <= (others => '0');
 		int_STM32_TX_DV <= '0';
-		init_FIFO_RHD2132_Read <= '0';
-		init_FIFO_RHD2132_Counter <= 0;
-		init_FIFO_RHD2216_Read <= '0';
-		first_rhd2132_packet <= '0';
-		first_rhd2216_packet <= '0';
-		
-		chip_toggle <= '0';
+		init_FIFO_RHS_READ_Read <= '0';
+		init_FIFO_RHS_READ_Counter <= 0;
+		init_FIFO_RHS_STIM_Read <= '0';
+		first_rhS_READ_packet <= '0';
+		first_rhs_STIM_packet <= '0';
+	
 		RHD_Interval_Counter <= 0;
 		
 		alt_counter   <= 0;  
@@ -575,18 +568,18 @@ architecture RTL of Controller_RHD_Sampling is
 		rgd_info_sig_blue   <= '1';
 		
 
-	    NUM_DATA <= 2*(STM32_SPI_NUM_BITS_PER_PACKET / RHD2132_SPI_NUM_BITS_PER_PACKET);
+	    NUM_DATA <= 2*(STM32_SPI_NUM_BITS_PER_PACKET / RHS_READ_SPI_NUM_BITS_PER_PACKET);
 	
 		
 	  elsif rising_edge(i_Clk) then
-		--int_FIFO_RHD2132_RE <= '0'; 
+		--int_FIFO_RHS_READ_RE <= '0'; 
 		if i_Controller_Mode = x"0" then
-			-- INIT RHD2132s FIFO
-			if init_FIFO_RHD2132_Read = '0' then
-				int_FIFO_RHD2132_RE <= '1';
-				init_FIFO_RHD2132_Read <= '1';
+			-- INIT RHS_READs FIFO
+			if init_FIFO_RHS_READ_Read = '0' then
+				int_FIFO_RHS_READ_RE <= '1';
+				init_FIFO_RHS_READ_Read <= '1';
 			else
-				int_FIFO_RHD2132_RE <= '0';
+				int_FIFO_RHS_READ_RE <= '0';
 			end if;
 			rgd_info_sig_blue   <= '1';
 						
@@ -594,25 +587,25 @@ architecture RTL of Controller_RHD_Sampling is
 			case stm32_state is
 				when 0 =>
 					rgd_info_sig_blue   <= '0';
-					int_FIFO_RHD2132_RE <= '0';
+					int_FIFO_RHS_READ_RE <= '0';
 				
-					if (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= ((NUM_DATA) + 2)) and (first_rhd2132_packet = '0') then
+					if (to_integer(unsigned(int_FIFO_RHS_READ_COUNT)) >= ((NUM_DATA) + 2)) and (first_rhs_READ_packet = '0') then
 						stm32_state <= 1;
-						int_FIFO_RHD2132_RE <= '1'; -- START READ
-						first_rhd2132_packet <= '1';
-					elsif (to_integer(unsigned(int_FIFO_RHD2132_COUNT)) >= (NUM_DATA)) and (first_rhd2132_packet = '1') then
+						int_FIFO_RHS_READ_RE <= '1'; -- START READ
+						first_rhS_READ_packet <= '1';
+					elsif (to_integer(unsigned(int_FIFO_RHS_READ_COUNT)) >= (NUM_DATA)) and (first_rhs_READ_packet = '1') then
 						stm32_state <= 3;
-						int_FIFO_RHD2132_RE <= '1'; 
+						int_FIFO_RHS_READ_RE <= '1'; 
 					else
 						stm32_state <= 0;
 					end if;
 				
 				when 1 =>
 					stm32_state <= 2;
-					int_FIFO_RHD2132_RE <= '1'; -- START READ
+					int_FIFO_RHS_READ_RE <= '1'; -- START READ
 				when 2 =>
 					stm32_state <= 3;
-					int_FIFO_RHD2132_RE <= '1'; -- START READ
+					int_FIFO_RHS_READ_RE <= '1'; -- START READ
 				when 3 =>
 					stm32_state <= 4;
 				when 4 =>
@@ -620,15 +613,15 @@ architecture RTL of Controller_RHD_Sampling is
 					
 				when 5 =>
 					if stm32_counter > (NUM_WORDS-2) then 
-						int_FIFO_RHD2132_RE <= '0'; 
+						int_FIFO_RHS_READ_RE <= '0'; 
 					end if;
 				
 					if stm32_counter < (NUM_WORDS) then
 						if (stm32_counter mod 16) = 0 then
 						    temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
-							--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2132_Q(31 downto 16) or x"0001"; -- set LSB
+							--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(31 downto 16) or x"0001"; -- set LSB
 						else
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHD2132_Q(31 downto 16) and x"FFFE"; -- clear LSB
+							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(31 downto 16) and x"FFFE"; -- clear LSB
 						end if;	
 		
 						alt_counter <= alt_counter + 1;
@@ -647,8 +640,8 @@ architecture RTL of Controller_RHD_Sampling is
 			
 				when 6 =>
 					stm32_state <= 7;
-					int_FIFO_RHD2132_RE <= '0';
-					int_FIFO_RHD2216_RE <= '0'; 					
+					int_FIFO_RHS_READ_RE <= '0';
+					int_FIFO_RHS_STIM_RE <= '0'; 					
 				when 7 =>
 					stm32_counter <= 0;				
 					stm32_state <= 8;
@@ -680,13 +673,13 @@ architecture RTL of Controller_RHD_Sampling is
 	process (i_Clk)
 	begin
 		if i_Rst_L = '1' then
-			int_RHD2132_TX_Byte     <= (others => '0');
-			int_RHD2132_TX_DV       <= '0';
+			int_RHS_READ_TX_Byte     <= (others => '0');
+			int_RHS_READ_TX_DV       <= '0';
 			rhd_index           <= 0;
 			rhd_state           <= 0;
 			rgd_info_sig_red   <= '1';
 			rgd_info_sig_green   <= '1';
-			use_rhd2132 <= '1';
+			chip_select_RHS_READ <= '1';
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
@@ -703,22 +696,22 @@ architecture RTL of Controller_RHD_Sampling is
 						----------------------------------------------------------------
 						when 0 =>
 
-							int_RHD2132_TX_Byte <= channel_array(rhd_index);
+							int_RHS_READ_TX_Byte <= channel_array(rhd_index);
 
-							if int_RHD2132_TX_Ready = '1' then
-								int_RHD2132_TX_DV <= '1';   -- pulse DV for one cycle
+							if int_RHS_READ_TX_Ready = '1' then
+								int_RHS_READ_TX_DV <= '1';   -- pulse DV for one cycle
 								rhd_state <= 1;
 							else
-								int_RHD2132_TX_DV <= '0';
+								int_RHS_READ_TX_DV <= '0';
 							end if;
 
 						----------------------------------------------------------------
 						-- STATE 1 : PULSE DV (ONE CYCLE)
 						----------------------------------------------------------------
 						when 1 =>
-							int_RHD2132_TX_DV <= '0';
+							int_RHS_READ_TX_DV <= '0';
 							-- Wait for Ready to drop (indicating transfer start)
-							if int_RHD2132_TX_Ready = '0' then
+							if int_RHS_READ_TX_Ready = '0' then
 								rhd_state <= 2;
 							else
 								rhd_state <= 1;
@@ -728,7 +721,7 @@ architecture RTL of Controller_RHD_Sampling is
 						-- STATE 2 : WAIT FOR TRANSFER COMPLETE
 						----------------------------------------------------------------
 						when 2 =>
-							if int_RHD2132_TX_Ready = '1' then
+							if int_RHS_READ_TX_Ready = '1' then
 
 								if rhd_index < 63 then
 									rhd_index <= rhd_index + 1;
@@ -738,9 +731,9 @@ architecture RTL of Controller_RHD_Sampling is
 
 								---- CHIP SELECTION LOGIC
 								if (rhd_index < 16) or ((rhd_index >= 32) and (rhd_index < 48)) then
-									use_rhd2132 <= '1';
+									chip_select_RHS_READ <= '1';
 								else
-									use_rhd2132 <= '0';
+									chip_select_RHS_READ <= '0';
 								end if;
 
 								rhd_state <= 0;
@@ -752,19 +745,18 @@ architecture RTL of Controller_RHD_Sampling is
 				end if;
 			else
 				-- Inactive controller mode: keep DV low
-				int_RHD2132_TX_DV <= '0';
+				int_RHS_READ_TX_DV <= '0';
 
 			end if;
 		end if;
 	end process;
 	
 	
-	mux_RHD2132_SPI_MISO <= i_RHD2132_SPI_MISO when use_rhd2132 = '1'
-                       else i_RHD2216_SPI_MISO;
+	mux_RHS_READ_SPI_MISO <= i_RHS_READ_SPI_MISO_1 when chip_select_RHS_READ = '1'
+                        else i_RHS_READ_SPI_MISO_2;
 	
-	o_RHD2132_SPI_CS_n <= mux_RHD2132_SPI_CS_n when use_rhd2132 = '1' else '1';
-
-	o_RHD2216_SPI_CS_n <= mux_RHD2132_SPI_CS_n when use_rhd2132 = '0' else '1';
+	o_RHS_READ_SPI_CS_n_1 <= mux_RHS_READ_SPI_CS_n when chip_select_RHS_READ = '1' else '1';
+	o_RHS_READ_SPI_CS_n_2 <= mux_RHS_READ_SPI_CS_n when chip_select_RHS_READ = '0' else '1';
 
 	rgb_info_red   <= rgd_info_sig_red;
 	rgb_info_green <= rgd_info_sig_green;
@@ -779,29 +771,29 @@ architecture RTL of Controller_RHD_Sampling is
 	o_STM32_TX_DV    <= int_STM32_TX_DV;
 	o_STM32_TX_Ready <= int_STM32_TX_Ready;
 	
-	o_RHD2132_TX_Byte  <= int_RHD2132_TX_Byte;
-	o_RHD2132_TX_DV    <= int_RHD2132_TX_DV;
-	o_RHD2132_TX_Ready <= int_RHD2132_TX_Ready;
+	o_RHS_READ_TX_Byte  <= int_RHS_READ_TX_Byte;
+	o_RHS_READ_TX_DV    <= int_RHS_READ_TX_DV;
+	o_RHS_READ_TX_Ready <= int_RHS_READ_TX_Ready;
 	
 
-	o_RHD2216_TX_Byte  <= int_RHD2216_TX_Byte;	
-	o_RHD2216_TX_DV    <= int_RHD2216_TX_DV;
-	o_RHD2216_TX_Ready <= int_RHD2216_TX_Ready;
+	o_RHS_STIM_TX_Byte  <= int_RHS_STIM_TX_Byte;	
+	o_RHS_STIM_TX_DV    <= int_RHS_STIM_TX_DV;
+	o_RHS_STIM_TX_Ready <= int_RHS_STIM_TX_Ready;
 
-	o_FIFO_RHD2132_RE 	   <= int_FIFO_RHD2132_RE;  
-	o_FIFO_RHD2132_COUNT   <= int_FIFO_RHD2132_COUNT;
-	o_FIFO_RHD2132_Q       <= int_FIFO_RHD2132_Q;
-	o_FIFO_RHD2132_EMPTY   <= int_FIFO_RHD2132_EMPTY;
-	o_FIFO_RHD2132_FULL    <= int_FIFO_RHD2132_FULL;
-	o_FIFO_RHD2132_AEMPTY  <= int_FIFO_RHD2132_AEMPTY;
-	o_FIFO_RHD2132_AFULL   <= int_FIFO_RHD2132_AFULL;
+	o_FIFO_RHS_READ_RE 	   <= int_FIFO_RHS_READ_RE;  
+	o_FIFO_RHS_READ_COUNT   <= int_FIFO_RHS_READ_COUNT;
+	o_FIFO_RHS_READ_Q       <= int_FIFO_RHS_READ_Q;
+	o_FIFO_RHS_READ_EMPTY   <= int_FIFO_RHS_READ_EMPTY;
+	o_FIFO_RHS_READ_FULL    <= int_FIFO_RHS_READ_FULL;
+	o_FIFO_RHS_READ_AEMPTY  <= int_FIFO_RHS_READ_AEMPTY;
+	o_FIFO_RHS_READ_AFULL   <= int_FIFO_RHS_READ_AFULL;
 	
-	o_FIFO_RHD2216_RE 	   <= int_FIFO_RHD2216_RE;
-	o_FIFO_RHD2216_COUNT   <= int_FIFO_RHD2216_COUNT;
-	o_FIFO_RHD2216_Q       <= int_FIFO_RHD2216_Q;
-	o_FIFO_RHD2216_EMPTY   <= int_FIFO_RHD2216_EMPTY;
-	o_FIFO_RHD2216_FULL    <= int_FIFO_RHD2216_FULL;
-	o_FIFO_RHD2216_AEMPTY  <= int_FIFO_RHD2216_AEMPTY;
-	o_FIFO_RHD2216_AFULL   <= int_FIFO_RHD2216_AFULL;
+	o_FIFO_RHS_STIM_RE 	   <= int_FIFO_RHS_STIM_RE;
+	o_FIFO_RHS_STIM_COUNT   <= int_FIFO_RHS_STIM_COUNT;
+	o_FIFO_RHS_STIM_Q       <= int_FIFO_RHS_STIM_Q;
+	o_FIFO_RHS_STIM_EMPTY   <= int_FIFO_RHS_STIM_EMPTY;
+	o_FIFO_RHS_STIM_FULL    <= int_FIFO_RHS_STIM_FULL;
+	o_FIFO_RHS_STIM_AEMPTY  <= int_FIFO_RHS_STIM_AEMPTY;
+	o_FIFO_RHS_STIM_AFULL   <= int_FIFO_RHS_STIM_AFULL;
 
 end architecture RTL;
