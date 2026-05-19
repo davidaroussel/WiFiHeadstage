@@ -962,12 +962,14 @@ void _RHS2116_setup_stimulation(SPI_HandleTypeDef *hspi, CURRENT_STEP_SIZE p_nA_
 	uint16_t CL_charge_recovery_enable = 0x0000;
 	RHS2116_Current_Limited_Charge_Recovery(hspi, REGISTER_48, CL_charge_recovery_enable);
 
+
+
+
 	// Write to registers 64-79, setting the negative stimulation current magnitudes to zero and the current
 	// trims to the center point. (These commands do not take effect until the U flag is asserted since Registers 64-79 are triggered registers.)
 	// Define the common values for negative current trim and magnitude
 	uint8_t negative_current_trim = 0b10000000;
 	uint8_t negative_current_magnitude = 0b11111111;
-
 	RHS2116_Negative_Stimulation_Current_Magnitude(hspi, negative_current_trim, negative_current_magnitude, 0);
 
 	// Write to registers 96-111, setting the negative stimulation current magnitudes to zero and the current
@@ -978,7 +980,6 @@ void _RHS2116_setup_stimulation(SPI_HandleTypeDef *hspi, CURRENT_STEP_SIZE p_nA_
 	RHS2116_Positive_Stimulation_Current_Magnitude(hspi, positive_current_trim, positive_current_magnitude, 0);
 
 	RHS2116_Enable_Stim(hspi);
-
 
 }
 
@@ -1120,8 +1121,9 @@ void RHS2116_Toggle_LED_Warning(int flash_speed){
 	HAL_Delay(flash_speed);
 }
 
-void RHS2116_MEP_Config_Params(){
-	  for (int i = 0; i < NUM_CHANNELS; i++)
+void RHS2116_MEP_Config_Params(SPI_HandleTypeDef *hspi, uint32_t stim_current_uA){
+	uint8_t channel = 0;
+	for (int i = 0; i < NUM_CHANNELS; i++)
 	  {
 		  CHANNEL_LIST[i].periodP_us  = 240;   // TIME FOR POS + NEG PHASE
 		  CHANNEL_LIST[i].num_pulse   = 13;    // NUMBER OF PULSE IN EACH TRAIN
@@ -1131,6 +1133,37 @@ void RHS2116_MEP_Config_Params(){
 		  CHANNEL_LIST[i].num_train   = 1;    // NUMBER OF TRAIN BEFORE STOPPING
 		  CHANNEL_LIST[i].periodT_ms  = 998;   // TIME BETWEEN TRAIN
 	  }  /* USER CODE END SysInit */
+
+	 USERS_STIM_PARAMETERS *CHANNEL_CONFIGS = &CHANNEL_LIST[channel];
+	 CHANNEL_LIST[channel].AmpA_uA = stim_current_uA;
+	 // Validate amplitude
+	 uint8_t p_current_amplitude;
+	 if (CHANNEL_CONFIGS->AmpA_uA >= 10 && CHANNEL_CONFIGS->AmpA_uA <= 300)
+	 {
+		 p_current_amplitude = CHANNEL_CONFIGS->AmpA_uA / 10;
+	 }
+	 else
+	 {
+		 printf("Fatal error: invalid amplitude %lu uA (channel %u)\r\n", CHANNEL_CONFIGS->AmpA_uA, channel);
+		 Error_Handler();
+	 }
+
+
+
+	 uint8_t  num_pulse            = CHANNEL_CONFIGS->num_pulse;
+	 uint16_t channel_mask         = (1 << channel);
+	 uint32_t p_period_us          = CHANNEL_CONFIGS->periodP_us;
+	 uint32_t p_pulse_width_us     = CHANNEL_CONFIGS->periodP_us / 2;
+	 uint32_t p_dead_zone_us       = 0;
+	 uint32_t p_callback_period_us = 10;
+	 uint32_t p_period_train_ms    = CHANNEL_CONFIGS->periodT_ms;
+	 uint32_t p_num_train          = CHANNEL_CONFIGS->num_train;
+
+	 CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
+
+ //    HAL_Delay(500);
+
+	 RHS2116_setup_stim_pattern(hspi, channel_mask, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
 }
 
 void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA)
@@ -1142,46 +1175,35 @@ void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint3
         }
         Error_Handler();
     }
-
-    USERS_STIM_PARAMETERS *CHANNEL_CONFIGS = &CHANNEL_LIST[channel];
-    CHANNEL_LIST[channel].AmpA_uA = stim_current_uA;
-    // Validate amplitude
-    uint8_t p_current_amplitude;
-    if (CHANNEL_CONFIGS->AmpA_uA >= 10 && CHANNEL_CONFIGS->AmpA_uA <= 300)
-    {
-        p_current_amplitude = CHANNEL_CONFIGS->AmpA_uA / 10;
-    }
-    else
-    {
-        printf("Fatal error: invalid amplitude %lu uA (channel %u)\r\n", CHANNEL_CONFIGS->AmpA_uA, channel);
-        Error_Handler();
-    }
-
     // Select chip
-    if (channel < 16)
-        HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
-    else{
-    	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
-        channel = channel % 16;
-    }
+	if (channel < 16)
+		HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+	else{
+		HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+		channel = channel % 16;
+	}
+	stim_parameters.activated_channels = channel;
 
-    uint8_t  num_pulse            = CHANNEL_CONFIGS->num_pulse;
+	USERS_STIM_PARAMETERS *CHANNEL_CONFIGS = &CHANNEL_LIST[channel];
+
+	if (stim_current_uA >= 10 && stim_current_uA <= 300)
+	{
+	 CHANNEL_CONFIGS->AmpA_uA = stim_current_uA / 10;
+	 stim_parameters.current_amplitude = stim_current_uA /10;
+	}
+	else{
+		while(1)
+		{
+			RHS2116_Toggle_LED_Warning(100);
+		}
+		Error_Handler();
+	}
+
+	// KEEP ONLY THIS PART IN THIS FUNCTION
+	uint8_t  num_pulse            = CHANNEL_CONFIGS->num_pulse;
+	uint32_t p_num_train          = CHANNEL_CONFIGS->num_train;
     uint16_t channel_mask         = (1 << channel);
-    uint32_t p_period_us          = CHANNEL_CONFIGS->periodP_us;
-    uint32_t p_pulse_width_us     = CHANNEL_CONFIGS->periodP_us / 2;
-    uint32_t p_dead_zone_us       = 0;
-    uint32_t p_callback_period_us = 10;
     uint32_t p_period_train_ms    = CHANNEL_CONFIGS->periodT_ms;
-    uint32_t p_num_train          = CHANNEL_CONFIGS->num_train;
-
-    CURRENT_STEP_SIZE p_nA_stepsize = Curr_10000nA;
-
-//    HAL_Delay(500);
-
-    RHS2116_setup_stim_pattern(hspi, channel_mask, p_period_us, p_pulse_width_us, p_dead_zone_us, p_nA_stepsize, p_current_amplitude, p_callback_period_us);
-
-    // KEEP ONLY THIS PART IN THIS FUNCTION
-
     uint32_t train_counter = 0;
     while ((train_counter < p_num_train) || p_num_train == 0)
     {

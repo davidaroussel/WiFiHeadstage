@@ -6,15 +6,15 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 8;
-        STM32_CS_INACTIVE_CLKS        : integer := 32;
+        STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 32;
         RHS_READ_CLKS_PER_HALF_BIT       : integer := 8;
         RHS_READ_CS_INACTIVE_CLKS        : integer := 32;
 
-        RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 64;    -- 32 for around 2.5KHz
-        RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
+        RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 8;    -- 32 for around 2.5KHz
+        RHS_STIM_CS_INACTIVE_CLKS        : integer := 8;
 		
 		-- 0: N/A 
 		-- 1: N/A
@@ -40,7 +40,7 @@ entity top_level is
         i_RHS_TOP_SPI_MISO_1 : in  STD_LOGIC; 
 		o_RHS_TOP_SPI_CS_n_1 : out STD_LOGIC; 
 		
-		o_RHS_TOP_SPI_MOSI_2   : out STD_LOGIC; --FOR DK
+		--o_RHS_TOP_SPI_MOSI_2   : out STD_LOGIC; --FOR DK
 		i_RHS_TOP_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_TOP_SPI_CS_n_2 : out STD_LOGIC; --FOR HEADSTAGE
 		
@@ -85,9 +85,6 @@ architecture RTL of top_level is
 	signal w_reset              : std_logic;
 	
 	signal reset_counter : integer range 0 to 168000000 := 0;
-	
-	signal debug_STM32_SPI_MISO : std_logic;
-	signal debug_RHD_SPI_MISO   : std_logic;
 
     signal w_STM32_TX_Byte       : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_TX_DV         : std_logic;
@@ -99,9 +96,9 @@ architecture RTL of top_level is
     signal w_FIFO_RHS_READ_COUNT          : std_logic_vector(8 downto 0);
     signal w_FIFO_RHS_READ_WE             : std_logic;
 	
-    signal w_FIFO_RHD2216_Data           : std_logic_vector(31 downto 0);
-    signal w_FIFO_RHD2216_COUNT          : std_logic_vector(8 downto 0);
-    signal w_FIFO_RHD2216_WE             : std_logic;
+    signal w_FIFO_RHS_STIM_Data           : std_logic_vector(31 downto 0);
+    signal w_FIFO_RHS_STIM_COUNT          : std_logic_vector(8 downto 0);
+    signal w_FIFO_RHS_STIM_WE             : std_logic;
 	
 	signal led1_sig : std_logic := '1';
     signal led2_sig : std_logic := '1';
@@ -122,6 +119,17 @@ architecture RTL of top_level is
 	signal int_RHS_TOP_SPI_CS_n_1 : std_logic;
 	signal int_RHS_TOP_SPI_MISO_2 : std_logic;
 	signal int_RHS_TOP_SPI_CS_n_2 : std_logic;
+	
+	signal int_RHS_TOP_CS_n : std_logic;
+	
+	signal int_RHS_BOTTOM_SPI_MOSI : std_logic;
+	signal int_RHS_BOTTOM_SPI_Clk  : std_logic;
+	signal int_RHS_BOTTOM_SPI_MISO_1 : std_logic;
+	signal int_RHS_BOTTOM_SPI_CS_n_1 : std_logic;
+	signal int_RHS_BOTTOM_SPI_MISO_2 : std_logic;
+	signal int_RHS_BOTTOM_SPI_CS_n_2 : std_logic;
+
+	signal int_RHS_BOTTOM_CS_n : std_logic;
 
     signal int_STM32_SPI_MOSI : std_logic;
 	signal int_STM32_SPI_MISO : std_logic;
@@ -188,7 +196,20 @@ begin
             i_RHS_READ_SPI_MISO_2   => int_RHS_TOP_SPI_MISO_2,
 			o_RHS_READ_SPI_Clk      => int_RHS_TOP_SPI_Clk,
             o_RHS_READ_SPI_CS_n_1   => int_RHS_TOP_SPI_CS_n_1,
-            o_RHS_READ_SPI_CS_n_2   => int_RHS_TOP_SPI_CS_n_2
+            o_RHS_READ_SPI_CS_n_2   => int_RHS_TOP_SPI_CS_n_2,
+			
+			            -- FIFO
+            o_FIFO_RHS_STIM_Data    => w_FIFO_RHS_STIM_Data,
+            o_FIFO_RHS_STIM_COUNT   => w_FIFO_RHS_STIM_COUNT,
+            o_FIFO_RHS_STIM_WE      => w_FIFO_RHS_STIM_WE,
+				
+            -- RHD SPI
+            o_RHS_STIM_SPI_MOSI     => int_RHS_BOTTOM_SPI_MOSI,
+            i_RHS_STIM_SPI_MISO_1   => int_RHS_BOTTOM_SPI_MISO_1,
+            i_RHS_STIM_SPI_MISO_2   => int_RHS_BOTTOM_SPI_MISO_2,
+			o_RHS_STIM_SPI_Clk      => int_RHS_BOTTOM_SPI_Clk,
+            o_RHS_STIM_SPI_CS_n_1   => int_RHS_BOTTOM_SPI_CS_n_1,
+            o_RHS_STIM_SPI_CS_n_2   => int_RHS_BOTTOM_SPI_CS_n_2
         );
 	o_reset <= w_reset;
 	o_Controller_Mode <= w_Controller_Mode;
@@ -198,23 +219,23 @@ begin
 		begin
 			if w_Controller_Mode = x"0" then
 				-- Passthrough: STM32 directly drives RHD
-				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
-				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
-				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_1;  
+				o_RHS_BOTTOM_SPI_Clk    <= o_STM32_SPI4_Clk;
+				o_RHS_BOTTOM_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				o_RHS_BOTTOM_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO    <= i_RHS_BOTTOM_SPI_MISO_1;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
 				
 			elsif w_Controller_Mode = x"1" then
-				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				o_RHS_BOTTOM_SPI_Clk    <= o_STM32_SPI4_Clk;
 				--IF DEVKIT
 				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
 				--o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;				
 				--IF HEADSTAGE
-				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
-				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_2;  
+				o_RHS_BOTTOM_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				o_RHS_BOTTOM_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
+				i_STM32_SPI4_MISO    <= i_RHS_BOTTOM_SPI_MISO_2;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
@@ -225,14 +246,14 @@ begin
 				o_STM32_SPI4_CS_n   <= int_STM32_SPI_CS_n;
 				int_STM32_SPI_MISO  <= i_STM32_SPI4_MISO;
 
-				o_RHS_TOP_SPI_Clk    <= int_RHS_TOP_SPI_Clk;
-				o_RHS_TOP_SPI_MOSI   <= int_RHS_TOP_SPI_MOSI;
+				o_RHS_BOTTOM_SPI_Clk    <= int_RHS_BOTTOM_SPI_Clk;
+				o_RHS_BOTTOM_SPI_MOSI   <= int_RHS_BOTTOM_SPI_MOSI;
 
-				o_RHS_TOP_SPI_CS_n_1   <= int_RHS_TOP_SPI_CS_n_1;
-				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1;
+				o_RHS_BOTTOM_SPI_CS_n_1   <= int_RHS_BOTTOM_SPI_CS_n_1;
+				int_RHS_BOTTOM_SPI_MISO_1 <= i_RHS_BOTTOM_SPI_MISO_1;
 
-				o_RHS_TOP_SPI_CS_n_2   <= int_RHS_TOP_SPI_CS_n_2;
-				int_RHS_TOP_SPI_MISO_2 <= i_RHS_TOP_SPI_MISO_2;
+				o_RHS_BOTTOM_SPI_CS_n_2   <= int_RHS_BOTTOM_SPI_CS_n_2;
+				int_RHS_BOTTOM_SPI_MISO_2 <= i_RHS_BOTTOM_SPI_MISO_2;
 			end if;
 
 		end process;

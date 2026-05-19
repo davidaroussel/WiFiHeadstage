@@ -111,9 +111,10 @@ volatile uint8_t spi_nrf_ready = 0;
 volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
 
-static boolean test_stim = 0;
-static boolean MEP_Mode  = 0;
-static boolean Z_Mode    = 0;
+static boolean test_stim     = 0;
+static boolean MEP_Mode      = 1;
+static boolean Z_Mode        = 0;
+static boolean FPGA_MEP_Mode = 0;
 
 
 
@@ -192,18 +193,15 @@ int main(void)
 	else if (MEP_Mode){
 		HAL_TIM_Base_Start_IT(&htim11);
 		uint32_t stim_current_uA = 20;
+		RHS2116_MEP_Config_Params(hspi, stim_current_uA);
 		for (uint8_t i =0 ; i<32; i++){
-			RHS2116_MEP_Config_Params();
+
 			RHS2116_MEP_Run_Stimulation(hspi, i, stim_current_uA);
 		}
 	    RHS2116_Toggle_LED_Warning(300);
 	    RHS2116_Toggle_LED_Warning(300);
 	    RHS2116_Toggle_LED_Warning(300);
 	    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
-//		uint8_t channel = 1;
-//		uint32_t stim_current_uA = 30;
-//		RHS2116_MEP_Config_Params();
-//		RHS2116_MEP_Run_Stimulation(hspi, channel, stim_current_uA);
 
 	}
 	else if (Z_Mode)
@@ -222,6 +220,32 @@ int main(void)
 			}
 		}
 	}
+	else if(FPGA_MEP_Mode){
+		uint32_t stim_current_uA = 30;
+		RHS2116_MEP_Config_Params(hspi, stim_current_uA);
+		// De-init SPI before changing mode
+		HAL_SPI_DeInit(&hspi4);
+		printf("[INFO] SPI deinitialized.\r\n");
+		//  HAL_Delay(1000);
+
+		// Re-init as SLAVE
+		SPI4_Slave_Init();
+		printf("[INFO] SPI SLAVE mode initialized.\r\n");
+
+		if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+			printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
+			Error_Handler();
+		}
+		printf("[INFO] Sending RDY_FPGA signal...\r\n");
+		//  HAL_Delay(1000);
+
+		HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
+		printf("[INFO] RDY_FPGA pin set LOW.\r\n");
+
+
+	}
+
 	else{
 		  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
 		      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
@@ -344,33 +368,28 @@ void SystemClock_Config(void)
 		RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 		RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 		RCC_OscInitStruct.PLL.PLLQ = 4;
-
+		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 	//    RCC_OscInitStruct.PLL.PLLM = 25;
 	//    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
-	//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-//		RCC_OscInitStruct.PLL.PLLM = 25;
-//		RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
-//		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+		RCC_OscInitStruct.PLL.PLLM = 25;
+		RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
 
 
-	    RCC_OscInitStruct.PLL.PLLM = 25;
-	    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
-	    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+
+//	    RCC_OscInitStruct.PLL.PLLM = 25;
+//	    RCC_OscInitStruct.PLL.PLLN = 240;    // SYSCLK = 60 MHz
 
 		//    RCC_OscInitStruct.PLL.PLLM = 16;
 		//	RCC_OscInitStruct.PLL.PLLN = 128;    // SYSCLK = 50 MHz
-		//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 	//	RCC_OscInitStruct.PLL.PLLM = 25;
 	//	RCC_OscInitStruct.PLL.PLLN = 192;    // SYSCLK = 48 MHz
-	//	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 
 	//    RCC_OscInitStruct.PLL.PLLM = 25;
 	//    RCC_OscInitStruct.PLL.PLLN = 168;    // SYSCLK = 42 MHz
-	//    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
 		if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 		{
@@ -671,7 +690,7 @@ static void Init_Intan_RHS(void){
 		while (init_check == 0xFFFF) {
 		init_check = INIT_RHS(hspi);
 		}
-		if (!MEP_Mode && !Z_Mode && !test_stim){
+		if (!MEP_Mode && !Z_Mode && !test_stim && !FPGA_MEP_Mode){
 			// De-init SPI before changing mode
 			HAL_SPI_DeInit(&hspi4);
 			printf("[INFO] SPI deinitialized.\r\n");
@@ -700,7 +719,7 @@ static void Init_Intan_RHS(void){
 
 		HAL_Delay(1);
 
-		if (!MEP_Mode && !Z_Mode && !test_stim){
+		if (!MEP_Mode && !Z_Mode && !test_stim && !FPGA_MEP_Mode){
 			// De-init SPI before changing mode
 			HAL_SPI_DeInit(&hspi4);
 			printf("[INFO] SPI deinitialized.\r\n");
