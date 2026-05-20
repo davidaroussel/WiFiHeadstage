@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Tue May 19 15:29:05 2026
+Tue May 19 20:10:36 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml 
@@ -295,38 +295,11 @@ WARNING <35935040> - synthesis: Register int_BOOST_ENABLE clock is stuck at One.
 WARNING <35935049> - synthesis: input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - synthesis: input port sdi_i remains unconnected for this instance. VDB-5049
 ######## Converting I/O port i_STM32_SPI4_MISO to output.
-CRITICAL <35002028> - synthesis: I/O Port o_RHS_TOP_SPI_MOSI 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port o_RHS_TOP_SPI_Clk 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port i_RHS_TOP_SPI_MISO_1 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port o_RHS_TOP_SPI_CS_n_1 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port i_RHS_TOP_SPI_MISO_2 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port o_RHS_TOP_SPI_CS_n_2 's net has no driver and is unused.
 WARNING <35931002> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(139): net \pll_inst/lscc_pll_inst/sclk_i does not have a driver. VDB-1002
 WARNING <35931002> - synthesis: c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(140): net \pll_inst/lscc_pll_inst/sdi_i does not have a driver. VDB-1002
-######## Missing driver on net o_RHS_TOP_SPI_MOSI. Patching with GND.
-######## Missing driver on net o_RHS_TOP_SPI_Clk. Patching with GND.
-######## Missing driver on net o_RHS_TOP_SPI_CS_n_1. Patching with GND.
-######## Missing driver on net o_RHS_TOP_SPI_CS_n_2. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sclk_i. Patching with GND.
 ######## Missing driver on net \pll_inst/lscc_pll_inst/sdi_i. Patching with GND.
 INFO <35001774> - synthesis: Extracted state machine for register '\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS' with one-hot encoding
-State machine has 3 reachable states with original encodings of:
-
- 00 
-
- 01 
-
- 10 
-
-original encoding -> new encoding (one-hot encoding)
-
- 00 -> 001
-
- 01 -> 010
-
- 10 -> 100
-
-INFO <35001774> - synthesis: Extracted state machine for register '\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS' with one-hot encoding
 State machine has 3 reachable states with original encodings of:
 
  00 
@@ -360,20 +333,37 @@ original encoding -> new encoding (one-hot encoding)
 
  10 -> 100
 
+INFO <35001774> - synthesis: Extracted state machine for register '\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS' with one-hot encoding
+State machine has 3 reachable states with original encodings of:
+
+ 00 
+
+ 01 
+
+ 10 
+
+original encoding -> new encoding (one-hot encoding)
+
+ 00 -> 001
+
+ 01 -> 010
+
+ 10 -> 100
 
 
 
-CRITICAL <35001747> - synthesis: Bit(s) of register driving w_Controller_Mode[3:0] stuck at '0': 3, 2
-CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM stuck at '0': 3
+
 CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS_FSM stuck at '0': 3
+CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM stuck at '0': 3
 CRITICAL <35001747> - synthesis: Bit(s) of register \Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM stuck at '0': 3
+CRITICAL <35001747> - synthesis: Bit(s) of register driving w_Controller_Mode[3:0] stuck at '0': 3, 2
 CRITICAL <35001747> - synthesis: Bit(s) of register driving \Controller_inst/stim_sequence_phase[31:0] stuck at '0': 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2
 CRITICAL <35001747> - synthesis: Bit(s) of register driving \Controller_inst/stim_delay_target[31:0] stuck at '0': 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2
 ######## Found 1 RTL RAMs in the design.
 ######## Mapping RTL RAM \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/mem_EBR.mem to 2 EBR blocks in PSEUDO_DUAL_PORT Mode
 
-CRITICAL <35002028> - synthesis: I/O Port i_RHS_TOP_SPI_MISO_1 's net has no driver and is unused.
-CRITICAL <35002028> - synthesis: I/O Port i_RHS_TOP_SPI_MISO_2 's net has no driver and is unused.
+CRITICAL <35002028> - synthesis: I/O Port i_RHS_BOTTOM_SPI_MISO_2 's net has no driver and is unused.
+WARNING <35935040> - synthesis: Register \Controller_inst/int_RHS_READ_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i31 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i30 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/stm32_state_i0_i29 clock is stuck at Zero. VDB-5040
@@ -407,11 +397,12 @@ WARNING <35935040> - synthesis: Register \Controller_inst/int_RHS_STIM_TX_Byte_i
 WARNING <35935040> - synthesis: Register \Controller_inst/int_RHS_STIM_TX_Byte_i0_i26 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/int_RHS_STIM_TX_Byte_i0_i25 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/int_RHS_STIM_TX_Byte_i0_i24 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i26 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28 clock is stuck at Zero. VDB-5040
 Combinational loop found : 1
 
  Net \Controller_inst/NUM_DATA[0] 
@@ -604,79 +595,8 @@ Combinational loop found : 32
 
  Instance \Controller_inst/NUM_DATA_1__I_0 
 
-Combinational loop found : 33
-
- Net o_RHS_BOTTOM_SPI_CS_n_2_c 
-
- Instance o_RHS_BOTTOM_SPI_CS_n_2_c_I_0 
-
-Combinational loop found : 34
-
- Net o_RHS_BOTTOM_SPI_CS_n_1_c 
-
- Instance o_RHS_BOTTOM_SPI_CS_n_1_c_I_0 
-
- Net o_RHS_BOTTOM_SPI_CS_n_1_c_N_2261 
-
- Instance i10 
-
-Combinational loop found : 35
-
- Net i_STM32_SPI4_MISO_c 
-
- Instance i_STM32_SPI4_MISO_c_I_0 
-
- Net i_STM32_SPI4_MISO_c_N_2253 
-
- Instance i12 
-
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i1 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i1 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i31 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i30 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i29 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i28 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i27 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i26 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i25 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i24 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i23 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i22 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i21 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i20 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i19 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i18 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i17 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i16 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i2 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i3 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i4 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i5 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i6 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i7 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i8 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i9 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i10 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i11 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i12 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i13 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i14 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i15 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i16 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i17 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i18 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i19 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i20 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i21 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i22 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i23 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i24 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i25 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i26 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i27 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i28 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i29 clock is stuck at Zero. VDB-5040
-WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i1 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i2 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i3 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i4 clock is stuck at Zero. VDB-5040
@@ -706,6 +626,35 @@ WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i28 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i29 clock is stuck at Zero. VDB-5040
 WARNING <35935040> - synthesis: Register \Controller_inst/rhs_STIM_state_const__i30 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i2 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i3 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i4 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i5 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i6 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i7 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i8 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i9 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i10 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i11 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i12 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i13 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i14 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i15 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i16 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i17 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i18 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i19 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i20 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i21 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i22 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i23 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i24 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i25 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i26 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i27 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i28 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i29 clock is stuck at Zero. VDB-5040
+WARNING <35935040> - synthesis: Register \Controller_inst/rhd_state_const__i30 clock is stuck at Zero. VDB-5040
 WARNING <35001779> - synthesis: Initial value found on instance rgb_sig_green will be ignored.
 WARNING <35001779> - synthesis: Initial value found on instance \Controller_inst/stim_delay_target__i1 will be ignored.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/full_r is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.full_flag_r.
@@ -2292,23 +2241,25 @@ Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i3 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i3.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i2 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i2.
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i1.
+INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top_level)######################
-Number of register bits => 2126 of 5280 (40 % )
+Number of register bits => 2197 of 5280 (41 % )
 BB_B => 3
 EBR_B => 1
-CCU2 => 189
-FD1P3XZ => 2126
-IB => 5
-LUT4 => 1787
+CCU2 => 209
+FD1P3XZ => 2197
+IB => 6
+IOL_B => 12
+LUT4 => 1867
 OB => 22
 PLL_B => 1
 ################### End Area Report ##################
 Number of odd-length carry chains : 8
-Number of even-length carry chains : 13
+Number of even-length carry chains : 15
 
 
 <A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
@@ -2324,23 +2275,23 @@ Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : o_reset_c, loads : 1000
   Net : maxfan_replicated_net_999, loads : 1000
-  Net : Controller_inst/int_STM32_TX_DV, loads : 537
-  Net : Controller_inst/n6731, loads : 512
+  Net : Controller_inst/int_STM32_TX_DV, loads : 536
+  Net : Controller_inst/n6951, loads : 512
   Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 254
+  Net : maxfan_replicated_net_1191, loads : 192
   Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 132
-  Net : maxfan_replicated_net_1123, loads : 124
-  Net : Controller_inst/n10, loads : 65
-  Net : Controller_inst/n10_adj_2388, loads : 65
-  Net : Controller_inst/n10_adj_2484, loads : 65
+  Net : Controller_inst/n10_adj_2420, loads : 113
+  Net : Controller_inst/n10_adj_2445, loads : 113
+  Net : Controller_inst/n10_adj_2465, loads : 113
 ################### End Clock Report ##################
 
-Peak Memory Usage: 189 MB
+Peak Memory Usage: 187 MB
 
 --------------------------------------------------------------
 Total CPU Time: 16 secs 
 Total REAL Time: 17 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 99801df1dc4b51f1a07632e57f3ce79ce00c052
+Checksum -- synthesis -- netlist: 2e7f54cc4722de07da7801eed522fe33f2d85f1e
 
 
 

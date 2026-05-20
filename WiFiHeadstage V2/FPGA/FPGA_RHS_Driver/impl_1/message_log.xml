@@ -977,36 +977,6 @@
             <Dynamic>sdi_i</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>o_RHS_TOP_SPI_MOSI</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>o_RHS_TOP_SPI_Clk</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>o_RHS_TOP_SPI_CS_n_1</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>o_RHS_TOP_SPI_CS_n_2</Dynamic>
-        </Message>
-        <Message>
             <ID>35931002</ID>
             <Severity>16</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/clk_48mhz/rtl/clk_48mhz.v(139): </Dynamic>
@@ -1031,26 +1001,14 @@
         <Message>
             <ID>35001774</ID>
             <Severity>1</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS</Dynamic>
             <Dynamic>one-hot</Dynamic>
         </Message>
         <Message>
             <ID>35001774</ID>
             <Severity>1</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/r_SM_CS</Dynamic>
             <Dynamic>one-hot</Dynamic>
-        </Message>
-        <Message>
-            <ID>35001747</ID>
-            <Severity>256</Severity>
-            <Dynamic>driving w_Controller_Mode[3:0]</Dynamic>
-            <Dynamic>3, 2</Dynamic>
-        </Message>
-        <Message>
-            <ID>35001747</ID>
-            <Severity>256</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM</Dynamic>
-            <Dynamic>3</Dynamic>
         </Message>
         <Message>
             <ID>35001747</ID>
@@ -1061,8 +1019,20 @@
         <Message>
             <ID>35001747</ID>
             <Severity>256</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/r_SM_CS_FSM</Dynamic>
+            <Dynamic>3</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
             <Dynamic>\Controller_inst/SPI_Master_CS_STM32_1/r_SM_CS_FSM</Dynamic>
             <Dynamic>3</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving w_Controller_Mode[3:0]</Dynamic>
+            <Dynamic>3, 2</Dynamic>
         </Message>
         <Message>
             <ID>35001747</ID>
@@ -1079,12 +1049,13 @@
         <Message>
             <ID>35002028</ID>
             <Severity>256</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_READ_TX_Byte__i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
@@ -1287,25 +1258,7 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i25</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1317,7 +1270,25 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i1</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i25</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i26</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1329,271 +1300,7 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i31</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i30</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i29</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i25</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i24</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i23</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i22</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i21</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i20</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i19</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i18</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i17</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/o_RX_Byte_Falling_i0_i16</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i2</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i8</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i9</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i10</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i11</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i13</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i14</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i15</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i16</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i17</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i18</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i19</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i20</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i21</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i22</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i23</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i24</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i25</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i29</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rhd_state_const__i30</Dynamic>
+            <Dynamic>\Controller_inst/rhd_state_const__i1</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1771,6 +1478,180 @@
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i7</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i8</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i9</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i10</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i11</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i12</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i13</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i14</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i15</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i16</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i17</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i18</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i19</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i20</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i21</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i22</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i23</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i24</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i25</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i26</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i27</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i28</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i29</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/rhd_state_const__i30</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
             <ID>35001779</ID>
             <Severity>16</Severity>
             <Dynamic>rgb_sig_green</Dynamic>
@@ -1781,6 +1662,10 @@
             <Dynamic>\Controller_inst/stim_delay_target__i1</Dynamic>
         </Message>
         <Message>
+            <ID>35002039</ID>
+            <Severity>1</Severity>
+        </Message>
+        <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
             <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
@@ -1788,26 +1673,20 @@
     </Task>
     <Task name="Export">
         <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
+            <ID>1081100</ID>
+            <Severity>1</Severity>
+            <Dynamic>Bitstream authenticated.</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>1191031</ID>
@@ -1836,46 +1715,25 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
     </Task>
     <Task name="PAR">
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
@@ -1885,64 +1743,33 @@
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
@@ -1952,46 +1779,24 @@
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>77001031</ID>
             <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_1</Dynamic>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {2} [get_ports i_RHS_TOP_SPI_MISO_2]</Dynamic>
+            <Dynamic>ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>

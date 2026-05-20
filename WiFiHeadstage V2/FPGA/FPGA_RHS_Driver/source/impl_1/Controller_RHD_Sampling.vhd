@@ -260,13 +260,13 @@ architecture RTL of Controller_RHD_Sampling is
 	-- READ INTAN ASCII
 	signal channel_array_intan : t_channel_array := (
 		0  => x"C0FB0000",  -- I and N
-		1  => x"C0FC0000",  -- T and A
-		2  => x"C0FD0000",  -- N and 0
-		3  => x"C0FE0000",  -- #CH and Die Rev.
-		4  => x"C0FB0000",  -- I and N
+		1  => x"C0FB0000",  -- T and A
+		2  => x"C0FB0000",  -- N and 0
+		3  => x"C0FB0000",  -- #CH and Die Rev.
+		4  => x"C0FC0000",  -- I and N
 		5  => x"C0FC0000",  -- T and A
-		6  => x"C0FD0000",  -- N and 0
-		7  => x"C0FF0000",  -- 0 and Chip ID(32)
+		6  => x"C0FC0000",  -- N and 0
+		7  => x"C0FC0000",  -- 0 and Chip ID(32)
 
 		8  => x"C0FB0000",  -- I and N
 		9  => x"C0FC0000",  -- T and A
@@ -277,13 +277,13 @@ architecture RTL of Controller_RHD_Sampling is
 		14 => x"C0FD0000",  -- N and 0
 		15 => x"C0FF0000",  -- 0 and Chip ID(32)
 
-		16 => x"C0FB0000",  -- I and N
-		17 => x"C0FC0000",  -- T and A
-		18 => x"C0FD0000",  -- N and 0
+		16 => x"C0FE0000",  -- I and N
+		17 => x"C0FE0000",  -- T and A
+		18 => x"C0FE0000",  -- N and 0
 		19 => x"C0FE0000",  -- #CH and Die Rev.
-		20 => x"C0FB0000",  -- I and N
-		21 => x"C0FC0000",  -- T and A
-		22 => x"C0FD0000",  -- N and 0
+		20 => x"C0FF0000",  -- I and N
+		21 => x"C0FF0000",  -- T and A
+		22 => x"C0FF0000",  -- N and 0
 		23 => x"C0FF0000",  -- 0 and Chip ID(32)
 
 		24 => x"C0FB0000",  -- I and N
@@ -520,7 +520,8 @@ architecture RTL of Controller_RHD_Sampling is
 	constant STIM_FIRST_PACKET        : integer := 6;
 	constant STIM_SECOND_PACKET       : integer := 3;
 	constant STIM_THIRD_PACKET        : integer := 3;
-	constant STIM_PULSE_NUM  : integer := 13;
+
+	constant STIM_PULSE_NUM  : integer := 13;
 
 	signal stim_delay_target : integer := 0;
 
@@ -691,7 +692,7 @@ architecture RTL of Controller_RHD_Sampling is
 					stm32_state <= 5;
 					
 				when 5 =>
-					if stm32_counter > (NUM_WORDS-2) then 
+					if stm32_counter > (NUM_WORDS-3) then 
 						int_FIFO_RHS_READ_RE <= '0'; 
 					end if;
 				
@@ -699,9 +700,6 @@ architecture RTL of Controller_RHD_Sampling is
 						if (stm32_counter mod 16) = 0 then
 						    temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
 							--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(31 downto 16) or x"0001"; -- set LSB
-						elsif (stm32_counter mod 32) = 31 then
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <=  x"ABCD"; -- set LSB
-						
 						else
 							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(31 downto 16) and x"FFFE"; -- clear LSB
 						end if;	
@@ -874,15 +872,17 @@ architecture RTL of Controller_RHD_Sampling is
 			rhd_index           <= 0;
 			rhd_state           <= 0;
 			rgd_info_sig_red   <= '1';
+			rgd_info_sig_green   <= '1';
 			chip_select_RHS_READ <= '1';
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
 				rgd_info_sig_red   <= '0';
+				rgd_info_sig_green   <= '0';
 				
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_red   <= '1';
-
+				rgd_info_sig_green   <= '1';
 				if SAMPLING_MODE = "00" or SAMPLING_MODE = "10" then
 					case rhd_state is
 						----------------------------------------------------------------
@@ -917,14 +917,14 @@ architecture RTL of Controller_RHD_Sampling is
 						when 2 =>
 							if int_RHS_READ_TX_Ready = '1' then
 
-								if rhd_index < 63 then
+								if rhd_index < 31 then
 									rhd_index <= rhd_index + 1;
 								else
 									rhd_index <= 0;
 								end if;
 
 								---- CHIP SELECTION LOGIC
-								if (rhd_index < 16) or ((rhd_index >= 32) and (rhd_index < 48)) then
+								if (rhd_index < 16) then
 									chip_select_RHS_READ <= '1';
 								else
 									chip_select_RHS_READ <= '0';
@@ -944,6 +944,7 @@ architecture RTL of Controller_RHD_Sampling is
 			end if;
 		end if;
 	end process;
+	
 	
 	
 	process (i_Clk)
@@ -1193,12 +1194,13 @@ architecture RTL of Controller_RHD_Sampling is
 	end process;
 	
 	
+	
 	mux_RHS_READ_SPI_MISO <= i_RHS_READ_SPI_MISO_1 when chip_select_RHS_READ = '1'
                         else i_RHS_READ_SPI_MISO_2;
 	
 	o_RHS_READ_SPI_CS_n_1 <= mux_RHS_READ_SPI_CS_n when chip_select_RHS_READ = '1' else '1';
 	o_RHS_READ_SPI_CS_n_2 <= mux_RHS_READ_SPI_CS_n when chip_select_RHS_READ = '0' else '1';
-
+	
 
 	mux_RHS_STIM_SPI_MISO <= i_RHS_STIM_SPI_MISO_1 when chip_select_RHS_STIM = '1'
                         else i_RHS_STIM_SPI_MISO_2;

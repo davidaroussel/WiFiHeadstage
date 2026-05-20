@@ -14,7 +14,7 @@ entity top_level is
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
         RHS_STIM_CLKS_PER_HALF_BIT       : integer := 8;    -- 32 for around 2.5KHz
-        RHS_STIM_CS_INACTIVE_CLKS        : integer := 8;
+        RHS_STIM_CS_INACTIVE_CLKS        : integer := 32;
 		
 		-- 0: N/A 
 		-- 1: N/A
@@ -216,29 +216,36 @@ begin
 
 	
 	Mode_Process : process(pll_clk_int)
-		begin
+	begin
+		if rising_edge(pll_clk_int)then
 			if w_Controller_Mode = x"0" then
-				-- Passthrough: STM32 directly drives RHD
 				o_RHS_BOTTOM_SPI_Clk    <= o_STM32_SPI4_Clk;
 				o_RHS_BOTTOM_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				
 				o_RHS_BOTTOM_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
+				o_RHS_BOTTOM_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
+				
 				i_STM32_SPI4_MISO    <= i_RHS_BOTTOM_SPI_MISO_1;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
 				
 			elsif w_Controller_Mode = x"1" then
-				o_RHS_BOTTOM_SPI_Clk    <= o_STM32_SPI4_Clk;
-				--IF DEVKIT
+				--IF DEVKIT (TO REDO SINCE MODIFY !!)
 				--o_RHS_TOP_SPI_MOSI_2 <= o_STM32_SPI4_MOSI;
 				--o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;				
 				--IF HEADSTAGE
-				o_RHS_BOTTOM_SPI_MOSI   <= o_STM32_SPI4_MOSI;
-				o_RHS_BOTTOM_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
-				i_STM32_SPI4_MISO    <= i_RHS_BOTTOM_SPI_MISO_2;  
+				o_RHS_TOP_SPI_Clk    <= o_STM32_SPI4_Clk;
+				o_RHS_TOP_SPI_MOSI   <= o_STM32_SPI4_MOSI;
+				
+				o_RHS_TOP_SPI_CS_n_1 <= o_STM32_SPI4_CS_n;
+				o_RHS_TOP_SPI_CS_n_2 <= o_STM32_SPI4_CS_n;
+				
+				i_STM32_SPI4_MISO    <= i_RHS_TOP_SPI_MISO_1;  
 				o_STM32_SPI4_Clk  <= 'Z';                                                                                                                                                                                                                                                 
 				o_STM32_SPI4_MOSI <= 'Z';
 				o_STM32_SPI4_CS_n <= 'Z';
+
 			else
 				-- Normal mode: controller handles communication
 				o_STM32_SPI4_Clk    <= int_STM32_SPI_Clk;
@@ -254,9 +261,19 @@ begin
 
 				o_RHS_BOTTOM_SPI_CS_n_2   <= int_RHS_BOTTOM_SPI_CS_n_2;
 				int_RHS_BOTTOM_SPI_MISO_2 <= i_RHS_BOTTOM_SPI_MISO_2;
-			end if;
+				
+				o_RHS_TOP_SPI_Clk    <= int_RHS_TOP_SPI_Clk;
+				o_RHS_TOP_SPI_MOSI   <= int_RHS_TOP_SPI_MOSI;
 
-		end process;
+				o_RHS_TOP_SPI_CS_n_1   <= int_RHS_TOP_SPI_CS_n_1;
+				int_RHS_TOP_SPI_MISO_1 <= i_RHS_TOP_SPI_MISO_1;
+
+				o_RHS_TOP_SPI_CS_n_2   <= int_RHS_TOP_SPI_CS_n_2;
+				int_RHS_TOP_SPI_MISO_2 <= i_RHS_TOP_SPI_MISO_2;
+				
+			end if;
+		end if;
+	end process;
 	
 	
 	
