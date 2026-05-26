@@ -43,7 +43,8 @@ class DataConverterV2:
 
         self.next_channel = 0
 
-        self.RHS_version = 0
+        self.neuro_timing_buffer = []
+        self.emg_timing_buffer = []
 
     def startThread(self):
         self.m_dataConversionTread.start()
@@ -264,8 +265,7 @@ class DataConverterV2:
                     valid_rows = np.any(raw_blocks != raw_blocks[:, [0]], axis=1)
                     raw_blocks = raw_blocks[valid_rows]
 
-                    second_ch_lsb = raw_blocks[:, 1] & 1
-                    timing_bits = second_ch_lsb[valid_rows]
+                    timing_source = raw_blocks[:, 1] & 1
 
                     # Skip if everything was garbage (very important for your case)
                     if raw_blocks.shape[0] == 0:
@@ -273,6 +273,9 @@ class DataConverterV2:
 
                     # -------- EMG --------
                     if emg_rows.any():
+                        self.emg_timing_buffer.extend(
+                            timing_source[emg_rows].tolist()
+                        )
                         emg_data = raw_blocks[emg_rows].ravel()
                         n = emg_data.size
 
@@ -284,6 +287,9 @@ class DataConverterV2:
 
                     # -------- NEURO --------
                     if neuro_rows.any():
+                        self.neuro_timing_buffer.extend(
+                            timing_source[neuro_rows].tolist()
+                        )
                         neuro_data = raw_blocks[neuro_rows].ravel()
                         n = neuro_data.size
 
@@ -314,6 +320,10 @@ class DataConverterV2:
 
                     # timing bit from channel 1
                     timing_bits = second_ch_lsb[valid_rows]
+
+                    self.neuro_timing_buffer.extend(
+                        timing_bits.tolist()
+                    )
 
                     # keep previous state between loops
                     if "prev_timing_state" not in globals():
@@ -354,13 +364,38 @@ class DataConverterV2:
                     reshaped = chunk.reshape(-1, self.num_channels).T
                     converted = ((np.clip(reshaped, -32768, 32768) * scale) + OpenEphysOffset).astype(np.uint16)
 
-                    self.send_packet(
-                        "tcpClient_emg",
-                        "tcp_connected_emg",
-                        self.port_emg,
-                        converted.ravel().tobytes(),
-                        "emg"
-                    )
+                    num_samples = converted.shape[1]
+
+                    if len(self.emg_timing_buffer) >= num_samples:
+
+                        bits = np.array(
+                            self.emg_timing_buffer[:num_samples],
+                            dtype=np.uint8
+                        )
+
+                        del self.emg_timing_buffer[:num_samples]
+
+                    else:
+
+                        bits = np.zeros(num_samples, dtype=np.uint8)
+
+                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
+                    try:
+                        converted = np.vstack((
+                            converted,
+                            extra_channel_1,
+                            extra_channel_2
+                        ))
+                        self.send_packet(
+                            "tcpClient_emg",
+                            "tcp_connected_emg",
+                            self.port_emg,
+                            converted.ravel().tobytes(),
+                            "emg"
+                        )
+                    except Exception as e:
+                        print("[EMG] ", e)
+
 
                     # shift buffer (FAST)
                     emg_buffer[:emg_write - TARGET_EMG_SAMPLES] = emg_buffer[TARGET_EMG_SAMPLES:emg_write]
@@ -377,106 +412,32 @@ class DataConverterV2:
                     # RESHAPE / CONVERT NEURAL DATA
                     # =========================================================
 
-                    if self.diff_mode:
+                    if self.diff_mode: #ONLY FOR RHS BOARD
                         reshaped = chunk.reshape(-1, 2 * self.num_channels).T
                         reshaped = reshaped[0::2] - reshaped[1::2]
 
                     else:
                         reshaped = chunk.reshape(-1, self.num_channels).T
-                        # reshaped[[15, 31]] = reshaped[[31, 15]]
+                        # reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD
 
                     converted = (np.clip(reshaped, -32768, 32767) * scale + OpenEphysOffset).astype(np.uint16)
 
-                    bits = timing_bits[:converted.shape[1]]
+                    num_samples = converted.shape[1]
 
-                    idx = np.flatnonzero(bits)
+                    if len(self.emg_timing_buffer) >= num_samples:
 
-                    # if idx.size > 0:
-                    #     print("timing bit idx:", idx)
+                        bits = np.array(
+                            self.emg_timing_buffer[:num_samples],
+                            dtype=np.uint8
+                        )
 
-                    # =========================================================
-                    # EXTRA CHANNEL 1
-                    # ORIGINAL TIMING PULSE CHANNEL
-                    # =========================================================
+                        del self.emg_timing_buffer[:num_samples]
 
-                    marker_amplitude = 10000
+                    else:
 
-                    extra_channel_1 = np.where(
-                        bits == 1,
-                        marker_amplitude,
-                        -marker_amplitude
-                    ).astype(np.int16)
+                        bits = np.zeros(num_samples, dtype=np.uint8)
 
-                    # =========================================================
-                    # EXTRA CHANNEL 2
-                    # CHANNEL-ID ENCODING
-                    # =========================================================
-
-                    # baseline value
-                    extra_channel_2 = np.full(bits.shape,-5000, dtype=np.int16)
-
-                    # ---------------------------------------------------------
-                    # SYNC DETECTION
-                    # Full HIGH packet resets sequence
-                    # ---------------------------------------------------------
-                    all_high = np.all(bits)
-
-                    if all_high:
-                        # next timing event becomes channel 0
-                        self.next_channel = 0
-
-                        # optional visible sync marker
-                        extra_channel_2[:] = -10000
-
-                    # ---------------------------------------------------------
-                    # NORMAL TIMING EVENTS
-                    # ---------------------------------------------------------
-                    elif idx.size > 0:
-
-                        ch = self.next_channel
-
-                        # -----------------------------------------------------
-                        # CHANNEL -> AMPLITUDE MAPPING
-                        # -----------------------------------------------------
-
-                        # easy to visualize in OpenEphys
-                        # 5000 -> 29800
-                        amplitude_table = (5000 + np.arange(32) * 800).astype(np.int16)
-
-                        amplitude = amplitude_table[ch]
-
-                        # apply only where timing pulse exists
-                        extra_channel_2[idx] = amplitude
-
-                        # print(f"CHANNEL {ch} -> amplitude {amplitude}")
-
-                        # -----------------------------------------------------
-                        # INCREMENT CHANNEL
-                        # DO NOT WRAP HERE
-                        # WAIT FOR NEXT SYNC FRAME
-                        # -----------------------------------------------------
-
-                        if self.next_channel < 31:
-                            self.next_channel += 1
-
-                    # =========================================================
-                    # CONVERT EXTRA CHANNELS TO OPENEPHYS FORMAT
-                    # =========================================================
-
-                    extra_channel_1 = (
-                            np.clip(extra_channel_1, -32768, 32767)
-                            + OpenEphysOffset
-                    ).astype(np.uint16)
-
-                    extra_channel_2 = (
-                            np.clip(extra_channel_2, -32768, 32767)
-                            + OpenEphysOffset
-                    ).astype(np.uint16)
-
-                    # shape -> (1, samples)
-                    extra_channel_1 = extra_channel_1[np.newaxis, :]
-                    extra_channel_2 = extra_channel_2[np.newaxis, :]
-
+                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
                     # =========================================================
                     # APPEND EXTRA CHANNELS
                     # =========================================================
@@ -488,7 +449,6 @@ class DataConverterV2:
                             extra_channel_1,
                             extra_channel_2
                         ))
-
                         self.send_packet(
                             "tcpClient_neuro",
                             "tcp_connected_neuro",
@@ -498,10 +458,98 @@ class DataConverterV2:
                         )
 
                     except Exception as e:
-                        print(e)
+                        print("[NEURO] ", e)
 
                     # ----------------------------
                     # shift buffer
                     # ----------------------------
                     neuro_buffer[:neuro_write - TARGET_NEURO_SAMPLES] = neuro_buffer[TARGET_NEURO_SAMPLES:neuro_write]
                     neuro_write -= TARGET_NEURO_SAMPLES
+
+    def add_timing_channels(self, timing_bits, converted):
+        openephys_offset = 32768
+        bits = timing_bits[:converted.shape[1]]
+
+        idx = np.flatnonzero(bits)
+
+        # if idx.size > 0:
+        #     print("timing bit idx:", idx)
+
+        # =========================================================
+        # EXTRA CHANNEL 1
+        # ORIGINAL TIMING PULSE CHANNEL
+        # =========================================================
+
+        marker_amplitude = 10000
+
+        extra_channel_1 = np.where(
+            bits == 1,
+            marker_amplitude,
+            -marker_amplitude
+        ).astype(np.int16)
+
+        # =========================================================
+        # EXTRA CHANNEL 2
+        # CHANNEL-ID ENCODING
+        # =========================================================
+
+        # baseline value
+        extra_channel_2 = np.full(bits.shape, -5000, dtype=np.int16)
+
+        # ---------------------------------------------------------
+        # SYNC DETECTION
+        # Full HIGH packet resets sequence
+        # ---------------------------------------------------------
+        all_high = np.all(bits)
+
+        if all_high:
+            # next timing event becomes channel 0
+            self.next_channel = 0
+
+            # optional visible sync marker
+            extra_channel_2[:] = -10000
+
+        # ---------------------------------------------------------
+        # NORMAL TIMING EVENTS
+        # ---------------------------------------------------------
+        elif idx.size > 0:
+
+            ch = self.next_channel
+
+            # -----------------------------------------------------
+            # CHANNEL -> AMPLITUDE MAPPING
+            # -----------------------------------------------------
+
+            # easy to visualize in OpenEphys
+            # 5000 -> 29800
+            amplitude_table = (5000 + np.arange(32) * 800).astype(np.int16)
+
+            amplitude = amplitude_table[ch]
+
+            # apply only where timing pulse exists
+            extra_channel_2[idx] = amplitude
+
+            # print(f"CHANNEL {ch} -> amplitude {amplitude}")
+
+            # -----------------------------------------------------
+            # INCREMENT CHANNEL
+            # DO NOT WRAP HERE
+            # WAIT FOR NEXT SYNC FRAME
+            # -----------------------------------------------------
+
+            if self.next_channel < 31:
+                self.next_channel += 1
+
+        # =========================================================
+        # CONVERT EXTRA CHANNELS TO OPENEPHYS FORMAT
+        # =========================================================
+
+        extra_channel_1 = (np.clip(extra_channel_1, -32768, 32767) + openephys_offset).astype(np.uint16)
+
+        extra_channel_2 = (np.clip(extra_channel_2, -32768, 32767) + openephys_offset).astype(np.uint16)
+
+        # shape -> (1, samples)
+        extra_channel_1 = extra_channel_1[np.newaxis, :]
+        extra_channel_2 = extra_channel_2[np.newaxis, :]
+
+        return extra_channel_1, extra_channel_2
