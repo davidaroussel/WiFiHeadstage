@@ -86,6 +86,7 @@ architecture RTL of top_level is
 	
 	signal reset_counter : integer range 0 to 168000000 := 0;
 
+
     signal w_STM32_TX_Byte       : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_TX_DV         : std_logic;
     signal w_STM32_TX_Ready      : std_logic;

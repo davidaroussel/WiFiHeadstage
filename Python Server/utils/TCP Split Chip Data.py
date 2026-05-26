@@ -77,7 +77,7 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
     maxOpenEphysValue = 0.005
     scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
-    capture_duration = 10 # seconds
+    capture_duration = 20 # seconds
 
     # =============================
     # BUFFERS
@@ -216,21 +216,28 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                         filtered_emg_processed = process_chip(filtered_emg_data)
                         filtered_neuro_processed = process_chip(filtered_neuro_data)
 
-                        fig, axes = plt.subplots(16, 2, figsize=(18, 20))
+                        fig, axes = plt.subplots(NUM_CHANNELS, 2, figsize=(18, 20))
                         fig.suptitle("EMG & Neuro: Raw (blue) vs Filtered (red)", fontsize=16)
 
                         # Share X within each column
-                        for ch in range(1, 16):
+                        for ch in range(1, NUM_CHANNELS):
                             axes[ch, 0].sharex(axes[0, 0])  # left column shares with top-left
                             axes[ch, 1].sharex(axes[0, 1])  # right column shares with top-right
 
-                        log_raw_capture_with_headers(
+                        # log_raw_capture_with_headers(
+                        #     capture_buffer,
+                        #     file_path="raw_data.txt",
+                        #     points_per_line=16
+                        # )
+
+                        log_hex_16bit(
                             capture_buffer,
-                            file_path="raw_data.txt",
-                            points_per_line=16
+                            file_path="hex_data.txt",
+                            values_per_row=64,
+                            group_size=16
                         )
 
-                        for ch in range(16):
+                        for ch in range(NUM_CHANNELS):
                             re = raw_emg_processed[ch][len(raw_emg_processed[ch]) // 2:]
                             rn = raw_neuro_processed[ch][len(raw_neuro_processed[ch]) // 2:]
                             fe = filtered_emg_processed[ch][len(filtered_emg_processed[ch]) // 2:]
@@ -272,6 +279,49 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                 conn.close()
             if server_socket:
                 server_socket.close()
+
+def log_hex_16bit(
+    buffer,
+    file_path="hex_dump.txt",
+    values_per_row=64,
+    group_size=16
+):
+    """
+    Write buffer as 16-bit HEX values.
+
+    Format:
+    - 64 values per row
+    - extra spacing every 16 values
+    - values shown as 4-digit uppercase HEX
+
+    Example row:
+    00AF 12BC 0F01 ...    A1B2 C3D4 ...
+    """
+
+    import numpy as np
+
+    # Interpret as unsigned 16-bit big-endian
+    data = np.frombuffer(buffer, dtype='>u2')
+
+    with open(file_path, "w") as f:
+
+        for row_start in range(0, len(data), values_per_row):
+
+            row = data[row_start:row_start + values_per_row]
+
+            parts = []
+
+            for i, value in enumerate(row):
+
+                # 4-digit HEX
+                parts.append(f"{value:04X}")
+
+                # extra spacing every group_size values
+                if (i + 1) % group_size == 0 and (i + 1) != len(row):
+                    parts.append("   ")   # bigger separator
+
+            f.write(" ".join(parts))
+            f.write("\n")
 
 def analyze_forced_buffer(file_path):
     with open(file_path, 'r') as f:

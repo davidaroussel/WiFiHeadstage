@@ -2,8 +2,8 @@
 // Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
 
 // backanno -o FPGA_Intan_Driver_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml FPGA_Intan_Driver_impl_1.udb 
-// Netlist created on Tue May 19 20:11:45 2026
-// Netlist written on Tue May 19 20:12:04 2026
+// Netlist created on Wed May 20 13:41:56 2026
+// Netlist written on Wed May 20 13:42:10 2026
 // Design is for device iCE40UP5K
 // Design is for package SG48
 // Design is for performance grade High-Performance_1.2V
@@ -18,7 +18,7 @@ module top_level ( o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI,
                    o_RHS_BOTTOM_SPI_CS_n_1, o_RHS_BOTTOM_SPI_Clk, 
                    o_RHS_BOTTOM_SPI_MOSI, o_RHS_TOP_SPI_CS_n_2, 
                    o_RHS_TOP_SPI_CS_n_1, o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_MOSI, 
-                   i_STM32_SPI4_MISO, RGB0_OUT, RGB1_OUT, RGB2_OUT, 
+                   i_STM32_SPI4_MISO, RGB1_OUT, RGB0_OUT, RGB2_OUT, 
                    i_RHS_BOTTOM_SPI_MISO_2 );
   input  RHS_SEL, CTRL0_IN, i_RHS_BOTTOM_SPI_MISO_1, i_RHS_TOP_SPI_MISO_2, 
          i_RHS_TOP_SPI_MISO_1, i_clk, i_RHS_BOTTOM_SPI_MISO_2;
@@ -28,7 +28,7 @@ module top_level ( o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI,
          o_RHS_BOTTOM_SPI_CS_n_2, o_RHS_BOTTOM_SPI_CS_n_1, 
          o_RHS_BOTTOM_SPI_Clk, o_RHS_BOTTOM_SPI_MOSI, o_RHS_TOP_SPI_CS_n_2, 
          o_RHS_TOP_SPI_CS_n_1, o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_MOSI, 
-         i_STM32_SPI4_MISO, RGB0_OUT, RGB1_OUT, RGB2_OUT;
+         i_STM32_SPI4_MISO, RGB1_OUT, RGB0_OUT, RGB2_OUT;
   inout  o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI;
   wire   \reset_counter_27__N_1[27] , n33058, n23359, \reset_counter[27] , 
          pll_clk_int, \reset_counter_27__N_1[26] , \reset_counter_27__N_1[25] , 
@@ -25874,8 +25874,8 @@ module top_level ( o_STM32_SPI4_CS_n, o_STM32_SPI4_Clk, o_STM32_SPI4_MOSI,
     .o_RHS_TOP_SPI_MOSI(o_RHS_TOP_SPI_MOSI));
   i_STM32_SPI4_MISO i_STM32_SPI4_MISO_I( .PADDO(i_STM32_SPI4_MISO_c), 
     .i_STM32_SPI4_MISO(i_STM32_SPI4_MISO));
-  RGB0_OUT RGB0_OUT_I( .PADDO(RGB0_OUT_c), .RGB0_OUT(RGB0_OUT));
   RGB1_OUT RGB1_OUT_I( .PADDO(RGB1_OUT_c), .RGB1_OUT(RGB1_OUT));
+  RGB0_OUT RGB0_OUT_I( .PADDO(RGB0_OUT_c), .RGB0_OUT(RGB0_OUT));
   RGB2_OUT RGB2_OUT_I( .PADDO(RGB2_OUT_c), .RGB2_OUT(RGB2_OUT));
 endmodule
 
@@ -80796,14 +80796,14 @@ module i_STM32_SPI4_MISO ( input PADDO, output i_STM32_SPI4_MISO );
 
 endmodule
 
-module RGB0_OUT ( input PADDO, output RGB0_OUT );
+module RGB1_OUT ( input PADDO, output RGB1_OUT );
   wire   VCCI;
 
-  BB_OD_B \RGB0_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB0_OUT));
+  BB_OD_B \RGB1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB1_OUT));
   vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (PADDO => RGB0_OUT) = (0:0:0,0:0:0);
+    (PADDO => RGB1_OUT) = (0:0:0,0:0:0);
   endspecify
 
 endmodule
@@ -80813,14 +80813,14 @@ module BB_OD_B ( input T_N, I, output O, inout B );
   BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
 endmodule
 
-module RGB1_OUT ( input PADDO, output RGB1_OUT );
+module RGB0_OUT ( input PADDO, output RGB0_OUT );
   wire   VCCI;
 
-  BB_OD_B \RGB1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB1_OUT));
+  BB_OD_B \RGB0_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB0_OUT));
   vcc DRIVEVCC( .PWR1(VCCI));
 
   specify
-    (PADDO => RGB1_OUT) = (0:0:0,0:0:0);
+    (PADDO => RGB0_OUT) = (0:0:0,0:0:0);
   endspecify
 
 endmodule

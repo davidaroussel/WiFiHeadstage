@@ -60,7 +60,7 @@ if __name__ == "__main__":
     TTL_GENERATOR       = False
     CONFIGURE_OPENEPHYS = False
     PRINT_OE_INFO       = False
-    DUAL_CHIP_MODE      = False
+    DUAL_CHIP_MODE      = True
 
     #GLOBAL VARIABLES
     HOST_ADDR      = ""#"192.168.2.196"
@@ -109,7 +109,6 @@ if __name__ == "__main__":
     QUEUE_CSV_DATA   = Queue()
 
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-
     CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
     TASK_WiFiServer    = WiFiHeadstageReceiverV2(QUEUE_RAW_DATA, CHANNELS, HEADSTAGE_BUFFER_SIZE, p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
