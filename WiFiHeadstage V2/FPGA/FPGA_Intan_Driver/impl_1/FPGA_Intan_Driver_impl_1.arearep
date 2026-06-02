@@ -1,0 +1,270 @@
+----------------------------------------------------------------------
+Report for cell top_level.TECH
+Register bits:  1436 of 5280 (27.197%)
+I/O cells:      27
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               BB_B         3          100.0
+                              EBR_B         2          100.0
+                               CCU2       151          100.0
+                            FD1P3XZ      1436          100.0
+                                 IB         4          100.0
+                               LUT4      1242          100.0
+                                 OB        20          100.0
+                              PLL_B         1          100.0
+SUB MODULES
+                          CLK_48MHz         1
+CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96)         1
+Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64)         1
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)         1
+                           FIFO_MEM         1
+                        FIFO_MEM_U3         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                         SPI_Master         1
+   SPI_Master(clks_per_half_bit=64)         1
+SPI_Master(num_of_bits_per_packet=256)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32)         1
+SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)         1
+                              TOTAL      2878
+----------------------------------------------------------------------
+Report for cell CLK_48MHz.v1
+Instance Path : pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+SUB MODULES
+CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000").v1
+Instance Path : pll_inst.lscc_pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2).v1
+Instance Path : Controller_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         2          100.0
+                                FA2       136           90.1
+                            FD1P3XZ      1403           97.7
+                               LUT4      1190           95.8
+SUB MODULES
+Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96)         1
+Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64)         1
+                           FIFO_MEM         1
+                        FIFO_MEM_U3         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                         SPI_Master         1
+   SPI_Master(clks_per_half_bit=64)         1
+SPI_Master(num_of_bits_per_packet=256)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32)         1
+SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)         1
+                              TOTAL      2747
+----------------------------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32).v1
+Instance Path : Controller_inst.SPI_Master_CS_STM32_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        19           12.6
+                            FD1P3XZ       301           21.0
+                               LUT4       241           19.4
+SUB MODULES
+SPI_Master(num_of_bits_per_packet=256)         1
+                              TOTAL       562
+----------------------------------------------------------------------
+Report for cell SPI_Master(num_of_bits_per_packet=256).v1
+Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        11            7.3
+                            FD1P3XZ       282           19.6
+                               LUT4       207           16.7
+                              TOTAL       500
+----------------------------------------------------------------------
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        27           17.9
+                            FD1P3XZ       235           16.4
+                               LUT4       161           13.0
+SUB MODULES
+                           FIFO_MEM         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+   SPI_Master(clks_per_half_bit=64)         1
+SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)         1
+                              TOTAL       430
+----------------------------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        12            7.9
+                            FD1P3XZ        66            4.6
+                               LUT4        96            7.7
+SUB MODULES
+   SPI_Master(clks_per_half_bit=64)         1
+                              TOTAL       175
+----------------------------------------------------------------------
+Report for cell SPI_Master(clks_per_half_bit=64).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         8            5.3
+                            FD1P3XZ        50            3.5
+                               LUT4        63            5.1
+                              TOTAL       121
+----------------------------------------------------------------------
+Report for cell FIFO_MEM.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.FIFO_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+                              TOTAL       234
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP").v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+                              TOTAL       233
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP").v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
+                              TOTAL       232
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP").v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_2.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+                              TOTAL       231
+----------------------------------------------------------------------
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        23           15.2
+                            FD1P3XZ       230           16.0
+                               LUT4       152           12.2
+SUB MODULES
+                        FIFO_MEM_U3         1
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                         SPI_Master         1
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)         1
+                              TOTAL       412
+----------------------------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96).v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         8            5.3
+                            FD1P3XZ        61            4.2
+                               LUT4        87            7.0
+SUB MODULES
+                         SPI_Master         1
+                              TOTAL       157
+----------------------------------------------------------------------
+Report for cell SPI_Master.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4            2.6
+                            FD1P3XZ        45            3.1
+                               LUT4        61            4.9
+                              TOTAL       110
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_U3.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2         1
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                              TOTAL       234
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1         1
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                              TOTAL       233
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+SUB MODULES
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0         1
+                              TOTAL       232
+----------------------------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0.v1
+Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           50.0
+                                FA2        15            9.9
+                            FD1P3XZ       152           10.6
+                               LUT4        63            5.1
+                              TOTAL       231

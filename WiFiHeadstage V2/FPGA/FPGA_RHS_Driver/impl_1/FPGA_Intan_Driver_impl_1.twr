@@ -1,0 +1,364 @@
+Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
+
+<<<<<<< HEAD
+Mon Jun  1 20:11:20 2026
+=======
+Wed May 20 13:42:00 2026
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
+
+Command line:    timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml
+
+-----------------------------------------
+Design:          top_level
+Family:          iCE40UP
+Device:          iCE40UP5K
+Package:         SG48
+Performance:     High-Performance_1.2V
+Package Status:                     Preliminary    Version 1.5
+**Performance Hardware Data Status :   Advanced Version 1.0
+-----------------------------------------
+
+
+=====================================================================
+                    Table of Contents
+=====================================================================
+    1  Timing Overview
+        1.1  SDC Constraints
+        1.2  Constraint Coverage
+        1.3  Overall Summary
+        1.4  Unconstrained Report
+        1.5  Combinational Loop
+        1.6  Error/Warning Messages
+    2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
+        2.1  Clock Summary
+        2.2  Endpoint slacks
+        2.3  Detailed Report
+    3  Hold at Speed Grade m Corner at -40 Degrees
+        3.1  Endpoint slacks
+        3.2  Detailed Report
+
+=====================================================================
+                    End of Table of Contents
+=====================================================================
+
+==============================================
+1  Timing Overview
+==============================================
+
+1.1  SDC Constraints
+=====================
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 5 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
+
+1.2  Constraint Coverage
+---------------------------
+Constraint Coverage: 0%
+
+
+1.3  Overall Summary
+---------------------------
+ Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees     Timing Errors: 0 endpoints;  Total Negative Slack: 0.000 ns 
+ Hold at Speed Grade m Corner at -40 Degrees                          Timing Errors: 0 endpoints;  Total Negative Slack: 0.000 ns 
+
+1.4  Unconstrained Report
+===========================
+
+1.4.1  Unconstrained Start/End Points
+--------------------------------------
+
+Clocked but unconstrained timing start points
+--------------------------------------------------
+There is no start point satisfying reporting criteria
+
+
+Clocked but unconstrained timing end points
+-------------------------------------------------------------------
+         Listing 10 End Points          |           Type           
+-------------------------------------------------------------------
+reset_counter_1557__i28/D               |    No arrival or required
+reset_counter_1557__i27/D               |    No arrival or required
+reset_counter_1557__i26/D               |    No arrival or required
+reset_counter_1557__i25/D               |    No arrival or required
+reset_counter_1557__i24/D               |    No arrival or required
+reset_counter_1557__i23/D               |    No arrival or required
+reset_counter_1557__i22/D               |    No arrival or required
+reset_counter_1557__i21/D               |    No arrival or required
+reset_counter_1557__i20/D               |    No arrival or required
+reset_counter_1557__i19/D               |    No arrival or required
+-------------------------------------------------------------------
+                                        |                          
+Number of unconstrained timing end poin |                          
+ts                                      |                      4226
+                                        |                          
+-------------------------------------------------------------------
+
+1.4.2  Start/End Points Without Timing Constraints
+---------------------------------------------------
+
+I/O ports without constraint
+----------------------------
+Possible constraints to use on I/O ports are:
+set_input_delay,
+set_output_delay,
+set_max_delay,
+create_clock,
+create_generated_clock,
+...
+
+-------------------------------------------------------------------
+     Listing 10 Start or End Points     |           Type           
+-------------------------------------------------------------------
+o_STM32_SPI4_CS_n                       |                     input
+o_STM32_SPI4_Clk                        |                     input
+o_STM32_SPI4_MOSI                       |                     input
+RHS_SEL                                 |                     input
+CTRL0_IN                                |                     input
+i_RHS_BOTTOM_SPI_MISO_1                 |                     input
+i_RHS_TOP_SPI_MISO_2                    |                     input
+i_RHS_TOP_SPI_MISO_1                    |                     input
+i_clk                                   |                     input
+i_RHS_BOTTOM_SPI_MISO_2                 |                     input
+-------------------------------------------------------------------
+                                        |                          
+Number of I/O ports without constraint  |                        25
+                                        |                          
+-------------------------------------------------------------------
+
+Nets without clock definition
+Define a clock on a top level port or a generated clock on a clock divider pin associated with this net(s).
+--------------------------------------------------
+There is no instance satisfying reporting criteria
+
+
+
+1.5  Combinational Loop
+========================
+Combinational Loops
+-------------------
+++++ Loop1
+i8059_3_lut_4_lut/D	->	i8059_3_lut_4_lut/Z
+
+++++ Loop2
+i8057_3_lut_4_lut/D	->	i8057_3_lut_4_lut/Z
+
+++++ Loop3
+i1_4_lut/A	->	i1_4_lut/Z
+
+++++ Loop4
+i1_4_lut_adj_164/A	->	i1_4_lut_adj_164/Z
+
+++++ Loop5
+i9415_3_lut/A	->	i9415_3_lut/Z
+
+++++ Loop6
+i8055_3_lut_4_lut/D	->	i8055_3_lut_4_lut/Z
+
+++++ Loop7
+i9425_3_lut/A	->	i9425_3_lut/Z
+
+++++ Loop8
+i8053_3_lut_4_lut/D	->	i8053_3_lut_4_lut/Z
+
+++++ Loop9
+i21_3_lut/C	->	i21_3_lut/Z
+
+++++ Loop10
+i4905_4_lut/A	->	i4905_4_lut/Z
+
+++++ Loop11
+i4903_4_lut/A	->	i4903_4_lut/Z
+
+++++ Loop12
+Controller_inst/i11511_2_lut/A	->	Controller_inst/i11511_2_lut/Z
+
+++++ Loop13
+Controller_inst/i11516_2_lut/A	->	Controller_inst/i11516_2_lut/Z
+
+++++ Loop14
+Controller_inst/i11517_2_lut/A	->	Controller_inst/i11517_2_lut/Z
+
+++++ Loop15
+Controller_inst/i11128_2_lut/A	->	Controller_inst/i11128_2_lut/Z
+
+++++ Loop16
+Controller_inst/i11536_2_lut/A	->	Controller_inst/i11536_2_lut/Z
+
+++++ Loop17
+Controller_inst/i11535_2_lut/A	->	Controller_inst/i11535_2_lut/Z
+
+++++ Loop18
+Controller_inst/i11534_2_lut/A	->	Controller_inst/i11534_2_lut/Z
+
+++++ Loop19
+Controller_inst/i11533_2_lut/A	->	Controller_inst/i11533_2_lut/Z
+
+++++ Loop20
+Controller_inst/i11532_2_lut/A	->	Controller_inst/i11532_2_lut/Z
+
+++++ Loop21
+Controller_inst/i11531_2_lut/A	->	Controller_inst/i11531_2_lut/Z
+
+++++ Loop22
+Controller_inst/i11530_2_lut/A	->	Controller_inst/i11530_2_lut/Z
+
+++++ Loop23
+Controller_inst/i11529_2_lut/A	->	Controller_inst/i11529_2_lut/Z
+
+++++ Loop24
+Controller_inst/i11510_2_lut/A	->	Controller_inst/i11510_2_lut/Z
+
+++++ Loop25
+Controller_inst/i11526_2_lut/A	->	Controller_inst/i11526_2_lut/Z
+
+++++ Loop26
+Controller_inst/i11528_2_lut/A	->	Controller_inst/i11528_2_lut/Z
+
+++++ Loop27
+Controller_inst/i11527_2_lut/A	->	Controller_inst/i11527_2_lut/Z
+
+++++ Loop28
+Controller_inst/i11523_2_lut/A	->	Controller_inst/i11523_2_lut/Z
+
+++++ Loop29
+Controller_inst/i11506_2_lut/A	->	Controller_inst/i11506_2_lut/Z
+
+++++ Loop30
+Controller_inst/i11507_2_lut/A	->	Controller_inst/i11507_2_lut/Z
+
+++++ Loop31
+Controller_inst/i11512_2_lut/A	->	Controller_inst/i11512_2_lut/Z
+
+++++ Loop32
+Controller_inst/i11525_2_lut/A	->	Controller_inst/i11525_2_lut/Z
+
+++++ Loop33
+Controller_inst/i11514_2_lut/A	->	Controller_inst/i11514_2_lut/Z
+
+++++ Loop34
+Controller_inst/i11515_2_lut/A	->	Controller_inst/i11515_2_lut/Z
+
+++++ Loop35
+Controller_inst/i11521_2_lut/A	->	Controller_inst/i11521_2_lut/Z
+
+++++ Loop36
+Controller_inst/i11513_2_lut/A	->	Controller_inst/i11513_2_lut/Z
+
+++++ Loop37
+Controller_inst/i11524_2_lut/A	->	Controller_inst/i11524_2_lut/Z
+
+++++ Loop38
+Controller_inst/i11509_2_lut/A	->	Controller_inst/i11509_2_lut/Z
+
+++++ Loop39
+Controller_inst/i11518_2_lut/A	->	Controller_inst/i11518_2_lut/Z
+
+++++ Loop40
+Controller_inst/i11519_2_lut/A	->	Controller_inst/i11519_2_lut/Z
+
+++++ Loop41
+Controller_inst/i11522_2_lut/A	->	Controller_inst/i11522_2_lut/Z
+
+++++ Loop42
+Controller_inst/i11520_2_lut/A	->	Controller_inst/i11520_2_lut/Z
+
+++++ Loop43
+Controller_inst/i11508_2_lut/A	->	Controller_inst/i11508_2_lut/Z
+
+
+1.6  Error/Warning Messages
+============================
+WARNING "70001944" - No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+
+===============================================================
+2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
+===============================================================
+
+2.1  Clock Summary
+=======================
+
+2.1.1 Clock "pll_clk_int"
+=======================
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+
+Single Clock Domain
+-------------------------------------------------------------------------------------------------------
+           Clock pll_clk_int            |                    |       Period       |     Frequency      
+-------------------------------------------------------------------------------------------------------
+ From pll_clk_int                       |             Target |               +INF |          0.000 MHz 
+                                        | Actual (all paths) |           1.336 ns |        748.503 MHz 
+Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_0__I_0/RCLK (MPW)                                                                
+                                        |   (50% duty cycle) |           1.336 ns |        748.503 MHz 
+-------------------------------------------------------------------------------------------------------
+
+Clock Domain Crossing
+
+2.2  Endpoint slacks
+=======================
+--------------------------------------------------
+There is no end point satisfying reporting criteria
+
+Total Negative Slack: 0
+
+
+2.3  Detailed Report
+=======================
+
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Detail report of critical paths
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    Detailed Report for timing paths 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    End of Detailed Report for timing paths 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+##########################################################
+
+
+
+===============================================================
+3  Hold at Speed Grade m Corner at -40 Degrees
+===============================================================
+
+3.1  Endpoint slacks
+=======================
+--------------------------------------------------
+There is no end point satisfying reporting criteria
+
+Total Negative Slack: 0
+
+
+3.2  Detailed Report
+=======================
+
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Detail report of critical paths
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    Detailed Report for timing paths 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    End of Detailed Report for timing paths 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+##########################################################
+
+
+

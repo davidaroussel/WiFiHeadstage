@@ -1,0 +1,281 @@
+
+// Verilog netlist produced by program backanno, Version Radiant Software (64-bit) 2023.2.1.288.0
+
+// backanno -o Passthrough_impl_1_vo.vo -sp High-Performance_1.2V -w -neg -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/Passthrough/promote.xml Passthrough_impl_1.udb 
+// Netlist created on Tue Apr 28 16:10:20 2026
+// Netlist written on Tue Apr 28 16:10:28 2026
+// Design is for device iCE40UP5K
+// Design is for package SG48
+// Design is for performance grade High-Performance_1.2V
+
+`timescale 1 ns / 1 ps
+
+module Controller_RHD64_Config ( o_RHS_TOP_SPI_MOSI, i_STM32_SPI4_MISO, 
+                                 o_RHS_TOP_SPI_Clk, o_RHS_TOP_SPI_CS_n_1, 
+                                 LED1_OUT, LED2_OUT, LED3_OUT, 
+                                 o_STM32_SPI4_MOSI, o_STM32_SPI4_Clk, 
+                                 o_STM32_SPI4_CS_n, i_RHS_TOP_SPI_MISO_1, 
+                                 RGB1_OUT, RGB2_OUT, RGB0_OUT, LED_CTL, 
+                                 ext_clk );
+  input  o_STM32_SPI4_MOSI, o_STM32_SPI4_Clk, o_STM32_SPI4_CS_n, 
+         i_RHS_TOP_SPI_MISO_1, LED_CTL, ext_clk;
+  output o_RHS_TOP_SPI_MOSI, i_STM32_SPI4_MISO, o_RHS_TOP_SPI_Clk, 
+         o_RHS_TOP_SPI_CS_n_1, LED1_OUT, LED2_OUT, LED3_OUT, RGB1_OUT, 
+         RGB2_OUT, RGB0_OUT;
+  wire   VCC_net, GND_net, o_RHS_TOP_SPI_MOSI_c_c, i_STM32_SPI4_MISO_c_c, 
+         o_RHS_TOP_SPI_Clk_c_c, o_RHS_TOP_SPI_CS_n_1_c_c;
+
+  SLICE_0 SLICE_0( .F0(VCC_net));
+  SLICE_1 SLICE_1( .F0(GND_net));
+  o_RHS_TOP_SPI_MOSI o_RHS_TOP_SPI_MOSI_I( .PADDO(o_RHS_TOP_SPI_MOSI_c_c), 
+    .o_RHS_TOP_SPI_MOSI(o_RHS_TOP_SPI_MOSI));
+  i_STM32_SPI4_MISO i_STM32_SPI4_MISO_I( .PADDO(i_STM32_SPI4_MISO_c_c), 
+    .i_STM32_SPI4_MISO(i_STM32_SPI4_MISO));
+  o_RHS_TOP_SPI_Clk o_RHS_TOP_SPI_Clk_I( .PADDO(o_RHS_TOP_SPI_Clk_c_c), 
+    .o_RHS_TOP_SPI_Clk(o_RHS_TOP_SPI_Clk));
+  o_RHS_TOP_SPI_CS_n_1 o_RHS_TOP_SPI_CS_n_1_I( 
+    .PADDO(o_RHS_TOP_SPI_CS_n_1_c_c), 
+    .o_RHS_TOP_SPI_CS_n_1(o_RHS_TOP_SPI_CS_n_1));
+  LED1_OUT LED1_OUT_I( .PADDO(VCC_net), .LED1_OUT(LED1_OUT));
+  LED2_OUT LED2_OUT_I( .PADDO(VCC_net), .LED2_OUT(LED2_OUT));
+  LED3_OUT LED3_OUT_I( .PADDO(VCC_net), .LED3_OUT(LED3_OUT));
+  o_STM32_SPI4_MOSI o_STM32_SPI4_MOSI_I( .PADDI(o_RHS_TOP_SPI_MOSI_c_c), 
+    .o_STM32_SPI4_MOSI(o_STM32_SPI4_MOSI));
+  o_STM32_SPI4_Clk o_STM32_SPI4_Clk_I( .PADDI(o_RHS_TOP_SPI_Clk_c_c), 
+    .o_STM32_SPI4_Clk(o_STM32_SPI4_Clk));
+  o_STM32_SPI4_CS_n o_STM32_SPI4_CS_n_I( .PADDI(o_RHS_TOP_SPI_CS_n_1_c_c), 
+    .o_STM32_SPI4_CS_n(o_STM32_SPI4_CS_n));
+  i_RHS_TOP_SPI_MISO_1 i_RHS_TOP_SPI_MISO_1_I( .PADDI(i_STM32_SPI4_MISO_c_c), 
+    .i_RHS_TOP_SPI_MISO_1(i_RHS_TOP_SPI_MISO_1));
+  RGB1_OUT RGB1_OUT_I( .PADDO(GND_net), .RGB1_OUT(RGB1_OUT));
+  RGB2_OUT RGB2_OUT_I( .PADDO(GND_net), .RGB2_OUT(RGB2_OUT));
+  RGB0_OUT RGB0_OUT_I( .PADDO(GND_net), .RGB0_OUT(RGB0_OUT));
+endmodule
+
+module SLICE_0 ( output F0 );
+  wire   GNDI;
+
+  lut4 i2( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+  endspecify
+
+endmodule
+
+module lut4 ( input A, B, C, D, output Z );
+
+  LUT4 #("0xFFFF") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module gnd ( output PWR0 );
+
+  VLO INST1( .Z(PWR0));
+endmodule
+
+module SLICE_1 ( output F0 );
+  wire   GNDI;
+
+  lut40001 i1( .A(GNDI), .B(GNDI), .C(GNDI), .D(GNDI), .Z(F0));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+  endspecify
+
+endmodule
+
+module lut40001 ( input A, B, C, D, output Z );
+
+  LUT4 #("0x0000") INST10( .A(A), .B(B), .C(C), .D(D), .Z(Z));
+endmodule
+
+module o_RHS_TOP_SPI_MOSI ( input PADDO, output o_RHS_TOP_SPI_MOSI );
+  wire   VCCI;
+
+  BB_B_B \o_RHS_TOP_SPI_MOSI_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(o_RHS_TOP_SPI_MOSI));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => o_RHS_TOP_SPI_MOSI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module BB_B_B ( input T_N, I, output O, inout B );
+
+  BB_B INST10( .T_N(T_N), .I(I), .O(O), .B(B));
+endmodule
+
+module vcc ( output PWR1 );
+
+  VHI INST1( .Z(PWR1));
+endmodule
+
+module i_STM32_SPI4_MISO ( input PADDO, output i_STM32_SPI4_MISO );
+  wire   VCCI;
+
+  BB_B_B \i_STM32_SPI4_MISO_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(i_STM32_SPI4_MISO));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => i_STM32_SPI4_MISO) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_RHS_TOP_SPI_Clk ( input PADDO, output o_RHS_TOP_SPI_Clk );
+  wire   VCCI;
+
+  BB_B_B \o_RHS_TOP_SPI_Clk_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(o_RHS_TOP_SPI_Clk));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => o_RHS_TOP_SPI_Clk) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_RHS_TOP_SPI_CS_n_1 ( input PADDO, output o_RHS_TOP_SPI_CS_n_1 );
+  wire   VCCI;
+
+  BB_B_B \o_RHS_TOP_SPI_CS_n_1_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), 
+    .B(o_RHS_TOP_SPI_CS_n_1));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => o_RHS_TOP_SPI_CS_n_1) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module LED1_OUT ( input PADDO, output LED1_OUT );
+  wire   VCCI;
+
+  BB_B_B \LED1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(LED1_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => LED1_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module LED2_OUT ( input PADDO, output LED2_OUT );
+  wire   VCCI;
+
+  BB_B_B \LED2_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(LED2_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => LED2_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module LED3_OUT ( input PADDO, output LED3_OUT );
+  wire   VCCI;
+
+  BB_B_B \LED3_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(LED3_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => LED3_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_MOSI ( output PADDI, input o_STM32_SPI4_MOSI );
+  wire   GNDI;
+
+  BB_B_B \o_RHS_TOP_SPI_MOSI_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_MOSI));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_MOSI => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_Clk ( output PADDI, input o_STM32_SPI4_Clk );
+  wire   GNDI;
+
+  BB_B_B \o_RHS_TOP_SPI_Clk_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_Clk));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_Clk => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module o_STM32_SPI4_CS_n ( output PADDI, input o_STM32_SPI4_CS_n );
+  wire   GNDI;
+
+  BB_B_B \o_RHS_TOP_SPI_CS_n_1_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(o_STM32_SPI4_CS_n));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (o_STM32_SPI4_CS_n => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module i_RHS_TOP_SPI_MISO_1 ( output PADDI, input i_RHS_TOP_SPI_MISO_1 );
+  wire   GNDI;
+
+  BB_B_B \i_STM32_SPI4_MISO_c_pad.bb_inst ( .T_N(GNDI), .I(GNDI), .O(PADDI), 
+    .B(i_RHS_TOP_SPI_MISO_1));
+  gnd DRIVEGND( .PWR0(GNDI));
+
+  specify
+    (i_RHS_TOP_SPI_MISO_1 => PADDI) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module RGB1_OUT ( input PADDO, output RGB1_OUT );
+  wire   VCCI;
+
+  BB_OD_B \RGB1_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB1_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => RGB1_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module BB_OD_B ( input T_N, I, output O, inout B );
+
+  BB_OD INST10( .T_N(T_N), .I(I), .O(O), .B(B));
+endmodule
+
+module RGB2_OUT ( input PADDO, output RGB2_OUT );
+  wire   VCCI;
+
+  BB_OD_B \RGB2_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB2_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => RGB2_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule
+
+module RGB0_OUT ( input PADDO, output RGB0_OUT );
+  wire   VCCI;
+
+  BB_OD_B \RGB0_OUT_pad.bb_inst ( .T_N(VCCI), .I(PADDO), .O(), .B(RGB0_OUT));
+  vcc DRIVEVCC( .PWR1(VCCI));
+
+  specify
+    (PADDO => RGB0_OUT) = (0:0:0,0:0:0);
+  endspecify
+
+endmodule

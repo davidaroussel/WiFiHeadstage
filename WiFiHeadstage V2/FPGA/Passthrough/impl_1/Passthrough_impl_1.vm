@@ -1,0 +1,98 @@
+// Verilog netlist produced by program LSE :  version Radiant Software (64-bit) 2023.2.1.288.0
+// Netlist written on Tue Apr 28 16:10:06 2026
+// Source file index table: 
+// Object locations will have the form @<file_index>(<first_ line>[<left_column>],<last_line>[<right_column>])
+// file 0 "c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/passthrough/source/impl_1/passthrough.vhd"
+// file 1 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.v"
+// file 2 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ice40up.vhd"
+// file 3 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/ccu2_b.v"
+// file 4 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/fd1p3bz.v"
+// file 5 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/fd1p3dz.v"
+// file 6 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/fd1p3iz.v"
+// file 7 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/fd1p3jz.v"
+// file 8 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/hsosc.v"
+// file 9 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/hsosc1p8v.v"
+// file 10 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/ib.v"
+// file 11 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/ifd1p3az.v"
+// file 12 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/lsosc.v"
+// file 13 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/lsosc1p8v.v"
+// file 14 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/ob.v"
+// file 15 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/obz_b.v"
+// file 16 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/ofd1p3az.v"
+// file 17 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/pdp4k.v"
+// file 18 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/rgb.v"
+// file 19 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/rgb1p8v.v"
+// file 20 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/sp256k.v"
+// file 21 "c:/lscc/radiant/2023.2/cae_library/simulation/verilog/ice40up/legacy.v"
+// file 22 "c:/lscc/radiant/2023.2/ip/avant/fifo/rtl/lscc_fifo.v"
+// file 23 "c:/lscc/radiant/2023.2/ip/avant/fifo_dc/rtl/lscc_fifo_dc.v"
+// file 24 "c:/lscc/radiant/2023.2/ip/avant/ram_dp/rtl/lscc_ram_dp.v"
+// file 25 "c:/lscc/radiant/2023.2/ip/avant/ram_dq/rtl/lscc_ram_dq.v"
+// file 26 "c:/lscc/radiant/2023.2/ip/avant/rom/rtl/lscc_rom.v"
+// file 27 "c:/lscc/radiant/2023.2/ip/common/adder/rtl/lscc_adder.v"
+// file 28 "c:/lscc/radiant/2023.2/ip/common/adder_subtractor/rtl/lscc_add_sub.v"
+// file 29 "c:/lscc/radiant/2023.2/ip/common/complex_mult/rtl/lscc_complex_mult.v"
+// file 30 "c:/lscc/radiant/2023.2/ip/common/counter/rtl/lscc_cntr.v"
+// file 31 "c:/lscc/radiant/2023.2/ip/common/mult_accumulate/rtl/lscc_mult_accumulate.v"
+// file 32 "c:/lscc/radiant/2023.2/ip/common/mult_add_sub/rtl/lscc_mult_add_sub.v"
+// file 33 "c:/lscc/radiant/2023.2/ip/common/mult_add_sub_sum/rtl/lscc_mult_add_sub_sum.v"
+// file 34 "c:/lscc/radiant/2023.2/ip/common/multiplier/rtl/lscc_multiplier.v"
+// file 35 "c:/lscc/radiant/2023.2/ip/common/subtractor/rtl/lscc_subtractor.v"
+// file 36 "c:/lscc/radiant/2023.2/ip/pmi/pmi_add.v"
+// file 37 "c:/lscc/radiant/2023.2/ip/pmi/pmi_addsub.v"
+// file 38 "c:/lscc/radiant/2023.2/ip/pmi/pmi_complex_mult.v"
+// file 39 "c:/lscc/radiant/2023.2/ip/pmi/pmi_counter.v"
+// file 40 "c:/lscc/radiant/2023.2/ip/pmi/pmi_dsp.v"
+// file 41 "c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo.v"
+// file 42 "c:/lscc/radiant/2023.2/ip/pmi/pmi_fifo_dc.v"
+// file 43 "c:/lscc/radiant/2023.2/ip/pmi/pmi_mac.v"
+// file 44 "c:/lscc/radiant/2023.2/ip/pmi/pmi_mult.v"
+// file 45 "c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsub.v"
+// file 46 "c:/lscc/radiant/2023.2/ip/pmi/pmi_multaddsubsum.v"
+// file 47 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp.v"
+// file 48 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dp_be.v"
+// file 49 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq.v"
+// file 50 "c:/lscc/radiant/2023.2/ip/pmi/pmi_ram_dq_be.v"
+// file 51 "c:/lscc/radiant/2023.2/ip/pmi/pmi_rom.v"
+// file 52 "c:/lscc/radiant/2023.2/ip/pmi/pmi_sub.v"
+
+//
+// Verilog Description of module Controller_RHD64_Config
+//
+
+module Controller_RHD64_Config (input o_STM32_SPI4_MOSI, output i_STM32_SPI4_MISO, 
+            input o_STM32_SPI4_Clk, input o_STM32_SPI4_CS_n, output o_RHS_TOP_SPI_MOSI, 
+            input i_RHS_TOP_SPI_MISO_1, output o_RHS_TOP_SPI_Clk, output o_RHS_TOP_SPI_CS_n_1, 
+            input LED_CTL, output RGB0_OUT, output RGB1_OUT, output RGB2_OUT, 
+            output LED1_OUT, output LED2_OUT, output LED3_OUT, input ext_clk);
+    
+    
+    wire GND_net, VCC_net, o_RHS_TOP_SPI_MOSI_c_c, i_STM32_SPI4_MISO_c_c, 
+        o_RHS_TOP_SPI_Clk_c_c, o_RHS_TOP_SPI_CS_n_1_c_c;
+    
+    VHI i2 (.Z(VCC_net));
+    (* lineinfo="@0(15[3],15[21])" *) OB o_RHS_TOP_SPI_MOSI_pad (.I(o_RHS_TOP_SPI_MOSI_c_c), 
+            .O(o_RHS_TOP_SPI_MOSI));
+    (* lineinfo="@0(10[9],10[26])" *) OB i_STM32_SPI4_MISO_pad (.I(i_STM32_SPI4_MISO_c_c), 
+            .O(i_STM32_SPI4_MISO));
+    (* lineinfo="@0(17[9],17[26])" *) OB o_RHS_TOP_SPI_Clk_pad (.I(o_RHS_TOP_SPI_Clk_c_c), 
+            .O(o_RHS_TOP_SPI_Clk));
+    (* lineinfo="@0(18[9],18[29])" *) OB o_RHS_TOP_SPI_CS_n_1_pad (.I(o_RHS_TOP_SPI_CS_n_1_c_c), 
+            .O(o_RHS_TOP_SPI_CS_n_1));
+    (* lineinfo="@0(22[9],22[17])" *) OB RGB0_OUT_pad (.I(GND_net), .O(RGB0_OUT));
+    (* lineinfo="@0(23[9],23[17])" *) OB RGB1_OUT_pad (.I(GND_net), .O(RGB1_OUT));
+    (* lineinfo="@0(24[9],24[17])" *) OB RGB2_OUT_pad (.I(GND_net), .O(RGB2_OUT));
+    (* lineinfo="@0(26[3],26[11])" *) OB LED1_OUT_pad (.I(VCC_net), .O(LED1_OUT));
+    (* lineinfo="@0(27[3],27[11])" *) OB LED2_OUT_pad (.I(VCC_net), .O(LED2_OUT));
+    (* lineinfo="@0(28[3],28[11])" *) OB LED3_OUT_pad (.I(VCC_net), .O(LED3_OUT));
+    (* lineinfo="@0(9[9],9[26])" *) IB o_RHS_TOP_SPI_MOSI_c_pad (.I(o_STM32_SPI4_MOSI), 
+            .O(o_RHS_TOP_SPI_MOSI_c_c));
+    (* lineinfo="@0(11[9],11[25])" *) IB o_RHS_TOP_SPI_Clk_c_pad (.I(o_STM32_SPI4_Clk), 
+            .O(o_RHS_TOP_SPI_Clk_c_c));
+    (* lineinfo="@0(12[9],12[26])" *) IB o_RHS_TOP_SPI_CS_n_1_c_pad (.I(o_STM32_SPI4_CS_n), 
+            .O(o_RHS_TOP_SPI_CS_n_1_c_c));
+    (* lineinfo="@0(16[9],16[29])" *) IB i_STM32_SPI4_MISO_c_pad (.I(i_RHS_TOP_SPI_MISO_1), 
+            .O(i_STM32_SPI4_MISO_c_c));
+    VLO i1 (.Z(GND_net));
+    
+endmodule

@@ -1,0 +1,232 @@
+---------------------------------------------------
+Report for cell top_level
+   Instance path: top_level
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	       2408        100.0
+                               LUTGATE	       2106        100.0
+                                LUTCCU	        302        100.0
+                                 IOBUF	         27        100.0
+                                PFUREG	       1436        100.0
+                                   EBR	          2        100.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                             CLK_48MHz	          1         0.0
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)	          1        60.1
+---------------------------------------------------
+Report for cell CLK_48MHz
+   Instance path: top_level/pll_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")	          1         0.0
+---------------------------------------------------
+Report for cell CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")
+   Instance path: top_level/pll_inst/lscc_pll_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+---------------------------------------------------
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)
+   Instance path: top_level/Controller_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	       1448        60.1
+                               LUTGATE	       1176        55.8
+                                LUTCCU	        272        90.1
+                                PFUREG	       1403        97.7
+                                   EBR	          2        100.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96)	          1         8.2
+Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64)	          1         8.7
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32)	          1        11.6
+---------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32)
+   Instance path: top_level/Controller_inst/SPI_Master_CS_STM32_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        279        11.6
+                               LUTGATE	        241        11.4
+                                LUTCCU	         38        12.6
+                                PFUREG	        301        21.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+SPI_Master(num_of_bits_per_packet=256)	          1         9.5
+---------------------------------------------------
+Report for cell SPI_Master(num_of_bits_per_packet=256)
+   Instance path: top_level/Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        229         9.5
+                               LUTGATE	        207         9.8
+                                LUTCCU	         22         7.3
+                                PFUREG	        282        19.6
+---------------------------------------------------
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64)
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        210         8.7
+                               LUTGATE	        156         7.4
+                                LUTCCU	         54        17.9
+                                PFUREG	        235        16.4
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                              FIFO_MEM	          1         3.9
+SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)	          1         4.8
+---------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        115         4.8
+                               LUTGATE	         91         4.3
+                                LUTCCU	         24         7.9
+                                PFUREG	         66         4.6
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+      SPI_Master(clks_per_half_bit=64)	          1         3.2
+---------------------------------------------------
+Report for cell SPI_Master(clks_per_half_bit=64)
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         76         3.2
+                               LUTGATE	         60         2.8
+                                LUTCCU	         16         5.3
+                                PFUREG	         50         3.5
+---------------------------------------------------
+Report for cell FIFO_MEM
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/FIFO_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+---------------------------------------------------
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96)
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        197         8.2
+                               LUTGATE	        151         7.2
+                                LUTCCU	         46        15.2
+                                PFUREG	        230        16.0
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                           FIFO_MEM_U3	          1         3.9
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)	          1         4.2
+---------------------------------------------------
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        102         4.2
+                               LUTGATE	         86         4.1
+                                LUTCCU	         16         5.3
+                                PFUREG	         61         4.2
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                            SPI_Master	          1         2.9
+---------------------------------------------------
+Report for cell SPI_Master
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         69         2.9
+                               LUTGATE	         61         2.9
+                                LUTCCU	          8         2.6
+                                PFUREG	         45         3.1
+---------------------------------------------------
+Report for cell FIFO_MEM_U3
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/FIFO_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U2
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U1
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0	          1         3.9
+---------------------------------------------------
+Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")_U0
+   Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         93         3.9
+                               LUTGATE	         63         3.0
+                                LUTCCU	         30         9.9
+                                PFUREG	        152        10.6
+                                   EBR	          1        50.0

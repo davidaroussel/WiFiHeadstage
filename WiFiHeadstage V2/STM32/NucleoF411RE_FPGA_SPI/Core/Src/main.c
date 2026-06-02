@@ -1,0 +1,642 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "../Intan/Intan_utils.h"
+#include "../Intan/RHS_Driver.h"
+#include "../Intan/RHD_Driver.h"
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define FPGA_CHUNK_SIZE 4096
+#define FPGA_ACCUM_SIZE 8192
+#define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
+
+#define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_rx_fpga_buffer[SPI_RX_FPGA_BUFFER_SIZE];
+
+#define SPI_TX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
+uint8_t spi_tx_fpga_buffer[SPI_TX_FPGA_BUFFER_SIZE];
+
+
+#define NRF_FRAME_SIZE (FPGA_ACCUM_SIZE) // 2B header + payload + 2B footer
+uint8_t fpga_accum_buffer[FPGA_ACCUM_SIZE];
+uint32_t fpga_accum_index = 0;
+uint8_t nrf_tx_buffer[NRF_FRAME_SIZE];
+uint8_t nrf_rx_buffer[NRF_FRAME_SIZE];
+
+
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+SPI_HandleTypeDef hspi1;
+SPI_HandleTypeDef hspi4;
+DMA_HandleTypeDef hdma_spi1_rx;
+DMA_HandleTypeDef hdma_spi1_tx;
+DMA_HandleTypeDef hdma_spi4_rx;
+DMA_HandleTypeDef hdma_spi4_tx;
+
+UART_HandleTypeDef huart2;
+
+/* USER CODE BEGIN PV */
+#ifdef __GNUC__
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi);
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
+static void MX_USART2_UART_Init(void);
+static void SPI4_Master_Init(void);
+static void SPI4_Slave_Init(void);
+static void MX_SPI1_Init(void);
+static void Prepare_nRF_Frame(void);
+static void Init_Intan(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+volatile uint8_t spi_fpga_ready = 0;
+volatile uint8_t spi_nrf_ready = 0;
+volatile uint32_t spi_counter = 0;
+volatile uint8_t fpga_frame_ready = 0;
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+  /* USER CODE BEGIN 2 */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  for (int i=0; i<SPI_TX_FPGA_BUFFER_SIZE; i++){
+	  spi_tx_fpga_buffer[i] = i%255;
+  }
+
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_USART2_UART_Init();
+  MX_SPI1_Init();
+
+  //FOR THE NRF TO WAIT UNTIL EVERYTHING IS READY
+   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+   HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_RESET);
+
+   Init_Intan();
+
+  // Start SPI DMA transmission/reception
+  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
+      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
+      Error_Handler();
+  }
+
+  printf("[INFO] Sending RDY_FPGA signal...\r\n");
+//  HAL_Delay(1000);
+  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_SET);
+  printf("[INFO] RDY_FPGA pin set LOW.\r\n");
+
+
+
+  while (1)
+  {
+      if (spi_fpga_ready)
+      {
+          spi_fpga_ready = 0;
+
+          memcpy(&fpga_accum_buffer[fpga_accum_index],
+                 spi_rx_fpga_buffer,
+                 SPI_RX_FPGA_BUFFER_SIZE);
+
+          fpga_accum_index += SPI_RX_FPGA_BUFFER_SIZE;
+
+          if (fpga_accum_index >= FPGA_ACCUM_SIZE)
+          {
+              fpga_accum_index = 0;
+              fpga_frame_ready = 1;   // mark frame complete
+          }
+      }
+
+      // 🔽 THIS BLOCK GOES HERE 🔽
+      if (fpga_frame_ready)
+      {
+    	  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+          fpga_frame_ready = 0;
+          spi_nrf_ready = 1;
+      }
+
+      if (spi_nrf_ready)
+      {
+          spi_nrf_ready = 0;
+
+          Prepare_nRF_Frame();
+
+//          HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer, nrf_rx_buffer, NRF_FRAME_SIZE);
+
+          HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
+      }
+  }
+
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 200;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+    hspi1.Instance = SPI1;
+	hspi1.Init.Mode = SPI_MODE_SLAVE;
+	hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+	hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+	hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+	hspi1.Init.NSS = SPI_NSS_HARD_INPUT;  // SLAVE → external NSS
+	hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+	hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+	hspi1.Init.CRCPolynomial = 10;
+
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+static void SPI4_Master_Init(void)
+{
+
+	  /* SPI4 parameter configuration */
+	  hspi4.Instance = SPI4;
+	  hspi4.Init.Mode = SPI_MODE_MASTER;
+	  hspi4.Init.Direction = SPI_DIRECTION_2LINES;
+	  hspi4.Init.DataSize = SPI_DATASIZE_16BIT;
+	  hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;  // Set CPOL = 0
+	  hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;       // Set CPHA = 0
+	  hspi4.Init.NSS = SPI_NSS_SOFT;
+	  hspi4.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+	  hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	  hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
+	  hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+	  hspi4.Init.CRCPolynomial = 10;
+
+	  if (HAL_SPI_Init(&hspi4) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+
+	RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin   = RHD_SPI_CS_Pin;
+	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
+}
+
+
+static void SPI4_Slave_Init(void)
+{
+    hspi4.Instance = SPI4;
+    hspi4.Init.Mode = SPI_MODE_SLAVE;
+    hspi4.Init.Direction = SPI_DIRECTION_2LINES;
+    hspi4.Init.DataSize = SPI_DATASIZE_8BIT;
+    hspi4.Init.CLKPolarity = SPI_POLARITY_LOW;
+    hspi4.Init.CLKPhase = SPI_PHASE_1EDGE;
+    hspi4.Init.NSS = SPI_NSS_HARD_INPUT;  // SLAVE → external NSS
+    hspi4.Init.FirstBit = SPI_FIRSTBIT_MSB;
+    hspi4.Init.TIMode = SPI_TIMODE_DISABLE;
+    hspi4.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+    hspi4.Init.CRCPolynomial = 10;
+
+    if (HAL_SPI_Init(&hspi4) != HAL_OK){
+        Error_Handler();
+    }
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = RHD_SPI_CS_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF6_SPI4;
+	HAL_GPIO_Init(RHD_SPI_CS_Port, &GPIO_InitStruct);
+}
+/**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 921600;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA2_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+  /* DMA2_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+  /* DMA2_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+  /* DMA2_Stream3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(RDY_FPGA_GPIO_Port, RDY_FPGA_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin : B1_Pin */
+  GPIO_InitStruct.Pin = B1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PC12 */
+  GPIO_InitStruct.Pin = RDY_FPGA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(RDY_FPGA_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PC10 */
+  GPIO_InitStruct.Pin = RDY_nRF_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(RDY_nRF_GPIO_Port, &GPIO_InitStruct);
+
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI1)
+    {
+
+
+    }
+
+    else  if (hspi->Instance == SPI4)
+    {
+        spi_counter++;
+        spi_fpga_ready = 1;
+//        printf("SPI_COUNTER %i \r\n", spi_counter);
+        // Restart DMA immediately
+        HAL_SPI_TransmitReceive_DMA(hspi, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE);
+        if (spi_counter == 2){
+        	spi_nrf_ready = 1;
+        	spi_counter = 0;
+        }
+    }
+}
+
+
+static void Prepare_nRF_Frame(void)
+{
+//	printf("PREPARE FRAME \r\n");
+
+
+    memcpy(&nrf_tx_buffer[0],
+           fpga_accum_buffer,
+           FPGA_ACCUM_SIZE);
+
+
+    nrf_tx_buffer[0] = 0xAA;
+    nrf_tx_buffer[1] = 0x55;
+
+
+    for(int i=0; i<FPGA_ACCUM_SIZE; i+=2)
+		printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+    printf("\r\n");
+    printf("\r\n");
+
+//    printf("%02X%02X %02X%02X %02X%02X %02X%02X", nrf_tx_buffer[0], nrf_tx_buffer[1], nrf_tx_buffer[64], nrf_tx_buffer[65], nrf_tx_buffer[128], nrf_tx_buffer[129], nrf_tx_buffer[192], nrf_tx_buffer[193]);
+//    printf("\r\n");
+
+//    for (int i = 0; i<NRF_FRAME_SIZE; i+=64){
+//    	printf("%02X%02X ", nrf_tx_buffer[i], nrf_tx_buffer[i+1]);
+//    }
+//    printf("--------------------------------------------------------------------------");
+//    printf("\r\n");
+//    printf("\r\n");
+}
+
+
+static void Init_Intan(void){
+	uint16_t RHD2132_ID = 0x0004;
+	uint16_t RHD2216_ID = 0x0002;
+	uint8_t rhd2132_detected = 0;
+	uint8_t rhd2132_doubled = 0;
+	uint8_t rhd2216_detected = 0;
+	uint8_t rhd2216_doubled = 0;
+	uint32_t retry_counter = 0;
+	uint8_t DUAL_INTAN = 0;
+	HAL_SPI_DeInit(&hspi4);
+	uint16_t rhd_chip = 0;
+
+	//    Start SPI4 as MASTER
+	SPI4_Master_Init();
+	//  HAL_Delay(1000);
+	if (DUAL_INTAN)
+	{
+		printf("[INFO] Initializing RHD in passthrough mode...\r\n");
+		while (!(rhd2132_detected && rhd2216_detected))
+		{
+			rhd_chip = INIT_RHD(&hspi4);
+
+			if (rhd_chip == 0xFFFF)
+			{
+				if ((retry_counter % 100) == 0){
+					printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
+				}
+				retry_counter += 1;
+			}
+			else
+			{
+				if (rhd_chip == RHD2132_ID && !rhd2132_detected)
+				{
+					if (!rhd2132_doubled){
+						rhd2132_doubled = 1;
+						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+						printf("[OK] RHD2132 Initialized Once\r\n");
+					}
+					else{
+						rhd2132_detected = 1;
+						printf("[OK] RHD2132 Initialized Twice\r\n");
+					}
+
+				}
+				else if (rhd_chip == RHD2216_ID && !rhd2216_detected)
+				{
+					if (!rhd2216_doubled){
+						rhd2216_doubled = 1;
+						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
+						printf("[OK] RHD2132 Initialized Once\r\n");
+					}
+					else{
+						rhd2216_detected = 1;
+						printf("[OK] RHD2132 Initialized Twice\r\n");
+					}
+				}
+			}
+			HAL_Delay(10);
+	  }
+
+	  if (rhd2132_detected && rhd2216_detected)
+	  {
+		  printf("[SUCCESS] Both RHD2132 and RHD2216 detected.\r\n");
+	  }
+	  else
+	  {
+		  printf("[WARNING] One or more RHD chips missing.\r\n");
+	  }
+  }
+  else
+	  {
+	  while (rhd_chip == 0xFFFF) {
+		  printf("[WARN] RHD not detected. Retrying...\r\n");
+		  rhd_chip = INIT_RHD(&hspi4);
+		  //  HAL_Delay(1000);
+	  }
+	  printf("RHD CHIP IS: 0x%04X \r\n", rhd_chip);
+	  }
+	  HAL_Delay(1);
+
+	  // De-init SPI before changing mode
+	  HAL_SPI_DeInit(&hspi4);
+	  printf("[INFO] SPI deinitialized.\r\n");
+	  //  HAL_Delay(1000);
+
+	  // Re-init as SLAVE
+	  SPI4_Slave_Init();
+	  printf("[INFO] SPI SLAVE mode initialized.\r\n");
+}
+
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART2 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */
