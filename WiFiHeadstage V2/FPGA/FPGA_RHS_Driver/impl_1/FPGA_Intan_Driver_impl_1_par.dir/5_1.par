@@ -1,6 +1,14 @@
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
+<<<<<<< HEAD
 Wed May 20 13:41:27 2026
+=======
+<<<<<<< HEAD
+Mon Jun  1 20:10:40 2026
+=======
+Wed May 20 13:41:27 2026
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -18,6 +26,7 @@ Family:  iCE40UP
 Device:  iCE40UP5K
 Package: SG48
 Performance Grade:   High-Performance_1.2V
+<<<<<<< HEAD
 WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
 
 WARNING <77001031> - par: In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
@@ -30,10 +39,25 @@ WARNING <77001031> - par: In the constraint 'ldc_set_location -site {48} [get_po
 
 
 WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 9 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
+=======
+WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+
+WARNING <77001031> - par: In the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+
+WARNING <70001944> - par: No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+
+WARNING <77001031> - par: In the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+
+
+WARNING: Database constraint "create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 5 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]" does not have corresponding timing constraint. Please check if the resource objects of the constraint are valid carefully!
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 WARNING <71003020> - par: Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 WARNING <71003020> - par: Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 WARNING <71003020> - par: Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 WARNING <71003020> - par: Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
+<<<<<<< HEAD
 Number of Signals: 6125
 Number of Connections: 17230
 Device utilization summary:
@@ -44,6 +68,18 @@ Device utilization summary:
    PIO               28/56           50% used
                      28/36           77% bonded
    IOLOGIC           12/56           21% used
+=======
+Number of Signals: 5674
+Number of Connections: 15318
+Device utilization summary:
+
+   SLICE (est.)    1734/2640         66% used
+     LUT           3287/5280         62% used
+     REG           2104/5280         40% used
+   PIO               28/56           50% used
+                     28/36           77% bonded
+   IOLOGIC            0/56            0% used
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
    DSP                0/8             0% used
    I2C                0/2             0% used
    HFOSC              0/1             0% used
@@ -63,6 +99,19 @@ Device utilization summary:
 Pin Constraint Summary:
    19 out of 28 pins locked (67% locked).
 .
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+.............
+Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 4 secs 
+
+
+................
+Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 6 secs 
+
+Starting Placer Phase 1. CPU time: 6 secs , REAL time: 6 secs 
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 ............
 Finished Placer Phase 0 (HIER). CPU time: 2 secs , REAL time: 3 secs 
 
@@ -71,6 +120,7 @@ Finished Placer Phase 0 (HIER). CPU time: 2 secs , REAL time: 3 secs
 Finished Placer Phase 0 (AP).  CPU time: 4 secs , REAL time: 5 secs 
 
 Starting Placer Phase 1. CPU time: 4 secs , REAL time: 5 secs 
+<<<<<<< HEAD
 ..  ..
 ....................
 
@@ -86,23 +136,64 @@ WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MIS
 WARNING <77001031> - par: In the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 
 Finished Placer Phase 1. CPU time: 15 secs , REAL time: 17 secs 
+=======
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+..  ..
+....................
+
+Placer score = 549038.
+
+Device SLICE utilization summary after final SLICE packing:
+   SLICE           1720/2640         65% used
+
+WARNING <70001944> - par: No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+
+WARNING <77001031> - par: In the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+
+<<<<<<< HEAD
+Finished Placer Phase 1. CPU time: 21 secs , REAL time: 21 secs 
+=======
+Finished Placer Phase 1. CPU time: 15 secs , REAL time: 17 secs 
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 Starting Placer Phase 2.
 .
 
+<<<<<<< HEAD
 Placer score =  754142
 Finished Placer Phase 2.  CPU time: 16 secs , REAL time: 17 secs 
+=======
+<<<<<<< HEAD
+Placer score =  585194
+Finished Placer Phase 2.  CPU time: 21 secs , REAL time: 22 secs 
+=======
+Placer score =  754142
+Finished Placer Phase 2.  CPU time: 16 secs , REAL time: 17 secs 
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
+<<<<<<< HEAD
   PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1218, ce load = 0, sr load = 0
   PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_215" on site "R9C3A", clk load = 0, ce load = 0, sr load = 539
   PRIMARY "o_reset_c" from Q0 on comp "SLICE_209" on site "R14C2D", clk load = 0, ce load = 0, sr load = 545
   PRIMARY "Controller_inst.n6951" from F0 on comp "Controller_inst.SLICE_2957" on site "R13C2B", clk load = 0, ce load = 258, sr load = 0
   PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2376" on site "R13C29D", clk load = 0, ce load = 287, sr load = 0
   PRIMARY "maxfan_replicated_net_1191" from Q0 on comp "SLICE_215" on site "R9C3A", clk load = 0, ce load = 0, sr load = 95
+=======
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1132, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q1 on comp "Controller_inst.SLICE_3115" on site "R11C25B", clk load = 0, ce load = 0, sr load = 540
+  PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_151" on site "R8C2A", clk load = 0, ce load = 0, sr load = 512
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2997" on site "R14C7A", clk load = 0, ce load = 257, sr load = 0
+  PRIMARY "Controller_inst.n6018" from F1 on comp "Controller_inst.SLICE_2746" on site "R13C25A", clk load = 0, ce load = 259, sr load = 0
+  PRIMARY "maxfan_replicated_net_1099" from Q0 on comp "SLICE_151" on site "R8C2A", clk load = 0, ce load = 0, sr load = 56
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
   PRIMARY  : 6 out of 8 (75%)
 
@@ -119,15 +210,30 @@ I/O Bank Usage Summary:
 +----------+----------------+------------+------------+------------+
 | I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
 +----------+----------------+------------+------------+------------+
+<<<<<<< HEAD
 | 0        | 11 / 14 ( 78%) | 3.3V       |            |            |
 | 1        | 9 / 14 ( 64%)  | 3.3V       |            |            |
 | 2        | 8 / 8 (100%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
+=======
+| 0        | 14 / 14 (100%) | 3.3V       |            |            |
+| 1        | 7 / 14 ( 50%)  | 3.3V       |            |            |
+| 2        | 7 / 8 ( 87%)   | 3.3V       |            |            |
++----------+----------------+------------+------------+------------+
+
+<<<<<<< HEAD
+Total Placer CPU time: 22 secs , REAL time: 22 secs 
+
+
+Checksum -- place: ecdf47c5614c2b92de85f59941b4035245a16596
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 Total Placer CPU time: 16 secs , REAL time: 17 secs 
 
 
 Checksum -- place: 5a3bdf05d6b8693d92a74da3adac257c5d889895
+<<<<<<< HEAD
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
@@ -136,6 +242,21 @@ WARNING <77001031> - par: In the constraint 'ldc_set_location -site {48} [get_po
 
 
 Start NBR router at 13:41:45 05/20/26
+=======
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
+
+WARNING <77001032> - par: Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
+
+WARNING <77001031> - par: In the constraint 'ldc_set_location -site {2} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
+
+
+<<<<<<< HEAD
+Start NBR router at 20:11:02 06/01/26
+=======
+Start NBR router at 13:41:45 05/20/26
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -153,6 +274,7 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
+<<<<<<< HEAD
 2566 connections routed with dedicated routing resources
 6 global clock signals routed
 5508 connections routed (of 14671 total) (37.54%)
@@ -175,6 +297,29 @@ Primary clocks (6 used out of 8 available):
        Data    loads: 0     out of     5 routed (  0.00%)
 #7  Signal "pll_clk_int"
        Clock   loads: 1218  out of  1218 routed (100.00%)
+=======
+2360 connections routed with dedicated routing resources
+6 global clock signals routed
+5116 connections routed (of 12525 total) (40.85%)
+---------------------------------------------------------
+Clock routing summary:
+Primary clocks (6 used out of 8 available):
+#0  Signal "maxfan_replicated_net_1099"
+       Control loads: 56    out of    56 routed (100.00%)
+#1  Signal "Controller_inst.n6018"
+       Control loads: 259   out of   259 routed (100.00%)
+#4  Signal "o_reset_c"
+       Control loads: 540   out of   540 routed (100.00%)
+       Data    loads: 0     out of     1 routed (  0.00%)
+#5  Signal "Controller_inst.int_STM32_TX_DV"
+       Control loads: 257   out of   257 routed (100.00%)
+       Data    loads: 0     out of    24 routed (  0.00%)
+#6  Signal "maxfan_replicated_net_999"
+       Control loads: 512   out of   512 routed (100.00%)
+       Data    loads: 0     out of    33 routed (  0.00%)
+#7  Signal "pll_clk_int"
+       Clock   loads: 1132  out of  1132 routed (100.00%)
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -184,18 +329,52 @@ Other clocks:
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 WARNING <70001944> - par: No source clock for
+<<<<<<< HEAD
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 Start NBR section for initial routing at 13:41:46 05/20/26
+=======
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+
+<<<<<<< HEAD
+Start NBR section for initial routing at 20:11:04 06/01/26
+=======
+Start NBR section for initial routing at 13:41:46 05/20/26
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<<<<<<< HEAD
 299(0.11%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+=======
+<<<<<<< HEAD
+200(0.08%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+=======
+299(0.11%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+Start NBR section for normal routing at 20:11:12 06/01/26
+Level 4, iteration 1
+13(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+Level 4, iteration 2
+8(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+Level 4, iteration 3
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+Level 4, iteration 4
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+
+Start NBR section for post-routing at 20:11:12 06/01/26
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 Start NBR section for normal routing at 13:41:54 05/20/26
 Level 4, iteration 1
 17(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
@@ -205,17 +384,38 @@ Level 4, iteration 3
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 9 secs 
 
 Start NBR section for post-routing at 13:41:54 05/20/26
+<<<<<<< HEAD
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - par: No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
+=======
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+
+End NBR router with 0 unrouted connection
+WARNING <70001944> - par: No source clock for
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+
+<<<<<<< HEAD
+Checksum -- route: a2a8b2e3a6f15c3e13a4917b23870573afa142d3
+
+Total CPU time 12 secs 
+Total REAL time: 13 secs 
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 Checksum -- route: d375590f74edbc13e3be47318477e0cf2966af02
 
 Total CPU time 10 secs 
 Total REAL time: 11 secs 
+<<<<<<< HEAD
 Completely routed.
 End of route.  14671 routed (100.00%); 0 unrouted.
+=======
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+Completely routed.
+End of route.  12525 routed (100.00%); 0 unrouted.
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -233,9 +433,21 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
+<<<<<<< HEAD
 Total CPU  Time: 28 secs 
 Total REAL Time: 29 secs 
 Peak Memory Usage: 201.31 MB
+=======
+<<<<<<< HEAD
+Total CPU  Time: 35 secs 
+Total REAL Time: 35 secs 
+Peak Memory Usage: 190.30 MB
+=======
+Total CPU  Time: 28 secs 
+Total REAL Time: 29 secs 
+Peak Memory Usage: 201.31 MB
+>>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 
 par done!
