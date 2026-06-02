@@ -45,6 +45,7 @@ class DataConverterV2:
 
         self.neuro_timing_buffer = []
         self.emg_timing_buffer = []
+        self.RHD_CHIP = 0
 
     def startThread(self):
         self.m_dataConversionTread.start()
@@ -177,295 +178,6 @@ class DataConverterV2:
 
         return corrected_blocks
 
-    def convertData(self):
-
-        OpenEphysOffset = 32768
-        maxOpenEphysValue = 0.005
-        scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
-
-        START_CAPS = b'\xAA\x54'
-        FRAME_SIZE = 8192
-        PAYLOAD_SIZE = 8192
-
-        # ===== TARGET SIZES =====
-        if self.diff_mode:
-            TARGET_NEURO_SAMPLES = 8192  # 256 samples × 16 channels
-        else:
-            TARGET_NEURO_SAMPLES = 4096
-        TARGET_EMG_SAMPLES = 4096  # change as needed
-
-        # ===== Connect both sockets =====
-        if self.dual_chip_mode:
-            self.connect_TCP(self.port_neuro, "neuro")
-            self.connect_TCP(self.port_emg, "emg")
-            print("--- STARTING DUAL STREAM THREAD ---")
-        else:
-            self.connect_TCP(self.port_neuro, "neuro")
-            print("--- STARTING SINGLE STREAM THREAD ---")
-
-        # =============================
-        # PREALLOCATED BUFFERS (outside loop)
-        # =============================
-        neuro_buffer = np.empty(TARGET_NEURO_SAMPLES * 2, dtype='>i2')
-        emg_buffer = np.empty(TARGET_EMG_SAMPLES * 2, dtype='>i2')
-
-        neuro_write = 0
-        emg_write = 0
-
-        data_buffer = bytearray()
-        view = memoryview(data_buffer)
-
-        # =============================
-        # MAIN LOOP
-        # =============================
-        data_buffer = bytearray()  # ✅ NO memoryview
-
-        while True:
-            chunk = self.queue_raw_data.get()
-            data_buffer.extend(chunk)
-            # print(f"Queue Size {self.queue_raw_data.qsize()}")
-            while len(data_buffer) >= FRAME_SIZE:
-
-                payload = bytes(data_buffer[:PAYLOAD_SIZE])
-                del data_buffer[:FRAME_SIZE]
-
-                raw = np.frombuffer(payload, dtype='>i2')
-                # reshape once (needed for both modes)
-                raw_blocks = raw.reshape(-1, 16)
-
-                # =========================================
-                # 🔥 REMOVE UNIFORM ROWS (FASTEST METHOD)
-                # =========================================
-                # Keep rows where at least one value differs from column 0
-                valid_rows = np.any(raw_blocks != raw_blocks[:, [0]], axis=1)
-                raw_blocks = raw_blocks[valid_rows]
-
-                # If nothing left, skip immediately
-                if raw_blocks.shape[0] == 0:
-                    continue
-
-                if self.dual_chip_mode:
-                    # =============================
-                    # 🔥 DUAL MODE (FAST LSB CHECK)
-                    # =============================
-
-                    # Only check first 2 channels
-                    ch0 = raw_blocks[:, 0] & 1
-                    ch1 = raw_blocks[:, 1] & 1
-
-                    emg_rows = (ch0 == 1) & (ch1 == 1)
-                    neuro_rows = (ch0 == 0) & (ch1 == 0)
-
-
-
-                    # =========================================
-                    # 🔥 REMOVE FLAT ROWS (ALL 16 VALUES SAME)
-                    # =========================================
-                    # Keep rows where at least one value differs
-                    valid_rows = np.any(raw_blocks != raw_blocks[:, [0]], axis=1)
-                    raw_blocks = raw_blocks[valid_rows]
-
-                    timing_source = raw_blocks[:, 1] & 1
-
-                    # Skip if everything was garbage (very important for your case)
-                    if raw_blocks.shape[0] == 0:
-                        continue
-
-                    # -------- EMG --------
-                    if emg_rows.any():
-                        self.emg_timing_buffer.extend(
-                            timing_source[emg_rows].tolist()
-                        )
-                        emg_data = raw_blocks[emg_rows].ravel()
-                        n = emg_data.size
-
-                        if emg_write + n > emg_buffer.size:
-                            emg_write = 0  # wrap/reset
-
-                        emg_buffer[emg_write:emg_write + n] = emg_data
-                        emg_write += n
-
-                    # -------- NEURO --------
-                    if neuro_rows.any():
-                        self.neuro_timing_buffer.extend(
-                            timing_source[neuro_rows].tolist()
-                        )
-                        neuro_data = raw_blocks[neuro_rows].ravel()
-                        n = neuro_data.size
-
-                        if neuro_write + n > neuro_buffer.size:
-                            neuro_write = 0
-
-                        neuro_buffer[neuro_write:neuro_write + n] = neuro_data
-                        neuro_write += n
-
-                else:
-                    raw_16ch = raw_blocks[:, :]
-
-                    first_ch_lsb = raw_16ch[:, 0] & 1
-                    second_ch_lsb = raw_16ch[:, 1] & 1
-
-                    # channels 2..15 must have LSB = 0
-                    remaining_ch_lsb = raw_16ch[:, 2:] & 1
-
-                    valid_rows = (
-                            (first_ch_lsb == 1) &
-                            (remaining_ch_lsb.sum(axis=1) == 0)
-                    )
-
-                    if not valid_rows.any():
-                        continue
-
-                    filtered_blocks = raw_16ch[valid_rows]
-
-                    # timing bit from channel 1
-                    timing_bits = second_ch_lsb[valid_rows]
-
-                    self.neuro_timing_buffer.extend(
-                        timing_bits.tolist()
-                    )
-
-                    # keep previous state between loops
-                    if "prev_timing_state" not in globals():
-                        prev_timing_state = None
-
-                    # for bit in timing_bits:
-                    #     # only react on transitions
-                    #     if bit != prev_timing_state:
-                    #         if bit:
-                    #             self.gui_ttl.send_ttl(line=2, state=1)  # Turn ON
-                    #             # send TTL HIGH on channel 2
-                    #             # example:
-                    #             # keyboard.write_register(2, 1)
-                    #
-                    #         else:
-                    #             self.gui_ttl.send_ttl(line=2, state=0)  # Turn OFF
-                    #             # send TTL LOW on channel 2
-                    #             # example:
-                    #             # keyboard.write_register(2, 0)
-                    #
-                    #         # update state
-                    #         prev_timing_state = bit
-
-                    neuro_data = filtered_blocks.ravel()
-                    n = neuro_data.size
-                    if neuro_write + n > neuro_buffer.size:
-                        neuro_write = 0  # wrap/reset
-
-                    neuro_buffer[neuro_write:neuro_write + n] = neuro_data
-                    neuro_write += n
-
-                # =============================
-                # EMG PROCESS + SEND
-                # =============================
-                if emg_write >= TARGET_EMG_SAMPLES:
-                    chunk = emg_buffer[:TARGET_EMG_SAMPLES]
-
-                    reshaped = chunk.reshape(-1, self.num_channels).T
-                    converted = ((np.clip(reshaped, -32768, 32768) * scale) + OpenEphysOffset).astype(np.uint16)
-
-                    num_samples = converted.shape[1]
-
-                    if len(self.emg_timing_buffer) >= num_samples:
-
-                        bits = np.array(
-                            self.emg_timing_buffer[:num_samples],
-                            dtype=np.uint8
-                        )
-
-                        del self.emg_timing_buffer[:num_samples]
-
-                    else:
-
-                        bits = np.zeros(num_samples, dtype=np.uint8)
-
-                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
-                    try:
-                        converted = np.vstack((
-                            converted,
-                            extra_channel_1,
-                            extra_channel_2
-                        ))
-                        self.send_packet(
-                            "tcpClient_emg",
-                            "tcp_connected_emg",
-                            self.port_emg,
-                            converted.ravel().tobytes(),
-                            "emg"
-                        )
-                    except Exception as e:
-                        print("[EMG] ", e)
-
-
-                    # shift buffer (FAST)
-                    emg_buffer[:emg_write - TARGET_EMG_SAMPLES] = emg_buffer[TARGET_EMG_SAMPLES:emg_write]
-                    emg_write -= TARGET_EMG_SAMPLES
-
-                # =============================
-                # NEURO PROCESS + SEND
-                # =============================
-                if neuro_write >= TARGET_NEURO_SAMPLES:
-
-                    chunk = neuro_buffer[:TARGET_NEURO_SAMPLES]
-
-                    # =========================================================
-                    # RESHAPE / CONVERT NEURAL DATA
-                    # =========================================================
-
-                    if self.diff_mode: #ONLY FOR RHS BOARD
-                        reshaped = chunk.reshape(-1, 2 * self.num_channels).T
-                        reshaped = reshaped[0::2] - reshaped[1::2]
-
-                    else:
-                        reshaped = chunk.reshape(-1, self.num_channels).T
-                        # reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD
-
-                    converted = (np.clip(reshaped, -32768, 32767) * scale + OpenEphysOffset).astype(np.uint16)
-
-                    num_samples = converted.shape[1]
-
-                    if len(self.emg_timing_buffer) >= num_samples:
-
-                        bits = np.array(
-                            self.emg_timing_buffer[:num_samples],
-                            dtype=np.uint8
-                        )
-
-                        del self.emg_timing_buffer[:num_samples]
-
-                    else:
-
-                        bits = np.zeros(num_samples, dtype=np.uint8)
-
-                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
-                    # =========================================================
-                    # APPEND EXTRA CHANNELS
-                    # =========================================================
-
-                    try:
-
-                        converted = np.vstack((
-                            converted,
-                            extra_channel_1,
-                            extra_channel_2
-                        ))
-                        self.send_packet(
-                            "tcpClient_neuro",
-                            "tcp_connected_neuro",
-                            self.port_neuro,
-                            converted.ravel().tobytes(),
-                            "neuro"
-                        )
-
-                    except Exception as e:
-                        print("[NEURO] ", e)
-
-                    # ----------------------------
-                    # shift buffer
-                    # ----------------------------
-                    neuro_buffer[:neuro_write - TARGET_NEURO_SAMPLES] = neuro_buffer[TARGET_NEURO_SAMPLES:neuro_write]
-                    neuro_write -= TARGET_NEURO_SAMPLES
-
     def add_timing_channels(self, timing_bits, converted):
         openephys_offset = 32768
         bits = timing_bits[:converted.shape[1]]
@@ -553,3 +265,281 @@ class DataConverterV2:
         extra_channel_2 = extra_channel_2[np.newaxis, :]
 
         return extra_channel_1, extra_channel_2
+
+    def convertData(self):
+
+        OpenEphysOffset = 32768
+        maxOpenEphysValue = 0.005
+        scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
+
+        START_CAPS = b'\xAA\x54'
+        FRAME_SIZE = 8192
+        PAYLOAD_SIZE = 8192
+
+        # ===== TARGET SIZES =====
+        if self.diff_mode:
+            TARGET_NEURO_SAMPLES = 8192  # 256 samples × 16 channels
+        else:
+            TARGET_NEURO_SAMPLES = 4096
+        TARGET_EMG_SAMPLES = 4096  # change as needed
+
+        # ===== Connect both sockets =====
+        if self.dual_chip_mode:
+            self.connect_TCP(self.port_neuro, "neuro")
+            self.connect_TCP(self.port_emg, "emg")
+            print("--- STARTING DUAL STREAM THREAD ---")
+        else:
+            self.connect_TCP(self.port_neuro, "neuro")
+            print("--- STARTING SINGLE STREAM THREAD ---")
+
+        # =============================
+        # PREALLOCATED BUFFERS (outside loop)
+        # =============================
+        neuro_buffer = np.empty(TARGET_NEURO_SAMPLES * 2, dtype='>i2')
+        emg_buffer = np.empty(TARGET_EMG_SAMPLES * 2, dtype='>i2')
+
+        neuro_write = 0
+        emg_write = 0
+
+        data_buffer = bytearray()
+        view = memoryview(data_buffer)
+
+        # =============================
+        # MAIN LOOP
+        # =============================
+        data_buffer = bytearray()  # ✅ NO memoryview
+
+        while True:
+            chunk = self.queue_raw_data.get()
+            data_buffer.extend(chunk)
+            # print(f"Queue Size {self.queue_raw_data.qsize()}")
+            while len(data_buffer) >= FRAME_SIZE:
+
+                payload = bytes(data_buffer[:PAYLOAD_SIZE])
+                del data_buffer[:FRAME_SIZE]
+
+                raw = np.frombuffer(payload, dtype='>i2')
+                # reshape once (needed for both modes)
+                raw_blocks = raw.reshape(-1, self.num_channels)
+
+                # =========================================
+                # 🔥 REMOVE UNIFORM ROWS (FASTEST METHOD)
+                # =========================================
+                # Keep rows where at least one value differs from column 0
+                valid_rows = np.any(raw_blocks != raw_blocks[:, [0]], axis=1)
+                raw_blocks = raw_blocks[valid_rows]
+
+                # If nothing left, skip immediately
+                if raw_blocks.shape[0] == 0:
+                    continue
+
+                if self.dual_chip_mode:
+                    # =============================
+                    # 🔥 DUAL MODE (FAST LSB CHECK)
+                    # =============================
+
+                    # Only check first 2 channels
+                    ch0 = raw_blocks[:, 0] & 1
+                    ch1 = raw_blocks[:, 1] & 1
+
+                    emg_rows = (ch0 == 1) & (ch1 == 1)
+                    neuro_rows = (ch0 == 0) & (ch1 == 0)
+
+
+
+                    # =========================================
+                    # 🔥 REMOVE FLAT ROWS (ALL 16 VALUES SAME)
+                    # =========================================
+                    # Keep rows where at least one value differs
+                    valid_rows = np.any(raw_blocks != raw_blocks[:, [0]], axis=1)
+                    raw_blocks = raw_blocks[valid_rows]
+
+                    timing_source = raw_blocks[:, 1] & 1
+
+                    # Skip if everything was garbage (very important for your case)
+                    if raw_blocks.shape[0] == 0:
+                        continue
+
+                    # -------- EMG --------
+                    if emg_rows.any():
+                        self.emg_timing_buffer.extend(
+                            timing_source[emg_rows].tolist()
+                        )
+                        emg_data = raw_blocks[emg_rows].ravel()
+                        n = emg_data.size
+
+                        if emg_write + n > emg_buffer.size:
+                            emg_write = 0  # wrap/reset
+
+                        emg_buffer[emg_write:emg_write + n] = emg_data
+                        emg_write += n
+
+                    # -------- NEURO --------
+                    if neuro_rows.any():
+                        self.neuro_timing_buffer.extend(
+                            timing_source[neuro_rows].tolist()
+                        )
+                        neuro_data = raw_blocks[neuro_rows].ravel()
+                        n = neuro_data.size
+
+                        if neuro_write + n > neuro_buffer.size:
+                            neuro_write = 0
+
+                        neuro_buffer[neuro_write:neuro_write + n] = neuro_data
+                        neuro_write += n
+
+                else:
+                    raw_16ch = raw_blocks[:, :]
+
+                    if self.RHD_CHIP:
+                        first_ch_lsb = raw_16ch[:, 0] & 1
+                        second_ch_lsb = raw_16ch[:, 1] & 1
+                        # channels 2..15 must have LSB = 0
+                        remaining_ch_lsb = raw_16ch[:, 2:] & 1
+                        valid_rows = ((first_ch_lsb == 1) & (remaining_ch_lsb.sum(axis=1) == 0))
+
+                    else:
+                        first_ch_lsb = raw_16ch[:, 0] & 1
+                        second_ch_lsb = raw_16ch[:, 1] & 1  #TIMING CHANNEL
+                        remaining_ch_lsb = raw_16ch[:, 2:16] & 1
+                        first_ch_msb = raw_16ch[:, 16] & 1
+                        remaining_ch_msb = raw_16ch[:, 18:32] & 1
+                        valid_rows = (
+                                (first_ch_lsb == 1) &
+                                (remaining_ch_lsb.sum(axis=1) == 0) &
+                                (first_ch_msb == 1) &
+                                (remaining_ch_msb.sum(axis=1) == 0)
+                        )
+
+                    if not valid_rows.any():
+                        continue
+
+                    filtered_blocks = raw_16ch[valid_rows]
+
+                    # timing bit from channel 1
+                    timing_bits = second_ch_lsb[valid_rows]
+
+                    self.neuro_timing_buffer.extend(
+                        timing_bits.tolist()
+                    )
+
+                    # keep previous state between loops
+                    if "prev_timing_state" not in globals():
+                        prev_timing_state = None
+
+                    neuro_data = filtered_blocks.ravel()
+                    n = neuro_data.size
+                    if neuro_write + n > neuro_buffer.size:
+                        neuro_write = 0  # wrap/reset
+
+                    neuro_buffer[neuro_write:neuro_write + n] = neuro_data
+                    neuro_write += n
+
+                # =============================
+                # EMG PROCESS + SEND
+                # =============================
+                if emg_write >= TARGET_EMG_SAMPLES:
+                    chunk = emg_buffer[:TARGET_EMG_SAMPLES]
+
+                    reshaped = chunk.reshape(-1, self.num_channels).T
+                    converted = ((np.clip(reshaped, -32768, 32768) * scale) + OpenEphysOffset).astype(np.uint16)
+
+                    num_samples = converted.shape[1]
+
+                    if len(self.emg_timing_buffer) >= num_samples:
+
+                        bits = np.array(
+                            self.emg_timing_buffer[:num_samples],
+                            dtype=np.uint8
+                        )
+
+                        del self.emg_timing_buffer[:num_samples]
+
+                    else:
+
+                        bits = np.zeros(num_samples, dtype=np.uint8)
+
+                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
+                    try:
+                        converted = np.vstack((
+                            converted,
+                            extra_channel_1,
+                            extra_channel_2
+                        ))
+                        self.send_packet(
+                            "tcpClient_emg",
+                            "tcp_connected_emg",
+                            self.port_emg,
+                            converted.ravel().tobytes(),
+                            "emg"
+                        )
+                    except Exception as e:
+                        print("[EMG] ", e)
+
+
+                    # shift buffer (FAST)
+                    emg_buffer[:emg_write - TARGET_EMG_SAMPLES] = emg_buffer[TARGET_EMG_SAMPLES:emg_write]
+                    emg_write -= TARGET_EMG_SAMPLES
+
+                # =============================
+                # NEURO PROCESS + SEND
+                # =============================
+                if neuro_write >= TARGET_NEURO_SAMPLES:
+
+                    chunk = neuro_buffer[:TARGET_NEURO_SAMPLES]
+
+                    # =========================================================
+                    # RESHAPE / CONVERT NEURAL DATA
+                    # =========================================================
+
+                    if self.diff_mode: #ONLY FOR RHS BOARD
+                        reshaped = chunk.reshape(-1, 2 * self.num_channels).T
+                        reshaped = reshaped[0::2] - reshaped[1::2]
+
+                    else:
+                        reshaped = chunk.reshape(-1, self.num_channels).T
+                        # reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD, DONT TELL MOM...
+
+                    converted = (np.clip(reshaped, -32768, 32767) * scale + OpenEphysOffset).astype(np.uint16)
+
+                    num_samples = converted.shape[1]
+
+                    if len(self.neuro_timing_buffer) >= num_samples:
+
+                        bits = np.array(
+                            self.neuro_timing_buffer[:num_samples],
+                            dtype=np.uint8
+                        )
+
+                        del self.neuro_timing_buffer[:num_samples]
+
+                    else:
+
+                        bits = np.zeros(num_samples, dtype=np.uint8)
+
+                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
+
+                    try:
+
+                        converted = np.vstack((
+                            converted,
+                            extra_channel_1,
+                            extra_channel_2
+                        ))
+                        self.send_packet(
+                            "tcpClient_neuro",
+                            "tcp_connected_neuro",
+                            self.port_neuro,
+                            converted.ravel().tobytes(),
+                            "neuro"
+                        )
+
+                    except Exception as e:
+                        print("[NEURO] ", e)
+
+                    # ----------------------------
+                    # shift buffer
+                    # ----------------------------
+                    neuro_buffer[:neuro_write - TARGET_NEURO_SAMPLES] = neuro_buffer[TARGET_NEURO_SAMPLES:neuro_write]
+                    neuro_write -= TARGET_NEURO_SAMPLES
+
