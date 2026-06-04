@@ -3,6 +3,25 @@ Report for cell top_level
    Instance path: top_level
                      Cell usage:
                                   cell	      count    Res Usage(%)
+<<<<<<< HEAD
+                                  LUT4	         71        100.0
+                               LUTGATE	         41        100.0
+                                LUTCCU	         30        100.0
+                                 IOBUF	         27        100.0
+                                PFUREG	         33        100.0
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                             CLK_48MHz	          1         0.0
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64)	          1         1.4
+---------------------------------------------------
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64)
+   Instance path: top_level/Controller_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	          1         1.4
+                               LUTGATE	          1         2.4
+                                PFUREG	          2         6.1
+=======
                                   LUT4	       2408        100.0
                                LUTGATE	       2106        100.0
                                 LUTCCU	        302        100.0
@@ -13,6 +32,7 @@ SUB MODULES
                                   cell	      count    LUT4 Usage(%)
                              CLK_48MHz	          1         0.0
 Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)	          1        60.1
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 ---------------------------------------------------
 Report for cell CLK_48MHz
    Instance path: top_level/pll_inst
@@ -26,6 +46,8 @@ Report for cell CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANG
    Instance path: top_level/pll_inst/lscc_pll_inst
                      Cell usage:
                                   cell	      count    Res Usage(%)
+<<<<<<< HEAD
+=======
 ---------------------------------------------------
 Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)
    Instance path: top_level/Controller_inst
@@ -230,3 +252,4 @@ Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,
                                 LUTCCU	         30         9.9
                                 PFUREG	        152        10.6
                                    EBR	          1        50.0
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b

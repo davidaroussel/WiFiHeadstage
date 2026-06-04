@@ -5,6 +5,17 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
+<<<<<<< HEAD
+        STM32_CLKS_PER_HALF_BIT       : integer := 8;
+        STM32_CS_INACTIVE_CLKS        : integer := 8;
+		
+        RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 8;
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 32;
+
+        RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 8;    -- 32 for around 2.5KHz
+=======
         STM32_CLKS_PER_HALF_BIT       : integer := 4;
         STM32_CS_INACTIVE_CLKS        : integer := 16;
 		
@@ -14,6 +25,7 @@ entity top_level is
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
         RHS_STIM_CLKS_PER_HALF_BIT       : integer := 4;    -- 32 for around 2.5KHz
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
         RHS_STIM_CS_INACTIVE_CLKS        : integer := 32;
 		
 		-- 0: N/A 
@@ -172,7 +184,11 @@ begin
 
 			rgb_info_red   => rgb_sig_red,
 			rgb_info_blue   => rgb_sig_blue,
+<<<<<<< HEAD
+			--rgb_info_green   => rgb_sig_green,
+=======
 			rgb_info_green   => rgb_sig_green,
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -218,7 +234,11 @@ begin
 	
 	Mode_Process : process(pll_clk_int)
 	begin
+<<<<<<< HEAD
+		if rising_edge(pll_clk_int)then
+=======
 
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 			if w_Controller_Mode = x"0" then
 				o_RHS_BOTTOM_SPI_Clk    <= o_STM32_SPI4_Clk;
 				o_RHS_BOTTOM_SPI_MOSI   <= o_STM32_SPI4_MOSI;
@@ -273,6 +293,10 @@ begin
 				int_RHS_TOP_SPI_MISO_2 <= i_RHS_TOP_SPI_MISO_2;
 				
 			end if;
+<<<<<<< HEAD
+		end if;
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	end process;
 	
 	
@@ -288,13 +312,27 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
+<<<<<<< HEAD
+				rgb_sig_green <= '0';
+=======
 				--rgb_sig_green <= '0';
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
             else
                 w_reset <= '0';
 				
 				if CTRL0_IN = '0' then
 					if RHS_SEL = '0' then
 						w_Controller_Mode <= x"0";
+<<<<<<< HEAD
+						rgb_sig_green <= '0';
+					elsif RHS_SEL = '1' then
+						w_Controller_Mode <= x"1";
+						rgb_sig_green <= '1';
+					end if;
+				elsif CTRL0_IN = '1' then
+					w_Controller_Mode <= x"2";
+					rgb_sig_green <= '1';
+=======
 						--rgb_sig_green <= '0';
 					elsif RHS_SEL = '1' then
 						w_Controller_Mode <= x"1";
@@ -303,6 +341,7 @@ begin
 				elsif CTRL0_IN = '1' then
 					w_Controller_Mode <= x"2";
 					--rgb_sig_green <= '1';
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 				end if;
 
 

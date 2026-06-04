@@ -51,7 +51,11 @@ Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/
 Removing unused logic ...
 Starting design annotation....
 WARNING <70001944> - No source clock for
+<<<<<<< HEAD
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+=======
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
  
 Constraint Summary:
    Total number of constraints: 1
@@ -62,12 +66,17 @@ POSTSYN finished successfully.
 Total CPU Time: 0 secs 
 Total REAL Time: 0 secs 
 <<<<<<< HEAD
+Peak Memory Usage: 72 MB
+Checksum -- postsyn: 36eeb1c0ed01bca81b859f79b70c21f4598121db
+=======
+<<<<<<< HEAD
 Peak Memory Usage: 65 MB
 Checksum -- postsyn: 21930b871b238cffc7343b87a16ae9036580a9aa
 =======
 Peak Memory Usage: 72 MB
 Checksum -- postsyn: 36eeb1c0ed01bca81b859f79b70c21f4598121db
 >>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 
 </PRE></DIV>

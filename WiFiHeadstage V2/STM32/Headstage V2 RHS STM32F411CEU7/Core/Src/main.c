@@ -36,8 +36,13 @@
 #define ID_PATATO  0xF5
 #define ID_POTATO  0x3B
 
+<<<<<<< HEAD
+#define FPGA_CHUNK_SIZE 2048
+#define FPGA_ACCUM_SIZE 4096
+=======
 #define FPGA_CHUNK_SIZE 4096
 #define FPGA_ACCUM_SIZE 8192
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 #define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
 #define SPI_RX_FPGA_BUFFER_SIZE FPGA_CHUNK_SIZE
@@ -112,9 +117,15 @@ volatile uint32_t spi_counter = 0;
 volatile uint8_t fpga_frame_ready = 0;
 
 static boolean test_stim     = 0;
+<<<<<<< HEAD
+static boolean MEP_Mode      = 1;
+static boolean Z_Mode        = 0;
+static boolean FPGA_MEP_Mode = 0;
+=======
 static boolean MEP_Mode      = 0;
 static boolean Z_Mode        = 0;
 static boolean FPGA_MEP_Mode = 1;
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 
 
@@ -205,6 +216,22 @@ int main(void)
 
 	}
 	else if (Z_Mode)
+<<<<<<< HEAD
+	{	if(DEVKIT){
+			printf("Impedance Measurement \r\n");
+		}
+		HAL_TIM_Base_Start_IT(&htim11);
+		uint8_t testing_channel = 0;
+		uint8_t testing_time = 2;
+	//Test electrode impedance measurement
+		for (int i = 0; i<1000; i++)
+		{
+			uint16_t impedance = RHS2116_Electrode_Impedance_Test(hspi, testing_channel, testing_time);
+			if(DEVKIT){
+				printf("Measured impredance: %d \r\n", impedance);
+			}
+		}
+=======
 	{
 	    if (DEVKIT){
 	        printf("Impedance Measurement \r\n");
@@ -252,6 +279,7 @@ int main(void)
 //	            testing_channel = 0;
 //	        }
 	    }
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	}
 	else if(FPGA_MEP_Mode){
 		uint32_t stim_current_uA = 30;
@@ -270,7 +298,11 @@ int main(void)
 			Error_Handler();
 		}
 		printf("[INFO] Sending RDY_FPGA signal...\r\n");
+<<<<<<< HEAD
+		//  HAL_Delay(1000);
+=======
 		HAL_Delay(10);
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 		HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
@@ -649,8 +681,11 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
     {
     	uint8_t tessting = 0;
 
+<<<<<<< HEAD
+=======
         HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
     }
 
     else  if (hspi->Instance == SPI4)

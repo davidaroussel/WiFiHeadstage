@@ -10,6 +10,25 @@ ldc_set_location -site {46} [get_ports RHS_SEL]
 ##ldc_set_location -site {6}  [get_ports i_LED_SYNC]
 
 ###### TO RHS2116 TOP #### READ CHIP !!
+<<<<<<< HEAD
+ldc_set_location -site {25} [get_ports o_RHS_TOP_SPI_MOSI]
+ldc_set_location -site {27} [get_ports o_RHS_TOP_SPI_Clk]## RHS2116 RIGHT
+ldc_set_location -site {26} [get_ports i_RHS_TOP_SPI_MISO_1]
+ldc_set_location -site {28} [get_ports o_RHS_TOP_SPI_CS_n_1]
+### RHS2116 LEFT
+ldc_set_location -site {2}  [get_ports i_RHS_TOP_SPI_MISO_2]
+ldc_set_location -site {32} [get_ports o_RHS_TOP_SPI_CS_n_2]
+
+##### TO RHS2116 MIDDLE #### STIMULATION CHIP !!
+ldc_set_location -site {3}  [get_ports o_RHS_BOTTOM_SPI_MOSI]
+ldc_set_location -site {45} [get_ports o_RHS_BOTTOM_SPI_Clk]
+### RHS2116 RIGHT
+ldc_set_location -site {4}  [get_ports i_RHS_BOTTOM_SPI_MISO_1]
+ldc_set_location -site {44} [get_ports o_RHS_BOTTOM_SPI_CS_n_1]
+# RHS2116 LEFT
+ldc_set_location -site {48} [get_ports i_RHS_BOTTOM_SPI_MISO_2]
+ldc_set_location -site {47} [get_ports o_RHS_BOTTOM_SPI_CS_n_2]
+=======
 ldc_set_location -site {25} [get_ports o_RHS_BOTTOM_SPI_MOSI]
 ldc_set_location -site {27} [get_ports o_RHS_BOTTOM_SPI_Clk]## RHS2116 RIGHT
 ldc_set_location -site {26} [get_ports i_RHS_BOTTOM_SPI_MISO_1]
@@ -27,6 +46,7 @@ ldc_set_location -site {44} [get_ports o_RHS_TOP_SPI_CS_n_1]
 # RHS2116 LEFT
 ldc_set_location -site {48} [get_ports i_RHS_TOP_SPI_MISO_2]
 ldc_set_location -site {47} [get_ports o_RHS_TOP_SPI_CS_n_2]
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 ##### TO STM32_PORT_1 (SPI5) ####
 ##ldc_set_location -site {46} [get_ports o_STM32_SPI5_MOSI]

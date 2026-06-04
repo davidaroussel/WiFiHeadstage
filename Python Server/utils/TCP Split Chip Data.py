@@ -71,13 +71,21 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
 
     TARGET_NEURO_SAMPLES = 4096
     TARGET_EMG_SAMPLES = 4096
+<<<<<<< HEAD
+    NUM_CHANNELS = 16
+=======
     NUM_CHANNELS = 32
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
     OpenEphysOffset = 32768
     maxOpenEphysValue = 0.005
     scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
+<<<<<<< HEAD
+    capture_duration = 5 # seconds
+=======
     capture_duration = 20 # seconds
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
     # =============================
     # BUFFERS
@@ -135,6 +143,10 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                     # AFTER 10 SECONDS → PROCESS
                     # =============================
                     if time.time() - start_time >= capture_duration:
+<<<<<<< HEAD
+                    # if False:
+=======
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
                         print(f"Final Counter {counter}")
                         print("[INFO] 10 seconds reached. Processing...")
 

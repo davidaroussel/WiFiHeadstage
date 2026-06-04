@@ -59,7 +59,11 @@ uint8_t RHS2116_Read_Chip_ID(SPI_HandleTypeDef *hspi, uint8_t Register);
 void RHS2116_Convert_Register(SPI_HandleTypeDef *hspi);
 
 /*Impedance*/
+<<<<<<< HEAD
+int16_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, float p_measurement_time_s);
+=======
 uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, double p_measurement_time_s);
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 /* Stimulation */
 void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint32_t stim_current_uA);

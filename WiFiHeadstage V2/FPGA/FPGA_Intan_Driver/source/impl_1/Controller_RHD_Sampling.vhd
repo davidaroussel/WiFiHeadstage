@@ -270,7 +270,11 @@ architecture RTL of Controller_RHD_Sampling is
 	signal chip_toggle : std_logic := '0';
 
 	signal data_array : t_data_array := (
+<<<<<<< HEAD
+		-- Registers 40–63
+=======
 		-- Registers 40?63
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		0  => x"E800",  -- REG40
 		1  => x"E900",  -- REG41
 		2  => x"EA00",  -- REG42
@@ -280,7 +284,11 @@ architecture RTL of Controller_RHD_Sampling is
 		6  => x"FD00",  -- REG61
 		7  => x"FF00",  -- REG63
 
+<<<<<<< HEAD
+		-- Registers 0–7
+=======
 		-- Registers 0?7
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		8  => x"80DE",
 		9  => x"8120",
 		10 => x"8228",
@@ -390,7 +398,11 @@ architecture RTL of Controller_RHD_Sampling is
 		29 => x"0D00",  -- CH13
 		30 => x"0E00",  -- CH14
 		31 => x"0F00",  -- CH15
+<<<<<<< HEAD
+		-- CH0–CH31 repeated again for indices 32–63
+=======
 		-- CH0?CH31 repeated again for indices 32?63
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		32 => x"0000",  -- CH0 repeat
 		33 => x"0100",  -- CH1 repeat
 		34 => x"0200",  -- CH2 repeat
@@ -459,7 +471,11 @@ architecture RTL of Controller_RHD_Sampling is
 		29 => x"FC00",  -- CH13
 		30 => x"FD00",  -- CH14
 		31 => x"FE00",  -- CH15
+<<<<<<< HEAD
+		-- CH0–CH31 repeated again for indices 32–63
+=======
 		-- CH0?CH31 repeated again for indices 32?63
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		32 => x"E800",  -- CH0 repeat
 		33 => x"E900",  -- CH1 repeat
 		34 => x"EA00",  -- CH2 repeat
@@ -527,7 +543,11 @@ architecture RTL of Controller_RHD_Sampling is
 		29 => x"FC00",  -- CH13
 		30 => x"FD00",  -- CH14
 		31 => x"FF00",  -- CH15
+<<<<<<< HEAD
+		-- CH0–CH31 repeated again for indices 32–63
+=======
 		-- CH0?CH31 repeated again for indices 32?63
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		32 => x"E900",  -- CH0 repeat
 		33 => x"E800",  -- CH1 repeat
 		34 => x"E900",  -- CH2 repeat
@@ -811,7 +831,11 @@ architecture RTL of Controller_RHD_Sampling is
 					int_FIFO_RHD2132_RE <= '1';
 					
 				when 5 =>
+<<<<<<< HEAD
+					if stm32_counter > (NUM_WORDS - 3) then 
+=======
 					if stm32_counter > (NUM_WORDS - 4) then 
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 						int_FIFO_RHD2132_RE <= '0'; 
 					end if;
 				
@@ -858,7 +882,11 @@ architecture RTL of Controller_RHD_Sampling is
 					stm32_state <= 18;
 
 				when 18 =>
+<<<<<<< HEAD
+					if stm32_counter > (NUM_WORDS -) then 
+=======
 					if stm32_counter > (NUM_WORDS -4) then 
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 						int_FIFO_RHD2216_RE <= '0'; 
 					end if;
 					if stm32_counter < (NUM_WORDS - 1) then

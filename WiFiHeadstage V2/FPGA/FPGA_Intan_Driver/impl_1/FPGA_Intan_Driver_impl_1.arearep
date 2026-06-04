@@ -1,5 +1,15 @@
 ----------------------------------------------------------------------
 Report for cell top_level.TECH
+<<<<<<< HEAD
+Register bits:  33 of 5280 (0.625%)
+I/O cells:      27
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               CCU2        15          100.0
+                            FD1P3XZ        33          100.0
+                                 IB         7          100.0
+                               LUT4        36          100.0
+=======
 Register bits:  1436 of 5280 (27.197%)
 I/O cells:      27
                                   Cell usage:
@@ -10,11 +20,24 @@ I/O cells:      27
                             FD1P3XZ      1436          100.0
                                  IB         4          100.0
                                LUT4      1242          100.0
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
                                  OB        20          100.0
                               PLL_B         1          100.0
 SUB MODULES
                           CLK_48MHz         1
 CLK_48MHz_ipgen_lscc_pll(DIVR="0",DIVF="71",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+<<<<<<< HEAD
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64)         1
+                              TOTAL       115
+----------------------------------------------------------------------
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64).v1
+Instance Path : Controller_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3XZ         2            6.1
+                               LUT4         1            2.8
+                              TOTAL         3
+=======
 Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=96)         1
 Controller_RHD_FIFO(clks_per_half_bit=64,cs_inactive_clks=64)         1
 Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2)         1
@@ -33,6 +56,7 @@ SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=96)
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=256,cs_inactive_clks=32)         1
 SPI_Master_CS(clks_per_half_bit=64,num_of_bits_per_packet=16,cs_inactive_clks=64)         1
                               TOTAL      2878
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 ----------------------------------------------------------------------
 Report for cell CLK_48MHz.v1
 Instance Path : pll_inst
@@ -49,6 +73,8 @@ Instance Path : pll_inst.lscc_pll_inst
                                cell     count   Res Usage(%)
                               PLL_B         1          100.0
                               TOTAL         1
+<<<<<<< HEAD
+=======
 ----------------------------------------------------------------------
 Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_spi_num_bits_per_packet=256,stm32_cs_inactive_clks=32,rhd2132_spi_ddr_mode=0,rhd2132_clks_per_half_bit=2,rhd2132_cs_inactive_clks=96,rhd2216_clks_per_half_bit=64,rhd2216_cs_inactive_clks=64,rhd_sampling_mode=2).v1
 Instance Path : Controller_inst
@@ -268,3 +294,4 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo
                             FD1P3XZ       152           10.6
                                LUT4        63            5.1
                               TOTAL       231
+>>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
