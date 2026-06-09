@@ -147,22 +147,14 @@ int main(void)
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
-<<<<<<< HEAD
-//  Init_Intan();
-=======
   Init_Intan();
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+
 
   // Start SPI DMA transmission/reception
   if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
 	  Error_Handler();
   }
 
-<<<<<<< HEAD
-//  HAL_Delay(500);
-=======
-  HAL_Delay(500);
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
 
@@ -178,14 +170,12 @@ int main(void)
 
 	  }
 /* USER CODE END WHILE */
-<<<<<<< HEAD
-=======
+
 
 //      HAL_SPI_TransmitReceive_DMA(&hspi1, nrf_tx_buffer[nrf_read_idx], nrf_rx_buffer, NRF_FRAME_SIZE);
 //
 //      HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_RESET);
 
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	  if (spi_fpga_ready)
 	  {
 
@@ -489,11 +479,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
     if (hspi->Instance == SPI1)
     {
-<<<<<<< HEAD
 
-=======
-    	spi_counter = spi_counter;
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
     }
 
@@ -530,7 +516,7 @@ static void Init_Intan(void){
 	if (DUAL_INTAN)
 	{
 
-<<<<<<< HEAD
+
 	while (!(rhd2132_detected && rhd2216_detected))
 	{
 		rhd_chip = INIT_RHD(&hspi4);
@@ -571,48 +557,7 @@ static void Init_Intan(void){
 		}
 		HAL_Delay(1);
 	  }
-=======
-		while (!(rhd2132_detected && rhd2216_detected))
-		{
-			rhd_chip = INIT_RHD(&hspi4);
 
-			if (rhd_chip == 0xFFFF)
-			{
-				if ((retry_counter % 100) == 0){
-					printf("[WARN] No RHD detected. Retrying... [%u]\r\n", retry_counter);
-				}
-			}
-			else
-			{
-				if (rhd_chip == RHD2132_ID && !rhd2132_detected)
-				{
-					if (!rhd2132_doubled){
-						rhd2132_doubled = 1;
-						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
-						printf("[OK] RHD2132 Initialized Once\r\n");
-					}
-					else{
-						rhd2132_detected = 1;
-						printf("[OK] RHD2132 Initialized Twice\r\n");
-					}
-
-				}
-				else if (rhd_chip == RHD2216_ID && !rhd2216_detected)
-				{
-					if (!rhd2216_doubled){
-						rhd2216_doubled = 1;
-						printf("[INFO] RHD CHIP DETECTED: 0x%04X\r\n", rhd_chip);
-						printf("[OK] RHD2132 Initialized Once\r\n");
-					}
-					else{
-						rhd2216_detected = 1;
-						printf("[OK] RHD2132 Initialized Twice\r\n");
-					}
-				}
-			}
-			HAL_Delay(1);
-		  }
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
   }
   else

@@ -46,15 +46,7 @@ if (a)
 <A name="Timing_rpt_top">Timing Report</A><B><U><big></big></U></B>
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-<<<<<<< HEAD
-Wed May 20 13:42:00 2026
-=======
-<<<<<<< HEAD
-Mon Jun  1 20:11:20 2026
-=======
-Wed May 20 13:42:00 2026
->>>>>>> 2d0a6dcea4548812d6ef14daab62e7ceae19b447
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+Fri Jun  5 10:06:00 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -102,11 +94,7 @@ Package Status:                     Preliminary    Version 1.5
 
 <A name="Timing_rpt_SDCConstraints"></A><B><U><big>1.1  SDC Constraints</big></U></B>
 
-<<<<<<< HEAD
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 9 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
-=======
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -divide_by 2 -multiply_by 5 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 3 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 <A name="Timing_rpt_ConstraintCoverage"></A><B><U><big>1.2  Constraint Coverage</big></U></B>
 
@@ -130,22 +118,6 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-<<<<<<< HEAD
-reset_counter_1555__i28/D               |    No arrival or required
-reset_counter_1555__i27/D               |    No arrival or required
-reset_counter_1555__i26/D               |    No arrival or required
-reset_counter_1555__i25/D               |    No arrival or required
-reset_counter_1555__i24/D               |    No arrival or required
-reset_counter_1555__i23/D               |    No arrival or required
-reset_counter_1555__i22/D               |    No arrival or required
-reset_counter_1555__i21/D               |    No arrival or required
-reset_counter_1555__i20/D               |    No arrival or required
-reset_counter_1555__i19/D               |    No arrival or required
--------------------------------------------------------------------
-                                        |                          
-Number of unconstrained timing end poin |                          
-ts                                      |                      4230
-=======
 reset_counter_1557__i28/D               |    No arrival or required
 reset_counter_1557__i27/D               |    No arrival or required
 reset_counter_1557__i26/D               |    No arrival or required
@@ -160,7 +132,6 @@ reset_counter_1557__i19/D               |    No arrival or required
                                         |                          
 Number of unconstrained timing end poin |                          
 ts                                      |                      4226
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
                                         |                          
 -------------------------------------------------------------------
 
@@ -179,12 +150,9 @@ create_generated_clock,
 -------------------------------------------------------------------
      Listing 10 Start or End Points     |           Type           
 -------------------------------------------------------------------
-<<<<<<< HEAD
-=======
 o_STM32_SPI4_CS_n                       |                     input
 o_STM32_SPI4_Clk                        |                     input
 o_STM32_SPI4_MOSI                       |                     input
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 RHS_SEL                                 |                     input
 CTRL0_IN                                |                     input
 i_RHS_BOTTOM_SPI_MISO_1                 |                     input
@@ -192,18 +160,9 @@ i_RHS_TOP_SPI_MISO_2                    |                     input
 i_RHS_TOP_SPI_MISO_1                    |                     input
 i_clk                                   |                     input
 i_RHS_BOTTOM_SPI_MISO_2                 |                     input
-<<<<<<< HEAD
-o_reset                                 |                    output
-o_Controller_Mode[0]                    |                    output
-o_Controller_Mode[1]                    |                    output
--------------------------------------------------------------------
-                                        |                          
-Number of I/O ports without constraint  |                        22
-=======
 -------------------------------------------------------------------
                                         |                          
 Number of I/O ports without constraint  |                        25
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
                                         |                          
 -------------------------------------------------------------------
 
@@ -219,102 +178,6 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-<<<<<<< HEAD
-Controller_inst/i13486_2_lut/A	->	Controller_inst/i13486_2_lut/Z
-
-++++ Loop2
-Controller_inst/i13485_2_lut/A	->	Controller_inst/i13485_2_lut/Z
-
-++++ Loop3
-Controller_inst/i13494_2_lut/A	->	Controller_inst/i13494_2_lut/Z
-
-++++ Loop4
-Controller_inst/i13495_2_lut/A	->	Controller_inst/i13495_2_lut/Z
-
-++++ Loop5
-Controller_inst/i13130_2_lut/A	->	Controller_inst/i13130_2_lut/Z
-
-++++ Loop6
-Controller_inst/i13514_2_lut/A	->	Controller_inst/i13514_2_lut/Z
-
-++++ Loop7
-Controller_inst/i13513_2_lut/A	->	Controller_inst/i13513_2_lut/Z
-
-++++ Loop8
-Controller_inst/i13512_2_lut/A	->	Controller_inst/i13512_2_lut/Z
-
-++++ Loop9
-Controller_inst/i13511_2_lut/A	->	Controller_inst/i13511_2_lut/Z
-
-++++ Loop10
-Controller_inst/i13510_2_lut/A	->	Controller_inst/i13510_2_lut/Z
-
-++++ Loop11
-Controller_inst/i13509_2_lut/A	->	Controller_inst/i13509_2_lut/Z
-
-++++ Loop12
-Controller_inst/i13508_2_lut/A	->	Controller_inst/i13508_2_lut/Z
-
-++++ Loop13
-Controller_inst/i13507_2_lut/A	->	Controller_inst/i13507_2_lut/Z
-
-++++ Loop14
-Controller_inst/i13488_2_lut/A	->	Controller_inst/i13488_2_lut/Z
-
-++++ Loop15
-Controller_inst/i13504_2_lut/A	->	Controller_inst/i13504_2_lut/Z
-
-++++ Loop16
-Controller_inst/i13506_2_lut/A	->	Controller_inst/i13506_2_lut/Z
-
-++++ Loop17
-Controller_inst/i13505_2_lut/A	->	Controller_inst/i13505_2_lut/Z
-
-++++ Loop18
-Controller_inst/i13501_2_lut/A	->	Controller_inst/i13501_2_lut/Z
-
-++++ Loop19
-Controller_inst/i13503_2_lut/A	->	Controller_inst/i13503_2_lut/Z
-
-++++ Loop20
-Controller_inst/i13492_2_lut/A	->	Controller_inst/i13492_2_lut/Z
-
-++++ Loop21
-Controller_inst/i13493_2_lut/A	->	Controller_inst/i13493_2_lut/Z
-
-++++ Loop22
-Controller_inst/i13499_2_lut/A	->	Controller_inst/i13499_2_lut/Z
-
-++++ Loop23
-Controller_inst/i13487_2_lut/A	->	Controller_inst/i13487_2_lut/Z
-
-++++ Loop24
-Controller_inst/i13502_2_lut/A	->	Controller_inst/i13502_2_lut/Z
-
-++++ Loop25
-Controller_inst/i13496_2_lut/A	->	Controller_inst/i13496_2_lut/Z
-
-++++ Loop26
-Controller_inst/i13500_2_lut/A	->	Controller_inst/i13500_2_lut/Z
-
-++++ Loop27
-Controller_inst/i13497_2_lut/A	->	Controller_inst/i13497_2_lut/Z
-
-++++ Loop28
-Controller_inst/i13498_2_lut/A	->	Controller_inst/i13498_2_lut/Z
-
-++++ Loop29
-Controller_inst/i13489_2_lut/A	->	Controller_inst/i13489_2_lut/Z
-
-++++ Loop30
-Controller_inst/i13491_2_lut/A	->	Controller_inst/i13491_2_lut/Z
-
-++++ Loop31
-Controller_inst/i13484_2_lut/A	->	Controller_inst/i13484_2_lut/Z
-
-++++ Loop32
-Controller_inst/i13490_2_lut/A	->	Controller_inst/i13490_2_lut/Z
-=======
 i8059_3_lut_4_lut/D	->	i8059_3_lut_4_lut/Z
 
 ++++ Loop2
@@ -442,28 +305,19 @@ Controller_inst/i11520_2_lut/A	->	Controller_inst/i11520_2_lut/Z
 
 ++++ Loop43
 Controller_inst/i11508_2_lut/A	->	Controller_inst/i11508_2_lut/Z
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
 
 <A name="Timing_rpt_ErrorWarningMessage"></A><B><U><big>1.6  Error/Warning Messages</big></U></B>
 
 WARNING "70001944" - No source clock for
-<<<<<<< HEAD
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
-=======
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 
 <A name="Timing_rpt_SetupSlowCornerMaxDegree"></A><B><U><big>2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees</big></U></B>
 <A name="Timing_rpt_ClockSummarySetupSlowCornerMaxDegree"></A><B><U><big>2.1  Clock Summary</big></U></B>
 <A name="Timing_rpt_Clk_1"></A><B><U><big>2.1.1 Clock "pll_clk_int"</big></U></B>
 
-<<<<<<< HEAD
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 9 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
-=======
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 5 -divide_by 2 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
 
 Single Clock Domain
 -------------------------------------------------------------------------------------------------------

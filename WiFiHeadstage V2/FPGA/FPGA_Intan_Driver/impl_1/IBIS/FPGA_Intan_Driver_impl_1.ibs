@@ -1,12 +1,7 @@
 |************************************************************************
 | IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
-<<<<<<< HEAD
-| Report Generate Date: Apr 29 2026
-| Report Generate Time: 12:27:13
-=======
-| Report Generate Date: Jun  1 2026
-| Report Generate Time: 17:38:52
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+| Report Generate Date: Jun  9 2026
+| Report Generate Time: 10:33:15
 |************************************************************************
 |IBIS file ice40up.ibs   
 |Lattice Semiconductor Corporation   
@@ -141,57 +136,30 @@ L_pkg          2.652nH         1.989nH         3.504nH
 C_pkg          0.2807pF        0.2236pF        0.3481pF
 |
 [Pin]  signal_name          model_name           R_pin     L_pin     C_pin
-<<<<<<< HEAD
-47            o_RHD2132_SPI_CS_n   lvc330a080aaaaaaaaou
-45            o_RHD2132_SPI_Clk    lvc330a080aaaaaaaaou
-25            o_RHD2132_SPI_MOSI   lvc330a080aaaaaaaaou
-10            i_STM32_SPI4_MISO    lvc330a080aaaaaaaaou
-31            CTRL0_IN             lvc330axxxbaaaaaaain
-13            i_RHD2216_SPI_MISO   lvc330axxxbaaaaaaain
-48            i_RHD2132_SPI_MISO   lvc330axxxbaaaaaaain
-6             o_STM32_SPI4_CS_n    lvc330axxxbaaaaaaain
-9             o_STM32_SPI4_Clk     lvc330axxxbaaaaaaain
-11            o_STM32_SPI4_MOSI    lvc330axxxbaaaaaaain
-35            i_clk                lvc330axxxbaaaaaaain
-4             o_reset              lvc330a080aaaaaaaaou
-21            o_Controller_Mode[0] lvc330a080aaaaaaaaou
-28            o_Controller_Mode[1] lvc330a080aaaaaaaaou
-26            o_Controller_Mode[2] lvc330a080aaaaaaaaou
-27            o_Controller_Mode[3] lvc330a080aaaaaaaaou
-37            LED4_OUT             lvc330a080aaaaaaaaou
-42            LED3_OUT             lvc330a080aaaaaaaaou
-36            LED2_OUT             lvc330a080aaaaaaaaou
-38            LED1_OUT             lvc330a080aaaaaaaaou
-43            o_BOOST_ENABLE       lvc330a080aaaaaaaaou
-3             o_RHD2216_SPI_CS_n   lvc330a080aaaaaaaaou
-2             o_RHD2216_SPI_Clk    lvc330a080aaaaaaaaou
-12            o_RHD2216_SPI_MOSI   lvc330a080aaaaaaaaou
-=======
 44            o_STM32_SPI4_CS_n    lvc330a080baaaaaaaio
 46            o_STM32_SPI4_Clk     lvc330a080baaaaaaaio
 2             o_STM32_SPI4_MOSI    lvc330a080baaaaaaaio
 32            CTRL0_IN             lvc330axxxbaaaaaaain
-42            i_RHD2216_SPI_MISO   lvc330axxxbaaaaaaain
-26            i_RHD2132_SPI_MISO   lvc330axxxbaaaaaaain
+26            i_RHD2216_SPI_MISO   lvc330axxxbaaaaaaain
+42            i_RHD2132_SPI_MISO   lvc330axxxbaaaaaaain
 35            i_clk                lvc330axxxbaaaaaaain
-16            o_reset              lvc330a080aaaaaaaaou
-34            o_Controller_Mode[0] lvc330a080aaaaaaaaou
-10            o_Controller_Mode[1] lvc330a080aaaaaaaaou
-48            o_Controller_Mode[2] lvc330a080aaaaaaaaou
-45            o_Controller_Mode[3] lvc330a080aaaaaaaaou
-11            LED4_OUT             lvc330a080aaaaaaaaou
-13            LED3_OUT             lvc330a080aaaaaaaaou
-20            LED2_OUT             lvc330a080aaaaaaaaou
-17            LED1_OUT             lvc330a080aaaaaaaaou
-19            o_BOOST_ENABLE       lvc330a080aaaaaaaaou
-37            o_RHD2216_SPI_CS_n   lvc330a080aaaaaaaaou
-43            o_RHD2216_SPI_Clk    lvc330a080aaaaaaaaou
-38            o_RHD2216_SPI_MOSI   lvc330a080aaaaaaaaou
-28            o_RHD2132_SPI_CS_n   lvc330a080aaaaaaaaou
-27            o_RHD2132_SPI_Clk    lvc330a080aaaaaaaaou
-25            o_RHD2132_SPI_MOSI   lvc330a080aaaaaaaaou
+11            o_reset              lvc330a080aaaaaaaaou
+4             o_Controller_Mode[0] lvc330a080aaaaaaaaou
+48            o_Controller_Mode[1] lvc330a080aaaaaaaaou
+10            o_Controller_Mode[2] lvc330a080aaaaaaaaou
+9             o_Controller_Mode[3] lvc330a080aaaaaaaaou
+36            LED4_OUT             lvc330a080aaaaaaaaou
+6             LED3_OUT             lvc330a080aaaaaaaaou
+18            LED2_OUT             lvc330a080aaaaaaaaou
+34            LED1_OUT             lvc330a080aaaaaaaaou
+21            o_BOOST_ENABLE       lvc330a080aaaaaaaaou
+28            o_RHD2216_SPI_CS_n   lvc330a080aaaaaaaaou
+27            o_RHD2216_SPI_Clk    lvc330a080aaaaaaaaou
+25            o_RHD2216_SPI_MOSI   lvc330a080aaaaaaaaou
+37            o_RHD2132_SPI_CS_n   lvc330a080aaaaaaaaou
+43            o_RHD2132_SPI_Clk    lvc330a080aaaaaaaaou
+38            o_RHD2132_SPI_MOSI   lvc330a080aaaaaaaaou
 47            i_STM32_SPI4_MISO    lvc330a080aaaaaaaaou
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 |************************************************************************
 [Model] lvc330a080aaaaaaaaou
 Model_type Output
@@ -852,8 +820,6 @@ V_fixture_max= 0.0
 | 
 | End [Model] lvc330a080aaaaaaaaou
 |************************************************************************
-<<<<<<< HEAD
-=======
 [Model] lvc330a080baaaaaaaio
 Model_type I/O
 Polarity       Non-Inverting
@@ -1667,7 +1633,6 @@ V_fixture_max= 0.0
 | 
 | End [Model] lvc330a080baaaaaaaio
 |************************************************************************
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 [Model] lvc330axxxbaaaaaaain
 Model_type Input
 Polarity       Non-Inverting

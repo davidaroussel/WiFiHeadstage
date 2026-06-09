@@ -46,13 +46,9 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-<<<<<<< HEAD
-#define DUAL_CHIP 0
-#define DEVKIT    1
-=======
+
 #define DUAL_CHIP 1
 #define DEVKIT    0
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 #define NUM_CHANNELS 32
 /* USER CODE END EM */
 
@@ -80,12 +76,9 @@ void Error_Handler(void);
 #define RDY_nRF_Pin GPIO_PIN_2
 #define RDY_nRF_GPIO_Port GPIOA
 
-<<<<<<< HEAD
-=======
 #define RF_Data_Pin GPIO_PIN_3
 #define RF_Data_GPIO_Port GPIOA
 
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 #define FPGA_MUX_5_Pin GPIO_PIN_8
 #define FPGA_MUX_5_GPIO_Port GPIOA
 

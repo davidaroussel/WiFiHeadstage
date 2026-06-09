@@ -687,11 +687,7 @@ void wait_blocking_us(int32_t p_us)
 
 uint16_t RHS2116_convert_one_channel(SPI_HandleTypeDef *hspi, uint8_t p_channel)
 {
-<<<<<<< HEAD
-	uint16_t msb_value = p_channel & 0xFF00;
-=======
 	uint16_t msb_value = p_channel & 0x00FF;
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	lsb_value = 0b0000000000000000;
 	tx_vector[0] = msb_value;
 	tx_vector[1] = lsb_value;
@@ -701,63 +697,14 @@ uint16_t RHS2116_convert_one_channel(SPI_HandleTypeDef *hspi, uint8_t p_channel)
 	return rx_vector[0];
 }
 
-<<<<<<< HEAD
-int16_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, float p_measurement_time_s)
-{
-	/*Paramètres constants*/
-	const uint16_t voltage_saturation = 16000;
-	const uint16_t minimum_sin_amplitude = 8;
-	const uint8_t sin_offset = 127;
-	const float sin_frequency = 1000;
-	const float sin_period = 1/sin_frequency;
-	/*Fin paramètres constants*/
-
-	/*Variables locales*/
-	uint8_t sin_amplitude = 127; //1-127
-	float time = 0;
-	float sampling_period = 0.00001;
-	int16_t samples_per_period = sin_period/sampling_period;
-	uint8_t Zcheck_DAC;
-	uint16_t adc_converted_value;
-	uint16_t max_adc_converted_value = 0;
-	uint16_t max_adc_converted_value_valid = 0;
-	int16_t sample_number = 0;
-	float max_time = 0;
-	float max_time_valid = 0;
-
-
-	uint8_t Zcheck_en = 1;//Enable impedance check
-	uint8_t Zcheck_scale = 0b11; // Serie capacitor: 00 = 0.1 pF; 01 = 1.0 pF; 11 = 10 pF
-	float capacitance = 0.000000000010; //10pF
-	uint8_t Zcheck_load = 0; //Do not use
-	uint8_t Zcheck_DAC_power = 1; //Active the DAC for the waveform for measurement
-	uint8_t Zcheck_select = p_channel; //6 bit value, the channel to measure the impedance
-	/*Fin variables locales*/
-
-	/*Impedance measurement setup*/
-
-	RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select);
-
-	uint8_t RH1_sel1  = 0b010110;//7.5k Hz low-pass
-	uint8_t RH1_sel2  = 0b00000;
-	RHS2116_Amplifier_Bandwidth_Select_Upper(hspi, REGISTER_4, RH1_sel1, RH1_sel2);
-	uint8_t RH2_sel1  = 0b010110;//7.5k Hz low-pass
-	uint8_t RH2_sel2  = 0b00000;
-	RHS2116_Amplifier_Bandwidth_Select_Upper(hspi, REGISTER_5, RH2_sel1, RH2_sel2);
-	uint8_t RL_Asel1  = 0b001111;//300 Hz high-pass
-	uint8_t RL_Asel2  = 0b000001;
-	uint8_t RL_Asel3  = 0b0;
-	RHS2116_Amplifier_Bandwidth_Select_Lower(hspi, REGISTER_6, RL_Asel1, RL_Asel2, RL_Asel3);
-	uint8_t RL_Bsel1  = 0b001111;//300 Hz high-pass
-=======
 uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_channel, double p_measurement_time_s)
 
 {
 
 	/*Paramètres constants*/
-	p_measurement_time_s = p_measurement_time_s;
+
 	const uint16_t voltage_saturation = 32000;
-	const uint16_t minimum_sin_amplitude = 127;
+	const uint16_t minimum_sin_amplitude = 8;
 	const uint8_t sin_offset = 127;
 	const double sin_frequency = 500;
 
@@ -800,24 +747,15 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 	uint8_t RL_Asel3  = 0b0;
 	RHS2116_Amplifier_Bandwidth_Select_Lower(hspi, REGISTER_6, RL_Asel1, RL_Asel2, RL_Asel3);
 	uint8_t RL_Bsel1  = 0b011100;//75 Hz high-pass
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	uint8_t RL_Bsel2  = 0b000000;
 	uint8_t RL_Bsel3  = 0b0;
 	RHS2116_Amplifier_Bandwidth_Select_Lower(hspi, REGISTER_7, RL_Bsel1, RL_Bsel2, RL_Bsel3);
 
-<<<<<<< HEAD
-	RHS2116_Configure_ADC_Sampling_Rate(hspi, REGISTER_0, 32, 40);
-
-	uint8_t DSPcutoffFreq = 0b1010;
-	uint8_t DSPenable = 0b1;
-	uint8_t ABSmode = 0b0;
-=======
 
 	RHS2116_Configure_ADC_Sampling_Rate(hspi, REGISTER_0, 32, 40);
 	uint8_t DSPcutoffFreq = 0b0110;
 	uint8_t DSPenable = 0b1;
 	uint8_t ABSmode = 0b1;
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	uint8_t TWOScomp = 0b1;
 	uint8_t weakMISO = 0b0;
 	uint8_t digout1_HiZ = 0b1;
@@ -825,46 +763,11 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 	uint8_t digout2_HiZ = 0b1;
 	uint8_t digout2 = 0b0;
 	uint8_t digoutOD = 0b0;
-<<<<<<< HEAD
-=======
 
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 	RHS2116_ADCFormat_DSPSetting_AuxOutput(hspi, REGISTER_1,
 											DSPcutoffFreq, DSPenable,ABSmode, TWOScomp,weakMISO,
 											digout1_HiZ, digout1, digout2_HiZ, digout2, digoutOD);
 
-<<<<<<< HEAD
-	uint16_t AC_amp_power  = 0b1111111111111111; //Power up all the bioamplifiers (to measute the voltage)
-	RHS2116_Amplifier_Power_Up(hspi, REGISTER_8, AC_amp_power);
-	/*End impedance measurement setup*/
-
-	/*Waveform output*/
-	while(1)
-	{
-
-		for(time = 0; time < p_measurement_time_s; time += sin_period)
-		{
-			Zcheck_DAC = sin_amplitude*sin(2*M_PI*sin_frequency*time) + sin_offset;
-			RHS2116_Impedence_Check_DAC(hspi, REGISTER_3, Zcheck_DAC);
-			wait_blocking_us(sin_period*1000000);
-
-			adc_converted_value = RHS2116_convert_one_channel(hspi, p_channel);
-			if(adc_converted_value > max_adc_converted_value)
-			{
-				max_time = time;
-				max_adc_converted_value = adc_converted_value;
-			}
-			if(sample_number++ >= samples_per_period)
-			{
-				sample_number = 0;
-				max_adc_converted_value_valid = max_adc_converted_value;
-				max_time_valid = max_time;
-				max_adc_converted_value = 0;
-			}
-		}
-
-		if(max_adc_converted_value_valid >= voltage_saturation)
-=======
 
 	//uint16_t AC_amp_power  = 0b1000000000000000;
 	uint16_t AC_amp_power  = 0b1111111111111111; //Power up all the bioamplifiers (to measute the voltage)
@@ -904,7 +807,6 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 		moyenne_mobile  = moyenne_mobile*M_PI/2;
 
 		if(moyenne_mobile > voltage_saturation*0.75)
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 		{
 			if(sin_amplitude <= minimum_sin_amplitude)
 			{
@@ -914,15 +816,10 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 				Zcheck_DAC_power = 0; //Deactivate the DAC for the waveform for measurement
 				RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select);
 				/*End turn OFF the impedance measurement*/
-<<<<<<< HEAD
-				return 0xFFFF; //Impossible de mesurer, impédance trop élevée
-			}
-=======
 				return 0xFFFFFFFF; //Impossible de mesurer, impédance trop élevée
 			}
 			moyenne_mobile = 0;
 			moyenne_mobile_nm1 = 0;
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 			sin_amplitude = sin_amplitude/2;
 			continue;
 		}
@@ -931,19 +828,6 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 			break;
 		}
 	}
-<<<<<<< HEAD
-	float injected_curent_peak = 2*M_PI*sin_frequency*capacitance*max_adc_converted_value_valid*cos(2*M_PI*sin_frequency*max_time_valid);
-	uint16_t impedance = (sin_amplitude*0.004785)/injected_curent_peak;
-	/*End waveform output*/
-
-	/*Turn OFF the impedance measurement*/
-	Zcheck_en = 0;//Disable impedance check
-	Zcheck_DAC_power = 0; //Deactivate the DAC for the waveform for measurement
-	RHS2116_Impedance_Check_Control(hspi, REGISTER_2, Zcheck_en, Zcheck_scale, Zcheck_load, Zcheck_DAC_power, Zcheck_select);
-	/*End turn OFF the impedance measurement*/
-
-	return impedance;
-=======
 	double injected_curent_peak = 2*M_PI*sin_frequency*capacitance*sin_amplitude*0.004785;
 	uint32_t impedance = (((double)(moyenne_mobile))*0.000000195)/(4*injected_curent_peak)*1.25;
 	/*End waveform output*/
@@ -958,7 +842,6 @@ uint32_t RHS2116_Electrode_Impedance_Test(SPI_HandleTypeDef *hspi, uint8_t p_cha
 
 	return impedance;
 
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 }
 
 
