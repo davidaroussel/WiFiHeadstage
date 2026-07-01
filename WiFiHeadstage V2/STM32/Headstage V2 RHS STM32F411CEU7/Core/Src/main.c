@@ -36,8 +36,8 @@
 #define ID_PATATO  0xF5
 #define ID_POTATO  0x3B
 
-#define FPGA_CHUNK_SIZE 2048
-#define FPGA_ACCUM_SIZE 4096
+#define FPGA_CHUNK_SIZE 4096
+#define FPGA_ACCUM_SIZE 8192
 
 #define STACK_SIZE FPGA_ACCUM_SIZE / FPGA_CHUNK_SIZE
 
@@ -279,10 +279,13 @@ int main(void)
 		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
 		printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 
+//		HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_SET);
+
 
 	}
 
-	else{
+	else
+	{
 		  if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
 		      printf("[ERROR] SPI DMA transmit/receive failed!\r\n");
 		      Error_Handler();
@@ -300,6 +303,7 @@ int main(void)
 
   while (1)
   {
+
 	  if (spi_fpga_ready)
 	  {
 
@@ -623,6 +627,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+  HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
@@ -634,14 +639,21 @@ static void MX_GPIO_Init(void)
 
 
   /*Configure GPIO pin : PC11 --- CONFIRM FOR HEADSTAGE, USE SECOND MISO !!*/
-  GPIO_InitStruct.Pin = RHS_Chip_SEL_Pin;
+  GPIO_InitStruct.Pin = RHS_Chip_SEL_Pin | RHS_Start_Stim_Out_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RHS_Chip_SEL_Port, &GPIO_InitStruct);
 
+  GPIO_InitStruct.Pin = RHS_Start_Stim_In_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(RHS_Start_Stim_In_Port, &GPIO_InitStruct);
+
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
@@ -660,6 +672,30 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
         spi_fpga_ready = 1;
 //        printf("SPI_COUNTER %i \r\n", spi_counter);
         // Restart DMA immediately
+    }
+}
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == RHS_Start_Stim_In_Pin)
+    {
+        if (HAL_GPIO_ReadPin(RHS_Start_Stim_In_Port,
+                             RHS_Start_Stim_In_Pin) == GPIO_PIN_RESET)
+        {
+            HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port,
+                              RHS_Start_Stim_Out_Pin,
+                              GPIO_PIN_SET);
+
+            // Optional:
+            // RHS2116_start_stim_pattern_single_shot(&hspi4);
+        }
+        else
+        {
+            HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port,
+                              RHS_Start_Stim_Out_Pin,
+                              GPIO_PIN_RESET);
+        }
     }
 }
 

@@ -52,8 +52,9 @@ entity top_level is
 		i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
-		CTRL0_IN     : in STD_LOGIC;
-		RHS_SEL     : in STD_LOGIC;
+		CTRL0_IN         : in STD_LOGIC;
+		RHS_SEL          : in STD_LOGIC;
+		i_RHS_STIM_START   : in STD_LOGIC;
 		
 		-- IR SYNCHRONIZATION INPUT 
 		--i_LED_SYNC   : in STD_LOGIC;
@@ -169,6 +170,7 @@ begin
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
+			i_RHS_STIM_START    => i_RHS_STIM_START,
 
 			rgb_info_red   => rgb_sig_red,
 			rgb_info_blue   => rgb_sig_blue,
@@ -301,12 +303,12 @@ begin
 						--rgb_sig_green <= '1';
 					end if;
 				elsif CTRL0_IN = '1' then
-					w_Controller_Mode <= x"2";
+						w_Controller_Mode <= x"2";
 					--rgb_sig_green <= '1';
 				end if;
 
 
-				--Controller mode sequencing
+				----Controller mode sequencing
 				--case reset_counter is
 					--when 36000000 =>
 						--w_Controller_Mode <= x"1";

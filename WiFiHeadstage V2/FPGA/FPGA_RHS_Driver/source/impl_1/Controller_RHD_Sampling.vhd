@@ -32,6 +32,7 @@ entity Controller_RHD_Sampling is
 
   	-- Controller Modes
 	i_Controller_Mode  : in std_logic_vector(3 downto 0);
+	i_RHS_STIM_START   : in std_logic;
 
     -- STM32 SPI Interface
     o_STM32_SPI_Clk      : out std_logic;
@@ -104,18 +105,7 @@ entity Controller_RHD_Sampling is
     -- RX (MISO) Signals
     o_RHS_STIM_RX_DV        : out std_logic;
     o_RHS_STIM_RX_Byte_Rising  : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-    o_RHS_STIM_RX_Byte_Falling : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-	
-	o_stim_burst_counter_debug       : out std_logic_vector(7 downto 0);
-	o_stim_10sec_counter_debug : out std_logic_vector(31 downto 0);
-	o_stim_1sec_counter_debug  : out std_logic_vector(31 downto 0);
-	o_stim_train_counter_debug      : out std_logic_vector(7 downto 0);
-	o_stim_pulse_counter_debug      : out std_logic_vector(7 downto 0);
-	o_stim_sequence_phase_debug     : out std_logic_vector(7 downto 0);
-	o_stim_delay_counter_debug      : out std_logic_vector(31 downto 0);
-	o_rhs_STIM_state_debug          : out std_logic_vector(7 downto 0);
-	o_rhs_STIM_index_debug          : out std_logic_vector(7 downto 0);
-	o_stim_train_sector_counter_debug : out std_logic_vector(4 downto 0)
+    o_RHS_STIM_RX_Byte_Falling : out std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0)
   );
 end entity Controller_RHD_Sampling;
 
@@ -801,60 +791,59 @@ architecture RTL of Controller_RHD_Sampling is
 				
 			elsif i_Controller_Mode = x"2" then
 				rgd_info_sig_red   <= '1';
-				if SAMPLING_MODE = "00" or SAMPLING_MODE = "10" then
-					case rhd_state is
-						----------------------------------------------------------------
-						-- STATE 0 : PREPARE NEXT BYTE
-						----------------------------------------------------------------
-						when 0 =>
+				
+				case rhd_state is
+					----------------------------------------------------------------
+					-- STATE 0 : PREPARE NEXT BYTE
+					----------------------------------------------------------------
+					when 0 =>
 
-							int_RHS_READ_TX_Byte <= channel_array(rhd_index);
+						int_RHS_READ_TX_Byte <= channel_array(rhd_index);
 
-							if int_RHS_READ_TX_Ready = '1' then
-								int_RHS_READ_TX_DV <= '1';   -- pulse DV for one cycle
-								rhd_state <= 1;
-							else
-								int_RHS_READ_TX_DV <= '0';
-							end if;
-
-						----------------------------------------------------------------
-						-- STATE 1 : PULSE DV (ONE CYCLE)
-						----------------------------------------------------------------
-						when 1 =>
+						if int_RHS_READ_TX_Ready = '1' then
+							int_RHS_READ_TX_DV <= '1';   -- pulse DV for one cycle
+							rhd_state <= 1;
+						else
 							int_RHS_READ_TX_DV <= '0';
-							-- Wait for Ready to drop (indicating transfer start)
-							if int_RHS_READ_TX_Ready = '0' then
-								rhd_state <= 2;
+						end if;
+
+					----------------------------------------------------------------
+					-- STATE 1 : PULSE DV (ONE CYCLE)
+					----------------------------------------------------------------
+					when 1 =>
+						int_RHS_READ_TX_DV <= '0';
+						-- Wait for Ready to drop (indicating transfer start)
+						if int_RHS_READ_TX_Ready = '0' then
+							rhd_state <= 2;
+						else
+							rhd_state <= 1;
+						end if;
+
+					----------------------------------------------------------------
+					-- STATE 2 : WAIT FOR TRANSFER COMPLETE
+					----------------------------------------------------------------
+					when 2 =>
+						if int_RHS_READ_TX_Ready = '1' then
+
+							if rhd_index < 31 then
+								rhd_index <= rhd_index + 1;
 							else
-								rhd_state <= 1;
+								rhd_index <= 0;
 							end if;
 
-						----------------------------------------------------------------
-						-- STATE 2 : WAIT FOR TRANSFER COMPLETE
-						----------------------------------------------------------------
-						when 2 =>
-							if int_RHS_READ_TX_Ready = '1' then
-
-								if rhd_index < 31 then
-									rhd_index <= rhd_index + 1;
-								else
-									rhd_index <= 0;
-								end if;
-
-								---- CHIP SELECTION LOGIC
-								if (rhd_index < 16) then
-									chip_select_RHS_READ <= '1';
-								else
-									chip_select_RHS_READ  <= '0';
-								end if;
-
-								rhd_state <= 0;
+							---- CHIP SELECTION LOGIC
+							if (rhd_index < 16) then
+								chip_select_RHS_READ <= '1';
+							else
+								chip_select_RHS_READ  <= '0';
 							end if;
 
-						when others =>
 							rhd_state <= 0;
-					end case;
-				end if;
+						end if;
+
+					when others =>
+						rhd_state <= 0;
+				end case;
 			else
 				-- Inactive controller mode: keep DV low
 				int_RHS_READ_TX_DV <= '0';
@@ -890,7 +879,7 @@ architecture RTL of Controller_RHD_Sampling is
 		-- Default
 		int_RHS_STIM_TX_DV <= '0';
 
-		if i_Controller_Mode = x"2" then
+		if i_RHS_STIM_START = '1' then
 		  rgd_info_sig_blue <= '0';
 
 		  case rhs_STIM_state is
@@ -1089,6 +1078,7 @@ architecture RTL of Controller_RHD_Sampling is
 
 		else
 		  int_RHS_STIM_TX_DV <= '0';
+		  rgd_info_sig_blue <= '1';
 		end if;
 
 	  end if;
@@ -1153,24 +1143,24 @@ architecture RTL of Controller_RHD_Sampling is
 	o_FIFO_RHS_STIM_AEMPTY  <= int_FIFO_RHS_STIM_AEMPTY;
 	o_FIFO_RHS_STIM_AFULL   <= int_FIFO_RHS_STIM_AFULL;
 
-	o_stim_10sec_counter_debug <= std_logic_vector(to_unsigned(stim_10sec_counter, 32));
+	--o_stim_10sec_counter_debug <= std_logic_vector(to_unsigned(stim_10sec_counter, 32));
 
-	o_stim_1sec_counter_debug <= std_logic_vector(to_unsigned(stim_1sec_counter, 32));
+	--o_stim_1sec_counter_debug <= std_logic_vector(to_unsigned(stim_1sec_counter, 32));
 
-	o_stim_burst_counter_debug <= std_logic_vector(to_unsigned(stim_burst_counter, 8));
+	--o_stim_burst_counter_debug <= std_logic_vector(to_unsigned(stim_burst_counter, 8));
 
-	o_stim_train_counter_debug <= std_logic_vector(to_unsigned(stim_train_counter, 8));
+	--o_stim_train_counter_debug <= std_logic_vector(to_unsigned(stim_train_counter, 8));
 
-	o_stim_pulse_counter_debug <= std_logic_vector(to_unsigned(stim_pulse_counter, 8));
+	--o_stim_pulse_counter_debug <= std_logic_vector(to_unsigned(stim_pulse_counter, 8));
 
-	o_stim_sequence_phase_debug <= std_logic_vector(to_unsigned(stim_sequence_phase, 8));
+	--o_stim_sequence_phase_debug <= std_logic_vector(to_unsigned(stim_sequence_phase, 8));
 
-	o_stim_delay_counter_debug <= std_logic_vector(to_unsigned(stim_delay_counter, 32));
+	--o_stim_delay_counter_debug <= std_logic_vector(to_unsigned(stim_delay_counter, 32));
 
-	o_rhs_STIM_state_debug <= std_logic_vector(to_unsigned(rhs_STIM_state, 8));
+	--o_rhs_STIM_state_debug <= std_logic_vector(to_unsigned(rhs_STIM_state, 8));
 
-	o_rhs_STIM_index_debug <= std_logic_vector(to_unsigned(rhs_STIM_index, 8));
+	--o_rhs_STIM_index_debug <= std_logic_vector(to_unsigned(rhs_STIM_index, 8));
 
-	o_stim_train_sector_counter_debug <= std_logic_vector(to_unsigned(stim_train_sector_counter, 32));
+	--o_stim_train_sector_counter_debug <= std_logic_vector(to_unsigned(stim_train_sector_counter, 32));
 
 end architecture RTL;

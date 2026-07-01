@@ -132,13 +132,17 @@ class OpenEphys_Configuration:
 
     def get_ES_processor_id(self):
         found_ES = False
+        ES_process_found = 0
+        self.EphysSocket_id = []
         r = self.session.get(f"{self.gui_url}/processors")
         for processor in r.json()["processors"]:
             processor_name = processor["name"]
             if processor_name == "Ephys Socket":
-                self.EphysSocket_id = processor["id"]
+                self.EphysSocket_id.append(processor["id"])
                 found_ES = True
+                ES_process_found += 1
         if found_ES:
+            print(f"[OPENEPHYS] FOUND {ES_process_found} EPHYS SOCKET Processor ")
             retVal = f"EphysSocket processor id: {self.EphysSocket_id}"
             # print(retVal)
             return retVal
@@ -147,9 +151,10 @@ class OpenEphys_Configuration:
             print("!! EPHYS SOCKET PLUGIN NOT FOUND IN ACQUISITION CHAINE !!")
             exit()
 
-    def get_ES_info(self):
+    def get_ES_info(self, processor_id):
+
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": "ES INFO"})
         current_info = r.json()["info"]
 
@@ -169,10 +174,28 @@ class OpenEphys_Configuration:
         # print(retVal)
         return retVal
 
+    def get_GUI_recording_info(self):
+        r = self.session.get(f"{self.gui_url}/recording")
+        data = r.json()
 
-    def set_ES_scale(self, scale_value):
+        self.recording_node = data["record_nodes"][0]["node_id"]
+        self.recording_path = data["record_nodes"][0]["parent_directory"]
+
+        return data
+
+    def set_ES_configuration(self, processor_id, scale, offset, port, frequency):
+        command = f"ES CONFIG {scale} {offset} {port} {frequency}"
+
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": command},
+        )
+
+        return r.json()["info"]
+
+    def set_ES_scale(self,processor_id, scale_value):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES SCALE {scale_value}"})
         # print(r.json())
         success = r.json()["info"]
@@ -183,9 +206,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_offset(self, offset_value):
+    def set_ES_offset(self,processor_id, offset_value):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES OFFSET {offset_value}"})
         # print(r.json())
         success = r.json()["info"]
@@ -196,9 +219,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_port(self, port):
+    def set_ES_port(self, processor_id, port):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES PORT {port}"})
         # print(r.json())
         success = r.json()["info"]
@@ -209,9 +232,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_frequency(self, frequency):
+    def set_ES_frequency(self, processor_id, frequency):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES FREQUENCY {frequency}"})
         # print(r.json())
         success = r.json()["info"]
@@ -221,3 +244,25 @@ class OpenEphys_Configuration:
             retVal = f"New ES FREQUENCY: {frequency}"
             # print(retVal)
             return retVal
+
+    def get_ES_Connection_Status(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES CONNECTION_STATUS"})
+        status = r.json()["info"]
+        return status
+
+
+    def CONNECT_ES(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES CONNECT"})
+        status = r.json()["info"]
+        return status
+
+    def DISCONNECT_ES(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES DISCONNECT"})
+        status = r.json()["info"]
+        return status

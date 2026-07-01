@@ -13,7 +13,7 @@ from open_ephys.control.network_control import NetworkControl
 
 
 class DataConverterV2:
-    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_frequency, p_buffer_size, p_dual_chip_mode, p_port, p_host_addr=""):
+    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_buffer_size, p_dual_chip_mode, p_port, p_host_addr=""):
         self.openEphys_Socket = None
         self.tcpClient = None
         self.port = p_port
@@ -31,7 +31,6 @@ class DataConverterV2:
         self.queue_raw_data = queue_raw_data
         self.queue_csv_data = queue_csv_data
         self.num_channels = len(p_channels)
-        self.frequency = p_frequency
         self.headstage_buffer_size = p_buffer_size
         self.openephys_buffer_size = int(p_buffer_size / (self.num_channels * 2))
 
@@ -179,7 +178,7 @@ class DataConverterV2:
         return corrected_blocks
 
     def add_timing_channels(self, timing_bits, converted):
-        openephys_offset = 32768
+        openephys_offset = 32760
         bits = timing_bits[:converted.shape[1]]
 
         idx = np.flatnonzero(bits)
@@ -256,9 +255,9 @@ class DataConverterV2:
         # CONVERT EXTRA CHANNELS TO OPENEPHYS FORMAT
         # =========================================================
 
-        extra_channel_1 = (np.clip(extra_channel_1, -32768, 32767) + openephys_offset).astype(np.uint16)
+        extra_channel_1 = (np.clip(extra_channel_1, -32767, 32766) + openephys_offset).astype(np.uint16)
 
-        extra_channel_2 = (np.clip(extra_channel_2, -32768, 32767) + openephys_offset).astype(np.uint16)
+        extra_channel_2 = (np.clip(extra_channel_2, -32767, 32766) + openephys_offset).astype(np.uint16)
 
         # shape -> (1, samples)
         extra_channel_1 = extra_channel_1[np.newaxis, :]
@@ -498,7 +497,7 @@ class DataConverterV2:
 
                     else:
                         reshaped = chunk.reshape(-1, self.num_channels).T
-                        reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD, DONT TELL MOM...
+                        # reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD, DONT TELL MOM...
 
                     converted = (np.clip(reshaped, -32768, 32767) * scale + OpenEphysOffset).astype(np.uint16)
 
