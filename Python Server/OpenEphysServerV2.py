@@ -55,7 +55,6 @@ def create_data_array():
 if __name__ == "__main__":
     # create_data_array()
 
-
     #MODES
     TTL_GENERATOR       = False
     CONFIGURE_OPENEPHYS = True
@@ -88,48 +87,15 @@ if __name__ == "__main__":
         5: ("r", "f")
     }
 
-    retVal_list = []
     OE_config = OpenEphys_Configuration()
-    try:
-        if CONFIGURE_OPENEPHYS:
-            # retVal_list.append(OE_config.get_GUI_status())
-            retVal_list.append(OE_config.get_GUI_recording_node())
-            retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+    OE_config.OE_INIT_PLUGIN(OE_config, PRINT_OE_INFO, CONFIGURE_OPENEPHYS, OE_SOCKET_PORT, OPENEPHYS_SCALE, SAMPLING_FREQ, OPENEPHYS_OFFSET)
 
-            retVal_list.append(OE_config.get_ES_processor_id())
-            for idx, processor_id in enumerate(OE_config.EphysSocket_id):
-                current_val = OE_config.get_ES_info(processor_id)
-                parts = current_val.split(":", 1)[1].split("|")
-                data = {}
-                for part in parts:
-                    key, value = part.strip().split(":", 1)
-                    data[key.strip()] = float(value.strip())
-                # retVal_list.append("BEFORE: " + current_val)
-                if data["Port"] != OE_SOCKET_PORT[idx]:
-                    retVal_list.append(OE_config.set_ES_port(processor_id, OE_SOCKET_PORT[idx]))
-                if data["Scale"] != OPENEPHYS_SCALE:
-                    retVal_list.append(OE_config.set_ES_scale(processor_id, OPENEPHYS_SCALE))
-                if data["Sample rate"] != SAMPLING_FREQ[idx]:
-                    retVal_list.append(OE_config.set_ES_frequency(processor_id, SAMPLING_FREQ[idx]))
-                if data["Offset"] != OPENEPHYS_OFFSET:
-                    retVal_list.append(OE_config.set_ES_offset(processor_id, OPENEPHYS_OFFSET))
-                # retVal_list.append("AFTER: " + OE_config.get_ES_info(processor_id))
-
-            if PRINT_OE_INFO:
-                for retVal in retVal_list:
-                    print(retVal)
-                print("\n")
-    except Exception as e:
-        print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
-        print(e)
-        exit()
     #CONSTRUCTORS
     QUEUE_RAW_DATA   = Queue()
     QUEUE_CSV_DATA   = Queue()
 
     # CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     CHANNELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-
 
     TASK_WiFiServer    = WiFiHeadstageReceiverV2(QUEUE_RAW_DATA, CHANNELS, HEADSTAGE_BUFFER_SIZE, p_port=HEADSTAGE_PORT, p_host_addr=HOST_ADDR)
     TASK_DataConverter = DataConverterV2(QUEUE_RAW_DATA, QUEUE_CSV_DATA, CHANNELS, HEADSTAGE_BUFFER_SIZE, DUAL_CHIP_MODE, p_port=OPENEPHYS_PORT, p_host_addr=HOST_ADDR)
@@ -152,25 +118,32 @@ if __name__ == "__main__":
     for processor_id in OE_config.EphysSocket_id:
         OE_config.CONNECT_ES(processor_id)
 
+    for processor_id in OE_config.EphysSocket_id:
+        ephys_socket_state = OE_config.get_ES_Connection_Status(processor_id)
+        while ephys_socket_state == 'DISCONNECTED':
+            OE_config.CONNECT_ES(processor_id)
+
+
     if DUAL_CHIP_MODE:
-        # while not (TASK_DataConverter.tcp_connected_neuro & TASK_DataConverter.tcp_connected_emg):
-        #     pass
-        time.sleep(1)
+        while not (TASK_DataConverter.tcp_connected_neuro & TASK_DataConverter.tcp_connected_emg):
+            pass
     else:
         while not (TASK_DataConverter.tcp_connected_neuro):
             pass
 
-    start_acquistion = False
+    start_acquisition = False
     for processor_id in OE_config.EphysSocket_id:
         status = OE_config.get_ES_Connection_Status(processor_id)
         if status == "DISCONNECT":
-            start_acquistion = False
+            start_acquisition = False
         else:
-            start_acquistion = True
+            start_acquisition = True
 
-    if start_acquistion:
+    if start_acquisition:
         OE_config.Network_Events_Connect()
-        OE_config.GUI_Start_Acquisition()
+        ret_val = None
+        while ret_val != b'StartedAcquisition':
+            ret_val = OE_config.GUI_Start_Acquisition()
 
     time.sleep(0.1)
     print("Match Parameters with OpenEphys !!")

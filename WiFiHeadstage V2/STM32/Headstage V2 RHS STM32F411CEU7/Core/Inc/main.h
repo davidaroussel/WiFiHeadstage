@@ -47,7 +47,7 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
-#define DUAL_CHIP 1
+#define DUAL_CHIP 0
 #define DEVKIT    0
 #define NUM_CHANNELS 32
 /* USER CODE END EM */

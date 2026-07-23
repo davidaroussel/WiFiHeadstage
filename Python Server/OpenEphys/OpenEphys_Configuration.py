@@ -142,7 +142,7 @@ class OpenEphys_Configuration:
                 found_ES = True
                 ES_process_found += 1
         if found_ES:
-            print(f"[OPENEPHYS] FOUND {ES_process_found} EPHYS SOCKET Processor ")
+            # print(f"[OPENEPHYS] FOUND {ES_process_found} EPHYS SOCKET Processor ")
             retVal = f"EphysSocket processor id: {self.EphysSocket_id}"
             # print(retVal)
             return retVal
@@ -152,7 +152,6 @@ class OpenEphys_Configuration:
             exit()
 
     def get_ES_info(self, processor_id):
-
         r = self.session.put(
             f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": "ES INFO"})
@@ -182,16 +181,6 @@ class OpenEphys_Configuration:
         self.recording_path = data["record_nodes"][0]["parent_directory"]
 
         return data
-
-    def set_ES_configuration(self, processor_id, scale, offset, port, frequency):
-        command = f"ES CONFIG {scale} {offset} {port} {frequency}"
-
-        r = self.session.put(
-            f"{self.gui_url}/processors/{processor_id}/config",
-            json={"text": command},
-        )
-
-        return r.json()["info"]
 
     def set_ES_scale(self,processor_id, scale_value):
         r = self.session.put(
@@ -266,3 +255,51 @@ class OpenEphys_Configuration:
             json={"text": f"ES DISCONNECT"})
         status = r.json()["info"]
         return status
+
+
+    def OE_INIT_PLUGIN(self, OE_config, PRINT_OE_INFO, CONFIGURE_OPENEPHYS, OE_SOCKET_PORT, OPENEPHYS_SCALE, SAMPLING_FREQ, OPENEPHYS_OFFSET):
+        retVal_list = []
+        try:
+            if CONFIGURE_OPENEPHYS:
+                needed_config = False
+                # retVal_list.append(OE_config.get_GUI_status())
+                OE_config.get_GUI_recording_node()
+                # OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING")
+                OE_config.get_ES_processor_id()
+
+                # TO PRINT RETURNED VALUE FROM OPEN EPHYS
+                # retVal_list.append(OE_config.get_GUI_recording_node())
+                # retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+                # retVal_list.append(OE_config.get_ES_processor_id())
+                for idx, processor_id in enumerate(OE_config.EphysSocket_id):
+                    current_val = OE_config.get_ES_info(processor_id)
+                    parts = current_val.split(":", 1)[1].split("|")
+                    data = {}
+                    for part in parts:
+                        key, value = part.strip().split(":", 1)
+                        data[key.strip()] = float(value.strip())
+                    # retVal_list.append("BEFORE: " + current_val)
+                    if data["Port"] != OE_SOCKET_PORT[idx]:
+                        retVal_list.append(OE_config.set_ES_port(processor_id, OE_SOCKET_PORT[idx]))
+                        needed_config = True
+                    if data["Scale"] != OPENEPHYS_SCALE:
+                        retVal_list.append(OE_config.set_ES_scale(processor_id, OPENEPHYS_SCALE))
+                        needed_config = True
+                    if data["Sample rate"] != SAMPLING_FREQ[idx]:
+                        retVal_list.append(OE_config.set_ES_frequency(processor_id, SAMPLING_FREQ[idx]))
+                        needed_config = True
+                    if data["Offset"] != OPENEPHYS_OFFSET:
+                        retVal_list.append(OE_config.set_ES_offset(processor_id, OPENEPHYS_OFFSET))
+                        needed_config = True
+                    # retVal_list.append("AFTER: " + OE_config.get_ES_info(processor_id))
+                if not needed_config:
+                    print("[OPENEPHYS] EPHYS SOCKET ALREADY SETUP")
+
+                if PRINT_OE_INFO:
+                    for retVal in retVal_list:
+                        print(retVal)
+                    print("\n")
+        except Exception as e:
+            print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
+            print(e)
+            exit()

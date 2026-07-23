@@ -110,7 +110,7 @@ class DataConverterV2:
                 return
 
             except Exception as e:
-                print(f"[{stream_type.upper()} SEND ERROR]", e)
+                # print(f"[{stream_type.upper()} SEND ERROR]", e)
 
                 setattr(self, connected_attr, False)
 
