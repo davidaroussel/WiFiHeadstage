@@ -60,8 +60,9 @@ def remove_repeated_rows_fast(blocks, min_repeats=4):
     mask = max_counts < min_repeats
     return blocks[mask], mask
 
-def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
 
+def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
+    ENABLE_EXTRA_CHANNEL = True
     # =============================
     # CONSTANTS
     # =============================
@@ -71,21 +72,14 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
 
     TARGET_NEURO_SAMPLES = 4096
     TARGET_EMG_SAMPLES = 4096
-<<<<<<< HEAD
+
     NUM_CHANNELS = 16
-=======
-    NUM_CHANNELS = 32
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
 
     OpenEphysOffset = 32768
     maxOpenEphysValue = 0.005
     scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
-<<<<<<< HEAD
-    capture_duration = 5 # seconds
-=======
-    capture_duration = 20 # seconds
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
+    capture_duration = 15 # seconds
 
     # =============================
     # BUFFERS
@@ -143,16 +137,12 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                     # AFTER 10 SECONDS → PROCESS
                     # =============================
                     if time.time() - start_time >= capture_duration:
-<<<<<<< HEAD
-                    # if False:
-=======
->>>>>>> ed5c0376b362634e1e81d9a369ec4feb75cb968b
                         print(f"Final Counter {counter}")
                         print("[INFO] 10 seconds reached. Processing...")
 
                         raw = np.frombuffer(capture_buffer, dtype='>i2')
                         n = raw.size
-                        block_size = 16  # size of each data block
+                        block_size = 32  # size of each data block
                         num_lines = n // block_size
 
                         # -------------------------
@@ -214,25 +204,55 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                         print(
                             f"[INFO] Neuro rows: {len(raw_neuro_data) // block_size}, Filtered Neuro rows: {len(filtered_neuro_data) // block_size}")
 
-                        def process_chip(data):
+                        def process_chip(data, add_extra_channel=False):
                             usable = (data.size // NUM_CHANNELS) * NUM_CHANNELS
                             data = data[:usable]
-                            reshaped = data.reshape(-1, NUM_CHANNELS).T
-                            clipped = np.clip(reshaped, -32768, 32768)
-                            converted = (clipped * scale + OpenEphysOffset).astype(np.uint16)
+
+                            if usable == 0:
+                                return np.empty((NUM_CHANNELS + int(add_extra_channel), 0), dtype=np.uint16)
+
+                            rows = data.reshape(-1, NUM_CHANNELS)
+
+                            if add_extra_channel:
+                                second_word = rows[:, 1]
+
+                                bits = (second_word & 0x0001) != 0
+
+                                extra_channel = np.where(
+                                    bits,
+                                    40000,
+                                    10000
+                                ).astype(np.uint16)
+
+                            reshaped = rows.T
+
+                            clipped = np.clip(reshaped, -32768, 32767)
+
+                            converted = (
+                                    clipped * scale + OpenEphysOffset
+                            ).astype(np.uint16)
+
+                            if add_extra_channel:
+                                converted = np.vstack([
+                                    converted,
+                                    extra_channel[np.newaxis, :]
+                                ])
+
                             return converted
-
                         # Convert all buffers for plotting
-                        raw_emg_processed = process_chip(raw_emg_data)
-                        raw_neuro_processed = process_chip(raw_neuro_data)
-                        filtered_emg_processed = process_chip(filtered_emg_data)
-                        filtered_neuro_processed = process_chip(filtered_neuro_data)
+                        raw_emg_processed = process_chip(raw_emg_data, add_extra_channel=ENABLE_EXTRA_CHANNEL)
+                        raw_neuro_processed = process_chip(raw_neuro_data, add_extra_channel=ENABLE_EXTRA_CHANNEL)
+                        filtered_emg_processed = process_chip(filtered_emg_data, add_extra_channel=ENABLE_EXTRA_CHANNEL)
+                        filtered_neuro_processed = process_chip(filtered_neuro_data, add_extra_channel=ENABLE_EXTRA_CHANNEL)
 
-                        fig, axes = plt.subplots(NUM_CHANNELS, 2, figsize=(18, 20))
+                        num_plot_channels = raw_emg_processed.shape[0]
+                        fig, axes = plt.subplots(num_plot_channels, 2, figsize=(18, 20))
+
+                        # fig, axes = plt.subplots(NUM_CHANNELS, 2, figsize=(18, 20))
                         fig.suptitle("EMG & Neuro: Raw (blue) vs Filtered (red)", fontsize=16)
 
                         # Share X within each column
-                        for ch in range(1, NUM_CHANNELS):
+                        for ch in range(1, num_plot_channels):
                             axes[ch, 0].sharex(axes[0, 0])  # left column shares with top-left
                             axes[ch, 1].sharex(axes[0, 1])  # right column shares with top-right
 
@@ -245,24 +265,31 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                         log_hex_16bit(
                             capture_buffer,
                             file_path="hex_data.txt",
-                            values_per_row=64,
+                            values_per_row=128,
                             group_size=16
                         )
 
-                        for ch in range(NUM_CHANNELS):
-                            re = raw_emg_processed[ch][len(raw_emg_processed[ch]) // 2:]
-                            rn = raw_neuro_processed[ch][len(raw_neuro_processed[ch]) // 2:]
-                            fe = filtered_emg_processed[ch][len(filtered_emg_processed[ch]) // 2:]
-                            fn = filtered_neuro_processed[ch][len(filtered_neuro_processed[ch]) // 2:]
+                        for ch in range(num_plot_channels):
+
+                            re = raw_emg_processed[ch][len(raw_emg_processed[ch]) // 10:]
+                            rn = raw_neuro_processed[ch][len(raw_neuro_processed[ch]) // 10:]
+                            fe = filtered_emg_processed[ch][len(filtered_emg_processed[ch]) // 10:]
+                            fn = filtered_neuro_processed[ch][len(filtered_neuro_processed[ch]) // 10:]
 
                             axes[ch, 0].plot(re, color='tab:blue', alpha=0.5)
                             axes[ch, 0].plot(fe, color='tab:red', alpha=0.7)
-                            axes[ch, 0].set_ylabel(f"E Ch {ch}")
-                            axes[ch, 0].set_yticks([])
 
                             axes[ch, 1].plot(rn, color='tab:blue', alpha=0.5)
                             axes[ch, 1].plot(fn, color='tab:red', alpha=0.7)
-                            axes[ch, 1].set_ylabel(f"N Ch {ch}")
+
+                            if ch < NUM_CHANNELS:
+                                axes[ch, 0].set_ylabel(f"E Ch {ch}")
+                                axes[ch, 1].set_ylabel(f"N Ch {ch}")
+                            else:
+                                axes[ch, 0].set_ylabel("E Timing")
+                                axes[ch, 1].set_ylabel("N Timing")
+
+                            axes[ch, 0].set_yticks([])
                             axes[ch, 1].set_yticks([])
 
                         axes[-1, 0].set_xlabel("Sample Index")
@@ -276,7 +303,6 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
                         capture_active = False
                         capture_buffer.clear()
                         print("[INFO] Capture reset.")
-
         except KeyboardInterrupt:
             print("\n[INFO] Server stopped manually.")
             break

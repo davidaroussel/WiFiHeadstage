@@ -323,7 +323,7 @@ def plot_all_data(data, num_channels, events, fs, directory_name, save_directory
     ttl_states = events['state']  # Rising (1) and falling (0) edges
     ttl_events = events
     ttl_data = []
-    recording_start_sample = ttl_events.values[0][1]
+    # recording_start_sample = ttl_events.values[0][1]
 
     for ttl_signal in ttl_events.values:
         ttl_id = ttl_signal[0]

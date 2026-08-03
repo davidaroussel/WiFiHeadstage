@@ -45,7 +45,7 @@ class DataConverterV2:
 
         self.neuro_timing_buffer = []
         self.emg_timing_buffer = []
-        self.RHD_CHIP = 0
+        self.RHD_CHIP = 1
 
     def startThread(self):
         self.m_dataConversionTread.start()
@@ -397,19 +397,30 @@ class DataConverterV2:
                         # channels 2..15 must have LSB = 0
                         remaining_ch_lsb = raw_16ch[:, 2:] & 1
                         valid_rows = ((first_ch_lsb == 1) & (remaining_ch_lsb.sum(axis=1) == 0))
-
                     else:
                         first_ch_lsb = raw_16ch[:, 0] & 1
                         second_ch_lsb = raw_16ch[:, 1] & 1  #TIMING CHANNEL
-                        remaining_ch_lsb = raw_16ch[:, 2:16] & 1
-                        first_ch_msb = raw_16ch[:, 16] & 1
-                        remaining_ch_msb = raw_16ch[:, 18:32] & 1
+                        remaining_ch_lsb = raw_16ch[:, 2:] & 1
+                        first_ch_msb = raw_16ch[:, ] & 1
+                        # remaining_ch_msb = raw_16ch[:, 18:32] & 1
                         valid_rows = (
                                 (first_ch_lsb == 1) &
-                                (remaining_ch_lsb.sum(axis=1) == 0) &
-                                (first_ch_msb == 1) &
-                                (remaining_ch_msb.sum(axis=1) == 0)
+                                (remaining_ch_lsb.sum(axis=1) == 0)
+                                # (first_ch_msb == 1) &
+                                # (remaining_ch_msb.sum(axis=1) == 0)
                         )
+                    # else:
+                    #     first_ch_lsb = raw_16ch[:, 0] & 1
+                    #     second_ch_lsb = raw_16ch[:, 1] & 1  #TIMING CHANNEL
+                    #     remaining_ch_lsb = raw_16ch[:, 2:16] & 1
+                    #     first_ch_msb = raw_16ch[:, 16] & 1
+                    #     remaining_ch_msb = raw_16ch[:, 18:32] & 1
+                    #     valid_rows = (
+                    #             (first_ch_lsb == 1) &
+                    #             (remaining_ch_lsb.sum(axis=1) == 0) &
+                    #             (first_ch_msb == 1) &
+                    #             (remaining_ch_msb.sum(axis=1) == 0)
+                    #     )
 
                     if not valid_rows.any():
                         continue
@@ -498,7 +509,7 @@ class DataConverterV2:
 
                     else:
                         reshaped = chunk.reshape(-1, self.num_channels).T
-                        reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD, DONT TELL MOM...
+                        # reshaped[[15, 31]] = reshaped[[31, 15]]  #ONLY FOR RHS BOARD, DONT TELL MOM...
 
                     converted = (np.clip(reshaped, -32768, 32767) * scale + OpenEphysOffset).astype(np.uint16)
 
@@ -518,6 +529,7 @@ class DataConverterV2:
                         bits = np.zeros(num_samples, dtype=np.uint8)
 
                     extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
+
 
                     try:
 
