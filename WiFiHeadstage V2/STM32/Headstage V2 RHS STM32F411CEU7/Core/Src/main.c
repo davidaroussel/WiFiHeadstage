@@ -99,6 +99,7 @@ static void MX_SPI1_Init(void);
 static void Prepare_nRF_Frame(void);
 static void Check_nRF_Message(void);
 static void Init_Intan_RHS(void);
+static void Init_Intan(void);
 /* USER CODE BEGIN PFP */
 static void MX_TIM11_Init(void);
 /* USER CODE END PFP */
@@ -165,14 +166,29 @@ int main(void)
 
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
 //hspi = &hspi3; //NOT PASSTHROUGH    NEED TO CHANGE STUFF IN SPI_SEND_RECV
   HAL_Delay(500);
 
+	//    Start SPI4 as MASTER
+  SPI4_Master_Init();
+
+  Init_Intan();
   Init_Intan_RHS();
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+  uint32_t stim_current_uA = 30;
+  RHS2116_MEP_Config_Params(hspi, stim_current_uA);
+
+//
+//  HAL_SPI_DeInit(&hspi4);
+//  printf("[INFO] SPI deinitialized.\r\n");
+//
+//  SPI4_Slave_Init();
+//  printf("[INFO] SPI SLAVE mode initialized.\r\n");
 
 	if(test_stim)
 	{  	//GABRIEL QUESTIONS: MIN-MAX TESTÉ
@@ -256,10 +272,10 @@ int main(void)
 	    }
 	}
 	else if(FPGA_MEP_Mode){
-		uint32_t stim_current_uA = 30;
-		RHS2116_MEP_Config_Params(hspi, stim_current_uA);
+
+
 		// De-init SPI before changing mode
-		HAL_SPI_DeInit(&hspi4);
+//		HAL_SPI_DeInit(&hspi4);
 		printf("[INFO] SPI deinitialized.\r\n");
 		//  HAL_Delay(1000);
 
@@ -279,7 +295,7 @@ int main(void)
 		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
 		printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 
-//		HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
 
 
 	}
@@ -626,7 +642,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
@@ -724,85 +740,48 @@ static void Prepare_nRF_Frame(void)
 }
 
 
+static void Init_Intan(void){
+	uint16_t RHD2132_ID = 0x0001;
+	uint16_t RHD2216_ID = 0x0002;
+	uint16_t rhd_chip = 0xFFFF;
 
+	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+	HAL_Delay(500);
+
+
+	while (rhd_chip != RHD2216_ID && rhd_chip != RHD2132_ID)
+	{
+	    printf("[WARN] RHD not detected. Retrying...\r\n");
+	    rhd_chip = INIT_RHD(&hspi4);
+	}
+	printf("RHD CHIP IS: 0x%04X \r\n", rhd_chip);
+
+	HAL_Delay(1);
+
+
+}
 
 static void Init_Intan_RHS(void){
 
 	SPI_HandleTypeDef *hspi;
 	hspi = &hspi4;   //PASSTHROUGH
 
-	uint16_t init_check = 0xFFFF;
+	uint16_t RHS2116_ID = 0x20;
+	uint8_t chip_id = 0xFF;
 
-	if (DUAL_CHIP){
-		HAL_SPI_DeInit(hspi);
+	HAL_GPIO_WritePin(RHS_SPI_CS_Port, RHS_SPI_CS_Pin, GPIO_PIN_SET);
+	MX_TIM11_Init();
 
-		SPI4_Master_Init(); //PASSTHROUGH
-		HAL_GPIO_WritePin(RHS_SPI_CS_Port, RHS_SPI_CS_Pin, GPIO_PIN_SET);
-		MX_TIM11_Init();
+	SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
+	hspi->Instance->CR1 |= SPI_CR1_DFF;
 
-		SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
-		hspi->Instance->CR1 |= SPI_CR1_DFF;
+	printf("Init First RHS \r\n");
+	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+	HAL_Delay(500);
 
-		printf("Init First RHS \r\n");
-		HAL_Delay(500);
-		HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
-		HAL_Delay(500);
-
-
-		while (init_check == 0xFFFF) {
-		init_check = INIT_RHS(hspi);
-		}
-
-		printf("Init Second RHS \r\n");
-		HAL_Delay(500);
-		HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
-		HAL_Delay(500);
-
-		init_check = 0xFFFF;
-		while (init_check == 0xFFFF) {
-		init_check = INIT_RHS(hspi);
-		}
-		if (!MEP_Mode && !Z_Mode && !test_stim && !FPGA_MEP_Mode){
-			// De-init SPI before changing mode
-			HAL_SPI_DeInit(&hspi4);
-			printf("[INFO] SPI deinitialized.\r\n");
-			//  HAL_Delay(1000);
-
-			// Re-init as SLAVE
-			SPI4_Slave_Init();
-			printf("[INFO] SPI SLAVE mode initialized.\r\n");
-		}
-
-
-	}else{
-		HAL_SPI_DeInit(hspi);
-
-		SPI4_Master_Init(); //PASSTHROUGH
-		HAL_GPIO_WritePin(RHS_SPI_CS_Port, RHS_SPI_CS_Pin, 1);
-		MX_TIM11_Init();
-		printf("Init RHS \r\n");
-
-		SET_BIT(hspi->Instance->CR1, SPI_CR1_SPE);
-		hspi->Instance->CR1 |= SPI_CR1_DFF;
-
-		while (init_check == 0xFFFF) {
-		init_check = INIT_RHS(hspi);
-		}
-
-		HAL_Delay(1);
-
-		if (!MEP_Mode && !Z_Mode && !test_stim && !FPGA_MEP_Mode){
-			// De-init SPI before changing mode
-			HAL_SPI_DeInit(&hspi4);
-			printf("[INFO] SPI deinitialized.\r\n");
-			//  HAL_Delay(1000);
-
-			// Re-init as SLAVE
-			SPI4_Slave_Init();
-			printf("[INFO] SPI SLAVE mode initialized.\r\n");
-		}
+	while (chip_id != RHS2116_ID) {
+		chip_id = INIT_RHS(hspi);
 	}
-
 }
 
 

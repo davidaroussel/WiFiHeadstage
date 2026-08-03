@@ -22,7 +22,7 @@ entity top_level is
 		-- 1: EMG Only 
 		-- 2: EMG + Neuro
 
-		RHD_SAMPLING_MODE : integer := 2
+		RHD_SAMPLING_MODE : integer := 1
 
 		---- MAIN_CLK : 24MHz -- Stable EMG 2.9KHz-
 		--   HALF_BIT : 8 

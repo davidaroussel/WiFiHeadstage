@@ -77,6 +77,10 @@ void Error_Handler(void);
 #define Reboot_SPI_Port GPIOB
 
 
+// FOR HEADSTAGE
+#define RHS_Chip_SEL_Pin  GPIO_PIN_10
+#define RHS_Chip_SEL_Port GPIOA
+
 //Nordic nRF SPI PIN (SPI 1)
 #define nRF_SPI_MOSI_Port GPIOA
 #define nRF_SPI_MOSI_Pin GPIO_PIN_7
