@@ -150,13 +150,6 @@ int main(void)
   Init_Intan();
 
 
-	HAL_SPI_DeInit(&hspi4);
-	printf("[INFO] SPI deinitialized.\r\n");
-	//  HAL_Delay(1000);
-
-	// Re-init as SLAVE
-	SPI4_Slave_Init();
-
   // Start SPI DMA transmission/reception
   if (HAL_SPI_TransmitReceive_DMA(&hspi4, spi_tx_fpga_buffer, spi_rx_fpga_buffer, SPI_RX_FPGA_BUFFER_SIZE) != HAL_OK) {
 	  Error_Handler();
@@ -446,13 +439,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
   HAL_GPIO_WritePin(debug_Port, debug_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
@@ -467,13 +458,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(debug_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PC11 --- CONFIRM FOR HEADSTAGE, USE SECOND MISO !!*/
-  GPIO_InitStruct.Pin = RHS_Chip_SEL_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(RHS_Chip_SEL_Port, &GPIO_InitStruct);
 
 
 
@@ -522,7 +506,7 @@ static void Init_Intan(void){
 	uint8_t rhd2216_detected = 0;
 	uint8_t rhd2216_doubled = 0;
 	uint32_t retry_counter = 0;
-	uint8_t DUAL_INTAN = 0;
+	uint8_t DUAL_INTAN = 1;
 	HAL_SPI_DeInit(&hspi4);
 	uint16_t rhd_chip = 0;
 
@@ -578,7 +562,7 @@ static void Init_Intan(void){
   }
   else
 	  {
-	  while (rhd_chip != RHD2216_ID) {
+	  while (rhd_chip == 0xFFFF) {
 		  printf("[WARN] RHD not detected. Retrying...\r\n");
 		  rhd_chip = INIT_RHD(&hspi4);
 		  //  HAL_Delay(1000);
@@ -587,6 +571,14 @@ static void Init_Intan(void){
 	  }
 	  HAL_Delay(1);
 
+	  // De-init SPI before changing mode
+	  HAL_SPI_DeInit(&hspi4);
+	  printf("[INFO] SPI deinitialized.\r\n");
+	  //  HAL_Delay(1000);
+
+	  // Re-init as SLAVE
+	  SPI4_Slave_Init();
+	  printf("[INFO] SPI SLAVE mode initialized.\r\n");
 }
 
 

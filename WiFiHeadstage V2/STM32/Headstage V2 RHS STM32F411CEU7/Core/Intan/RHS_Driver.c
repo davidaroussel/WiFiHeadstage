@@ -1239,7 +1239,7 @@ void RHS2116_MEP_Run_Stimulation(SPI_HandleTypeDef *hspi, uint8_t channel, uint3
 
 
 
-uint8_t INIT_RHS(SPI_HandleTypeDef *hspi){
+uint16_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	//SET CS_PIN
 	RHS_SPI_CS_Port->BSRR = RHS_SPI_CS_Pin;
@@ -1249,7 +1249,7 @@ uint8_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	if (pre_chip_id != 0x20){
 		printf("INTAN NOT DETECTED [%d]\r\n", pre_chip_id);
-		return 0xFF;
+		return 0xFFFF;
 	}
 
 	RHS2116_Read_Register(hspi, REGISTER_255);
@@ -1484,5 +1484,5 @@ uint8_t INIT_RHS(SPI_HandleTypeDef *hspi){
 
 	RHS2116_Convert_Register(hspi);
 
-	return pre_chip_id;
+	return 0;
 }

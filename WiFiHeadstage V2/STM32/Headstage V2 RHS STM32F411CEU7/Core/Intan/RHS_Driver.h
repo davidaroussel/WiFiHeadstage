@@ -125,7 +125,7 @@ void _RHS2116_setup_stimulation(SPI_HandleTypeDef *hspi, CURRENT_STEP_SIZE p_nA_
 
 /*********** End stimulation interface***********/
 
-uint8_t INIT_RHS(SPI_HandleTypeDef *hspi);
+uint16_t INIT_RHS(SPI_HandleTypeDef *hspi);
 
 #define CONVERT_CMD  0b000000
 #define WRITE_CMD    0b10000000

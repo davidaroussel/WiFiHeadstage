@@ -57,9 +57,10 @@ if __name__ == "__main__":
 
     #MODES
     TTL_GENERATOR       = False
-    CONFIGURE_OPENEPHYS = True
-    PRINT_OE_INFO       = True
-    DUAL_CHIP_MODE      = True
+    CONFIGURE_OPENEPHYS = False
+    PRINT_OE_INFO       = False
+    DUAL_CHIP_MODE      = False
+    AUTO_START_OE       = False
 
     #GLOBAL VARIABLES
     HOST_ADDR      = ""#"192.168.2.196"
@@ -111,17 +112,18 @@ if __name__ == "__main__":
         TASK_Manual_TTL.startThread()
     TASK_DataConverter.startThread()
 
-    # Pre-Connection to activate the pipeline
-    for processor_id in OE_config.EphysSocket_id:
-        OE_config.CONNECT_ES(processor_id)
-
-    for processor_id in OE_config.EphysSocket_id:
-        OE_config.CONNECT_ES(processor_id)
-
-    for processor_id in OE_config.EphysSocket_id:
-        ephys_socket_state = OE_config.get_ES_Connection_Status(processor_id)
-        while ephys_socket_state == 'DISCONNECTED':
+    if AUTO_START_OE:
+        # Pre-Connection to activate the pipeline
+        for processor_id in OE_config.EphysSocket_id:
             OE_config.CONNECT_ES(processor_id)
+
+        for processor_id in OE_config.EphysSocket_id:
+            OE_config.CONNECT_ES(processor_id)
+
+        for processor_id in OE_config.EphysSocket_id:
+            ephys_socket_state = OE_config.get_ES_Connection_Status(processor_id)
+            while ephys_socket_state == 'DISCONNECTED':
+                OE_config.CONNECT_ES(processor_id)
 
 
     if DUAL_CHIP_MODE:
@@ -131,19 +133,20 @@ if __name__ == "__main__":
         while not (TASK_DataConverter.tcp_connected_neuro):
             pass
 
-    start_acquisition = False
-    for processor_id in OE_config.EphysSocket_id:
-        status = OE_config.get_ES_Connection_Status(processor_id)
-        if status == "DISCONNECT":
-            start_acquisition = False
-        else:
-            start_acquisition = True
+    if AUTO_START_OE:
+        start_acquisition = False
+        for processor_id in OE_config.EphysSocket_id:
+            status = OE_config.get_ES_Connection_Status(processor_id)
+            if status == "DISCONNECT":
+                start_acquisition = False
+            else:
+                start_acquisition = True
 
-    if start_acquisition:
-        OE_config.Network_Events_Connect()
-        ret_val = None
-        while ret_val != b'StartedAcquisition':
-            ret_val = OE_config.GUI_Start_Acquisition()
+        if start_acquisition:
+            OE_config.Network_Events_Connect()
+            ret_val = None
+            while ret_val != b'StartedAcquisition':
+                ret_val = OE_config.GUI_Start_Acquisition()
 
     time.sleep(0.1)
     print("Match Parameters with OpenEphys !!")

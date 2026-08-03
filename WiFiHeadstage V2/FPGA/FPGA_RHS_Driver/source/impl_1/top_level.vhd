@@ -8,13 +8,19 @@ entity top_level is
         STM32_CLKS_PER_HALF_BIT       : integer := 2;
         STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
+<<<<<<< HEAD
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHS_READ_CLKS_PER_HALF_BIT       : integer := 2;   -- 16 and 32 for around 5.45KHz
         RHS_READ_CS_INACTIVE_CLKS        : integer := 8;
+=======
+        RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 32;
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 4;
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 16;
+>>>>>>> 3ed83c476ea76ae59a545fd03f5c9e7cf10849cd
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 16;    -- 32 for around 2.5KHz
-        RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 4;    -- 32 for around 2.5KHz
+        RHS_STIM_CS_INACTIVE_CLKS        : integer := 32;
 		
 		-- 0: N/A 
 		-- 1: N/A
@@ -52,12 +58,11 @@ entity top_level is
 		i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
-		CTRL0_IN         : in STD_LOGIC;
-		i_RHS_SEL          : in STD_LOGIC;
-		i_RHS_STIM_START   : in STD_LOGIC;
+		CTRL0_IN     : in STD_LOGIC;
+		RHS_SEL     : in STD_LOGIC;
 		
 		-- IR SYNCHRONIZATION INPUT 
-		i_BLE_SYNC   : in STD_LOGIC;
+		--i_LED_SYNC   : in STD_LOGIC;
 		
 		-- RHS BOOST Interface 
 		o_BOOST_ENABLE    : out STD_LOGIC;
@@ -86,8 +91,6 @@ architecture RTL of top_level is
 	signal w_reset              : std_logic;
 	
 	signal reset_counter : integer range 0 to 168000000 := 0;
-	signal BLE_SYNC_counter : integer range 0 to 1000 := 0;
-	
 
 
     signal w_STM32_TX_Byte       : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
@@ -172,12 +175,10 @@ begin
             i_Clk               => pll_clk_int,
             i_Rst_L             => w_reset,
             i_Controller_Mode   => w_Controller_Mode,
-			i_RHS_STIM_START    => i_RHS_STIM_START,
-			i_BLE_SYNC          => i_BLE_SYNC,
 
 			rgb_info_red   => rgb_sig_red,
-			rgb_info_blue  => rgb_sig_blue,
-			rgb_info_green => rgb_sig_green,
+			rgb_info_blue   => rgb_sig_blue,
+			rgb_info_green   => rgb_sig_green,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -281,18 +282,7 @@ begin
 	end process;
 	
 	
-	--process(pll_clk_int)
-		--begin
-		--if reset_counter < 20 then
-			--rgb_sig_green <= '1';
-		
-		--elsif i_BLE_SYNC = '1' then
-			
-			--rgb_sig_green <= '0';
-		--else
-			--rgb_sig_green <= '1';
-		--end if;
-		--end process;
+	
 
 
 	Reset_Process : process(pll_clk_int)
@@ -304,22 +294,25 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
+				--rgb_sig_green <= '0';
             else
                 w_reset <= '0';
 				
 				if CTRL0_IN = '0' then
-					if i_RHS_SEL = '0' then
+					if RHS_SEL = '0' then
 						w_Controller_Mode <= x"0";
-					elsif i_RHS_SEL = '1' then
+						--rgb_sig_green <= '0';
+					elsif RHS_SEL = '1' then
 						w_Controller_Mode <= x"1";
+						--rgb_sig_green <= '1';
 					end if;
 				elsif CTRL0_IN = '1' then
-						w_Controller_Mode <= x"2";
+					w_Controller_Mode <= x"2";
+					--rgb_sig_green <= '1';
 				end if;
-			
 
 
-				----Controller mode sequencing
+				--Controller mode sequencing
 				--case reset_counter is
 					--when 36000000 =>
 						--w_Controller_Mode <= x"1";

@@ -323,7 +323,7 @@ def plot_all_data(data, num_channels, events, fs, directory_name, save_directory
     ttl_states = events['state']  # Rising (1) and falling (0) edges
     ttl_events = events
     ttl_data = []
-    recording_start_sample = ttl_events.values[0][1]
+    # recording_start_sample = ttl_events.values[0][1]
 
     for ttl_signal in ttl_events.values:
         ttl_id = ttl_signal[0]
@@ -396,22 +396,7 @@ def plot_all_data(data, num_channels, events, fs, directory_name, save_directory
 
     plt.show()
 
-def write_raw_data_txt(data, save_directory):
-    output_file = os.path.join(save_directory, "raw_data.txt")
 
-    data_int16 = np.asarray(data, dtype=np.int16)
-
-    with open(output_file, "w") as f:
-        # Optional header
-        num_channels = data_int16.shape[1]
-        header = ["Sample"] + [f"CH{i}" for i in range(num_channels)]
-        f.write(" ".join(header) + "\n")
-
-        for sample_idx, row in enumerate(data_int16):
-            hex_values = [f"{int(sample) & 0xFFFF:04X}" for sample in row]
-            f.write(f"{sample_idx} " + " ".join(hex_values) + "\n")
-
-    print(f"Raw data written to: {output_file}")
 
 if __name__ == '__main__':
     src_directory = r'../../analysis_results/'
@@ -432,16 +417,16 @@ if __name__ == '__main__':
         print(f"\nProcessing Experiment Directory: {directory_name}")
 
         session = Session(experiment_directory)
-        recordnode = session.recordings[0]
-        continuous = recordnode.continuous[0]
-        events = recordnode.events
+        recordnode = session.recordnodes[0]
+        recording = recordnode.recordings[0]
+        continuous = recording.continuous[0]
+        events = recording.events
 
         # Get the length of the continuous data
         num_samples_continuous = continuous.samples.shape[0]
         sample_rate = continuous.metadata['sample_rate']
         recording_duration_seconds = num_samples_continuous / sample_rate
         start_sample_index = 0
-
 
         print(f"{num_samples_continuous} samples recorded at {sample_rate} Hz.")
         print(f"Recording duration: {recording_duration_seconds:.2f} seconds")
@@ -462,8 +447,5 @@ if __name__ == '__main__':
         # plot_spikes_around_best(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
 
         # plot_best_spike_with_surrounding_individual(data, num_channels, fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)
-
-        data = continuous.get_samples(0, int(num_samples_continuous))
-        write_raw_data_txt(data, save_directory)
 
         plot_all_data(data, num_channels, events,  fs=continuous.metadata['sample_rate'], directory_name=directory_name, save_directory=save_directory, save_figure=False)

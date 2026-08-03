@@ -47,7 +47,7 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
-#define DUAL_CHIP 0
+#define DUAL_CHIP 1
 #define DEVKIT    0
 #define NUM_CHANNELS 32
 /* USER CODE END EM */
@@ -97,12 +97,6 @@ void Error_Handler(void);
     // FOR HEADSTAGE
     #define RHS_Chip_SEL_Pin  GPIO_PIN_10
     #define RHS_Chip_SEL_Port GPIOA
-
-	#define RHS_Start_Stim_Out_Pin  GPIO_PIN_12
-	#define RHS_Start_Stim_Out_Port GPIOA
-
-	#define RHS_Start_Stim_In_Pin  GPIO_PIN_15
-	#define RHS_Start_Stim_In_Port GPIOA
 
 #endif
 
