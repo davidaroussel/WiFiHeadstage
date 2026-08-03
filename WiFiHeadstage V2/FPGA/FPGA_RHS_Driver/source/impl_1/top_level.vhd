@@ -5,12 +5,12 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 4;
-        STM32_CS_INACTIVE_CLKS        : integer := 16;
+        STM32_CLKS_PER_HALF_BIT       : integer := 2;
+        STM32_CS_INACTIVE_CLKS        : integer := 8;
 		
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHS_READ_CLKS_PER_HALF_BIT       : integer := 16;
-        RHS_READ_CS_INACTIVE_CLKS        : integer := 32;
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 2;   -- 16 and 32 for around 5.45KHz
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 8;
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
         RHS_STIM_CLKS_PER_HALF_BIT       : integer := 16;    -- 32 for around 2.5KHz

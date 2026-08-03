@@ -3,15 +3,15 @@ Report for cell top_level
    Instance path: top_level
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	       3271        100.0
-                               LUTGATE	       2959        100.0
-                                LUTCCU	        312        100.0
+                                  LUT4	       3268        100.0
+                               LUTGATE	       2962        100.0
+                                LUTCCU	        306        100.0
                                  IOBUF	         32        100.0
-                                PFUREG	       2125        100.0
+                                PFUREG	       2118        100.0
                                    EBR	          1        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-Controller_RHD_Sampling(rhs_read_clks_per_half_bit=16,rhs_stim_clks_per_half_bit=16,rhs_stim_cs_inactive_clks=64)	          1        44.8
+Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_cs_inactive_clks=8,rhs_read_clks_per_half_bit=2,rhs_read_cs_inactive_clks=8,rhs_stim_clks_per_half_bit=16,rhs_stim_cs_inactive_clks=64)	          1        44.5
                                PLL_SPI	          1         0.0
 ---------------------------------------------------
 Report for cell PLL_SPI
@@ -27,61 +27,61 @@ Report for cell PLL_SPI_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANGE=
                      Cell usage:
                                   cell	      count    Res Usage(%)
 ---------------------------------------------------
-Report for cell Controller_RHD_Sampling(rhs_read_clks_per_half_bit=16,rhs_stim_clks_per_half_bit=16,rhs_stim_cs_inactive_clks=64)
+Report for cell Controller_RHD_Sampling(stm32_clks_per_half_bit=2,stm32_cs_inactive_clks=8,rhs_read_clks_per_half_bit=2,rhs_read_cs_inactive_clks=8,rhs_stim_clks_per_half_bit=16,rhs_stim_cs_inactive_clks=64)
    Instance path: top_level/Controller_inst
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	       1464        44.8
-                               LUTGATE	       1182        39.9
-                                LUTCCU	        282        90.4
-                                PFUREG	       2092        98.4
+                                  LUT4	       1454        44.5
+                               LUTGATE	       1178        39.8
+                                LUTCCU	        276        90.2
+                                PFUREG	       2085        98.4
                                    EBR	          1        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-Controller_RHD_FIFO(clks_per_half_bit=16,cs_inactive_clks=32)	          1         6.1
-Controller_RHD_FIFO(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)	          1         3.1
-SPI_Master_CS(clks_per_half_bit=4,num_of_bits_per_packet=512,cs_inactive_clks=16)	          1        13.9
+Controller_RHD_FIFO(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)	          1         3.0
+Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=8)	          1         5.7
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=8)	          1        13.3
 ---------------------------------------------------
-Report for cell SPI_Master_CS(clks_per_half_bit=4,num_of_bits_per_packet=512,cs_inactive_clks=16)
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=512,cs_inactive_clks=8)
    Instance path: top_level/Controller_inst/SPI_Master_CS_STM32_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        455        13.9
-                               LUTGATE	        423        14.3
-                                LUTCCU	         32        10.3
-                                PFUREG	        560        26.4
+                                  LUT4	        434        13.3
+                               LUTGATE	        402        13.6
+                                LUTCCU	         32        10.5
+                                PFUREG	        558        26.3
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-SPI_Master(clks_per_half_bit=4,num_of_bits_per_packet=512)	          1        12.5
+SPI_Master(num_of_bits_per_packet=512)	          1        12.4
 ---------------------------------------------------
-Report for cell SPI_Master(clks_per_half_bit=4,num_of_bits_per_packet=512)
+Report for cell SPI_Master(num_of_bits_per_packet=512)
    Instance path: top_level/Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        409        12.5
-                               LUTGATE	        387        13.1
-                                LUTCCU	         22         7.1
-                                PFUREG	        541        25.5
+                                  LUT4	        404        12.4
+                               LUTGATE	        382        12.9
+                                LUTCCU	         22         7.2
+                                PFUREG	        540        25.5
 ---------------------------------------------------
 Report for cell Controller_RHD_FIFO(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        100         3.1
-                               LUTGATE	         78         2.6
-                                LUTCCU	         22         7.1
+                                  LUT4	         99         3.0
+                               LUTGATE	         77         2.6
+                                LUTCCU	         22         7.2
                                 PFUREG	         64         3.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-SPI_Master_CS(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)	          1         3.1
+SPI_Master_CS(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)	          1         3.0
 ---------------------------------------------------
 Report for cell SPI_Master_CS(clks_per_half_bit=16,num_of_bits_per_packet=32,cs_inactive_clks=64)
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        100         3.1
-                               LUTGATE	         78         2.6
-                                LUTCCU	         22         7.1
+                                  LUT4	         99         3.0
+                               LUTGATE	         77         2.6
+                                LUTCCU	         22         7.2
                                 PFUREG	         64         3.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
@@ -91,45 +91,45 @@ Report for cell SPI_Master(clks_per_half_bit=16,num_of_bits_per_packet=32)
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         58         1.8
-                               LUTGATE	         50         1.7
+                                  LUT4	         59         1.8
+                               LUTGATE	         51         1.7
                                 LUTCCU	          8         2.6
                                 PFUREG	         47         2.2
 ---------------------------------------------------
-Report for cell Controller_RHD_FIFO(clks_per_half_bit=16,cs_inactive_clks=32)
+Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,cs_inactive_clks=8)
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        200         6.1
-                               LUTGATE	        156         5.3
-                                LUTCCU	         44        14.1
-                                PFUREG	        232        10.9
+                                  LUT4	        186         5.7
+                               LUTGATE	        148         5.0
+                                LUTCCU	         38        12.4
+                                PFUREG	        227        10.7
                                    EBR	          1        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
                               FIFO_MEM	          1         2.8
-SPI_Master_CS(clks_per_half_bit=16,num_of_bits_per_packet=16,cs_inactive_clks=32)	          1         3.2
+SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8)	          1         2.8
 ---------------------------------------------------
-Report for cell SPI_Master_CS(clks_per_half_bit=16,num_of_bits_per_packet=16,cs_inactive_clks=32)
+Report for cell SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=16,cs_inactive_clks=8)
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        105         3.2
-                               LUTGATE	         91         3.1
-                                LUTCCU	         14         4.5
-                                PFUREG	         63         3.0
+                                  LUT4	         91         2.8
+                               LUTGATE	         83         2.8
+                                LUTCCU	          8         2.6
+                                PFUREG	         58         2.7
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-      SPI_Master(clks_per_half_bit=16)	          1         2.3
+                            SPI_Master	          1         2.1
 ---------------------------------------------------
-Report for cell SPI_Master(clks_per_half_bit=16)
+Report for cell SPI_Master
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         74         2.3
-                               LUTGATE	         66         2.2
+                                  LUT4	         68         2.1
+                               LUTGATE	         60         2.0
                                 LUTCCU	          8         2.6
-                                PFUREG	         48         2.3
+                                PFUREG	         45         2.1
 ---------------------------------------------------
 Report for cell FIFO_MEM
    Instance path: top_level/Controller_inst/Controller_RHD_FIFO_1/FIFO_1
@@ -137,7 +137,7 @@ Report for cell FIFO_MEM
                                   cell	      count    Res Usage(%)
                                   LUT4	         93         2.8
                                LUTGATE	         63         2.1
-                                LUTCCU	         30         9.6
+                                LUTCCU	         30         9.8
                                 PFUREG	        152         7.2
                                    EBR	          1        100.0
 SUB MODULES
@@ -150,7 +150,7 @@ Report for cell FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_
                                   cell	      count    Res Usage(%)
                                   LUT4	         93         2.8
                                LUTGATE	         63         2.1
-                                LUTCCU	         30         9.6
+                                LUTCCU	         30         9.8
                                 PFUREG	        152         7.2
                                    EBR	          1        100.0
 SUB MODULES
@@ -163,7 +163,7 @@ Report for cell FIFO_MEM_ipgen_lscc_fifo_main(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,
                                   cell	      count    Res Usage(%)
                                   LUT4	         93         2.8
                                LUTGATE	         63         2.1
-                                LUTCCU	         30         9.6
+                                LUTCCU	         30         9.8
                                 PFUREG	        152         7.2
                                    EBR	          1        100.0
 SUB MODULES
@@ -176,6 +176,6 @@ Report for cell FIFO_MEM_ipgen_lscc_soft_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,
                                   cell	      count    Res Usage(%)
                                   LUT4	         93         2.8
                                LUTGATE	         63         2.1
-                                LUTCCU	         30         9.6
+                                LUTCCU	         30         9.8
                                 PFUREG	        152         7.2
                                    EBR	          1        100.0

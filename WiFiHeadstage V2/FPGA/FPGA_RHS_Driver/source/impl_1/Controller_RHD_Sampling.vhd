@@ -668,8 +668,8 @@ architecture RTL of Controller_RHD_Sampling is
 	constant CLK_FREQ_HZ       : integer := 24000000;
 
 	constant DELAY_200uS_CLKS  : integer := 4800;
-	constant DELAY_3mS_CLKS    : integer := 84500;
-	constant DELAY_1S_CLKS     : integer := 24000000;
+	constant DELAY_3mS_CLKS    : integer := 120000;
+	constant DELAY_1S_CLKS     : integer := 22000000;
 	constant DELAY_10S_CLKS    : integer := 48000000;
 	
 	signal delay_10s_counter : integer range 0 to 10 := 0;
@@ -791,28 +791,28 @@ architecture RTL of Controller_RHD_Sampling is
 
 	process(i_Clk)
 	begin
-		if rising_edge(i_Clk) then
-			if i_Rst_L = '1' then
-				r_led_counter      <= (others => '0');
-				rgd_info_sig_green <= '1';
-				ble_sync_flag <= '0';
+		if i_Rst_L = '1' then
+			r_led_counter      <= (others => '0');
+			rgd_info_sig_green <= '1';
+			ble_sync_flag <= '0';
 
-			else
-				if i_BLE_SYNC = '1' then
-					r_led_counter <= C_LED_HOLD;
-				elsif r_led_counter /= 0 then
-					r_led_counter <= r_led_counter - 1;
-				end if;
+		elsif rising_edge(i_Clk) then
 
-				-- Active-low LED
-				if (i_BLE_SYNC = '1') or (r_led_counter /= 0) then
-					rgd_info_sig_green <= '0';
-					ble_sync_flag <= '1';
-				else
-					ble_sync_flag <= '0';
-					rgd_info_sig_green <= '1';
-				end if;
+			if i_BLE_SYNC = '1' then
+				r_led_counter <= C_LED_HOLD;
+			elsif r_led_counter /= 0 then
+				r_led_counter <= r_led_counter - 1;
 			end if;
+
+			-- Active-low LED
+			if (i_BLE_SYNC = '1') or (r_led_counter /= 0) then
+				rgd_info_sig_green <= '0';
+				ble_sync_flag <= '1';
+			else
+				ble_sync_flag <= '0';
+				rgd_info_sig_green <= '1';
+			end if;
+
 		end if;
 	end process;
 
@@ -1053,210 +1053,212 @@ architecture RTL of Controller_RHD_Sampling is
 		stim_train_sector_counter <= 0;
 
 	  elsif rising_edge(i_Clk) then
+		if i_Controller_Mode = x"2" then
 
-		---- Default
-		int_RHS_STIM_TX_DV <= '0';
-		
-		if i_RHS_STIM_START = '1' then
-		  rgd_info_sig_red <= '0';
+			---- Default
+			int_RHS_STIM_TX_DV <= '0';
+			
+			if i_RHS_STIM_START = '1' then
+			  rgd_info_sig_red <= '0';
 
-		  case rhs_STIM_state is
+			  case rhs_STIM_state is
 
-			-- ============================================================
-			-- STATE 0 : SELECT BYTE TO SEND
-			-- ============================================================
-			when 0 =>
-			  -- Pick the correct SPI word based on phase and burst position
-			  case stim_sequence_phase is
-				when 0 =>   -- NEGATIVE PHASE (6 packets: indices 0..5)
-				  if stim_burst_counter = 0 then
-					-- index 1 + 16 = 17  (Enable STIM, special word from upper bank)
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 16);
-				  elsif stim_burst_counter = 4 then
-					-- index 1 + 48 = 49  (CH_STAT select word)
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 48); 
-				  else
-					-- indices 0,1,2,3,4,5 ? burst_counter directly
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_burst_counter);
+				-- ============================================================
+				-- STATE 0 : SELECT BYTE TO SEND
+				-- ============================================================
+				when 0 =>
+				  -- Pick the correct SPI word based on phase and burst position
+				  case stim_sequence_phase is
+					when 0 =>   -- NEGATIVE PHASE (6 packets: indices 0..5)
+					  if stim_burst_counter = 0 then
+						-- index 1 + 16 = 17  (Enable STIM, special word from upper bank)
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 16);
+					  elsif stim_burst_counter = 4 then
+						-- index 1 + 48 = 49  (CH_STAT select word)
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 48); 
+					  else
+						-- indices 0,1,2,3,4,5 ? burst_counter directly
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_burst_counter);
+					  end if;
+
+					when 1 =>   -- POSITIVE PHASE (3 packets: indices 6..8)
+					  if stim_burst_counter = 0 then
+						-- index 1 + 32 = 33
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 32);
+					  elsif stim_burst_counter = 2 then
+						-- index 1 + 48 = 49
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 48);
+					  else
+						-- 6 + burst_counter
+						int_RHS_STIM_TX_Byte <= channel_array_STIM(6 + stim_burst_counter);
+					  end if;
+
+					when 2 =>   -- DISABLE PHASE (3 packets: indices 9..11)
+					  int_RHS_STIM_TX_Byte <= channel_array_STIM(9 + stim_burst_counter);
+
+					when others =>
+					  int_RHS_STIM_TX_Byte <= channel_array_STIM(0);
+				  end case;
+
+				  rhs_STIM_state <= 1;   -- always proceed to send
+
+				-- ============================================================
+				-- STATE 1 : WAIT FOR TX READY, THEN ASSERT DV
+				-- ============================================================
+				when 1 =>
+				  if int_RHS_STIM_TX_Ready = '1' then
+					int_RHS_STIM_TX_DV <= '1';
+					rhs_STIM_state <= 2;
 				  end if;
 
-				when 1 =>   -- POSITIVE PHASE (3 packets: indices 6..8)
-				  if stim_burst_counter = 0 then
-					-- index 1 + 32 = 33
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 32);
-				  elsif stim_burst_counter = 2 then
-					-- index 1 + 48 = 49
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(stim_ch + 48);
-				  else
-					-- 6 + burst_counter
-					int_RHS_STIM_TX_Byte <= channel_array_STIM(6 + stim_burst_counter);
-				  end if;
+				when 2 =>
+				  int_RHS_STIM_TX_DV <= '0';
+				  rhs_STIM_state <= 12;  -- immediately move on			  
 
-				when 2 =>   -- DISABLE PHASE (3 packets: indices 9..11)
-				  int_RHS_STIM_TX_Byte <= channel_array_STIM(9 + stim_burst_counter);
-
-				when others =>
-				  int_RHS_STIM_TX_Byte <= channel_array_STIM(0);
-			  end case;
-
-			  rhs_STIM_state <= 1;   -- always proceed to send
-
-			-- ============================================================
-			-- STATE 1 : WAIT FOR TX READY, THEN ASSERT DV
-			-- ============================================================
-			when 1 =>
-			  if int_RHS_STIM_TX_Ready = '1' then
-				int_RHS_STIM_TX_DV <= '1';
-				rhs_STIM_state <= 2;
-			  end if;
-
-			when 2 =>
-			  int_RHS_STIM_TX_DV <= '0';
-			  rhs_STIM_state <= 12;  -- immediately move on			  
-
-			when 12 =>
-				if int_RHS_STIM_TX_Ready = '0' then
-					rhs_STIM_state <= 3;
-				end if;
+				when 12 =>
+					if int_RHS_STIM_TX_Ready = '0' then
+						rhs_STIM_state <= 3;
+					end if;
 
 
-			-- ============================================================
-			-- STATE 3 : WAIT FOR TX COMPLETE
-			-- ============================================================
-			when 3 =>
-			  if int_RHS_STIM_TX_Ready = '1' then
+				-- ============================================================
+				-- STATE 3 : WAIT FOR TX COMPLETE
+				-- ============================================================
+				when 3 =>
+				  if int_RHS_STIM_TX_Ready = '1' then
 
-				-- PHASE 0 : NEGATIVE
-				if stim_sequence_phase = 0 then
-				  stim_train_flag <= '1';
-				  if stim_burst_counter < (STIM_FIRST_PACKET - 1) then
-					stim_burst_counter <= stim_burst_counter + 1;
-					rhs_STIM_state     <= 0;
-				  else
-					stim_burst_counter  <= 0;
-					stim_sequence_phase <= 1;
-					stim_delay_counter  <= 0;
-					rhs_STIM_state      <= 4;
-				  end if;
+					-- PHASE 0 : NEGATIVE
+					if stim_sequence_phase = 0 then
+					  stim_train_flag <= '1';
+					  if stim_burst_counter < (STIM_FIRST_PACKET - 1) then
+						stim_burst_counter <= stim_burst_counter + 1;
+						rhs_STIM_state     <= 0;
+					  else
+						stim_burst_counter  <= 0;
+						stim_sequence_phase <= 1;
+						stim_delay_counter  <= 0;
+						rhs_STIM_state      <= 4;
+					  end if;
 
-				-- PHASE 1 : POSITIVE
-				elsif stim_sequence_phase = 1 then
-				  if stim_burst_counter < (STIM_SECOND_PACKET - 1) then
-					stim_burst_counter <= stim_burst_counter + 1;
-					rhs_STIM_state     <= 0;
-				  else
-					stim_burst_counter  <= 0;
-					stim_sequence_phase <= 2;
-					stim_delay_counter  <= 0;
-					rhs_STIM_state      <= 5;
-				  end if;
+					-- PHASE 1 : POSITIVE
+					elsif stim_sequence_phase = 1 then
+					  if stim_burst_counter < (STIM_SECOND_PACKET - 1) then
+						stim_burst_counter <= stim_burst_counter + 1;
+						rhs_STIM_state     <= 0;
+					  else
+						stim_burst_counter  <= 0;
+						stim_sequence_phase <= 2;
+						stim_delay_counter  <= 0;
+						rhs_STIM_state      <= 5;
+					  end if;
 
-				-- PHASE 2 : DISABLE
-				elsif stim_sequence_phase = 2 then
-				  if stim_burst_counter < (STIM_THIRD_PACKET - 1) then
-					stim_burst_counter <= stim_burst_counter + 1;
-					rhs_STIM_state     <= 0;
-				  else
-					-- One full pulse complete
-					stim_burst_counter  <= 0;
-					stim_sequence_phase <= 0;
-					stim_train_flag     <= '0'; 
-					stim_delay_counter <= 0;
-					
-					if stim_pulse_counter < (STIM_PULSE_NUM - 1) then
-					  -- More pulses remain in this train
-					  stim_pulse_counter <= stim_pulse_counter + 1;
-					  rhs_STIM_state     <= 6;   -- 3ms inter-pulse gap
+					-- PHASE 2 : DISABLE
+					elsif stim_sequence_phase = 2 then
+					  if stim_burst_counter < (STIM_THIRD_PACKET - 1) then
+						stim_burst_counter <= stim_burst_counter + 1;
+						rhs_STIM_state     <= 0;
+					  else
+						-- One full pulse complete
+						stim_burst_counter  <= 0;
+						stim_sequence_phase <= 0;
+						stim_train_flag     <= '0'; 
+						stim_delay_counter <= 0;
+						
+						if stim_pulse_counter < (STIM_PULSE_NUM - 1) then
+						  -- More pulses remain in this train
+						  stim_pulse_counter <= stim_pulse_counter + 1;
+						  rhs_STIM_state     <= 6;   -- 3ms inter-pulse gap
 
-					else
-						if stim_channel_index < 31 then
-							stim_channel_index <= stim_channel_index + 1;
-							rhs_STIM_state <= 7;
 						else
-							stim_channel_index <= 0;
-							
-							rhs_STIM_state <= 8;
+							if stim_channel_index < 31 then
+								stim_channel_index <= stim_channel_index + 1;
+								rhs_STIM_state <= 7;
+							else
+								stim_channel_index <= 0;
+								
+								rhs_STIM_state <= 8;
+							end if;
+							-- Train complete
+							stim_pulse_counter <= 0;
+							stim_train_counter <= 0;
+
+
 						end if;
-						-- Train complete
-						stim_pulse_counter <= 0;
-						stim_train_counter <= 0;
-
-
+					  end if;
 					end if;
 				  end if;
-				end if;
-			  end if;
 
-			-- ============================================================
-			-- STATE 4 : 200 탎 DELAY  (after negative phase)
-			-- ============================================================
-			when 4 =>
-			  if stim_delay_counter < DELAY_200uS_CLKS then
-				stim_delay_counter <= stim_delay_counter + 1;
-			  else
-				stim_delay_counter <= 0;
-				rhs_STIM_state     <= 0;
-			  end if;
+				-- ============================================================
+				-- STATE 4 : 200 탎 DELAY  (after negative phase)
+				-- ============================================================
+				when 4 =>
+				  if stim_delay_counter < DELAY_200uS_CLKS then
+					stim_delay_counter <= stim_delay_counter + 1;
+				  else
+					stim_delay_counter <= 0;
+					rhs_STIM_state     <= 0;
+				  end if;
 
-			-- ============================================================
-			-- STATE 5 : 200 탎 DELAY  (after positive phase)
-			-- ============================================================
-			when 5 =>
-			  if stim_delay_counter < DELAY_200uS_CLKS then
-				stim_delay_counter <= stim_delay_counter + 1;
-			  else
-				stim_delay_counter <= 0;
-				rhs_STIM_state     <= 0;
-			  end if;
+				-- ============================================================
+				-- STATE 5 : 200 탎 DELAY  (after positive phase)
+				-- ============================================================
+				when 5 =>
+				  if stim_delay_counter < DELAY_200uS_CLKS then
+					stim_delay_counter <= stim_delay_counter + 1;
+				  else
+					stim_delay_counter <= 0;
+					rhs_STIM_state     <= 0;
+				  end if;
 
-			-- ============================================================
-			-- STATE 6 : 3 ms DELAY  (inter-pulse gap)
-			-- ============================================================
-			when 6 =>
-			  if stim_delay_counter < DELAY_3mS_CLKS then
-				stim_delay_counter <= stim_delay_counter + 1;
-			  else
-				stim_delay_counter <= 0;
-				rhs_STIM_state     <= 0;
-			  end if;
+				-- ============================================================
+				-- STATE 6 : 3 ms DELAY  (inter-pulse gap)
+				-- ============================================================
+				when 6 =>
+				  if stim_delay_counter < DELAY_3mS_CLKS then
+					stim_delay_counter <= stim_delay_counter + 1;
+				  else
+					stim_delay_counter <= 0;
+					rhs_STIM_state     <= 0;
+				  end if;
 
-			-- ============================================================
-			-- STATE 7 : 1s DELAY (inter-train gap)
-			-- ============================================================
-			when 7 =>
-			  if stim_1sec_counter < DELAY_1S_CLKS then
-				stim_1sec_counter <= stim_1sec_counter + 1;
-			  else
-				stim_1sec_counter  <= 0;
-				rhs_STIM_state      <= 0;
-			  end if;
+				-- ============================================================
+				-- STATE 7 : 1s DELAY (inter-train gap)
+				-- ============================================================
+				when 7 =>
+				  if stim_1sec_counter < DELAY_1S_CLKS then
+					stim_1sec_counter <= stim_1sec_counter + 1;
+				  else
+					stim_1sec_counter  <= 0;
+					rhs_STIM_state      <= 0;
+				  end if;
 
-			-- ============================================================
-			-- STATE 8 : LONG PAUSE (after all trains)
-			-- ============================================================
-			when 8 =>
-			  stim_train_flag <= '1';
-			  if stim_10sec_counter < DELAY_10S_CLKS then
-				stim_10sec_counter <= stim_10sec_counter + 1;
-				rgd_info_sig_red <= '1';
-			  else
-				rgd_info_sig_red <= '0';
-				stim_10sec_counter <= 0;
-				stim_train_flag       <= '0';
-				rhs_STIM_state        <= 0;
+				-- ============================================================
+				-- STATE 8 : LONG PAUSE (after all trains)
+				-- ============================================================
+				when 8 =>
+				  stim_train_flag <= '1';
+				  if stim_10sec_counter < DELAY_10S_CLKS then
+					stim_10sec_counter <= stim_10sec_counter + 1;
+					rgd_info_sig_red <= '1';
+				  else
+					rgd_info_sig_red <= '0';
+					stim_10sec_counter <= 0;
+					stim_train_flag       <= '0';
+					rhs_STIM_state        <= 0;
 
-			  end if;
-			  
-			  
+				  end if;
+				  
+				  
 
-			when others =>
-			  rhs_STIM_state <= 0;
+				when others =>
+				  rhs_STIM_state <= 0;
 
-		  end case;
-
+			  end case;
+			end if;
 		else
 		  int_RHS_STIM_TX_DV <= '0';
 		  rgd_info_sig_red <= '1';
+		  stim_channel_index <= 0;
 		end if;
 
 	  end if;
@@ -1264,6 +1266,7 @@ architecture RTL of Controller_RHD_Sampling is
 	
 	--stim_ch <= stim_channel_index when stim_channel_index < 16
           --else stim_channel_index - 16;
+		  
 	stim_ch <= 0;
 
 	chip_select_RHS_STIM <= '1' when stim_channel_index < 16
