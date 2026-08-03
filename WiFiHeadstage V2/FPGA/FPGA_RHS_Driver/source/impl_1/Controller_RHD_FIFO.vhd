@@ -34,11 +34,11 @@ entity Controller_RHD_FIFO is
     o_RX_Byte_Rising  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);   -- Byte received on MISO Rising  CLK Edge
     o_RX_Byte_Falling : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);  -- Byte received on MISO Falling CLK Edge
 
-    o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
+    o_FIFO_Data   : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_WE     : out std_logic;
 	o_FIFO_COUNT  : out std_logic_vector(8 downto 0);
     i_FIFO_RE     : in std_logic;
-	o_FIFO_Q 	  : out std_logic_vector(NUM_OF_BITS_PER_PACKET-1 downto 0);
+	o_FIFO_Q 	  : out std_logic_vector(NUM_OF_BITS_PER_PACKET*2-1 downto 0);
     o_FIFO_EMPTY  : out std_logic;
     o_FIFO_FULL   : out std_logic;
     o_FIFO_AEMPTY : out std_logic;
@@ -182,8 +182,8 @@ begin
 		elsif i_Controller_Mode = x"2" then
 		  if int_RX_DV = '1' then
 			int_FIFO_WE <= '1';
-			--int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
-			int_FIFO_DATA  <= int_RX_Byte_Falling;
+			int_FIFO_DATA(31 downto 16) <= int_RX_Byte_Rising;
+			int_FIFO_DATA(15 downto 0)  <= int_RX_Byte_Falling;
 			
 			
 			

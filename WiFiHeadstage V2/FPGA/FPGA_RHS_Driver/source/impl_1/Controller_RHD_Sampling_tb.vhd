@@ -263,18 +263,7 @@ begin
 
         o_RHS_STIM_RX_DV => tb_RHS_STIM_RX_DV,
         o_RHS_STIM_RX_Byte_Rising => tb_RHS_STIM_RX_Byte_Rising,
-        o_RHS_STIM_RX_Byte_Falling => tb_RHS_STIM_RX_Byte_Falling,
-		
-		
-		o_stim_1sec_counter_debug       => stim_1sec_counter_debug_tb,
-		o_stim_10sec_counter_debug      => stim_10sec_counter_debug_tb,
-		o_stim_burst_counter_debug      => stim_burst_counter_debug_tb,
-		o_stim_train_counter_debug      => stim_train_counter_debug_tb,
-		o_stim_pulse_counter_debug      => stim_pulse_counter_debug_tb,
-		o_stim_sequence_phase_debug     => stim_sequence_phase_debug_tb,
-		o_stim_delay_counter_debug      => stim_delay_counter_debug_tb,
-		o_rhs_STIM_state_debug          => rhs_STIM_state_debug_tb,
-		o_rhs_STIM_index_debug          => rhs_STIM_index_debug_tb
+        o_RHS_STIM_RX_Byte_Falling => tb_RHS_STIM_RX_Byte_Falling
     );
 
     --------------------------------------------------------------------
