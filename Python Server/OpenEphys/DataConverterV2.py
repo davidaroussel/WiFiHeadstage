@@ -13,7 +13,7 @@ from open_ephys.control.network_control import NetworkControl
 
 
 class DataConverterV2:
-    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_frequency, p_buffer_size, p_dual_chip_mode, p_port, p_host_addr=""):
+    def __init__(self, queue_raw_data, queue_csv_data, p_channels, p_buffer_size, p_dual_chip_mode, p_port, p_host_addr=""):
         self.openEphys_Socket = None
         self.tcpClient = None
         self.port = p_port
@@ -31,7 +31,6 @@ class DataConverterV2:
         self.queue_raw_data = queue_raw_data
         self.queue_csv_data = queue_csv_data
         self.num_channels = len(p_channels)
-        self.frequency = p_frequency
         self.headstage_buffer_size = p_buffer_size
         self.openephys_buffer_size = int(p_buffer_size / (self.num_channels * 2))
 
@@ -45,6 +44,7 @@ class DataConverterV2:
 
         self.neuro_timing_buffer = []
         self.emg_timing_buffer = []
+        self.BLE_timing_buffer = []
         self.RHD_CHIP = 1
 
     def startThread(self):
@@ -124,65 +124,13 @@ class DataConverterV2:
                 setattr(self, client_attr, None)
                 time.sleep(0.001)
 
-    def reconstruct_invalid_rows(self, raw_blocks, emg_mask, neuro_mask, invalid_indices):
-        """
-        Replace invalid rows with interpolated data based on the nearest
-        valid rows of the same type (EMG or Neuro).
-        """
-
-        corrected_blocks = raw_blocks.copy()
-        num_blocks = raw_blocks.shape[0]
-
-        for idx in invalid_indices:
-
-            # Determine row type from first channel LSB
-            first_lsb = raw_blocks[idx, 0] & 0x0001
-            is_emg = first_lsb == 1
-
-            if is_emg:
-                valid_mask = emg_mask
-            else:
-                valid_mask = neuro_mask
-
-            prev_idx = None
-            next_idx = None
-
-            # Search previous valid
-            for i in range(idx - 1, -1, -1):
-                if valid_mask[i]:
-                    prev_idx = i
-                    break
-
-            # Search next valid
-            for i in range(idx + 1, num_blocks):
-                if valid_mask[i]:
-                    next_idx = i
-                    break
-
-            # Reconstruction logic
-            if prev_idx is not None and next_idx is not None:
-                corrected_blocks[idx] = (
-                        (raw_blocks[prev_idx].astype(np.int32) +
-                         raw_blocks[next_idx].astype(np.int32)) // 2
-                ).astype(np.int16)
-
-            elif prev_idx is not None:
-                corrected_blocks[idx] = raw_blocks[prev_idx]
-
-            elif next_idx is not None:
-                corrected_blocks[idx] = raw_blocks[next_idx]
-
-            else:
-                # extremely rare fallback
-                corrected_blocks[idx] = 0
-
-        return corrected_blocks
-
-    def add_timing_channels(self, timing_bits, converted):
+    def add_timing_channels(self, timing_bits, p_ble_bits, converted):
         openephys_offset = 32768
         bits = timing_bits[:converted.shape[1]]
+        ble_bits = p_ble_bits[:converted.shape[1]]
 
         idx = np.flatnonzero(bits)
+        ble_idx = np.flatnonzero(ble_bits)
 
         # if idx.size > 0:
         #     print("timing bit idx:", idx)
@@ -200,57 +148,55 @@ class DataConverterV2:
             -marker_amplitude
         ).astype(np.int16)
 
-        # =========================================================
-        # EXTRA CHANNEL 2
-        # CHANNEL-ID ENCODING
-        # =========================================================
-
-        # baseline value
-        extra_channel_2 = np.full(bits.shape, -5000, dtype=np.int16)
+        extra_channel_2 = np.where(
+            ble_bits == 1,
+            marker_amplitude,
+            -marker_amplitude
+        ).astype(np.int16)
 
         # ---------------------------------------------------------
         # SYNC DETECTION
         # Full HIGH packet resets sequence
         # ---------------------------------------------------------
-        all_high = np.all(bits)
-
-        if all_high:
-            # next timing event becomes channel 0
-            self.next_channel = 0
-
-            # optional visible sync marker
-            extra_channel_2[:] = -10000
-
-        # ---------------------------------------------------------
-        # NORMAL TIMING EVENTS
-        # ---------------------------------------------------------
-        elif idx.size > 0:
-
-            ch = self.next_channel
-
-            # -----------------------------------------------------
-            # CHANNEL -> AMPLITUDE MAPPING
-            # -----------------------------------------------------
-
-            # easy to visualize in OpenEphys
-            # 5000 -> 29800
-            amplitude_table = (5000 + np.arange(32) * 800).astype(np.int16)
-
-            amplitude = amplitude_table[ch]
-
-            # apply only where timing pulse exists
-            extra_channel_2[idx] = amplitude
-
-            # print(f"CHANNEL {ch} -> amplitude {amplitude}")
-
-            # -----------------------------------------------------
-            # INCREMENT CHANNEL
-            # DO NOT WRAP HERE
-            # WAIT FOR NEXT SYNC FRAME
-            # -----------------------------------------------------
-
-            if self.next_channel < 31:
-                self.next_channel += 1
+        # all_high = np.all(bits)
+        #
+        # if all_high:
+        #     # next timing event becomes channel 0
+        #     self.next_channel = 0
+        #
+        #     # optional visible sync marker
+        #     extra_channel_2[:] = -10000
+        #
+        # # ---------------------------------------------------------
+        # # NORMAL TIMING EVENTS
+        # # ---------------------------------------------------------
+        # elif idx.size > 0:
+        #
+        #     ch = self.next_channel
+        #
+        #     # -----------------------------------------------------
+        #     # CHANNEL -> AMPLITUDE MAPPING
+        #     # -----------------------------------------------------
+        #
+        #     # easy to visualize in OpenEphys
+        #     # 5000 -> 29800
+        #     amplitude_table = (5000 + np.arange(32) * 800).astype(np.int16)
+        #
+        #     amplitude = amplitude_table[ch]
+        #
+        #     # apply only where timing pulse exists
+        #     extra_channel_2[idx] = amplitude
+        #
+        #     # print(f"CHANNEL {ch} -> amplitude {amplitude}")
+        #
+        #     # -----------------------------------------------------
+        #     # INCREMENT CHANNEL
+        #     # DO NOT WRAP HERE
+        #     # WAIT FOR NEXT SYNC FRAME
+        #     # -----------------------------------------------------
+        #
+        #     if self.next_channel < 31:
+        #         self.next_channel += 1
 
         # =========================================================
         # CONVERT EXTRA CHANNELS TO OPENEPHYS FORMAT
@@ -391,36 +337,14 @@ class DataConverterV2:
                 else:
                     raw_16ch = raw_blocks[:, :]
 
-                    if self.RHD_CHIP:
-                        first_ch_lsb = raw_16ch[:, 0] & 1
-                        second_ch_lsb = raw_16ch[:, 1] & 1
-                        # channels 2..15 must have LSB = 0
-                        remaining_ch_lsb = raw_16ch[:, 2:] & 1
-                        valid_rows = ((first_ch_lsb == 1) & (remaining_ch_lsb.sum(axis=1) == 0))
-                    else:
-                        first_ch_lsb = raw_16ch[:, 0] & 1
-                        second_ch_lsb = raw_16ch[:, 1] & 1  #TIMING CHANNEL
-                        remaining_ch_lsb = raw_16ch[:, 2:] & 1
-                        first_ch_msb = raw_16ch[:, ] & 1
-                        # remaining_ch_msb = raw_16ch[:, 18:32] & 1
-                        valid_rows = (
-                                (first_ch_lsb == 1) &
-                                (remaining_ch_lsb.sum(axis=1) == 0)
-                                # (first_ch_msb == 1) &
-                                # (remaining_ch_msb.sum(axis=1) == 0)
-                        )
-                    # else:
-                    #     first_ch_lsb = raw_16ch[:, 0] & 1
-                    #     second_ch_lsb = raw_16ch[:, 1] & 1  #TIMING CHANNEL
-                    #     remaining_ch_lsb = raw_16ch[:, 2:16] & 1
-                    #     first_ch_msb = raw_16ch[:, 16] & 1
-                    #     remaining_ch_msb = raw_16ch[:, 18:32] & 1
-                    #     valid_rows = (
-                    #             (first_ch_lsb == 1) &
-                    #             (remaining_ch_lsb.sum(axis=1) == 0) &
-                    #             (first_ch_msb == 1) &
-                    #             (remaining_ch_msb.sum(axis=1) == 0)
-                    #     )
+                    first_ch_lsb = raw_16ch[:, 0] & 1
+                    second_ch_lsb = raw_16ch[:, 1] & 1
+                    third_ch_lsb = raw_16ch[:, 2] & 1
+                    # if third_ch_lsb[0] == 1:
+                    #     print("fucks")
+                    # channels 2..15 must have LSB = 0
+                    remaining_ch_lsb = raw_16ch[:, 3:] & 1
+                    valid_rows = ((first_ch_lsb == 1) & (remaining_ch_lsb.sum(axis=1) == 0))
 
                     if not valid_rows.any():
                         continue
@@ -429,10 +353,12 @@ class DataConverterV2:
 
                     # timing bit from channel 1
                     timing_bits = second_ch_lsb[valid_rows]
+                    ble_sync_bits = third_ch_lsb[valid_rows]
 
-                    self.neuro_timing_buffer.extend(
-                        timing_bits.tolist()
-                    )
+
+                    self.neuro_timing_buffer.extend(timing_bits.tolist())
+                    self.BLE_timing_buffer.extend(ble_sync_bits.tolist())
+
 
                     # keep previous state between loops
                     if "prev_timing_state" not in globals():
@@ -528,7 +454,20 @@ class DataConverterV2:
 
                         bits = np.zeros(num_samples, dtype=np.uint8)
 
-                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, converted)
+                    if len(self.BLE_timing_buffer) >= num_samples:
+
+                        ble_bits = np.array(
+                            self.BLE_timing_buffer[:num_samples],
+                            dtype=np.uint8
+                        )
+
+                        del self.BLE_timing_buffer[:num_samples]
+
+                    else:
+
+                        ble_bits = np.zeros(num_samples, dtype=np.uint8)
+
+                    extra_channel_1, extra_channel_2 = self.add_timing_channels(bits, ble_bits, converted)
 
 
                     try:

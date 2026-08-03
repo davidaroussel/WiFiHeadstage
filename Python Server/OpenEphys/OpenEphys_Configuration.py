@@ -132,13 +132,17 @@ class OpenEphys_Configuration:
 
     def get_ES_processor_id(self):
         found_ES = False
+        ES_process_found = 0
+        self.EphysSocket_id = []
         r = self.session.get(f"{self.gui_url}/processors")
         for processor in r.json()["processors"]:
             processor_name = processor["name"]
             if processor_name == "Ephys Socket":
-                self.EphysSocket_id = processor["id"]
+                self.EphysSocket_id.append(processor["id"])
                 found_ES = True
+                ES_process_found += 1
         if found_ES:
+            # print(f"[OPENEPHYS] FOUND {ES_process_found} EPHYS SOCKET Processor ")
             retVal = f"EphysSocket processor id: {self.EphysSocket_id}"
             # print(retVal)
             return retVal
@@ -147,9 +151,9 @@ class OpenEphys_Configuration:
             print("!! EPHYS SOCKET PLUGIN NOT FOUND IN ACQUISITION CHAINE !!")
             exit()
 
-    def get_ES_info(self):
+    def get_ES_info(self, processor_id):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": "ES INFO"})
         current_info = r.json()["info"]
 
@@ -169,10 +173,18 @@ class OpenEphys_Configuration:
         # print(retVal)
         return retVal
 
+    def get_GUI_recording_info(self):
+        r = self.session.get(f"{self.gui_url}/recording")
+        data = r.json()
 
-    def set_ES_scale(self, scale_value):
+        self.recording_node = data["record_nodes"][0]["node_id"]
+        self.recording_path = data["record_nodes"][0]["parent_directory"]
+
+        return data
+
+    def set_ES_scale(self,processor_id, scale_value):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES SCALE {scale_value}"})
         # print(r.json())
         success = r.json()["info"]
@@ -183,9 +195,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_offset(self, offset_value):
+    def set_ES_offset(self,processor_id, offset_value):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES OFFSET {offset_value}"})
         # print(r.json())
         success = r.json()["info"]
@@ -196,9 +208,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_port(self, port):
+    def set_ES_port(self, processor_id, port):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES PORT {port}"})
         # print(r.json())
         success = r.json()["info"]
@@ -209,9 +221,9 @@ class OpenEphys_Configuration:
             # print(retVal)
             return retVal
 
-    def set_ES_frequency(self, frequency):
+    def set_ES_frequency(self, processor_id, frequency):
         r = self.session.put(
-            f"{self.gui_url}/processors/{self.EphysSocket_id}/config",
+            f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES FREQUENCY {frequency}"})
         # print(r.json())
         success = r.json()["info"]
@@ -221,3 +233,73 @@ class OpenEphys_Configuration:
             retVal = f"New ES FREQUENCY: {frequency}"
             # print(retVal)
             return retVal
+
+    def get_ES_Connection_Status(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES CONNECTION_STATUS"})
+        status = r.json()["info"]
+        return status
+
+
+    def CONNECT_ES(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES CONNECT"})
+        status = r.json()["info"]
+        return status
+
+    def DISCONNECT_ES(self, processor_id):
+        r = self.session.put(
+            f"{self.gui_url}/processors/{processor_id}/config",
+            json={"text": f"ES DISCONNECT"})
+        status = r.json()["info"]
+        return status
+
+
+    def OE_INIT_PLUGIN(self, OE_config, PRINT_OE_INFO, CONFIGURE_OPENEPHYS, OE_SOCKET_PORT, OPENEPHYS_SCALE, SAMPLING_FREQ, OPENEPHYS_OFFSET):
+        retVal_list = []
+        try:
+            if CONFIGURE_OPENEPHYS:
+                needed_config = False
+                # retVal_list.append(OE_config.get_GUI_status())
+                OE_config.get_GUI_recording_node()
+                # OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING")
+                OE_config.get_ES_processor_id()
+
+                # TO PRINT RETURNED VALUE FROM OPEN EPHYS
+                # retVal_list.append(OE_config.get_GUI_recording_node())
+                # retVal_list.append(OE_config.set_GUI_recording_path(r"C:\Users\david\Documents\Open Ephys\TESTING"))
+                # retVal_list.append(OE_config.get_ES_processor_id())
+                for idx, processor_id in enumerate(OE_config.EphysSocket_id):
+                    current_val = OE_config.get_ES_info(processor_id)
+                    parts = current_val.split(":", 1)[1].split("|")
+                    data = {}
+                    for part in parts:
+                        key, value = part.strip().split(":", 1)
+                        data[key.strip()] = float(value.strip())
+                    # retVal_list.append("BEFORE: " + current_val)
+                    if data["Port"] != OE_SOCKET_PORT[idx]:
+                        retVal_list.append(OE_config.set_ES_port(processor_id, OE_SOCKET_PORT[idx]))
+                        needed_config = True
+                    if data["Scale"] != OPENEPHYS_SCALE:
+                        retVal_list.append(OE_config.set_ES_scale(processor_id, OPENEPHYS_SCALE))
+                        needed_config = True
+                    if data["Sample rate"] != SAMPLING_FREQ[idx]:
+                        retVal_list.append(OE_config.set_ES_frequency(processor_id, SAMPLING_FREQ[idx]))
+                        needed_config = True
+                    if data["Offset"] != OPENEPHYS_OFFSET:
+                        retVal_list.append(OE_config.set_ES_offset(processor_id, OPENEPHYS_OFFSET))
+                        needed_config = True
+                    # retVal_list.append("AFTER: " + OE_config.get_ES_info(processor_id))
+                if not needed_config:
+                    print("[OPENEPHYS] EPHYS SOCKET ALREADY SETUP")
+
+                if PRINT_OE_INFO:
+                    for retVal in retVal_list:
+                        print(retVal)
+                    print("\n")
+        except Exception as e:
+            print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
+            print(e)
+            exit()
