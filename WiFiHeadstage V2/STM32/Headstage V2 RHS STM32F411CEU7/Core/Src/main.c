@@ -182,7 +182,7 @@ int main(void)
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   uint32_t stim_current_uA = 30;
   RHS2116_MEP_Config_Params(hspi, stim_current_uA);
-
+  HAL_Delay(500);
 //
 //  HAL_SPI_DeInit(&hspi4);
 //  printf("[INFO] SPI deinitialized.\r\n");
@@ -289,7 +289,7 @@ int main(void)
 		}
 		printf("[INFO] Sending RDY_FPGA signal...\r\n");
 
-		HAL_Delay(10);
+		HAL_Delay(100);
 
 		HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);

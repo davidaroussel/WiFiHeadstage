@@ -8,6 +8,10 @@ ldc_set_location -site {41} [get_ports RGB2_OUT]
 ldc_set_location -site {10} [get_ports o_BOOST_ENABLE]
 ldc_set_location -site {4} [get_ports i_RHS_SEL] 
 ldc_set_location -site {3} [get_ports i_RHS_STIM_START] 
+#ldc_set_location -site {48} [get_ports i_RHS_STIM_STATUS]
+ldc_set_location -site {32} [get_ports i_CH_BANK_SEL]
+ldc_set_location -site {31} [get_ports CTRL0_IN]
+
 ldc_set_location -site {12} [get_ports i_BLE_SYNC]
 
 ###### TO RHS2116 TOP #### READ CHIP !!
@@ -35,14 +39,14 @@ ldc_set_location -site {36} [get_ports o_RHS_BOTTOM_SPI_CS_n_2]
 ##ldc_set_location -site {3} [get_ports i_STM32_SPI5_MISO]
 ##ldc_set_location -site {48} [get_ports o_STM32_SPI5_Clk]
 ##ldc_set_location -site {45} [get_ports o_STM32_SPI5_CS_n]    
-##ldc_set_location -site {32} [get_ports CTRL0_IN]
+
 
 ##### TO STM32_PORT_2 (SPI4) / ADC (MISO-CLK IDEM) ####
 ldc_set_location -site {2}  [get_ports o_STM32_SPI4_MOSI]
 ldc_set_location -site {47} [get_ports i_STM32_SPI4_MISO]
 ldc_set_location -site {46} [get_ports o_STM32_SPI4_Clk]
 ldc_set_location -site {44} [get_ports o_STM32_SPI4_CS_n]
-ldc_set_location -site {31} [get_ports CTRL0_IN]
+
 
 
 ######(FOR DEV KIT)######

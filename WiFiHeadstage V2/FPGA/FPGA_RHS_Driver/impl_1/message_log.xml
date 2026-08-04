@@ -4,6 +4,17 @@
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
             <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
             <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
@@ -16,6 +27,17 @@
             <ID>70001944</ID>
             <Severity>16</Severity>
             <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -41,12 +63,7 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>i_BLE_SYNC</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
@@ -61,17 +78,53 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
             <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
             <Severity>16</Severity>
             <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -83,6 +136,17 @@
             <ID>77001031</ID>
             <Severity>16</Severity>
             <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -370,9 +434,14 @@
             <Dynamic>i_RHS_STIM_START</Dynamic>
         </Message>
         <Message>
-            <ID>35935049</ID>
+            <ID>35935050</ID>
             <Severity>16</Severity>
             <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935049</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_CH_BANK_SEL</Dynamic>
         </Message>
         <Message>
             <ID>35901018</ID>
@@ -772,10 +841,10 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(113): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(114): </Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>113</Navigation>
+            <Navigation>114</Navigation>
         </Message>
         <Message>
             <ID>35921012</ID>
@@ -826,6 +895,22 @@
             <Navigation>36</Navigation>
         </Message>
         <Message>
+            <ID>35929000</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(267): </Dynamic>
+            <Dynamic>i_ch_bank_sel</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
+            <Navigation>267</Navigation>
+        </Message>
+        <Message>
+            <ID>35921259</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(37): </Dynamic>
+            <Dynamic>i_ch_bank_sel</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
+            <Navigation>37</Navigation>
+        </Message>
+        <Message>
             <ID>35921012</ID>
             <Severity>1</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(5): </Dynamic>
@@ -836,10 +921,10 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(80): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(81): </Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>80</Navigation>
+            <Navigation>81</Navigation>
         </Message>
         <Message>
             <ID>35921504</ID>
@@ -853,9 +938,14 @@
             <Dynamic>i_RHS_STIM_START</Dynamic>
         </Message>
         <Message>
-            <ID>35935049</ID>
+            <ID>35935050</ID>
             <Severity>16</Severity>
             <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935049</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_CH_BANK_SEL</Dynamic>
         </Message>
         <Message>
             <ID>35935049</ID>
@@ -1050,10 +1140,10 @@
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(573): </Dynamic>
-            <Dynamic>rhd_array_intan_original_ramnet</Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(505): </Dynamic>
+            <Dynamic>rhd_array_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>573</Navigation>
+            <Navigation>505</Navigation>
         </Message>
         <Message>
             <ID>35935040</ID>
@@ -1072,12 +1162,17 @@
             <Dynamic>sdi_i</Dynamic>
         </Message>
         <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
             <ID>35931002</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(125): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(126): </Dynamic>
             <Dynamic>int_RHS_TOP_SPI_CS_n_2</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>125</Navigation>
+            <Navigation>126</Navigation>
         </Message>
         <Message>
             <ID>35931002</ID>
@@ -1166,6 +1261,143 @@
             <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
+            <ID>35002028</ID>
+            <Severity>256</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i31</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i30</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i29</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i28</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i27</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i26</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i25</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i24</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i23</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i22</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i21</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i20</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i19</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i18</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i17</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i16</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i15</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i14</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i13</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i12</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i11</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stm32_state_i0_i10</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
             <Dynamic>\Controller_inst/stm32_state_i0_i9</Dynamic>
@@ -1186,37 +1418,7 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i11</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
             <Dynamic>\Controller_inst/stm32_state_i0_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i13</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i14</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i15</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1228,157 +1430,19 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i16</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i17</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i18</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i19</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
             <Dynamic>\Controller_inst/stm32_state_i0_i4</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i20</Dynamic>
+            <Dynamic>\Controller_inst/int_RHS_READ_TX_Byte__i5</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i21</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_READ_TX_Byte__i1</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i22</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i23</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i10</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i24</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i1</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i25</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i29</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i30</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stm32_state_i0_i31</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i30</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i26</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i25</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i24</Dynamic>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i20</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1390,7 +1454,61 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i20</Dynamic>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i24</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i25</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i26</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i27</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i28</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i30</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte__i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i30</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1424,22 +1542,9 @@
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i27</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i28</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_2/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i30</Dynamic>
-            <Dynamic>Zero</Dynamic>
+            <ID>35001752</ID>
+            <Severity>256</Severity>
+            <Dynamic>\Controller_inst/stim_pulse_counter_1605__i5</Dynamic>
         </Message>
         <Message>
             <ID>70001944</ID>
@@ -1479,6 +1584,11 @@
         <Message>
             <ID>71003020</ID>
             <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
             <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
         </Message>
         <Message>
@@ -1486,8 +1596,29 @@
             <Severity>16</Severity>
             <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
         </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+        </Message>
     </Task>
     <Task name="Export">
+        <Message>
+            <ID>1081100</ID>
+            <Severity>1</Severity>
+            <Dynamic>Bitstream authenticated.</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_BLE_SYNC</Dynamic>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {12} [get_ports i_BLE_SYNC]</Dynamic>
+        </Message>
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>

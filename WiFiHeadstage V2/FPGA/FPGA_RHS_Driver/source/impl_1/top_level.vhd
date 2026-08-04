@@ -4,16 +4,16 @@ use ieee.numeric_std.all;
 
 entity top_level is
     generic (
-        STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 4;
-        STM32_CS_INACTIVE_CLKS        : integer := 16;
+        STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
+        STM32_CLKS_PER_HALF_BIT       : integer := 2;       -- 4 and 16 for around 5.45KHz with 36MHz CLK
+        STM32_CS_INACTIVE_CLKS        : integer := 32;
 		
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHS_READ_CLKS_PER_HALF_BIT       : integer := 16;   -- 16 and 32 for around 5.45KHz
-        RHS_READ_CS_INACTIVE_CLKS        : integer := 32;
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 2;   -- 16 and 32 for around 5.45KHz
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 128;
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 16;    -- 32 for around 2.5KHz
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 64;    -- Calibrated at 36MHz - 16 H-B - 64 INAC
         RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
 		
 		-- 0: N/A 
@@ -52,7 +52,8 @@ entity top_level is
 		i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
-		CTRL0_IN         : in STD_LOGIC;
+		CTRL0_IN           : in STD_LOGIC;
+		i_CH_BANK_SEL      : in STD_LOGIC;
 		i_RHS_SEL          : in STD_LOGIC;
 		i_RHS_STIM_START   : in STD_LOGIC;
 		
@@ -174,6 +175,7 @@ begin
             i_Controller_Mode   => w_Controller_Mode,
 			i_RHS_STIM_START    => i_RHS_STIM_START,
 			i_BLE_SYNC          => i_BLE_SYNC,
+			i_CH_BANK_SEL       => i_CH_BANK_SEL,
 
 			rgb_info_red   => rgb_sig_red,
 			rgb_info_blue  => rgb_sig_blue,
@@ -280,19 +282,6 @@ begin
 			end if;
 	end process;
 	
-	
-	--process(pll_clk_int)
-		--begin
-		--if reset_counter < 20 then
-			--rgb_sig_green <= '1';
-		
-		--elsif i_BLE_SYNC = '1' then
-			
-			--rgb_sig_green <= '0';
-		--else
-			--rgb_sig_green <= '1';
-		--end if;
-		--end process;
 
 
 	Reset_Process : process(pll_clk_int)
@@ -317,8 +306,6 @@ begin
 						w_Controller_Mode <= x"2";
 				end if;
 			
-
-
 				----Controller mode sequencing
 				--case reset_counter is
 					--when 36000000 =>
