@@ -33,9 +33,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ID_PATATO  0xF5
-#define ID_POTATO  0x3B
-
 #define FPGA_CHUNK_SIZE 4096
 #define FPGA_ACCUM_SIZE 8192
 
@@ -169,10 +166,18 @@ int main(void)
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
 //hspi = &hspi3; //NOT PASSTHROUGH    NEED TO CHANGE STUFF IN SPI_SEND_RECV
   HAL_Delay(500);
+
+//  while(1){
+//	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
+//	  HAL_Delay(1000);
+//	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
+//	  HAL_Delay(1000);
+//  }
 
 	//    Start SPI4 as MASTER
   SPI4_Master_Init();
@@ -180,7 +185,7 @@ int main(void)
   Init_Intan();
   Init_Intan_RHS();
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
-  uint32_t stim_current_uA = 30;
+   uint32_t stim_current_uA = 30;
   RHS2116_MEP_Config_Params(hspi, stim_current_uA);
   HAL_Delay(500);
 //
@@ -645,6 +650,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
   GPIO_InitStruct.Pin = RDY_nRF_Pin|FPGA_MUX_5_Pin|FPGA_MUX_4_Pin;
@@ -652,6 +658,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = FPGA_CH_BANK_SEL_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(FPGA_CH_BANK_SEL_Port, &GPIO_InitStruct);
 
 
   /*Configure GPIO pin : PC11 --- CONFIRM FOR HEADSTAGE, USE SECOND MISO !!*/

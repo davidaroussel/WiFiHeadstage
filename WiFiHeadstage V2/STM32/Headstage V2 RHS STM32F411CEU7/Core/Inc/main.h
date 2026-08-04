@@ -88,6 +88,10 @@ void Error_Handler(void);
 #define Reboot_SPI_Pin GPIO_PIN_5
 #define Reboot_SPI_Port GPIOB
 
+#define FPGA_CH_BANK_SEL_Pin GPIO_PIN_1
+#define FPGA_CH_BANK_SEL_Port GPIOB
+
+
 #if DEVKIT == 1
     // FOR DEV KIT
     #define RHS_Chip_SEL_Pin  GPIO_PIN_11

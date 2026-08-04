@@ -6,7 +6,7 @@ entity Controller_RHD_Sampling is
   generic (
 	STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
 	STM32_CLKS_PER_HALF_BIT       : integer := 2;
-	STM32_CS_INACTIVE_CLKS        : integer := 32;
+	STM32_CS_INACTIVE_CLKS        : integer := 64;
 	
 	RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
 	RHS_READ_CLKS_PER_HALF_BIT       : integer := 2;
@@ -571,6 +571,75 @@ architecture RTL of Controller_RHD_Sampling is
 		63 => x"0F00"   -- CH15 repeat
 	);
 	
+	signal rhd_array_intan : t_rhd_array := (
+		0  => x"E800",  -- CH0
+		1  => x"E900",  -- CH1
+		2  => x"EA00",  -- CH2
+		3  => x"EB00",  -- CH3
+		4  => x"EC00",  -- CH4
+		5  => x"FC00",  -- CH5
+		6  => x"FD00",  -- CH6
+		7  => x"FF00",  -- CH7
+		8  => x"E800",  -- CH8
+		9  => x"E900",  -- CH9
+		10 => x"EA00",  -- CH10
+		11 => x"EB00",  -- CH11
+		12 => x"EC00",  -- CH12
+		13 => x"FC00",  -- CH13
+		14 => x"FD00",  -- CH14
+		15 => x"FF00",  -- CH15
+		16 => x"E800",  -- CH0
+		17 => x"E900",  -- CH1
+		18 => x"EA00",  -- CH2
+		19 => x"EB00",  -- CH3
+		20 => x"EC00",  -- CH4
+		21 => x"FC00",  -- CH5
+		22 => x"FD00",  -- CH6
+		23 => x"FF00",  -- CH7
+		24 => x"E800",  -- CH8
+		25 => x"E900",  -- CH9
+		26 => x"EA00",  -- CH10
+		27 => x"EB00",  -- CH11
+		28 => x"EC00",  -- CH12
+		29 => x"FC00",  -- CH13
+		30 => x"FD00",  -- CH14
+		31 => x"FF00",  -- CH15
+
+		-- CH0–CH31 repeated again for indices 32–63
+
+		32 => x"E900",  -- CH0 repeat
+		33 => x"E800",  -- CH1 repeat
+		34 => x"E900",  -- CH2 repeat
+		35 => x"E800",  -- CH3 repeat
+		36 => x"E900",  -- CH4 repeat
+		37 => x"E800",  -- CH5 repeat
+		38 => x"E900",  -- CH6 repeat
+		39 => x"E800",  -- CH7 repeat
+		40 => x"EB00",  -- CH8 repeat
+		41 => x"EA00",  -- CH9 repeat
+		42 => x"EB00",  -- CH10 repeat
+		43 => x"EA00",  -- CH11 repeat
+		44 => x"EB00",  -- CH12 repeat
+		45 => x"EA00",  -- CH13 repeat
+		46 => x"EB00",  -- CH14 repeat
+		47 => x"EA00",  -- CH15 repeat	
+		48 => x"FC00",  -- CH0 repeat
+		49 => x"EC00",  -- CH1 repeat
+		50 => x"FC00",  -- CH2 repeat
+		51 => x"EC00",  -- CH3 repeat
+		52 => x"FC00",  -- CH4 repeat
+		53 => x"EC00",  -- CH5 repeat
+		54 => x"FC00",  -- CH6 repeat
+		55 => x"EC00",  -- CH7 repeat
+		56 => x"FF00",  -- CH8 repeat
+		57 => x"ED00",  -- CH9 repeat
+		58 => x"FF00",  -- CH10 repeat
+		59 => x"ED00",  -- CH11 repeat
+		60 => x"FF00",  -- CH12 repeat
+		61 => x"ED00",  -- CH13 repeat
+		62 => x"FF00",  -- CH14 repeat
+		63 => x"ED00"   -- CH15 repeat
+	);
 	signal rhd_array_32 : t_rhd_array := (
 		0  => x"0000",  -- CH0
 		1  => x"0100",  -- CH1
@@ -588,22 +657,22 @@ architecture RTL of Controller_RHD_Sampling is
 		13 => x"0D00",  -- CH13
 		14 => x"0E00",  -- CH14
 		15 => x"0F00",  -- CH15		
-		16 => x"0000",  -- CH0
-		17 => x"0100",  -- CH1
-		18 => x"0200",  -- CH2
-		19 => x"0300",  -- CH3
-		20 => x"0400",  -- CH4
-		21 => x"0500",  -- CH5
-		22 => x"0600",  -- CH6
-		23 => x"0700",  -- CH7
-		24 => x"0800",  -- CH8
-		25 => x"0900",  -- CH9
-		26 => x"0A00",  -- CH10
-		27 => x"0B00",  -- CH11
-		28 => x"0C00",  -- CH12
-		29 => x"0D00",  -- CH13
-		30 => x"0E00",  -- CH14
-		31 => x"0F00",  -- CH15
+		16 => x"1000",  -- CH16
+		17 => x"1100",  -- CH17
+		18 => x"1200",  -- CH18
+		19 => x"1300",  -- CH19
+		20 => x"1400",  -- CH20
+		21 => x"1500",  -- CH21
+		22 => x"1600",  -- CH22
+		23 => x"1700",  -- CH23
+		24 => x"1800",  -- CH24
+		25 => x"1900",  -- CH25
+		26 => x"1A00",  -- CH26
+		27 => x"1B00",  -- CH27
+		28 => x"1C00",  -- CH28
+		29 => x"1D00",  -- CH29
+		30 => x"1E00",  -- CH30
+		31 => x"1F00",  -- CH31
 		
 		-- CH0?CH31 repeated again for indices 32?63
 		32 => x"1000",  -- CH16
@@ -975,8 +1044,13 @@ architecture RTL of Controller_RHD_Sampling is
 					-- STATE 0 : PREPARE NEXT BYTE
 					----------------------------------------------------------------
 					when 0 =>
-
-						int_RHS_READ_TX_Byte <= rhd_array(rhd_index);
+						if i_CH_BANK_SEL = '1' then
+							int_RHS_READ_TX_Byte <= rhd_array_32(rhd_index);
+						else
+							int_RHS_READ_TX_Byte <= rhd_array(rhd_index);
+						
+						end if;
+						--int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
 
 						if int_RHS_READ_TX_Ready = '1' then
 							int_RHS_READ_TX_DV <= '1';   -- pulse DV for one cycle
