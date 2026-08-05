@@ -4,17 +4,17 @@ use ieee.numeric_std.all;
 
 entity Controller_RHD_Sampling is
   generic (
-	STM32_SPI_NUM_BITS_PER_PACKET : integer := 256;
-	STM32_CLKS_PER_HALF_BIT       : integer := 2;
-	STM32_CS_INACTIVE_CLKS        : integer := 64;
+	STM32_SPI_NUM_BITS_PER_PACKET : integer := 0;
+	STM32_CLKS_PER_HALF_BIT       : integer := 0;
+	STM32_CS_INACTIVE_CLKS        : integer := 0;
 	
-	RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
-	RHS_READ_CLKS_PER_HALF_BIT       : integer := 2;
-	RHS_READ_CS_INACTIVE_CLKS        : integer := 64;
+	RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 0;
+	RHS_READ_CLKS_PER_HALF_BIT       : integer := 0;
+	RHS_READ_CS_INACTIVE_CLKS        : integer := 0;
 
-	RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
-	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 16;    -- 32 for around 2.5KHz
-	RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
+	RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 0;
+	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 0;    -- 32 for around 2.5KHz
+	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0;
 	  
 	RHS_SAMPLING_MODE 		: integer := 0
     );
@@ -1045,9 +1045,9 @@ architecture RTL of Controller_RHD_Sampling is
 					----------------------------------------------------------------
 					when 0 =>
 						if i_CH_BANK_SEL = '1' then
-							int_RHS_READ_TX_Byte <= rhd_array_32(rhd_index);
-						else
 							int_RHS_READ_TX_Byte <= rhd_array(rhd_index);
+						else
+							int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
 						
 						end if;
 						--int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
@@ -1327,6 +1327,7 @@ architecture RTL of Controller_RHD_Sampling is
 		  end case;
 
 		else
+		  stim_channel_index <= 0;
 		  int_RHS_STIM_TX_DV <= '0';
 		  rgd_info_sig_red <= '1';
 		end if;

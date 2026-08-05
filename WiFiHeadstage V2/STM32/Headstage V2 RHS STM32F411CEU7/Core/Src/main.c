@@ -166,7 +166,8 @@ int main(void)
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
+
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
 //hspi = &hspi3; //NOT PASSTHROUGH    NEED TO CHANGE STUFF IN SPI_SEND_RECV
@@ -431,8 +432,12 @@ void SystemClock_Config(void)
 		RCC_OscInitStruct.PLL.PLLQ = 4;
 		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
 
-	//    RCC_OscInitStruct.PLL.PLLM = 25;
-	//    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
+//		RCC_OscInitStruct.PLL.PLLM = 25;
+//		RCC_OscInitStruct.PLL.PLLN = 400;    // SYSCLK = 100 MHz
+
+
+//	    RCC_OscInitStruct.PLL.PLLM = 25;
+//	    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 
 		RCC_OscInitStruct.PLL.PLLM = 25;
 		RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz

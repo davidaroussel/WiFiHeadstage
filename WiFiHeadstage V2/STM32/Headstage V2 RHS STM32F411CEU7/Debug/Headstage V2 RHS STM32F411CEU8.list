@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000183dc  00000000  00000000  00022f51  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00013656  00000000  00000000  0003b32d  2**0
+ 17 .debug_line   00013658  00000000  00000000  0003b32d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00094257  00000000  00000000  0004e983  2**0
+ 18 .debug_str    00094257  00000000  00000000  0004e985  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000e2bda  2**0
+ 19 .comment      00000043  00000000  00000000  000e2bdc  2**0
                   CONTENTS, READONLY
  20 .debug_frame  0000539c  00000000  00000000  000e2c20  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -9668,8 +9668,9 @@ int main(void)
  8004bde:	f44f 5180 	mov.w	r1, #4096	@ 0x1000
  8004be2:	4890      	ldr	r0, [pc, #576]	@ (8004e24 <main+0x2c8>)
  8004be4:	f002 f87a 	bl	8006cdc <HAL_GPIO_WritePin>
-  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
- 8004be8:	2200      	movs	r2, #0
+
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);
+ 8004be8:	2201      	movs	r2, #1
  8004bea:	2102      	movs	r1, #2
  8004bec:	488e      	ldr	r0, [pc, #568]	@ (8004e28 <main+0x2cc>)
  8004bee:	f002 f875 	bl	8006cdc <HAL_GPIO_WritePin>
@@ -10286,8 +10287,9 @@ void SystemClock_Config(void)
  8005018:	2304      	movs	r3, #4
  800501a:	653b      	str	r3, [r7, #80]	@ 0x50
 
-	//    RCC_OscInitStruct.PLL.PLLM = 25;
-	//    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
+
+//	    RCC_OscInitStruct.PLL.PLLM = 25;
+//	    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 
 		RCC_OscInitStruct.PLL.PLLM = 25;
  800501c:	2319      	movs	r3, #25
