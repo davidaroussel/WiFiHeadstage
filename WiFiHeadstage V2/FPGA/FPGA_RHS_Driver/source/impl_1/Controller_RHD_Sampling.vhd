@@ -15,8 +15,9 @@ entity Controller_RHD_Sampling is
 	RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 0;
 	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 0;    -- 32 for around 2.5KHz
 	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0;
-	  
-	RHS_SAMPLING_MODE 		: integer := 0
+	
+	RHS_READ_NUM_CHANNEL : integer := 8
+	
     );
   port (
 	o_NUM_DATA       : out integer;
@@ -227,8 +228,6 @@ architecture RTL of Controller_RHD_Sampling is
 	signal counter      : integer := 0; -- Counter to control SendDataToRHDSPI
 
 	signal stm32_state : integer := 0;
-	
-	signal SAMPLING_MODE : std_logic_vector(1 downto 0) := std_logic_vector(to_unsigned(RHS_SAMPLING_MODE, 2)); -- 0: Neuro Only - 1: EMG Only - 2: EMG + Neuro
 
 	signal NUM_DATA : integer := 0;
 	constant WORD_WIDTH : integer := 16;
@@ -580,14 +579,14 @@ architecture RTL of Controller_RHD_Sampling is
 		5  => x"0500",  -- CH5
 		6  => x"0600",  -- CH6
 		7  => x"0700",  -- CH7
-		8  => x"0000",  -- CH8
-		9  => x"0100",  -- CH9
-		10 => x"0200",  -- CH10
-		11 => x"0300",  -- CH11
-		12 => x"0400",  -- CH12
-		13 => x"0500",  -- CH13
-		14 => x"0600",  -- CH14
-		15 => x"0700",  -- CH15		
+		8  => x"0000",  -- CH0
+		9  => x"0100",  -- CH1
+		10 => x"0200",  -- CH2
+		11 => x"0300",  -- CH3
+		12 => x"0400",  -- CH4
+		13 => x"0500",  -- CH5
+		14 => x"0600",  -- CH6
+		15 => x"0700",  -- CH7		
 		16 => x"0000",  -- CH0
 		17 => x"0100",  -- CH1
 		18 => x"0200",  -- CH2
@@ -596,14 +595,14 @@ architecture RTL of Controller_RHD_Sampling is
 		21 => x"0500",  -- CH5
 		22 => x"0600",  -- CH6
 		23 => x"0700",  -- CH7
-		24 => x"0000",  -- CH8
-		25 => x"0100",  -- CH9
-		26 => x"0200",  -- CH10
-		27 => x"0300",  -- CH11
-		28 => x"0400",  -- CH12
-		29 => x"0500",  -- CH13
-		30 => x"0600",  -- CH14
-		31 => x"0700",  -- CH15
+		24 => x"0000",  -- CH0
+		25 => x"0100",  -- CH1
+		26 => x"0200",  -- CH2
+		27 => x"0300",  -- CH3
+		28 => x"0400",  -- CH4
+		29 => x"0500",  -- CH5
+		30 => x"0600",  -- CH6
+		31 => x"0700",  -- CH7
 		
 		-- CH0?CH31 repeated again for indices 32?63
 		32 => x"0000",  -- CH0 repeat
@@ -805,11 +804,10 @@ architecture RTL of Controller_RHD_Sampling is
 	signal ble_sync_flag	       	 : std_logic := '0';		
 
 
-	constant DELAY_200uS_CLKS  : integer := 4800; 
-	constant DELAY_3mS_CLKS    : integer := 72000;     
-	constant DELAY_1S_CLKS     : integer := 24000000;  
+	constant DELAY_200uS_CLKS  : integer := 9600; 
+	constant DELAY_3mS_CLKS    : integer := 120000;     
+	constant DELAY_1S_CLKS     : integer := 22000000;  
 	constant DELAY_10S_CLKS    : integer := 36000000; 
-
 
 	constant STIM_FIRST_PACKET        : integer := 6;
 	constant STIM_SECOND_PACKET       : integer := 3;
@@ -1023,16 +1021,16 @@ architecture RTL of Controller_RHD_Sampling is
 					end if;
 				
 					if stm32_counter < (NUM_WORDS) then
-						if (stm32_counter mod 16) = 0 then
+						if (stm32_counter mod RHS_READ_NUM_CHANNEL) = 0 then
 						    --temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
 							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
-						elsif (stm32_counter mod 16) = 1 then
+						elsif (stm32_counter mod RHS_READ_NUM_CHANNEL) = 1 then
 							if stim_train_flag = '1' then
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
 							else
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
 							end if;
-						elsif (stm32_counter mod 16) = 2 then
+						elsif (stm32_counter mod RHS_READ_NUM_CHANNEL) = 2 then
 							if ble_sync_flag = '1' then
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
 							else
@@ -1112,7 +1110,7 @@ architecture RTL of Controller_RHD_Sampling is
 					----------------------------------------------------------------
 					when 0 =>
 						if i_CH_BANK_SEL = '1' then
-							int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
+							int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
 						else
 							int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
 						
@@ -1189,7 +1187,7 @@ architecture RTL of Controller_RHD_Sampling is
 		stim_sequence_phase       <= 0;
 		stim_train_flag           <= '0';
 		stim_train_counter        <= 0;
-		--rgd_info_sig_red          <= '1';
+		rgd_info_sig_red          <= '1';
 		--rgd_info_sig_green        <= '1';
 		stim_train_sector_counter <= 0;
 		stim_delay_target         <= 0;
@@ -1205,6 +1203,7 @@ architecture RTL of Controller_RHD_Sampling is
 				-- STATE 0 : SELECT & PREPARE BYTE TO SEND
 				-- ============================================================
 				when 0 =>
+					rgd_info_sig_red <= '0';
 				  case stim_sequence_phase is
 					when 0 =>   -- NEGATIVE PHASE (STIM_FIRST_PACKET packets)
 					  if stim_burst_counter = 0 then
@@ -1306,7 +1305,7 @@ architecture RTL of Controller_RHD_Sampling is
 							  stim_channel_index <= 0;
 							  
 							  stim_delay_target  <= DELAY_10S_CLKS;
-							  --rgd_info_sig_red   <= not rgd_info_sig_red;
+							  rgd_info_sig_red   <= '1';
 							end if;
 
 							stim_return_state <= 0;
@@ -1343,14 +1342,9 @@ architecture RTL of Controller_RHD_Sampling is
 	stim_ch <= stim_channel_index when stim_channel_index < 16
           else stim_channel_index - 16;
 		  
-	--stim_ch <= 2;
 
 	chip_select_RHS_STIM <= '1' when stim_channel_index < 16
                        else '0';
-					   
-	rgd_info_sig_red <= '1' when stim_channel_index < 16
-                       else '0';
-					   
 	
 	
 	--mux_RHS_READ_SPI_MISO <= i_RHS_READ_SPI_MISO_1 when chip_select_RHS_READ = '1'

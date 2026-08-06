@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2023.2.1.288.0
-Mapped on: Wed Aug  5 20:26:09 2026
+Mapped on: Thu Aug  6 10:24:42 2026
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -62,11 +62,11 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers: 2087 out of  5280 (40%)
+   Number of slice registers: 2086 out of  5280 (40%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           3306 out of  5280 (63%)
-      Number of logic LUT4s:             1335
-      Number of inserted feedthru LUT4s: 1649
+   Number of LUT4s:           3279 out of  5280 (62%)
+      Number of logic LUT4s:             1307
+      Number of inserted feedthru LUT4s: 1650
       Number of replicated LUT4s:         58
       Number of ripple logic:            132 (264 LUT4s)
    Number of IO sites used:   32 out of 39 (82%)
@@ -91,117 +91,119 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
    Number of EBRs:             1 out of 30 (3%)
    Number of PLLs:             1 out of 1 (100%)
    Number of Clocks:  2
-      Net pll_clk_int: 2074 loads, 2074 rising, 0 falling (Driver: Pin
+      Net pll_clk_int: 2073 loads, 2073 rising, 0 falling (Driver: Pin
      pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
       Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
-   Number of Clock Enables:  85
+   Number of Clock Enables:  86
       Net VCC_net: 2 loads, 0 SLICEs
-      Net n13382: 5 loads, 5 SLICEs
-      Net n5: 1 loads, 1 SLICEs
-      Net Controller_inst.n28359: 19 loads, 19 SLICEs
-      Net Controller_inst.n16580: 512 loads, 512 SLICEs
-      Net Controller_inst.n26607: 5 loads, 5 SLICEs
-      Net Controller_inst.n16582: 3 loads, 3 SLICEs
-      Net Controller_inst.n26623: 31 loads, 31 SLICEs
-      Net Controller_inst.n26537: 4 loads, 4 SLICEs
-      Net Controller_inst.n27528: 5 loads, 5 SLICEs
-      Net Controller_inst.n27262: 24 loads, 24 SLICEs
-      Net Controller_inst.n37763: 1 loads, 1 SLICEs
-      Net Controller_inst.n27272: 4 loads, 4 SLICEs
-      Net Controller_inst.n42348: 1 loads, 1 SLICEs
-      Net Controller_inst.int_RHS_STIM_TX_DV: 24 loads, 24 SLICEs
+      Net n3: 1 loads, 1 SLICEs
+      Net Controller_inst.n16586: 512 loads, 512 SLICEs
+      Net Controller_inst.n28382: 19 loads, 19 SLICEs
       Net Controller_inst.n1517: 5 loads, 5 SLICEs
+      Net Controller_inst.n26638: 5 loads, 5 SLICEs
+      Net Controller_inst.n26642: 31 loads, 31 SLICEs
+      Net Controller_inst.n26574: 4 loads, 4 SLICEs
+      Net Controller_inst.n27560: 5 loads, 5 SLICEs
+      Net Controller_inst.n27289: 24 loads, 24 SLICEs
+      Net Controller_inst.n36459: 1 loads, 1 SLICEs
+      Net Controller_inst.n27299: 4 loads, 4 SLICEs
+      Net Controller_inst.n35305: 1 loads, 1 SLICEs
+      Net Controller_inst.n25748: 15 loads, 15 SLICEs
+      Net Controller_inst.n25718: 15 loads, 15 SLICEs
+      Net Controller_inst.n25688: 15 loads, 15 SLICEs
+      Net Controller_inst.n25658: 15 loads, 15 SLICEs
+      Net Controller_inst.n25628: 15 loads, 15 SLICEs
+      Net Controller_inst.int_RHS_STIM_TX_DV: 24 loads, 24 SLICEs
+      Net Controller_inst.n41149: 1 loads, 1 SLICEs
+      Net Controller_inst.n36422: 1 loads, 1 SLICEs
       Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
-      Net Controller_inst.n25: 1 loads, 1 SLICEs
-      Net Controller_inst.n38398: 1 loads, 1 SLICEs
+      Net Controller_inst.n25_adj_2244: 1 loads, 1 SLICEs
+      Net Controller_inst.n25598: 15 loads, 15 SLICEs
+      Net Controller_inst.n25568: 15 loads, 15 SLICEs
+      Net Controller_inst.n25536: 15 loads, 15 SLICEs
+      Net Controller_inst.n37082: 1 loads, 1 SLICEs
       Net Controller_inst.int_RHS_READ_TX_DV: 8 loads, 8 SLICEs
-      Net Controller_inst.n13420: 6 loads, 6 SLICEs
-      Net Controller_inst.n27259: 1 loads, 1 SLICEs
-      Net Controller_inst.n4_adj_2307: 32 loads, 32 SLICEs
-      Net Controller_inst.n25765: 15 loads, 15 SLICEs
-      Net Controller_inst.n25735: 15 loads, 15 SLICEs
-      Net Controller_inst.n25705: 15 loads, 15 SLICEs
-      Net Controller_inst.n25675: 15 loads, 15 SLICEs
-      Net Controller_inst.n25645: 15 loads, 15 SLICEs
-      Net Controller_inst.n25615: 15 loads, 15 SLICEs
-      Net Controller_inst.n25585: 15 loads, 15 SLICEs
-      Net Controller_inst.n25555: 15 loads, 15 SLICEs
-      Net Controller_inst.n25525: 15 loads, 15 SLICEs
-      Net Controller_inst.n25493: 15 loads, 15 SLICEs
-      Net Controller_inst.n25461: 15 loads, 15 SLICEs
-      Net Controller_inst.n25429: 15 loads, 15 SLICEs
-      Net Controller_inst.n25399: 15 loads, 15 SLICEs
-      Net Controller_inst.n25369: 15 loads, 15 SLICEs
-      Net Controller_inst.n25339: 15 loads, 15 SLICEs
-      Net Controller_inst.n25293: 15 loads, 15 SLICEs
-      Net Controller_inst.n25277: 15 loads, 15 SLICEs
-      Net Controller_inst.n25246: 15 loads, 15 SLICEs
-      Net Controller_inst.n25216: 15 loads, 15 SLICEs
-      Net Controller_inst.n25186: 15 loads, 15 SLICEs
-      Net Controller_inst.n25130: 15 loads, 15 SLICEs
-      Net Controller_inst.n25126: 15 loads, 15 SLICEs
-      Net Controller_inst.n25912: 15 loads, 15 SLICEs
-      Net Controller_inst.n25928: 15 loads, 15 SLICEs
+      Net Controller_inst.n25504: 15 loads, 15 SLICEs
+      Net Controller_inst.n25472: 15 loads, 15 SLICEs
+      Net Controller_inst.n25442: 15 loads, 15 SLICEs
+      Net Controller_inst.n25412: 15 loads, 15 SLICEs
+      Net Controller_inst.n25382: 15 loads, 15 SLICEs
+      Net Controller_inst.n25352: 15 loads, 15 SLICEs
+      Net Controller_inst.n13414: 6 loads, 6 SLICEs
+      Net Controller_inst.n4_adj_2273: 32 loads, 32 SLICEs
+      Net Controller_inst.n25322: 15 loads, 15 SLICEs
+      Net Controller_inst.n25266: 15 loads, 15 SLICEs
+      Net Controller_inst.n25247: 15 loads, 15 SLICEs
+      Net Controller_inst.n25221: 15 loads, 15 SLICEs
+      Net Controller_inst.n25195: 15 loads, 15 SLICEs
+      Net Controller_inst.n25165: 15 loads, 15 SLICEs
+      Net Controller_inst.n25886: 15 loads, 15 SLICEs
+      Net Controller_inst.n25904: 15 loads, 15 SLICEs
+      Net Controller_inst.n25918: 15 loads, 15 SLICEs
       Net Controller_inst.n25944: 15 loads, 15 SLICEs
-      Net Controller_inst.n25972: 15 loads, 15 SLICEs
-      Net Controller_inst.n26012: 15 loads, 15 SLICEs
-      Net Controller_inst.n26036: 15 loads, 15 SLICEs
-      Net Controller_inst.n26038: 15 loads, 15 SLICEs
-      Net Controller_inst.n25028: 15 loads, 15 SLICEs
+      Net Controller_inst.n25954: 15 loads, 15 SLICEs
+      Net Controller_inst.n25982: 15 loads, 15 SLICEs
+      Net Controller_inst.n26010: 15 loads, 15 SLICEs
+      Net Controller_inst.n25073: 15 loads, 15 SLICEs
+      Net Controller_inst.n25069: 15 loads, 15 SLICEs
       Net Controller_inst.n26070: 15 loads, 15 SLICEs
-      Net Controller_inst.n26100: 15 loads, 15 SLICEs
-      Net Controller_inst.n13: 2 loads, 2 SLICEs
-      Net Controller_inst.n37762: 1 loads, 1 SLICEs
-      Net Controller_inst.int_STM32_TX_Ready_N_2178: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n27505: 8 loads, 8 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n27292: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n27411: 10 loads, 10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n37798: 1 loads, 1
+      Net Controller_inst.n26102: 15 loads, 15 SLICEs
+      Net Controller_inst.n26132: 15 loads, 15 SLICEs
+      Net Controller_inst.n13376: 5 loads, 5 SLICEs
+      Net Controller_inst.n12_adj_2274: 2 loads, 2 SLICEs
+      Net Controller_inst.n36458: 1 loads, 1 SLICEs
+      Net Controller_inst.n16588: 8 loads, 8 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n27441: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n27527: 7 loads, 7 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n37225: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.int_STM32_TX_Ready_N_2178: 1
+     loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n36484: 1 loads, 1
      SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n27287: 1 loads, 1
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n27314: 1 loads, 1
      SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n28303: 11 loads,
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n28328: 11 loads,
      11 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n27407: 8 loads, 8
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n27437: 8 loads, 8
      SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n27391: 8 loads,
-     8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n27410: 6 loads,
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n27440: 6 loads,
      6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.int_RHS_STIM_TX_
-     Ready_N_2181: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n38544: 1 loads,
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n27421: 8 loads,
+     8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n13456: 1 loads,
+     1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n37223: 1 loads,
      1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n27278:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n27305:
      1 loads, 1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n28319:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n33300:
      7 loads, 7 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n27361:
+     Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n27393:
      4 loads, 4 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.n13430: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27377: 8 loads,
-     8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27409: 5 loads,
+      Net Controller_inst.Controller_RHD_FIFO_1.n13424: 16 loads, 16 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27439: 5 loads,
      5 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27282: 1 loads,
-     1 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.int_RHS_READ_TX_
      Ready_N_2175: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27407: 7 loads,
+     7 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n27309: 1 loads,
+     1 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27267:
-     1 loads, 1 SLICEs
-      Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n28317:
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n31115:
      6 loads, 6 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27326:
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27358:
      3 loads, 3 SLICEs
       Net
-     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27336:
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27368:
      4 loads, 4 SLICEs
+      Net
+     Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n27294:
+     1 loads, 1 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
      RIC.u_fifo.wr_addr_nxt_w_0__N_1960: 9 loads, 9 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FAB
@@ -212,23 +214,23 @@ Command line:   map -i FPGA_Intan_Driver_impl_1_syn.udb -pdc
      RIC.u_fifo.wr_fifo_en_w: 1 loads, 0 SLICEs
    Number of LSRs:  4
       Net o_reset_c_N_2154: 2 loads, 2 SLICEs
-      Net maxfan_replicated_net_1085: 86 loads, 86 SLICEs
       Net o_reset_c: 1000 loads, 1000 SLICEs
+      Net maxfan_replicated_net_1084: 85 loads, 85 SLICEs
       Net maxfan_replicated_net_999: 965 loads, 965 SLICEs
    Top 10 highest fanout non-clock nets:
       Net o_reset_c: 1000 loads
       Net maxfan_replicated_net_999: 998 loads
       Net Controller_inst.int_STM32_TX_DV: 535 loads
-      Net Controller_inst.n16580: 512 loads
+      Net Controller_inst.n16586: 512 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]:
-     194 loads
+     218 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]:
-     172 loads
-      Net VCC_net: 106 loads
-      Net maxfan_replicated_net_1085: 86 loads
+     156 loads
+      Net VCC_net: 104 loads
+      Net maxfan_replicated_net_1084: 85 loads
+      Net stim_burst_counter[1]: 61 loads
       Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]:
-     77 loads
-      Net stim_burst_counter[1]: 55 loads
+     60 loads
 
    Number of warnings:  6
    Number of errors:    0
@@ -321,9 +323,9 @@ WARNING &lt;71003020&gt; - map: Top module port &apos;i_RHS_SEL&apos; does not c
 +---------------------+-----------+-----------+-------+-------+-----------+
 | i_STM32_SPI4_MISO   | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
-+---------------------+-----------+-----------+-------+-------+-----------+
 | RGB1_OUT            | OUTPUT    |           |       |       | OD        |
++---------------------+-----------+-----------+-------+-------+-----------+
+| RGB0_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | RGB2_OUT            | OUTPUT    |           |       |       | OD        |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -349,7 +351,7 @@ PLL 1:                                 Pin/Node Value
   Lock Signal:                                  NONE
   Input Clock Frequency (MHz):                  NA
   Reference Divider:                            0
-  Feedback Divider:                             47
+  Feedback Divider:                             63
   VCO Divider:                                  4
   ENABLE_ICEGATE_PORTA:                         0
   ENABLE_ICEGATE_PORTB:                         0
@@ -382,8 +384,8 @@ Instance Name: Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0
 
    Total CPU Time: 1 secs
    Total REAL Time: 2 secs
-   Peak Memory Usage: 115 MB
-Checksum -- map: acca9bae26a234f86f9619f3d8db1fa068d939
+   Peak Memory Usage: 114 MB
+Checksum -- map: 1dd6011b9b70b7ec7ac1abb2c621a47f13d8e416
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

@@ -46,7 +46,7 @@ if (a)
 <A name="Timing_rpt_top">Timing Report</A><B><U><big></big></U></B>
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2023.2.1.288.0
 
-Wed Aug  5 20:27:02 2026
+Thu Aug  6 10:25:31 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -94,7 +94,7 @@ Package Status:                     Preliminary    Version 1.5
 
 <A name="Timing_rpt_SDCConstraints"></A><B><U><big>1.1  SDC Constraints</big></U></B>
 
-[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 3 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
+[IGNORED:]create_generated_clock -name {pll_clk_int} -source [get_pins pll_inst.lscc_pll_inst.u_PLL_B/REFERENCECLK] -multiply_by 4 [get_pins pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL]
 
 <A name="Timing_rpt_ConstraintCoverage"></A><B><U><big>1.2  Constraint Coverage</big></U></B>
 
@@ -118,20 +118,20 @@ Clocked but unconstrained timing end points
 -------------------------------------------------------------------
          Listing 10 End Points          |           Type           
 -------------------------------------------------------------------
-reset_counter_1519__i27/D               |    No arrival or required
-reset_counter_1519__i26/D               |    No arrival or required
-reset_counter_1519__i25/D               |    No arrival or required
-reset_counter_1519__i24/D               |    No arrival or required
-reset_counter_1519__i23/D               |    No arrival or required
-reset_counter_1519__i22/D               |    No arrival or required
-reset_counter_1519__i21/D               |    No arrival or required
-reset_counter_1519__i20/D               |    No arrival or required
-reset_counter_1519__i19/D               |    No arrival or required
-reset_counter_1519__i18/D               |    No arrival or required
+reset_counter_1534__i27/D               |    No arrival or required
+reset_counter_1534__i26/D               |    No arrival or required
+reset_counter_1534__i25/D               |    No arrival or required
+reset_counter_1534__i24/D               |    No arrival or required
+reset_counter_1534__i23/D               |    No arrival or required
+reset_counter_1534__i22/D               |    No arrival or required
+reset_counter_1534__i21/D               |    No arrival or required
+reset_counter_1534__i20/D               |    No arrival or required
+reset_counter_1534__i19/D               |    No arrival or required
+reset_counter_1534__i18/D               |    No arrival or required
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
-ts                                      |                      4169
+ts                                      |                      4173
                                         |                          
 -------------------------------------------------------------------
 
@@ -178,10 +178,10 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-i20881_3_lut_4_lut/D	->	i20881_3_lut_4_lut/Z
+i19562_3_lut/C	->	i19562_3_lut/Z
 
 ++++ Loop2
-i20885_3_lut_4_lut/D	->	i20885_3_lut_4_lut/Z
+i19566_3_lut/C	->	i19566_3_lut/Z
 
 ++++ Loop3
 o_RHS_TOP_SPI_CS_n_1_c_I_0_3_lut_4_lut/A	->	o_RHS_TOP_SPI_CS_n_1_c_I_0_3_lut_4_lut/Z
@@ -190,131 +190,131 @@ o_RHS_TOP_SPI_CS_n_1_c_I_0_3_lut_4_lut/A	->	o_RHS_TOP_SPI_CS_n_1_c_I_0_3_lut_4_l
 o_RHS_TOP_SPI_CS_n_2_c_I_0_4_lut/A	->	o_RHS_TOP_SPI_CS_n_2_c_I_0_4_lut/Z
 
 ++++ Loop5
-i20887_3_lut_4_lut/D	->	i20887_3_lut_4_lut/Z
+i19568_3_lut/C	->	i19568_3_lut/Z
 
 ++++ Loop6
 o_RHS_TOP_SPI_Clk_c_I_0_3_lut_4_lut/A	->	o_RHS_TOP_SPI_Clk_c_I_0_3_lut_4_lut/Z
 
 ++++ Loop7
-i20889_3_lut_4_lut/D	->	i20889_3_lut_4_lut/Z
+i19570_3_lut/C	->	i19570_3_lut/Z
 
 ++++ Loop8
 o_RHS_TOP_SPI_MOSI_c_I_0_3_lut_4_lut/A	->	o_RHS_TOP_SPI_MOSI_c_I_0_3_lut_4_lut/Z
 
 ++++ Loop9
-i21_3_lut_4_lut/D	->	i21_3_lut_4_lut/Z
+i21_3_lut/C	->	i21_3_lut/Z
 
 ++++ Loop10
-i5324_3_lut/A	->	i5324_3_lut/Z
+i5333_3_lut/A	->	i5333_3_lut/Z
 
 ++++ Loop11
-Controller_inst/i14435_2_lut/A	->	Controller_inst/i14435_2_lut/Z
+Controller_inst/i14350_2_lut/A	->	Controller_inst/i14350_2_lut/Z
 
 ++++ Loop12
-Controller_inst/i14784_2_lut/A	->	Controller_inst/i14784_2_lut/Z
+Controller_inst/i14349_2_lut/A	->	Controller_inst/i14349_2_lut/Z
 
 ++++ Loop13
-Controller_inst/i14783_2_lut/A	->	Controller_inst/i14783_2_lut/Z
+Controller_inst/i14348_2_lut/A	->	Controller_inst/i14348_2_lut/Z
 
 ++++ Loop14
-Controller_inst/i14782_2_lut/A	->	Controller_inst/i14782_2_lut/Z
+Controller_inst/i14347_2_lut/A	->	Controller_inst/i14347_2_lut/Z
 
 ++++ Loop15
-Controller_inst/i14781_2_lut/A	->	Controller_inst/i14781_2_lut/Z
+Controller_inst/i14346_2_lut/A	->	Controller_inst/i14346_2_lut/Z
 
 ++++ Loop16
-Controller_inst/i14780_2_lut/A	->	Controller_inst/i14780_2_lut/Z
+Controller_inst/i14345_2_lut/A	->	Controller_inst/i14345_2_lut/Z
 
 ++++ Loop17
-Controller_inst/i14779_2_lut/A	->	Controller_inst/i14779_2_lut/Z
+Controller_inst/i14344_2_lut/A	->	Controller_inst/i14344_2_lut/Z
 
 ++++ Loop18
-Controller_inst/i14778_2_lut/A	->	Controller_inst/i14778_2_lut/Z
+Controller_inst/i14343_2_lut/A	->	Controller_inst/i14343_2_lut/Z
 
 ++++ Loop19
-Controller_inst/i14777_2_lut/A	->	Controller_inst/i14777_2_lut/Z
+Controller_inst/i14342_2_lut/A	->	Controller_inst/i14342_2_lut/Z
 
 ++++ Loop20
-Controller_inst/i14776_2_lut/A	->	Controller_inst/i14776_2_lut/Z
+Controller_inst/i14324_2_lut/A	->	Controller_inst/i14324_2_lut/Z
 
 ++++ Loop21
-Controller_inst/i14773_2_lut/A	->	Controller_inst/i14773_2_lut/Z
+Controller_inst/i14341_2_lut/A	->	Controller_inst/i14341_2_lut/Z
 
 ++++ Loop22
-Controller_inst/i14758_2_lut/A	->	Controller_inst/i14758_2_lut/Z
+Controller_inst/i14340_2_lut/A	->	Controller_inst/i14340_2_lut/Z
 
 ++++ Loop23
-Controller_inst/i14775_2_lut/A	->	Controller_inst/i14775_2_lut/Z
+Controller_inst/i14339_2_lut/A	->	Controller_inst/i14339_2_lut/Z
 
 ++++ Loop24
-Controller_inst/i14774_2_lut/A	->	Controller_inst/i14774_2_lut/Z
+Controller_inst/i14331_2_lut/A	->	Controller_inst/i14331_2_lut/Z
 
 ++++ Loop25
-Controller_inst/i14755_2_lut/A	->	Controller_inst/i14755_2_lut/Z
+Controller_inst/i14325_2_lut/A	->	Controller_inst/i14325_2_lut/Z
 
 ++++ Loop26
-Controller_inst/i14771_2_lut/A	->	Controller_inst/i14771_2_lut/Z
+Controller_inst/i14337_2_lut/A	->	Controller_inst/i14337_2_lut/Z
 
 ++++ Loop27
-Controller_inst/i14764_2_lut/A	->	Controller_inst/i14764_2_lut/Z
+Controller_inst/i14330_2_lut/A	->	Controller_inst/i14330_2_lut/Z
 
 ++++ Loop28
-Controller_inst/i14757_2_lut/A	->	Controller_inst/i14757_2_lut/Z
+Controller_inst/i14320_2_lut/A	->	Controller_inst/i14320_2_lut/Z
 
 ++++ Loop29
-Controller_inst/i14765_2_lut/A	->	Controller_inst/i14765_2_lut/Z
+Controller_inst/i14338_2_lut/A	->	Controller_inst/i14338_2_lut/Z
 
 ++++ Loop30
-Controller_inst/i14756_2_lut/A	->	Controller_inst/i14756_2_lut/Z
+Controller_inst/i14014_2_lut/A	->	Controller_inst/i14014_2_lut/Z
 
 ++++ Loop31
-Controller_inst/i14754_2_lut/A	->	Controller_inst/i14754_2_lut/Z
+Controller_inst/i14321_2_lut/A	->	Controller_inst/i14321_2_lut/Z
 
 ++++ Loop32
-Controller_inst/i14772_2_lut/A	->	Controller_inst/i14772_2_lut/Z
+Controller_inst/i14336_2_lut/A	->	Controller_inst/i14336_2_lut/Z
 
 ++++ Loop33
-Controller_inst/i14770_2_lut/A	->	Controller_inst/i14770_2_lut/Z
+Controller_inst/i14322_2_lut/A	->	Controller_inst/i14322_2_lut/Z
 
 ++++ Loop34
-Controller_inst/i14769_2_lut/A	->	Controller_inst/i14769_2_lut/Z
+Controller_inst/i14335_2_lut/A	->	Controller_inst/i14335_2_lut/Z
 
 ++++ Loop35
-Controller_inst/i14759_2_lut/A	->	Controller_inst/i14759_2_lut/Z
+Controller_inst/i14323_2_lut/A	->	Controller_inst/i14323_2_lut/Z
 
 ++++ Loop36
-Controller_inst/i14768_2_lut/A	->	Controller_inst/i14768_2_lut/Z
+Controller_inst/i14334_2_lut/A	->	Controller_inst/i14334_2_lut/Z
 
 ++++ Loop37
-Controller_inst/i14760_2_lut/A	->	Controller_inst/i14760_2_lut/Z
+Controller_inst/i14333_2_lut/A	->	Controller_inst/i14333_2_lut/Z
 
 ++++ Loop38
-Controller_inst/i14767_2_lut/A	->	Controller_inst/i14767_2_lut/Z
+Controller_inst/i14332_2_lut/A	->	Controller_inst/i14332_2_lut/Z
 
 ++++ Loop39
-Controller_inst/i14761_2_lut/A	->	Controller_inst/i14761_2_lut/Z
+Controller_inst/i14326_2_lut/A	->	Controller_inst/i14326_2_lut/Z
 
 ++++ Loop40
-Controller_inst/i14766_2_lut/A	->	Controller_inst/i14766_2_lut/Z
+Controller_inst/i14329_2_lut/A	->	Controller_inst/i14329_2_lut/Z
 
 ++++ Loop41
-Controller_inst/i14762_2_lut/A	->	Controller_inst/i14762_2_lut/Z
+Controller_inst/i14327_2_lut/A	->	Controller_inst/i14327_2_lut/Z
 
 ++++ Loop42
-Controller_inst/i14763_2_lut/A	->	Controller_inst/i14763_2_lut/Z
+Controller_inst/i14328_2_lut/A	->	Controller_inst/i14328_2_lut/Z
 
 
 <A name="Timing_rpt_ErrorWarningMessage"></A><B><U><big>1.6  Error/Warning Messages</big></U></B>
 
 WARNING "70001944" - No source clock for
-	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
+	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
 
 
 <A name="Timing_rpt_SetupSlowCornerMaxDegree"></A><B><U><big>2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees</big></U></B>
 <A name="Timing_rpt_ClockSummarySetupSlowCornerMaxDegree"></A><B><U><big>2.1  Clock Summary</big></U></B>
 <A name="Timing_rpt_Clk_1"></A><B><U><big>2.1.1 Clock "pll_clk_int"</big></U></B>
 
-create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 3 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
+create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] 
 
 Single Clock Domain
 -------------------------------------------------------------------------------------------------------
