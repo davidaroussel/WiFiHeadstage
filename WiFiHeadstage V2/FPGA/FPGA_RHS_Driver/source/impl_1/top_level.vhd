@@ -13,8 +13,8 @@ entity top_level is
         RHS_READ_CS_INACTIVE_CLKS        : integer := 128;
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 64;    -- Calibrated at 36MHz - 16 H-B - 64 INAC
-        RHS_STIM_CS_INACTIVE_CLKS        : integer := 64;
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 1;    -- Calibrated at 36MHz - 16 H-B - 64 INAC
+        RHS_STIM_CS_INACTIVE_CLKS        : integer := 128;
 		
 		-- 0: N/A 
 		-- 1: N/A
@@ -296,33 +296,37 @@ begin
             else
                 w_reset <= '0';
 				
-				if CTRL0_IN = '0' then
-					if i_RHS_SEL = '0' then
-						w_Controller_Mode <= x"0";
-					elsif i_RHS_SEL = '1' then
-						w_Controller_Mode <= x"1";
-					end if;
-				elsif CTRL0_IN = '1' then
-						w_Controller_Mode <= x"2";
-				end if;
-			
-				----Controller mode sequencing
-				--case reset_counter is
-					--when 36000000 =>
+				--if CTRL0_IN = '0' then
+					--if i_RHS_SEL = '0' then
+						--w_Controller_Mode <= x"0";
+					--elsif i_RHS_SEL = '1' then
 						--w_Controller_Mode <= x"1";
-					--when 72000000 =>
-						--stop_counting <= '1';
+					--end if;
+				--elsif CTRL0_IN = '1' then
+						--w_Controller_Mode <= x"2";
+				--end if;
+			
+				--Controller mode sequencing
+				case reset_counter is
+					when 24000000 =>
+						w_Controller_Mode <= x"1";
+					when 48000000 =>
+						w_Controller_Mode <= x"0";
+					when 72000000 =>
+						w_Controller_Mode <= x"1";
+					when 96000000 =>
+						stop_counting <= '1';
 						
-						--if CTRL0_IN = '1' then
-							--w_Controller_Mode <= x"1";
-						--elsif CTRL0_IN = '0' then
-							--w_Controller_Mode <= x"2";
-						--end if;
+						if CTRL0_IN = '0' then
+							w_Controller_Mode <= x"1";
+						elsif CTRL0_IN = '1' then
+							w_Controller_Mode <= x"2";
+						end if;
 						
 						
-					--when others =>
-						--null;
-				--end case;
+					when others =>
+						null;
+				end case;
 				
 			end if;
 			

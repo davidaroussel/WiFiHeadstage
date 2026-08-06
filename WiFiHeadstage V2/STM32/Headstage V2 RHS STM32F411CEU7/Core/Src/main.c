@@ -171,7 +171,7 @@ int main(void)
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
 //hspi = &hspi3; //NOT PASSTHROUGH    NEED TO CHANGE STUFF IN SPI_SEND_RECV
-  HAL_Delay(500);
+//  HAL_Delay(500);
 
 //  while(1){
 //	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
