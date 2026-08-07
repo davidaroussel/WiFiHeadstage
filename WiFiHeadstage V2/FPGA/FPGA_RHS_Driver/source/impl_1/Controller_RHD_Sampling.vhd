@@ -16,7 +16,7 @@ entity Controller_RHD_Sampling is
 	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 0;    -- 32 for around 2.5KHz
 	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0;
 	
-	RHS_READ_NUM_CHANNEL : integer := 8
+	RHS_READ_NUM_CHANNEL : integer := 16
 	
     );
   port (
@@ -806,8 +806,8 @@ architecture RTL of Controller_RHD_Sampling is
 
 	constant DELAY_200uS_CLKS  : integer := 9600; 
 	constant DELAY_3mS_CLKS    : integer := 120000;     
-	constant DELAY_1S_CLKS     : integer := 22000000;  
-	constant DELAY_10S_CLKS    : integer := 36000000; 
+	constant DELAY_1S_CLKS     : integer := 48000000;  
+	constant DELAY_10S_CLKS    : integer := 60000000; 
 
 	constant STIM_FIRST_PACKET        : integer := 6;
 	constant STIM_SECOND_PACKET       : integer := 3;
@@ -927,7 +927,7 @@ architecture RTL of Controller_RHD_Sampling is
 	begin
 		if i_Rst_L = '1' then
 			r_led_counter      <= (others => '0');
-			--rgd_info_sig_green <= '1';
+			rgd_info_sig_green <= '1';
 			ble_sync_flag <= '0';
 
 		elsif rising_edge(i_Clk) then
@@ -940,11 +940,11 @@ architecture RTL of Controller_RHD_Sampling is
 
 			-- Active-low LED
 			if (i_BLE_SYNC = '1') or (r_led_counter /= 0) then
-				--rgd_info_sig_green <= '0';
+				rgd_info_sig_green <= '0';
 				ble_sync_flag <= '1';
 			else
 				ble_sync_flag <= '0';
-				--rgd_info_sig_green <= '1';
+				rgd_info_sig_green <= '1';
 			end if;
 
 		end if;
@@ -1110,7 +1110,11 @@ architecture RTL of Controller_RHD_Sampling is
 					----------------------------------------------------------------
 					when 0 =>
 						if i_CH_BANK_SEL = '1' then
-							int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
+							if RHS_READ_NUM_CHANNEL = 8 then
+								int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
+							elsif RHS_READ_NUM_CHANNEL = 16 then
+								int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
+							end if;
 						else
 							int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
 						
@@ -1254,7 +1258,7 @@ architecture RTL of Controller_RHD_Sampling is
 				  if int_RHS_STIM_TX_Ready = '1' then
 
 					if stim_sequence_phase = 0 then
-					  stim_train_flag <= '1';
+					  
 					end if;
 
 					-- Generic loop check: same rule for ALL three phases.
@@ -1268,6 +1272,7 @@ architecture RTL of Controller_RHD_Sampling is
 
 						-- NEGATIVE phase fully sent -> 200us delay -> POSITIVE phase
 						when 0 =>
+						  stim_train_flag <= '1';
 						  stim_sequence_phase <= 1;
 						  stim_delay_target   <= DELAY_200uS_CLKS;
 						  stim_return_state   <= 0;

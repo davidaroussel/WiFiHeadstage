@@ -6,11 +6,11 @@ entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
         STM32_CLKS_PER_HALF_BIT       : integer := 1;       -- 4 and 16 for around 5.45KHz with 36MHz CLK
-        STM32_CS_INACTIVE_CLKS        : integer := 96;
+        STM32_CS_INACTIVE_CLKS        : integer := 128;
 		
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
         RHS_READ_CLKS_PER_HALF_BIT       : integer := 1;   -- 16 and 32 for around 5.45KHz
-        RHS_READ_CS_INACTIVE_CLKS        : integer := 96;
+        RHS_READ_CS_INACTIVE_CLKS        : integer := 128;
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
         RHS_STIM_CLKS_PER_HALF_BIT       : integer := 2;    -- Calibrated at 36MHz - 16 H-B - 64 INAC
