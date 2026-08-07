@@ -79,7 +79,7 @@ def tcp_receive(host="192.168.2.196", port=5000, buffer_size=8192):
     maxOpenEphysValue = 0.005
     scale = (0.000000195 / maxOpenEphysValue) * OpenEphysOffset
 
-    capture_duration = 15 # seconds
+    capture_duration = 10 # seconds
 
     # =============================
     # BUFFERS

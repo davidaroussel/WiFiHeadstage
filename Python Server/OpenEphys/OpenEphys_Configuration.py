@@ -100,15 +100,17 @@ class OpenEphys_Configuration:
     def get_GUI_recording_node(self):
         r = self.session.get(f"{self.gui_url}/recording")
         # print(r.json())
-        if "record_nodes" in r.json():
-            self.recording_node = r.json()["record_nodes"][0]["node_id"]
-            retVal = f"Recording Node: {self.recording_node}"
-        else:
+        try:
+            if "record_nodes" in r.json():
+                self.recording_node = r.json()["record_nodes"][0]["node_id"]
+                retVal = f"Recording Node: {self.recording_node}"
+                # print(retVal)
+                return retVal
+        except Exception as e:
             print("")
             print("No Recording Nodes in the acquisition chaine !!")
             exit()
-        # print(retVal)
-        return retVal
+
 
     def get_GUI_recording_path(self):
         r = self.session.get(
@@ -239,6 +241,8 @@ class OpenEphys_Configuration:
             f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES CONNECTION_STATUS"})
         status = r.json()["info"]
+        print(r.status_code)
+        print(r.json())
         return status
 
 
