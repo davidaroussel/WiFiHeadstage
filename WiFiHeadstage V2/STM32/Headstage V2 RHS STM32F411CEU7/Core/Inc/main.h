@@ -79,36 +79,29 @@ void Error_Handler(void);
 #define RF_Data_Pin GPIO_PIN_3
 #define RF_Data_GPIO_Port GPIOA
 
-#define FPGA_MUX_5_Pin GPIO_PIN_8
-#define FPGA_MUX_5_GPIO_Port GPIOA
+#define FPGA_CH_BANK_SEL_Pin GPIO_PIN_8
+#define FPGA_CH_BANK_SEL_Port GPIOA
 
-#define FPGA_MUX_4_Pin GPIO_PIN_9
-#define FPGA_MUX_4_GPIO_Port GPIOA
+#define FPGA_START_SAMPLING_Pin GPIO_PIN_9
+#define FPGA_START_SAMPLING_Port GPIOA
 
 #define Reboot_SPI_Pin GPIO_PIN_5
 #define Reboot_SPI_Port GPIOB
 
-#define FPGA_CH_BANK_SEL_Pin GPIO_PIN_1
-#define FPGA_CH_BANK_SEL_Port GPIOB
+#define FPGA_CH_CHIP_SEL_Pin GPIO_PIN_1
+#define FPGA_CH_CHIP_SEL_Port GPIOB
 
 
-#if DEVKIT == 1
-    // FOR DEV KIT
-    #define RHS_Chip_SEL_Pin  GPIO_PIN_11
-    #define RHS_Chip_SEL_Port GPIOC
-#else
+// FOR HEADSTAGE
+#define RHS_Chip_SEL_Pin  GPIO_PIN_10
+#define RHS_Chip_SEL_Port GPIOA
 
-    // FOR HEADSTAGE
-    #define RHS_Chip_SEL_Pin  GPIO_PIN_10
-    #define RHS_Chip_SEL_Port GPIOA
+#define RHS_Start_Stim_Out_Pin  GPIO_PIN_12
+#define RHS_Start_Stim_Out_Port GPIOA
 
-	#define RHS_Start_Stim_Out_Pin  GPIO_PIN_12
-	#define RHS_Start_Stim_Out_Port GPIOA
+#define RHS_Start_Stim_In_Pin  GPIO_PIN_15
+#define RHS_Start_Stim_In_Port GPIOA
 
-	#define RHS_Start_Stim_In_Pin  GPIO_PIN_15
-	#define RHS_Start_Stim_In_Port GPIOA
-
-#endif
 
 
 //Nordic nRF SPI PIN (SPI 1)

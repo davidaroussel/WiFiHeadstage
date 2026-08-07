@@ -14,9 +14,7 @@ entity Controller_RHD_Sampling is
 
 	RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 0;
 	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 0;    -- 32 for around 2.5KHz
-	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0;
-	
-	RHS_READ_NUM_CHANNEL : integer := 16
+	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0
 	
     );
   port (
@@ -34,8 +32,10 @@ entity Controller_RHD_Sampling is
   	-- Controller Modes
 	i_Controller_Mode  : in std_logic_vector(3 downto 0);
 	i_RHS_STIM_START   : in std_logic;
+	i_NUM_CHANNEL_SEL  : in std_logic;
+	i_CH_BANK_SEL 	   : in std_logic;
+
 	i_BLE_SYNC         : in std_logic;
-	i_CH_BANK_SEL      : in std_logic;
 
     -- STM32 SPI Interface
     o_STM32_SPI_Clk      : out std_logic;
@@ -246,7 +246,6 @@ architecture RTL of Controller_RHD_Sampling is
 	signal rhd_index           : integer range 0 to 63  := 0;
 	signal rhs_STIM_index    : integer := 0;
 	signal rhs_STIM_state : integer range 0 to 15 := 0;
-	
 
 	signal alt_counter : integer := 0;
 	
@@ -258,7 +257,6 @@ architecture RTL of Controller_RHD_Sampling is
 	
 	type t_channel_array is array (0 to 63) of std_logic_vector(RHS_STIM_SPI_NUM_BITS_PER_PACKET-1 downto 0);
 	type t_rhd_array is array (0 to 63) of std_logic_vector(RHS_READ_SPI_NUM_BITS_PER_PACKET-1 downto 0);
-	
 	
 	-- READ INTAN ASCII
 	signal channel_array_intan : t_channel_array := (
@@ -605,14 +603,14 @@ architecture RTL of Controller_RHD_Sampling is
 		31 => x"0700",  -- CH7
 		
 		-- CH0?CH31 repeated again for indices 32?63
-		32 => x"0000",  -- CH0 repeat
-		33 => x"0100",  -- CH1 repeat
-		34 => x"0200",  -- CH2 repeat
-		35 => x"0300",  -- CH3 repeat
-		36 => x"0400",  -- CH4 repeat
-		37 => x"0500",  -- CH5 repeat
-		38 => x"0600",  -- CH6 repeat
-		39 => x"0700",  -- CH7 repeat
+		32 => x"0800",  -- CH0 repeat
+		33 => x"0900",  -- CH1 repeat
+		34 => x"0A00",  -- CH2 repeat
+		35 => x"0B00",  -- CH3 repeat
+		36 => x"0C00",  -- CH4 repeat
+		37 => x"0D00",  -- CH5 repeat
+		38 => x"0E00",  -- CH6 repeat
+		39 => x"0F00",  -- CH7 repeat
 		40 => x"0800",  -- CH8 repeat
 		41 => x"0900",  -- CH9 repeat
 		42 => x"0A00",  -- CH10 repeat
@@ -621,14 +619,14 @@ architecture RTL of Controller_RHD_Sampling is
 		45 => x"0D00",  -- CH13 repeat
 		46 => x"0E00",  -- CH14 repeat
 		47 => x"0F00",  -- CH15 repeat	
-		48 => x"0000",  -- CH0 repeat
-		49 => x"0100",  -- CH1 repeat
-		50 => x"0200",  -- CH2 repeat
-		51 => x"0300",  -- CH3 repeat
-		52 => x"0400",  -- CH4 repeat
-		53 => x"0500",  -- CH5 repeat
-		54 => x"0600",  -- CH6 repeat
-		55 => x"0700",  -- CH7 repeat
+		48 => x"0800",  -- CH0 repeat
+		49 => x"0900",  -- CH1 repeat
+		50 => x"0A00",  -- CH2 repeat
+		51 => x"0B00",  -- CH3 repeat
+		52 => x"0C00",  -- CH4 repeat
+		53 => x"0D00",  -- CH5 repeat
+		54 => x"0E00",  -- CH6 repeat
+		55 => x"0F00",  -- CH7 repeat
 		56 => x"0800",  -- CH8 repeat
 		57 => x"0900",  -- CH9 repeat
 		58 => x"0A00",  -- CH10 repeat
@@ -780,11 +778,11 @@ architecture RTL of Controller_RHD_Sampling is
 	
 	signal mux_RHS_READ_SPI_MISO : STD_LOGIC;
 	signal mux_RHS_READ_SPI_CS_n : STD_LOGIC;
-	signal chip_select_RHS_READ : std_logic;
+	signal chip_select_RHS_READ  : STD_LOGIC;
 	
 	signal mux_RHS_STIM_SPI_MISO : STD_LOGIC;
 	signal mux_RHS_STIM_SPI_CS_n : STD_LOGIC;
-	signal chip_select_RHS_STIM : std_logic;
+	signal chip_select_RHS_STIM  : STD_LOGIC;
 	
 	signal stim_delay_counter    	 : integer range 0 to 2147483647 := 0;
 	signal stim_1sec_counter     	 : integer range 0 to 2147483647 := 0;
@@ -803,7 +801,6 @@ architecture RTL of Controller_RHD_Sampling is
 	signal stim_train_flag       	 : std_logic := '0';
 	signal ble_sync_flag	       	 : std_logic := '0';		
 
-
 	constant DELAY_200uS_CLKS  : integer := 9600; 
 	constant DELAY_3mS_CLKS    : integer := 120000;     
 	constant DELAY_1S_CLKS     : integer := 48000000;  
@@ -816,19 +813,16 @@ architecture RTL of Controller_RHD_Sampling is
 	type t_phase_count is array (0 to 2) of integer;
 	constant PHASE_PACKET_COUNT : t_phase_count := (STIM_FIRST_PACKET, STIM_SECOND_PACKET, STIM_THIRD_PACKET);
 
-	constant STIM_PULSE_NUM  : integer := 13;
-	constant STIM_TRAIN_NUM  : integer := 1;
+	constant STIM_PULSE_NUM   : integer := 13;
+	constant STIM_TRAIN_NUM    : integer := 1;
 	constant STIM_TRAIN_SECTOR : integer := 4;
-	
-	signal blink_counter : integer := 0;
-	
-	signal tx_ready_d : std_logic := '0';
-	signal tx_ready_rise : std_logic;
 
 	signal stim_ch : integer := 0;
 	
 	signal r_led_counter : unsigned(18 downto 0) := (others => '0');
-	constant C_LED_HOLD : unsigned(18 downto 0) := to_unsigned(480000, 19);
+	constant C_LED_HOLD  : unsigned(18 downto 0) := to_unsigned(480000, 19);
+
+	signal RHS_READ_NUM_CHANNEL : integer := 0; 
 
 	begin
 	  Controller_RHD_FIFO_1 : entity work.Controller_RHD_FIFO
@@ -949,6 +943,7 @@ architecture RTL of Controller_RHD_Sampling is
 
 		end if;
 	end process;
+	
 
 
 	 --STM32 PROCESS, GETTING DATA FROM THE FIFO OF THE CONTROLER_RHD MODULE
@@ -995,7 +990,7 @@ architecture RTL of Controller_RHD_Sampling is
 				
 					if (to_integer(unsigned(int_FIFO_RHS_READ_COUNT)) >= ((NUM_DATA) + 2)) and (first_rhs_READ_packet = '0') then
 						stm32_state <= 1;
-						int_FIFO_RHS_READ_RE <= '1'; -- START READ
+						int_FIFO_RHS_READ_RE  <= '1'; -- START READ
 						first_rhs_READ_packet <= '1';
 					elsif (to_integer(unsigned(int_FIFO_RHS_READ_COUNT)) >= (NUM_DATA)) and (first_rhs_READ_packet = '1') then
 						stm32_state <= 4;
@@ -1021,25 +1016,48 @@ architecture RTL of Controller_RHD_Sampling is
 					end if;
 				
 					if stm32_counter < (NUM_WORDS) then
-						if (stm32_counter mod RHS_READ_NUM_CHANNEL) = 0 then
-						    --temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
-						elsif (stm32_counter mod RHS_READ_NUM_CHANNEL) = 1 then
-							if stim_train_flag = '1' then
+						if i_NUM_CHANNEL_SEL = '0' then
+							--rgd_info_sig_green   <= '1';
+							if (stm32_counter mod 16) = 0 then
+								--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+							elsif (stm32_counter mod 16) = 1 then
+								if stim_train_flag = '1' then
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+								else
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
+								end if;
+							elsif (stm32_counter mod 16) = 2 then
+								if ble_sync_flag = '1' then
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+								else
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
+								end if;
 							else
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
-							end if;
-						elsif (stm32_counter mod RHS_READ_NUM_CHANNEL) = 2 then
-							if ble_sync_flag = '1' then
+							end if;	
+						elsif i_NUM_CHANNEL_SEL = '1' then
+							--rgd_info_sig_green   <= '0';
+							if (stm32_counter mod 8) = 0 then
+								--temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= std_logic_vector(to_unsigned(RHD_Interval_Counter, 16)) or x"0001"; -- set LSB
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+							elsif (stm32_counter mod 8) = 1 then
+								if stim_train_flag = '1' then
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+								else
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
+								end if;
+							elsif (stm32_counter mod 8) = 2 then
+								if ble_sync_flag = '1' then
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) or x"0001"; -- set LSB
+								else
+									temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
+								end if;
 							else
 								temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
-							end if;
-						else
-							temp_buffer(TOTAL_BITS - (stm32_counter*16) - 1 downto TOTAL_BITS - ((stm32_counter+1)*16)) <= int_FIFO_RHS_READ_Q(15 downto 0) and x"FFFE"; -- clear LSB
-						end if;	
-		
+							end if;	
+						
+						end if;
 						alt_counter <= alt_counter + 1;
 						stm32_counter <= stm32_counter + 1;
 					else
@@ -1099,26 +1117,41 @@ architecture RTL of Controller_RHD_Sampling is
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
-				rgd_info_sig_blue   <= '0';
+				rgd_info_sig_blue   <= '1';
 				
 			elsif i_Controller_Mode = x"2" then
-				rgd_info_sig_blue   <= '1';
+				
 				
 				case rhd_state is
 					----------------------------------------------------------------
 					-- STATE 0 : PREPARE NEXT BYTE
 					----------------------------------------------------------------
 					when 0 =>
-						if i_CH_BANK_SEL = '1' then
-							if RHS_READ_NUM_CHANNEL = 8 then
+						if i_NUM_CHANNEL_SEL = '1' then
+							rgd_info_sig_blue   <= '1';
+							if i_CH_BANK_SEL = '0' then
 								int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
-							elsif RHS_READ_NUM_CHANNEL = 16 then
-								int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
+							elsif i_CH_BANK_SEL = '1' then
+								int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index+32);
 							end if;
+							--int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
 						else
-							int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
-						
+							rgd_info_sig_blue   <= '0';
+							int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
 						end if;
+						
+						
+						
+						--if i_NUM_CHANNEL_SEL = '1' then
+							--if RHS_READ_NUM_CHANNEL = 8 then
+								--int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
+							--elsif RHS_READ_NUM_CHANNEL = 16 then
+								--int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
+							--end if;
+						--else
+							--int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
+						--end if;
+						
 						--int_RHS_READ_TX_Byte <= rhd_array_intan(rhd_index);
 
 						if int_RHS_READ_TX_Ready = '1' then
@@ -1337,6 +1370,9 @@ architecture RTL of Controller_RHD_Sampling is
 				  rhs_STIM_state <= 0;
 
 			  end case;
+			  
+			else 
+				rgd_info_sig_red   <= '1';
 			end if;
 		else
 		  int_RHS_STIM_TX_DV <= '0';

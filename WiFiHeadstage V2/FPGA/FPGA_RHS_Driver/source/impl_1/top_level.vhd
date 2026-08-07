@@ -5,15 +5,15 @@ use ieee.numeric_std.all;
 entity top_level is
     generic (
         STM32_SPI_NUM_BITS_PER_PACKET : integer := 512;
-        STM32_CLKS_PER_HALF_BIT       : integer := 1;       -- 4 and 16 for around 5.45KHz with 36MHz CLK
+        STM32_CLKS_PER_HALF_BIT       : integer := 1;       
         STM32_CS_INACTIVE_CLKS        : integer := 128;
 		
         RHS_READ_SPI_NUM_BITS_PER_PACKET : integer := 16;
-        RHS_READ_CLKS_PER_HALF_BIT       : integer := 1;   -- 16 and 32 for around 5.45KHz
+        RHS_READ_CLKS_PER_HALF_BIT       : integer := 1;   
         RHS_READ_CS_INACTIVE_CLKS        : integer := 128;
 
         RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 32;
-        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 2;    -- Calibrated at 36MHz - 16 H-B - 64 INAC
+        RHS_STIM_CLKS_PER_HALF_BIT       : integer := 2;    
         RHS_STIM_CS_INACTIVE_CLKS        : integer := 128;
 		
 		-- 0: N/A 
@@ -52,10 +52,11 @@ entity top_level is
 		i_RHS_BOTTOM_SPI_MISO_2 : in  STD_LOGIC; 
 		o_RHS_BOTTOM_SPI_CS_n_2 : out STD_LOGIC;
 		
-		CTRL0_IN           : in STD_LOGIC;
+		i_START_SAMPLING   : in STD_LOGIC;
 		i_CH_BANK_SEL      : in STD_LOGIC;
 		i_RHS_SEL          : in STD_LOGIC;
 		i_RHS_STIM_START   : in STD_LOGIC;
+		i_NUM_CHANNEL_SEL  : in STD_LOGIC;
 		
 		-- IR SYNCHRONIZATION INPUT 
 		i_BLE_SYNC   : in STD_LOGIC;
@@ -88,8 +89,6 @@ architecture RTL of top_level is
 	
 	signal reset_counter : integer range 0 to 168000000 := 0;
 	signal BLE_SYNC_counter : integer range 0 to 1000 := 0;
-	
-
 
     signal w_STM32_TX_Byte       : std_logic_vector(STM32_SPI_NUM_BITS_PER_PACKET-1 downto 0);
     signal w_STM32_TX_DV         : std_logic;
@@ -175,6 +174,7 @@ begin
             i_Controller_Mode   => w_Controller_Mode,
 			i_RHS_STIM_START    => i_RHS_STIM_START,
 			i_BLE_SYNC          => i_BLE_SYNC,
+			i_NUM_CHANNEL_SEL   => i_NUM_CHANNEL_SEL, 
 			i_CH_BANK_SEL       => i_CH_BANK_SEL,
 
 			rgb_info_red   => rgb_sig_red,
@@ -296,13 +296,13 @@ begin
             else
                 w_reset <= '0';
 				
-				--if CTRL0_IN = '0' then
+				--if i_START_SAMPLING = '0' then
 					--if i_RHS_SEL = '0' then
 						--w_Controller_Mode <= x"0";
 					--elsif i_RHS_SEL = '1' then
 						--w_Controller_Mode <= x"1";
 					--end if;
-				--elsif CTRL0_IN = '1' then
+				--elsif i_START_SAMPLING = '1' then
 						--w_Controller_Mode <= x"2";
 				--end if;
 			
@@ -317,9 +317,9 @@ begin
 					when 96000000 =>
 						stop_counting <= '1';
 						
-						if CTRL0_IN = '0' then
+						if i_START_SAMPLING = '0' then
 							w_Controller_Mode <= x"1";
-						elsif CTRL0_IN = '1' then
+						elsif i_START_SAMPLING = '1' then
 							w_Controller_Mode <= x"2";
 						end if;
 						

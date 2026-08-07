@@ -160,13 +160,13 @@ int main(void)
 
   MX_SPI1_Init();
 
-  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+  HAL_GPIO_WritePin(FPGA_START_SAMPLING_Port, FPGA_START_SAMPLING_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  					//LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);			    //IF RHD2132 : LOW: 0-7CH || HIGH: 8-15CH
+
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
 
-  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);
   SPI_HandleTypeDef *hspi;
   hspi = &hspi4;   //PASSTHROUGH
 //hspi = &hspi3; //NOT PASSTHROUGH    NEED TO CHANGE STUFF IN SPI_SEND_RECV
@@ -175,7 +175,7 @@ int main(void)
 //  while(1){
 //	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
 //	  HAL_Delay(1000);
-//	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
+//	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);
 //	  HAL_Delay(1000);
 //  }
 
@@ -184,7 +184,7 @@ int main(void)
 
   Init_Intan();
   Init_Intan_RHS();
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
    uint32_t stim_current_uA = 30;
   RHS2116_MEP_Config_Params(hspi, stim_current_uA);
   HAL_Delay(500);
@@ -224,7 +224,7 @@ int main(void)
 	    RHS2116_Toggle_LED_Warning(300);
 	    RHS2116_Toggle_LED_Warning(300);
 	    RHS2116_Toggle_LED_Warning(300);
-	    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: 0-15 CHANNEL (RED) || HIGH: 16:31 (GREEN)
+	    HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET); //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
 
 	}
 	else if (Z_Mode)
@@ -296,8 +296,7 @@ int main(void)
 
 		HAL_Delay(100);
 
-		HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(FPGA_START_SAMPLING_Port, FPGA_START_SAMPLING_Pin, GPIO_PIN_SET);
 		printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 
 		HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
@@ -314,8 +313,7 @@ int main(void)
 		    printf("[INFO] Sending RDY_FPGA signal...\r\n");
 		  //  HAL_Delay(1000);
 
-		    HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_SET);
-		    HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_SET);
+		    HAL_GPIO_WritePin(FPGA_START_SAMPLING_Port, FPGA_START_SAMPLING_Pin, GPIO_PIN_SET);
 		    printf("[INFO] RDY_FPGA pin set LOW.\r\n");
 	}
 
@@ -656,25 +654,25 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(FPGA_MUX_4_GPIO_Port, FPGA_MUX_4_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(FPGA_MUX_5_GPIO_Port, FPGA_MUX_5_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);   //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
-  HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(FPGA_START_SAMPLING_Port, FPGA_START_SAMPLING_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);                //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
+  HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(FPGA_CH_CHIP_SEL_Port, FPGA_CH_CHIP_SEL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : RDY_nRF_Pin FPGA_MUX_5_Pin FPGA_MUX_4_Pin */
-  GPIO_InitStruct.Pin = RDY_nRF_Pin|FPGA_MUX_5_Pin|FPGA_MUX_4_Pin;
+  /*Configure GPIO pins : RDY_nRF_Pin FPGA_CH_BANK_SEL_Pin FPGA_START_SAMPLING_Pin */
+  GPIO_InitStruct.Pin = RDY_nRF_Pin|FPGA_CH_BANK_SEL_Pin|FPGA_START_SAMPLING_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  GPIO_InitStruct.Pin = FPGA_CH_BANK_SEL_Pin;
+  GPIO_InitStruct.Pin = FPGA_CH_CHIP_SEL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(FPGA_CH_BANK_SEL_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(FPGA_CH_CHIP_SEL_Port, &GPIO_InitStruct);
 
 
   /*Configure GPIO pin : PC11 --- CONFIRM FOR HEADSTAGE, USE SECOND MISO !!*/
@@ -768,18 +766,24 @@ static void Init_Intan(void){
 	uint16_t RHD2216_ID = 0x0002;
 	uint16_t rhd_chip = 0xFFFF;
 
-	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_SET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
 	HAL_Delay(500);
-
 
 	while (rhd_chip != RHD2216_ID && rhd_chip != RHD2132_ID)
 	{
 	    printf("[WARN] RHD not detected. Retrying...\r\n");
 	    rhd_chip = INIT_RHD(&hspi4);
 	}
+
+	if (rhd_chip == RHD2216_ID){
+		HAL_GPIO_WritePin(FPGA_CH_CHIP_SEL_Port, FPGA_CH_CHIP_SEL_Pin, GPIO_PIN_RESET);  //LOW: 16 CHANNELS CONFIG || HIGH: 8 CHANNELS CONFIG
+	}
+	else if (rhd_chip == RHD2132_ID){
+		HAL_GPIO_WritePin(FPGA_CH_CHIP_SEL_Port, FPGA_CH_CHIP_SEL_Pin, GPIO_PIN_SET);    //LOW: 16 CHANNELS CONFIG || HIGH: 8 CHANNELS CONFIG
+	}
+
 	printf("RHD CHIP IS: 0x%04X \r\n", rhd_chip);
 
-	HAL_Delay(1);
+	HAL_Delay(200);
 
 
 }
@@ -799,7 +803,7 @@ static void Init_Intan_RHS(void){
 	hspi->Instance->CR1 |= SPI_CR1_DFF;
 
 	printf("Init First RHS \r\n");
-	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);  //LOW: RHS (GREEN) || HIGH: RHD (BLUE)
+	HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin, GPIO_PIN_RESET);  //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
 	HAL_Delay(500);
 
 	while (chip_id != RHS2116_ID) {
