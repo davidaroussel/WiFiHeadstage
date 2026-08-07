@@ -241,8 +241,6 @@ class OpenEphys_Configuration:
             f"{self.gui_url}/processors/{processor_id}/config",
             json={"text": f"ES CONNECTION_STATUS"})
         status = r.json()["info"]
-        print(r.status_code)
-        print(r.json())
         return status
 
 
@@ -305,5 +303,10 @@ class OpenEphys_Configuration:
                     print("\n")
         except Exception as e:
             print("[WARNING] OpenEphys Needs to be Started to configure EphysSocket")
+            self.Network_Events_Connect()
+            self.GUI_Stop_Recording()
+            self.GUI_Stop_Acquisition()
+            for processor_id in self.EphysSocket_id:
+                self.DISCONNECT_ES(processor_id)
             print(e)
             exit()

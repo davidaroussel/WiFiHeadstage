@@ -267,7 +267,7 @@ class DataConverterV2:
                 raw = np.frombuffer(payload, dtype='>i2')
                 # reshape once (needed for both modes)
                 raw_blocks = raw.reshape(-1, self.num_channels)
-
+                raw_blocks_beta = raw.reshape(-1, self.num_channels*2)
                 # =========================================
                 # 🔥 REMOVE UNIFORM ROWS (FASTEST METHOD)
                 # =========================================
@@ -345,10 +345,13 @@ class DataConverterV2:
                     # channels 2..15 must have LSB = 0
                     remaining_ch_lsb = raw_16ch[:, 3:] & 1
                     valid_rows = ((first_ch_lsb == 1) & (remaining_ch_lsb.sum(axis=1) == 0))
-
-                    if not valid_rows.any():
-                        continue
-
+                    if not valid_rows.all():
+                        if np.all(first_ch_lsb[:-1] != first_ch_lsb[1:]):
+                            print("WRONG CHANNEL LIST SELECTED")
+                        else:
+                            print(f"DATA CORRUPTED AND DOESNT MATCH ANY PATTERNS")
+                        print("EXITING !!")
+                        exit()
                     filtered_blocks = raw_16ch[valid_rows]
 
                     # timing bit from channel 1
