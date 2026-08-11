@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000183d7  00000000  00000000  00022f52  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001365d  00000000  00000000  0003b329  2**0
+ 17 .debug_line   0001365f  00000000  00000000  0003b329  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000941a8  00000000  00000000  0004e986  2**0
+ 18 .debug_str    000941a8  00000000  00000000  0004e988  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000e2b2e  2**0
+ 19 .comment      00000043  00000000  00000000  000e2b30  2**0
                   CONTENTS, READONLY
  20 .debug_frame  0000539c  00000000  00000000  000e2b74  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -9674,7 +9674,7 @@ int main(void)
   hspi = &hspi4;   //PASSTHROUGH
  8004be8:	4b88      	ldr	r3, [pc, #544]	@ (8004e0c <main+0x2b0>)
  8004bea:	62bb      	str	r3, [r7, #40]	@ 0x28
-//	  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);
+//	  HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
 //	  HAL_Delay(1000);
 //  }
 
@@ -10268,16 +10268,16 @@ void SystemClock_Config(void)
 		RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
  8004fec:	2304      	movs	r3, #4
  8004fee:	653b      	str	r3, [r7, #80]	@ 0x50
-
-
-//		RCC_OscInitStruct.PLL.PLLM = 25;
-//		RCC_OscInitStruct.PLL.PLLN = 400;    // SYSCLK = 100 MHz
+//		RCC_OscInitStruct.PLL.PLLN = 320;    // SYSCLK = 80 MHz
+		//
+//	    RCC_OscInitStruct.PLL.PLLM = 25;
+//	    RCC_OscInitStruct.PLL.PLLN = 280;    // SYSCLK = 70 MHz
 
 		RCC_OscInitStruct.PLL.PLLM = 25;
  8004ff0:	2319      	movs	r3, #25
  8004ff2:	64bb      	str	r3, [r7, #72]	@ 0x48
-		RCC_OscInitStruct.PLL.PLLN = 360;    // SYSCLK = 90 MHz
- 8004ff4:	f44f 73b4 	mov.w	r3, #360	@ 0x168
+		RCC_OscInitStruct.PLL.PLLN = 264;    // SYSCLK = 66 MHz
+ 8004ff4:	f44f 7384 	mov.w	r3, #264	@ 0x108
  8004ff8:	64fb      	str	r3, [r7, #76]	@ 0x4c
 
 

@@ -293,6 +293,7 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
+				--rgb_sig_green <= '0';
             else
                 w_reset <= '0';
 				

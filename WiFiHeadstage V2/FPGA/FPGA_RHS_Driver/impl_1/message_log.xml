@@ -1787,34 +1787,6 @@
             <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
-    <Task name="Export">
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>1191031</ID>
-            <Severity>1</Severity>
-        </Message>
-    </Task>
     <Task name="Map">
         <Message>
             <ID>52291017</ID>
@@ -1863,6 +1835,34 @@
             <ID>71003020</ID>
             <Severity>16</Severity>
             <Dynamic>i_RHS_SEL</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Export">
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1191031</ID>
+            <Severity>1</Severity>
         </Message>
     </Task>
 </BaliMessageLog>

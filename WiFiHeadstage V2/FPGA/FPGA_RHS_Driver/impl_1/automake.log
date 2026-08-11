@@ -84,7 +84,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Fri Aug  7 15:17:34 2026
+Tue Aug 11 16:39:11 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml 
@@ -2192,10 +2192,10 @@ Top 10 highest fanout non-clock nets:
 Peak Memory Usage: 198 MB
 
 --------------------------------------------------------------
-Total CPU Time: 17 secs 
-Total REAL Time: 18 secs 
+Total CPU Time: 15 secs 
+Total REAL Time: 15 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 5b76de43aec1d424e463cea1bd573a16f41e01b1
+Checksum -- synthesis -- netlist: da2f2d5c50dc07c6aa05360d1ec9816de9b22701
 
 
 
@@ -2207,8 +2207,8 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
-CPU Time to convert: 0.515625
-REAL Time to convert: 0
+CPU Time to convert: 0.484375
+REAL Time to convert: 1
 convert PEAK Memory Usage: 65 MB
 convert CURRENT Memory Usage: 62 MB
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
@@ -2224,9 +2224,9 @@ Constraint Summary:
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 1 secs 
-Total REAL Time: 0 secs 
+Total REAL Time: 2 secs 
 Peak Memory Usage: 65 MB
-Checksum -- postsyn: 9f136503231b1bc8654cd531ccfefd8794d16fb
+Checksum -- postsyn: aeb3156040477bdfe59ddec3c3336f7baf7d7788
 
 
 
@@ -2416,17 +2416,17 @@ Constraint Summary:
    Total number of constraints dropped: 0
 
 
-Total CPU Time: 2 secs  
+Total CPU Time: 1 secs  
 Total REAL Time: 2 secs  
 Peak Memory Usage: 114 MB
 
-Checksum -- map: c476f3dd8fb77e45a6b2751c2f3cb3545fcfc50f
+Checksum -- map: 6cedfcb842e547d8f3f86d2b1d966c0859284d1d
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-Fri Aug  7 15:18:06 2026
+Tue Aug 11 16:39:40 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -2498,13 +2498,13 @@ Pin Constraint Summary:
    20 out of 30 pins locked (66% locked).
 .
 .............
-Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 5 secs 
+Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 4 secs 
 
 
 ................
-Finished Placer Phase 0 (AP).  CPU time: 7 secs , REAL time: 8 secs 
+Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 6 secs 
 
-Starting Placer Phase 1. CPU time: 7 secs , REAL time: 8 secs 
+Starting Placer Phase 1. CPU time: 6 secs , REAL time: 6 secs 
 ..  ..
 ....................
 
@@ -2519,13 +2519,13 @@ WARNING <77001032> - Unable to find the instance/port 'i_RHS_SEL' in the constra
 WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_SEL]', the locate object is not specified
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
-Finished Placer Phase 1. CPU time: 27 secs , REAL time: 28 secs 
+Finished Placer Phase 1. CPU time: 21 secs , REAL time: 21 secs 
 
 Starting Placer Phase 2.
 .
 
 Placer score =  673940
-Finished Placer Phase 2.  CPU time: 27 secs , REAL time: 29 secs 
+Finished Placer Phase 2.  CPU time: 21 secs , REAL time: 21 secs 
 
 
 ------------------ Clock Report ------------------
@@ -2557,10 +2557,10 @@ I/O Bank Usage Summary:
 | 2        | 8 / 8 (100%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 27 secs , REAL time: 29 secs 
+Total Placer CPU time: 21 secs , REAL time: 21 secs 
 
 
-Checksum -- place: b6ceae21a7c59ccb7735e944fd0625d6ded7b9
+Checksum -- place: 59b473a46b290ce32b6563c7a8d35ec289e62056
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_SEL' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_SEL]'
@@ -2568,7 +2568,7 @@ WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 
-Start NBR router at 15:18:35 08/07/26
+Start NBR router at 16:40:02 08/11/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -2617,29 +2617,29 @@ WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
     TimerIf::skewscore 0
 
-Start NBR section for initial routing at 15:18:37 08/07/26
+Start NBR section for initial routing at 16:40:03 08/11/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-194(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 14 secs 
+194(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 15:18:49 08/07/26
+Start NBR section for normal routing at 16:40:12 08/11/26
 Level 4, iteration 1
-20(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 14 secs 
+20(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 2
-15(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 14 secs 
+15(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 3
-3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 14 secs 
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 4
-3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 14 secs 
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 5
-0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 15 secs 
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 
-Start NBR section for post-routing at 15:18:50 08/07/26
+Start NBR section for post-routing at 16:40:13 08/11/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - No source clock for
@@ -2648,10 +2648,10 @@ Requested speed is the same as database speed
 Changing speed to m;   changing temperature to -40
 Changing speed to 6;   changing temperature to 100
 
-Checksum -- route: 140307654c14e267127a273fc47e8a4fd9e904c5
+Checksum -- route: 564322a7a1c6fa908b9fc61c1f88e823b3c6f7a
 
-Total CPU time 16 secs 
-Total REAL time: 17 secs 
+Total CPU time 13 secs 
+Total REAL time: 13 secs 
 Completely routed.
 End of route.  12564 routed (100.00%); 0 unrouted.
 
@@ -2668,9 +2668,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-Total CPU  Time: 45 secs 
-Total REAL Time: 47 secs 
-Peak Memory Usage: 191.35 MB
+Total CPU  Time: 36 secs 
+Total REAL Time: 36 secs 
+Peak Memory Usage: 190.07 MB
 
 
 par done!
@@ -2680,7 +2680,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /47 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /36 secs 
 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "FPGA_Intan_Driver_impl_1.twr" "FPGA_Intan_Driver_impl_1.udb" 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml
@@ -2697,7 +2697,7 @@ Performance Grade:   High-Performance_1.2V
 
 
 
-Successfully loading udb, 0.20 seconds
+Successfully loading udb, 0.17 seconds
 
 Initializing timer
 Starting design annotation....
@@ -2711,11 +2711,11 @@ Connections ignored  1142  counted  11279  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
-Total CPU Time: 6 secs 
-Total REAL Time: 7 secs 
+Total CPU Time: 5 secs 
+Total REAL Time: 5 secs 
 Peak Memory Usage: 139 MB
 
- 6.507672s wall, 6.234375s user + 0.125000s system = 6.359375s CPU (97.7%)
+ 5.159013s wall, 4.953125s user + 0.171875s system = 5.125000s CPU (99.3%)
 
 
 tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
@@ -2777,7 +2777,7 @@ Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs
 ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Fri Aug  7 15:19:08 2026
+Tue Aug 11 16:40:28 2026
 
 Loading FPGA_Intan_Driver_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
@@ -2830,6 +2830,6 @@ Writing a verilog netlist based on the FPGA_Intan_Driver_impl_1 design file.
 Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
 Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
 Backanno finished with 0 posted error messages.
-Total CPU Time: 7 secs 
-Total REAL Time: 8 secs 
-Peak Memory Usage: 207 MB
+Total CPU Time: 6 secs 
+Total REAL Time: 6 secs 
+Peak Memory Usage: 208 MB

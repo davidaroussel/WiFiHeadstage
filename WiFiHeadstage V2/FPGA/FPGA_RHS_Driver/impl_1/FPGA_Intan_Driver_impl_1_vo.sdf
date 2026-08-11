@@ -1,7 +1,7 @@
 (DELAYFILE
   (SDFVERSION "3.0")
   (DESIGN "top_level")
-  (DATE "Fri Aug  7 15:19:16 2026")
+  (DATE "Tue Aug 11 16:40:35 2026")
   (VENDOR "Lattice")
   (PROGRAM "backanno")
   (VERSION "Radiant Software (64-bit) 2023.2.1.288.0")
@@ -32609,15 +32609,6 @@
     )
   )
   (CELL
-    (CELLTYPE "RGB2_OUT")
-    (INSTANCE RGB2_OUT_I)
-    (DELAY
-      (ABSOLUTE
-        (IOPATH PADDO RGB2_OUT (1914:2001:2088)(1914:2001:2088))
-      )
-    )
-  )
-  (CELL
     (CELLTYPE "RGB1_OUT")
     (INSTANCE RGB1_OUT_I)
     (DELAY
@@ -32632,6 +32623,15 @@
     (DELAY
       (ABSOLUTE
         (IOPATH PADDO RGB0_OUT (1914:2001:2088)(1914:2001:2088))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "RGB2_OUT")
+    (INSTANCE RGB2_OUT_I)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH PADDO RGB2_OUT (1914:2001:2088)(1914:2001:2088))
       )
     )
   )
