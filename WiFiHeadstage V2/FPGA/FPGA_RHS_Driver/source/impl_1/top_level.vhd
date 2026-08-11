@@ -293,7 +293,7 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
-				--rgb_sig_green <= '0';
+				rgb_sig_green <= '0';
             else
                 w_reset <= '0';
 				
@@ -311,17 +311,22 @@ begin
 				case reset_counter is
 					when 24000000 =>
 						w_Controller_Mode <= x"1";
+						
 					when 48000000 =>
 						w_Controller_Mode <= x"0";
+						
 					when 72000000 =>
 						w_Controller_Mode <= x"1";
+						
 					when 96000000 =>
 						stop_counting <= '1';
 						
 						if i_START_SAMPLING = '0' then
 							w_Controller_Mode <= x"1";
+							
 						elsif i_START_SAMPLING = '1' then
 							w_Controller_Mode <= x"2";
+							
 						end if;
 						
 						

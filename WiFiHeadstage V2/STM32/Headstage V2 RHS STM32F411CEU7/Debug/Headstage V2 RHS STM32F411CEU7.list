@@ -37,15 +37,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000183d7  00000000  00000000  00022f52  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001365f  00000000  00000000  0003b329  2**0
+ 17 .debug_line   00013661  00000000  00000000  0003b329  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000941a8  00000000  00000000  0004e988  2**0
+ 18 .debug_str    000941a8  00000000  00000000  0004e98a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000e2b30  2**0
+ 19 .comment      00000043  00000000  00000000  000e2b32  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000539c  00000000  00000000  000e2b74  2**2
+ 20 .debug_frame  0000539c  00000000  00000000  000e2b78  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000008a  00000000  00000000  000e7f10  2**0
+ 21 .debug_line_str 0000008a  00000000  00000000  000e7f14  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -9653,8 +9653,8 @@ int main(void)
  8004bbc:	f44f 6180 	mov.w	r1, #1024	@ 0x400
  8004bc0:	4891      	ldr	r0, [pc, #580]	@ (8004e08 <main+0x2ac>)
  8004bc2:	f002 f881 	bl	8006cc8 <HAL_GPIO_WritePin>
-  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);			    //IF RHD2132 : LOW: 0-7CH || HIGH: 8-15CH
- 8004bc6:	2201      	movs	r2, #1
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);			    //IF RHD2132 : LOW: 0-7CH || HIGH: 8-15CH
+ 8004bc6:	2200      	movs	r2, #0
  8004bc8:	f44f 7180 	mov.w	r1, #256	@ 0x100
  8004bcc:	488e      	ldr	r0, [pc, #568]	@ (8004e08 <main+0x2ac>)
  8004bce:	f002 f87b 	bl	8006cc8 <HAL_GPIO_WritePin>
@@ -9698,7 +9698,7 @@ int main(void)
  8004c08:	6a79      	ldr	r1, [r7, #36]	@ 0x24
  8004c0a:	6ab8      	ldr	r0, [r7, #40]	@ 0x28
  8004c0c:	f7ff fb18 	bl	8004240 <RHS2116_MEP_Config_Params>
-  HAL_Delay(500);
+   HAL_Delay(500);
  8004c10:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
  8004c14:	f001 f8d4 	bl	8005dc0 <HAL_Delay>
 //  printf("[INFO] SPI deinitialized.\r\n");

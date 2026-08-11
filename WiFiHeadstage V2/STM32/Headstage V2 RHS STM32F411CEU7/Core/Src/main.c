@@ -162,7 +162,7 @@ int main(void)
 
   HAL_GPIO_WritePin(FPGA_START_SAMPLING_Port, FPGA_START_SAMPLING_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_SET);  					//LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
-  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_SET);			    //IF RHD2132 : LOW: 0-7CH || HIGH: 8-15CH
+  HAL_GPIO_WritePin(FPGA_CH_BANK_SEL_Port, FPGA_CH_BANK_SEL_Pin, GPIO_PIN_RESET);			    //IF RHD2132 : LOW: 0-7CH || HIGH: 8-15CH
 
   HAL_GPIO_WritePin(RDY_nRF_GPIO_Port, RDY_nRF_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(RHS_Start_Stim_Out_Port, RHS_Start_Stim_Out_Pin, GPIO_PIN_RESET);
@@ -187,7 +187,7 @@ int main(void)
   HAL_GPIO_WritePin(RHS_Chip_SEL_Port, RHS_Chip_SEL_Pin,  GPIO_PIN_RESET);  //LOW: RHD2116 CHANNELS CONFIG || HIGH: RHD2132 CHANNELS CONFIG
    uint32_t stim_current_uA = 30;
   RHS2116_MEP_Config_Params(hspi, stim_current_uA);
-  HAL_Delay(500);
+   HAL_Delay(500);
 //
 //  HAL_SPI_DeInit(&hspi4);
 //  printf("[INFO] SPI deinitialized.\r\n");

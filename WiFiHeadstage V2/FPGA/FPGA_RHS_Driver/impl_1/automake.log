@@ -84,7 +84,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Tue Aug 11 16:39:11 2026
+Tue Aug 11 17:00:32 2026
 
 
 Command Line:  C:\lscc\radiant\2023.2\ispfpga\bin\nt64\synthesis.exe -f FPGA_Intan_Driver_impl_1_lattice.synproj -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml 
@@ -297,7 +297,6 @@ Top module name (VHDL, mixed language): top_level
 
 
 WARNING <35001771> - Initial value found on net rgb_sig_red will be ignored due to unrecognized driver type
-WARNING <35001771> - Initial value found on net rgb_sig_green will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net rgb_sig_blue will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[31] will be ignored due to unrecognized driver type
 WARNING <35001771> - Initial value found on net NUM_DATA[30] will be ignored due to unrecognized driver type
@@ -341,6 +340,7 @@ WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga
 WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(502): ram rhd_array_16_original_ramnet has no write-port on it. VDB-1038
 WARNING <35931038> - c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(571): ram rhd_array_8_original_ramnet has no write-port on it. VDB-1038
 WARNING <35935040> - Register int_BOOST_ENABLE clock is stuck at One. VDB-5040
+WARNING <35935040> - Register rgb_sig_green clock is stuck at Zero. VDB-5040
 WARNING <35935049> - input port sclk_i remains unconnected for this instance. VDB-5049
 WARNING <35935049> - input port sdi_i remains unconnected for this instance. VDB-5049
 ######## Converting I/O port i_STM32_SPI4_MISO to output.
@@ -690,7 +690,7 @@ Combinational loop found : 33
 
  Instance int_RHS_TOP_SPI_MISO_1_I_0 
 
- Net int_RHS_TOP_SPI_MISO_1_N_2180 
+ Net int_RHS_TOP_SPI_MISO_1_N_2179 
 
  Instance i36 
 
@@ -2155,13 +2155,13 @@ Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/
 Duplicate register/latch removal. \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/waddr_r_i1 is a one-to-one match with \Controller_inst/Controller_RHD_FIFO_1/FIFO_1/lscc_fifo_inst/fifo0/_FABRIC.u_fifo/MISC.wr_flag_addr_r_i1.
 
 ################### Begin Area Report (top_level)######################
-Number of register bits => 2083 of 5280 (39 % )
+Number of register bits => 2082 of 5280 (39 % )
 BB_B => 3
 EBR_B => 1
 CCU2 => 132
-FD1P3XZ => 2083
+FD1P3XZ => 2082
 IB => 8
-LUT4 => 1323
+LUT4 => 1313
 OB => 22
 PLL_B => 1
 ################### End Area Report ##################
@@ -2179,23 +2179,23 @@ Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : o_reset_c, loads : 1000
   Net : maxfan_replicated_net_999, loads : 1000
-  Net : Controller_inst/int_STM32_TX_DV, loads : 535
-  Net : Controller_inst/n19743, loads : 512
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 200
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 168
-  Net : maxfan_replicated_net_1081, loads : 82
-  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[2], loads : 73
+  Net : Controller_inst/int_STM32_TX_DV, loads : 533
+  Net : Controller_inst/n19746, loads : 512
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[1], loads : 221
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[0], loads : 154
+  Net : maxfan_replicated_net_1080, loads : 81
+  Net : Controller_inst/SPI_Master_CS_STM32_1/SPI_Master_1/r_TX_Bit_Count[2], loads : 58
   Net : Controller_inst/stim_sequence_phase[0], loads : 57
   Net : Controller_inst/stim_burst_counter[1], loads : 53
 ################### End Clock Report ##################
 
-Peak Memory Usage: 198 MB
+Peak Memory Usage: 199 MB
 
 --------------------------------------------------------------
 Total CPU Time: 15 secs 
 Total REAL Time: 15 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: da2f2d5c50dc07c6aa05360d1ec9816de9b22701
+Checksum -- synthesis -- netlist: bd1005fe8382094b1a2f3fc1ee97fa9c4dde06a2
 
 
 
@@ -2207,8 +2207,8 @@ Command Line: postsyn -a iCE40UP -p iCE40UP5K -t SG48 -sp High-Performance_1.2V 
    Package:          SG48
    Performance:      High-Performance_1.2V
 Reading input file 'FPGA_Intan_Driver_impl_1.vm' ...
-CPU Time to convert: 0.484375
-REAL Time to convert: 1
+CPU Time to convert: 0.5
+REAL Time to convert: 0
 convert PEAK Memory Usage: 65 MB
 convert CURRENT Memory Usage: 62 MB
 Reading constraint file 'C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/impl_1/FPGA_Intan_Driver_impl_1.ldc' ...
@@ -2224,9 +2224,9 @@ Constraint Summary:
 Writing output file 'FPGA_Intan_Driver_impl_1_syn.udb'.
 POSTSYN finished successfully.
 Total CPU Time: 1 secs 
-Total REAL Time: 2 secs 
+Total REAL Time: 0 secs 
 Peak Memory Usage: 65 MB
-Checksum -- postsyn: aeb3156040477bdfe59ddec3c3336f7baf7d7788
+Checksum -- postsyn: bc13fa8d5986e1b7c3a0c23369ded7831b4549d
 
 
 
@@ -2264,11 +2264,11 @@ WARNING <71003020> - Top module port 'i_RHS_SEL' does not connect to anything.
 
 
 Design Summary:
-   Number of slice registers: 2083 out of  5280 (39%)
+   Number of slice registers: 2082 out of  5280 (39%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           3296 out of  5280 (62%)
-      Number of logic LUT4s:             1323
-      Number of inserted feedthru LUT4s: 1651
+   Number of LUT4s:           3288 out of  5280 (62%)
+      Number of logic LUT4s:             1314
+      Number of inserted feedthru LUT4s: 1652
       Number of replicated LUT4s:         58
       Number of ripple logic:            132 (264 LUT4s)
    Number of IO sites used:   33 out of 39 (85%)
@@ -2293,93 +2293,93 @@ Design Summary:
    Number of EBRs:             1 out of 30 (3%)
    Number of PLLs:             1 out of 1 (100%)
    Number of Clocks:  2
-      Net pll_clk_int: 2072 loads, 2072 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
+      Net pll_clk_int: 2071 loads, 2071 rising, 0 falling (Driver: Pin pll_inst.lscc_pll_inst.u_PLL_B/OUTGLOBAL)
       Net i_clk_c: 1 loads, 1 rising, 0 falling (Driver: Port i_clk)
    Number of Clock Enables:  88
       Net VCC_net: 2 loads, 0 SLICEs
-      Net n3: 1 loads, 1 SLICEs
       Net n25: 1 loads, 1 SLICEs
-      Net n33469: 4 loads, 4 SLICEs
-      Net Controller_inst.n34492: 19 loads, 19 SLICEs
-      Net Controller_inst.n19743: 512 loads, 512 SLICEs
-      Net Controller_inst.n12275: 5 loads, 5 SLICEs
-      Net Controller_inst.n32031: 4 loads, 4 SLICEs
-      Net Controller_inst.n32750: 31 loads, 31 SLICEs
-      Net Controller_inst.n32000: 4 loads, 4 SLICEs
-      Net Controller_inst.n33656: 5 loads, 5 SLICEs
-      Net Controller_inst.n33458: 24 loads, 24 SLICEs
-      Net Controller_inst.n33505: 1 loads, 1 SLICEs
-      Net Controller_inst.n19741: 3 loads, 3 SLICEs
-      Net Controller_inst.n45441: 1 loads, 1 SLICEs
-      Net Controller_inst.n50063: 1 loads, 1 SLICEs
+      Net n33462: 4 loads, 4 SLICEs
+      Net n3: 1 loads, 1 SLICEs
+      Net Controller_inst.n33122: 9 loads, 9 SLICEs
+      Net Controller_inst.n31399: 15 loads, 15 SLICEs
+      Net Controller_inst.n19746: 512 loads, 512 SLICEs
+      Net Controller_inst.n4_c: 32 loads, 32 SLICEs
+      Net Controller_inst.n12278: 5 loads, 5 SLICEs
+      Net Controller_inst.n34485: 19 loads, 19 SLICEs
+      Net Controller_inst.n32047: 4 loads, 4 SLICEs
+      Net Controller_inst.n32761: 31 loads, 31 SLICEs
+      Net Controller_inst.n32009: 4 loads, 4 SLICEs
+      Net Controller_inst.n33649: 5 loads, 5 SLICEs
+      Net Controller_inst.n33451: 24 loads, 24 SLICEs
+      Net Controller_inst.n19744: 3 loads, 3 SLICEs
+      Net Controller_inst.n45768: 1 loads, 1 SLICEs
+      Net Controller_inst.n45766: 1 loads, 1 SLICEs
+      Net Controller_inst.n45070: 1 loads, 1 SLICEs
       Net Controller_inst.int_RHS_READ_TX_DV: 4 loads, 4 SLICEs
-      Net Controller_inst.n44751: 1 loads, 1 SLICEs
-      Net Controller_inst.n33117: 11 loads, 11 SLICEs
       Net Controller_inst.int_STM32_TX_DV: 512 loads, 512 SLICEs
-      Net Controller_inst.n45442: 1 loads, 1 SLICEs
-      Net Controller_inst.n32058: 15 loads, 15 SLICEs
-      Net Controller_inst.n32029: 15 loads, 15 SLICEs
-      Net Controller_inst.n32140: 15 loads, 15 SLICEs
-      Net Controller_inst.n32170: 15 loads, 15 SLICEs
-      Net Controller_inst.n32200: 15 loads, 15 SLICEs
-      Net Controller_inst.n32230: 15 loads, 15 SLICEs
-      Net Controller_inst.n32260: 15 loads, 15 SLICEs
-      Net Controller_inst.n32290: 15 loads, 15 SLICEs
-      Net Controller_inst.n32320: 15 loads, 15 SLICEs
-      Net Controller_inst.n32350: 15 loads, 15 SLICEs
-      Net Controller_inst.n32380: 15 loads, 15 SLICEs
-      Net Controller_inst.n32410: 15 loads, 15 SLICEs
-      Net Controller_inst.n32440: 15 loads, 15 SLICEs
-      Net Controller_inst.n32470: 15 loads, 15 SLICEs
-      Net Controller_inst.n32500: 15 loads, 15 SLICEs
-      Net Controller_inst.n32530: 15 loads, 15 SLICEs
-      Net Controller_inst.n32560: 15 loads, 15 SLICEs
-      Net Controller_inst.n32590: 15 loads, 15 SLICEs
-      Net Controller_inst.n32620: 15 loads, 15 SLICEs
-      Net Controller_inst.n32650: 15 loads, 15 SLICEs
-      Net Controller_inst.n32680: 15 loads, 15 SLICEs
-      Net Controller_inst.n4_adj_2256: 32 loads, 32 SLICEs
-      Net Controller_inst.n14468: 6 loads, 6 SLICEs
-      Net Controller_inst.n31420: 15 loads, 15 SLICEs
-      Net Controller_inst.n31390: 15 loads, 15 SLICEs
-      Net Controller_inst.n31360: 15 loads, 15 SLICEs
-      Net Controller_inst.n31330: 15 loads, 15 SLICEs
-      Net Controller_inst.n31300: 15 loads, 15 SLICEs
-      Net Controller_inst.n31270: 15 loads, 15 SLICEs
-      Net Controller_inst.n31240: 15 loads, 15 SLICEs
-      Net Controller_inst.n31210: 15 loads, 15 SLICEs
-      Net Controller_inst.n31180: 15 loads, 15 SLICEs
-      Net Controller_inst.n32002: 14 loads, 14 SLICEs
-      Net Controller_inst.n32033: 15 loads, 15 SLICEs
+      Net Controller_inst.int_STM32_TX_Ready_N_2194: 1 loads, 1 SLICEs
+      Net Controller_inst.n45769: 1 loads, 1 SLICEs
+      Net Controller_inst.n8_adj_2277: 2 loads, 2 SLICEs
+      Net Controller_inst.n32011: 15 loads, 15 SLICEs
+      Net Controller_inst.n32181: 15 loads, 15 SLICEs
+      Net Controller_inst.n32040: 15 loads, 15 SLICEs
+      Net Controller_inst.n32691: 15 loads, 15 SLICEs
+      Net Controller_inst.n32301: 15 loads, 15 SLICEs
+      Net Controller_inst.n32631: 15 loads, 15 SLICEs
+      Net Controller_inst.n32601: 15 loads, 15 SLICEs
+      Net Controller_inst.n32571: 15 loads, 15 SLICEs
+      Net Controller_inst.n32511: 15 loads, 15 SLICEs
+      Net Controller_inst.n32481: 15 loads, 15 SLICEs
+      Net Controller_inst.n32421: 15 loads, 15 SLICEs
+      Net Controller_inst.n32451: 15 loads, 15 SLICEs
+      Net Controller_inst.n32391: 15 loads, 15 SLICEs
+      Net Controller_inst.n32541: 15 loads, 15 SLICEs
+      Net Controller_inst.n32361: 15 loads, 15 SLICEs
+      Net Controller_inst.n32331: 15 loads, 15 SLICEs
+      Net Controller_inst.n32661: 15 loads, 15 SLICEs
+      Net Controller_inst.n32271: 15 loads, 15 SLICEs
+      Net Controller_inst.n14471: 6 loads, 6 SLICEs
+      Net Controller_inst.n31429: 15 loads, 15 SLICEs
+      Net Controller_inst.n14433: 4 loads, 4 SLICEs
+      Net Controller_inst.n33498: 1 loads, 1 SLICEs
+      Net Controller_inst.n31279: 15 loads, 15 SLICEs
+      Net Controller_inst.n39617: 1 loads, 1 SLICEs
+      Net Controller_inst.n31369: 15 loads, 15 SLICEs
+      Net Controller_inst.n31339: 15 loads, 15 SLICEs
+      Net Controller_inst.n31309: 15 loads, 15 SLICEs
+      Net Controller_inst.n31249: 15 loads, 15 SLICEs
+      Net Controller_inst.n31219: 15 loads, 15 SLICEs
+      Net Controller_inst.n31189: 15 loads, 15 SLICEs
+      Net Controller_inst.n32069: 15 loads, 15 SLICEs
+      Net Controller_inst.n32038: 15 loads, 15 SLICEs
+      Net Controller_inst.n32151: 15 loads, 15 SLICEs
+      Net Controller_inst.n32211: 15 loads, 15 SLICEs
+      Net Controller_inst.n32241: 15 loads, 15 SLICEs
       Net Controller_inst.int_RHS_STIM_TX_DV: 24 loads, 24 SLICEs
-      Net Controller_inst.n14430: 4 loads, 4 SLICEs
-      Net Controller_inst.n39288: 1 loads, 1 SLICEs
-      Net Controller_inst.n44927: 1 loads, 1 SLICEs
-      Net Controller_inst.int_STM32_TX_Ready_N_2195: 1 loads, 1 SLICEs
-      Net Controller_inst.n45392: 2 loads, 2 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n33572: 10 loads, 10 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n33633: 8 loads, 8 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.n33486: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n45470: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n33482: 1 loads, 1 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n33617: 8 loads, 8 SLICEs
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n38187: 11 loads, 11 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n33571: 6 loads, 6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n33601: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n25275: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n46188: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n33473: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n42499: 7 loads, 7 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n33568: 4 loads, 4 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.n14478: 16 loads, 16 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33570: 5 loads, 5 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33587: 8 loads, 8 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33477: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.int_RHS_READ_TX_Ready_N_2192: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33471: 1 loads, 1 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n34450: 6 loads, 6 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33533: 3 loads, 3 SLICEs
-      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33543: 4 loads, 4 SLICEs
+      Net Controller_inst.n45252: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n33565: 10 loads, 10 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n33626: 8 loads, 8 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.n33479: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n45786: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n33475: 1 loads, 1 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n33610: 8 loads, 8 SLICEs
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.n38537: 11 loads, 11 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n33564: 6 loads, 6 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n33594: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n46488: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.n25276: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n33466: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n33561: 4 loads, 4 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_2.SPI_Master_CS_1.SPI_Master_1.n37341: 7 loads, 7 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.n14481: 16 loads, 16 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33563: 5 loads, 5 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33580: 8 loads, 8 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.n33470: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.int_RHS_READ_TX_Ready_N_2191: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33464: 1 loads, 1 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n34443: 6 loads, 6 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33526: 3 loads, 3 SLICEs
+      Net Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master_1.n33536: 4 loads, 4 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.wr_addr_nxt_w_0__N_1976: 9 loads, 9 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_addr_nxt_w_0__N_1985: 9 loads, 9 SLICEs
       Net Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo0._FABRIC.u_fifo.rd_fifo_en_w: 1 loads, 0 SLICEs
@@ -2387,19 +2387,19 @@ Design Summary:
    Number of LSRs:  4
       Net o_reset_c_N_2170: 2 loads, 2 SLICEs
       Net o_reset_c: 999 loads, 999 SLICEs
-      Net maxfan_replicated_net_1081: 81 loads, 81 SLICEs
+      Net maxfan_replicated_net_1080: 80 loads, 80 SLICEs
       Net maxfan_replicated_net_999: 969 loads, 969 SLICEs
    Top 10 highest fanout non-clock nets:
       Net maxfan_replicated_net_999: 1000 loads
       Net o_reset_c: 1000 loads
-      Net Controller_inst.int_STM32_TX_DV: 536 loads
-      Net Controller_inst.n19743: 512 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 200 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 168 loads
+      Net Controller_inst.int_STM32_TX_DV: 535 loads
+      Net Controller_inst.n19746: 512 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[1]: 221 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[0]: 154 loads
       Net VCC_net: 106 loads
-      Net maxfan_replicated_net_1081: 82 loads
-      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 73 loads
-      Net stim_burst_counter[1]: 62 loads
+      Net maxfan_replicated_net_1080: 81 loads
+      Net Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1.r_TX_Bit_Count[2]: 58 loads
+      Net stim_burst_counter[0]: 58 loads
 Running physical design DRC...
 
 WARNING <71003020> - Top module port 'i_RHS_TOP_SPI_MISO_2' does not connect to anything.
@@ -2420,13 +2420,13 @@ Total CPU Time: 1 secs
 Total REAL Time: 2 secs  
 Peak Memory Usage: 114 MB
 
-Checksum -- map: 6cedfcb842e547d8f3f86d2b1d966c0859284d1d
+Checksum -- map: 6282fd93942f06233a5670cbdc9d63eb2db283a7
 Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
 
 pnmainc -run pnmain "FPGA_Intan_Driver_impl_1_par.tcl"
 
 Lattice Place and Route Report for Design "FPGA_Intan_Driver_impl_1_map.udb"
-Tue Aug 11 16:39:40 2026
+Tue Aug 11 17:01:01 2026
 
 PAR: Place And Route Radiant Software (64-bit) 2023.2.1.288.0.
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
@@ -2468,13 +2468,13 @@ WARNING <71003020> - Top module port 'i_RHS_SEL' does not connect to anything.
 WARNING <71003020> - Top module port 'i_RHS_TOP_SPI_MISO_2' does not connect to anything.
 WARNING <71003020> - Top module port 'i_RHS_BOTTOM_SPI_MISO_2' does not connect to anything.
 WARNING <71003020> - Top module port 'i_RHS_SEL' does not connect to anything.
-Number of Signals: 5636
+Number of Signals: 5627
 Number of Connections: 15273
 Device utilization summary:
 
-   SLICE (est.)    1752/2640         66% used
-     LUT           3296/5280         62% used
-     REG           2083/5280         39% used
+   SLICE (est.)    1755/2640         66% used
+     LUT           3288/5280         62% used
+     REG           2082/5280         39% used
    PIO               30/56           54% used
                      30/36           83% bonded
    IOLOGIC            0/56            0% used
@@ -2498,20 +2498,20 @@ Pin Constraint Summary:
    20 out of 30 pins locked (66% locked).
 .
 .............
-Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 4 secs 
+Finished Placer Phase 0 (HIER). CPU time: 4 secs , REAL time: 5 secs 
 
 
 ................
-Finished Placer Phase 0 (AP).  CPU time: 6 secs , REAL time: 6 secs 
+Finished Placer Phase 0 (AP).  CPU time: 7 secs , REAL time: 8 secs 
 
-Starting Placer Phase 1. CPU time: 6 secs , REAL time: 6 secs 
+Starting Placer Phase 1. CPU time: 7 secs , REAL time: 8 secs 
 ..  ..
 ....................
 
-Placer score = 609291.
+Placer score = 612616.
 
 Device SLICE utilization summary after final SLICE packing:
-   SLICE           1733/2640         65% used
+   SLICE           1739/2640         65% used
 
 WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
@@ -2519,23 +2519,23 @@ WARNING <77001032> - Unable to find the instance/port 'i_RHS_SEL' in the constra
 WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_RHS_SEL]', the locate object is not specified
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
-Finished Placer Phase 1. CPU time: 21 secs , REAL time: 21 secs 
+Finished Placer Phase 1. CPU time: 21 secs , REAL time: 22 secs 
 
 Starting Placer Phase 2.
 .
 
-Placer score =  673940
-Finished Placer Phase 2.  CPU time: 21 secs , REAL time: 21 secs 
+Placer score =  666749
+Finished Placer Phase 2.  CPU time: 22 secs , REAL time: 23 secs 
 
 
 ------------------ Clock Report ------------------
 
 Global Clocks :
-  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1142, ce load = 0, sr load = 0
-  PRIMARY "o_reset_c" from Q1 on comp "Controller_inst.SLICE_3142" on site "R12C26A", clk load = 0, ce load = 0, sr load = 531
-  PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_135" on site "R12C7D", clk load = 0, ce load = 0, sr load = 538
-  PRIMARY "Controller_inst.n19743" from F1 on comp "Controller_inst.SLICE_2754" on site "R16C2A", clk load = 0, ce load = 275, sr load = 0
-  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2209" on site "R17C26A", clk load = 0, ce load = 259, sr load = 0
+  PRIMARY "pll_clk_int" from OUTGLOBAL on comp "pll_inst.lscc_pll_inst.u_PLL_B" on site "PLL_R13C32", clk load = 1137, ce load = 0, sr load = 0
+  PRIMARY "o_reset_c" from Q1 on comp "SLICE_3114" on site "R13C31C", clk load = 0, ce load = 0, sr load = 523
+  PRIMARY "maxfan_replicated_net_999" from Q1 on comp "SLICE_135" on site "R11C18C", clk load = 0, ce load = 0, sr load = 542
+  PRIMARY "Controller_inst.n19746" from F1 on comp "Controller_inst.SLICE_2659" on site "R21C20C", clk load = 0, ce load = 277, sr load = 0
+  PRIMARY "Controller_inst.int_STM32_TX_DV" from Q1 on comp "Controller_inst.SLICE_2210" on site "R21C22A", clk load = 0, ce load = 260, sr load = 0
 
   PRIMARY  : 5 out of 8 (62%)
 
@@ -2557,10 +2557,10 @@ I/O Bank Usage Summary:
 | 2        | 8 / 8 (100%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 21 secs , REAL time: 21 secs 
+Total Placer CPU time: 22 secs , REAL time: 23 secs 
 
 
-Checksum -- place: 59b473a46b290ce32b6563c7a8d35ec289e62056
+Checksum -- place: e1a30d6bde16e87483aad5c1434453763360d60
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_SEL' in the constraint 'ldc_set_location -site {4} [get_ports i_RHS_SEL]'
@@ -2568,7 +2568,7 @@ WARNING <77001031> - In the constraint 'ldc_set_location -site {4} [get_ports i_
 WARNING <77001032> - Unable to find the instance/port 'i_RHS_BOTTOM_SPI_MISO_2' in the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]'
 WARNING <77001031> - In the constraint 'ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]', the locate object is not specified
 
-Start NBR router at 16:40:02 08/11/26
+Start NBR router at 17:01:24 08/11/26
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -2586,25 +2586,25 @@ Note: NBR uses a different method to calculate timing slacks. The
 Starting routing resource preassignment
 Preassignment Summary:
 --------------------------------------------------------------------------------
-2310 connections routed with dedicated routing resources
+2309 connections routed with dedicated routing resources
 5 global clock signals routed
-5055 connections routed (of 12564 total) (40.23%)
+5048 connections routed (of 12560 total) (40.19%)
 ---------------------------------------------------------
 Clock routing summary:
 Primary clocks (5 used out of 8 available):
 #0  Signal "maxfan_replicated_net_999"
-       Control loads: 538   out of   538 routed (100.00%)
+       Control loads: 542   out of   542 routed (100.00%)
        Data    loads: 0     out of    31 routed (  0.00%)
-#1  Signal "Controller_inst.int_STM32_TX_DV"
-       Control loads: 259   out of   259 routed (100.00%)
-       Data    loads: 0     out of    24 routed (  0.00%)
+#1  Signal "Controller_inst.n19746"
+       Control loads: 277   out of   277 routed (100.00%)
+#3  Signal "Controller_inst.int_STM32_TX_DV"
+       Control loads: 260   out of   260 routed (100.00%)
+       Data    loads: 0     out of    23 routed (  0.00%)
 #4  Signal "o_reset_c"
-       Control loads: 531   out of   531 routed (100.00%)
+       Control loads: 523   out of   523 routed (100.00%)
        Data    loads: 0     out of     1 routed (  0.00%)
-#5  Signal "Controller_inst.n19743"
-       Control loads: 275   out of   275 routed (100.00%)
 #7  Signal "pll_clk_int"
-       Clock   loads: 1142  out of  1142 routed (100.00%)
+       Clock   loads: 1137  out of  1137 routed (100.00%)
 Other clocks:
     Signal "i_clk_c"
        Clock   loads: 1     out of     1 routed (100.00%)
@@ -2617,29 +2617,29 @@ WARNING <70001944> - No source clock for
 	generated clock	create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] .
     TimerIf::skewscore 0
 
-Start NBR section for initial routing at 16:40:03 08/11/26
+Start NBR section for initial routing at 17:01:26 08/11/26
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-194(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 10 secs 
+194(0.07%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 16:40:12 08/11/26
+Start NBR section for normal routing at 17:01:35 08/11/26
 Level 4, iteration 1
-20(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
+14(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 2
-15(0.01%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
+9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 3
 3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 4
-3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 Level 4, iteration 5
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 0 (nbr) score; real time: 11 secs 
 
-Start NBR section for post-routing at 16:40:13 08/11/26
+Start NBR section for post-routing at 17:01:35 08/11/26
 
 End NBR router with 0 unrouted connection
 WARNING <70001944> - No source clock for
@@ -2648,12 +2648,12 @@ Requested speed is the same as database speed
 Changing speed to m;   changing temperature to -40
 Changing speed to 6;   changing temperature to 100
 
-Checksum -- route: 564322a7a1c6fa908b9fc61c1f88e823b3c6f7a
+Checksum -- route: d89058f85fe7045d5e3028cf1db247535609e17b
 
 Total CPU time 13 secs 
-Total REAL time: 13 secs 
+Total REAL time: 14 secs 
 Completely routed.
-End of route.  12564 routed (100.00%); 0 unrouted.
+End of route.  12560 routed (100.00%); 0 unrouted.
 
 Writing design to file FPGA_Intan_Driver_impl_1_par.dir/5_1.udb ...
 
@@ -2669,8 +2669,8 @@ PAR_SUMMARY::Number of errors = 0
 Note: user must run 'timing' for timing closure signoff.
 
 Total CPU  Time: 36 secs 
-Total REAL Time: 36 secs 
-Peak Memory Usage: 190.07 MB
+Total REAL Time: 37 secs 
+Peak Memory Usage: 190.67 MB
 
 
 par done!
@@ -2680,7 +2680,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2023 Lattice Semiconductor Corporation,  All rights reserved.
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /36 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /37 secs 
 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "FPGA_Intan_Driver_impl_1.twr" "FPGA_Intan_Driver_impl_1.udb" 
 timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt FPGA_Intan_Driver_impl_1.twr FPGA_Intan_Driver_impl_1.udb -gui -msgset C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPGA/FPGA_RHS_Driver/promote.xml
@@ -2707,15 +2707,15 @@ High-Performance_1.2V
 
 Starting full timing analysis...
 Performance Hardware Data Status:   Advanced       Version 1.0.
-Connections ignored  1142  counted  11279  covered  0
+Connections ignored  1137  counted  11278  covered  0
 Changing speed to m;   changing temperature to -40
 
 STA Runtime and Peak Memory Usage :
 Total CPU Time: 5 secs 
 Total REAL Time: 5 secs 
-Peak Memory Usage: 139 MB
+Peak Memory Usage: 140 MB
 
- 5.159013s wall, 4.953125s user + 0.171875s system = 5.125000s CPU (99.3%)
+ 5.065070s wall, 4.921875s user + 0.140625s system = 5.062500s CPU (99.9%)
 
 
 tmcheck -par "FPGA_Intan_Driver_impl_1.par" 
@@ -2769,15 +2769,15 @@ Saving bit stream in "C:/Users/david/Desktop/WiFi Headstage/WiFiHeadstage V2/FPG
 Bitstream generation complete!
 
 Total CPU Time: 1 secs 
-Total REAL Time: 2 secs 
-Peak Memory Usage: 152 MB
+Total REAL Time: 0 secs 
+Peak Memory Usage: 153 MB
 
-Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /2 secs 
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
 
 ibisgen "FPGA_Intan_Driver_impl_1.udb" "C:/lscc/radiant/2023.2/cae_library/ibis/iCE40UP.ibs"
 IBIS Models Generator: Lattice Radiant Software (64-bit) 2023.2.1.288.0
 
-Tue Aug 11 16:40:28 2026
+Tue Aug 11 17:01:50 2026
 
 Loading FPGA_Intan_Driver_impl_1.udb ...
 Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2023.2/ispfpga.
@@ -2831,5 +2831,5 @@ Writing Verilog netlist to file FPGA_Intan_Driver_impl_1_vo.vo
 Writing SDF timing to file FPGA_Intan_Driver_impl_1_vo.sdf
 Backanno finished with 0 posted error messages.
 Total CPU Time: 6 secs 
-Total REAL Time: 6 secs 
+Total REAL Time: 7 secs 
 Peak Memory Usage: 208 MB

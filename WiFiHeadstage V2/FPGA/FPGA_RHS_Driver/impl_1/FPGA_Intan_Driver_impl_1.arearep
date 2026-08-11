@@ -1,15 +1,15 @@
 ----------------------------------------------------------------------
 Report for cell top_level.TECH
-Register bits:  2083 of 5280 (39.451%)
+Register bits:  2082 of 5280 (39.432%)
 I/O cells:      33
                                   Cell usage:
                                cell     count   Res Usage(%)
                                BB_B         3          100.0
                               EBR_B         1          100.0
                                CCU2       132          100.0
-                            FD1P3XZ      2083          100.0
+                            FD1P3XZ      2082          100.0
                                  IB         8          100.0
-                               LUT4      1323          100.0
+                               LUT4      1313          100.0
                                  OB        22          100.0
                               PLL_B         1          100.0
 SUB MODULES
@@ -28,7 +28,23 @@ SPI_Master(num_of_bits_per_packet=32)         1
 SPI_Master_CS(clks_per_half_bit=1,num_of_bits_per_packet=16,cs_inactive_clks=128)         1
 SPI_Master_CS(clks_per_half_bit=1,num_of_bits_per_packet=512,cs_inactive_clks=128)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=128)         1
-                              TOTAL      3588
+                              TOTAL      3577
+----------------------------------------------------------------------
+Report for cell PLL_SPI.v1
+Instance Path : pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+SUB MODULES
+PLL_SPI_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell PLL_SPI_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000").v1
+Instance Path : pll_inst.lscc_pll_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              PLL_B         1          100.0
+                              TOTAL         1
 ----------------------------------------------------------------------
 Report for cell Controller_RHD_Sampling(stm32_spi_num_bits_per_packet=512,stm32_clks_per_half_bit=1,stm32_cs_inactive_clks=128,rhs_read_spi_num_bits_per_packet=16,rhs_read_clks_per_half_bit=1,rhs_read_cs_inactive_clks=128,rhs_stim_spi_num_bits_per_packet=32,rhs_stim_clks_per_half_bit=2,rhs_stim_cs_inactive_clks=128).v1
 Instance Path : Controller_inst
@@ -36,8 +52,8 @@ Instance Path : Controller_inst
                                cell     count   Res Usage(%)
                               EBR_B         1          100.0
                                 FA2       117           88.6
-                            FD1P3XZ      2049           98.4
-                               LUT4      1229           92.9
+                            FD1P3XZ      2048           98.4
+                               LUT4      1219           92.8
 SUB MODULES
 Controller_RHD_FIFO(clks_per_half_bit=1,cs_inactive_clks=128)         1
 Controller_RHD_FIFO(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=128)         1
@@ -51,7 +67,7 @@ SPI_Master(num_of_bits_per_packet=32)         1
 SPI_Master_CS(clks_per_half_bit=1,num_of_bits_per_packet=16,cs_inactive_clks=128)         1
 SPI_Master_CS(clks_per_half_bit=1,num_of_bits_per_packet=512,cs_inactive_clks=128)         1
 SPI_Master_CS(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=128)         1
-                              TOTAL      3408
+                              TOTAL      3397
 ----------------------------------------------------------------------
 Report for cell SPI_Master_CS(clks_per_half_bit=1,num_of_bits_per_packet=512,cs_inactive_clks=128).v1
 Instance Path : Controller_inst.SPI_Master_CS_STM32_1
@@ -59,10 +75,10 @@ Instance Path : Controller_inst.SPI_Master_CS_STM32_1
                                cell     count   Res Usage(%)
                                 FA2        20           15.2
                             FD1P3XZ       561           26.9
-                               LUT4       448           33.9
+                               LUT4       433           33.0
 SUB MODULES
 SPI_Master(clks_per_half_bit=1,num_of_bits_per_packet=512)         1
-                              TOTAL      1030
+                              TOTAL      1015
 ----------------------------------------------------------------------
 Report for cell SPI_Master(clks_per_half_bit=1,num_of_bits_per_packet=512).v1
 Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
@@ -70,8 +86,8 @@ Instance Path : Controller_inst.SPI_Master_CS_STM32_1.SPI_Master_1
                                cell     count   Res Usage(%)
                                 FA2        11            8.3
                             FD1P3XZ       539           25.9
-                               LUT4       414           31.3
-                              TOTAL       964
+                               LUT4       404           30.8
+                              TOTAL       954
 ----------------------------------------------------------------------
 Report for cell Controller_RHD_FIFO(clks_per_half_bit=2,num_of_bits_per_packet=32,cs_inactive_clks=128).v1
 Instance Path : Controller_inst.Controller_RHD_FIFO_2
@@ -112,7 +128,7 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1
                               EBR_B         1          100.0
                                 FA2        23           17.4
                             FD1P3XZ       230           11.0
-                               LUT4       163           12.3
+                               LUT4       163           12.4
 SUB MODULES
                            FIFO_MEM         1
 FIFO_MEM_ipgen_lscc_fifo(ADDRESS_DEPTH=256,ADDRESS_WIDTH=8,DATA_WIDTH=32,ALMOST_FULL_ASSERT_LVL=255,ALMOST_FULL_DEASSERT_LVL=254,ALMOST_EMPTY_DEASSERT_LVL=2,ENABLE_DATA_COUNT="TRUE",FAMILY="iCE40UP")         1
@@ -139,7 +155,7 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1.SPI_Master_CS_1.SPI_Master
                                cell     count   Res Usage(%)
                                 FA2         4            3.0
                             FD1P3XZ        44            2.1
-                               LUT4        68            5.1
+                               LUT4        68            5.2
                               TOTAL       116
 ----------------------------------------------------------------------
 Report for cell FIFO_MEM.v1
@@ -190,19 +206,3 @@ Instance Path : Controller_inst.Controller_RHD_FIFO_1.FIFO_1.lscc_fifo_inst.fifo
                             FD1P3XZ       152            7.3
                                LUT4        63            4.8
                               TOTAL       231
-----------------------------------------------------------------------
-Report for cell PLL_SPI.v1
-Instance Path : pll_inst
-                                  Cell usage:
-                               cell     count   Res Usage(%)
-                              PLL_B         1          100.0
-SUB MODULES
-PLL_SPI_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000")         1
-                              TOTAL         2
-----------------------------------------------------------------------
-Report for cell PLL_SPI_ipgen_lscc_pll(DIVR="0",DIVF="63",DIVQ="4",FILTER_RANGE="1",PLLOUT_SELECT_PORTA="GENCLK",PLLOUT_SELECT_PORTB="GENCLK",FREQUENCY_PIN_REFERENCECLK="12.000000").v1
-Instance Path : pll_inst.lscc_pll_inst
-                                  Cell usage:
-                               cell     count   Res Usage(%)
-                              PLL_B         1          100.0
-                              TOTAL         1
