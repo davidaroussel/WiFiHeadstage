@@ -921,7 +921,7 @@ architecture RTL of Controller_RHD_Sampling is
 	begin
 		if i_Rst_L = '1' then
 			r_led_counter      <= (others => '0');
-			rgd_info_sig_green <= '1';
+			rgd_info_sig_blue <= '1';
 			ble_sync_flag <= '0';
 
 		elsif rising_edge(i_Clk) then
@@ -934,11 +934,11 @@ architecture RTL of Controller_RHD_Sampling is
 
 			-- Active-low LED
 			if (i_BLE_SYNC = '1') or (r_led_counter /= 0) then
-				rgd_info_sig_green <= '0';
+				--rgd_info_sig_blue <= '0';
 				ble_sync_flag <= '1';
 			else
 				ble_sync_flag <= '0';
-				rgd_info_sig_green <= '1';
+				rgd_info_sig_blue <= '1';
 			end if;
 
 		end if;
@@ -1111,13 +1111,12 @@ architecture RTL of Controller_RHD_Sampling is
 			int_RHS_READ_TX_DV       <= '0';
 			rhd_index           <= 0;
 			rhd_state           <= 0;
-			rgd_info_sig_blue   <= '1';
+			--rgd_info_sig_blue   <= '1';
 			chip_select_RHS_READ <= '1';
-			rgd_info_sig_blue <= '1';
 			
 		elsif rising_edge(i_Clk) then
 			if i_Controller_Mode = x"1" then
-				rgd_info_sig_blue   <= '1';
+				--rgd_info_sig_blue   <= '1';
 				
 			elsif i_Controller_Mode = x"2" then
 				
@@ -1128,7 +1127,7 @@ architecture RTL of Controller_RHD_Sampling is
 					----------------------------------------------------------------
 					when 0 =>
 						if i_NUM_CHANNEL_SEL = '1' then
-							rgd_info_sig_blue   <= '1';
+							--rgd_info_sig_blue   <= '1';
 							if i_CH_BANK_SEL = '0' then
 								int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
 							elsif i_CH_BANK_SEL = '1' then
@@ -1136,7 +1135,7 @@ architecture RTL of Controller_RHD_Sampling is
 							end if;
 							--int_RHS_READ_TX_Byte <= rhd_array_8(rhd_index);
 						else
-							rgd_info_sig_blue   <= '0';
+							--rgd_info_sig_blue   <= '0';
 							int_RHS_READ_TX_Byte <= rhd_array_16(rhd_index);
 						end if;
 						
