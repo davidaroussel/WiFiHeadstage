@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliMessageLog>
-    <Task name="PAR">
+    <Task name="Export">
         <Message>
             <ID>77001032</ID>
             <Severity>16</Severity>
@@ -24,155 +24,8 @@
             <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_SEL</Dynamic>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001032</ID>
-            <Severity>16</Severity>
-            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>77001031</ID>
-            <Severity>16</Severity>
-            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
-        </Message>
-        <Message>
-            <ID>70001944</ID>
-            <Severity>16</Severity>
-            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+            <ID>1191031</ID>
+            <Severity>1</Severity>
         </Message>
     </Task>
     <Task name="Map">
@@ -896,10 +749,10 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(115): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(117): </Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>115</Navigation>
+            <Navigation>117</Navigation>
         </Message>
         <Message>
             <ID>35921012</ID>
@@ -928,40 +781,8 @@
         <Message>
             <ID>35921259</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(34): </Dynamic>
-            <Dynamic>i_rhs_stim_start</Dynamic>
-            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>34</Navigation>
-        </Message>
-        <Message>
-            <ID>35929000</ID>
-            <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(265): </Dynamic>
-            <Dynamic>i_num_channel_sel</Dynamic>
-            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
-            <Navigation>265</Navigation>
-        </Message>
-        <Message>
-            <ID>35921259</ID>
-            <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(35): </Dynamic>
-            <Dynamic>i_num_channel_sel</Dynamic>
-            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>35</Navigation>
-        </Message>
-        <Message>
-            <ID>35929000</ID>
-            <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(265): </Dynamic>
-            <Dynamic>i_ch_bank_sel</Dynamic>
-            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
-            <Navigation>265</Navigation>
-        </Message>
-        <Message>
-            <ID>35921259</ID>
-            <Severity>1</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(36): </Dynamic>
-            <Dynamic>i_ch_bank_sel</Dynamic>
+            <Dynamic>i_rhs_stim_start</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
             <Navigation>36</Navigation>
         </Message>
@@ -969,7 +790,23 @@
             <ID>35929000</ID>
             <Severity>1</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(265): </Dynamic>
-            <Dynamic>i_ble_sync</Dynamic>
+            <Dynamic>i_num_channel_sel</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
+            <Navigation>265</Navigation>
+        </Message>
+        <Message>
+            <ID>35921259</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(37): </Dynamic>
+            <Dynamic>i_num_channel_sel</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
+            <Navigation>37</Navigation>
+        </Message>
+        <Message>
+            <ID>35929000</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(265): </Dynamic>
+            <Dynamic>i_ch_bank_sel</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
             <Navigation>265</Navigation>
         </Message>
@@ -977,9 +814,25 @@
             <ID>35921259</ID>
             <Severity>1</Severity>
             <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(38): </Dynamic>
-            <Dynamic>i_ble_sync</Dynamic>
+            <Dynamic>i_ch_bank_sel</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
             <Navigation>38</Navigation>
+        </Message>
+        <Message>
+            <ID>35929000</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd(265): </Dynamic>
+            <Dynamic>i_ble_sync</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling_tb.vhd</Navigation>
+            <Navigation>265</Navigation>
+        </Message>
+        <Message>
+            <ID>35921259</ID>
+            <Severity>1</Severity>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(40): </Dynamic>
+            <Dynamic>i_ble_sync</Dynamic>
+            <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
+            <Navigation>40</Navigation>
         </Message>
         <Message>
             <ID>35921012</ID>
@@ -992,10 +845,10 @@
         <Message>
             <ID>35921010</ID>
             <Severity>1</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(82): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(83): </Dynamic>
             <Dynamic>rtl</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>82</Navigation>
+            <Navigation>83</Navigation>
         </Message>
         <Message>
             <ID>35921504</ID>
@@ -1037,6 +890,11 @@
             <ID>35001771</ID>
             <Severity>16</Severity>
             <Dynamic>rgb_sig_red</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001771</ID>
+            <Severity>16</Severity>
+            <Dynamic>rgb_sig_green</Dynamic>
         </Message>
         <Message>
             <ID>35001771</ID>
@@ -1236,26 +1094,26 @@
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(408): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(410): </Dynamic>
             <Dynamic>channel_array_STIM_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>408</Navigation>
+            <Navigation>410</Navigation>
         </Message>
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(502): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(504): </Dynamic>
             <Dynamic>rhd_array_16_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>502</Navigation>
+            <Navigation>504</Navigation>
         </Message>
         <Message>
             <ID>35931038</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(571): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd(573): </Dynamic>
             <Dynamic>rhd_array_8_original_ramnet</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/controller_rhd_sampling.vhd</Navigation>
-            <Navigation>571</Navigation>
+            <Navigation>573</Navigation>
         </Message>
         <Message>
             <ID>35935040</ID>
@@ -1281,10 +1139,10 @@
         <Message>
             <ID>35931002</ID>
             <Severity>16</Severity>
-            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(125): </Dynamic>
+            <Dynamic>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd(126): </Dynamic>
             <Dynamic>int_RHS_TOP_SPI_CS_n_2</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/source/impl_1/top_level.vhd</Navigation>
-            <Navigation>125</Navigation>
+            <Navigation>126</Navigation>
         </Message>
         <Message>
             <ID>35931002</ID>
@@ -1301,12 +1159,6 @@
             <Dynamic>\pll_inst/lscc_pll_inst/sdi_i</Dynamic>
             <Navigation>c:/users/david/desktop/wifi headstage/wifiheadstage v2/fpga/fpga_rhs_driver/pll_spi/rtl/pll_spi.v</Navigation>
             <Navigation>140</Navigation>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/rgd_info_sig_blue</Dynamic>
-            <Dynamic>One</Dynamic>
         </Message>
         <Message>
             <ID>35001774</ID>
@@ -1363,6 +1215,12 @@
             <Dynamic>3, 2, 1, 0</Dynamic>
         </Message>
         <Message>
+            <ID>35001747</ID>
+            <Severity>256</Severity>
+            <Dynamic>driving w_Controller_Mode[3:0]</Dynamic>
+            <Dynamic>3, 2</Dynamic>
+        </Message>
+        <Message>
             <ID>35002028</ID>
             <Severity>256</Severity>
             <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
@@ -1380,6 +1238,42 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i22</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/stim_delay_target__i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
             <Dynamic>\Controller_inst/stim_delay_target__i1</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
@@ -1387,12 +1281,6 @@
             <ID>35935040</ID>
             <Severity>16</Severity>
             <Dynamic>\Controller_inst/int_RHS_READ_TX_Byte_i0_i0</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i0</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1632,91 +1520,7 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i22</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/stim_delay_target__i2</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i1</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i2</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i3</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i4</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i5</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i6</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i7</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i12</Dynamic>
-            <Dynamic>Zero</Dynamic>
-        </Message>
-        <Message>
-            <ID>35935040</ID>
-            <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i13</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i15</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1728,25 +1532,67 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i15</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i13</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i20</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i12</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i23</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i7</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i24</Dynamic>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i6</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i5</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i4</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i3</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i2</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i1</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/Controller_RHD_FIFO_1/SPI_Master_CS_1/SPI_Master_1/r_TX_Byte_i0_i0</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i26</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1758,7 +1604,19 @@
         <Message>
             <ID>35935040</ID>
             <Severity>16</Severity>
-            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i26</Dynamic>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i24</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i23</Dynamic>
+            <Dynamic>Zero</Dynamic>
+        </Message>
+        <Message>
+            <ID>35935040</ID>
+            <Severity>16</Severity>
+            <Dynamic>\Controller_inst/int_RHS_STIM_TX_Byte_i0_i20</Dynamic>
             <Dynamic>Zero</Dynamic>
         </Message>
         <Message>
@@ -1838,11 +1696,33 @@
             <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
-    <Task name="Export">
+    <Task name="PAR">
         <Message>
-            <ID>1081100</ID>
-            <Severity>1</Severity>
-            <Dynamic>Bitstream authenticated.</Dynamic>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
         <Message>
             <ID>77001032</ID>
@@ -1867,8 +1747,128 @@
             <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
         </Message>
         <Message>
-            <ID>1191031</ID>
-            <Severity>1</Severity>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_TOP_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+        </Message>
+        <Message>
+            <ID>71003020</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_SEL</Dynamic>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {4} [get_ports i_RHS_SEL]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001032</ID>
+            <Severity>16</Severity>
+            <Dynamic>i_RHS_BOTTOM_SPI_MISO_2</Dynamic>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>77001031</ID>
+            <Severity>16</Severity>
+            <Dynamic>ldc_set_location -site {9} [get_ports i_RHS_BOTTOM_SPI_MISO_2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
+        </Message>
+        <Message>
+            <ID>70001944</ID>
+            <Severity>16</Severity>
+            <Dynamic>create_generated_clock -name {pll_clk_int} -source [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/REFERENCECLK}] -multiply_by 4 [get_pins {pll_inst/lscc_pll_inst/u_PLL_B/OUTGLOBAL }] </Dynamic>
         </Message>
     </Task>
 </BaliMessageLog>

@@ -14,7 +14,9 @@ entity Controller_RHD_Sampling is
 
 	RHS_STIM_SPI_NUM_BITS_PER_PACKET : integer := 0;
 	RHS_STIM_CLKS_PER_HALF_BIT       : integer := 0;    -- 32 for around 2.5KHz
-	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0
+	RHS_STIM_CS_INACTIVE_CLKS        : integer := 0;
+	
+	RHS_STIM_MODE : integer := 0
 	
     );
   port (
@@ -921,7 +923,7 @@ architecture RTL of Controller_RHD_Sampling is
 	begin
 		if i_Rst_L = '1' then
 			r_led_counter      <= (others => '0');
-			rgd_info_sig_blue <= '1';
+			rgd_info_sig_green <= '1';
 			ble_sync_flag <= '0';
 
 		elsif rising_edge(i_Clk) then
@@ -934,11 +936,11 @@ architecture RTL of Controller_RHD_Sampling is
 
 			-- Active-low LED
 			if (i_BLE_SYNC = '1') or (r_led_counter /= 0) then
-				--rgd_info_sig_blue <= '0';
+				rgd_info_sig_green <= '0';
 				ble_sync_flag <= '1';
 			else
 				ble_sync_flag <= '0';
-				rgd_info_sig_blue <= '1';
+				rgd_info_sig_green <= '1';
 			end if;
 
 		end if;
@@ -965,7 +967,7 @@ architecture RTL of Controller_RHD_Sampling is
 		
 		alt_counter   <= 0;  
 		
-		--rgd_info_sig_green   <= '1';
+		rgd_info_sig_blue   <= '1';
 
 	    NUM_DATA <= 2*(STM32_SPI_NUM_BITS_PER_PACKET / 16);
 	
@@ -980,12 +982,12 @@ architecture RTL of Controller_RHD_Sampling is
 			else
 				int_FIFO_RHS_READ_RE <= '0';
 			end if;
-			--rgd_info_sig_green   <= '0';
+			rgd_info_sig_blue   <= '0';
 						
 		elsif i_Controller_Mode = x"2" then 
 			case stm32_state is
 				when 0 =>
-					--rgd_info_sig_green   <= '1';
+					rgd_info_sig_blue   <= '1';
 					int_FIFO_RHS_READ_RE <= '0';
 				
 					if (to_integer(unsigned(int_FIFO_RHS_READ_COUNT)) >= ((NUM_DATA) + 2)) and (first_rhs_READ_packet = '0') then
@@ -1224,7 +1226,6 @@ architecture RTL of Controller_RHD_Sampling is
 		stim_train_flag           <= '0';
 		stim_train_counter        <= 0;
 		rgd_info_sig_red          <= '1';
-		--rgd_info_sig_green        <= '1';
 		stim_train_sector_counter <= 0;
 		stim_delay_target         <= 0;
 		stim_return_state         <= 0;

@@ -19,6 +19,7 @@ entity top_level is
 		-- 0: N/A 
 		-- 1: N/A
 		-- 2: N/A
+		RHS_STIM_MODE     : integer := 0;   -- 0: MEP Mode | 1: BLE Triggered
 		RHS_SAMPLING_MODE : integer := 0
 		
     );
@@ -165,7 +166,9 @@ begin
 		
             RHS_STIM_SPI_NUM_BITS_PER_PACKET => RHS_STIM_SPI_NUM_BITS_PER_PACKET,
             RHS_STIM_CLKS_PER_HALF_BIT       => RHS_STIM_CLKS_PER_HALF_BIT,
-            RHS_STIM_CS_INACTIVE_CLKS        => RHS_STIM_CS_INACTIVE_CLKS
+            RHS_STIM_CS_INACTIVE_CLKS        => RHS_STIM_CS_INACTIVE_CLKS,
+			
+			RHS_STIM_MODE        => RHS_STIM_MODE
         )
         port map (
             -- Global
@@ -179,7 +182,7 @@ begin
 
 			rgb_info_red   => rgb_sig_red,
 			rgb_info_blue  => rgb_sig_blue,
-			--rgb_info_green => rgb_sig_green,
+			rgb_info_green => rgb_sig_green,
 
             -- STM32 SPI
             o_STM32_SPI_Clk     => int_STM32_SPI_Clk,
@@ -293,7 +296,6 @@ begin
 				w_Controller_Mode <= x"0";
                 w_reset <= '1';  -- Hold reset active
 				int_BOOST_ENABLE    <= '1';
-				rgb_sig_green <= '1';
             else
                 w_reset <= '0';
 				
@@ -311,22 +313,15 @@ begin
 				case reset_counter is
 					when 24000000 =>
 						w_Controller_Mode <= x"1";
-						rgb_sig_green <= '0';
 					when 48000000 =>
 						w_Controller_Mode <= x"0";
-						rgb_sig_green <= '1';
-					when 72000000 =>
-						w_Controller_Mode <= x"1";
-						rgb_sig_green <= '0';
 					when 96000000 =>
 						stop_counting <= '1';
-						
 						if i_START_SAMPLING = '0' then
-							w_Controller_Mode <= x"1";
+							w_Controller_Mode <= x"0";
 							
 						elsif i_START_SAMPLING = '1' then
 							w_Controller_Mode <= x"2";
-							rgb_sig_green <= '1';
 							
 						end if;
 						
